@@ -2,9 +2,9 @@
 #include "std_library_functions.h"
 
 // USA: func_02069790
-extern "C" ARM int func_02069790(void** arg0) {
-    void* var0 = *arg0;
-    unsigned short var1 = 0xff0d;
-    memcpy(var0, &var1, 2);
+extern "C" ARM int func_02069790(void** dst) {
+    void* d = *dst;
+    unsigned short v = 0xff0d;
+    memcpy(d, &v, 2);
     return 2;
 }

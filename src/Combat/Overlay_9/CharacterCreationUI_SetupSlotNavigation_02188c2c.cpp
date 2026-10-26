@@ -5,9 +5,9 @@
 
 // The struct tags stay: these functions' C++ symbols are mangled with them.
 struct GridCursor;
-void GridCursor_Init(struct GridCursor* cursor);
-void GridCursor_SetDimensions(struct GridCursor* cursor, int columns, int rows, int order);
-void GridCursor_SetCount(struct GridCursor* cursor, int count);
+extern "C" void GridCursor_Init(struct GridCursor* cursor);
+extern "C" void GridCursor_SetDimensions(struct GridCursor* cursor, int columns, int rows, int order);
+extern "C" void GridCursor_SetCount(struct GridCursor* cursor, int count);
 extern "C" void GridCursor_SetSelectedIndex(GridCursor* cursor, int index);
 
 // Overlay 9, originally func_ov009_02188c2c (USA/EUR 0x02188c2c, JPN 0x02189af0)

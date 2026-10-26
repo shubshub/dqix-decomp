@@ -5,17 +5,17 @@
 extern "C" void __clear(void* buf, int len);
 extern "C" int memcmp(void* a, void* b, int n);
 
-void TileHeader_Flush(char* dst, char* src);
+extern "C" void TileHeader_Flush(char* dst, char* src);
 
 struct HeaderAt0204ab4c;
 struct BufferAt0204ab4c;
-void InvalidateDirtyCacheBlocks(struct HeaderAt0204ab4c* header, struct BufferAt0204ab4c* buffer);
+extern "C" void func_0204ab4c(struct HeaderAt0204ab4c* header, struct BufferAt0204ab4c* buffer);
 
-void ClearRecordFields(struct BackgroundScreen* rec);
-void BackgroundScreen_Flush(void* a, void* b);
+extern "C" void ClearRecordFields(struct BackgroundScreen* rec);
+extern "C" void BackgroundScreen_Flush(void* a, void* b);
 
 // Main, originally DispatchByTag0204b2e0 (USA 0x0204b2e0, EUR 0x0204b2f0, JPN 0x0204c100)
-ARM void Background_FlushFile(void* layer, char* file) {
+extern "C" ARM void Background_FlushFile(void* layer, char* file) {
     char tag[5];
 
     if (file == 0) {
@@ -31,7 +31,7 @@ ARM void Background_FlushFile(void* layer, char* file) {
     }
 
     if (memcmp(tag, Background_paltTag, 4) == 0) {
-        InvalidateDirtyCacheBlocks((struct HeaderAt0204ab4c*)((char*)layer + 0xc), (struct BufferAt0204ab4c*)file);
+        func_0204ab4c((struct HeaderAt0204ab4c*)((char*)layer + 0xc), (struct BufferAt0204ab4c*)file);
         return;
     }
 

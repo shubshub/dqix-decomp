@@ -2,62 +2,62 @@
 #include "Resource/GameResources.h"
 #include "Combat/EntryGetterTypes.h"
 
-struct Struct_02017a94 { char unknown_0_[6]; short unknown_6_; };
+struct Obj0201b600 { char pad0[6]; short angle; };
 struct Struct_0203dce4_2;
 
-struct Struct_02015438;
+struct HeadNode02046b24;
 struct GameResources;
 struct Struct_0203cec4;
 struct Struct_0203fc5c;
 struct Node020406f8;
-struct Vec3_020406f8 { int x; int y; int z; };
-struct Node02040774;
+struct Struct_0203de84 { int x; int y; int z; };
+struct Struct_0203d028_15;
 struct Npc;
-struct Obj02040b2c;
-struct EntryPositionState { char unknown0[0x10]; int x; int y; int z; short value; };
+struct Struct_0203e2c4_2;
+struct Struct_020aeb34 { char unknown0[0x10]; int x; int y; int z; short value; };
 
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" int rand(void);
 extern "C" long long fix32_SinFx64c(int phase);
 extern "C" long long fix32_CosFx64c(int phase);
 extern "C" float _ll_sto_f(long long);
-struct EntryList_203dce4* GetGlobalPtr021075f4_0203cf4c();
-int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24**);
-struct Obj0201b600* FindElemByKeys(Obj0201b600*, int, unsigned short);
-struct Entry_203dce4* GetEntryUnlessFlag0x8000_0203dce4(struct EntryList_203dce4*, int);
-void ClearFlag0x1_02040648(unsigned int*);
-int FieldTaskQueue_IsEmpty(void**);
+extern "C" struct Struct_0203dce4_2* func_0203cf4c();
+extern "C" int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24**);
+extern "C" struct Obj0201b600* func_0201b600(Obj0201b600*, int, unsigned short);
+extern "C" struct Struct_0203dce4* func_0203dce4(struct Struct_0203dce4_2*, int);
+extern "C" void func_02040648(unsigned int*);
+extern "C" int FieldTaskQueue_IsEmpty(void**);
 int IsMainBrightnessTransitionActive(struct GameResources*);
 int GetMainBrightnessTransitionState(struct GameResources*);
-void SetActiveChildFields02040774(struct Node02040774*, int, int, int);
-void PropagateValueToActiveSlot02040b2c(struct Obj02040b2c*, int);
-void SelectVec3FromSources020406f8(struct Vec3_020406f8*, struct Node020406f8*);
-void SetOrClearFlag0x8_0203cec4(struct Struct_203cec4*, int);
-void SetField40IfPositive(struct Struct_0203fc5c*, float);
-void Npc_WalkTo(struct Npc*, int);
+extern "C" void func_02040774(struct Struct_0203d028_15*, int, int, int);
+extern "C" void func_02040b2c(struct Struct_0203e2c4_2*, int);
+extern "C" void func_020406f8(struct Struct_0203de84*, struct Node020406f8*);
+extern "C" void func_0203cec4(struct Struct_0203cec4*, int);
+extern "C" void func_0203fc5c(struct Struct_0203fc5c*, float);
+extern "C" void Npc_WalkTo(struct Npc*, int);
 
 // USA: func_020aeb34
 extern "C" ARM void func_020aeb34(void) {
-    struct Struct_0203dce4_2* var0;
-    struct Struct_0203dce4* var1[4];
-    GameResources* var2;
-    struct Struct_02017a94* var3;
-    int var4;
-    struct Struct_02015438** var5;
+    struct Struct_0203dce4_2* list;
+    struct Struct_0203dce4* arr[4];
+    GameResources* base;
+    struct Obj0201b600* elem;
+    int i;
+    struct HeadNode02046b24** head;
 
     elem = (struct Obj0201b600*)Zone3D_GetInstance();
-    list = GetGlobalPtr021075f4_0203cf4c();
+    list = func_0203cf4c();
     base = GetGameResources();
     head = (HeadNode02046b24**)base->fieldTaskQueue_;
     FieldTaskQueue_GetCurrentKind(head);
-    elem = FindElemByKeys(elem, 0, 0x2a);
+    elem = func_0201b600(elem, 0, 0x2a);
 
-    if (var3 == NULL) return;
+    if (elem == NULL) return;
 
-    for (var4 = 0; var4 < 4; var4++) {
-        var1[var4] = func_0203dce4(var0, var2->unknown_444a_[var4]);
-        if (var1[var4] == NULL) return;
-        func_02040648((unsigned int*)var1[var4]);
+    for (i = 0; i < 4; i++) {
+        arr[i] = func_0203dce4(list, base->unknown_444a_[i]);
+        if (arr[i] == NULL) return;
+        func_02040648((unsigned int*)arr[i]);
     }
 
     if (FieldTaskQueue_IsEmpty((void**)head) == 0 && IsMainBrightnessTransitionActive(base) == 0 &&
@@ -65,52 +65,52 @@ extern "C" ARM void func_020aeb34(void) {
          GetMainBrightnessTransitionState(base) == 3)) {
         if (elem->angle != 0) return;
         for (int j = 0; j < 4; j++) {
-            EntryPositionState* s = (EntryPositionState*)GetField0xc02040538((S02040538*)arr[j]);
-            SetActiveChildFields02040774((struct Node02040774*)arr[j], s->x, s->y, s->z);
-            PropagateValueToActiveSlot02040b2c((struct Obj02040b2c*)arr[j], s->value);
+            Struct_020aeb34* s = (Struct_020aeb34*)func_02040538((Struct_0203e0a0*)arr[j]);
+            func_02040774((struct Struct_0203d028_15*)arr[j], s->x, s->y, s->z);
+            func_02040b2c((struct Struct_0203e2c4_2*)arr[j], s->value);
         }
         return;
     }
 
-    var2->unknown_4454_ += 2 * (rand() % 13 - 6);
-    if (var2->unknown_4454_ > 0x2d) var2->unknown_4454_ = 0x2d;
-    if (var2->unknown_4454_ < 0x20) var2->unknown_4454_ = 0x20;
+    base->unknown_4454_ += 2 * (rand() % 13 - 6);
+    if (base->unknown_4454_ > 0x2d) base->unknown_4454_ = 0x2d;
+    if (base->unknown_4454_ < 0x20) base->unknown_4454_ = 0x20;
 
     int var8 = 88006;
-    if (var3->unknown_6_ <= var2->unknown_4454_) {
-        var3->unknown_6_ += 0x6487;
+    if (elem->angle <= base->unknown_4454_) {
+        elem->angle += 0x6487;
     }
-    var3->unknown_6_ -= var2->unknown_4454_;
+    elem->angle -= base->unknown_4454_;
 
-    int var9 = var3->unknown_6_;
+    int angle = elem->angle;
 
     for (int k = 0; k < 4; k++) {
         int phase;
         Vector3fix vecB;
         Vector3fix vecA;
         Vector3fix out;
-        struct Vec3_020406f8 sel;
+        struct Struct_0203de84 sel;
 
-        var9 += 0x1921;
-        if (var9 >= 0x6487) var9 -= 0x6487;
-        var11 = var9 - 0xcc;
-        if (var11 <= 0) var11 += 0x6487;
+        angle += 0x1921;
+        if (angle >= 0x6487) angle -= 0x6487;
+        phase = angle - 0xcc;
+        if (phase <= 0) phase += 0x6487;
 
         vecB.x = (int)(4096.0f * (_ll_sto_f(fix32_SinFx64c(phase)) / 4294967296.0f)) * 2;
         vecB.y = 0;
         vecB.z = (int)(4096.0f * (_ll_sto_f(fix32_CosFx64c(phase)) / 4294967296.0f)) * 2;
 
-        var13.unknown_0_ = var8;
-        struct Struct_0203dce4* var16 = var1[var10];
-        func_020406f8(&var15, (struct Struct_0203de84_2*)var16);
-        var13.unknown_8_ = -0x970;
-        var13.unknown_4_ = var15.unknown_4_;
+        vecA.x = var8;
+        struct Struct_0203dce4* entry = arr[k];
+        func_020406f8(&sel, (struct Node020406f8*)entry);
+        vecA.z = -0x970;
+        vecA.y = sel.y;
 
-        Vector3fix_Add(&var13, &var12, &var14);
+        Vector3fix_Add(&vecA, &vecB, &out);
 
-        if ((entry->child14) != NULL) SetOrClearFlag0x8_0203cec4((struct Struct_203cec4*)(entry->child14), 1);
-        if ((entry->child14) != NULL) SetField40IfPositive((struct Struct_0203fc5c*)(entry->child14), 0.8f);
+        if ((entry->child14) != NULL) func_0203cec4((struct Struct_0203cec4*)(entry->child14), 1);
+        if ((entry->child14) != NULL) func_0203fc5c((struct Struct_0203fc5c*)(entry->child14), 0.8f);
         Npc_WalkTo((struct Npc*)entry, (int)&out);
-        SetActiveChildFields02040774((struct Node02040774*)entry, out.x, out.y, out.z);
+        func_02040774((struct Struct_0203d028_15*)entry, out.x, out.y, out.z);
     }
 }

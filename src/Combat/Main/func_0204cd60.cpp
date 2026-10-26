@@ -2,61 +2,61 @@
 #include <std_library_functions.h>
 #include <NitroSDK/BGBases.h>
 
-struct Wnd0204cd60 {
+struct Struct_0204cd60 {
     char pad0[8];
     unsigned char* buf;
     short arrA[18];
     short arrB[18];
-    short arrC[18];
-    short arrD[18];
-    char pad9C[4];
-    int fA0;
-    int fA4;
-    short fA8;
-    short fAA;
+    short unknown_54_[18];
+    short unknown_78_[18];
+    char unknown_9c_[4];
+    int unknown_a0_;
+    int unknown_a4_;
+    short unknown_a8_;
+    short unknown_aa_;
     char padAC[4];
-    short fB0;
-    short fB2;
+    short unknown_b0_;
+    short unknown_b2_;
     char padB4[2];
-    short fB6;
-    char padB8[2];
+    short unknown_b6_;
+    char unknown_b8_[2];
     short sizeTagLineHeight_;
-    short fBC;
-    short fBE;
-    char padC0[5];
+    short unknown_bc_;
+    short unknown_be_;
+    char unknown_c0_[5];
     unsigned char flags;
-    unsigned char fC6;
-    unsigned char fC7;
-    char padC8[0x10];
+    unsigned char unknown_c6_;
+    unsigned char unknown_c7_;
+    char unknown_c8_[0x10];
     unsigned char bit0 : 2;
-    unsigned char useBg : 1;
-    unsigned char bit3 : 5;
-    char padD9[2];
-    signed char margins[4];
+    unsigned char unknown_d8_2_ : 1;
+    unsigned char unknown_d8_3_ : 5;
+    char unknown_d9_[2];
+    signed char unknown_db_[4];
 };
 
-struct Struct_0204cd60_2 {
-    int unknown_0_;
-    char unknown_4_;
+struct Glyph0204cd60 {
+    int val;
+    char width;
     signed char unknown_5_0_ : 6;
-    signed char unknown_5_6_ : 2;
-    char unknown_6_[2];
+    signed char unused : 2;
+    char pad6[2];
 };
 
 extern "C" void* __clear(void* dst, int count);
 extern "C" int Font_GetTextWidth(char* str, int id);
-int Font_FindCharacterIndex(int key, int tableIdx);
-Glyph0204cd60* Font_GetCharacter(int idx, int tableIdx);
-int Font_GetKerning(int a, int b, int tableIdx);
-extern "C" void func_0204cc68(Wnd0204cd60* wnd, int mode, short x0, short y0, short x1, short y1);
-extern "C" void func_0204f914(Wnd0204cd60* wnd, int mode, short x0, short y0, short x1, short y1);
-extern "C" void func_0204ea5c(Wnd0204cd60* wnd);
-extern "C" void func_0204ecb4(Wnd0204cd60* wnd, int a, int b, int w, int h, signed char* margins);
+extern "C" int Font_FindCharacterIndex(int key, int tableIdx);
+extern "C" Glyph0204cd60* Font_GetCharacter(int idx, int tableIdx);
+extern "C" int Font_GetKerning(int a, int b, int tableIdx);
+extern "C" void func_0204cc68(Struct_0204cd60* wnd, int mode, short arg2, short arg3, short x1, short arg5);
+extern "C" void func_0204f914(Struct_0204cd60* wnd, int mode, short arg2, short arg3, short x1, short arg5);
+extern "C" void func_0204ea5c(Struct_0204cd60* wnd);
+extern "C" void func_0204ecb4(Struct_0204cd60* wnd, int a, int b, int w, int h, signed char* arg5);
 extern "C" int func_0204fc40(void* unused0, char** cursor, char* tag, short* out, int max);
-extern "C" void func_0204f3bc(Wnd0204cd60* wnd, int idx);
-extern "C" void func_0204df9c(Wnd0204cd60* wnd, Glyph0204cd60* glyph, int x, int y, int color, int font);
-extern "C" void func_0204fae8(Wnd0204cd60* wnd);
-extern "C" void func_0204fa0c(Wnd0204cd60* wnd, short x, short y);
+extern "C" void func_0204f3bc(Struct_0204cd60* wnd, int idx);
+extern "C" void func_0204df9c(Struct_0204cd60* wnd, Glyph0204cd60* glyph, int x, int y, int color, int font);
+extern "C" void func_0204fae8(Struct_0204cd60* wnd);
+extern "C" void func_0204fa0c(Struct_0204cd60* wnd, short x, short y);
 
 extern const unsigned char data_020e7bdc[];
 extern char data_020f0248[];
@@ -94,26 +94,26 @@ extern char data_020f02e7[];
 extern char data_020f02eb[];
 extern char data_020f02f1[];
 
-static inline void inline_01ff8b48(Struct_0204cd60* arg0, short arg1, short arg2) {
-    arg0->unknown_bc_ = arg1;
-    arg0->unknown_be_ = arg2;
+static inline void inline_01ff8b48(Struct_0204cd60* wnd, short x, short y) {
+    wnd->unknown_bc_ = x;
+    wnd->unknown_be_ = y;
 }
 
 // USA: func_0204cd60
-extern "C" ARM void func_0204cd60(Struct_0204cd60* arg0, char* arg1, short arg2, short arg3) {
-    char* var0;
-    short var1[8];
-    char var2[0x100];
-    int var3;
-    short var4;
-    short var5;
-    unsigned char* var6;
-    short var7;
-    unsigned char* var8;
-    short var9;
-    Struct_0204cd60_2* var10;
-    unsigned char var11;
-    int var12;
+extern "C" ARM void func_0204cd60(Struct_0204cd60* wnd, char* text, short border, short font) {
+    char* p;
+    short out[8];
+    char tmp[0x100];
+    int sel;
+    short x;
+    short y;
+    unsigned char* dst;
+    short pitch;
+    unsigned char* buf;
+    short stride;
+    Glyph0204cd60* glyph;
+    unsigned char prev;
+    int code;
     int var13;
     short var14;
     short var15;
@@ -125,29 +125,29 @@ extern "C" ARM void func_0204cd60(Struct_0204cd60* arg0, char* arg1, short arg2,
     short var29, var30, var31, var32;
     int var33;
     short var34;
-    short var35;
-    int var36;
-    int var37, var38, var39, var40;
-    int var41;
-    short var42, var43, var44, var45;
-    short var46, var47, var48, var49;
+    short lineH;
+    int mode;
+    int color, colorIdx, var39, var40;
+    int handled;
+    short ax, var43, ay, var45;
+    short var46, x1, var48, var49;
     unsigned char var50;
-    int var51;
-    char* var52;
+    int ch;
+    char* cursor;
 
-    var52 = arg1;
-    if (var52 == 0) return;
+    cursor = text;
+    if (cursor == 0) return;
 
     var14 = 0;
-    var11 = 0xff;
-    arg0->unknown_c5_ &= ~2;
+    prev = 0xff;
+    wnd->flags &= ~2;
     var13 = -1;
-    var7 = (arg0->unknown_a8_ << 3) >> 1;
-    var35 = arg0->unknown_b6_;
-    var9 = var35 * var7;
-    var5 = arg0->unknown_b2_;
-    var8 = arg0->unknown_8_;
-    var6 = var8 + var5 * var7;
+    pitch = (wnd->unknown_a8_ << 3) >> 1;
+    lineH = wnd->unknown_b6_;
+    stride = lineH * pitch;
+    y = wnd->unknown_b2_;
+    buf = wnd->buf;
+    dst = buf + y * pitch;
     var15 = var14;
     var16 = var14;
     var17 = var14;
@@ -161,80 +161,80 @@ extern "C" ARM void func_0204cd60(Struct_0204cd60* arg0, char* arg1, short arg2,
     var30 = var14;
     var31 = var14;
     var32 = var14;
-    var3 = var13;
-    var33 = arg0->unknown_c7_;
-    var4 = arg0->unknown_b0_;
+    sel = var13;
+    var33 = wnd->unknown_c7_;
+    x = wnd->unknown_b0_;
 
-    if (arg0->unknown_d8_2_) {
-        memcpy(arg0->unknown_8_, (char*)GetSubBG2CharacterBase() + arg0->unknown_a0_, arg0->unknown_a4_);
+    if (wnd->unknown_d8_2_) {
+        memcpy(wnd->buf, (char*)GetSubBG2CharacterBase() + wnd->unknown_a0_, wnd->unknown_a4_);
     } else {
-        memset(arg0->unknown_8_, 0, arg0->unknown_a4_);
+        memset(wnd->buf, 0, wnd->unknown_a4_);
     }
 
-    if (arg0->unknown_c5_ & 4) {
-        var36 = 0;
+    if (wnd->flags & 4) {
+        mode = 0;
     } else {
-        if (!arg0->unknown_d8_2_) {
-            short var53 = 0;
-            short var54 = 0;
-            short var55 = arg0->unknown_a8_ << 3;
-            short var56 = arg0->unknown_aa_ << 3;
-            var54 += arg0->unknown_db_[0];
-            var56 -= arg0->unknown_db_[0] + arg0->unknown_db_[1];
-            var53 += arg0->unknown_db_[2];
-            var55 -= arg0->unknown_db_[2] + arg0->unknown_db_[3];
-            func_0204f914(arg0, 0x11, var53, var54, var55, var56);
-            func_0204ea5c(arg0);
+        if (!wnd->unknown_d8_2_) {
+            short rx = 0;
+            short ry = 0;
+            short var55 = wnd->unknown_a8_ << 3;
+            short var56 = wnd->unknown_aa_ << 3;
+            ry += wnd->unknown_db_[0];
+            var56 -= wnd->unknown_db_[0] + wnd->unknown_db_[1];
+            rx += wnd->unknown_db_[2];
+            var55 -= wnd->unknown_db_[2] + wnd->unknown_db_[3];
+            func_0204f914(wnd, 0x11, rx, ry, var55, var56);
+            func_0204ea5c(wnd);
         }
-        var36 = 0x11;
+        mode = 0x11;
     }
 
-    if (arg2 > 0) {
-        short var57 = arg0->unknown_a8_ << 3;
-        short var58 = arg0->unknown_aa_ << 3;
-        func_0204cc68(arg0, 3, 0, 0, var57, var58);
-        func_0204cc68(arg0, var36, (int)arg2, (int)arg2, var57 - arg2, var58 - arg2);
-    } else if (!(arg0->unknown_c5_ & 0x10)) {
-        func_0204ecb4(arg0, 0, 0, arg0->unknown_a8_, arg0->unknown_aa_, arg0->unknown_db_);
+    if (border > 0) {
+        short w = wnd->unknown_a8_ << 3;
+        short h = wnd->unknown_aa_ << 3;
+        func_0204cc68(wnd, 3, 0, 0, w, h);
+        func_0204cc68(wnd, mode, (int)border, (int)border, w - border, h - border);
+    } else if (!(wnd->flags & 0x10)) {
+        func_0204ecb4(wnd, 0, 0, wnd->unknown_a8_, wnd->unknown_aa_, wnd->unknown_db_);
     }
 
-    var37 = 0xf0;
-    var38 = 0xf;
-    var39 = var37;
-    var40 = var38;
+    color = 0xf0;
+    colorIdx = 0xf;
+    var39 = color;
+    var40 = colorIdx;
 
-    while ((var51 = *var52) != 0) {
-        int var59 = var52[1];
-        if ((var51 == '\\' && var59 == 'n') || (var51 == '\r' && var59 == '\n')) {
-            var5 += var35;
-            var4 = arg0->unknown_b0_;
-            var52 += 2;
-            var6 += var9;
+    while ((ch = *cursor) != 0) {
+        int next = cursor[1];
+        if ((ch == '\\' && next == 'n') || (ch == '\r' && next == '\n')) {
+            y += lineH;
+            x = wnd->unknown_b0_;
+            cursor += 2;
+            dst += stride;
             continue;
         }
-        if (var51 == '\n') {
-            var5 += var35;
-            var4 = arg0->unknown_b0_;
-            var52 += 1;
-            var6 += var9;
+        if (ch == '\n') {
+            y += lineH;
+            x = wnd->unknown_b0_;
+            cursor += 1;
+            dst += stride;
             continue;
         }
-        if (var51 == '<') {
-            var41 = 1;
-            var0 = var52 + 1;
-            if (func_0204fc40(arg0, &var0, data_020f0248, var1, 1)) {
-                switch (var1[0]) {
+        if (ch == '<') {
+            handled = 1;
+            p = cursor + 1;
+            if (func_0204fc40(wnd, &p, data_020f0248, out, 1)) {
+                switch (out[0]) {
                 case 8:
                     var33 = 8;
-                    var35 = 9;
+                    lineH = 9;
                     break;
                 case 12:
                     var33 = 12;
-                    var35 = 13;
+                    lineH = 13;
                     break;
                 default:
                     var33 = 10;
-                    var35 = arg0->unknown_b6_;
+                    lineH = wnd->unknown_b6_;
                     break;
                 }
                 if (wnd->sizeTagLineHeight_ != 0) lineH = wnd->sizeTagLineHeight_;
@@ -293,100 +293,100 @@ extern "C" ARM void func_0204cd60(Struct_0204cd60* arg0, char* arg1, short arg2,
                     wnd->arrA[sel] = x;
                     wnd->arrB[sel] = y;
                 }
-                if (var3 >= 0 && var3 == var13) {
-                    var39 = var37;
-                    var40 = var38;
-                    var37 = 0xe0;
-                    var38 = 0xe;
-                } else if (var3 >= 0 && var3 == var28) {
-                    var39 = var37;
-                    var40 = var38;
-                    var37 = 0x50;
-                    var38 = 0x5;
+                if (sel >= 0 && sel == var13) {
+                    var39 = color;
+                    var40 = colorIdx;
+                    color = 0xe0;
+                    colorIdx = 0xe;
+                } else if (sel >= 0 && sel == var28) {
+                    var39 = color;
+                    var40 = colorIdx;
+                    color = 0x50;
+                    colorIdx = 0x5;
                 }
-            } else if (func_0204fc40(arg0, &var0, data_020f02a0, var1, 0)) {
-                if (var3 >= 0) {
-                    if (var3 == var13 || var3 == var28) {
-                        var37 = var39;
-                        var38 = var40;
+            } else if (func_0204fc40(wnd, &p, data_020f02a0, out, 0)) {
+                if (sel >= 0) {
+                    if (sel == var13 || sel == var28) {
+                        color = var39;
+                        colorIdx = var40;
                     }
                 }
-                if (var3 >= 0 && var3 < 18) {
-                    arg0->unknown_54_[var3] = var4 - arg0->unknown_c_[var3];
-                    arg0->unknown_78_[var3] = var33 + (var5 - arg0->unknown_30_[var3]) + 1;
-                    if (arg0->unknown_54_[var3] < 4) arg0->unknown_54_[var3] = 4;
+                if (sel >= 0 && sel < 18) {
+                    wnd->unknown_54_[sel] = x - wnd->arrA[sel];
+                    wnd->unknown_78_[sel] = var33 + (y - wnd->arrB[sel]) + 1;
+                    if (wnd->unknown_54_[sel] < 4) wnd->unknown_54_[sel] = 4;
                 }
-                if (var28 >= 0 && var3 == var28) {
-                    if (!(arg0->unknown_c5_ & 0x10) && (var24 >= 0 || var25 >= 0 || var26 >= 0 || var27 >= 0)) {
-                        arg0->unknown_c_[var3] -= var29 + arg0->unknown_c6_;
-                        arg0->unknown_30_[var3] -= var30;
-                        arg0->unknown_54_[var3] += var29 + var31;
-                        arg0->unknown_78_[var3] += var30 + var32;
+                if (var28 >= 0 && sel == var28) {
+                    if (!(wnd->flags & 0x10) && (var24 >= 0 || var25 >= 0 || var26 >= 0 || var27 >= 0)) {
+                        wnd->arrA[sel] -= var29 + wnd->unknown_c6_;
+                        wnd->arrB[sel] -= var30;
+                        wnd->unknown_54_[sel] += var29 + var31;
+                        wnd->unknown_78_[sel] += var30 + var32;
                     }
-                    arg0->unknown_c5_ |= 2;
+                    wnd->flags |= 2;
                 }
-                if (!(arg0->unknown_c5_ & 0x10) && var17 != 0) {
-                    arg0->unknown_54_[var3] = var18;
-                    var42 = arg0->unknown_c_[var3];
-                    var43 = arg0->unknown_54_[var3];
-                    var44 = arg0->unknown_30_[var3];
-                    var45 = arg0->unknown_78_[var3];
-                    var46 = var42 - var19;
-                    var47 = var21 + (var42 + var43);
-                    var48 = var44 - var20;
-                    var49 = var22 + (var44 + var45);
-                    func_0204cc68(arg0, 3, var46 + 1, var48, var47 - 1, var48 + 1);
-                    func_0204cc68(arg0, 3, var46 + 1, var49 - 1, var47 - 1, var49);
-                    func_0204cc68(arg0, 3, var46, var48 + 1, var46 + 1, var49 - 1);
-                    func_0204cc68(arg0, 3, var47 - 1, var48 + 1, var47, var49 - 1);
+                if (!(wnd->flags & 0x10) && var17 != 0) {
+                    wnd->unknown_54_[sel] = var18;
+                    ax = wnd->arrA[sel];
+                    var43 = wnd->unknown_54_[sel];
+                    ay = wnd->arrB[sel];
+                    var45 = wnd->unknown_78_[sel];
+                    var46 = ax - var19;
+                    x1 = var21 + (ax + var43);
+                    var48 = ay - var20;
+                    var49 = var22 + (ay + var45);
+                    func_0204cc68(wnd, 3, var46 + 1, var48, x1 - 1, var48 + 1);
+                    func_0204cc68(wnd, 3, var46 + 1, var49 - 1, x1 - 1, var49);
+                    func_0204cc68(wnd, 3, var46, var48 + 1, var46 + 1, var49 - 1);
+                    func_0204cc68(wnd, 3, x1 - 1, var48 + 1, x1, var49 - 1);
                 }
-                var3 = -1;
-            } else if (func_0204fc40(arg0, &var0, data_020f02a3, var1, 2)) {
-            } else if (func_0204fc40(arg0, &var0, data_020f02aa, var1, 5)) {
-                var28 = var1[0];
-                var29 = var1[1];
-                var30 = var1[2];
-                var31 = var1[3];
-                var32 = var1[4];
-            } else if (func_0204fc40(arg0, &var0, data_020f02b1, var1, 1)) {
-                var23 = var1[0];
-            } else if (func_0204fc40(arg0, &var0, data_020f02b9, var1, 3)) {
-                var24 = (signed char)var1[0];
-            } else if (func_0204fc40(arg0, &var0, data_020f02bd, var1, 3)) {
-                var25 = (signed char)var1[0];
-            } else if (func_0204fc40(arg0, &var0, data_020f02c1, var1, 3)) {
-                var26 = (signed char)var1[0];
-            } else if (func_0204fc40(arg0, &var0, data_020f02c5, var1, 3)) {
-                var27 = (signed char)var1[0];
-            } else if (func_0204fc40(arg0, &var0, data_020f02c9, var1, 5)) {
+                sel = -1;
+            } else if (func_0204fc40(wnd, &p, data_020f02a3, out, 2)) {
+            } else if (func_0204fc40(wnd, &p, data_020f02aa, out, 5)) {
+                var28 = out[0];
+                var29 = out[1];
+                var30 = out[2];
+                var31 = out[3];
+                var32 = out[4];
+            } else if (func_0204fc40(wnd, &p, data_020f02b1, out, 1)) {
+                var23 = out[0];
+            } else if (func_0204fc40(wnd, &p, data_020f02b9, out, 3)) {
+                var24 = (signed char)out[0];
+            } else if (func_0204fc40(wnd, &p, data_020f02bd, out, 3)) {
+                var25 = (signed char)out[0];
+            } else if (func_0204fc40(wnd, &p, data_020f02c1, out, 3)) {
+                var26 = (signed char)out[0];
+            } else if (func_0204fc40(wnd, &p, data_020f02c5, out, 3)) {
+                var27 = (signed char)out[0];
+            } else if (func_0204fc40(wnd, &p, data_020f02c9, out, 5)) {
                 var17 = 1;
-                var18 = var1[0];
-                var19 = var1[1];
-                var20 = var1[2];
-                var21 = var1[3];
-                var22 = var1[4];
+                var18 = out[0];
+                var19 = out[1];
+                var20 = out[2];
+                var21 = out[3];
+                var22 = out[4];
                 if (var18 == 0) var17 = 0;
-            } else if (func_0204fc40(arg0, &var0, data_020f02cf, var1, 2)) {
-                var15 = var1[0];
-                var16 = var1[1];
-            } else if (func_0204fc40(arg0, &var0, data_020f02d4, var1, 1)) {
+            } else if (func_0204fc40(wnd, &p, data_020f02cf, out, 2)) {
+                var15 = out[0];
+                var16 = out[1];
+            } else if (func_0204fc40(wnd, &p, data_020f02d4, out, 1)) {
                 var14 = 1;
-                func_0204f3bc(arg0, var1[0]);
-                var6 = var8 + arg0->unknown_b2_ * var7;
-                var5 = (var1[0] - 10) >> 1;
-            } else if (func_0204fc40(arg0, &var0, data_020f02db, var1, 0)) {
+                func_0204f3bc(wnd, out[0]);
+                dst = buf + wnd->unknown_b2_ * pitch;
+                y = (out[0] - 10) >> 1;
+            } else if (func_0204fc40(wnd, &p, data_020f02db, out, 0)) {
                 if (var14 != 0) {
-                    var5 = arg0->unknown_b2_;
-                    var4 = arg0->unknown_b0_;
-                    var6 = var8 + var5 * var7;
+                    y = wnd->unknown_b2_;
+                    x = wnd->unknown_b0_;
+                    dst = buf + y * pitch;
                     var14 = 0;
                 }
             } else if (func_0204fc40(wnd, &p, data_020f02e2, out, 1)) {
-                hilite = out[0];
+                var13 = out[0];
             } else if (func_0204fc40(wnd, &p, data_020f02e7, out, 1)) {
                 x = out[0];
                 prev = 0xff;
-                savedX = x;
+                var34 = x;
                 __clear(tmp, 0x100);
                 char* start = p;
                 char* end = strstr(start, data_020f02eb);
@@ -397,18 +397,18 @@ extern "C" ARM void func_0204cd60(Struct_0204cd60* arg0, char* arg1, short arg2,
                         x -= Font_GetTextWidth(tmp, font);
                     }
                 }
-            } else if (func_0204fc40(arg0, &var0, data_020f02f1, var1, 0)) {
-                var4 = var34;
-                var11 = 0xff;
+            } else if (func_0204fc40(wnd, &p, data_020f02f1, out, 0)) {
+                x = var34;
+                prev = 0xff;
             } else {
-                var41 = 0;
+                handled = 0;
             }
-            if (var41) {
-                var52 = var0;
+            if (handled) {
+                cursor = p;
                 continue;
             }
         }
-        adv = data_020e7bdc[font] + 1;
+        var50 = data_020e7bdc[font] + 1;
         int idx = Font_FindCharacterIndex((int)cursor, font);
         if (idx >= 0) {
             code = idx & 0xff;
@@ -416,36 +416,36 @@ extern "C" ARM void func_0204cd60(Struct_0204cd60* arg0, char* arg1, short arg2,
             x += Font_GetKerning(prev, code, font);
             func_0204df9c(wnd, glyph, x, y, colorIdx, font);
             prev = code;
-            adv = (unsigned char)(glyph->width + 1);
-            cursor += glyph->skip;
+            var50 = (unsigned char)(glyph->width + 1);
+            cursor += glyph->unknown_5_0_;
         } else {
             if (ch != ' ') {
                 func_0204df9c(wnd, Font_GetCharacter(0, font), x, y, colorIdx, font);
             }
-            var52++;
+            cursor++;
         }
-        var4 += var50;
+        x += var50;
     }
 
-    { int var64 = 0; if (var64) func_0204fae8((Struct_0204cd60*)var6); }
-    if (arg0->unknown_c5_ & 8) func_0204fae8(arg0);
-    if (!(arg0->unknown_c5_ & 0x10)) {
-        if (var28 >= 0) arg0->unknown_c5_ |= 2;
+    { int var64 = 0; if (var64) func_0204fae8((Struct_0204cd60*)dst); }
+    if (wnd->flags & 8) func_0204fae8(wnd);
+    if (!(wnd->flags & 0x10)) {
+        if (var28 >= 0) wnd->flags |= 2;
         if (var23 >= 0) {
-            short var65 = arg0->unknown_c_[var23] - 8;
-            short var66 = arg0->unknown_30_[var23] - 1;
-            arg0->unknown_bc_ = var65;
-            arg0->unknown_be_ = var66;
-            func_0204fa0c(arg0, var65, var66);
+            short cx = wnd->arrA[var23] - 8;
+            short var66 = wnd->arrB[var23] - 1;
+            wnd->unknown_bc_ = cx;
+            wnd->unknown_be_ = var66;
+            func_0204fa0c(wnd, cx, var66);
         }
     }
     if (var15 > 0 && var16 > 0) {
-        short var67 = var5 + var33;
-        short var68 = (short)(arg0->unknown_a8_ << 3) - (var16 * 2 + 2);
-        short var69 = var67 - var16;
-        short var70;
-        for (var70 = 0; var70 < var15; var70++) {
-            func_0204cc68(arg0, 0xf, var68, var69, var68 + var16, var69 + var16);
+        short base = y + var33;
+        short var68 = (short)(wnd->unknown_a8_ << 3) - (var16 * 2 + 2);
+        short by = base - var16;
+        short i;
+        for (i = 0; i < var15; i++) {
+            func_0204cc68(wnd, 0xf, var68, by, var68 + var16, by + var16);
             var68 -= var16 * 2;
         }
     }

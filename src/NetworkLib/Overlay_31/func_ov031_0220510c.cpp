@@ -7,10 +7,10 @@ extern "C" {
 }
 
 // USA: func_ov031_0220510c
-extern "C" ARM void* func_ov031_0220510c(int arg0) {
-    int var0;
-    if (func_020c7ea0(&data_ov031_0224e204, &var0, arg0) != 0) {
-        return (void*)var0;
+extern "C" ARM void* func_ov031_0220510c(int key) {
+    int local;
+    if (func_020c7ea0(&data_ov031_0224e204, &local, key) != 0) {
+        return (void*)local;
     }
     return NULL;
 }

@@ -1,29 +1,29 @@
 #include <globaldefs.h>
 
 struct Struct_0203f008_2 {
-    char unknown_0_[0x38];
-    int unknown_38_;
+    char unk[0x38];
+    int flag;
 };
 
 struct Struct_02040468 {
-    unsigned int unknown_0_;
-    int unknown_4_;
-    struct Struct_0203f008_2* unknown_8_;
+    unsigned int count;
+    int unk4;
+    struct Struct_0203f008_2* elements;
 };
 
 // USA: func_02040468
-extern "C" ARM struct Struct_0203f008_2* func_02040468(struct Struct_02040468* arg0, int arg1) {
-    struct Struct_0203f008_2* var0 = arg0->unknown_8_;
-    struct Struct_0203f008_2* var1;
-    if (var0 == 0) {
+extern "C" ARM struct Struct_0203f008_2* func_02040468(struct Struct_02040468* list, int index) {
+    struct Struct_0203f008_2* elements = list->elements;
+    struct Struct_0203f008_2* element;
+    if (elements == 0) {
         return 0;
     }
-    if (arg1 < 0 || arg0->unknown_0_ <= (unsigned int)arg1) {
+    if (index < 0 || list->count <= (unsigned int)index) {
         return 0;
     }
-    var1 = &var0[arg1];
-    if (var1->unknown_38_ < 0) {
-        var1 = 0;
+    element = &elements[index];
+    if (element->flag < 0) {
+        element = 0;
     }
-    return var1;
+    return element;
 }

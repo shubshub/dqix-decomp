@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 struct Struct_02094654_2 {
-    unsigned int unknown_0_;
+    unsigned int attributes01;
     unsigned short unknown_4_;
-    short unknown_6_;
+    short affineParameter;
 };
 
 enum {
@@ -13,21 +13,21 @@ enum {
 };
 
 // USA: func_020946f8
-extern "C" ARM void func_020946f8(Struct_02094654_2* arg0, int arg1, int arg2, int arg3,
-                            int arg4, int arg5, int arg6, int arg7, int arg8,
-                            int arg9, int arg10, int arg11) {
-    if (arg6 == Enum_020946f8_256 || arg6 == Enum_020946f8_768) {
-        if (arg4 == Enum_020946f8_3) {
-            arg0->unknown_0_ = (arg2 & 0xff) | (arg11 << 25) | (arg4 << 10) | (arg5 << 12) | arg7 | ((arg1 & 0x1ff) << 16) | arg6;
+extern "C" ARM void func_020946f8(Struct_02094654_2* sprite, int x, int y, int priority,
+                            int mode, int arg5, int effect, int shape, int colorMode,
+                            int characterIndex, int arg10, int affineIndex) {
+    if (effect == Enum_020946f8_256 || effect == Enum_020946f8_768) {
+        if (mode == Enum_020946f8_3) {
+            sprite->attributes01 = (y & 0xff) | (affineIndex << 25) | (mode << 10) | (arg5 << 12) | shape | ((x & 0x1ff) << 16) | effect;
         } else {
-            arg0->unknown_0_ = (arg2 & 0xff) | ((arg11 << 25) | (arg8 << 13)) | (arg4 << 10) | (arg5 << 12) | arg7 | ((arg1 & 0x1ff) << 16) | arg6;
+            sprite->attributes01 = (y & 0xff) | ((affineIndex << 25) | (colorMode << 13)) | (mode << 10) | (arg5 << 12) | shape | ((x & 0x1ff) << 16) | effect;
         }
     } else {
-        if (arg4 == Enum_020946f8_3) {
-            arg0->unknown_0_ = (arg2 & 0xff) | (arg4 << 10) | (arg5 << 12) | arg7 | ((arg1 & 0x1ff) << 16) | arg6;
+        if (mode == Enum_020946f8_3) {
+            sprite->attributes01 = (y & 0xff) | (mode << 10) | (arg5 << 12) | shape | ((x & 0x1ff) << 16) | effect;
         } else {
-            arg0->unknown_0_ = (arg2 & 0xff) | (arg8 << 13) | (arg4 << 10) | (arg5 << 12) | arg7 | ((arg1 & 0x1ff) << 16) | arg6;
+            sprite->attributes01 = (y & 0xff) | (colorMode << 13) | (mode << 10) | (arg5 << 12) | shape | ((x & 0x1ff) << 16) | effect;
         }
     }
-    arg0->unknown_4_ = arg9 | (arg3 << 10) | (arg10 << 12);
+    sprite->unknown_4_ = characterIndex | (priority << 10) | (arg10 << 12);
 }

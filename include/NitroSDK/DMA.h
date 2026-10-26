@@ -7,10 +7,10 @@ struct DMARegisterSet
     unsigned int sourceAddr;
     unsigned int destAddr;
     union {
-        unsigned int unknown_0_;
+        unsigned int u32;
         struct {
             unsigned short unknown1_0_;
-            unsigned short unknown_2_;
+            unsigned short control;
         };
     } controlAndSize;
 };

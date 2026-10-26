@@ -18,43 +18,43 @@
 #include <Combat/Main/BattleList.h>
 #include <Resource/GameResources.h>
 
-struct Struct_02052e14;
+struct Field150Holder02052e14;
 
-struct Struct_ov005_02153ba4_2 {
-    char unknown_0_[R(0x4f8, 0x4fc)];
-    int unknown_4fc_;
+struct MemberScreen {
+    char unk_0[R(0x4f8, 0x4fc)];
+    int member_;
 };
 
 struct Struct_ov005_02153ba4 {
-    short unknown_0_;
-    signed char unknown_2_;
+    short item_;
+    signed char count_;
     unsigned char unknown_3_;
-    void* unknown_4_;
-    void* unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
+    void* vramState_;
+    void* model_;
+    int x_;
+    int y_;
     int unknown_14_;
     short unknown_18_;
 };
 
-struct Struct_ov005_02153954 {
-    char unknown_0_[R(0x2d08, 0x2d90)];
-    Struct_ov005_02153ba4 unknown_2d90_[24];
+struct EquipmentMenu {
+    char unk_0[R(0x2d08, 0x2d90)];
+    Struct_ov005_02153ba4 slots_[24];
 };
 
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
-extern "C" short* func_02052e14(Struct_02052e14* arg0);
+extern "C" MemberScreen* func_ov017_021a193c(int* p);
+extern "C" short* func_02052e14(Field150Holder02052e14* obj);
 
 extern "C" unsigned char data_ov005_0215cbd4[8];
 
 // USA: func_ov005_02155544
 extern "C" ARM void func_ov005_02155544(EquipmentMenu* self) {
     GameState* gameState = GameState::GetInstance();
-    MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
-    GameObject* member = GetCombatantWithFlag0x100_0200ff1c(gameState, screen->member_);
-    short* equipment = GetField150Ptr0x488((Field150Holder02052e14*)member);
+    MemberScreen* screen = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+    GameObject* member = func_0200ff1c(gameState, screen->member_);
+    short* equipment = func_02052e14((Field150Holder02052e14*)member);
     for (int i = 0; i < 8; i++) {
-        EquipmentSlot* slot = &self->slots_[i];
+        Struct_ov005_02153ba4* slot = &self->slots_[i];
         slot->item_ = equipment[data_ov005_0215cbd4[i]];
         slot->count_ = 1;
     }

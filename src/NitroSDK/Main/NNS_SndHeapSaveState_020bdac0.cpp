@@ -9,7 +9,7 @@ struct Obj020bdac0 {
 };
 
 // Main, originally SaveStateAndAllocateChild020bdac0 (USA 0x020bdac0, EUR 0x020bdad0, JPN 0x020bf58c)
-ARM int NNS_SndHeapSaveState(struct Obj020bdac0* obj) {
+extern "C" ARM int NNS_SndHeapSaveState(struct Obj020bdac0* obj) {
     if (!obj->allocator->SaveCurrentState(obj->list.numElements)) return -1;
     if (func_020bdc24(obj)) return obj->list.numElements - 1;
     obj->allocator->RestoreState(0);

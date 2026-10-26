@@ -2,98 +2,98 @@
 #include "GameState/GameState.h"
 
 extern "C" void* func_ov017_021b8478(void* obj);
-void* GetField6b0_021b8470(void* obj);
-int GameState_GetProtagonistIndex(GameState* battleStruct);
+extern "C" void* func_ov017_021b8470(void* obj);
+extern "C" int GameState_GetProtagonistIndex(GameState* battleStruct);
 
 struct Struct_ov017_021c6534 {
-    unsigned char unknown_0_0_ : 4;
-    unsigned char unknown_0_4_ : 4;
+    unsigned char lo : 4;
+    unsigned char hi : 4;
 };
 
 struct Struct_ov017_021c6534_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_[3];
+    unsigned short key;
+    unsigned short ids[3];
     unsigned char unknown_8_[3];
-    Struct_ov017_021c6534 unknown_b_[3];
-    unsigned char unknown_e_;
+    Struct_ov017_021c6534 nibbles[3];
+    unsigned char mode;
 };
 
 struct Struct_ov017_021c6534_3 {
-    unsigned char unknown_0_[4];
-    Struct_ov017_021c6534_2 unknown_4_;
+    unsigned char pad0[4];
+    Struct_ov017_021c6534_2 data;
 };
 
 struct Struct_ov017_021c6534_4 {
-    unsigned char unknown_0_[8];
-    unsigned short unknown_8_;
+    unsigned char pad0[8];
+    unsigned short key;
     unsigned char unknown_a_[0x2a - 0x0a];
-    signed char unknown_2a_;
+    signed char field_0x2a;
 };
 
 struct Struct_ov017_021c6534_5 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_[0xa - 0x2];
-    unsigned char unknown_a_0_ : 4;
-    unsigned char unknown_a_4_ : 4;
-    unsigned char unknown_b_;
+    unsigned short id;
+    unsigned char pad2[0xa - 0x2];
+    unsigned char lo : 4;
+    unsigned char hi : 4;
+    unsigned char val;
     unsigned char unknown_c_[0x18 - 0x0c];
 };
 
 struct Struct_ov017_021c6534_6 {
     unsigned char unknown_0_;
     unsigned char unknown_1_0_ : 4;
-    unsigned char unknown_1_4_ : 2;
-    unsigned char unknown_1_6_ : 2;
-    unsigned char unknown_2_[2];
-    Struct_ov017_021c6534_5 unknown_4_[3];
+    unsigned char count : 2;
+    unsigned char mode : 2;
+    unsigned char pad2[2];
+    Struct_ov017_021c6534_5 slots[3];
 };
 
 // USA: func_ov017_021c6534
-extern "C" ARM void func_ov017_021c6534(int arg0, Struct_ov017_021c6534_3* arg1, GameState* arg2, char* arg3) {
+extern "C" ARM void func_ov017_021c6534(int unused0, Struct_ov017_021c6534_3* evt, GameState* battleStruct, char* base) {
 #if defined(jpn)
- enum { Enum_ov017_021c6534_1816 = 0x508 };
+ enum { regionalOffset = 0x508 };
 #else
- enum { Enum_ov017_021c6534_1816 = 0x718 };
+ enum { regionalOffset = 0x718 };
 #endif
-    void* var0 = *(void**)(arg3 + 0x3000 + Enum_ov017_021c6534_1816);
+    void* table = *(void**)(base + 0x3000 + regionalOffset);
 
-    Struct_ov017_021c6534_4* var1 = (Struct_ov017_021c6534_4*)func_ov017_021b8478(var0);
-    if (!var1) return;
+    Struct_ov017_021c6534_4* fieldObj = (Struct_ov017_021c6534_4*)func_ov017_021b8478(table);
+    if (!fieldObj) return;
 
-    void* var2 = func_ov017_021b8470(var0);
-    if (!var2) return;
+    void* state = func_ov017_021b8470(table);
+    if (!state) return;
 
     if (fieldObj->field_0x2a == GameState_GetProtagonistIndex(battleStruct)) return;
-    EvtData021c6534* data = &evt->data;
+    Struct_ov017_021c6534_2* data = &evt->data;
     if (fieldObj->key != data->key) return;
 
-    Struct_ov017_021c6534_6* var4 = (Struct_ov017_021c6534_6*)((char*)var2 + 0x1b0 + 0x8000);
-    unsigned char var5[3];
-    unsigned char var6[3];
-    var5[0] = var3->unknown_b_[0].unknown_0_0_;
-    var5[1] = var3->unknown_b_[1].unknown_0_0_;
-    var5[2] = var3->unknown_b_[2].unknown_0_0_;
-    var6[0] = var3->unknown_b_[0].unknown_0_4_;
-    var6[1] = var3->unknown_b_[1].unknown_0_4_;
-    var6[2] = var3->unknown_b_[2].unknown_0_4_;
+    Struct_ov017_021c6534_6* party = (Struct_ov017_021c6534_6*)((char*)state + 0x1b0 + 0x8000);
+    unsigned char lo[3];
+    unsigned char hi[3];
+    lo[0] = data->nibbles[0].lo;
+    lo[1] = data->nibbles[1].lo;
+    lo[2] = data->nibbles[2].lo;
+    hi[0] = data->nibbles[0].hi;
+    hi[1] = data->nibbles[1].hi;
+    hi[2] = data->nibbles[2].hi;
 
-    int var7 = 0;
+    int count = 0;
     int var8 = 0;
     int var9 = 0;
-    for (int var10 = 0; var10 < 3; var10++) {
-        Struct_ov017_021c6534_5* var11 = &var4->unknown_4_[var10];
-        var11->unknown_0_ = var3->unknown_2_[var10];
-        var11->unknown_b_ = var3->unknown_8_[var10];
-        var11->unknown_a_0_ = var5[var10];
-        var11->unknown_a_4_ = var6[var10];
-        if (var11->unknown_0_ != 0) {
-            var7++;
-            var8 += var11->unknown_a_0_;
-            var9 += var11->unknown_a_4_;
+    for (int i = 0; i < 3; i++) {
+        Struct_ov017_021c6534_5* slot = &party->slots[i];
+        slot->id = data->ids[i];
+        slot->val = data->unknown_8_[i];
+        slot->lo = lo[i];
+        slot->hi = hi[i];
+        if (slot->id != 0) {
+            count++;
+            var8 += slot->lo;
+            var9 += slot->hi;
         }
     }
-    var4->unknown_1_4_ = var7;
-    var4->unknown_1_6_ = var3->unknown_e_;
-    var4->unknown_0_ = var8;
-    var4->unknown_1_0_ = var9;
+    party->count = count;
+    party->mode = data->mode;
+    party->unknown_0_ = var8;
+    party->unknown_1_0_ = var9;
 }

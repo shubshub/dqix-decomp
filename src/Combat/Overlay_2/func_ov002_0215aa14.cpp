@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void func_0203970c(void* arg0, int arg1, int arg2);
+extern "C" void func_0203970c(void* unused, int index, int value);
 
 #if defined(jpn)
 #define SUB_BASE_0215aa14 0x1b00
-struct Struct_ov002_0215aa14 { char unknown_0_[0x40]; signed char unknown_7c_; };
+struct Struct_ov002_0215aa14 { char pad[0x40]; signed char val; };
 #else
 #define SUB_BASE_0215aa14 0x1c00
-struct Struct_ov002_0215aa14 { char unknown_0_[0x7c]; signed char unknown_7c_; };
+struct Struct_ov002_0215aa14 { char pad[0x7c]; signed char val; };
 #endif
 
 // USA: func_ov002_0215aa14
-extern "C" ARM void func_ov002_0215aa14(char* arg0) {
-    GameObject* var0 = GameState::GetInstance()->GetProtagonist();
-    if (!var0) return;
-    for (int var1 = 0; var1 < 7; var1++) {
-        struct Struct_ov002_0215aa14* var2 = (struct Struct_ov002_0215aa14*)(arg0 + var1 + SUB_BASE_0215aa14);
-        func_0203970c(var0, var1, var2->unknown_7c_);
+extern "C" ARM void func_ov002_0215aa14(char* base) {
+    GameObject* combatant = GameState::GetInstance()->GetProtagonist();
+    if (!combatant) return;
+    for (int i = 0; i < 7; i++) {
+        struct Struct_ov002_0215aa14* sub = (struct Struct_ov002_0215aa14*)(base + i + SUB_BASE_0215aa14);
+        func_0203970c(combatant, i, sub->val);
     }
 }

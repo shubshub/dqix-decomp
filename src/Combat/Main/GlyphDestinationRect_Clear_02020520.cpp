@@ -10,7 +10,7 @@ struct Struct02020520 {
 };
 
 // Main, originally ClearStruct02020520 (USA 0x02020520, EUR 0x02020530, JPN 0x0202016c)
-ARM void GlyphDestinationRect_Clear(struct Struct02020520* cell) {
+extern "C" ARM void GlyphDestinationRect_Clear(struct Struct02020520* cell) {
     cell->offset = 0;
     cell->x = 0;
     cell->y = 0;

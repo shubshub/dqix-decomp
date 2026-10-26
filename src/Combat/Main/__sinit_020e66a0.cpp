@@ -3,12 +3,12 @@
 
 #pragma define_section initcode ".init" RX
 
-extern "C" KeyManager* _ZN10KeyManagerC1Ev(KeyManager* arg0);
-extern "C" KeyManager* _ZN10KeyManagerD1Ev(KeyManager* arg0);
-extern "C" TouchInput* _ZN10TouchInputC1Ev(TouchInput* arg0);
-extern "C" TouchInput* _ZN10TouchInputD1Ev(TouchInput* arg0);
-extern "C" void func_02046724(int* arg0);
-extern "C" void __register_global_object(void* arg0, void* arg1, void* arg2);
+extern "C" KeyManager* _ZN10KeyManagerC1Ev(KeyManager* self);
+extern "C" KeyManager* _ZN10KeyManagerD1Ev(KeyManager* self);
+extern "C" TouchInput* _ZN10TouchInputC1Ev(TouchInput* self);
+extern "C" TouchInput* _ZN10TouchInputD1Ev(TouchInput* self);
+extern "C" void func_02046724(int* field);
+extern "C" void __register_global_object(void* obj, void* dtor, void* node);
 
 extern int data_02114e04;
 extern int data_02114e08;

@@ -16,13 +16,13 @@ extern "C" void func_020dc2bc();
 extern "C" ARM void func_ov008_0218599c(void* obj) {
     int* word = (int*)GameState::GetInstance()->GetResources();
     BackgroundLoader::GetInstance();
-    unsigned char var1 = *((unsigned char*)arg0 + 0xb11);
-    if (var1 == 0) {
-        if (IsBrightnessTransitionActive((GameResources*)var0) == 0) {
-            *((unsigned char*)arg0 + 0xb11) = *((unsigned char*)arg0 + 0xb11) + 1;
+    unsigned char flag = *((unsigned char*)obj + 0xb11);
+    if (flag == 0) {
+        if (IsBrightnessTransitionActive((GameResources*)word) == 0) {
+            *((unsigned char*)obj + 0xb11) = *((unsigned char*)obj + 0xb11) + 1;
         }
     }
-    if (var1 != 1) {
+    if (flag != 1) {
         return;
     }
     func_020dc2bc();
@@ -35,6 +35,6 @@ extern "C" ARM void func_ov008_0218599c(void* obj) {
     REG_BG3CNT_SUB = (REG_BG3CNT_SUB & ~3);
     REG_DISPCNT_SUB = (REG_DISPCNT_SUB & ~0x1f00) | 0x1300;
 
-    *((unsigned char*)arg0 + 0xb10) = 0;
-    *((unsigned char*)arg0 + 0xb11) = 0;
+    *((unsigned char*)obj + 0xb10) = 0;
+    *((unsigned char*)obj + 0xb11) = 0;
 }

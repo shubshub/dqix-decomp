@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
-struct Struct_020bc180_2 { int unknown_0_; int unknown_4_; int unknown_8_; int unknown_c_; };
+struct Struct_020bc180_2 { int f0; int f4; int f8; int fc; };
 
 // USA: func_020c022c
-extern "C" ARM int func_020c022c(struct Struct_020bc180_2* arg0) {
-    if (arg0->unknown_8_ >= arg0->unknown_c_) {
-        return arg0->unknown_4_;
+extern "C" ARM int func_020c022c(struct Struct_020bc180_2* t) {
+    if (t->f8 >= t->fc) {
+        return t->f4;
     }
-    return arg0->unknown_0_ + arg0->unknown_8_ * (arg0->unknown_4_ - arg0->unknown_0_) / arg0->unknown_c_;
+    return t->f0 + t->f8 * (t->f4 - t->f0) / t->fc;
 }

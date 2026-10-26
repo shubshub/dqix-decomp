@@ -11,7 +11,7 @@
 #include "GameState/GameState.h"
 
 struct ByteHeader0204693c;
-extern void ResetByteHeader(ByteHeader0204693c* p);
+extern "C" void func_0204693c(ByteHeader0204693c* p);
 
 struct Struct021a9bc4 {
 	unsigned char byte0;
@@ -23,7 +23,7 @@ struct Struct021a9bc4 {
 
 // Overlay 17, originally func_ov017_021a9bc4 (USA/EUR 0x021a9bc4, JPN 0x021aa408)
 extern "C" ARM void FieldTask_InitAcquireTreasureMap(Struct021a9bc4* self, unsigned char value) {
-	ResetByteHeader((ByteHeader0204693c*)self);
+	func_0204693c((ByteHeader0204693c*)self);
 	self->byte0 = 0x3b;
 	self->byte8 = 0;
 	self->byte26c = 0;

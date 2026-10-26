@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Struct_0206f81c_3 {
-	unsigned char unknown_0_[0x38];
+	unsigned char pad[0x38];
 	union {
 		unsigned int unknown1_38_;
 		struct {
@@ -9,12 +9,12 @@ struct Struct_0206f81c_3 {
 			unsigned int unknown_0_3_ : 1;
 			unsigned int unknown_0_4_ : 1;
 			unsigned int unknown_0_5_ : 1;
-			unsigned int unknown_0_6_ : 26;
-		} unknown_38_;
+			unsigned int rest : 26;
+		} bits;
 	};
 };
 
 // USA: func_ov017_021b2bf4
-extern "C" ARM void func_ov017_021b2bf4(Struct_0206f81c_3* arg0, unsigned int arg1) {
-	arg0->unknown_38_.unknown_0_4_ = arg1;
+extern "C" ARM void func_ov017_021b2bf4(Struct_0206f81c_3* obj, unsigned int v) {
+	obj->bits.unknown_0_4_ = v;
 }

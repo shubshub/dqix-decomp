@@ -20,16 +20,16 @@
 
 struct Struct_ov015_02193d38
 {
-    unsigned short unknown_0_[8];
+    unsigned short colors_[8];
 };
 
-void G3X_Reset();
+extern "C" void G3X_Reset();
 extern "C" void G3X_ResetMtxStack();
-int G3X_SetEdgeColorTable(int a);
+extern "C" int G3X_SetEdgeColorTable(int a);
 extern "C" void Camera_Update(void* camera);
-void G3i_LookAt_(int a, int b, int c, int d, void* e);
-void G3i_OrthoW_(int a, int b, int c, int d, int e, int f, int g, int h, void* i);
-void WriteControlAndToggle020d86d0(int a, int b);
+extern "C" void G3i_LookAt_(int a, int b, int c, int d, void* e);
+extern "C" void G3i_OrthoW_(int a, int b, int c, int d, int e, int f, int g, int h, void* i);
+extern "C" void func_020d86d0(int a, int b);
 extern "C" void func_ov015_02190348(void* self);
 extern "C" void func_ov015_02190428(void* self);
 extern "C" void func_ov015_0219050c(void* self);
@@ -39,10 +39,10 @@ extern const Vector3fix data_ov015_02193d14;
 extern const Vector3fix data_ov015_02193d2c;
 
 // USA: func_ov015_021901c8
-extern "C" ARM void func_ov015_021901c8(void* arg0)
+extern "C" ARM void func_ov015_021901c8(void* self)
 {
-    GameState* var0 = GameState::GetInstance();
-    if (var0 == NULL)
+    GameState* gameState = GameState::GetInstance();
+    if (gameState == NULL)
         return;
     G3X_Reset();
     G3X_ResetMtxStack();
@@ -51,7 +51,7 @@ extern "C" ARM void func_ov015_021901c8(void* arg0)
     DISP3DCNT = (DISP3DCNT & ~0x3000) | 0x10;
     DISP3DCNT = (DISP3DCNT & ~0x3000) | 0x20;
     {
-        EdgeColors colors = data_ov015_02193d38;
+        Struct_ov015_02193d38 colors = data_ov015_02193d38;
         G3X_SetEdgeColorTable((int)colors.colors_);
     }
     void* camera = gameState->GetCamera();
@@ -71,8 +71,8 @@ extern "C" ARM void func_ov015_021901c8(void* arg0)
     }
     G3i_OrthoW_(0, 0xc0000, 0, 0x100000, -0x400000, 0x400000, 0x400000, 1, NULL);
     GXFIFO_MATRIX_MODE = 2;
-    func_ov015_02190428(arg0);
-    func_ov015_0219050c(arg0);
+    func_ov015_02190428(self);
+    func_ov015_0219050c(self);
     func_020d86d0(1, 0);
-    UpdateAndApplyBrightness((GameResources*)arg0);
+    UpdateAndApplyBrightness((GameResources*)self);
 }

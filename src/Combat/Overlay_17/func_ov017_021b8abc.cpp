@@ -4,22 +4,22 @@
 
 struct Struct_ov017_021b7284 {
     short unknown_0_[3];
-    unsigned char unknown_6_[2];
-    unsigned char unknown_8_[3];
+    unsigned char pad[2];
+    unsigned char bytes[3];
 };
 
 // USA: func_ov017_021b8abc
-extern "C" ARM int func_ov017_021b8abc(int arg0, Struct_ov017_021b7284* arg1) {
-    Struct_02074060 var0;
-    if (arg0 <= -1) {
+extern "C" ARM int func_ov017_021b8abc(int id, Struct_ov017_021b7284* out) {
+    Struct_02074060 buf;
+    if (id <= -1) {
         goto fail;
     }
-    if (!func_02074114(&var0, arg0)) {
+    if (!func_02074114(&buf, id)) {
         goto fail;
     }
-    for (int var1 = 0; var1 < 3; var1++) {
-        arg1->unknown_0_[var1] = var0.unknown_2_[var1];
-        arg1->unknown_8_[var1] = (unsigned char)var0.unknown_8_[var1];
+    for (int i = 0; i < 3; i++) {
+        out->unknown_0_[i] = buf.values[i];
+        out->bytes[i] = (unsigned char)buf.attributes[i];
     }
     return 1;
 fail:

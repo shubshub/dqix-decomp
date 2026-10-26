@@ -2,30 +2,30 @@
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 
-extern "C" unsigned char func_02039d7c(char* arg0);
+extern "C" unsigned char GameObject_IsClimbingLadder(char* obj);
 
 // USA: func_0208ae00
-extern "C" ARM int func_0208ae00(char* arg0, int arg1) {
-    unsigned int* var0 = ((unsigned int*)GetGameResources());
-    GameState* var1 = GameState::GetInstance();
-    GameObject* var2 = func_0200ff1c(var1, arg1);
-    GameObject* var3 = func_0200ff1c(var1, arg1);
-    if (var2 == NULL || (**(int**)((char*)var2 + 0x130) & 1)) {
+extern "C" ARM int func_0208ae00(char* obj, int combatantId) {
+    unsigned int* v5 = ((unsigned int*)GetGameResources());
+    GameState* battle = GameState::GetInstance();
+    GameObject* c1 = func_0200ff1c(battle, combatantId);
+    GameObject* c2 = func_0200ff1c(battle, combatantId);
+    if (c1 == NULL || (**(int**)((char*)c1 + 0x130) & 1)) {
         return 0;
     }
-    int* var4 = *(int**)((char*)var3 + 0x130);
-    if (!(*var4 & 2)) {
+    int* p2 = *(int**)((char*)c2 + 0x130);
+    if (!(*p2 & 2)) {
         return 0;
     }
-    if (TestFlags04((GameResources*)var0, 0x10) != 0) {
+    if (TestFlags04((GameResources*)v5, 0x10) != 0) {
         return 0;
     }
-    if (*(int*)(arg0 + 0x1c) != 0) {
+    if (*(int*)(obj + 0x1c) != 0) {
         return 0;
     }
-    GameObject* var5 = var1->GetUnknownGameObject();
-    if (*(short*)((char*)var5 + 0xb2) == 0) {
+    GameObject* c3 = battle->GetLeader();
+    if (*(short*)((char*)c3 + 0xb2) == 0) {
         return 0;
     }
-    return func_02039d7c((char*)var5) == 0 ? 1 : 0;
+    return GameObject_IsClimbingLadder((char*)c3) == 0 ? 1 : 0;
 }

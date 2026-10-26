@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
-extern "C" int func_020d424c(int arg0, int arg1, int arg2);
-extern "C" int func_020d40bc(int arg0, int arg1, const void* arg2, unsigned int arg3,
-                             unsigned short arg4, unsigned short arg5, unsigned short arg6,
-                             int arg7, int arg8);
+extern "C" int func_020d424c(int a, int b, int c);
+extern "C" int func_020d40bc(int a, int b, const void* buf, unsigned int size,
+                             unsigned short e0, unsigned short e1, unsigned short e2,
+                             int f, int g);
 extern "C" void* func_020d41d8(void);
 extern "C" void InvalidateDataCacheRange(const void* addr, unsigned int size);
 void CleanCacheRange(const void* addr, unsigned int size);
 
 struct Struct_020d59bc {
-    char unknown_0_[0x7c];
-    const void* unknown_7c_;
+    char pad0[0x7c];
+    const void* field7c;
     char unknown_80_[6];
     unsigned short unknown_86_;
     char unknown_88_[0xfa];
@@ -20,45 +20,45 @@ struct Struct_020d59bc {
 };
 
 struct Struct_020d59bc_2 {
-    char unknown_0_[4];
-    struct Struct_020d59bc* unknown_4_;
+    char pad0[4];
+    struct Struct_020d59bc* field4;
 };
 
 // USA: func_020d59bc
-extern "C" ARM int func_020d59bc(int arg0, int arg1, const void* arg2, unsigned int arg3,
-                                 unsigned short arg4, unsigned short arg5, unsigned short arg6) {
-    int var0 = 1;
-    struct Struct_020d59bc* var1 = ((struct Struct_020d59bc_2*)func_020d41d8())->unknown_4_;
-    int var2 = func_020d424c(2, 9, 0xa);
-    if (var2 != 0) {
-        return var2;
+extern "C" ARM int func_020d59bc(int a, int b, const void* buf, unsigned int size,
+                                 unsigned short e0, unsigned short e1, unsigned short e2) {
+    int count = 1;
+    struct Struct_020d59bc* var1 = ((struct Struct_020d59bc_2*)func_020d41d8())->field4;
+    int r = func_020d424c(2, 9, 0xa);
+    if (r != 0) {
+        return r;
     }
     InvalidateDataCacheRange(&var1->unknown_188_, 2);
     if (var1->unknown_188_ == 0) {
         InvalidateDataCacheRange(&var1->unknown_182_, 2);
-        var0 = var1->unknown_182_;
+        count = var1->unknown_182_;
         InvalidateDataCacheRange(&var1->unknown_86_, 2);
     }
-    if (arg2 == 0) {
+    if (buf == 0) {
         return 6;
     }
-    if (var0 == 0) {
+    if (count == 0) {
         return 7;
     }
-    InvalidateDataCacheRange(&var1->unknown_7c_, 2);
-    if (arg2 == var1->unknown_7c_) {
+    InvalidateDataCacheRange(&var1->field7c, 2);
+    if (buf == var1->field7c) {
         return 6;
     }
-    if (arg3 > 0x200) {
+    if (size > 0x200) {
         return 6;
     }
-    if (arg3 == 0) {
+    if (size == 0) {
         return 6;
     }
-    CleanCacheRange(arg2, arg3);
-    var2 = func_020d40bc(0xf, 7, arg2, arg3, arg4, arg5, arg6, arg0, arg1);
-    if (var2 == 0) {
-        var2 = 2;
+    CleanCacheRange(buf, size);
+    r = func_020d40bc(0xf, 7, buf, size, e0, e1, e2, a, b);
+    if (r == 0) {
+        r = 2;
     }
-    return var2;
+    return r;
 }

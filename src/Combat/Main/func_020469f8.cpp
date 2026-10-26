@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
-struct Struct_020469f8_2 {
-    char unknown_0_[2];
-    unsigned char unknown_2_;
+struct HeadNode020469f8 {
+    char unk0[2];
+    unsigned char inList;
     unsigned char unknown_3_;
-    struct Struct_020469f8_2* unknown_4_;
+    struct HeadNode020469f8* next;
 };
 
-struct Struct_020469f8 {
-    struct Struct_020469f8_2* unknown_0_;
-    struct Struct_020469f8_2* unknown_4_;
+struct HeadList020469f8 {
+    struct HeadNode020469f8* head;
+    struct HeadNode020469f8* tail;
 };
 
 // USA: func_020469f8
-extern "C" ARM void func_020469f8(struct Struct_020469f8* arg0, struct Struct_020469f8_2* arg1) {
-    if (arg0->unknown_0_ != NULL && arg0->unknown_4_ != NULL) {
-        arg0->unknown_0_->unknown_3_ = 0;
-        arg1->unknown_4_ = arg0->unknown_0_;
-        arg0->unknown_0_ = arg1;
+extern "C" ARM void func_020469f8(struct HeadList020469f8* list, struct HeadNode020469f8* node) {
+    if (list->head != NULL && list->tail != NULL) {
+        list->head->unknown_3_ = 0;
+        node->next = list->head;
+        list->head = node;
     } else {
-        arg0->unknown_0_ = arg1;
-        arg0->unknown_4_ = arg1;
-        arg1->unknown_4_ = NULL;
+        list->head = node;
+        list->tail = node;
+        node->next = NULL;
     }
-    arg1->unknown_2_ = 1;
+    node->inList = 1;
 }

@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
-extern "C" void func_02087efc(unsigned char* arg0);
-extern "C" void func_02088c38(unsigned char* arg0);
-extern "C" void func_02088c9c(unsigned char* arg0);
+extern "C" void func_02087efc(unsigned char* p);
+extern "C" void func_02088c38(unsigned char* p);
+extern "C" void func_02088c9c(unsigned char* p);
 
 struct Struct_02087e6c {
-    char unknown_0_[0x14];
-    int unknown_14_;
-    char unknown_18_[0x58 - 0x18];
+    char pad0[0x14];
+    int field14;
+    char pad18[0x58 - 0x18];
     int unknown_58_0_ : 21;
     int unknown_5a_5_ : 3;
     char unknown_5b_[0x75 - 0x5c];
@@ -17,26 +17,26 @@ struct Struct_02087e6c {
 };
 
 // USA: func_02087e6c
-extern "C" ARM int func_02087e6c(struct Struct_02087e6c* arg0, int arg1) {
-    int var0 = arg1 + arg0->unknown_5a_5_;
+extern "C" ARM int func_02087e6c(struct Struct_02087e6c* obj, int delta) {
+    int val = delta + obj->unknown_5a_5_;
 
-    if (var0 > 2) {
-        var0 = 2;
+    if (val > 2) {
+        val = 2;
     }
-    if (var0 < -2) {
-        var0 = -2;
+    if (val < -2) {
+        val = -2;
     }
 
-    if (var0 == 0) {
-        func_02087efc((unsigned char*)arg0);
+    if (val == 0) {
+        func_02087efc((unsigned char*)obj);
         return 0;
     }
 
-    arg0->unknown_5a_5_ = var0;
-    arg0->unknown_74_ = 5;
-    arg0->unknown_97_ = 0;
-    arg0->unknown_14_ |= 0x20000;
-    func_02088c38((unsigned char*)arg0);
-    func_02088c9c((unsigned char*)arg0);
-    return arg0->unknown_5a_5_;
+    obj->unknown_5a_5_ = val;
+    obj->unknown_74_ = 5;
+    obj->unknown_97_ = 0;
+    obj->field14 |= 0x20000;
+    func_02088c38((unsigned char*)obj);
+    func_02088c9c((unsigned char*)obj);
+    return obj->unknown_5a_5_;
 }

@@ -1,36 +1,36 @@
 #include <globaldefs.h>
 
 extern "C" int func_ov031_0220d60c(void);
-extern "C" int func_ov031_0220f368(unsigned char *arg0, unsigned char *arg1);
+extern "C" int func_ov031_0220f368(unsigned char *a, unsigned char *b);
 
 struct Struct_ov031_0220ede4 {
-    unsigned char unknown_0_[0xc];
-    Struct_ov031_0220ede4 *unknown_c_;
-    unsigned char unknown_10_[4];
+    unsigned char pad0[0xc];
+    Struct_ov031_0220ede4 *next;
+    unsigned char pad10[4];
 };
 
 struct Struct_ov031_0220ede4_2 {
-    unsigned char unknown_0_[4];
-    Struct_ov031_0220ede4 *unknown_4_;
+    unsigned char pad0[4];
+    Struct_ov031_0220ede4 *head;
 };
 
 // USA: func_ov031_0220ede4
-extern "C" ARM Struct_ov031_0220ede4 *func_ov031_0220ede4(unsigned char *arg0) {
-    char *var0 = (char *)func_ov031_0220d60c() + 0x2000;
-    Struct_ov031_0220ede4 *var1 = NULL;
-    Struct_ov031_0220ede4_2 *var2 = *(Struct_ov031_0220ede4_2 **)(var0 + 0x270);
-    if (arg0 == NULL) return var1;
+extern "C" ARM Struct_ov031_0220ede4 *func_ov031_0220ede4(unsigned char *key) {
+    char *base = (char *)func_ov031_0220d60c() + 0x2000;
+    Struct_ov031_0220ede4 *node = NULL;
+    Struct_ov031_0220ede4_2 *var2 = *(Struct_ov031_0220ede4_2 **)(base + 0x270);
+    if (key == NULL) return node;
     if (var2 != NULL) {
-        unsigned int var3 = *(unsigned int *)(var0 + 0x274);
-        if (var3 > 0xc) {
-            var1 = var2->unknown_4_;
-            if (var1 != NULL) {
+        unsigned int cnt = *(unsigned int *)(base + 0x274);
+        if (cnt > 0xc) {
+            node = var2->head;
+            if (node != NULL) {
                 do {
-                    if (func_ov031_0220f368((unsigned char *)var1 + 0x14, arg0) != 0) break;
-                    var1 = var1->unknown_c_;
-                } while (var1 != NULL);
+                    if (func_ov031_0220f368((unsigned char *)node + 0x14, key) != 0) break;
+                    node = node->next;
+                } while (node != NULL);
             }
         }
     }
-    return var1;
+    return node;
 }

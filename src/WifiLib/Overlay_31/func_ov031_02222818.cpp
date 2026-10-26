@@ -2,12 +2,12 @@
 
 
 // USA: func_ov031_02222818
-extern "C" THUMB void func_ov031_02222818(unsigned char* arg0, const unsigned char* arg1, unsigned int arg2) {
-    unsigned int var0 = 0;
-    if (var0 < arg2) {
+extern "C" THUMB void func_ov031_02222818(unsigned char* dst, const unsigned char* src, unsigned int count) {
+    unsigned int i = 0;
+    if (i < count) {
         do {
-            arg0[var0] = arg1[var0];
-            var0++;
-        } while (var0 < arg2);
+            dst[i] = src[i];
+            i++;
+        } while (i < count);
     }
 }

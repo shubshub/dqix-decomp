@@ -8,12 +8,12 @@
 #include "World/Object3D.h"
 #include "std_library_functions.h"
 
-char* MessageSystem_GetInstance(void);
+extern "C" char* MessageSystem_GetInstance(void);
 struct Foo0207df50;
-void VramState_Rewind(Foo0207df50*);
-void VramState_Restore(char* obj);
-void VramState_Save(char* obj);
-void CallFunc0202f310AtField0x19e0_020440b8(char* base, void* alloc, void* data);
+extern "C" void VramState_Rewind(Foo0207df50*);
+extern "C" void VramState_Restore(char* obj);
+extern "C" void VramState_Save(char* obj);
+extern "C" void func_020440b8(char* base, void* alloc, void* data);
 
 extern char data_ov017_021d7504[];
 extern char data_ov017_021d7510[];
@@ -24,7 +24,7 @@ extern char data_ov017_021d758d[];
 extern char data_ov017_021d75a2[];
 
 // USA: func_ov017_0219ba0c
-extern "C" ARM void func_ov017_0219ba0c(GameResources* res, int skipModels) {
+extern "C" ARM void func_ov017_0219ba0c(GameResources* res, int arg1) {
     const void* file;
     unsigned int fileSize;
     unsigned int length;
@@ -50,14 +50,14 @@ extern "C" ARM void func_ov017_0219ba0c(GameResources* res, int skipModels) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    CallFunc0202f310AtField0x19e0_020440b8(controller, alloc, g_fileLoadBuffer);
-    if (skipModels) {
+    func_020440b8(controller, alloc, g_fileLoadBuffer);
+    if (arg1) {
         narc.Destroy();
         VramState_Save(tables);
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    var9.Destroy();
+    narc.Destroy();
 
     ((Model3D*)res->unknown_ptr_36c8)->Clear();
     if (GetFileInNarc(g_fileLoadBuffer, data_ov017_021d7577, &file, &fileSize, 0)) {
@@ -78,8 +78,8 @@ extern "C" ARM void func_ov017_0219ba0c(GameResources* res, int skipModels) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    void* var11 = var6->Allocate(var3);
-    if (var11 == NULL) {
+    void* buf = alloc->Allocate(size);
+    if (buf == NULL) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
@@ -90,8 +90,8 @@ extern "C" ARM void func_ov017_0219ba0c(GameResources* res, int skipModels) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    var11 = var6->Allocate(var3);
-    if (var11 == NULL) {
+    buf = alloc->Allocate(size);
+    if (buf == NULL) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }

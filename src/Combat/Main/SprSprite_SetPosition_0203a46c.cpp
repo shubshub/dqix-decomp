@@ -9,7 +9,7 @@ struct Vec3Target0203a46c {
 };
 
 // Main, originally SetVec3At0x1c (USA 0x0203a46c, EUR 0x0203a47c, JPN 0x02039ec4)
-ARM void SprSprite_SetPosition(struct Vec3Target0203a46c* sprite, int x, int y, int z) {
+extern "C" ARM void SprSprite_SetPosition(struct Vec3Target0203a46c* sprite, int x, int y, int z) {
     sprite->x = x;
     sprite->y = y;
     sprite->z = z;

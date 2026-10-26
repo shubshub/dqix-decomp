@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_02222ddc {
-	unsigned char unknown_0_[0xc];
+	unsigned char pad[0xc];
 	int unknown_c_;
-	unsigned char unknown_10_[9];
+	unsigned char pad2[9];
 	unsigned char unknown_19_;
 };
 
 struct Struct_ov031_02250ba8 {
-	Struct_ov031_02222ddc *unknown_0_;
+	Struct_ov031_02222ddc *ptr;
 };
 
 extern Struct_ov031_02250ba8 data_ov031_02250ba8;
@@ -18,8 +18,8 @@ extern "C" int func_ov031_0223e2b8(int, void*);
 
 // USA: func_ov031_02222ddc
 extern "C" ARM int func_ov031_02222ddc(void) {
-	Struct_ov031_02222ddc *var0 = data_ov031_02250ba8.unknown_0_;
-	var0->unknown_19_ = 1;
-	Struct_ov031_02222ddc *var1 = data_ov031_02250ba8.unknown_0_;
-	return func_ov031_0223e2b8(var1->unknown_c_, (void*)func_ov031_0222318c);
+	Struct_ov031_02222ddc *p = data_ov031_02250ba8.ptr;
+	p->unknown_19_ = 1;
+	Struct_ov031_02222ddc *p2 = data_ov031_02250ba8.ptr;
+	return func_ov031_0223e2b8(p2->unknown_c_, (void*)func_ov031_0222318c);
 }

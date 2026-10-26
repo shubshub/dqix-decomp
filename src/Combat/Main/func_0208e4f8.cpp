@@ -3,19 +3,19 @@
 #include "Resource/GameResources.h"
 
 struct Struct_0208e4f8 {
-    int unknown_0_;
-    int unknown_4_;
-    short unknown_8_;
-    short unknown_a_;
-    int unknown_c_;
+    int field0;
+    int field4;
+    short field8;
+    short fielda;
+    int fieldc;
 };
 
 // USA: func_0208e4f8
-extern "C" ARM void func_0208e4f8(struct Struct_0208e4f8* arg0) {
-    int var0 = (int)GetGameResources();
-    SafeAllocator* var1 = (SafeAllocator*)(var0 + 0x1a0);
-    var1->Reset();
-    arg0->unknown_4_ = 0;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_c_ = 0;
+extern "C" ARM void func_0208e4f8(struct Struct_0208e4f8* p) {
+    int base = (int)GetGameResources();
+    SafeAllocator* alloc = (SafeAllocator*)(base + 0x1a0);
+    alloc->Reset();
+    p->field4 = 0;
+    p->field8 = 0;
+    p->fieldc = 0;
 }

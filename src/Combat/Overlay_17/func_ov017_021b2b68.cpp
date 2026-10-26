@@ -4,15 +4,15 @@
 
 extern "C" void func_ov017_0219b624(void);
 
-struct Struct_ov017_021b2b68 { char unknown_0_[0x8]; int unknown_8_; char unknown_c_[0x2c]; int unknown_38_; };
+struct Struct_ov017_021b2b68 { char pad[0x8]; int field8; char pad2[0x2c]; int field38; };
 
 // USA: func_ov017_021b2b68
-extern "C" ARM int func_ov017_021b2b68(struct Struct_ov017_021b2b68* arg0) {
+extern "C" ARM int func_ov017_021b2b68(struct Struct_ov017_021b2b68* self) {
 	if (((BackgroundLoader*)((void*)(int)BackgroundLoader::GetInstance()))->GetNumQueuedTasks() > 0) {
-		return arg0->unknown_8_;
+		return self->field8;
 	}
 	GetGameResources();
 	func_ov017_0219b624();
-	arg0->unknown_38_ &= ~4;
+	self->field38 &= ~4;
 	return 3;
 }

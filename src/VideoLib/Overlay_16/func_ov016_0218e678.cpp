@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov016_0218ef1c(void* arg0);
+extern "C" int func_ov016_0218ef1c(void* p);
 
 // USA: func_ov016_0218e678
-extern "C" ARM int func_ov016_0218e678(void* arg0) {
-    if (arg0 == NULL) {
+extern "C" ARM int func_ov016_0218e678(void* p) {
+    if (p == NULL) {
         return 0;
     }
-    return func_ov016_0218ef1c(arg0);
+    return func_ov016_0218ef1c(p);
 }

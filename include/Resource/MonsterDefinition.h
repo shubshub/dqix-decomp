@@ -4,44 +4,44 @@ class SafeAllocator;
 
 
 
-struct Struct_0206ef40 {
-    union { char* unknown1_0_; unsigned int unknown_0_; };
+struct MonsterDefinition {
+    union { char* name; unsigned int unknown_0_; };
     union { char* unknown_4_; unsigned int unknown1_4_; };
-    short unknown_8_;
-    unsigned short unknown_a_;
-    short unknown_c_;
-    short unknown_e_;
-    unsigned int unknown_10_;
+    short monsterId;
+    unsigned short unknownA;
+    short radius;
+    short height;
+    unsigned int unknown10;
 #if !defined(jpn)
     union { char* unknown_14_; unsigned int unknown1_14_; };
-    int unknown_18_;
+    int unknown18;
 #endif
 };
 
 struct Struct_0206f01c {
-    unsigned int unknown_0_0_ : 12;
+    unsigned int count : 12;
     unsigned int unknown_1_4_ : 19;
-    unsigned int unknown_3_7_ : 1;
+    unsigned int relocated : 1;
 };
 
 
 struct Struct_0206f01c_2 {
-    Struct_0206f01c unknown_0_;
-    Struct_0206ef40* unknown_4_;
+    Struct_0206f01c header;
+    MonsterDefinition* arr;
 };
 
 struct Struct_0206ef48 {
-    Struct_0206f01c_2 unknown_0_;
-    char* unknown_8_;
+    Struct_0206f01c_2 table;
+    char* strings;
 };
 
 struct Struct_0206efd8 {
-    Struct_0206f01c unknown_0_;
+    Struct_0206f01c header;
 
 };
 
 
-typedef int (*Type_0206f110)(Struct_0206ef48*, Struct_0206ef40*);
+typedef int (*Type_0206f110)(Struct_0206ef48*, MonsterDefinition*);
 typedef int (*Type_0206f470)(void*);
 
 #if defined(jpn)
@@ -57,7 +57,7 @@ int func_0206f0f8(Struct_0206f01c*);
 int func_0206f110(Struct_0206ef48*, Type_0206f110);
 int func_0206f170(Struct_0206ef48*, Struct_0206efd8*, unsigned char*, Type_0206f110);
 void* func_0206f470(Struct_0206f01c_2*, int, Type_0206f470);
-int func_0206ef48(Struct_0206ef48*, Struct_0206ef40*);
+int func_0206ef48(Struct_0206ef48*, MonsterDefinition*);
 }
 
 

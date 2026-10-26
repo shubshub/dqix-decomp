@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 
 // USA: func_0201bf98
-extern "C" ARM void func_0201bf98(unsigned char* arg0, int arg1, int arg2) {
-    if (arg2) {
+extern "C" ARM void func_0201bf98(unsigned char* obj, int bit, int set) {
+    if (set) {
 #if defined(jpn)
-        arg0[0x2784] |= (1 << arg1);
+        obj[0x2784] |= (1 << bit);
 #else
-        arg0[0x2744] |= (1 << arg1);
+        obj[0x2744] |= (1 << bit);
 #endif
     } else {
 #if defined(jpn)
-        arg0[0x2784] &= ~(1 << arg1);
+        obj[0x2784] &= ~(1 << bit);
 #else
-        arg0[0x2744] &= ~(1 << arg1);
+        obj[0x2744] &= ~(1 << bit);
 #endif
     }
 }

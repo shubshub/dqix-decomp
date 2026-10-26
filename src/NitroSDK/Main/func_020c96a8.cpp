@@ -3,17 +3,17 @@
 unsigned int DisableIRQInterrupts(void);
 unsigned int SetIRQInterruptState(int mask);
 
-struct Struct_02111654_6 { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Struct_02111654_6 { int f0; int f4; int f8; };
 extern Struct_02111654_6 data_02111654;
 
 // USA: func_020c96a8
-extern "C" ARM int func_020c96a8(int arg0) {
-    unsigned int var0;
-    var0 = DisableIRQInterrupts();
-    if (arg0 < data_02111654.unknown_4_) {
-        data_02111654.unknown_8_++;
+extern "C" ARM int func_020c96a8(int value) {
+    unsigned int mask;
+    mask = DisableIRQInterrupts();
+    if (value < data_02111654.f4) {
+        data_02111654.f8++;
     }
-    data_02111654.unknown_4_ = arg0;
-    SetIRQInterruptState(var0);
-    return data_02111654.unknown_8_;
+    data_02111654.f4 = value;
+    SetIRQInterruptState(mask);
+    return data_02111654.f8;
 }

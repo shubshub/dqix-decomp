@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
-struct Struct_ov024_021fcaf0 { char unknown_0_[0x6f]; unsigned char unknown_6f_; };
+struct Struct_ov024_021fcaf0 { char unk[0x6f]; unsigned char flag; };
 
-extern "C" int func_ov024_021fe698(void* arg0, int arg1);
-extern "C" void func_ov024_021fd954(void* arg0, int arg1);
+extern "C" int func_ov024_021fe698(void* obj, int idx);
+extern "C" void func_ov024_021fd954(void* obj, int mode);
 
 // USA: func_ov024_021fcaf0
-extern "C" ARM void func_ov024_021fcaf0(struct Struct_ov024_021fcaf0* arg0) {
-    if (arg0->unknown_6f_) {
-        if (func_ov024_021fe698(arg0, 11)) {
-            func_ov024_021fd954(arg0, 14);
+extern "C" ARM void func_ov024_021fcaf0(struct Struct_ov024_021fcaf0* obj) {
+    if (obj->flag) {
+        if (func_ov024_021fe698(obj, 11)) {
+            func_ov024_021fd954(obj, 14);
         }
     }
 }

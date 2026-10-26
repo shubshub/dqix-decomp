@@ -20,7 +20,7 @@ struct InitStruct {
 };
 
 // Main, originally InitializeStruct_020280b0 (USA 0x020280b0, EUR 0x020280c0, JPN 0x0202791c)
-ARM void NodeGraph_Reset(struct InitStruct* graph) {
+extern "C" ARM void NodeGraph_Reset(struct InitStruct* graph) {
     graph->linked = 0;
     graph->tileCapacity = 0;
     graph->pairCapacity = 0;

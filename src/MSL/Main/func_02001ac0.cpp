@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 // USA: func_02001ac0
-extern "C" ARM void* func_02001ac0(void* arg0, int arg1, int arg2) {
-    unsigned char* var0 = (unsigned char*)arg0;
-    unsigned char var1 = (unsigned char)arg1;
-    if (arg2 != 0) {
+extern "C" ARM void* func_02001ac0(void* s, int c, int n) {
+    unsigned char* p = (unsigned char*)s;
+    unsigned char ch = (unsigned char)c;
+    if (n != 0) {
         do {
-            unsigned char var2 = *var0++;
-            if (var2 == var1) {
-                return var0 - 1;
+            unsigned char b = *p++;
+            if (b == ch) {
+                return p - 1;
             }
-        } while (--arg2 != 0);
+        } while (--n != 0);
     }
     return 0;
 }

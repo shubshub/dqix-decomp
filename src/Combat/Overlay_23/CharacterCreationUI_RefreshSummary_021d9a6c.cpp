@@ -4,12 +4,12 @@
 #include "Resource/CharacterCreationUI.h"
 #include "Combat/TryApplyElemFields.h"
 
-int KeyTable_Get(Container020e0310*, int);
-int Text_AppendPaletteTag(char*, int);
+extern "C" int KeyTable_Get(Container020e0310*, int);
+extern "C" int Text_AppendPaletteTag(char*, int);
 extern "C" int func_02042158(char*, int);
-int Text_Append(char*, const char*);
-int STD_GetStringLength(const char*);
-int STD_CompareString(const char*, const char*);
+extern "C" int Text_Append(char*, const char*);
+extern "C" int STD_GetStringLength(const char*);
+extern "C" int STD_CompareString(const char*, const char*);
 extern "C" int memcmp(const void*, const void*, unsigned int);
 extern "C" const char data_ov023_021fcd20[];
 
@@ -73,10 +73,10 @@ extern "C" ARM void CharacterCreationUI_RefreshSummary(char* storage) {
 #include "Resource/CharacterCreationUI.h"
 #include "Combat/TryApplyElemFields.h"
 
-extern int KeyTable_Get(Container020e0310*, int);
-extern int Text_AppendPaletteTag(char*, int);
-extern int AppendXTag_02041a28(char*, int);
-extern int Text_Append(char*, const char*);
+extern "C" int KeyTable_Get(Container020e0310*, int);
+extern "C" int Text_AppendPaletteTag(char*, int);
+extern "C" int func_02041a28(char*, int);
+extern "C" int Text_Append(char*, const char*);
 extern "C" int Font_GetTextWidth(void*, int);
 
 // Overlay 23, originally func_ov023_021d9a6c (USA/EUR 0x021d9a6c, JPN 0x021da264)
@@ -114,13 +114,13 @@ extern "C" ARM void CharacterCreationUI_RefreshSummary(char* storage) {
 
         if (row < CreationTab_NameEntry - CreationTab_Gender) {
             short key = keys[row];
-            AppendXTag_02041a28(text, 0x32 - Font_GetTextWidth((void*)KeyTable_Get(&editor->texts, key), 0));
+            func_02041a28(text, 0x32 - Font_GetTextWidth((void*)KeyTable_Get(&editor->texts, key), 0));
             Text_Append(text, (const char*)KeyTable_Get(&editor->texts, key));
             Text_Append(text, (const char*)KeyTable_Get(&editor->texts, CreationText_NewLine));
         } else if (row == CreationTab_NameEntry - CreationTab_Gender) {
             char* name = editor->names[editor->sex];
             if (*(signed char*)name != 0) {
-                AppendXTag_02041a28(text, 0x32 - Font_GetTextWidth(name, 0));
+                func_02041a28(text, 0x32 - Font_GetTextWidth(name, 0));
                 Text_Append(text, name);
             } else {
                 Text_Append(text, (const char*)KeyTable_Get(&editor->texts, CreationText_WidthTag));

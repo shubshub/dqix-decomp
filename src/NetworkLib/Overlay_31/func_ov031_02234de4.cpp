@@ -9,9 +9,9 @@ extern "C" void func_ov031_02234e40(void);
 
 // USA: func_ov031_02234de4
 extern "C" ARM void func_ov031_02234de4(void) {
-    int var0 = func_ov031_02237e9c();
-    if (var0 != 0) {
-        if (var0 != 1) return;
+    int v = func_ov031_02237e9c();
+    if (v != 0) {
+        if (v != 1) return;
         data_ov031_02290ce4 = 3;
         func_ov031_02236878(6);
     } else {

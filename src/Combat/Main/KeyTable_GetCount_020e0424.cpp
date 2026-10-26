@@ -9,6 +9,6 @@ struct Header020e0424 {
 typedef struct Header020e0424 KeyTableHeader;
 
 // Main, originally GetLow12Bits020e0424 (USA 0x020e0424, EUR 0x020e0434; JPN not identified)
-ARM unsigned int KeyTable_GetCount(KeyTableHeader* header) {
+extern "C" ARM unsigned int KeyTable_GetCount(KeyTableHeader* header) {
     return header->count;
 }

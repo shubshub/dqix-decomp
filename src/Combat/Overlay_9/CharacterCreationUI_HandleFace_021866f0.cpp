@@ -7,13 +7,13 @@ extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, 
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice);
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 #if defined(jpn)
-void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
+extern "C" void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
 #else
-ARM void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
+extern "C" ARM void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
 #endif
 
-int Camera_EasePositionTo(struct Camera* obj, int a, int b);
-void Camera_EaseTargetTo(struct Camera* obj, int a, int b);
+extern "C" int Camera_EasePositionTo(struct Camera* obj, int a, int b);
+extern "C" void Camera_EaseTargetTo(struct Camera* obj, int a, int b);
 
 extern Vector3fix CharacterCreationUI_faceTabCameraPosition;
 extern Vector3fix CharacterCreationUI_faceTabCameraTarget;

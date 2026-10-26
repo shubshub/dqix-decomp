@@ -13,74 +13,74 @@
 #endif
 
 struct Struct_ov001_021561e0_4 {
-    char unknown_0_[8];
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    char field_0[8];
+    unsigned short id;
+    unsigned short state;
     char unknown_c_[0x44];
-    unsigned short unknown_50_;
+    unsigned short flags;
     char unknown_52_[RG(0x2a, 0x26)];
-    SafeAllocator unknown_7c_;
+    SafeAllocator allocator;
     char unknown_90_[0x6c];
-    unsigned char unknown_fc_;
+    unsigned char active;
     char unknown_fd_[6];
-    unsigned char unknown_103_;
+    unsigned char pending;
     char unknown_104_[2];
     unsigned char unknown_106_;
     char unknown_107_[0x13];
     unsigned short unknown_11a_;
     char unknown_11c_[8];
     SafeAllocator unknown_124_;
-    SafeAllocator* unknown_138_;
+    SafeAllocator* externalAllocator;
     char unknown_13c_[0x20];
     int unknown_15c_;
-    void* unknown_160_;
+    void* allocation;
 };
-struct GameFlag021561e0 { char field_0[RG(0x5cac, 0x5a4c)]; unsigned char active; };
-struct CombatantFlags021561e0 { Object3D object; char field_ac[RG(0xe0, 0xd4)]; unsigned int flags; };
+struct Struct_ov001_021561e0 { char field_0[RG(0x5cac, 0x5a4c)]; unsigned char active; };
+struct Struct_ov001_021561e0_2 { Object3D object; char field_ac[RG(0xe0, 0xd4)]; unsigned int flags; };
 struct EventFlags021561e0 { char field_0[0x8c]; unsigned char flags[1]; };
 struct Entry_02028bd0;
 struct Obj02028c64;
-int InitAndCheckField3c_02153994();
+extern "C" int func_ov001_02153994();
 extern "C" int* LinkSession_GetInstance();
 extern "C" void func_ov001_0215aac8();
 extern "C" void func_ov027_021d8c20(void*);
 extern "C" void func_ov001_0215aaa8(int, int);
 extern "C" void func_ov001_02154974(void*);
-void AllocatorUnion_Free(AllocatorUnion*, void*);
-void DestroyActiveAllocators_0215aa5c();
+extern "C" void AllocatorUnion_Free(AllocatorUnion*, void*);
+extern "C" void func_ov001_0215aa5c();
 extern "C" void* Zone3D_GetInstance();
-void* ZoneFeatures_GetFirstOfType(unsigned char*, unsigned int);
-Entry_02028bd0* ZoneRecords_GetInstance();
-Obj02028c64* ZoneRecords_Find(Entry_02028bd0*, int);
-void ZoneRecord_SetDoorOpened(Obj02028c64*, int);
+extern "C" void* ZoneFeatures_GetFirstOfType(unsigned char*, unsigned int);
+extern "C" Entry_02028bd0* ZoneRecords_GetInstance();
+extern "C" Obj02028c64* ZoneRecords_Find(Entry_02028bd0*, int);
+extern "C" void ZoneRecord_SetDoorOpened(Obj02028c64*, int);
 extern "C" EventFlags021561e0* Scenario_GetInstance();
 extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
-int LinkSession_IsActive(int*);
+extern "C" int LinkSession_IsActive(int*);
 extern "C" int LinkSession_IsHostOrSolo(void*);
 extern "C" void func_ov017_021d0490(int);
 extern AllocatorUnion g_mainAllocator;
 
 // USA: func_ov001_021561e0
-extern "C" ARM int func_ov001_021561e0(CleanupState021561e0* state) {
-    if (InitAndCheckField3c_02153994() != 1) return state->state;
-    state->complete = 1;
-    if (!AlwaysTrue02094b4c(FontBankLoader_GetInstance())) return 11;
+extern "C" ARM int func_ov001_021561e0(Struct_ov001_021561e0_4* state) {
+    if (func_ov001_02153994() != 1) return state->state;
+    state->unknown_106_ = 1;
+    if (!func_02094b4c(FontBankLoader_GetInstance())) return 11;
     GameResources* resources = GetGameResources();
     GameState* game = GameState::GetInstance();
     int* manager = LinkSession_GetInstance();
-    if (state->resetGameFlag) ((GameFlag021561e0*)game)->active = 0;
+    if (state->unknown_15c_) ((Struct_ov001_021561e0*)game)->active = 0;
     func_ov001_0215aac8();
-    if (arg0->unknown_160_) {
-        func_ov027_021d8c20(arg0->unknown_160_);
-        arg0->unknown_160_ = 0;
+    if (state->allocation) {
+        func_ov027_021d8c20(state->allocation);
+        state->allocation = 0;
     }
-    if (arg0->unknown_50_ & 4) func_ov001_0215aaa8(1, 0);
-    func_ov001_02154974(arg0);
-    if ((arg0->unknown_50_ & 2) || (arg0->unknown_50_ & 8)) {
-        SignedAllocatorHeader* var3 = arg0->unknown_124_.GetSignedAllocator();
-        if (var3) {
-            arg0->unknown_124_.Destroy();
-            arg0->unknown_7c_.Free(var3);
+    if (state->flags & 4) func_ov001_0215aaa8(1, 0);
+    func_ov001_02154974(state);
+    if ((state->flags & 2) || (state->flags & 8)) {
+        SignedAllocatorHeader* buffer = state->unknown_124_.GetSignedAllocator();
+        if (buffer) {
+            state->unknown_124_.Destroy();
+            state->allocator.Free(buffer);
         }
         if (state->externalAllocator) {
             SignedAllocatorHeader* external = state->externalAllocator->GetSignedAllocator();
@@ -91,7 +91,7 @@ extern "C" ARM int func_ov001_021561e0(CleanupState021561e0* state) {
             }
         }
     }
-    if (!TestFlags00(resources, 0x1000) || !state->keepResources) {
+    if (!TestFlags00(resources, 0x1000) || !state->unknown_11a_) {
         SignedAllocatorHeader* buffer = state->allocator.GetSignedAllocator();
         if (buffer) {
             state->allocator.Destroy();
@@ -108,22 +108,22 @@ extern "C" ARM int func_ov001_021561e0(CleanupState021561e0* state) {
             if (entry) ZoneRecord_SetDoorOpened(entry, index);
             node->unk_2c.type2.flags &= ~0x200;
         }
-        var7 = var7->unknown_70_;
+        node = node->pNext;
     }
     if (state->id == 0x730a) {
         EventFlags021561e0* events = Scenario_GetInstance();
         Scenario_SetFlag(events, events->flags, 0x1142, 0);
     }
-    for (int var11 = 0; var11 < 4; ++var11) {
-        Struct_ov001_021561e0_2* var12 = (Struct_ov001_021561e0_2*)func_0200ff1c(var1, var11);
-        if (var12) {
-            var12->unknown_0_.DisableFlag(0x800000);
-            var12->unknown_18c_ &= ~2;
+    for (int i = 0; i < 4; ++i) {
+        Struct_ov001_021561e0_2* member = (Struct_ov001_021561e0_2*)func_0200ff1c(game, i);
+        if (member) {
+            member->object.DisableFlag(0x800000);
+            member->flags &= ~2;
         }
     }
     if (!LinkSession_IsActive(manager) || LinkSession_IsHostOrSolo(manager)) return 10;
     func_ov017_021d0490(0);
-    arg0->unknown_fc_ = 0;
-    arg0->unknown_103_ = 0;
+    state->active = 0;
+    state->pending = 0;
     return 16;
 }

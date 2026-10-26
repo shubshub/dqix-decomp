@@ -2,44 +2,44 @@
 #include "GameState/GameState.h"
 
 struct Struct_02049c08_2;
-struct Struct_02033834;
+struct Obj02033874;
 struct Struct_ov025_021def64;
 
 struct Struct_ov025_021def64_2 {
-    int unknown_0_;
-    struct Struct_ov025_021def64_2* unknown_4_;
-    struct Struct_ov025_021def64_2* unknown_8_;
-    GameObject* unknown_c_;
+    int key;
+    struct Struct_ov025_021def64_2* prev;
+    struct Struct_ov025_021def64_2* next;
+    GameObject* obj;
 };
 
-int DispatchByIndex021820bc(void* obj, int unused, int index, int arg);
-Vector3fix GetSubTriple02049c08(struct Obj02049c08* obj);
-void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
-void ResetFields_021df554(void* obj);
-struct Node021df568* InsertSorted_021df568(struct Node021df568* head, struct Node021df568* newNode);
-struct Node021df5cc* FindLastNode021df5cc(struct Node021df5cc* node);
+extern "C" int func_ov000_021820bc(void* obj, int unused, int index, int arg);
+extern "C" Vector3fix func_02049c08(struct Struct_02049c08_2* obj);
+extern "C" void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
+extern "C" void func_ov025_021df554(void* obj);
+extern "C" struct Struct_ov025_021def64_2* func_ov025_021df568(struct Struct_ov025_021def64_2* head, struct Struct_ov025_021def64_2* arg1);
+extern "C" struct Struct_ov025_021def64* func_ov025_021df5cc(struct Struct_ov025_021def64* node);
 extern "C" fix32_t fix32_Divide(fix32_t a, fix32_t b);
 
-static inline int inline_02061c04_5(int arg0, int arg1) { return (int)(((long long)arg0 * arg1 + 0x800) >> 12); }
+static inline int FxMul(int a, int b) { return (int)(((long long)a * b + 0x800) >> 12); }
 
 struct Struct_ov025_021def64_3 {
 #if defined(jpn)
-    char unknown_0_[0x218];
+    char pad[0x218];
 #else
-    char unknown1_0_[0x29c];
+    char pad[0x29c];
 #endif
-    void* unknown_29c_;
+    void* list;
 };
 
 // USA: func_ov025_021def64
-extern "C" ARM void func_ov025_021def64(struct Struct_ov025_021def64_3* arg0, int arg1, int arg2) {
+extern "C" ARM void func_ov025_021def64(struct Struct_ov025_021def64_3* self, int slot, int index) {
     struct Struct_ov025_021def64_2 var0[16];
     struct Struct_ov025_021def64_2 var1[16];
-    int var2[16];
-    GameObject* var3[16];
-    GameState* var4 = GameState::GetInstance();
-    int var5 = func_ov000_021820bc(arg0->unknown_29c_, arg1, arg2, (int)var2);
-    if (var5 == 0) return;
+    int ids[16];
+    GameObject* objs[16];
+    GameState* gs = GameState::GetInstance();
+    int count = func_ov000_021820bc(self->list, slot, index, (int)ids);
+    if (count == 0) return;
 
     int n = 0;
     int i;
@@ -47,161 +47,161 @@ extern "C" ARM void func_ov025_021def64(struct Struct_ov025_021def64_3* arg0, in
         objs[n] = gs->GetCombatantByIndex(ids[i]);
         if (objs[n] == NULL) continue;
         GameObject* o = objs[i];
-        o->obj3D_.position_ = GetSubTriple02049c08((struct Obj02049c08*)o);
+        o->obj3D_.position_ = func_02049c08((struct Struct_02049c08_2*)o);
         GameObject_SnapFacing((struct Obj02033874*)o, 0);
         n++;
     }
-    var5 = var6;
+    count = n;
 
     {
-        int var9;
+        int k;
         int var10;
         int var11;
-        struct Struct_ov025_021def64_2* var12;
-        struct Struct_ov025_021def64_2* var13;
-        fix32_t var14;
-        int var15;
-        int var16;
+        struct Struct_ov025_021def64_2* head;
+        struct Struct_ov025_021def64_2* next;
+        fix32_t scale;
+        int pos;
+        int r;
         int var17;
-        struct Struct_ov025_021def64_2* var18;
-        struct Struct_ov025_021def64_2* var19;
-        int var20;
-        int var21;
-        for (var7 = 0; var7 < var5; var7++) {
-            func_ov025_021df554(&var0[var7]);
-            GameObject* var22 = var3[var7];
-            var0[var7].unknown_0_ = func_02049c08((struct Struct_02049c08_2*)var22).x;
-            var0[var7].unknown_c_ = var22;
+        struct Struct_ov025_021def64_2* cur;
+        struct Struct_ov025_021def64_2* last;
+        int span;
+        int i2;
+        for (i = 0; i < count; i++) {
+            func_ov025_021df554(&var0[i]);
+            GameObject* o = objs[i];
+            var0[i].key = func_02049c08((struct Struct_02049c08_2*)o).x;
+            var0[i].obj = o;
         }
-        var12 = &var0[0];
-        for (var21 = 1; var21 < var5; var21++) {
-            var12 = func_ov025_021df568(var12, &var0[var21]);
+        head = &var0[0];
+        for (i2 = 1; i2 < count; i2++) {
+            head = func_ov025_021df568(head, &var0[i2]);
         }
-        var19 = (struct Struct_ov025_021def64_2*)func_ov025_021df5cc((struct Struct_ov025_021def64*)var12);
-        var20 = (var19->unknown_0_ + var19->unknown_c_->obj3D_.GetRadius() / 2) - (var12->unknown_0_ - var12->unknown_c_->obj3D_.GetRadius() / 2);
-        if (var20 > 0x4000 && var6 > 1) {
+        last = (struct Struct_ov025_021def64_2*)func_ov025_021df5cc((struct Struct_ov025_021def64*)head);
+        span = (last->key + last->obj->obj3D_.GetRadius() / 2) - (head->key - head->obj->obj3D_.GetRadius() / 2);
+        if (span > 0x4000 && n > 1) {
             int var23[16];
             var10 = 0;
             var11 = 0;
-            var18 = var12;
-            var9 = 0;
-            for (; (var13 = var18->unknown_8_) != NULL; var18 = var18->unknown_8_) {
-                var16 = var18->unknown_c_->obj3D_.GetRadius();
-                var17 = (var13->unknown_0_ - var18->unknown_0_) - (var13->unknown_c_->obj3D_.GetRadius() / 2 + var16 / 2);
-                var23[var9] = var17;
+            cur = head;
+            k = 0;
+            for (; (next = cur->next) != NULL; cur = cur->next) {
+                r = cur->obj->obj3D_.GetRadius();
+                var17 = (next->key - cur->key) - (next->obj->obj3D_.GetRadius() / 2 + r / 2);
+                var23[k] = var17;
                 var10 += var17;
-                var9++;
+                k++;
             }
-            for (var18 = var12; var18 != NULL; var18 = var18->unknown_8_) {
-                var11 += var18->unknown_c_->obj3D_.GetRadius();
+            for (cur = head; cur != NULL; cur = cur->next) {
+                var11 += cur->obj->obj3D_.GetRadius();
             }
-            var14 = 0;
+            scale = 0;
             if (var11 < 0x4000 && var10 != 0) {
-                var14 = fix32_Divide(0x4000 - var11, var10);
+                scale = fix32_Divide(0x4000 - var11, var10);
             }
-            var9 = 0;
-            var18 = var12;
+            k = 0;
+            cur = head;
             var10 = 0;
-            while ((var18 = var18->unknown_8_) != NULL) {
-                var23[var9] = inline_02061c04_5(var23[var9], var14);
-                var10 += var23[var9];
-                var9++;
+            while ((cur = cur->next) != NULL) {
+                var23[k] = FxMul(var23[k], scale);
+                var10 += var23[k];
+                k++;
             }
-            var15 = -((var11 + var10) / 2);
-            var9 = 0;
-            for (var18 = var12; var18 != NULL; var18 = var18->unknown_8_, var9++) {
-                var15 += var18->unknown_c_->obj3D_.GetRadius() / 2;
-                Vector3fix var24 = var18->unknown_c_->obj3D_.position_;
-                var24.x = var15;
-                var18->unknown_0_ = var15;
-                var18->unknown_c_->obj3D_.position_ = var24;
-                var15 += var18->unknown_c_->obj3D_.GetRadius() / 2;
-                var15 += var23[var9];
+            pos = -((var11 + var10) / 2);
+            k = 0;
+            for (cur = head; cur != NULL; cur = cur->next, k++) {
+                pos += cur->obj->obj3D_.GetRadius() / 2;
+                Vector3fix p = cur->obj->obj3D_.position_;
+                p.x = pos;
+                cur->key = pos;
+                cur->obj->obj3D_.position_ = p;
+                pos += cur->obj->obj3D_.GetRadius() / 2;
+                pos += var23[k];
             }
         } else {
-            int var25 = -((var12->unknown_0_ - var12->unknown_c_->obj3D_.GetRadius() / 2) + var20 / 2);
-            for (; var12 != NULL; var12 = var12->unknown_8_) {
-                Vector3fix var26 = var12->unknown_c_->obj3D_.position_;
-                var26.x += var25;
-                var12->unknown_c_->obj3D_.position_ = var26;
+            int off = -((head->key - head->obj->obj3D_.GetRadius() / 2) + span / 2);
+            for (; head != NULL; head = head->next) {
+                Vector3fix p = head->obj->obj3D_.position_;
+                p.x += off;
+                head->obj->obj3D_.position_ = p;
             }
         }
     }
 
     {
-        int var27;
+        int k;
         int var28;
         int var29;
-        struct Struct_ov025_021def64_2* var30;
-        struct Struct_ov025_021def64_2* var31;
-        int var32;
-        struct Struct_ov025_021def64_2* var33;
-        fix32_t var34;
-        int var35;
-        int var36;
+        struct Struct_ov025_021def64_2* head;
+        struct Struct_ov025_021def64_2* last;
+        int span;
+        struct Struct_ov025_021def64_2* next;
+        fix32_t scale;
+        int pos;
+        int r;
         int var37;
-        struct Struct_ov025_021def64_2* var38;
-        int var39;
-        for (var7 = 0; var7 < var5; var7++) {
-            func_ov025_021df554(&var1[var7]);
-            GameObject* var40 = var3[var7];
-            var1[var7].unknown_0_ = func_02049c08((struct Struct_02049c08_2*)var40).z;
-            var1[var7].unknown_c_ = var40;
+        struct Struct_ov025_021def64_2* cur;
+        int i2;
+        for (i = 0; i < count; i++) {
+            func_ov025_021df554(&var1[i]);
+            GameObject* o = objs[i];
+            var1[i].key = func_02049c08((struct Struct_02049c08_2*)o).z;
+            var1[i].obj = o;
         }
-        var30 = &var1[0];
-        for (var39 = 1; var39 < var5; var39++) {
-            var30 = func_ov025_021df568(var30, &var1[var39]);
-            for (struct Struct_ov025_021def64_2* var41 = var30; var41 != NULL; var41 = var41->unknown_8_) {
+        head = &var1[0];
+        for (i2 = 1; i2 < count; i2++) {
+            head = func_ov025_021df568(head, &var1[i2]);
+            for (struct Struct_ov025_021def64_2* p = head; p != NULL; p = p->next) {
             }
         }
-        var31 = (struct Struct_ov025_021def64_2*)func_ov025_021df5cc((struct Struct_ov025_021def64*)var30);
-        var32 = (var31->unknown_0_ + var31->unknown_c_->obj3D_.GetRadius() / 2) - (var30->unknown_0_ - var30->unknown_c_->obj3D_.GetRadius() / 2);
-        if (var32 > 0x4000 && var6 > 1) {
+        last = (struct Struct_ov025_021def64_2*)func_ov025_021df5cc((struct Struct_ov025_021def64*)head);
+        span = (last->key + last->obj->obj3D_.GetRadius() / 2) - (head->key - head->obj->obj3D_.GetRadius() / 2);
+        if (span > 0x4000 && n > 1) {
             int var42[16];
             var28 = 0;
             var29 = 0;
-            var38 = var30;
-            var27 = 0;
-            for (; (var33 = var38->unknown_8_) != NULL; var38 = var38->unknown_8_) {
-                var36 = var38->unknown_c_->obj3D_.GetRadius();
-                var37 = (var33->unknown_0_ - var38->unknown_0_) - (var33->unknown_c_->obj3D_.GetRadius() / 2 + var36 / 2);
-                var42[var27] = var37;
+            cur = head;
+            k = 0;
+            for (; (next = cur->next) != NULL; cur = cur->next) {
+                r = cur->obj->obj3D_.GetRadius();
+                var37 = (next->key - cur->key) - (next->obj->obj3D_.GetRadius() / 2 + r / 2);
+                var42[k] = var37;
                 var28 += var37;
-                var27++;
+                k++;
             }
-            for (var38 = var30; var38 != NULL; var38 = var38->unknown_8_) {
-                var29 += var38->unknown_c_->obj3D_.GetRadius();
+            for (cur = head; cur != NULL; cur = cur->next) {
+                var29 += cur->obj->obj3D_.GetRadius();
             }
-            var34 = 0;
+            scale = 0;
             if (var29 < 0x4000 && var28 != 0) {
-                var34 = fix32_Divide(0x4000 - var29, var28);
+                scale = fix32_Divide(0x4000 - var29, var28);
             }
-            var27 = 0;
-            var38 = var30;
+            k = 0;
+            cur = head;
             var28 = 0;
-            while ((var38 = var38->unknown_8_) != NULL) {
-                var42[var27] = inline_02061c04_5(var42[var27], var34);
-                var28 += var42[var27];
-                var27++;
+            while ((cur = cur->next) != NULL) {
+                var42[k] = FxMul(var42[k], scale);
+                var28 += var42[k];
+                k++;
             }
-            var35 = -((var29 + var28) / 2);
-            var27 = 0;
-            for (var38 = var30; var38 != NULL; var38 = var38->unknown_8_) {
-                var35 += var38->unknown_c_->obj3D_.GetRadius() / 2;
-                Vector3fix var43 = var38->unknown_c_->obj3D_.position_;
-                var43.z = var35;
-                var38->unknown_0_ = var35;
-                var38->unknown_c_->obj3D_.position_ = var43;
-                var35 += var38->unknown_c_->obj3D_.GetRadius() / 2;
-                var35 += var42[var27];
-                var27++;
+            pos = -((var29 + var28) / 2);
+            k = 0;
+            for (cur = head; cur != NULL; cur = cur->next) {
+                pos += cur->obj->obj3D_.GetRadius() / 2;
+                Vector3fix p = cur->obj->obj3D_.position_;
+                p.z = pos;
+                cur->key = pos;
+                cur->obj->obj3D_.position_ = p;
+                pos += cur->obj->obj3D_.GetRadius() / 2;
+                pos += var42[k];
+                k++;
             }
         } else {
-            int var44 = -((var30->unknown_0_ - var30->unknown_c_->obj3D_.GetRadius() / 2) + var32 / 2);
-            for (; var30 != NULL; var30 = var30->unknown_8_) {
-                Vector3fix var45 = var30->unknown_c_->obj3D_.position_;
-                var45.z += var44;
-                var30->unknown_c_->obj3D_.position_ = var45;
+            int off = -((head->key - head->obj->obj3D_.GetRadius() / 2) + span / 2);
+            for (; head != NULL; head = head->next) {
+                Vector3fix p = head->obj->obj3D_.position_;
+                p.z += off;
+                head->obj->obj3D_.position_ = p;
             }
         }
     }

@@ -8,7 +8,7 @@ struct Struct_0203fc5c {
     char pad[0x40];
     float field40;
 };
-ARM int SetField40IfPositive(struct Struct_0203fc5c* obj, float value);
+extern "C" ARM int func_0203fc5c(struct Struct_0203fc5c* obj, float value);
 
 extern "C" double _dflt(int);
 
@@ -30,7 +30,7 @@ enum { kWalking = 1 };
 #define WALK_ANIMATION_SPEED 0.03
 
 // Main, originally AdvanceOrSnapToTarget0203c960 (USA 0x0203c960, EUR 0x0203c970, JPN 0x0203ce98)
-ARM void NpcWalker_MoveTowardTarget(struct MoverObj0203c960* walker) {
+extern "C" ARM void NpcWalker_MoveTowardTarget(struct MoverObj0203c960* walker) {
     Vector3i step;
     Vector3fix_Subtract(&walker->target, &walker->position, &step);
     int distance = Vector3fix_Length(&step);
@@ -42,7 +42,7 @@ ARM void NpcWalker_MoveTowardTarget(struct MoverObj0203c960* walker) {
         walker->position = newPosition;
         double speed = _dflt(walker->speed);
         float animationSpeed = (float)(speed / WALK_ANIMATION_SPEED / 4096.0);
-        SetField40IfPositive((struct Struct_0203fc5c*)walker, animationSpeed);
+        func_0203fc5c((struct Struct_0203fc5c*)walker, animationSpeed);
         return;
     }
     walker->position = walker->target;

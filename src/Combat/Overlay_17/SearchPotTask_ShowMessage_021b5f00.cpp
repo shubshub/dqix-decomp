@@ -4,12 +4,12 @@
 #include "Resource/TextQueue.h"
 
 struct SePlayer;
-void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern "C" void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern int g_sePlayer;
 extern "C" void GameResources_PlaySpecialItemEffect(GameResources* resources, void* position, int b);
-void* TextQueue_GetInstance(void);
+extern "C" void* TextQueue_GetInstance(void);
 extern "C" void SearchPotTask_DrawSprite(void* self);
-void GameObject_EnableControl(void* obj);
+extern "C" void GameObject_EnableControl(void* obj);
 extern "C" void SearchPotTask_Release(void* self);
 
 // A FieldTaskKind_SearchPot task (its own copy of the layout, as in the other step files).

@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
-struct Struct_020e385c {
-    unsigned int unknown_0_;
-    unsigned char unknown_4_;
+struct TagValueEntry020e385c {
+    unsigned int val;
+    unsigned char tag;
 };
 struct Struct_020e3814 {
-    int unknown_0_;
-    unsigned char unknown_4_;
+    int f0;
+    unsigned char f4;
     unsigned char unknown_5_;
     unsigned char unknown_6_;
 };
 
-extern "C" struct Struct_020e385c* func_020e385c(struct Struct_020e385c* arg0, int arg1, int arg2);
-extern "C" void func_020e3840(struct Struct_020e3814* arg0);
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202c508(void*);
+extern "C" struct TagValueEntry020e385c* func_020e385c(struct TagValueEntry020e385c* entries, int tag, int val);
+extern "C" void func_020e3840(struct Struct_020e3814* s);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsHostOrSolo(void*);
 extern "C" void func_ov017_021cebcc(int, int, int);
 
 // USA: func_020e3994
-extern "C" ARM void func_020e3994(struct Struct_020e385c* arg0, int arg1, int arg2) {
-    struct Struct_020e385c* var0 = func_020e385c(arg0, arg1, arg2);
-    if (var0 == NULL) return;
-    func_020e3840((struct Struct_020e3814*)var0);
-    if (!func_0202c508(func_0202ae18())) return;
-    func_ov017_021cebcc(3, arg1 & 0xff, arg2);
+extern "C" ARM void func_020e3994(struct TagValueEntry020e385c* table, int tag, int val) {
+    struct TagValueEntry020e385c* entry = func_020e385c(table, tag, val);
+    if (entry == NULL) return;
+    func_020e3840((struct Struct_020e3814*)entry);
+    if (!LinkSession_IsHostOrSolo(LinkSession_GetInstance())) return;
+    func_ov017_021cebcc(3, tag & 0xff, val);
 }

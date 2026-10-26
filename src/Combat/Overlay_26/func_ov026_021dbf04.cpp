@@ -5,44 +5,44 @@ struct Struct_ov026_021d8ba0_6;
 struct Struct_ov000_02176038;
 
 struct Struct_ov026_021d8ba0 {
-    unsigned char unknown_0_[4];
-    signed char unknown_4_;
-    unsigned short unknown_6_;
-    unsigned short unknown_8_;
+    unsigned char b[4];
+    signed char c;
+    unsigned short d;
+    unsigned short e;
 };
 
-struct Struct_ov026_021d8ba0_5 {
-    char unknown_0_[0xf78];
-    signed char unknown_f78_[4];
-    unsigned char unknown_f7c_;
+struct Roster {
+    char pad0[0xf78];
+    signed char ids[4];
+    unsigned char count;
 };
 
-struct Struct_ov000_0217e870_2 {
-    char unknown_0_[0x8];
-    unsigned short unknown_8_;
+struct PartyState {
+    char pad0[0x8];
+    unsigned short netId;
 };
 
-struct Struct_ov026_021d8ba0_4 {
-    char unknown_0_[0xb8];
+struct Container_021dae60 {
+    char pad0[0xb8];
 };
 
 struct Struct_ov000_02160da0 {
 #if defined(jpn)
-    char unknown_0_[0x21c];
+    char pad0[0x21c];
 #else
-    char unknown1_0_[0x2a0];
+    char pad0[0x2a0];
 #endif
 
-    Struct_ov000_0217e870_2* unknown_2a0_;
+    PartyState* party;
     char unknown_2a4_[0xc08];
-    int unknown_eac_;
+    int state;
 #if defined(jpn)
     char unknown_e2c_[0x28f0];
 #else
     char unknown_eb0_[0x28b0];
 #endif
 
-    Struct_ov026_021d8ba0_4 unknown_3760_;
+    Container_021dae60 list;
 #if defined(jpn)
     char unknown_37d4_[0x1f14];
 #else
@@ -61,43 +61,43 @@ struct Struct_ov000_02160da0 {
     unsigned char unknown_772f_;
     char unknown_7730_[0x4];
     int unknown_7734_;
-    unsigned int unknown_7738_;
+    unsigned int savedField;
 };
 
-SlotWork* FindSlotById_021dae60(Container_021dae60* c, int id);
-int GetCombatWorkFlags0x55f4_ov000_02160fd4(void* work, int mask);
-void SetCombatWorkFlags0x55f4_ov000_02160fa8(void* work, int mask);
-void* GlobalFlags_GetInstance();
-void FlagWord_SetBits(unsigned int* field, unsigned int bits);
-void SetFlagAndCall02176038(Obj02176038* obj);
+extern "C" Struct_ov026_021d8ba0_6* func_ov026_021dae60(Container_021dae60* c, int id);
+extern "C" int func_ov000_02160fd4(void* work, int mask);
+extern "C" void func_ov000_02160fa8(void* work, int mask);
+extern "C" void* GlobalFlags_GetInstance();
+extern "C" void FlagWord_SetBits(unsigned int* field, unsigned int bits);
+extern "C" void func_ov000_02176038(Struct_ov000_02176038* obj);
 
 extern "C" {
 void* memset(void*, int, unsigned int);
-void func_ov000_0217fcc4(Struct_ov026_021d8ba0_4*, int);
+void func_ov000_0217fcc4(Container_021dae60*, int);
 void func_ov000_0217f518(Struct_ov026_021d8ba0_6*);
 void func_ov000_02162c14(Struct_ov000_02160da0*, int, Struct_ov026_021d8ba0*);
 void func_ov017_021c6814(unsigned short, unsigned short, Struct_ov026_021d8ba0*, unsigned char, int, int);
 }
 
 // USA: func_ov026_021dbf04
-extern "C" ARM void func_ov026_021dbf04(Struct_ov000_02160da0* arg0) {
-    Struct_ov026_021d8ba0 var0;
+extern "C" ARM void func_ov026_021dbf04(Struct_ov000_02160da0* self) {
+    Struct_ov026_021d8ba0 cmd;
 
-    int var1 = arg0->unknown_eac_;
-    if (var1 == 0) {
-        arg0->unknown_eac_ = 0;
-    } else if (var1 != 0 && var1 != 1 && var1 != 2) {
-        arg0->unknown_eac_ = 3;
+    int state = self->state;
+    if (state == 0) {
+        self->state = 0;
+    } else if (state != 0 && state != 1 && state != 2) {
+        self->state = 3;
     }
 
-    func_ov000_0217fcc4(&arg0->unknown_3760_, -1);
-    arg0->unknown_772f_ = 0;
-    memset(arg0->unknown_54f4_, 0, sizeof(arg0->unknown_54f4_));
+    func_ov000_0217fcc4(&self->list, -1);
+    self->unknown_772f_ = 0;
+    memset(self->unknown_54f4_, 0, sizeof(self->unknown_54f4_));
 
     Roster* roster = (Roster*)GameState_GetParty(GameState::GetInstance());
     for (int i = 0; i < roster->count; i++) {
         int id = roster->ids[i];
-        SlotWork* slot = FindSlotById_021dae60(&self->list, id);
+        Struct_ov026_021d8ba0_6* slot = func_ov026_021dae60(&self->list, id);
         if (slot != NULL) {
             func_ov000_0217f518(slot);
             func_ov000_02162c14(self, id, &cmd);
@@ -105,11 +105,11 @@ extern "C" ARM void func_ov026_021dbf04(Struct_ov000_02160da0* arg0) {
         }
     }
 
-    int var6 = func_ov000_02160fd4(arg0, 0x2000000);
-    arg0->unknown_55f4_ = arg0->unknown_7734_;
+    int var6 = func_ov000_02160fd4(self, 0x2000000);
+    self->unknown_55f4_ = self->unknown_7734_;
     if (var6) {
-        func_ov000_02160fa8(arg0, 0x2000000);
+        func_ov000_02160fa8(self, 0x2000000);
     }
     FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), self->savedField);
-    SetFlagAndCall02176038((Obj02176038*)&self->list);
+    func_ov000_02176038((Struct_ov000_02176038*)&self->list);
 }

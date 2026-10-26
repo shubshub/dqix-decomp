@@ -2,7 +2,7 @@
 #include "Resource/CharacterCreationUI.h"
 
 // Overlay 9, originally func_ov009_021855dc (USA/EUR 0x021855dc, JPN 0x021867bc)
-ARM void CharacterCreationUI_SwitchTab(unsigned char* storage, int tab) {
+extern "C" ARM void CharacterCreationUI_SwitchTab(unsigned char* storage, int tab) {
     CharacterCreationUI* self = (CharacterCreationUI*)storage;
     signed char newTab = (signed char)tab;
     self->state = newTab;

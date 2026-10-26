@@ -2,24 +2,24 @@
 #include "Resource/Script.h"
 
 struct Struct_02108d98 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
+    unsigned short field0;
+    unsigned short field2;
+    int field4;
+    int field8;
+    int fieldC;
 };
 extern struct Struct_02108d98 data_02108d98;
 
-struct Struct_0201c1c8;
-extern "C" void func_02071c64(int arg0, int arg1, int arg2);
+struct Variant02030b0c;
+extern "C" void func_02071c64(int a, int b, int c);
 
 // USA: func_02071820
-extern "C" ARM int func_02071820(struct Struct_0201c1c8* arg0) {
-    if (data_02108d98.unknown_4_ != 0 && data_02108d98.unknown_0_ != 0) {
-        func_02071c64(data_02108d98.unknown_c_, data_02108d98.unknown_8_, data_02108d98.unknown_0_);
+extern "C" ARM int func_02071820(struct Variant02030b0c* variant) {
+    if (data_02108d98.field4 != 0 && data_02108d98.field0 != 0) {
+        func_02071c64(data_02108d98.fieldC, data_02108d98.field8, data_02108d98.field0);
     } else {
-        func_02071c64(data_02108d98.unknown_c_, data_02108d98.unknown_8_,
-                      (unsigned short)((Script::Parameter*)arg0)->ToInt());
+        func_02071c64(data_02108d98.fieldC, data_02108d98.field8,
+                      (unsigned short)((Script::Parameter*)variant)->ToInt());
     }
     return 1;
 }

@@ -7,27 +7,27 @@
 #endif
 
 
-extern "C" void func_ov000_02170db0(void* arg0);
+extern "C" void func_ov000_02170db0(void* p);
 
 // USA: func_ov000_0217457c
-extern "C" ARM void func_ov000_0217457c(void* arg0, int arg1) {
-    if (arg1 < 0) {
-        int var0;
-        for (var0 = 0; var0 < 4; var0++) {
-            signed char var1 = *((signed char*)arg0 + var0 + 0x6c);
-            void* var2 = (char*)arg0 + 0x158 + 0x800 + var1 * REGION_OFFSET_0;
-            if (*(int*)((char*)var2 + 0x4c) >= 0) {
-                func_ov000_02170db0(var2);
+extern "C" ARM void func_ov000_0217457c(void* obj, int id) {
+    if (id < 0) {
+        int i;
+        for (i = 0; i < 4; i++) {
+            signed char j = *((signed char*)obj + i + 0x6c);
+            void* e = (char*)obj + 0x158 + 0x800 + j * REGION_OFFSET_0;
+            if (*(int*)((char*)e + 0x4c) >= 0) {
+                func_ov000_02170db0(e);
             }
         }
         return;
     }
-    int var3;
-    for (var3 = 0; var3 < 4; var3++) {
-        signed char var4 = *((signed char*)arg0 + var3 + 0x6c);
-        void* var5 = (char*)arg0 + 0x158 + 0x800 + var4 * REGION_OFFSET_0;
-        if (arg1 == *(int*)((char*)var5 + 0x4c)) {
-            func_ov000_02170db0(var5);
+    int i;
+    for (i = 0; i < 4; i++) {
+        signed char j = *((signed char*)obj + i + 0x6c);
+        void* e = (char*)obj + 0x158 + 0x800 + j * REGION_OFFSET_0;
+        if (id == *(int*)((char*)e + 0x4c)) {
+            func_ov000_02170db0(e);
             return;
         }
     }

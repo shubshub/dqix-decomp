@@ -2,44 +2,44 @@
 
 typedef struct Struct_020026b4 {
     char unknown_0_;
-    char unknown_1_;
+    char unused;
     short unknown_2_;
     struct {
-        unsigned char unknown_0_;
-        unsigned char unknown_1_[32];
-        unsigned char unknown_21_;
-    } unknown_4_;
+        unsigned char length;
+        unsigned char text[32];
+        unsigned char unused;
+    } sig;
 } Struct_020026b4;
 
 typedef struct Struct_020026b4_2 {
-    char unknown_0_;
-    char unknown_1_;
-    short unknown_2_;
+    char style;
+    char unused;
+    short digits;
 } Struct_020026b4_2;
 
-extern "C" void func_0200a180(Struct_020026b4* arg0, double arg1);
-extern "C" void func_0200966c(Struct_020026b4* arg0, int arg1);
+extern "C" void func_0200a180(Struct_020026b4* d, double x);
+extern "C" void func_0200966c(Struct_020026b4* d, int digits);
 
 // USA: func_0200a300
-extern "C" ARM void func_0200a300(const Struct_020026b4_2* arg0, double arg1, Struct_020026b4* arg2) {
-    short var0 = arg0->unknown_2_;
-    int var1;
+extern "C" ARM void func_0200a300(const Struct_020026b4_2* f, double x, Struct_020026b4* d) {
+    short digits = f->digits;
+    int i;
 
-    func_0200a180(arg2, arg1);
+    func_0200a180(d, x);
 
-    if (arg2->unknown_4_.unknown_1_[0] > 9)
+    if (d->sig.text[0] > 9)
         return;
 
-    if (var0 > 32)
-        var0 = 32;
+    if (digits > 32)
+        digits = 32;
 
-    func_0200966c(arg2, var0);
+    func_0200966c(d, digits);
 
-    while (arg2->unknown_4_.unknown_0_ < var0)
-        arg2->unknown_4_.unknown_1_[arg2->unknown_4_.unknown_0_++] = 0;
+    while (d->sig.length < digits)
+        d->sig.text[d->sig.length++] = 0;
 
-    arg2->unknown_2_ -= arg2->unknown_4_.unknown_0_ - 1;
+    d->unknown_2_ -= d->sig.length - 1;
 
-    for (var1 = 0; var1 < arg2->unknown_4_.unknown_0_; var1++)
-        arg2->unknown_4_.unknown_1_[var1] += '0';
+    for (i = 0; i < d->sig.length; i++)
+        d->sig.text[i] += '0';
 }

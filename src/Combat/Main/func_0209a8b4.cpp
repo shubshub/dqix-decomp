@@ -3,32 +3,33 @@
 #include "Memory/SafeAllocator.h"
 #include "std_library_functions.h"
 #include "Resource/Script.h"
+#include "Resource/SpellTable.h"
 
-struct Struct_02086f24_6 {
-    void* unknown_0_;
+struct Ctx0209a8b4 {
+    void* field0;
 };
-extern struct Struct_02086f24_6* data_02109ba8;
-extern char data_020f1640[];
+extern struct Ctx0209a8b4* SpellTable_scriptContext;
+extern char SpellTable_scriptOpcodes[];
 
-struct Struct_0201f040;
+struct ResetStruct;
 
-struct Struct_0201f040_2;
-struct Struct_02013fb4;
+struct StreamState;
+struct StreamHeader;
 
 struct Struct_0201f040_3;
 
 // USA: func_0209a8b4
-extern "C" ARM void func_0209a8b4(struct Struct_02086f24_6* arg0, SafeAllocator* arg1, struct Struct_02013fb4* arg2, int arg3) {
-    void* var0 = arg1->Allocate(0x550);
-    arg0->unknown_0_ = var0;
-    if (var0 != NULL) {
-        memset(var0, 0, 0x550);
-        char var1[0x430];
-        data_02109ba8 = arg0;
-        ((Script*)((struct Struct_0201f040*)var1))->Initialize();
-        ((Script*)((struct Struct_0201f040*)var1))->SetOpcodeLookup((Script::OpcodeLookupEntry*)data_020f1640);
-        ((Script*)((struct Struct_0201f040_2*)var1))->Load(arg2, arg3);
-        ((Script*)((struct Struct_0201f040_3*)var1))->Execute();
-        data_02109ba8 = NULL;
+extern "C" ARM void func_0209a8b4(struct Ctx0209a8b4* ctx, SafeAllocator* alloc, struct StreamHeader* buffer, int length) {
+    void* mem = alloc->Allocate(sizeof(SpellTable));
+    ctx->field0 = mem;
+    if (mem != NULL) {
+        memset(mem, 0, sizeof(SpellTable));
+        char local[0x430];
+        SpellTable_scriptContext = ctx;
+        ((Script*)((struct ResetStruct*)local))->Initialize();
+        ((Script*)((struct ResetStruct*)local))->SetOpcodeLookup((Script::OpcodeLookupEntry*)SpellTable_scriptOpcodes);
+        ((Script*)((struct StreamState*)local))->Load(buffer, length);
+        ((Script*)((struct Struct_0201f040_3*)local))->Execute();
+        SpellTable_scriptContext = NULL;
     }
 }

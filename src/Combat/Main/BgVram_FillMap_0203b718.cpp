@@ -14,7 +14,7 @@ struct BgVram {
 };
 
 // Main, originally SetArraySlotFlag0203b718 (USA 0x0203b718, EUR 0x0203b728, JPN 0x0203b170)
-ARM void BgVram_FillMap(void* bgVramRaw, int screen, int bg, int fillByte) {
+extern "C" ARM void BgVram_FillMap(void* bgVramRaw, int screen, int bg, int fillByte) {
     BgVram* bgVram = (BgVram*)bgVramRaw;
     switch (screen) {
     case 0:

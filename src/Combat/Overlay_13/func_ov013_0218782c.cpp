@@ -14,23 +14,23 @@
 #include "Filesystem/BackgroundLoader.h"
 
 // USA: func_ov013_0218782c
-extern "C" ARM void func_ov013_0218782c(void* arg0, int arg1, int arg2) {
-    char* var0 = (char*)arg0;
-    if (var0[R(0x53,0x67)] == arg1 && (unsigned char)var0[R(0x54,0x68)] == (unsigned int)arg2) return;
+extern "C" ARM void func_ov013_0218782c(void* obj, int a, int b) {
+    char* o = (char*)obj;
+    if (o[R(0x53,0x67)] == a && (unsigned char)o[R(0x54,0x68)] == (unsigned int)b) return;
 
-    int var1 = (arg1 >= 0 && arg1 <= 3);
+    int var1 = (a >= 0 && a <= 3);
     if (!var1) return;
-    if ((unsigned int)arg2 >= 5) return;
+    if ((unsigned int)b >= 5) return;
 
-    var0[R(0x53,0x67)] = (char)arg1;
-    var0[R(0x54,0x68)] = (char)arg2;
+    o[R(0x53,0x67)] = (char)a;
+    o[R(0x54,0x68)] = (char)b;
 
-    if (*(int*)(var0 + R(0x48,0x5c)) >= 0) {
-        int var2 = (int)BackgroundLoader::GetInstance();
-        ((BackgroundLoader*)(var2))->RemoveTask((int)(*(int*)(var0 + R(0x48,0x5c))));
-        *(int*)(var0 + R(0x48,0x5c)) = -1;
+    if (*(int*)(o + R(0x48,0x5c)) >= 0) {
+        int p = (int)BackgroundLoader::GetInstance();
+        ((BackgroundLoader*)(p))->RemoveTask((int)(*(int*)(o + R(0x48,0x5c))));
+        *(int*)(o + R(0x48,0x5c)) = -1;
     }
 
-    ((unsigned char*)var0)[R(0x55,0x69)] |= 1;
-    var0[R(0x52,0x66)] = 0;
+    ((unsigned char*)o)[R(0x55,0x69)] |= 1;
+    o[R(0x52,0x66)] = 0;
 }

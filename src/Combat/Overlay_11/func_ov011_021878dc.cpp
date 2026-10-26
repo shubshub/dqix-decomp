@@ -6,21 +6,21 @@
 #endif
 #include <globaldefs.h>
 
-struct Struct_ov011_02184c30;
-extern "C" int func_ov011_02184c30(struct Struct_ov011_02184c30* arg0);
+struct TaggedNumber02184c30;
+extern "C" int func_ov011_02184c30(struct TaggedNumber02184c30* v);
 
 extern "C" void* func_ov017_021b2164(void);
-extern "C" int func_ov012_021845f8(void* arg0, int arg1);
+extern "C" int func_ov012_021845f8(void* key, int val1);
 
 struct Struct_ov011_021844f4;
-extern "C" int func_ov011_021844f4(struct Struct_ov011_021844f4* arg0, int arg1, unsigned int arg2);
+extern "C" int func_ov011_021844f4(struct Struct_ov011_021844f4* obj, int unused, unsigned int size);
 
 // USA: func_ov011_021878dc
-extern "C" ARM int func_ov011_021878dc(struct Struct_ov011_02184c30* arg0) {
-    int var0 = func_ov011_02184c30(arg0);
-    int var1 = func_ov011_02184c30((struct Struct_ov011_02184c30*)((char*)arg0 + 8));
-    void* var2 = func_ov017_021b2164();
-    if (func_ov012_021845f8(var2, var0) == 0) return 0;
-    func_ov011_021844f4((struct Struct_ov011_021844f4*)var2, var0, (unsigned int)var1);
+extern "C" ARM int func_ov011_021878dc(struct TaggedNumber02184c30* a) {
+    int val1 = func_ov011_02184c30(a);
+    int val2 = func_ov011_02184c30((struct TaggedNumber02184c30*)((char*)a + 8));
+    void* key = func_ov017_021b2164();
+    if (func_ov012_021845f8(key, val1) == 0) return 0;
+    func_ov011_021844f4((struct Struct_ov011_021844f4*)key, val1, (unsigned int)val2);
     return 1;
 }

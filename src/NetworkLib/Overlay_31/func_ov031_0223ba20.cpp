@@ -1,42 +1,42 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_0223ba20_2 {
-    int unknown_0_;
-    int unknown_4_;
+    int flags;
+    int unused;
 };
 
 struct Struct_ov031_0223ba20 {
-    char unknown_0_[8];
-    Struct_ov031_0223ba20_2* unknown_8_;
-    unsigned char unknown_c_;
+    char pad8[8];
+    Struct_ov031_0223ba20_2* arr;
+    unsigned char count;
 };
 
-extern "C" void func_ov031_0223d8a0(void* arg0);
-extern "C" void func_ov031_0223bf48(int arg0, void* arg1);
+extern "C" void func_ov031_0223d8a0(void* obj);
+extern "C" void func_ov031_0223bf48(int val, void* obj);
 extern void* data_ov031_02290d28;
 
 // USA: func_ov031_0223ba20
-extern "C" ARM void func_ov031_0223ba20(void* arg0) {
-    Struct_ov031_0223ba20* var0 = (Struct_ov031_0223ba20*)arg0;
-    int var1 = 0;
+extern "C" ARM void func_ov031_0223ba20(void* obj) {
+    Struct_ov031_0223ba20* self = (Struct_ov031_0223ba20*)obj;
+    int index = 0;
 
-    Struct_ov031_0223ba20_2* var2 = var0->unknown_8_;
-    int var3 = 0;
-    int var4 = var0->unknown_c_;
-    if (var4 > 0) {
+    Struct_ov031_0223ba20_2* p = self->arr;
+    int i = 0;
+    int count = self->count;
+    if (count > 0) {
         do {
-            var2->unknown_0_ = (var2->unknown_0_ & 0xc1fffcff) | 0x200;
-            var3++;
-            var2++;
-        } while (var3 < var0->unknown_c_);
+            p->flags = (p->flags & 0xc1fffcff) | 0x200;
+            i++;
+            p++;
+        } while (i < self->count);
     }
 
-    func_ov031_0223d8a0(arg0);
+    func_ov031_0223d8a0(obj);
 
-    void* var5 = data_ov031_02290d28;
-    if ((unsigned int)arg0 >= (unsigned int)((char*)var5 + 0x228)) {
-        var1 = 1;
+    void* base = data_ov031_02290d28;
+    if ((unsigned int)obj >= (unsigned int)((char*)base + 0x228)) {
+        index = 1;
     }
-    int var6 = *(int*)((char*)var5 + var1 * 0x228 + 0x224);
-    func_ov031_0223bf48(var6, arg0);
+    int val = *(int*)((char*)base + index * 0x228 + 0x224);
+    func_ov031_0223bf48(val, obj);
 }

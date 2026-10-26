@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "Resource/CharacterCreationUI.h"
 
-void CharacterCreationUI_ResetTargetLayout(CreationSlotLayout *s);
+extern "C" void CharacterCreationUI_ResetTargetLayout(CreationSlotLayout *s);
 
 #if !defined(jpn) && !defined(eur)
 // {tab, x, y, width, height, stepX, stepY, columns, rows} per tab, ending in -1

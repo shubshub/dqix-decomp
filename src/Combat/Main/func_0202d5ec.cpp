@@ -4,10 +4,10 @@ extern char data_021015a0;
 extern "C" void func_0202c848(int);
 
 // USA: func_0202d5ec
-extern "C" ARM void func_0202d5ec(unsigned short* arg0) {
-    if (arg0[1] == 0) {
+extern "C" ARM void func_0202d5ec(unsigned short* obj) {
+    if (obj[1] == 0) {
         *(int*)(&data_021015a0 + 0x10) = 1;
         return;
     }
-    func_0202c848(arg0[1]);
+    func_0202c848(obj[1]);
 }

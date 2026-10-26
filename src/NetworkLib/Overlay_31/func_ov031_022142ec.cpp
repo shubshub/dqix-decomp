@@ -12,8 +12,8 @@ extern "C" ARM int func_ov031_022142ec(void) {
 	if (func_ov031_02206d90() != 0) {
 		return 0;
 	}
-	int var0 = func_ov031_022077c0();
-	if (var0 == 0 || var0 == -0x27) {
+	int r0 = func_ov031_022077c0();
+	if (r0 == 0 || r0 == -0x27) {
 		return 1;
 	}
 	return 0;

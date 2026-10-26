@@ -3,36 +3,36 @@
 #include "Resource/GameResources.h"
 
 struct Struct_ov017_021d26a4 {
-    unsigned char unknown_0_[4];
-    unsigned char unknown_4_;
+    unsigned char pad[4];
+    unsigned char id;
     unsigned char unknown_5_0_ : 1;
-    unsigned char unknown_5_1_ : 1;
+    unsigned char flag1 : 1;
 };
 
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" void func_ov017_0218d4b8(unsigned char* arg0, int arg1);
-extern "C" void func_ov017_0218d4d0(void* arg0, int arg1);
-extern "C" void func_ov017_02191aac(void* arg0, int arg1, int arg2, unsigned char arg3);
+extern "C" int func_02053c6c(unsigned char* obj);
+extern "C" void func_ov017_0218d4b8(unsigned char* base, int bit);
+extern "C" void func_ov017_0218d4d0(void* obj, int bit);
+extern "C" void func_ov017_02191aac(void* obj, int mode, int idx, unsigned char mask);
 
 // USA: func_ov017_021d26a4
-extern "C" ARM void func_ov017_021d26a4(void* arg0, Struct_ov017_021d26a4* arg1, GameState* arg2, void* arg3) {
+extern "C" ARM void func_ov017_021d26a4(void* unused, Struct_ov017_021d26a4* info, GameState* battleStruct, void* base) {
     int var0 = ((int)GetGameResources());
-    GameObject* var1 = arg2->GetPartyMemberByIndex(arg1->unknown_4_);
-    if (var1 == 0) {
+    GameObject* combatant = battleStruct->GetPartyMemberByIndex(info->id);
+    if (combatant == 0) {
         return;
     }
-    unsigned char* var2 = (unsigned char*)func_02053c6c((unsigned char*)var1);
-    if (var2 == 0) {
+    unsigned char* field150 = (unsigned char*)func_02053c6c((unsigned char*)combatant);
+    if (field150 == 0) {
         return;
     }
-    bool var3 = arg1->unknown_5_0_;
-    var2[0x56c] = var3;
-    if (var2[0x56c]) {
-        func_ov017_02191aac(arg3, 1, arg1->unknown_4_, 2);
+    bool bit0 = info->unknown_5_0_;
+    field150[0x56c] = bit0;
+    if (field150[0x56c]) {
+        func_ov017_02191aac(base, 1, info->id, 2);
     }
-    if (arg1->unknown_5_1_) {
-        func_ov017_0218d4b8((unsigned char*)var0, arg1->unknown_4_);
+    if (info->flag1) {
+        func_ov017_0218d4b8((unsigned char*)var0, info->id);
     } else {
-        func_ov017_0218d4d0((void*)var0, arg1->unknown_4_);
+        func_ov017_0218d4d0((void*)var0, info->id);
     }
 }

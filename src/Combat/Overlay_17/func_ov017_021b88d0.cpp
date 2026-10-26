@@ -10,7 +10,7 @@ enum { Enum_ov017_021b88d0_348 = 0x15c };
 struct Struct_ov000_0215fab0;
 
 struct Struct_ov017_021b88d0 {
-    GameObject unknown_0_;
+    GameObject base;
     char unknown_13c_[Enum_ov017_021b88d0_348 - 0x13c];
     int unknown_15c_;
     Vector3i unknown_160_;
@@ -18,77 +18,77 @@ struct Struct_ov017_021b88d0 {
 };
 
 struct Struct_ov017_021b88d0_2 {
-    unsigned char unknown_0_[3];
-    unsigned char unknown_3_;
+    unsigned char data[3];
+    unsigned char count;
 };
 
 struct Struct_ov017_021b88d0_3 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
+    unsigned char field_0x0;
+    unsigned char done;
     char unknown_2_[0x20 - 0x02];
     unsigned char unknown_20_;
-    char unknown_21_[0x24 - 0x21];
-    unsigned short unknown_24_;
+    char pad21[0x24 - 0x21];
+    unsigned short key;
     char unknown_26_[0x4c - 0x26];
     int unknown_4c_;
     char unknown_50_[0x6b0 - 0x50];
     struct Struct_ov000_0215fab0* unknown_6b0_;
-    unsigned short unknown_6b4_;
+    unsigned short state;
     char unknown_6b6_[0x6c0 - 0x6b6];
     struct Struct_ov017_021b88d0_2 unknown_6c0_;
 };
 
 extern "C" void __clear(void* buf, int n);
-int GameState_GetProtagonistIndex(GameState* gs);
-GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* gs, int id);
-int GetSignedByte0x2d0_020546a8(void* obj);
-extern "C" void func_ov000_0215fab0(struct RingBuf0215fab0* ring, unsigned char val);
-extern "C" void func_ov017_021b6f9c(struct Battle_021b88d0* self);
+extern "C" int GameState_GetProtagonistIndex(GameState* gs);
+extern "C" GameObject* func_0200ff58(GameState* gs, int id);
+extern "C" int func_020546a8(void* obj);
+extern "C" void func_ov000_0215fab0(struct Struct_ov000_0215fab0* arg0, unsigned char val);
+extern "C" void func_ov017_021b6f9c(struct Struct_ov017_021b88d0_3* self);
 
 // USA: func_ov017_021b88d0
-extern "C" ARM void func_ov017_021b88d0(struct Struct_ov017_021b88d0_3* arg0, int arg1, int arg2) {
-    if (arg0->unknown_24_ != arg2) {
+extern "C" ARM void func_ov017_021b88d0(struct Struct_ov017_021b88d0_3* self, int id, int key) {
+    if (self->key != key) {
         return;
     }
 
     GameState* gs = GameState::GetInstance();
     if (id == GameState_GetProtagonistIndex(gs)) {
         if (self->state == 1) {
-            self->field_0x4c = 1;
+            self->unknown_4c_ = 1;
             self->state = 2;
         }
         return;
     }
 
-    unsigned short var1 = arg0->unknown_6b4_;
-    if (var1 != 3 && var1 != 5) {
-        int var2[4];
-        __clear(var2, sizeof(var2));
-        var2[0] = arg1;
-        int var3 = 1;
-        for (int var4 = 0; var4 < 4; var4++) {
-            GameObject* var5 = func_0200ff58(var0, var4);
-            if (var5 != 0 && arg1 == func_020546a8(var5)) {
-                var2[var3++] = var4;
+    unsigned short state = self->state;
+    if (state != 3 && state != 5) {
+        int ids[4];
+        __clear(ids, sizeof(ids));
+        ids[0] = id;
+        int count = 1;
+        for (int i = 0; i < 4; i++) {
+            GameObject* c = func_0200ff58(gs, i);
+            if (c != 0 && id == func_020546a8(c)) {
+                ids[count++] = i;
             }
         }
 
-        for (int var6 = 0; var6 < var3; var6++) {
-            if (arg0->unknown_6b0_ != 0) {
-                func_ov000_0215fab0(arg0->unknown_6b0_, var2[var6]);
+        for (int j = 0; j < count; j++) {
+            if (self->unknown_6b0_ != 0) {
+                func_ov000_0215fab0(self->unknown_6b0_, ids[j]);
             } else {
-                arg0->unknown_6c0_.unknown_0_[arg0->unknown_6c0_.unknown_3_++] = var2[var6];
+                self->unknown_6c0_.data[self->unknown_6c0_.count++] = ids[j];
             }
-            struct Struct_ov017_021b88d0* var7 =
-                (struct Struct_ov017_021b88d0*)func_0200ff1c(var0, var2[var6]);
-            if (var7 != 0) {
-                var7->unknown_160_ = var7->unknown_0_.obj3D_.position_;
-                var7->unknown_16c_ = var7->unknown_0_.obj3D_.rotation_;
-                var7->unknown_15c_ = var7->unknown_0_.obj3D_.GetField06();
+            struct Struct_ov017_021b88d0* c =
+                (struct Struct_ov017_021b88d0*)func_0200ff1c(gs, ids[j]);
+            if (c != 0) {
+                c->unknown_160_ = c->base.obj3D_.position_;
+                c->unknown_16c_ = c->base.obj3D_.rotation_;
+                c->unknown_15c_ = c->base.obj3D_.GetField06();
             }
         }
-    } else if (arg0->unknown_20_ == 0) {
-        func_ov017_021b6f9c(arg0);
-        arg0->unknown_1_ = 1;
+    } else if (self->unknown_20_ == 0) {
+        func_ov017_021b6f9c(self);
+        self->done = 1;
     }
 }

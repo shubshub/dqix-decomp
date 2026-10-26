@@ -10,25 +10,25 @@ extern "C" THUMB void func_ov031_0221e1ec(void*, void*, int, int);
 extern "C" THUMB void func_ov031_0221e250(void*, unsigned char*, unsigned char*, unsigned int);
 extern "C" THUMB void func_ov031_0221c4ac(int);
 struct Struct_ov031_0221e0e8 {
-    unsigned int unknown_0_;
-    unsigned int unknown_4_;
-    void* unknown_8_;
-    unsigned int unknown_c_;
+    unsigned int first;
+    unsigned int second;
+    void* buffer;
+    unsigned int size;
 };
 
 // USA: func_ov031_0221e0e8
-extern "C" THUMB int func_ov031_0221e0e8(void* arg0, void* arg1, int arg2, unsigned char* arg3, unsigned short* arg4, void* arg5, int arg6) {
-    unsigned short var0;
-    Struct_ov031_0221e0e8 var1;
-    *arg3 = func_ov031_0221e2bc(arg0, arg2);
-    var1.unknown_8_ = func_ov031_0221c49c(arg2);
-    if (!var1.unknown_8_) return -1;
-    var0 = func_ov031_0221e664();
-    func_ov031_0221e51c(arg4, &var0, 2);
+extern "C" THUMB int func_ov031_0221e0e8(void* input, void* output, int length, unsigned char* status, unsigned short* arg4, void* data, int arg6) {
+    unsigned short seed;
+    Struct_ov031_0221e0e8 stream;
+    *status = func_ov031_0221e2bc(input, length);
+    stream.buffer = func_ov031_0221c49c(length);
+    if (!stream.buffer) return -1;
+    seed = func_ov031_0221e664();
+    func_ov031_0221e51c(arg4, &seed, 2);
     func_ov031_0221e51c(&data_ov031_0224f448, arg4, 2);
-    func_ov031_0221e51c(data_ov031_0224f44a, arg5, arg6);
-    func_ov031_0221e1ec(&var1, &data_ov031_0224f448, arg6 + 2, arg2);
-    func_ov031_0221e250(&var1, static_cast<unsigned char*>(arg1), static_cast<unsigned char*>(arg0), arg2);
-    func_ov031_0221c4ac((int)var1.unknown_8_);
+    func_ov031_0221e51c(data_ov031_0224f44a, data, arg6);
+    func_ov031_0221e1ec(&stream, &data_ov031_0224f448, arg6 + 2, length);
+    func_ov031_0221e250(&stream, static_cast<unsigned char*>(output), static_cast<unsigned char*>(input), length);
+    func_ov031_0221c4ac((int)stream.buffer);
     return 0;
 }

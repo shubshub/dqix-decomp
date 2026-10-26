@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
 struct Struct_0209fccc {
-    unsigned short unknown_0_;
+    unsigned short value;
 };
 
 struct Struct_0209d44c {
-    unsigned char unknown_0_[4];
-    char* unknown_4_;
+    unsigned char pad[4];
+    char* ctx;
 };
 
 // USA: func_0209fccc
-extern "C" ARM int func_0209fccc(struct Struct_0209d44c* arg0, int arg1) {
-    struct Struct_0209fccc* var0 = *(struct Struct_0209fccc**)(arg0->unknown_4_ + 0x8e18);
-    if (var0 == NULL) {
+extern "C" ARM int func_0209fccc(struct Struct_0209d44c* obj, int mode) {
+    struct Struct_0209fccc* s = *(struct Struct_0209fccc**)(obj->ctx + 0x8e18);
+    if (s == NULL) {
         return -1;
     }
-    if (arg1 == 0) {
-        return var0->unknown_0_;
+    if (mode == 0) {
+        return s->value;
     }
-    return var0->unknown_0_ / 100;
+    return s->value / 100;
 }

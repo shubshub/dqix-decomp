@@ -57,10 +57,10 @@ struct CameraInitView {
 extern "C" void Camera_SetOrbitFromPosition(CameraInitView* camera);
 extern "C" void Camera_SetOrbit(CameraInitView* camera, int yaw, int height, int distance);
 extern "C" void Mat3x3_WriteIdentity(void* matrix);
-void Vec3Ease_Clear(void* ease);
+extern "C" void Vec3Ease_Clear(void* ease);
 
 struct AngleTrig0202e9a4;
-void Camera_SetFieldOfView(struct AngleTrig0202e9a4* camera, int fieldOfView);
+extern "C" void Camera_SetFieldOfView(struct AngleTrig0202e9a4* camera, int fieldOfView);
 
 // Main, originally func_0202df68 (USA 0x0202df68, EUR 0x0202df78, JPN 0x0202dad8)
 extern "C" ARM void Camera_Init(CameraInitView* camera) {

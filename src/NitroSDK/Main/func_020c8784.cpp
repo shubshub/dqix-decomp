@@ -1,19 +1,19 @@
 #include <globaldefs.h>
 
 struct Struct_020c8784 {
-    struct Struct_020c8784* unknown_0_;
-    struct Struct_020c8784* unknown_4_;
+    struct Struct_020c8784* prev;
+    struct Struct_020c8784* next;
 };
 
 // USA: func_020c8784
-extern "C" ARM struct Struct_020c8784* func_020c8784(struct Struct_020c8784* arg0, struct Struct_020c8784* arg1) {
-    if (arg1->unknown_4_ != 0) {
-        arg1->unknown_4_->unknown_0_ = arg1->unknown_0_;
+extern "C" ARM struct Struct_020c8784* func_020c8784(struct Struct_020c8784* head, struct Struct_020c8784* node) {
+    if (node->next != 0) {
+        node->next->prev = node->prev;
     }
-    if (arg1->unknown_0_ == 0) {
-        arg0 = arg1->unknown_4_;
+    if (node->prev == 0) {
+        head = node->next;
     } else {
-        arg1->unknown_0_->unknown_4_ = arg1->unknown_4_;
+        node->prev->next = node->next;
     }
-    return arg0;
+    return head;
 }

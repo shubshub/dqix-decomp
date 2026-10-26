@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 
-extern "C" void func_0206e164(int arg0, int arg1, int arg2);
+extern "C" void func_0206e164(int base, int index, int value);
 
 // USA: func_0206e100
-extern "C" ARM void func_0206e100(int arg0, int arg1) {
-    if (arg1 >= 0xcc) {
+extern "C" ARM void func_0206e100(int base, int index) {
+    if (index >= 0xcc) {
         return;
     }
-    if (arg1 < 0) {
+    if (index < 0) {
         return;
     }
-    func_0206e164(arg0, arg1, 3);
+    func_0206e164(base, index, 3);
 }

@@ -5,10 +5,10 @@ enum { kMiddlePadding = 0x184 };
 enum { kMiddlePadding = 0x190 };
 #endif
 
-int GameObject_IsClimbingLadder(char*);
+extern "C" int GameObject_IsClimbingLadder(char*);
 
 struct Bytes02033b88;
-int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
+extern "C" int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
 
 struct Obj020397cc {
     char unknown0[0xc1];
@@ -19,7 +19,7 @@ struct Obj020397cc {
 };
 
 // Main, originally CancelPendingAction020397cc (USA 0x020397cc, EUR 0x020397dc, JPN 0x02039224)
-ARM void GameObject_DisableControl(struct Obj020397cc* object, int stopWalking) {
+extern "C" ARM void GameObject_DisableControl(struct Obj020397cc* object, int stopWalking) {
     // GameObject_IsClimbingLadder: whether a ladder climb is active; motion state 0 stands still
     if (stopWalking && object->controlEnabled && GameObject_IsClimbingLadder((char*)(object)) == 0 && (object->unknownC1 & 2) == 0) {
         GameObject_ForceMotionState((struct Bytes02033b88*)object, 0);

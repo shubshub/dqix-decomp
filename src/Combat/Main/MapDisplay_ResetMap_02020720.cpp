@@ -10,7 +10,7 @@
 #include "Combat/CombatScriptContext.h"
 
 struct BackgroundGraphics;
-ARM void Background_Init(struct BackgroundGraphics* obj);
+extern "C" ARM void Background_Init(struct BackgroundGraphics* obj);
 
 extern "C" ARM void MapDisplay_CenterOnLeader(void* obj);
 
@@ -61,7 +61,7 @@ extern "C" ARM void MapDisplay_ResetMap(MapDisplay* display) {
 
     display->field9bc = 0;
     display->actionState = 0;
-    data_020fdc4c.unknownCounter = 0;
+    data_020fdc4c.unknown_c_ = 0;
     display->fieldaa0 = 0;
 
     VectorizedMemset(display->bytesaa2, 0, 0x100);

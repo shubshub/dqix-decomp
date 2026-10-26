@@ -14,49 +14,49 @@ extern "C" void func_ov005_02155424(void* self);
 extern "C" void func_ov005_02155544(void* self);
 extern "C" void func_ov005_021555c0(void* self);
 extern "C" void func_ov005_021571d0(void* self);
-extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
+extern "C" void* ExtractFileFromGP2(const char* arg0, const char* innerFilePath, unsigned int* outSize);
 extern "C" void KeyTable_Load(void* dest, void* allocator, void* fileData, unsigned int size);
-char* MessageSystem_GetInstance();
-void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fog);
-int* BgVram_GetInstance();
-void BgVram_ResetWithBlankTile(int* obj, int a, int b);
-void BgVram_Reset(char*);
-void BgVram_Clear(char*);
-void Background_SetMapSize(unsigned char*, int);
+extern "C" char* MessageSystem_GetInstance();
+extern "C" void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fog);
+extern "C" int* BgVram_GetInstance();
+extern "C" void BgVram_ResetWithBlankTile(int* obj, int a, int b);
+extern "C" void BgVram_Reset(char*);
+extern "C" void BgVram_Clear(char*);
+extern "C" void Background_SetMapSize(unsigned char*, int);
 extern "C" void Background_SetPriority(void* obj, int value);
 struct BackgroundGraphics;
-void Background_SetScroll(BackgroundGraphics*, int, int);
-void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
-void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
+extern "C" void Background_SetScroll(BackgroundGraphics*, int, int);
+extern "C" void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
+extern "C" void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
 extern "C" void ColorEffect_ConfigureAlphaBlend(unsigned int* out, unsigned char a, unsigned char b, unsigned char c, int d);
 struct Container020e0310;
-const char* KeyTable_Get(Container020e0310*, int);
+extern "C" const char* KeyTable_Get(Container020e0310*, int);
 struct PacRecord;
-int Pac_CountFiles(PacRecord*);
-void* Pac_GetFile(PacRecord*, int, void**, int*);
+extern "C" int Pac_CountFiles(PacRecord*);
+extern "C" void* Pac_GetFile(PacRecord*, int, void**, int*);
 extern "C" void Background_LoadFile(void* obj, void* data, SafeAllocator* alloc, int field44);
 extern "C" void Background_FillRect(void* obj, unsigned short tile, int x, int y, int w, int h, unsigned short palette);
-void Background_UploadMap(BackgroundGraphics*, void*);
-void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
+extern "C" void Background_UploadMap(BackgroundGraphics*, void*);
+extern "C" void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
 struct WindowPane;
-void WindowPane_AllocateBuffer(WindowPane*, SafeAllocator*, int, unsigned int);
+extern "C" void WindowPane_AllocateBuffer(WindowPane*, SafeAllocator*, int, unsigned int);
 struct WindowPane;
 struct Struct_0205cf78;
-void Window_SetPanes(Struct_0205cf78*, WindowPane*, unsigned char);
+extern "C" void Window_SetPanes(Struct_0205cf78*, WindowPane*, unsigned char);
 struct Struct0200fb08;
-int GameState_GetLanguage(Struct0200fb08*);
-int FindMatchingRecords0204684c(PacRecord*, char const*, void**, int, int*, void**);
-void VramState_Restore(char*);
-void VramState_Save(char*);
-void SprSprite_LoadFile(void* a, int b, int c, int d);
-struct Obj021e1318;
-void ClearObj_021e1318(Obj021e1318*);
-void InitScriptAndRun_021e133c(void* a, void* b, int c, int d, int e, short f);
+extern "C" int GameState_GetLanguage(Struct0200fb08*);
+extern "C" int FindMatchingRecords0204684c(PacRecord*, char const*, void**, int, int*, void**);
+extern "C" void VramState_Restore(char*);
+extern "C" void VramState_Save(char*);
+extern "C" void SprSprite_LoadFile(void* a, int b, int c, int d);
+struct Struct_ov002_0215505c_2;
+extern "C" void func_ov023_021e1318(Struct_ov002_0215505c_2*);
+extern "C" void func_ov023_021e133c(void* a, void* b, int c, int d, int e, short f);
 extern "C" void func_ov005_02154d18(void* obj, int a, int b);
 extern "C" void func_ov005_02154d34(void* obj, int a, int b);
 extern "C" void func_ov005_02154d50(void* obj, int a, int b);
 extern "C" void func_ov005_02154d7c(void* obj, int a, int b);
-char* GetField1c_021a193c(int*);
+extern "C" char* func_ov017_021a193c(int*);
 extern "C" void func_020dc7e8(int a, int b);
 extern "C" void func_ov023_021dc134(void* obj, int key, int flag);
 extern "C" void func_ov023_021dbfd0(void* obj, void* alloc);
@@ -73,91 +73,91 @@ void* LoadFileIntoMemory(const char* path, void* archive, unsigned int* size);
 #endif
 
 struct Struct_ov005_0215436c {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
-    char unknown_1d_[3];
+    char pad0[0x1c];
+    unsigned char lo : 4;
+    unsigned char hi : 4;
+    char pad1[3];
 };
 
 union Struct_ov005_0215436c_2 {
-    unsigned int unknown_0_;
+    unsigned int raw;
     struct {
-        unsigned int unknown_0_0_ : 2;
-        unsigned int unknown_0_2_ : 1;
-        unsigned int unknown_0_3_ : 1;
+        unsigned int b0 : 2;
+        unsigned int b2 : 1;
+        unsigned int b3 : 1;
         unsigned int unknown_0_4_ : 1;
         unsigned int unknown_0_5_ : 1;
         unsigned int unknown_0_6_ : 1;
         unsigned int unknown_0_7_ : 3;
-        unsigned int unknown_1_2_ : 1;
-        unsigned int unknown_1_3_ : 21;
-    } unknown1_0_;
+        unsigned int b10 : 1;
+        unsigned int rest : 21;
+    } bits;
 };
 
 struct Struct_ov005_0215436c_3 {
-    SafeAllocator unknown_0_;
-    char unknown_14_[0x21c - sizeof(SafeAllocator)];
-    SafeAllocator unknown_21c_;
-    char unknown_230_[0x244 - 0x21c - sizeof(SafeAllocator)];
+    SafeAllocator alloc;
+    char pad0[0x21c - sizeof(SafeAllocator)];
+    SafeAllocator fileAlloc;
+    char pad1[0x244 - 0x21c - sizeof(SafeAllocator)];
     SafeAllocator unknown_244_;
-    char unknown_258_[0x258 - 0x244 - sizeof(SafeAllocator)];
-    SafeAllocator unknown1_258_;
-    char unknown_26c_[0x294 - 0x258 - sizeof(SafeAllocator)];
-    char unknown_294_[0xdf4 - 0x294];
+    char pad2[0x258 - 0x244 - sizeof(SafeAllocator)];
+    SafeAllocator scriptAlloc;
+    char pad3[0x294 - 0x258 - sizeof(SafeAllocator)];
+    char pairTables[0xdf4 - 0x294];
     int unknown_df4_;
-    char unknown_df8_[0xe10 - 0xdf8];
-    int unknown_e10_;
-    char unknown_e14_[REGION_LAYOUT(0xe80, 0xe84) - 0xe14];
-    Struct_ov005_0215436c unknown_e84_[3];
-    char unknown_ee4_[0xf7c - 0xee4];
+    char container[0xe10 - 0xdf8];
+    int fe10;
+    char pad4[REGION_LAYOUT(0xe80, 0xe84) - 0xe14];
+    Struct_ov005_0215436c lists[3];
+    char linkHead[0xf7c - 0xee4];
     Struct_ov005_0215436c* unknown_f7c_;
-    char unknown_f80_[0xf96 - 0xf80];
+    char pad5[0xf96 - 0xf80];
     unsigned char unknown_f96_;
-    char unknown_f97_[0xfa0 - 0xf97];
-    char unknown_fa0_[3][0xe0];
-    void* unknown_1240_;
-    char unknown_1244_[0x128c - 0x1244];
+    char pad6[0xfa0 - 0xf97];
+    char elems[3][0xe0];
+    void* buffer;
+    char effect[0x128c - 0x1244];
     int unknown_128c_;
     char unknown_1290_[REGION_LAYOUT(0x1930 - 0x128c, 0x19b8 - 0x1290)];
     unsigned short unknown_19b8_;
-    char unknown_19ba_[0x19be - 0x19ba];
+    char pad8[0x19be - 0x19ba];
     unsigned char unknown_19be_;
     char unknown_19bf_[0x19e0 - 0x19bf];
-    char unknown_19e0_[0x1a30 - 0x19e0];
+    char script[0x1a30 - 0x19e0];
     unsigned char unknown_1a30_;
-    char unknown_1a31_[0x1a34 - 0x1a31];
+    char pad10[0x1a34 - 0x1a31];
     void* unknown_1a34_;
-    int unknown_1a38_[0x1a6c - 0x1a38 >> 2];
+    int motion[0x1a6c - 0x1a38 >> 2];
     int unknown_1a6c_;
-    char unknown_1a70_[0x2d90 - 0x1a70];
+    char records[0x2d90 - 0x1a70];
     short unknown_2d90_;
     char unknown_2d92_[0x3da9 - 0x2d92];
     unsigned char unknown_3da9_;
     unsigned char unknown_3daa_;
-    char unknown_3dab_[0x3db8 - 0x3dab];
+    char pad12[0x3db8 - 0x3dab];
     unsigned char unknown_3db8_;
     char unknown_3db9_[0x3dc4 - 0x3db9];
-    unsigned char unknown_3dc4_;
+    unsigned char state;
     char unknown_3dc5_[3];
-    int unknown_3dc8_;
-    Struct_ov005_0215436c_2 unknown_3dcc_;
+    int handle;
+    Struct_ov005_0215436c_2 flags;
 };
 
 // USA: func_ov005_0215436c
-extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
-    unsigned int var0;
-    void* var1;
-    void* var2;
-    unsigned int var3;
-    int var4;
-    void* var5;
+extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* self) {
+    unsigned int size;
+    void* recData;
+    void* file3;
+    unsigned int len3;
+    int recSize;
+    void* file4;
     unsigned int var6;
     void* var7;
     unsigned int var8;
-    void* var9[REGION_LAYOUT(36, 38)];
-    int var10[REGION_LAYOUT(36, 38)];
+    void* datas[REGION_LAYOUT(36, 38)];
+    int sizes[REGION_LAYOUT(36, 38)];
 
-    if (arg0->unknown_3dc4_ == 0xff) {
+    if (self->state == 0xff) {
         return 1;
     }
 
@@ -165,20 +165,20 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
     int word = (int)gs->GetResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
-    if (arg0->unknown_3dc4_ == 0) {
-        func_ov005_02155424(arg0);
-        func_ov005_02155544(arg0);
-        func_ov005_021555c0(arg0);
-        arg0->unknown_3dcc_.unknown1_0_.unknown_0_5_ = 1;
-        arg0->unknown_3da9_ = 0;
-        arg0->unknown_3dcc_.unknown1_0_.unknown_0_6_ = 1;
-        arg0->unknown_3daa_ = 0;
-        arg0->unknown_3dc4_++;
-    } else if (arg0->unknown_3dc4_ == 1) {
-        if (arg0->unknown_3daa_ == 0) {
-            arg0->unknown_3dc4_++;
+    if (self->state == 0) {
+        func_ov005_02155424(self);
+        func_ov005_02155544(self);
+        func_ov005_021555c0(self);
+        self->flags.bits.unknown_0_5_ = 1;
+        self->unknown_3da9_ = 0;
+        self->flags.bits.unknown_0_6_ = 1;
+        self->unknown_3daa_ = 0;
+        self->state++;
+    } else if (self->state == 1) {
+        if (self->unknown_3daa_ == 0) {
+            self->state++;
         }
-    } else if (arg0->unknown_3dc4_ == 2) {
+    } else if (self->state == 2) {
 #if defined(jpn)
         self->alloc.Reset();
         void* data = self->alloc.Allocate(0x2000);
@@ -256,8 +256,8 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
                     }
                 }
             }
-            var13->RemoveTask(arg0->unknown_3dc8_);
-            arg0->unknown_3dc8_ = -1;
+            loader->RemoveTask(self->handle);
+            self->handle = -1;
 
             Background_FillRect(&self->lists[1], 0, 0, 0, 0x20, 0x19, 0);
             Background_UploadMap((BackgroundGraphics*)&self->lists[1], 0);
@@ -273,10 +273,10 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
             for (int j = 0; j < 3; j++) {
                 elem = self->elems[j];
                 WindowPane_AllocateBuffer((WindowPane*)elem, &self->alloc, (int)self->buffer, data_ov005_0215cd68[j]);
-                *(List0215436c**)(elem + 4) = &self->lists[2];
+                *(Struct_ov005_0215436c**)(elem + 4) = &self->lists[2];
             }
-            self->linkList = &self->lists[2];
-            self->linkFlag = 1;
+            self->unknown_f7c_ = &self->lists[2];
+            self->unknown_f96_ = 1;
             Window_SetPanes((Struct_0205cf78*)self->linkHead, (WindowPane*)self->elems, 3);
 
             const char* name = KeyTable_Get((Container020e0310*)self->container, REGION_LAYOUT(0x3e9, 0x3ea));
@@ -285,7 +285,7 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
         }
     } else if (self->state == 4) {
         if (loader->GetTaskStatus(self->handle) != 0) {
-            loader->GetLoadedFileByID(self->handle, &file4, &len4);
+            loader->GetLoadedFileByID(self->handle, &file4, &var6);
             int count = Pac_CountFiles((PacRecord*)file4);
 #if defined(jpn)
             const char* name = KeyTable_Get((Container020e0310*)self->container, 0x7d0);
@@ -296,9 +296,9 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
                 }
                 VramState_Save((char*)self->pairTables);
             }
-            var13->RemoveTask(arg0->unknown_3dc8_);
-            arg0->unknown_3dc8_ = -1;
-            arg0->unknown_3dc8_ = var13->QueueLoadFile(data_ov005_0215e1ad, 0);
+            loader->RemoveTask(self->handle);
+            self->handle = -1;
+            self->handle = loader->QueueLoadFile(data_ov005_0215e1ad, 0);
 #else
             int mode = GameState_GetLanguage((Struct0200fb08*)gs);
             int n = 0;
@@ -310,12 +310,12 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
                         if (mode == 2 || mode == 3) {
                             continue;
                         }
-                    } else if (var32 == 0x24) {
-                        if (var29 != 2) {
+                    } else if (i == 0x24) {
+                        if (mode != 2) {
                             continue;
                         }
-                    } else if (var32 == 0x25) {
-                        if (var29 != 3) {
+                    } else if (i == 0x25) {
+                        if (mode != 3) {
                             continue;
                         }
                     }
@@ -324,61 +324,61 @@ extern "C" ARM int func_ov005_0215436c(Struct_ov005_0215436c_3* arg0) {
                 }
                 VramState_Save((char*)self->pairTables);
             }
-            var13->RemoveTask(arg0->unknown_3dc8_);
-            arg0->unknown_3dc8_ = -1;
-            arg0->unknown_3dc8_ = var13->QueueLoadFileInGP2(data_ov005_0215cddd, data_ov005_0215cdf3, 0);
+            loader->RemoveTask(self->handle);
+            self->handle = -1;
+            self->handle = loader->QueueLoadFileInGP2(data_ov005_0215cddd, data_ov005_0215cdf3, 0);
 #endif
-            arg0->unknown_3dc4_++;
+            self->state++;
         }
-    } else if (arg0->unknown_3dc4_ == 5) {
-        if (var13->GetTaskStatus(arg0->unknown_3dc8_) != 0) {
-            var13->GetLoadedFileByID(arg0->unknown_3dc8_, &var7, &var8);
-            arg0->unknown1_258_.Reset();
-            func_ov023_021e1318((Struct_ov002_0215505c_2*)arg0->unknown_19e0_);
-            func_ov023_021e133c(arg0->unknown_19e0_, &arg0->unknown1_258_, (int)var7, var8, 0, 0);
-            var13->RemoveTask(arg0->unknown_3dc8_);
-            arg0->unknown_3dc8_ = -1;
-            arg0->unknown_3dc4_++;
+    } else if (self->state == 5) {
+        if (loader->GetTaskStatus(self->handle) != 0) {
+            loader->GetLoadedFileByID(self->handle, &var7, &var8);
+            self->scriptAlloc.Reset();
+            func_ov023_021e1318((Struct_ov002_0215505c_2*)self->script);
+            func_ov023_021e133c(self->script, &self->scriptAlloc, (int)var7, var8, 0, 0);
+            loader->RemoveTask(self->handle);
+            self->handle = -1;
+            self->state++;
         }
     } else {
-        char* var33 = arg0->unknown_1a70_;
+        char* recs = self->records;
         volatile unsigned short* var34 = (volatile unsigned short*)0x4000008;
         var34[0] = (var34[0] & ~3) | 1;
         var34[1] = (var34[1] & ~3) | 3;
         var34[2] = (var34[2] & ~3) | 2;
         var34[3] = var34[3] & ~3;
-        volatile unsigned int* var35 = (volatile unsigned int*)0x4000000;
-        *var35 = (*var35 & ~0x1f00) | 0x1f00;
+        volatile unsigned int* dispcnt = (volatile unsigned int*)0x4000000;
+        *dispcnt = (*dispcnt & ~0x1f00) | 0x1f00;
 
-        arg0->unknown_1a34_ = var33;
-        arg0->unknown_1a38_[0] = 0x8000;
-        arg0->unknown_1a38_[1] = -0x3000;
-        arg0->unknown_1a38_[2] = 0x3000;
-        arg0->unknown_1a38_[3] = -0x3000;
-        arg0->unknown_1a38_[4] = 0x3000;
-        func_ov005_02154d18(&arg0->unknown_1a34_, 0x85000, 0x17000);
-        func_ov005_02154d34(&arg0->unknown_1a34_, 0x85000, 0x17000);
-        func_ov005_02154d50(&arg0->unknown_1a34_, 0x76000, 0x16000);
-        func_ov005_02154d7c(&arg0->unknown_1a34_, 0x76000, 0x16000);
-        arg0->unknown_1a6c_ = 0x5000;
-        arg0->unknown_3db8_ = 0;
-        arg0->unknown_3dcc_.unknown_0_ |= 0x400;
-        func_ov005_021571d0(arg0);
-        arg0->unknown_1a30_ = 0;
-        arg0->unknown_3dcc_.unknown1_0_.unknown_0_2_ = 1;
-        arg0->unknown_3dcc_.unknown1_0_.unknown_0_3_ = 1;
+        self->unknown_1a34_ = recs;
+        self->motion[0] = 0x8000;
+        self->motion[1] = -0x3000;
+        self->motion[2] = 0x3000;
+        self->motion[3] = -0x3000;
+        self->motion[4] = 0x3000;
+        func_ov005_02154d18(&self->unknown_1a34_, 0x85000, 0x17000);
+        func_ov005_02154d34(&self->unknown_1a34_, 0x85000, 0x17000);
+        func_ov005_02154d50(&self->unknown_1a34_, 0x76000, 0x16000);
+        func_ov005_02154d7c(&self->unknown_1a34_, 0x76000, 0x16000);
+        self->unknown_1a6c_ = 0x5000;
+        self->unknown_3db8_ = 0;
+        self->flags.raw |= 0x400;
+        func_ov005_021571d0(self);
+        self->unknown_1a30_ = 0;
+        self->flags.bits.b2 = 1;
+        self->flags.bits.b3 = 1;
 
         GameState::GetInstance();
-        char* var36 = (char*)GetGameResources();
-        int var37 = *(int*)(func_ov017_021a193c((int*)(*(int*)(var36 + REGION_LAYOUT(0x34f8, 0x3708)))) + REGION_LAYOUT(0x4f8, 0x4fc));
-        func_020dc7e8(5, (signed char)var37);
-        arg0->unknown_244_.Reset();
-        func_ov023_021dc134(arg0->unknown_1244_, arg0->unknown_2d90_, 0);
-        arg0->unknown_19b8_ |= 0xd0;
-        func_ov023_021dbfd0(arg0->unknown_1244_, &arg0->unknown_244_);
-        arg0->unknown_128c_ = arg0->unknown_df4_;
-        arg0->unknown_19be_ = var37;
-        arg0->unknown_3dc4_ = 0xff;
+        char* res = (char*)GetGameResources();
+        int v = *(int*)(func_ov017_021a193c((int*)(*(int*)(res + REGION_LAYOUT(0x34f8, 0x3708)))) + REGION_LAYOUT(0x4f8, 0x4fc));
+        func_020dc7e8(5, (signed char)v);
+        self->unknown_244_.Reset();
+        func_ov023_021dc134(self->effect, self->unknown_2d90_, 0);
+        self->unknown_19b8_ |= 0xd0;
+        func_ov023_021dbfd0(self->effect, &self->unknown_244_);
+        self->unknown_128c_ = self->unknown_df4_;
+        self->unknown_19be_ = v;
+        self->state = 0xff;
         return 1;
     }
     return 0;

@@ -2,42 +2,42 @@
 #include <NitroSDK/Memory.h>
 
 struct Struct_020b1d70;
-extern "C" ARM int func_ov031_0223dd34(unsigned char* arg0, int arg1);
-extern "C" void func_ov031_0223c8d4(Struct_020b1d70* arg0, int arg1, int arg2, int arg3, int arg4, unsigned short* arg5, int arg6);
+extern "C" ARM int func_ov031_0223dd34(unsigned char* s, int len);
+extern "C" void func_ov031_0223c8d4(Struct_020b1d70* a, int b, int c, int d, int e, unsigned short* counts, int idx);
 
-struct Struct_ov031_0222ff34 { unsigned char unknown_0_[0x14]; Struct_020b1d70* unknown_14_; };
-struct Struct_ov031_02290ca0_12 { unsigned char unknown_0_[8]; Struct_ov031_0222ff34* unknown_8_; };
+struct Struct_ov031_0222ff34 { unsigned char pad[0x14]; Struct_020b1d70* field14; };
+struct Struct_ov031_02290ca0_12 { unsigned char pad[8]; Struct_ov031_0222ff34* field8; };
 extern Struct_ov031_02290ca0_12 data_ov031_02290ca0;
 
 // USA: func_ov031_0222ff34
-extern "C" ARM void func_ov031_0222ff34(unsigned char* arg0, int arg1) {
-	unsigned short var0[0x11];
-	VectorizedMemset(var0, 0, sizeof(var0));
-	int var1 = func_ov031_0223dd34(arg0, 0x20);
-	int var2 = var1 <= 0x10 ? var1 : 0x10;
-	int var3 = 0;
-	if (var2 > 0) {
+extern "C" ARM void func_ov031_0222ff34(unsigned char* str, int idx) {
+	unsigned short buf[0x11];
+	VectorizedMemset(buf, 0, sizeof(buf));
+	int len = func_ov031_0223dd34(str, 0x20);
+	int n = len <= 0x10 ? len : 0x10;
+	int i = 0;
+	if (n > 0) {
 		do {
-			unsigned char var4 = arg0[var3];
-			if (var4 == ' ') var0[var3] = 0xe01d;
-			else var0[var3] = var4;
-			var3++;
-		} while (var3 < var2);
+			unsigned char c = str[i];
+			if (c == ' ') buf[i] = 0xe01d;
+			else buf[i] = c;
+			i++;
+		} while (i < n);
 	}
-	int var5 = arg1 * 0x1d + 2;
-	if (var1 <= 0x10) var5 += 5;
-	func_ov031_0223c8d4(data_ov031_02290ca0.unknown_8_->unknown_14_, 0x48, var5, 2, 8, var0, 1);
-	if (var1 <= 0x10) return;
-	VectorizedMemset(var0, 0, sizeof(var0));
-	var1 -= 0x10;
-	int var6 = 0;
-	if (var1 > 0) {
+	int y = idx * 0x1d + 2;
+	if (len <= 0x10) y += 5;
+	func_ov031_0223c8d4(data_ov031_02290ca0.field8->field14, 0x48, y, 2, 8, buf, 1);
+	if (len <= 0x10) return;
+	VectorizedMemset(buf, 0, sizeof(buf));
+	len -= 0x10;
+	int j = 0;
+	if (len > 0) {
 		do {
-			unsigned char var7 = *(arg0 + var6 + 0x10);
-			if (var7 == ' ') var0[var6] = 0xe01d;
-			else var0[var6] = var7;
-			var6++;
-		} while (var6 < var1);
+			unsigned char c = *(str + j + 0x10);
+			if (c == ' ') buf[j] = 0xe01d;
+			else buf[j] = c;
+			j++;
+		} while (j < len);
 	}
-	func_ov031_0223c8d4(data_ov031_02290ca0.unknown_8_->unknown_14_, 0x48, var5 + 0xc, 2, 8, var0, 1);
+	func_ov031_0223c8d4(data_ov031_02290ca0.field8->field14, 0x48, y + 0xc, 2, 8, buf, 1);
 }

@@ -2,35 +2,35 @@
 #include "GameState/GameState.h"
 
 struct Struct_020a63f8 {
-    int unknown_0_;
-    int unknown_4_;
-    signed char unknown_8_;
-    signed char unknown_9_;
-    signed char unknown_a_;
+    int x;
+    int y;
+    signed char dx;
+    signed char dy;
+    signed char unk_a;
     unsigned char unknown_b_;
 };
 
 // USA: func_020a63f8
-extern "C" ARM void func_020a63f8(struct Struct_020a63f8* arg0) {
+extern "C" ARM void func_020a63f8(struct Struct_020a63f8* p) {
     GameState::GetInstance();
-    if (arg0->unknown_b_) {
+    if (p->unknown_b_) {
         return;
     }
-    *(volatile unsigned int*)0x4001014 = (arg0->unknown_0_ & 0x1ff) | ((arg0->unknown_4_ << 16) & 0x1ff0000);
+    *(volatile unsigned int*)0x4001014 = (p->x & 0x1ff) | ((p->y << 16) & 0x1ff0000);
 
-    arg0->unknown_0_ += arg0->unknown_8_;
-    if (arg0->unknown_0_ >= 0x100) {
-        arg0->unknown_0_ -= 0x100;
+    p->x += p->dx;
+    if (p->x >= 0x100) {
+        p->x -= 0x100;
     }
-    if (arg0->unknown_0_ <= -1) {
-        arg0->unknown_0_ += 0x100;
+    if (p->x <= -1) {
+        p->x += 0x100;
     }
 
-    arg0->unknown_4_ += arg0->unknown_9_;
-    if (arg0->unknown_4_ >= 0x100) {
-        arg0->unknown_4_ -= 0x100;
+    p->y += p->dy;
+    if (p->y >= 0x100) {
+        p->y -= 0x100;
     }
-    if (arg0->unknown_4_ <= -1) {
-        arg0->unknown_4_ += 0x100;
+    if (p->y <= -1) {
+        p->y += 0x100;
     }
 }

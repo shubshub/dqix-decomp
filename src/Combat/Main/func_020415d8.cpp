@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-extern "C" void func_02037d10(void*);
+extern "C" void GameObject_InitPartyMember(void*);
 
 struct Struct_020415d8 {
     unsigned short unknown_0_;
@@ -23,15 +23,15 @@ struct Struct_020415d8 {
 };
 
 // USA: func_020415d8
-extern "C" ARM void func_020415d8(struct Struct_020415d8* arg0) {
-    func_02037d10(arg0);
-    arg0->unknown_2d0_ = 0;
-    arg0->unknown_2d4_ = 0;
-    arg0->unknown_2e4_ = 0;
-    arg0->unknown_2e8_ = 0;
-    arg0->unknown_2f4_ = 0;
-    arg0->unknown_2ec_ = 0x7a;
-    arg0->unknown_2f0_ = 0;
-    arg0->unknown_0_ |= 0x4000;
-    arg0->unknown_0_ &= ~0x80;
+extern "C" ARM void func_020415d8(struct Struct_020415d8* obj) {
+    GameObject_InitPartyMember(obj);
+    obj->unknown_2d0_ = 0;
+    obj->unknown_2d4_ = 0;
+    obj->unknown_2e4_ = 0;
+    obj->unknown_2e8_ = 0;
+    obj->unknown_2f4_ = 0;
+    obj->unknown_2ec_ = 0x7a;
+    obj->unknown_2f0_ = 0;
+    obj->unknown_0_ |= 0x4000;
+    obj->unknown_0_ &= ~0x80;
 }

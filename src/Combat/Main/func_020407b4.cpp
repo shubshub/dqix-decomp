@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
-struct Struct_02040774_2 {
-    char unknown_0_[0x44];
-    int unknown_44_;
-    int unknown_48_;
-    int unknown_4c_;
+struct Fields020407b4 {
+    char unk0[0x44];
+    int field44;
+    int field48;
+    int field4c;
 };
 
 // USA: func_020407b4
-extern "C" ARM void func_020407b4(struct Struct_02040774_2* arg0, int arg1, int arg2, int arg3) {
-    arg0->unknown_44_ = arg1;
-    arg0->unknown_48_ = arg2;
-    arg0->unknown_4c_ = arg3;
+extern "C" ARM void func_020407b4(struct Fields020407b4* dst, int a, int b, int c) {
+    dst->field44 = a;
+    dst->field48 = b;
+    dst->field4c = c;
 }

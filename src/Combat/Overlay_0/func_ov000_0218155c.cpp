@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 // USA: func_ov000_0218155c
-extern "C" ARM int func_ov000_0218155c(void* arg0) {
-    int var0 = 0;
-    for (unsigned int var1 = 0; var1 < 12; var1++) {
-        if (*(unsigned int*)((char*)arg0 + 0x68) & (1 << var1)) var0++;
+extern "C" ARM int func_ov000_0218155c(void* obj) {
+    int count = 0;
+    for (unsigned int i = 0; i < 12; i++) {
+        if (*(unsigned int*)((char*)obj + 0x68) & (1 << i)) count++;
     }
-    return var0;
+    return count;
 }

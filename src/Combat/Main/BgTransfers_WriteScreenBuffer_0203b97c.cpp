@@ -6,18 +6,18 @@ enum { kBlockWidth = 32, kBlockEntries = 32 * 32 };
 
 // Main, originally func_0203b97c (USA 0x0203b97c, EUR 0x0203b98c, JPN 0x0203b3d4)
 extern "C" ARM void BgTransfers_WriteScreenBuffer(void* bgTransfers, unsigned short* destination, int width, int height, int startX, int startY, const unsigned short* source, unsigned int copyWidth, unsigned int copyHeight, unsigned short firstTile) {
-    int blockRow;
-    unsigned int blockColumns;
+    int var0;
+    unsigned int var1;
     int y;
     if (width <= startX || height <= startY) return;
-    blockColumns = (unsigned int)width >> 5;
+    var1 = (unsigned int)width >> 5;
     for (unsigned int row = 0; row < copyHeight; row++) {
         y = startY + row;
         for (unsigned int column = 0; column < copyWidth; column++) {
-            blockRow = (y / 32) * blockColumns;
+            var0 = (y / 32) * var1;
             int x = startX + column;
             if (x >= 0 && y >= 0 && width > x && height > y) {
-                int block = blockRow + x / 32;
+                int block = var0 + x / 32;
                 unsigned int offset = x + (y << 5) + block * (kBlockEntries - kBlockWidth);
                 unsigned short value = source[column + row * copyWidth];
                 destination[offset] = value;
@@ -25,5 +25,5 @@ extern "C" ARM void BgTransfers_WriteScreenBuffer(void* bgTransfers, unsigned sh
             }
         }
     }
-    CleanInvalidateCacheRange(arg1, arg3 * (arg2 << 1));
+    CleanInvalidateCacheRange(destination, height * (width << 1));
 }

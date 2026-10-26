@@ -2,35 +2,35 @@
 #include "std_library_functions.h"
 
 struct Struct_020e4e38_2 {
-    unsigned int unknown_0_0_ : 6;
-    unsigned int unknown_0_6_ : 6;
-    unsigned int unknown_1_4_ : 6;
-    unsigned int unknown_2_2_ : 6;
-    unsigned int unknown_3_0_ : 2;
-    unsigned int unknown_3_2_ : 1;
-    unsigned int unknown_3_3_ : 1;
-    unsigned int unknown_3_4_ : 1;
-    unsigned int unknown_3_5_ : 3;
+    unsigned int a : 6;
+    unsigned int b : 6;
+    unsigned int c : 6;
+    unsigned int d : 6;
+    unsigned int e : 2;
+    unsigned int f : 1;
+    unsigned int g : 1;
+    unsigned int h : 1;
+    unsigned int pad : 3;
 };
 
 struct Struct_020e4e38 {
     void* unknown_0_;
-    char unknown_4_[0x30];
-    void* unknown_34_;
-    struct Struct_020e4e38_2 unknown_38_;
+    char pad1[0x30];
+    void* field0x34;
+    struct Struct_020e4e38_2 packed;
 };
 
-extern "C" void func_020e4b34(void* arg0, void* arg1, void* arg2,
-    int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11);
+extern "C" void func_020e4b34(void* obj, void* arg1, void* arg2,
+    int p4, int p5, int p6, int p7, int p8, int p9, int p10, int arg10, int arg11);
 
 // USA: func_020e4e38
-extern "C" ARM void func_020e4e38(void* arg0, struct Struct_020e4e38* arg1) {
-    memset(arg0, 0, 0xc);
-    if (arg1 != NULL) {
-        func_020e4b34(arg0, arg1->unknown_0_, arg1->unknown_34_,
-            (unsigned char)arg1->unknown_38_.unknown_0_0_, (unsigned char)arg1->unknown_38_.unknown_0_6_,
-            (unsigned char)arg1->unknown_38_.unknown_1_4_, (unsigned char)arg1->unknown_38_.unknown_2_2_,
-            (unsigned char)arg1->unknown_38_.unknown_3_0_, (unsigned char)arg1->unknown_38_.unknown_3_2_,
-            (unsigned char)arg1->unknown_38_.unknown_3_3_, (unsigned char)arg1->unknown_38_.unknown_3_4_, 0);
+extern "C" ARM void func_020e4e38(void* obj, struct Struct_020e4e38* src) {
+    memset(obj, 0, 0xc);
+    if (src != NULL) {
+        func_020e4b34(obj, src->unknown_0_, src->field0x34,
+            (unsigned char)src->packed.a, (unsigned char)src->packed.b,
+            (unsigned char)src->packed.c, (unsigned char)src->packed.d,
+            (unsigned char)src->packed.e, (unsigned char)src->packed.f,
+            (unsigned char)src->packed.g, (unsigned char)src->packed.h, 0);
     }
 }

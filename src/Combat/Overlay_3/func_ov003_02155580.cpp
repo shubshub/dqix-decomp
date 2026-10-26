@@ -11,33 +11,33 @@ enum { Enum_ov003_02155580_486 = 0x1e6 };
 struct Struct_0207fdcc;
 
 struct Struct_0207fdcc_2 {
-    char unknown_0_[Enum_ov003_02155580_48];
-    struct Struct_0207fdcc* unknown_30_;
-    short unknown_34_;
-    short unknown_36_;
+    char pad0[Enum_ov003_02155580_48];
+    struct Struct_0207fdcc* elems;
+    short field34;
+    short selected;
 };
 
-struct Obj0208203c;
+struct Struct_02081f20_2;
 struct SePlayer;
-struct Clamp020e29a8;
-struct Obj020e280c;
+struct Struct_020e29a8;
+struct Struct_020e280c;
 
-extern "C" void func_020813ec(struct Obj2081* obj, int key);
-void ResetWithSub0208203c(struct Obj0208203c* obj);
-void SePlayer_Play(struct SePlayer* obj, int a, int b);
-void SetElementFlag0x20_02080c04(struct Obj2081* obj, int key);
-void ClampFieldTo2At0x16(struct Clamp020e29a8* p, int v);
-void ResetAndReposition020e280c(struct Obj020e280c* self, void* b);
+extern "C" void func_020813ec(struct Struct_0207fdcc_2* obj, int key);
+extern "C" void func_0208203c(struct Struct_02081f20_2* obj);
+extern "C" void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern "C" void func_02080c04(struct Struct_0207fdcc_2* obj, int key);
+extern "C" void func_020e29a8(struct Struct_020e29a8* p, int v);
+extern "C" void func_020e280c(struct Struct_020e280c* self, void* b);
 
 extern struct SePlayer g_sePlayer;
 
 struct Struct_ov003_02155580 {
-    char unknown_0_[0x8];
-    void* unknown_8_;
-    char unknown_c_[0x18 - 0xc];
-    struct Struct_0207fdcc_2* unknown_18_;
-    void* unknown_1c_;
-    char unknown_20_[0x80 - 0x20];
+    char pad0[0x8];
+    void* field8;
+    char pad1[0x18 - 0xc];
+    struct Struct_0207fdcc_2* menu;
+    void* cursor;
+    char pad2[0x80 - 0x20];
     char unknown_80_[Enum_ov003_02155580_486 - 0x80];
     short unknown_1e6_;
     short unknown_1e8_;
@@ -45,17 +45,17 @@ struct Struct_ov003_02155580 {
 };
 
 // USA: func_ov003_02155580
-extern "C" ARM void func_ov003_02155580(struct Ctx02155580* self, int arg) {
-    self->key1e6 = 1;
-    self->field1e8 = self->field1ea = 6;
-    self->menu->selected = self->field1ea;
-    func_020813ec(self->menu, self->key1e6);
-    ResetWithSub0208203c((struct Obj0208203c*)self->field80);
+extern "C" ARM void func_ov003_02155580(struct Struct_ov003_02155580* self, int arg) {
+    self->unknown_1e6_ = 1;
+    self->unknown_1e8_ = self->unknown_1ea_ = 6;
+    self->menu->selected = self->unknown_1ea_;
+    func_020813ec(self->menu, self->unknown_1e6_);
+    func_0208203c((struct Struct_02081f20_2*)self->unknown_80_);
     self->field8 = 0;
     SePlayer_Play(&g_sePlayer, 5, 0);
     if (self->cursor != 0) {
-        SetElementFlag0x20_02080c04(self->menu, self->key1e6);
-        ClampFieldTo2At0x16((struct Clamp020e29a8*)self->cursor, (signed char)arg);
-        ResetAndReposition020e280c((struct Obj020e280c*)self->cursor, (void*)-1);
+        func_02080c04(self->menu, self->unknown_1e6_);
+        func_020e29a8((struct Struct_020e29a8*)self->cursor, (signed char)arg);
+        func_020e280c((struct Struct_020e280c*)self->cursor, (void*)-1);
     }
 }

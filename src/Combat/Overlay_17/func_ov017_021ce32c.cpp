@@ -1,0 +1,45 @@
+#include <globaldefs.h>
+#include "GameState/GameState.h"
+
+extern "C" void* LinkMessageQueue_GetInstance(void);
+extern "C" void func_0205e330(void* a, void* b, int c);
+extern "C" int func_020546a8(void* obj);
+extern "C" int func_020546bc(void* obj);
+extern "C" int func_02039860(void* obj);
+extern "C" int GameObject_GetLinePosition(void* obj);
+extern "C" GameObject* func_0200ff58(GameState* battleStruct, int combatantId);
+
+struct Struct_ov017_021ce32c {
+	unsigned char tag;
+	unsigned char pad0[3];
+	unsigned short field4;
+	unsigned char field6;
+	unsigned char unknown_7_;
+	unsigned char field8;
+	unsigned char field9;
+	unsigned char fielda;
+	unsigned char pad1[9];
+};
+
+// USA: func_ov017_021ce32c
+extern "C" ARM void func_ov017_021ce32c(int id) {
+#if defined(jpn)
+ enum {regionalOffset0=0x2c6};
+#else
+ enum {regionalOffset0=0x2d2};
+#endif
+	void* p = LinkMessageQueue_GetInstance();
+	GameObject* c = func_0200ff58(GameState::GetInstance(), id);
+	if (c == NULL) {
+		return;
+	}
+	Struct_ov017_021ce32c buf;
+	buf.tag = 0x26;
+	buf.field4 = id;
+	buf.field6 = func_020546a8(c);
+	buf.unknown_7_ = func_020546bc(c);
+	buf.field8 = func_02039860(c);
+	buf.field9 = GameObject_GetLinePosition(c);
+	buf.fielda = *(unsigned char*)((char*)c + regionalOffset0);
+	func_0205e330(p, &buf, 0);
+}

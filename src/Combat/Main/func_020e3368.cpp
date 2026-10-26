@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsActive(int* obj);
 
 // USA: func_020e3368
-extern "C" ARM void func_020e3368(unsigned char* arg0, unsigned char arg1) {
-    unsigned char* var0;
-    int var1;
-    if (!func_0202b7d8((int*)func_0202ae18())) return;
-    var0 = arg0 + 0x20;
-    for (var1 = 0; var1 < 8; var1++, var0++) {
-        if (*var0 == 0) {
-            *var0 = arg1;
+extern "C" ARM void func_020e3368(unsigned char* base, unsigned char val) {
+    unsigned char* p;
+    int i;
+    if (!LinkSession_IsActive((int*)LinkSession_GetInstance())) return;
+    p = base + 0x20;
+    for (i = 0; i < 8; i++, p++) {
+        if (*p == 0) {
+            *p = val;
             return;
         }
     }

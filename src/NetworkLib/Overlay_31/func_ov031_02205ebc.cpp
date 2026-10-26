@@ -4,14 +4,14 @@
 extern "C" void func_ov031_02203670(void*);
 
 // USA: func_ov031_02205ebc
-extern "C" ARM void* func_ov031_02205ebc(void* arg0) {
-	void* var0 = *(void**)((char*)arg0 + 0x64);
-	int var1 = DisableIRQInterrupts();
-	void* var2 = *(void**)((char*)var0 + 0xf8);
-	if (var2 != NULL) {
-		*(void**)((char*)var0 + 0xf8) = NULL;
-		func_ov031_02203670(var2);
+extern "C" ARM void* func_ov031_02205ebc(void* obj) {
+	void* sub = *(void**)((char*)obj + 0x64);
+	int state = DisableIRQInterrupts();
+	void* v = *(void**)((char*)sub + 0xf8);
+	if (v != NULL) {
+		*(void**)((char*)sub + 0xf8) = NULL;
+		func_ov031_02203670(v);
 	}
-	SetIRQInterruptState(var1);
-	return var2;
+	SetIRQInterruptState(state);
+	return v;
 }

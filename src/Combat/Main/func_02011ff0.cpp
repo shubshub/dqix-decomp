@@ -1,13 +1,13 @@
 #include <globaldefs.h>
-extern "C" struct Struct_02011ff0* func_020108f0(void*, int);
+extern "C" struct S02011ff0* GameState_FindPartyMemberData(void*, int);
 
-struct Struct_02011ff0 {
-    char unknown_0_[0x56b];
-    unsigned char unknown_56b_0_ : 4;
+struct S02011ff0 {
+    char pad[0x56b];
+    unsigned char f : 4;
 };
 
 // USA: func_02011ff0
-extern "C" ARM int func_02011ff0(void* arg0, int arg1) {
-    struct Struct_02011ff0* var0 = func_020108f0((void*)(arg0), (int)(arg1));
-    return var0 ? var0->unknown_56b_0_ : 0;
+extern "C" ARM int func_02011ff0(void* base, int index) {
+    struct S02011ff0* p = GameState_FindPartyMemberData((void*)(base), (int)(index));
+    return p ? p->f : 0;
 }

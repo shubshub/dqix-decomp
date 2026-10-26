@@ -2,20 +2,20 @@
 #include "GameState/GameState.h"
 
 extern "C" int func_ov017_021d60f4(void*);
-extern "C" int func_ov001_0215ad2c(int arg0);
+extern "C" int func_ov001_0215ad2c(int x);
 
 // USA: func_ov001_0215eeb0
-extern "C" ARM int func_ov001_0215eeb0(void* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = func_ov001_0215ad2c(func_ov017_021d60f4(arg0));
-    int var2 = func_ov017_021d60f4((char*)arg0 + 0x8);
-    int var3 = func_ov017_021d60f4((char*)arg0 + 0x10);
-    GameObject* var4 = var0->GetGameObjectByIndex(var1);
-    if (var4 == NULL) return 0;
-    if (var3 != 0) {
-        ((Object3D*)((unsigned char*)var4))->EnableFlag(var2);
+extern "C" ARM int func_ov001_0215eeb0(void* self) {
+    GameState* battle = GameState::GetInstance();
+    int id = func_ov001_0215ad2c(func_ov017_021d60f4(self));
+    int flag = func_ov017_021d60f4((char*)self + 0x8);
+    int mask = func_ov017_021d60f4((char*)self + 0x10);
+    GameObject* combatant = battle->GetGameObjectByIndex(id);
+    if (combatant == NULL) return 0;
+    if (mask != 0) {
+        ((Object3D*)((unsigned char*)combatant))->EnableFlag(flag);
     } else {
-        ((Object3D*)((unsigned char*)var4))->DisableFlag(var2);
+        ((Object3D*)((unsigned char*)combatant))->DisableFlag(flag);
     }
     return 1;
 }

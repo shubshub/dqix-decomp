@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
-extern "C" void Mat3x3_ApplyScale(int* arg0, int* arg1, int arg2, int arg3, int arg4);
+extern "C" void Mat3x3_ApplyScale(int* src, int* dst, int scaleX, int scaleY, int scaleZ);
 
 // USA: func_020c1948
-extern "C" ARM void Mat4x3_ApplyScale(int* arg0, int* arg1, int arg2, int arg3, int arg4) {
-    Mat3x3_ApplyScale(arg0, arg1, arg2, arg3, arg4);
-    arg1[9] = arg0[9];
-    arg1[10] = arg0[10];
-    arg1[11] = arg0[11];
+extern "C" ARM void Mat4x3_ApplyScale(int* src, int* dst, int scaleX, int scaleY, int scaleZ) {
+    Mat3x3_ApplyScale(src, dst, scaleX, scaleY, scaleZ);
+    dst[9] = src[9];
+    dst[10] = src[10];
+    dst[11] = src[11];
 }

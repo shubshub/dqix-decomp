@@ -1,15 +1,15 @@
 #include "Memory/SafeAllocator.h"
 #include <globaldefs.h>
 
-struct Struct_0205de24_2;
+struct Struct0205de24;
 struct Struct_0205c570;
 
-void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+extern "C" void func_0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int Window_GetSelectedIndex(struct Struct_0205c570 *s);
-int CheckFlagOrThreshold_02161b48(char *self, int flag);
-void *GlobalFlags_GetInstance(void);
-void FlagWord_SetBits(unsigned int *p, unsigned int mask);
+extern "C" int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+extern "C" int func_ov002_02161b48(char *self, int flag);
+extern "C" void *GlobalFlags_GetInstance(void);
+extern "C" void FlagWord_SetBits(unsigned int *p, unsigned int mask);
 extern "C" int GetInventoryItemByID(char *self, int idx, int member);
 extern "C" void func_ov002_02161cf0(char *self);
 extern "C" void func_ov002_0215d864(char *self);
@@ -28,7 +28,7 @@ extern "C" ARM void func_ov002_021642e4(char *self) {
     char *sub = self + 0x38;
     if (phase == 0) {
         *(short *) (self + 0x1ab0) = 0;
-        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (self + 0xe20), 0, 2);
+        func_0205de24((struct Struct0205de24 *) (self + 0xe20), 0, 2);
         func_ov002_02161cf0(self);
         func_ov002_0215d864(self);
         FlagWord_SetBits((unsigned int *) GlobalFlags_GetInstance(), 1);
@@ -38,17 +38,17 @@ extern "C" ARM void func_ov002_021642e4(char *self) {
                                 GetInventoryItemByID(self, *(short *) (self + 0x1ab0), *(signed char *) (self + 0x1ae8)),
                                 self + 0x750, 0x50);
         } else {
-            ((SafeAllocator *) (arg0 + 0x7c8))->Reset();
-            func_ov023_021dc134(var1,
-                                GetInventoryItemByID(arg0, *(short *) (arg0 + 0x1ab0), *(signed char *) (arg0 + 0x1ae8)), 0);
+            ((SafeAllocator *) (self + 0x7c8))->Reset();
+            func_ov023_021dc134(sub,
+                                GetInventoryItemByID(self, *(short *) (self + 0x1ab0), *(signed char *) (self + 0x1ae8)), 0);
             struct Struct_ov002_02162e50 {
-                char unknown_0_[0x6f0];
-                unsigned short unknown_6f0_;
+                char pad[0x6f0];
+                unsigned short flags;
             };
-            ((Struct_ov002_02162e50 *) (var1))->unknown_6f0_ |= 0x50;
-            func_ov023_021dbfd0(var1, (SafeAllocator *) (arg0 + 0x7c8));
-            *(char **) (var1 + 0x48) = arg0 + 0x750;
-            *(int *) (arg0 + 0x22ac) |= 1;
+            ((Struct_ov002_02162e50 *) (sub))->flags |= 0x50;
+            func_ov023_021dbfd0(sub, (SafeAllocator *) (self + 0x7c8));
+            *(char **) (sub + 0x48) = self + 0x750;
+            *(int *) (self + 0x22ac) |= 1;
         }
         (*(int *) (self + 0x1a88))++;
     } else if (phase == 1) {
@@ -58,7 +58,7 @@ extern "C" ARM void func_ov002_021642e4(char *self) {
             Window_GetSelectedIndex((struct Struct_0205c570 *) (self + 0xe20));
         *(short *) (self + 0x1aea) = GetInventoryItemByID(self, *(short *) (self + 0x1ab0), *(signed char *) (self + 0x1ae8));
         func_ov023_021dcae0(sub, *(short *) (self + 0x1aea));
-        if (CheckFlagOrThreshold_02161b48(self, 1)) {
+        if (func_ov002_02161b48(self, 1)) {
             *(short *) (self + 0x1aea) = -1;
             *(short *) (self + 0x1ab0) = -1;
             func_ov002_02156e90(self);
@@ -71,7 +71,7 @@ extern "C" ARM void func_ov002_021642e4(char *self) {
     int phase = *(int *) (self + 0x1bc0);
     if (phase == 0) {
         *(short *) (self + 0x1be8) = 0;
-        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (self + 0xec8), 0, 2);
+        func_0205de24((struct Struct0205de24 *) (self + 0xec8), 0, 2);
         func_ov002_02161cf0(self);
         func_ov002_0215d864(self);
         FlagWord_SetBits((unsigned int *) GlobalFlags_GetInstance(), 1);
@@ -81,17 +81,17 @@ extern "C" ARM void func_ov002_021642e4(char *self) {
                                 GetInventoryItemByID(self, *(short *) (self + 0x1be8), *(signed char *) (self + 0x1c20)),
                                 self + 0x7ec, 0x50);
         } else {
-            ((SafeAllocator *) (arg0 + 0x864))->Reset();
-            func_ov023_021dc134(arg0 + 0x50,
-                                GetInventoryItemByID(arg0, *(short *) (arg0 + 0x1be8), *(signed char *) (arg0 + 0x1c20)), 0);
+            ((SafeAllocator *) (self + 0x864))->Reset();
+            func_ov023_021dc134(self + 0x50,
+                                GetInventoryItemByID(self, *(short *) (self + 0x1be8), *(signed char *) (self + 0x1c20)), 0);
             struct Struct_ov002_02162e50 {
-                char unknown_0_[0x774];
-                unsigned short unknown_774_;
+                char pad[0x774];
+                unsigned short flags;
             };
-            ((Struct_ov002_02162e50 *) (arg0 + 0x50))->unknown_774_ |= 0x50;
-            func_ov023_021dbfd0(arg0 + 0x50, (SafeAllocator *) (arg0 + 0x864));
-            *(char **) (arg0 + 0x98) = arg0 + 0x7ec;
-            *(int *) (arg0 + 0x247c) |= 1;
+            ((Struct_ov002_02162e50 *) (self + 0x50))->flags |= 0x50;
+            func_ov023_021dbfd0(self + 0x50, (SafeAllocator *) (self + 0x864));
+            *(char **) (self + 0x98) = self + 0x7ec;
+            *(int *) (self + 0x247c) |= 1;
         }
         (*(int *) (self + 0x1bc0))++;
     } else if (phase == 1) {
@@ -101,7 +101,7 @@ extern "C" ARM void func_ov002_021642e4(char *self) {
             Window_GetSelectedIndex((struct Struct_0205c570 *) (self + 0xec8));
         *(short *) (self + 0x1c22) = GetInventoryItemByID(self, *(short *) (self + 0x1be8), *(signed char *) (self + 0x1c20));
         func_ov023_021dcae0(self + 0x50, *(short *) (self + 0x1c22));
-        if (CheckFlagOrThreshold_02161b48(self, 1)) {
+        if (func_ov002_02161b48(self, 1)) {
             *(short *) (self + 0x1c22) = -1;
             *(short *) (self + 0x1be8) = -1;
             func_ov002_02156e90(self);

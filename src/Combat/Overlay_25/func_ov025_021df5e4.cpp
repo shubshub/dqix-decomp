@@ -3,53 +3,53 @@
 #include "Graphics/Vector.h"
 #include "GameState/GameState.h"
 
-extern "C" void func_0203db34(unsigned char* arg0, int arg1, int arg2, int arg3);
+extern "C" void func_0203db34(unsigned char* object, int x, int y, int z);
 
 struct Struct_ov025_021df5e4 {
-    Object3D unknown_0_;
+    Object3D body;
     Object3D unknown_ac_;
-    Vector3fix unknown_158_;
-    Vector3fix unknown_164_;
+    Vector3fix direction;
+    Vector3fix start;
     int unknown_170_;
     unsigned char unknown_174_;
-    unsigned char unknown_175_;
-    unsigned char unknown_176_[0x14];
-    unsigned char unknown_18a_;
-    unsigned char unknown_18b_;
+    unsigned char targetIndex;
+    unsigned char work[0x14];
+    unsigned char steps;
+    unsigned char step;
 };
 
 // USA: func_ov025_021df5e4
-extern "C" ARM void func_ov025_021df5e4(Struct_ov025_021df5e4* arg0, int arg1, int arg2) {
-    GameState* var0 = GameState::GetInstance();
-    arg0->unknown_174_ = arg1;
-    arg0->unknown_175_ = arg2;
-    GameObject* var1 = var0->GetGameObjectByIndex(arg0->unknown_174_);
-    GameObject* var2 = var0->GetGameObjectByIndex(arg0->unknown_175_);
-    if (var1 == 0 || var2 == 0) return;
-    Vector3fix var3 = var1->obj3D_.position_;
-    var3.y = 0;
-    Vector3fix var4 = var2->obj3D_.position_;
-    var4.y = 0;
-    fix32_t var5 = 0xc00;
-    fix32_t var6 = Vector3fix_Distance(&var3, &var4);
-    fix32_t var7 = var1->obj3D_.GetRadius();
-    if (var6 < var7) return;
-    Vector3fix_Subtract(&var4, &var3, &arg0->unknown_158_);
-    Vector3fix_Normalize(&arg0->unknown_158_, &arg0->unknown_158_);
-    Vector3fix var8;
-    Vector3fixMultiplyScalar(&arg0->unknown_158_, var7 >> 1, &var8);
-    Vector3fix_Add(&var3, &var8, &arg0->unknown_164_);
-    fix32_t var9 = Vector3fix_Distance(&arg0->unknown_164_, &var4);
-    arg0->unknown_18a_ = (int)((float)fix32_Divide(var9, var5) / 4096.0f) + 1;
-    if (arg0->unknown_18a_ > 10) {
-        var5 = fix32_Divide(var9, 0xa000);
-        arg0->unknown_18a_ = 10;
+extern "C" ARM void func_ov025_021df5e4(Struct_ov025_021df5e4* self, int source, int target) {
+    GameState* gs = GameState::GetInstance();
+    self->unknown_174_ = source;
+    self->targetIndex = target;
+    GameObject* src = gs->GetGameObjectByIndex(self->unknown_174_);
+    GameObject* dst = gs->GetGameObjectByIndex(self->targetIndex);
+    if (src == 0 || dst == 0) return;
+    Vector3fix from = src->obj3D_.position_;
+    from.y = 0;
+    Vector3fix to = dst->obj3D_.position_;
+    to.y = 0;
+    fix32_t speed = 0xc00;
+    fix32_t dist = Vector3fix_Distance(&from, &to);
+    fix32_t radius = src->obj3D_.GetRadius();
+    if (dist < radius) return;
+    Vector3fix_Subtract(&to, &from, &self->direction);
+    Vector3fix_Normalize(&self->direction, &self->direction);
+    Vector3fix offset;
+    Vector3fixMultiplyScalar(&self->direction, radius >> 1, &offset);
+    Vector3fix_Add(&from, &offset, &self->start);
+    fix32_t len = Vector3fix_Distance(&self->start, &to);
+    self->steps = (int)((float)fix32_Divide(len, speed) / 4096.0f) + 1;
+    if (self->steps > 10) {
+        speed = fix32_Divide(len, 0xa000);
+        self->steps = 10;
     }
-    fix32_t var10 = fix32ReduceAngle0To2Pi(fix32_Atan2(arg0->unknown_158_.x, arg0->unknown_158_.z));
-    func_0203db34((unsigned char*)&arg0->unknown_0_, 0, var10, 0);
-    func_0203db34((unsigned char*)&arg0->unknown_ac_, 0, var10, 0);
-    Vector3fixMultiplyScalar(&arg0->unknown_158_, var5, &arg0->unknown_158_);
-    arg0->unknown_18b_ = 0;
-    memset(arg0->unknown_176_, 0, 0x14);
-    if (arg0->unknown_18a_ != 0) arg0->unknown_170_ = 0;
+    fix32_t angle = fix32ReduceAngle0To2Pi(fix32_Atan2(self->direction.x, self->direction.z));
+    func_0203db34((unsigned char*)&self->body, 0, angle, 0);
+    func_0203db34((unsigned char*)&self->unknown_ac_, 0, angle, 0);
+    Vector3fixMultiplyScalar(&self->direction, speed, &self->direction);
+    self->step = 0;
+    memset(self->work, 0, 0x14);
+    if (self->steps != 0) self->unknown_170_ = 0;
 }

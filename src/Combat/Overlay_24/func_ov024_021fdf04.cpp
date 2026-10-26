@@ -3,9 +3,9 @@
 #include "Combat/Main/BattleList.h"
 
 struct Struct_ov024_021fdf04 {
-    PrimaryCombatStats unknown_0_;
+    PrimaryCombatStats primaryStats;
     unsigned int unknown_14_;
-    unsigned char unknown_18_[0x21 - 0x18];
+    unsigned char pad18[0x21 - 0x18];
     unsigned char unknown_21_;
     unsigned char unknown_22_[0x58 - 0x22];
     signed int unknown_58_0_ : 3;
@@ -18,78 +18,78 @@ struct Struct_ov024_021fdf04 {
     signed int unknown_5a_5_ : 3;
 };
 struct Struct_ov024_021fdf04_7 {
-    unsigned char unknown_0_[0xa];
-    unsigned short unknown_a_0_ : 11;
-    unsigned short unknown_b_3_ : 1;
+    unsigned char padding[0xa];
+    unsigned short unused : 11;
+    unsigned short flag : 1;
 };
 struct Struct_ov024_021fdf04_8 {
     unsigned char unknown_0_[4];
     short unknown_4_;
     unsigned char unknown_6_[0x138 - 6];
-    Struct_ov024_021fdf04* unknown_138_;
+    Struct_ov024_021fdf04* stats;
     unsigned char unknown_13c_[0x144 - 0x13c];
 #if defined(jpn)
     union {
-        Struct_ov024_021fdf04_7* unknown_144_;
-        unsigned char* unknown_150_;
+        Struct_ov024_021fdf04_7* info;
+        unsigned char* field150;
     };
     unsigned char unknown_148_[0x17c - 0x148];
 #else
-    Struct_ov024_021fdf04_7* unknown_144_;
+    Struct_ov024_021fdf04_7* info;
     unsigned char unknown1_148_[0x150 - 0x148];
-    unsigned char* unknown_150_;
+    unsigned char* field150;
     unsigned char unknown_154_[0x17c - 0x154];
 #endif
-    unsigned char unknown_17c_;
-    unsigned char inline_ov024_021fdf04() const { return unknown_17c_; }
+    unsigned char group;
+    unsigned char inline_ov024_021fdf04() const { return group; }
 };
 struct Struct_ov024_021fdf04_2 {
-    unsigned int unknown_0_;
+    unsigned int field_0x0;
     unsigned int unknown_4_;
     unsigned int unknown_8_0_ : 8;
-    unsigned int unknown_9_0_ : 2;
+    unsigned int mode : 2;
     unsigned int unknown_9_2_ : 22;
     unsigned int unknown_c_;
-    unsigned int unknown_10_;
+    unsigned int flags;
     unsigned int unknown_14_0_ : 28;
     unsigned int unknown_17_4_ : 4;
     unsigned int unknown_18_0_ : 5;
     unsigned int unknown_18_5_ : 7;
     unsigned int unknown_19_4_ : 20;
     unsigned int unknown_1c_0_ : 14;
-    unsigned int unknown_1d_6_ : 5;
+    unsigned int range : 5;
     unsigned int unknown_1e_3_ : 13;
     unsigned int unknown_20_[4];
     short unknown_30_;
 };
 struct Struct_ov024_021fdf04_3 {
-    unsigned char unknown_0_0_ : 6;
-    unsigned char unknown_0_6_ : 1;
-    unsigned char unknown_0_7_ : 1;
+    unsigned char weight : 6;
+    unsigned char flag : 1;
+    unsigned char sel : 1;
 };
 struct Struct_ov024_021fdf04_4 {
-    float unknown_0_;
-    unsigned char unknown_4_, unknown_5_, unknown_6_, unknown_7_, unknown_8_;
+    float value;
+    unsigned char id, flag, index, unknown_7_, kind;
     Struct_ov024_021fdf04_3 unknown_9_;
-    unsigned char unknown_a_[2];
+    unsigned char padding[2];
 };
 struct Struct_ov024_021f6a1c {
-    Struct_ov024_021fdf04_4 unknown_0_[16];
-    int unknown_c0_;
-    float unknown_c4_;
+    Struct_ov024_021fdf04_4 entries[16];
+    int count;
+    float threshold;
     Struct_ov024_021f6a1c() { memset(this, 0, sizeof(*this)); }
 };
 struct Struct_ov024_021fdf04_5 {
     unsigned char unknown_0_[8];
-    Struct_ov024_021fdf04_8* unknown_8_;
+    Struct_ov024_021fdf04_8* actor;
     unsigned char unknown_c_[0x7c - 0xc];
     Struct_ov024_021fdf04_8* unknown_7c_[8];
-    int unknown_9c_;
+    int count;
     unsigned char unknown_a0_[0x64c - 0xa0];
-    Struct_ov024_021fdf04_2* unknown_64c_;
+    Struct_ov024_021fdf04_2* action;
 };
-struct Struct_ov024_021fdf04_6 { unsigned int unknown_0_0_ : 1; unsigned int unknown_0_1_ : 1; };
-struct Struct_ov024_021fefea { unsigned char unknown_0_; unsigned char unknown_1_; };
+struct Struct_ov024_021fdf04_6 { unsigned int bit0 : 1; unsigned int unknown_0_1_ : 1; };
+struct Struct_ov024_021fefea { unsigned char weight; unsigned char unknown_1_; };
 extern const Struct_ov024_021fefea data_ov024_021fefea[];
 
 extern "C" int func_02053c6c(unsigned char*);
@@ -100,9 +100,9 @@ struct Struct_ov024_021fa7ec_7;
 extern "C" int func_ov024_021fb460(Struct_ov024_021fa7ec_7*);
 struct Struct_ov024_021fa7ec_8;
 extern "C" int func_ov024_021fb478(Struct_ov024_021fa7ec_8*);
-extern "C" float func_020748d0(int arg0);
-extern "C" float func_020748a8(int arg0);
-extern "C" float func_02074938(int arg0);
+extern "C" float func_020748d0(int v);
+extern "C" float func_020748a8(int v);
+extern "C" float func_02074938(int v);
 extern "C" int func_ov024_021e67b0(GameObject*);
 extern "C" float func_ov024_021f875c(Struct_ov024_021fdf04_5*, Struct_ov024_021fdf04_8*, Struct_ov024_021fdf04_2*, int);
 extern "C" int func_020882f8(unsigned char*);
@@ -120,192 +120,192 @@ extern "C" void func_ov024_021f6a1c(Struct_ov024_021f6a1c*, void*);
 extern "C" void func_ov024_021f9874(Struct_ov024_021fdf04_5*, Struct_ov024_021f6a1c*, int, int);
 
 // USA: func_ov024_021fdf04
-extern "C" ARM void func_ov024_021fdf04(Struct_ov024_021fdf04_5* arg0, int arg1) {
-    Struct_ov024_021fdf04_8* var0 = arg0->unknown_8_;
-    func_02053c6c((unsigned char*)var0);
+extern "C" ARM void func_ov024_021fdf04(Struct_ov024_021fdf04_5* context, int arg1) {
+    Struct_ov024_021fdf04_8* actor = context->actor;
+    func_02053c6c((unsigned char*)actor);
     func_020797dc();
 
-    Struct_ov024_021fdf04_2* var1 = arg0->unknown_64c_;
-    if (var1->unknown_9_0_ == 2) return;
+    Struct_ov024_021fdf04_2* action = context->action;
+    if (action->mode == 2) return;
 
-    float var2 = 1.0f;
-    func_ov024_021f8bd8(arg0, &var2, var0, var1);
+    float base = 1.0f;
+    func_ov024_021f8bd8(context, &base, actor, action);
 
-    int var3 = arg0->unknown_9c_;
-    float var4[8];
-    Struct_ov024_021fdf04_8** var5 = arg0->unknown_7c_;
-    __clear(var4, sizeof(var4));
+    int total = context->count;
+    float rates[8];
+    Struct_ov024_021fdf04_8** var5 = context->unknown_7c_;
+    __clear(rates, sizeof(rates));
 
-    for (int var6 = 0; var6 < var3; var6++) {
-        Struct_ov024_021fdf04_8* var7 = var5[var6];
-        float var8 = 1.0f;
-        float var9 = var2;
+    for (int i = 0; i < total; i++) {
+        Struct_ov024_021fdf04_8* unit = var5[i];
+        float rate = 1.0f;
+        float scale = base;
 
-        if (var1->unknown_10_ & 1) {
-            if (func_ov024_021fb460((Struct_ov024_021fa7ec_7*)var7) && var1->unknown_18_5_ != 2) {
-                var8 = var8 * func_020748d0((signed char)var7->unknown_138_->unknown_5a_2_);
+        if (action->flags & 1) {
+            if (func_ov024_021fb460((Struct_ov024_021fa7ec_7*)unit) && action->unknown_18_5_ != 2) {
+                rate = rate * func_020748d0((signed char)unit->stats->unknown_5a_2_);
             }
         }
-        if (var1->unknown_10_ & 4) {
-            if (func_ov024_021fb478((Struct_ov024_021fa7ec_8*)var7)) {
-                var8 = var8 * func_020748a8((signed char)var7->unknown_138_->unknown_5a_5_);
+        if (action->flags & 4) {
+            if (func_ov024_021fb478((Struct_ov024_021fa7ec_8*)unit)) {
+                rate = rate * func_020748a8((signed char)unit->stats->unknown_5a_5_);
             }
         }
-        if (var1->unknown_10_ & 0x10) {
-            if (var7->unknown_138_->unknown_21_ <= 3) {
-                var8 = var8 * func_02074938((signed char)var7->unknown_138_->unknown_21_);
-            } else if (func_ov024_021e67b0((GameObject*)var7)) {
-                var8 = var8 * func_02074938(1);
+        if (action->flags & 0x10) {
+            if (unit->stats->unknown_21_ <= 3) {
+                rate = rate * func_02074938((signed char)unit->stats->unknown_21_);
+            } else if (func_ov024_021e67b0((GameObject*)unit)) {
+                rate = rate * func_02074938(1);
             }
         }
-        var8 = var8 * func_ov024_021f875c(arg0, var7, var1, 1);
-        var4[var6] = var9 * var8;
+        rate = rate * func_ov024_021f875c(context, unit, action, 1);
+        rates[i] = scale * rate;
     }
 
-    int var10 = var1->unknown_17_4_;
-    if (var10 == 5) {
-        unsigned char* var11 = var0->unknown_150_ + 0x2f4;
-        if (var11) {
-            Struct_ov024_021fdf04_6* var12 = (Struct_ov024_021fdf04_6*)var11;
-            if (var12->unknown_0_1_) var10 = 3;
-            else if (var12->unknown_0_0_) var10 = 4;
-            else var10 = 2;
+    int kind = action->unknown_17_4_;
+    if (kind == 5) {
+        unsigned char* p = actor->field150 + 0x2f4;
+        if (p) {
+            Struct_ov024_021fdf04_6* bits = (Struct_ov024_021fdf04_6*)p;
+            if (bits->unknown_0_1_) kind = 3;
+            else if (bits->bit0) kind = 4;
+            else kind = 2;
         }
     }
-    if (var10 != 2 && var10 != 4 && var10 != 3) return;
+    if (kind != 2 && kind != 4 && kind != 3) return;
 
-    unsigned int var13 = var1->unknown_1d_6_;
-    unsigned char var14;
+    unsigned int row = action->range;
+    unsigned char weight;
     unsigned char var15;
-    if (var13 <= 11) {
-        var15 = data_ov024_021fefea[var13].unknown_1_;
-        var14 = data_ov024_021fefea[var13].unknown_0_;
+    if (row <= 11) {
+        var15 = data_ov024_021fefea[row].unknown_1_;
+        weight = data_ov024_021fefea[row].weight;
     } else {
         return;
     }
 
-    Struct_ov024_021f6a1c var16;
-    memset(&var16, 0, sizeof(var16));
-    Struct_ov024_021fdf04_4 var17;
+    Struct_ov024_021f6a1c list;
+    memset(&list, 0, sizeof(list));
+    Struct_ov024_021fdf04_4 entry;
 
-    int var18 = 0;
-    int var19 = 0;
+    int count = 0;
+    int flag = 0;
 
-    for (long var20 = 0; var20 < arg0->unknown_9c_; var20++) {
+    for (long i = 0; i < context->count; i++) {
         int var21 = 1;
-        var18++;
-        Struct_ov024_021fdf04_8* var22 = var5[var20];
+        count++;
+        Struct_ov024_021fdf04_8* unit = var5[i];
 
-        if (var1->unknown_10_ & 0x400) {
-            if (var22->unknown_138_->unknown_14_ & 0x200) var19 = 1;
+        if (action->flags & 0x400) {
+            if (unit->stats->unknown_14_ & 0x200) flag = 1;
         }
-        if (var4[var20] < 30.0f) var21 = 0;
+        if (rates[i] < 30.0f) var21 = 0;
 
         if (var21) {
-            int var23 = 5;
-            int var24 = 0;
-            int var25 = 0;
-            float var26 = 33.3f;
+            int code = 5;
+            int ok = 0;
+            int check = 0;
+            float threshold = 33.3f;
 
             if (arg1 == 4) {
-                if (func_020882f8((unsigned char*)var22->unknown_138_) == 0) var24 = 1;
-                var25 = 1;
-                var26 = 35.0f;
+                if (func_020882f8((unsigned char*)unit->stats) == 0) ok = 1;
+                check = 1;
+                threshold = 35.0f;
             } else if (arg1 == 5) {
-                if ((var22->unknown_138_->unknown_14_ & 0x40) == 0) var24 = 1;
-                var25 = 1;
-                var26 = 35.0f;
+                if ((unit->stats->unknown_14_ & 0x40) == 0) ok = 1;
+                check = 1;
+                threshold = 35.0f;
             } else if (arg1 == 3) {
-                if (func_ov024_021da9b0((Struct_ov024_021da670_7*)var22) == 0) var24 = 1;
-                var25 = 1;
+                if (func_ov024_021da9b0((Struct_ov024_021da670_7*)unit) == 0) ok = 1;
+                check = 1;
             } else if (arg1 == 6) {
-                if (func_ov024_021dd010((Struct_ov024_021dced0_2*)var22) == 0) var24 = 1;
-                var25 = 1;
+                if (func_ov024_021dd010((Struct_ov024_021dced0_2*)unit) == 0) ok = 1;
+                check = 1;
             } else if (arg1 == 7) {
-                if (func_ov024_021de25c((Struct_ov024_021de124*)var22) == 0) var24 = 1;
-                var25 = 1;
-                var26 = 35.0f;
+                if (func_ov024_021de25c((Struct_ov024_021de124*)unit) == 0) ok = 1;
+                check = 1;
+                threshold = 35.0f;
             } else if (arg1 == 8) {
-                if (func_ov024_021da9c8((Struct_ov024_021da670_8*)var22) == 0) var24 = 1;
-                var25 = 1;
-                if (var1->unknown_30_ == 2) {
-                    Struct_ov024_021fdf04_7* var27 = var22->unknown_144_;
-                    if (var27 != 0) {
-                        if (var27->unknown_b_3_) var24 = 0;
+                if (func_ov024_021da9c8((Struct_ov024_021da670_8*)unit) == 0) ok = 1;
+                check = 1;
+                if (action->unknown_30_ == 2) {
+                    Struct_ov024_021fdf04_7* info = unit->info;
+                    if (info != 0) {
+                        if (info->flag) ok = 0;
                     }
                 }
-                var26 = 50.0f;
+                threshold = 50.0f;
             } else if (arg1 == 9) {
-                if (var4[var20] >= 30.0f) var24 = 1;
-                var23 = 2;
+                if (rates[i] >= 30.0f) ok = 1;
+                code = 2;
             } else if (arg1 == 0x11) {
-                Struct_ov024_021fdf04* var28 = var22->unknown_138_;
-                if (var28->unknown_58_0_ >= -1) var24 = 1;
-                if (var28->unknown_0_.attack <= 40) var24 = 0;
-                var23 = 5;
+                Struct_ov024_021fdf04* s = unit->stats;
+                if (s->unknown_58_0_ >= -1) ok = 1;
+                if (s->primaryStats.attack <= 40) ok = 0;
+                code = 5;
             } else if (arg1 == 0x12) {
-                Struct_ov024_021fdf04* var29 = var22->unknown_138_;
-                if (var29->unknown_58_3_ >= -1) var24 = 1;
-                if (var29->unknown_0_.defense <= 20) var24 = 0;
-                var23 = 5;
+                Struct_ov024_021fdf04* s = unit->stats;
+                if (s->unknown_58_3_ >= -1) ok = 1;
+                if (s->primaryStats.defense <= 20) ok = 0;
+                code = 5;
             } else if (arg1 == 0x13) {
-                Struct_ov024_021fdf04* var30 = var22->unknown_138_;
-                if (var30->unknown_58_6_ >= -1) var24 = 1;
-                if (var30->unknown_0_.agility <= 40) var24 = 0;
-                var23 = 5;
+                Struct_ov024_021fdf04* s = unit->stats;
+                if (s->unknown_58_6_ >= -1) ok = 1;
+                if (s->primaryStats.agility <= 40) ok = 0;
+                code = 5;
             } else if (arg1 == 0x14) {
-                Struct_ov024_021fdf04* var31 = var22->unknown_138_;
-                if (var31->unknown_59_4_ >= -1) var24 = 1;
-                if ((unsigned short)var31->unknown_0_.magicalMight <= 100) var24 = 0;
-                var23 = 5;
+                Struct_ov024_021fdf04* s = unit->stats;
+                if (s->unknown_59_4_ >= -1) ok = 1;
+                if ((unsigned short)s->primaryStats.magicalMight <= 100) ok = 0;
+                code = 5;
             } else if (arg1 == 0x15) {
-                Struct_ov024_021fdf04* var32 = var22->unknown_138_;
-                if (var32->unknown_59_7_ >= -1) var24 = 1;
-                if ((unsigned short)var32->unknown_0_.magicalMending <= 100) var24 = 0;
-                var23 = 5;
+                Struct_ov024_021fdf04* s = unit->stats;
+                if (s->unknown_59_7_ >= -1) ok = 1;
+                if ((unsigned short)s->primaryStats.magicalMending <= 100) ok = 0;
+                code = 5;
             } else if (arg1 == 0x16) {
-                if (var22->unknown_138_->unknown_5a_2_ >= -1) var24 = 1;
-                var23 = 5;
+                if (unit->stats->unknown_5a_2_ >= -1) ok = 1;
+                code = 5;
             }
 
-            if (!var25 || func_ov024_021fa76c((Struct_021fa76c*)var22)) {
-                if (var4[var20] < var26) var24 = 0;
-                if (var24) {
-                    var17.unknown_0_ = var1->unknown_30_;
-                    var17.unknown_6_ = var20;
-                    var17.unknown_4_ = arg1;
-                    var17.unknown_5_ = 1;
-                    var17.unknown_7_ = var4[var20];
-                    var17.unknown_8_ = var23;
-                    var17.unknown_9_.unknown_0_0_ = var14;
-                    var17.unknown_9_.unknown_0_6_ = var15;
-                    func_ov024_021f6a1c(&var16, &var17);
+            if (!check || func_ov024_021fa76c((Struct_021fa76c*)unit)) {
+                if (rates[i] < threshold) ok = 0;
+                if (ok) {
+                    entry.value = action->unknown_30_;
+                    entry.index = i;
+                    entry.id = arg1;
+                    entry.flag = 1;
+                    entry.unknown_7_ = rates[i];
+                    entry.kind = code;
+                    entry.unknown_9_.weight = weight;
+                    entry.unknown_9_.flag = var15;
+                    func_ov024_021f6a1c(&list, &entry);
                 }
             } else {
                 continue;
             }
         }
 
-        int var33 = 0;
-        if (var20 == arg0->unknown_9c_ - 1) var33 = 1;
-        else if (var10 == 2) var33 = 1;
-        else if (var10 == 4) {
-            if (var22->inline_ov024_021fdf04() != var5[(int)var20 + 1]->inline_ov024_021fdf04()) var33 = 1;
+        int last = 0;
+        if (i == context->count - 1) last = 1;
+        else if (kind == 2) last = 1;
+        else if (kind == 4) {
+            if (unit->inline_ov024_021fdf04() != var5[(int)i + 1]->inline_ov024_021fdf04()) last = 1;
         }
-        if (!var33) continue;
-        if (var18 >= 2) {
-            if (var15) var19 = 1;
+        if (!last) continue;
+        if (count >= 2) {
+            if (var15) flag = 1;
         }
-        if (var18 <= 1) var15 = 0;
-        if (!var19) {
-            int var34 = (unsigned char)var22->unknown_4_;
-            int var35 = var22->inline_ov024_021fdf04();
-            if (var10 == 4) var34 = 0xff;
-            else if (var10 == 3) { var34 = 0xff; var35 = var34; }
-            func_ov024_021f9874(arg0, &var16, var35, var34);
+        if (count <= 1) var15 = 0;
+        if (!flag) {
+            int p3 = (unsigned char)unit->unknown_4_;
+            int p2 = unit->inline_ov024_021fdf04();
+            if (kind == 4) p3 = 0xff;
+            else if (kind == 3) { p3 = 0xff; p2 = p3; }
+            func_ov024_021f9874(context, &list, p2, p3);
         }
-        memset(&var16, 0, sizeof(var16));
-        var18 = 0;
-        var19 = 0;
+        memset(&list, 0, sizeof(list));
+        count = 0;
+        flag = 0;
     }
 }

@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov031_022415a8(const char* arg0);
-extern "C" int func_ov031_0223ffb0(void* arg0, const char* arg1, int arg2);
-extern "C" int func_ov031_0223fe20(void* arg0, void* arg1, const char* arg2, int arg3);
+extern "C" int func_ov031_022415a8(const char* s);
+extern "C" int func_ov031_0223ffb0(void* obj, const char* name, int len);
+extern "C" int func_ov031_0223fe20(void* dst, void* arg1, const char* name, int size);
 
 // USA: func_ov031_02240074
-extern "C" ARM int func_ov031_02240074(int* arg0, void* arg1, const char* arg2) {
-	int var0 = 0;
-	if (*arg0 != 0) {
-		return var0;
+extern "C" ARM int func_ov031_02240074(int* obj, void* arg1, const char* name) {
+	int result = 0;
+	if (*obj != 0) {
+		return result;
 	}
-	int var1 = func_ov031_022415a8(arg2);
-	if (func_ov031_0223ffb0(arg0, arg2, var1) != 0) {
-		var0 = func_ov031_0223fe20((char*)arg0 + 0x38, arg1, arg2, 0x18);
-		if (var0 != 0) {
-			void* var2 = *(void**)((char*)arg0 + 0x38);
-			void* var3 = *(void**)var2;
-			*(int*)((char*)var3 + 0x10) = var1;
+	int len = func_ov031_022415a8(name);
+	if (func_ov031_0223ffb0(obj, name, len) != 0) {
+		result = func_ov031_0223fe20((char*)obj + 0x38, arg1, name, 0x18);
+		if (result != 0) {
+			void* p1 = *(void**)((char*)obj + 0x38);
+			void* p2 = *(void**)p1;
+			*(int*)((char*)p2 + 0x10) = len;
 		}
 	}
-	return var0;
+	return result;
 }

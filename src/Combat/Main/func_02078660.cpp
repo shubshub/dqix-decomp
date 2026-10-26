@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "World/Object3D.h"
 
-extern "C" void func_02076a8c(void* arg0);
+extern "C" void FieldMonsterState_Init(void* p);
 
 // USA: func_02078660
-extern "C" ARM void func_02078660(void* arg0) {
-    if (((Object3D*)arg0)->GetInheritedAlpha() != 0) return;
-    func_02076a8c(arg0);
-    ((Object3D*)arg0)->MakeHidden();
+extern "C" ARM void func_02078660(void* p) {
+    if (((Object3D*)p)->GetInheritedAlpha() != 0) return;
+    FieldMonsterState_Init(p);
+    ((Object3D*)p)->MakeHidden();
 }

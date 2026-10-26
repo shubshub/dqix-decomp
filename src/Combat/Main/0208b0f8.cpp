@@ -4,39 +4,39 @@
 
 
 struct Base02010834;
-struct Container020e34bc;
-struct Entry020e3054;
-struct Combatant02048228;
-struct Combatant02048284;
+struct Struct_0208ab34;
+struct Struct_0208ab34_2;
+struct Struct_02048228;
+struct Struct_02048284;
 extern "C" void* Scenario_GetInstance();
 extern "C" void* LinkSession_GetInstance();
 extern "C" void* Zone3D_GetInstance();
 extern "C" void* __clear(void*, int);
 extern "C" void EventQuery_RunQueuedCommands(void*);
 extern "C" void func_ov017_021c9e00(int, int, int, int);
-void GameState_GetPartyMemberIds(Base02010834*, int, int*, int*);
-int FieldTaskQueue_IsEmpty(void**);
-int Scenario_RunTrigger(void*, int, void*);
-void* GetData02153637_020e2ff8();
-int GetEntryStatusForKey020e34bc(Container020e34bc*, int);
-int LinkSession_IsActive(int*);
-unsigned char GameObject_IsClimbingLadder(char*);
-int CountFlaggedSlotBit14Matches020852a4(unsigned char*);
-int CountFlaggedSlotBit15Matches02085318(unsigned char*);
-void StoreInFirstEmptySlot_020e3368(unsigned char*, unsigned char);
-void SetBoolFlagAt558_02026f08(unsigned char*, int, int);
-int RestoreMaxHpByAmount(Combatant02048228*, int);
-int RestoreMaxMpByAmount(Combatant02048284*, int);
-void Dispatch020e3428(void*, int);
-void ClearEntryIfCurrentArrMatches020e3468(Entry020e3054*, int);
+extern "C" void GameState_GetPartyMemberIds(Base02010834*, int, int*, int*);
+extern "C" int FieldTaskQueue_IsEmpty(void**);
+extern "C" int Scenario_RunTrigger(void*, int, void*);
+extern "C" void* func_020e2ff8();
+extern "C" int func_020e34bc(Struct_0208ab34*, int);
+extern "C" int LinkSession_IsActive(int*);
+extern "C" unsigned char GameObject_IsClimbingLadder(char*);
+extern "C" int func_020852a4(unsigned char*);
+extern "C" int func_02085318(unsigned char*);
+extern "C" void func_020e3368(unsigned char*, unsigned char);
+extern "C" void func_02026f08(unsigned char*, int, int);
+extern "C" int func_02048228(Struct_02048228*, int);
+extern "C" int func_02048284(Struct_02048284*, int);
+extern "C" void func_020e3428(void*, int);
+extern "C" void func_020e3468(Struct_0208ab34_2*, int);
 
-struct Struct_0208b0f8 {
-    char unknown_0_[4];
-    short unknown_4_;
-    char unknown_6_[0xb2 - 6];
-    short unknown_b2_;
+struct Actor0208b0f8 {
+    char pad0[4];
+    short slot;
+    char pad6[0xb2 - 6];
+    short active;
     char unknown_b4_[0x130 - 0xb4];
-    unsigned int* unknown_130_;
+    unsigned int* restorationState;
 #if defined(jpn)
     char unknown_134_[0x144 - 0x134];
 #else
@@ -45,23 +45,23 @@ struct Struct_0208b0f8 {
     unsigned char* unknown_150_;
 };
 struct Struct_0208b0f8_2 {
-    char unknown_0_[0x94];
+    char pad0[0x94];
     unsigned char unknown_94_[4];
     unsigned char unknown_98_[4];
-    unsigned char unknown_9c_;
+    unsigned char enabled;
     char unknown_9d_[0xa8 - 0x9d];
-    unsigned char unknown_a8_;
+    unsigned char countdown;
 };
 struct Struct_0208b0f8_3 {
-    char unknown_0_[0xc];
-    unsigned int unknown_c_;
-    char unknown_10_[0x30 - 0x10];
-    void* unknown_30_;
+    char pad0[0xc];
+    unsigned int zone;
+    char pad10[0x30 - 0x10];
+    void* nodes;
 };
 
 // USA: func_0208b0f8
 extern "C" ARM void func_0208b0f8(void* receiver) {
-    State0208b0f8* self = (State0208b0f8*)receiver;
+    Struct_0208b0f8_2* self = (Struct_0208b0f8_2*)receiver;
     GameState* game;
     void* data;
     GameResources* resources;
@@ -71,8 +71,8 @@ extern "C" ARM void func_0208b0f8(void* receiver) {
     int changed;
     void** list;
     void* entries;
-    unsigned char* mpTimer;
-    unsigned char* hpTimer;
+    unsigned char* var10;
+    unsigned char* var11;
     Actor0208b0f8* leader;
     int i;
     int status;
@@ -96,19 +96,19 @@ extern "C" ARM void func_0208b0f8(void* receiver) {
     if (FieldTaskQueue_IsEmpty(list) && leader->active != 0 && self->countdown != 0) {
         self->countdown--;
         if (self->countdown == 0) {
-            Record0208b0f8 record;
+            Struct_0208b0f8_3 record;
             record.zone = *(unsigned short*)Zone3D_GetInstance();
             if (Scenario_RunTrigger(data, 0x19, &record)) {
                 EventQuery_RunQueuedCommands(&record);
             }
         }
     }
-    entries = GetData02153637_020e2ff8();
+    entries = func_020e2ff8();
     changed = 0;
-    hpTimer = self->hpTimers;
-    mpTimer = self->mpTimers;
+    var11 = self->unknown_94_;
+    var10 = self->unknown_98_;
     for (i = 0; i < count; i++) {
-        status = GetEntryStatusForKey020e34bc((Container020e34bc*)entries, 1);
+        status = func_020e34bc((Struct_0208ab34*)entries, 1);
         party = (Actor0208b0f8*)game->GetPartyMemberByIndex(ids[i]);
         if (!LinkSession_IsActive(search) || (LinkSession_IsActive(search) && status != 1)) {
             if (party == NULL || leader->active == 0 || GameObject_IsClimbingLadder((char*)leader) != 0 ||
@@ -117,36 +117,36 @@ extern "C" ARM void func_0208b0f8(void* receiver) {
                 continue;
             }
         }
-        hp = CountFlaggedSlotBit14Matches020852a4(party->skills);
+        hp = func_020852a4(party->unknown_150_);
         if (hp > 0 && self->enabled && !blocked) {
-            if (hpTimer[i] == 0) {
-                if (status != 2 && status != 1) StoreInFirstEmptySlot_020e3368((unsigned char*)entries, 1);
+            if (var11[i] == 0) {
+                if (status != 2 && status != 1) func_020e3368((unsigned char*)entries, 1);
                 if (status == 1) {
-                    SetBoolFlagAt558_02026f08(flags, (unsigned char)ids[i], 0);
-                    if (!(party->restorationState[0] & 1)) RestoreMaxHpByAmount((Combatant02048228*)party, hp);
-                    hpTimer[i] = 0x28;
+                    func_02026f08(flags, (unsigned char)ids[i], 0);
+                    if (!(party->restorationState[0] & 1)) func_02048228((Struct_02048228*)party, hp);
+                    var11[i] = 0x28;
                     if (LinkSession_IsActive(search)) func_ov017_021c9e00(ids[i], 1, 0, 0);
                     changed = 1;
                 }
-            } else var11[var13]--;
+            } else var11[i]--;
         }
-        mp = CountFlaggedSlotBit15Matches02085318(party->skills);
+        mp = func_02085318(party->unknown_150_);
         if (mp > 0 && self->enabled && !blocked) {
-            if (mpTimer[i] == 0) {
-                if (status != 2 && status != 1) StoreInFirstEmptySlot_020e3368((unsigned char*)entries, 1);
+            if (var10[i] == 0) {
+                if (status != 2 && status != 1) func_020e3368((unsigned char*)entries, 1);
                 if (status == 1) {
-                    SetBoolFlagAt558_02026f08(flags, (unsigned char)ids[i], 0);
-                    if (!(party->restorationState[0] & 1)) RestoreMaxMpByAmount((Combatant02048284*)party, mp);
-                    mpTimer[i] = 0x28;
+                    func_02026f08(flags, (unsigned char)ids[i], 0);
+                    if (!(party->restorationState[0] & 1)) func_02048284((Struct_02048284*)party, mp);
+                    var10[i] = 0x28;
                     if (LinkSession_IsActive(search)) func_ov017_021c9e00(ids[i], 1, 1, 0);
                     changed = 1;
                 }
-            } else var10[var13]--;
+            } else var10[i]--;
         }
     }
-    if (var7) {
-        int var21 = func_020e34bc((Struct_0208ab34*)var9, 1);
-        if (var21 == 1) func_020e3428(var9, 1);
-        else if ((unsigned int)(var21 - 3) <= 2) func_020e3468((Struct_0208ab34_2*)var9, 1);
+    if (changed) {
+        int status = func_020e34bc((Struct_0208ab34*)entries, 1);
+        if (status == 1) func_020e3428(entries, 1);
+        else if ((unsigned int)(status - 3) <= 2) func_020e3468((Struct_0208ab34_2*)entries, 1);
     }
 }

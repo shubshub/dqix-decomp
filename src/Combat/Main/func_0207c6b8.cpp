@@ -1,26 +1,26 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0207c5f8(unsigned char* arg0, unsigned int arg1);
-extern "C" signed short func_0207c620(unsigned char* arg0, unsigned int arg1);
+extern "C" void* func_0207c5f8(unsigned char* obj, unsigned int index);
+extern "C" signed short func_0207c620(unsigned char* obj, unsigned int index);
 
 // USA: func_0207c6b8
-extern "C" ARM int func_0207c6b8(unsigned char* arg0, unsigned int arg1, int arg2) {
-    signed short* var0 = (signed short*)func_0207c5f8(arg0, arg1);
-    if (var0 == NULL) {
+extern "C" ARM int func_0207c6b8(unsigned char* obj, unsigned int index, int target) {
+    signed short* arr = (signed short*)func_0207c5f8(obj, index);
+    if (arr == NULL) {
         return -1;
     }
-    signed short var1;
-    var1 = 0;
-    int var2 = func_0207c620(arg0, arg1);
-    for (unsigned int var3 = 0; var3 < (unsigned int)var2; var3++) {
-        signed short var4 = *var0;
-        if (var4 > 0) {
-            if (arg2 == var1) {
-                return var4;
+    signed short j;
+    j = 0;
+    int count = func_0207c620(obj, index);
+    for (unsigned int i = 0; i < (unsigned int)count; i++) {
+        signed short v = *arr;
+        if (v > 0) {
+            if (target == j) {
+                return v;
             }
-            var1++;
+            j++;
         }
-        var0++;
+        arr++;
     }
     return -1;
 }

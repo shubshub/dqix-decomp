@@ -15,110 +15,110 @@ enum { Enum_ov003_0217d53c_14092 = 0x370c };
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-char* MessageSystem_GetInstance(void);
+extern "C" char* MessageSystem_GetInstance(void);
 extern "C" char* Zone3D_GetInstance(void);
 extern "C" int func_020457e0(char* obj);
 extern "C" void func_ov017_021baedc(void* self, int flag);
 struct TailList020469b4;
 struct TailNode020469b4;
-void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
-void FieldTask_InitEnterZone(unsigned char* obj, int arg);
-void* GameState_GetZoneTransition(GameState* state);
-void InitStruct02070378(char* obj);
+extern "C" void func_020469b4(struct TailList020469b4* list, struct TailNode020469b4* node);
+extern "C" void FieldTask_InitEnterZone(unsigned char* obj, int arg);
+extern "C" void* GameState_GetZoneTransition(GameState* state);
+extern "C" void func_02070378(char* obj);
 
-struct Struct_ov003_0217d53c_4 {
+struct Progress02012fe4 {
 #if defined(jpn)
-    unsigned char unknown1_0_[0x1b3c];
+    unsigned char pad0[0x1b3c];
 #else
-    unsigned char unknown_0_[0xb3c];
+    unsigned char pad0[0xb3c];
 #endif
-    int unknown_b3c_;
+    int chapter;
 };
 
 #if !defined(jpn)
-static inline struct Struct_ov003_0217d53c_4* inline_ov003_0216e714_2(void* arg0) {
-    return (struct Struct_ov003_0217d53c_4*)((int)arg0 + 0x1840);
+static inline struct Progress02012fe4* GetProgress(void* run) {
+    return (struct Progress02012fe4*)((int)run + 0x1840);
 }
 #endif
 
 struct Struct_ov003_0217d53c {
-    unsigned char unknown_0_[0x8];
-    unsigned short unknown_8_;
-    unsigned char unknown_a_[Enum_ov003_0217d53c_267 - 0xa];
-    unsigned char unknown_10b_;
+    unsigned char pad0[0x8];
+    unsigned short messageId;
+    unsigned char padA[Enum_ov003_0217d53c_267 - 0xa];
+    unsigned char active;
 };
 
-struct Struct_ov003_0217d53c_2 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_[0x7 - 0x2];
+struct EventRecord_0217d53c {
+    unsigned short id;
+    unsigned char pad2[0x7 - 0x2];
     unsigned char unknown_7_;
-    unsigned char unknown_8_[0xc - 0x8];
+    unsigned char pad8[0xc - 0x8];
     unsigned char unknown_c_;
-    unsigned char unknown_d_[0x14 - 0xd];
+    unsigned char padD[0x14 - 0xd];
     int unknown_14_;
     int unknown_18_;
 };
 
 struct Struct_ov003_0217d53c_3 {
-    unsigned char unknown_0_[0x4];
-    unsigned char unknown_4_;
-    signed char unknown_5_;
+    unsigned char pad0[0x4];
+    unsigned char state;
+    signed char busy;
 };
 
 // USA: func_ov003_0217d53c
-extern "C" ARM void func_ov003_0217d53c(State_0217d53c* self) {
+extern "C" ARM void func_ov003_0217d53c(Struct_ov003_0217d53c_3* self) {
     GameState* gs = GameState::GetInstance();
     char* global = MessageSystem_GetInstance();
     char* res = (char*)GetGameResources();
-    struct TailList020469b4* list = *(struct TailList020469b4**)(res + kRegion36fc);
+    struct TailList020469b4* list = *(struct TailList020469b4**)(res + Enum_ov003_0217d53c_14076);
 #if defined(jpn)
     Progress02012fe4* current = (Progress02012fe4*)(Zone3D_GetInstance() + 0x860);
 #else
     char* current = Zone3D_GetInstance();
 #endif
-    if (arg0->unknown_5_ != 0 || *(int*)(var1 + Enum_ov003_0217d53c_2464) != 0) return;
-    if (func_020457e0(var1) == 0) {
-        Struct_ov003_0217d53c* var6 = *(Struct_ov003_0217d53c**)(var2 + Enum_ov003_0217d53c_14132);
-        func_ov017_021baedc(var6, 1);
-        var6->unknown_10b_ = 1;
+    if (self->busy != 0 || *(int*)(global + Enum_ov003_0217d53c_2464) != 0) return;
+    if (func_020457e0(global) == 0) {
+        Struct_ov003_0217d53c* event = *(Struct_ov003_0217d53c**)(res + Enum_ov003_0217d53c_14132);
+        func_ov017_021baedc(event, 1);
+        event->active = 1;
         switch (
 #if defined(jpn)
-            var4->unknown_b3c_
+            current->chapter
 #else
-            inline_ov003_0216e714_2(var5)->unknown_b3c_
+            GetProgress(current)->chapter
 #endif
         ) {
             case 0:
             case 1:
             case 2:
-                var6->unknown_8_ = 0xd067;
+                event->messageId = 0xd067;
                 break;
             case 3:
             case 4:
-                var6->unknown_8_ = 0xd068;
+                event->messageId = 0xd068;
                 break;
             case 5:
-                var6->unknown_8_ = 0xd069;
+                event->messageId = 0xd069;
                 break;
             case 6:
-                var6->unknown_8_ = 0xd06a;
+                event->messageId = 0xd06a;
                 break;
         }
-        AppendNodeToTail(list, (struct TailNode020469b4*)event);
-        unsigned char* header = *(unsigned char**)(res + kRegion370c);
+        func_020469b4(list, (struct TailNode020469b4*)event);
+        unsigned char* header = *(unsigned char**)(res + Enum_ov003_0217d53c_14092);
         FieldTask_InitEnterZone(header, 0);
         EventRecord_0217d53c* record = (EventRecord_0217d53c*)GameState_GetZoneTransition(gs);
-        InitStruct02070378((char*)record);
+        func_02070378((char*)record);
         record->id = 0xc3bc;
-        record->field_0x7 = 1;
-        record->field_0x14 = 0x266;
-        record->field_0x18 = -0x7b33;
-        record->field_0xc = 1;
-        AppendNodeToTail(list, (struct TailNode020469b4*)header);
+        record->unknown_7_ = 1;
+        record->unknown_14_ = 0x266;
+        record->unknown_18_ = -0x7b33;
+        record->unknown_c_ = 1;
+        func_020469b4(list, (struct TailNode020469b4*)header);
         self->state = 4;
         self->busy = 0;
     } else {
-        arg0->unknown_4_ = 4;
-        arg0->unknown_5_ = 0;
+        self->state = 4;
+        self->busy = 0;
     }
 }

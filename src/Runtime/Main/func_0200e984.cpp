@@ -1,32 +1,32 @@
 #include <globaldefs.h>
 
 struct Struct_0200e984_2 {
-    unsigned int unknown_0_;
-    unsigned char* unknown_4_;
+    unsigned int a;
+    unsigned char* pattern;
 };
 
 struct Struct_0200e984 {
-    unsigned int unknown_0_;
-    char unknown_4_[0xc - 0x4];
-    unsigned char* unknown_c_;
+    unsigned int count;
+    char pad4[0xc - 0x4];
+    unsigned char* entries;
 };
 
-extern "C" ARM int func_0200eff0(void* arg0, unsigned char* arg1, Struct_0200e984_2* arg2);
+extern "C" ARM int func_0200eff0(void* str, unsigned char* pattern, Struct_0200e984_2* state);
 
 // USA: func_0200e984
-extern "C" ARM int func_0200e984(void* arg0, Struct_0200e984* arg1) {
-    unsigned char* var0 = arg1->unknown_c_;
-    unsigned int var1 = 0;
-    if (var1 < arg1->unknown_0_) {
+extern "C" ARM int func_0200e984(void* str, Struct_0200e984* list) {
+    unsigned char* entries = list->entries;
+    unsigned int i = 0;
+    if (i < list->count) {
         do {
-            unsigned char* var2 = (unsigned char*)(var0[0] | (var0[1] << 8) | (var0[2] << 16) | (var0[3] << 24));
-            Struct_0200e984_2 var3;
-            var3.unknown_4_ = var2;
-            int var4 = func_0200eff0(arg0, var2, &var3);
-            if (var4 != 0) return 1;
-            var1++;
-            var0 += 4;
-        } while (var1 < arg1->unknown_0_);
+            unsigned char* pattern = (unsigned char*)(entries[0] | (entries[1] << 8) | (entries[2] << 16) | (entries[3] << 24));
+            Struct_0200e984_2 state;
+            state.pattern = pattern;
+            int result = func_0200eff0(str, pattern, &state);
+            if (result != 0) return 1;
+            i++;
+            entries += 4;
+        } while (i < list->count);
     }
     return 0;
 }

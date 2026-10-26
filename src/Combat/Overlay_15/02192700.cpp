@@ -50,71 +50,71 @@ extern const char data_ov015_021950f0[];
 #include "std_library_functions.h"
 #include "Resource/BCFG.h"
 
-struct Struct_ov015_02192700 { char unknown_0_[0x40]; };
+struct MenuItem02192700 { char data[0x40]; };
 
-struct Struct_ov015_02192700_2 {
-    char unknown_0_[0x62];
-    unsigned short unknown_62_;
+struct MenuList02192700 {
+    char pad0[0x62];
+    unsigned short visibleCount;
     char unknown_64_[0x6d - 0x64];
-    unsigned char unknown_6d_;
+    unsigned char flags;
 };
 
 struct Struct_ov015_02192700_3 {
-    char unknown_0_[0xc];
-    char* unknown_c_;
+    char pad0[0xc];
+    char* name;
 };
 
 struct Struct_ov015_02192700_4 {
-    struct Struct_ov015_02192700_3* unknown_0_;
-    struct Struct_ov015_02192700_4* unknown_4_;
+    struct Struct_ov015_02192700_3* value;
+    struct Struct_ov015_02192700_4* next;
 };
 
-struct Struct_ov015_0218bb14 { char* unknown_0_; int unknown_4_; };
-struct Struct_ov015_0218bb14_2 { void* unknown_0_; struct Struct_ov015_0218bb14* unknown_4_; void* unknown_8_; int unknown_c_; };
+struct Struct_ov015_0218bb14 { char* name; int b; };
+struct Struct_ov015_0218bb14_2 { void* f0; struct Struct_ov015_0218bb14* arr; void* f8; int count; };
 
 struct Struct_ov015_02192700_5 {
-    char* unknown_0_;
-    int unknown_4_;
-    short unknown_8_;
+    char* name;
+    int f4;
+    short key;
 };
 
 struct Struct_ov015_02192700_6 {
-    int unknown_0_;
-    int unknown_4_;
+    int f0;
+    int f4;
 };
 
-struct Struct_ov002_0215a658 {
-    int unknown_0_;
-    char* unknown_4_;
+struct Element020dedd0 {
+    int f0;
+    char* name;
 };
 
 struct BCFG;
 
 struct Struct_ov015_02192700_7 {
-    int unknown_0_;
+    int f0;
     char unknown_4_[0x24];
-    struct Struct_ov015_02192700_7* unknown_28_;
+    struct Struct_ov015_02192700_7* next;
 };
 
 struct Struct_ov015_02192700_8 {
-    char unknown_0_[0x2c];
-    struct Struct_ov015_02192700_4* unknown_2c_;
+    char pad0[0x2c];
+    struct Struct_ov015_02192700_4* list;
     void* unknown_30_;
-    struct Struct_ov015_02192700_3* unknown_34_;
+    struct Struct_ov015_02192700_3* field34;
     char unknown_38_[0x3c - 0x38];
-    struct Struct_ov015_0218bb14_2 unknown_3c_;
-    char unknown_4c_[0x64 - 0x4c];
-    char unknown_64_[0x194 - 0x64];
+    struct Struct_ov015_0218bb14_2 entries;
+    char container[0x64 - 0x4c];
+    char search[0x194 - 0x64];
     int unknown_194_;
     char unknown_198_[0x19c - 0x198];
     unsigned char unknown_19c_[5];
     char unknown_1a1_[0x1a4 - 0x1a1];
-    int unknown_1a4_;
+    int state;
     char unknown_1a8_[0x268 - 0x1a8];
     short unknown_268_[(0x2c4 - 0x268) / 2];
-    struct Struct_ov015_02192700_2 unknown_2c4_;
+    struct MenuList02192700 menu;
     char unknown_332_[0x344 - 0x332];
-    struct Struct_ov015_02192700* unknown_344_;
+    struct MenuItem02192700* items;
     int unknown_348_;
     float unknown_34c_;
     unsigned char unknown_350_;
@@ -123,31 +123,31 @@ struct Struct_ov015_02192700_8 {
 };
 
 extern "C" void __clear(void* buf, int n);
-void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-struct Callback_0202a91c;
-void SetState0x6cAndInvoke(Callback_0202a91c*);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+struct Struct_02029634_3;
+extern "C" void func_0202a91c(Struct_02029634_3*);
 extern "C" void DebugMenu_Init(struct MenuList02192700* menu);
 extern "C" void DebugMenuItem_SetText(void* self, const char* src);
-void DebugMenuItem_Init(char*);
-const char* StandardStrings_Get(int id);
+extern "C" void DebugMenuItem_Init(char*);
+extern "C" const char* StandardStrings_Get(int id);
 struct ListHead0202a944;
 struct ListNode0202a944;
-void DebugMenu_AddItem(ListHead0202a944*, ListNode0202a944*);
-struct Entry8_0218bb14* GetEntry8_0218bb14(struct List8_0218bb14* list, int idx);
-extern "C" struct MenuEntry02192700* func_ov015_02193160(struct Obj02192700* obj, int state, int* pIdx);
-struct BinarySearchByComparatorStruct;
-struct SearchResult02192700* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
-extern "C" int func_ov015_02190d08(struct Obj02192700* obj);
+extern "C" void DebugMenu_AddItem(ListHead0202a944*, ListNode0202a944*);
+extern "C" struct Struct_ov015_0218bb14* func_ov015_0218bb14(struct Struct_ov015_0218bb14_2* list, int idx);
+extern "C" struct Struct_ov015_02192700_5* func_ov015_02193160(struct Struct_ov015_02192700_8* obj, int state, int* arg2);
+struct Struct_0206f01c_2;
+extern "C" struct Struct_ov015_02192700_6* func_0206f4f0(Struct_0206f01c_2*, int);
+extern "C" int func_ov015_02190d08(struct Struct_ov015_02192700_8* obj);
 struct ItemTable;
-struct Element020dedd0* ItemTable_Find(ItemTable*, int);
-struct Struct0219313c;
-void SetShortFields0219313c(Struct0219313c*, int, int);
-struct Struct02193150;
-void AddToShortField02193150(Struct02193150*, int);
+extern "C" struct Element020dedd0* ItemTable_Find(ItemTable*, int);
+struct Struct_ov015_02192700_9;
+extern "C" void func_ov015_0219313c(Struct_ov015_02192700_9*, int, int);
+struct Struct_ov015_02192700_10;
+extern "C" void func_ov015_02193150(Struct_ov015_02192700_10*, int);
 extern "C" void DebugMenu_UpdateLayout(struct MenuList02192700* menu);
-void DebugMenu_Open(char*, int);
-extern "C" struct HolderNode02192700* func_ov015_0218f344(void* obj);
+extern "C" void DebugMenu_Open(char*, int);
+extern "C" struct Struct_ov015_02192700_7* func_ov015_0218f344(void* obj);
 
 extern AllocatorUnion g_mainAllocator;
 extern const char data_ov015_021942a2[];
@@ -193,30 +193,30 @@ extern const char data_ov015_02194517[];
 extern const char data_ov015_0219451b[];
 extern const char data_ov015_0219451f[];
 
-static inline const char* inline_ov015_02192700(struct Struct_ov015_02192700_3* arg0) {
-    return arg0->unknown_c_;
+static inline const char* GetName(struct Struct_ov015_02192700_3* value) {
+    return value->name;
 }
 
 // USA: func_ov015_02192700
-extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, int arg1) {
-    char var0[0x80];
-    char var1[0x100];
-    char var2[0x80];
-    int var3;
-    int var4;
+extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* obj, int a1) {
+    char title[0x80];
+    char line[0x100];
+    char marked[0x80];
+    int idx;
+    int count;
 
     if (obj->items != 0) {
         AllocatorUnion_Free(&g_mainAllocator, obj->items);
         obj->items = 0;
     }
-    obj->field354 = a1;
+    obj->unknown_354_ = a1;
     __clear(title, 0x80);
-    SetState0x6cAndInvoke((Callback_0202a91c*)&obj->menu);
+    func_0202a91c((Struct_02029634_3*)&obj->menu);
     DebugMenu_Init(&obj->menu);
     obj->menu.flags |= 6;
 
-    if (arg0->unknown_194_ == 0 || arg0->unknown_194_ == 2) {
-        switch (arg0->unknown_1a4_) {
+    if (obj->unknown_194_ == 0 || obj->unknown_194_ == 2) {
+        switch (obj->state) {
         case 0:
             DebugMenuItem_SetText(&obj->menu, data_ov015_021943a5);
             break;
@@ -340,18 +340,18 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
             DebugMenuItem_SetText(&obj->menu, data_ov015_021944fa);
             break;
         case 37:
-            if (arg0->unknown_34_ != 0) {
-                sprintf(var0, data_ov015_02194503, arg0->unknown_34_->unknown_c_);
+            if (obj->field34 != 0) {
+                sprintf(title, data_ov015_02194503, obj->field34->name);
             }
             DebugMenuItem_SetText(&obj->menu, title);
             break;
         }
 
-        var4 = 0;
-        if (arg0->unknown_1a4_ == 2 || arg0->unknown_1a4_ == 3 || arg0->unknown_1a4_ == 36) {
-            struct Struct_ov015_02192700_4* var5;
-            for (var5 = arg0->unknown_2c_; var5 != 0; var5 = var5->unknown_4_) {
-                var4++;
+        count = 0;
+        if (obj->state == 2 || obj->state == 3 || obj->state == 36) {
+            struct Struct_ov015_02192700_4* it;
+            for (it = obj->list; it != 0; it = it->next) {
+                count++;
             }
             if (count == 0) {
                 obj->items = (struct MenuItem02192700*)AllocatorUnion_AllocateRounded(&g_mainAllocator, sizeof(struct MenuItem02192700));
@@ -368,7 +368,7 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
                 DebugMenu_AddItem((ListHead0202a944*)&obj->menu, (ListNode0202a944*)obj->items);
                 count = 1;
             } else {
-                struct ListNode02192700* node = obj->list;
+                struct Struct_ov015_02192700_4* node = obj->list;
                 for (count = 0; node != 0; count++) {
                     DebugMenuItem_Init((char*)&obj->items[count]);
                     DebugMenuItem_SetText(&obj->items[count], GetName(node->value));
@@ -379,20 +379,20 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
         } else if (obj->state == 40) {
             obj->items = (struct MenuItem02192700*)AllocatorUnion_AllocateRounded(&g_mainAllocator, obj->entries.count * sizeof(struct MenuItem02192700));
             for (; count < obj->entries.count; count++) {
-                struct Entry8_0218bb14* entry = GetEntry8_0218bb14(&obj->entries, count);
+                struct Struct_ov015_0218bb14* entry = func_ov015_0218bb14(&obj->entries, count);
                 DebugMenuItem_Init((char*)&obj->items[count]);
                 DebugMenuItem_SetText(&obj->items[count], entry->name);
                 DebugMenu_AddItem((ListHead0202a944*)&obj->menu, (ListNode0202a944*)&obj->items[count]);
             }
         } else {
-            struct Struct_ov015_02192700_5* var8;
+            struct Struct_ov015_02192700_5* entry;
 
-            var3 = 0;
-            var8 = func_ov015_02193160(arg0, arg0->unknown_1a4_, &var3);
-            while (var8 != 0) {
-                var3++;
-                var4++;
-                var8 = func_ov015_02193160(arg0, arg0->unknown_1a4_, &var3);
+            idx = 0;
+            entry = func_ov015_02193160(obj, obj->state, &idx);
+            while (entry != 0) {
+                idx++;
+                count++;
+                entry = func_ov015_02193160(obj, obj->state, &idx);
             }
             obj->items = (struct MenuItem02192700*)AllocatorUnion_AllocateRounded(&g_mainAllocator, count * sizeof(struct MenuItem02192700));
             count = 0;
@@ -401,7 +401,7 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
             while (entry != 0) {
                 DebugMenuItem_Init((char*)&obj->items[count]);
                 if (obj->state == 6) {
-                    struct SearchResult02192700* found = SearchWithComparator0206f4f0((BinarySearchByComparatorStruct*)obj->search, entry->key);
+                    struct Struct_ov015_02192700_6* found = func_0206f4f0((Struct_0206f01c_2*)obj->search, entry->key);
                     if (found != 0) {
                         __clear(line, 0x100);
                         sprintf(line, data_ov015_02194508, found->f4 + 1, found->f0);
@@ -422,32 +422,32 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
                     } else {
                         DebugMenuItem_SetText(&obj->items[count], entry->name);
                     }
-                } else if (arg0->unknown_1a4_ == 38) {
+                } else if (obj->state == 38) {
                     unsigned char var11;
 
-                    __clear(var2, 0x80);
+                    __clear(marked, 0x80);
                     var11 = 0;
-                    switch (var4) {
+                    switch (count) {
                     case 0:
-                        var11 = arg0->unknown_19c_[0];
+                        var11 = obj->unknown_19c_[0];
                         break;
                     case 1:
-                        var11 = arg0->unknown_19c_[1];
+                        var11 = obj->unknown_19c_[1];
                         break;
                     case 2:
-                        var11 = arg0->unknown_19c_[2];
+                        var11 = obj->unknown_19c_[2];
                         break;
                     case 3:
-                        var11 = arg0->unknown_19c_[3];
+                        var11 = obj->unknown_19c_[3];
                         break;
                     case 4:
-                        var11 = arg0->unknown_19c_[4];
+                        var11 = obj->unknown_19c_[4];
                         break;
                     }
                     if (var11 != 0) {
-                        sprintf(var2, data_ov015_02194517);
+                        sprintf(marked, data_ov015_02194517);
                     } else {
-                        sprintf(var2, data_ov015_0219451b);
+                        sprintf(marked, data_ov015_0219451b);
                     }
                     strcat(marked, entry->name);
                     DebugMenuItem_SetText(&obj->items[count], marked);
@@ -460,31 +460,31 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
                 entry = func_ov015_02193160(obj, obj->state, &idx);
             }
         }
-        SetShortFields0219313c((Struct0219313c*)&obj->menu, 0, count - 1);
-        AddToShortField02193150((Struct02193150*)&obj->menu, obj->cursors[obj->state]);
+        func_ov015_0219313c((Struct_ov015_02192700_9*)&obj->menu, 0, count - 1);
+        func_ov015_02193150((Struct_ov015_02192700_10*)&obj->menu, obj->unknown_268_[obj->state]);
         DebugMenu_UpdateLayout(&obj->menu);
         DebugMenu_Open((char*)&obj->menu, 1);
     } else {
-        struct Struct_ov015_02192700_7* var12;
-        struct Struct_ov015_02192700_7* var13;
+        struct Struct_ov015_02192700_7* it;
+        struct Struct_ov015_02192700_7* holder;
 
         DebugMenuItem_SetText(&obj->menu, data_ov015_0219451f);
         count = 0;
-        for (it = func_ov015_0218f344(obj->field30); it != 0; it = it->next) {
-            struct BCFG* bcfg = (struct BCFG*)it->bcfg;
-            if (bcfg != 0) {
-                count += bcfg->GetNumAnimations();
+        for (it = func_ov015_0218f344(obj->unknown_30_); it != 0; it = it->next) {
+            struct BCFG* var14 = (struct BCFG*)it->unknown_4_;
+            if (var14 != 0) {
+                count += var14->GetNumAnimations();
             }
         }
         obj->items = (struct MenuItem02192700*)AllocatorUnion_AllocateRounded(&g_mainAllocator, count * sizeof(struct MenuItem02192700));
-        holder = func_ov015_0218f344(obj->field30);
+        holder = func_ov015_0218f344(obj->unknown_30_);
         idx = 0;
         for (; holder != 0; holder = holder->next) {
-            struct BCFG* bcfg = (struct BCFG*)holder->bcfg;
-            if (bcfg != 0) {
-                int num = bcfg->GetNumAnimations();
+            struct BCFG* var15 = (struct BCFG*)holder->unknown_4_;
+            if (var15 != 0) {
+                int num = var15->GetNumAnimations();
                 for (int i = 0; i < num; i++) {
-                    const char* name = (const char*)bcfg->GetAnimationRecord(i);
+                    const char* name = (const char*)var15->GetAnimationRecord(i);
                     if (name != 0) {
                         DebugMenuItem_Init((char*)&obj->items[idx]);
                         DebugMenuItem_SetText(&obj->items[idx], name);
@@ -493,23 +493,23 @@ extern "C" ARM void func_ov015_02192700(struct Struct_ov015_02192700_8* arg0, in
                 }
             }
         }
-        SetShortFields0219313c((Struct0219313c*)&obj->menu, 0, count - 1);
-        AddToShortField02193150((Struct02193150*)&obj->menu, 0);
+        func_ov015_0219313c((Struct_ov015_02192700_9*)&obj->menu, 0, count - 1);
+        func_ov015_02193150((Struct_ov015_02192700_10*)&obj->menu, 0);
         DebugMenu_UpdateLayout(&obj->menu);
         DebugMenu_Open((char*)&obj->menu, 1);
     }
 
-    int var19 = arg0->unknown_2c4_.unknown_62_;
-    float var20 = (float)var19 / (float)var4;
-    if (var20 > 1.0f) {
-        var20 = 1.0f;
+    int visible = obj->menu.visibleCount;
+    float ratio = (float)visible / (float)count;
+    if (ratio > 1.0f) {
+        ratio = 1.0f;
     }
-    arg0->unknown_348_ = (int)(156.0f * var20);
-    int var21 = var4 - var19;
-    arg0->unknown_34c_ = (float)(156 - arg0->unknown_348_) / (float)var21;
-    if (arg0->unknown_348_ < 4) {
-        arg0->unknown_34c_ -= (float)(4 - arg0->unknown_348_) / (float)var21;
-        arg0->unknown_348_ = 4;
+    obj->unknown_348_ = (int)(156.0f * ratio);
+    int hidden = count - visible;
+    obj->unknown_34c_ = (float)(156 - obj->unknown_348_) / (float)hidden;
+    if (obj->unknown_348_ < 4) {
+        obj->unknown_34c_ -= (float)(4 - obj->unknown_348_) / (float)hidden;
+        obj->unknown_348_ = 4;
     }
-    arg0->unknown_350_ = 1;
+    obj->unknown_350_ = 1;
 }

@@ -7,9 +7,9 @@ struct DebugMenuItem {
     int type;
     char text[0x30];
     DebugMenuItem* next;
-    char padding_38[8];
+    char unknown_38_[8];
     int value;
-    char padding_44[8];
+    char unknown_44_[8];
     unsigned short flags;
 };
 
@@ -17,7 +17,7 @@ struct DebugMenu {
     int type;
     char text[0x40];
     DebugMenuItem* items;
-    char padding_48[8];
+    char unknown_48_[8];
     short x;
     short y;
     short width;
@@ -42,8 +42,8 @@ extern "C" int Font_GetTextWidth(const char*, int);
 extern "C" void func_02028ce4(const char*, int*, int*);
 #endif
 
-static inline int inline_0202a6c4(int arg0, int arg1, unsigned int arg2, unsigned int arg3) {
-    return arg3 - (arg2 - (arg0 - arg1));
+static inline int VisibleSelectionRemainder(int last, int first, unsigned int count, unsigned int visible) {
+    return visible - (count - (last - first));
 }
 
 // Main, originally func_0202a6c4 (USA 0x0202a6c4, EUR 0x0202a6d4, JPN 0x0202a27c)
@@ -53,13 +53,13 @@ extern "C" ARM void DebugMenu_UpdateLayout(DebugMenu* menu) {
     if (data_020ef74c.displayMode >= 3 && data_020ef74c.displayMode <= 6) {
         int measured;
         #if defined(jpn)
-        int var3;
-        func_02028ce4(arg0->unknown_4_, &var2, &var3);
+        int height;
+        func_02028ce4(menu->text, &measured, &height);
 #else
         if (menu->text != NULL) measured = Font_GetTextWidth(menu->text, 1);
 #endif
-        var2 /= data_020ef74c.unknown_8_;
-        var1 = var2;
+        measured /= data_020ef74c.unknown_8_;
+        width = measured;
     }
     DebugMenuItem* item = menu->items;
     int index = 0;
@@ -73,7 +73,7 @@ extern "C" ARM void DebugMenu_UpdateLayout(DebugMenu* menu) {
 #else
             if (item->text != NULL) measured = Font_GetTextWidth(item->text, 1);
 #endif
-            measured /= data_020ef74c.columnWidth;
+            measured /= data_020ef74c.unknown_8_;
             length = measured;
             if (menu->first >= 0 && menu->first <= menu->last &&
                 menu->first <= index && index <= menu->last)
@@ -98,7 +98,7 @@ extern "C" ARM void DebugMenu_UpdateLayout(DebugMenu* menu) {
         item = item->next;
         ++index;
     }
-    menu->width = (width + 3) * data_020ef74c.columnWidth;
+    menu->width = (width + 3) * data_020ef74c.unknown_8_;
     menu->height = (menu->count + 3) * data_020ef74c.rowHeight;
     if (menu->x + menu->height > kScreenHeight)
         menu->height = kScreenHeight - menu->x - data_020ef74c.rowHeight;

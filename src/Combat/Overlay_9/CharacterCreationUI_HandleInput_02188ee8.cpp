@@ -11,12 +11,12 @@
 #include "GameState/PartyMember.h"
 
 struct GridCursor;
-void GridCursor_Init(GridCursor*);
-void GridCursor_SetDimensions(GridCursor*, int, int, int);
-void GridCursor_SetCount(GridCursor*, int);
-int GridCursor_GetCount(void*);
-int GridCursor_GetSelectedIndex(GridCursor*);
-int KeyTable_Get(Container020e0310*, int);
+extern "C" void GridCursor_Init(GridCursor*);
+extern "C" void GridCursor_SetDimensions(GridCursor*, int, int, int);
+extern "C" void GridCursor_SetCount(GridCursor*, int);
+extern "C" int GridCursor_GetCount(void*);
+extern "C" int GridCursor_GetSelectedIndex(GridCursor*);
+extern "C" int KeyTable_Get(Container020e0310*, int);
 extern "C" int memcmp(const void*, const void*, unsigned int);
 extern "C" int CharacterCreationUI_GetTouchedInput(CharacterCreationUI*, int, int);
 extern "C" int CharacterCreationUI_PressNameKey(CharacterCreationUI*, unsigned char);
@@ -94,8 +94,8 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
                 }
                 self->flags |= CreationFlag_RefreshSummary;
             }
-            arg0->unknown_c54_ = arg0->unknown_c4c_;
-            arg0->unknown_c56_ = arg0->unknown_c4e_;
+            self->lastCursorX = self->cursorX;
+            self->lastCursorY = self->cursorY;
         }
     } else if (g_touchInput.isRepeatValid_ && g_touchInput.currentReading_.isHeld) touched = 1;
     else if (g_touchInput.released_) touched = 1;
@@ -248,11 +248,11 @@ extern "C" ARM int CharacterCreationUI_HandleInput(CharacterCreationUI* self)
 #include "Graphics/CharacterModel.h"
 #include "GameState/PartyMember.h"
 
-void GridCursor_Init(GridCursor*);
-void GridCursor_SetDimensions(GridCursor*, int, int, int);
-void GridCursor_SetCount(GridCursor*, int);
-int GridCursor_GetCount(void*);
-int GridCursor_GetSelectedIndex(GridCursor*);
+extern "C" void GridCursor_Init(GridCursor*);
+extern "C" void GridCursor_SetDimensions(GridCursor*, int, int, int);
+extern "C" void GridCursor_SetCount(GridCursor*, int);
+extern "C" int GridCursor_GetCount(void*);
+extern "C" int GridCursor_GetSelectedIndex(GridCursor*);
 
 // The keyboard's fields this file touches, as CharacterCreationUI_HandleNameEntry names them.
 struct Keyboard {

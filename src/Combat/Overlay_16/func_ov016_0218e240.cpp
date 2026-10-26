@@ -1,47 +1,47 @@
 #include <globaldefs.h>
 #include <std_library_functions.h>
 
-struct Struct_ov016_0218e240 {
-    int unknown_0_;
-    signed char unknown_4_;
+struct Glyph0218e240 {
+    int val;
+    signed char width;
     signed char unknown_5_0_ : 6;
-    signed char unknown_5_6_ : 2;
-    char unknown_6_[2];
+    signed char rest : 2;
+    char pad6[2];
 };
 
 extern "C" char data_ov016_0219d06d[];
 extern "C" char data_ov016_0219d06f[];
 
-int Font_GetFallbackWidth(int idx);
-int Font_FindCharacterIndex(int key, int tableIdx);
-struct Glyph0218e240* Font_GetCharacter(int idx, int tableIdx);
-int Font_GetKerning(int a, int b, int tableIdx);
+extern "C" int Font_GetFallbackWidth(int idx);
+extern "C" int Font_FindCharacterIndex(int key, int tableIdx);
+extern "C" struct Glyph0218e240* Font_GetCharacter(int idx, int tableIdx);
+extern "C" int Font_GetKerning(int a, int b, int tableIdx);
 extern "C" void* __clear(void* dst, int count);
 extern "C" int Font_GetTextWidth(char* str, int id);
 extern "C" int memcmp(unsigned char* a, unsigned char* b, int n);
-extern "C" void func_ov016_0218e17c(unsigned short* dst, int x, int y, void* glyph, int color, int fontId);
+extern "C" void func_ov016_0218e17c(unsigned short* dst, int x, int y, void* glyph, int color, int arg5);
 
 // USA: func_ov016_0218e240
-extern "C" ARM void func_ov016_0218e240(unsigned short* dst, char* text, unsigned short color, int x0, int y0, unsigned char center, unsigned short outline, int count) {
+extern "C" ARM void func_ov016_0218e240(unsigned short* dst, char* text, unsigned short color, int arg3, int arg4, unsigned char center, unsigned short arg6, int count) {
     int i = 0;
-    int x = x0;
+    int x = arg3;
     struct Glyph0218e240* glyph;
     int line;
-    int y = y0;
+    int y = arg4;
     short prev = 0xff;
     int font = Font_GetFallbackWidth(1) & 0xff;
-    int adv;
+    int var7;
     int xs[3];
     xs[0] = x;
     xs[1] = x;
     xs[2] = x;
 
-    if (arg5 != 0) {
-        int var9 = 1;
-        char* var10 = strstr(arg1, data_ov016_0219d06d);
-        if (var10 == 0) {
-            var10 = strstr(arg1, data_ov016_0219d06f);
-            var9 = 2;
+    if (center != 0) {
+        int len = 1;
+        char* hit = strstr(text, data_ov016_0219d06d);
+        if (hit == 0) {
+            hit = strstr(text, data_ov016_0219d06f);
+            len = 2;
         }
         if (hit != 0) {
                         int off = hit - text;
@@ -57,9 +57,9 @@ extern "C" ARM void func_ov016_0218e240(unsigned short* dst, char* text, unsigne
         }
     }
 
-    var3 = 0;
-    var1 = var8[var3];
-    var3++;
+    line = 0;
+    x = xs[line];
+    line++;
 
     for (;;) {
         if (count <= i) break;
@@ -70,21 +70,21 @@ extern "C" ARM void func_ov016_0218e240(unsigned short* dst, char* text, unsigne
                         ctrl = 1; 1;
             step = 2;
         }
-        if (var14 != 0) {
-            var1 = var8[var3];
-            arg1 += var13;
-            var3++;
-            var5 = 0xff;
-            var4 += 0xe;
+        if (ctrl != 0) {
+            x = xs[line];
+            text += step;
+            line++;
+            prev = 0xff;
+            y += 0xe;
             continue;
         }
 
-                int wide = font + 1;
-        adv = 1;
+                int var15 = font + 1;
+        var7 = 1;
         unsigned char code = Font_FindCharacterIndex((int)text, 1);
         if (code != 0xff) {
                         glyph = Font_GetCharacter(code, 1);
-            if (outline != 0) {
+            if (arg6 != 0) {
                 func_ov016_0218e17c(dst, x - 1, y, glyph, 0, 1);
                 func_ov016_0218e17c(dst, x + 1, y, glyph, 0, 1);
                 func_ov016_0218e17c(dst, x, y - 1, glyph, 0, 1);
@@ -93,13 +93,13 @@ extern "C" ARM void func_ov016_0218e240(unsigned short* dst, char* text, unsigne
             x += Font_GetKerning(prev, code, 1);
             func_ov016_0218e17c(dst, x, y, glyph, color, 1);
             prev = code;
-                        wide = glyph->width + 1;
-            adv = glyph->skip;
+                        var15 = glyph->width + 1;
+            var7 = glyph->unknown_5_0_;
         } else {
-            var5 = 0xff;
+            prev = 0xff;
         }
-        var1 += var15;
-        arg1 += var7;
-        var0++;
+        x += var15;
+        text += var7;
+        i++;
     }
 }

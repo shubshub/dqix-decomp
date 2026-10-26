@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
 // USA: func_ov000_02159c58
-extern "C" ARM int func_ov000_02159c58(void* arg0, int arg1) {
-    switch (arg1) {
+extern "C" ARM int func_ov000_02159c58(void* obj, int v) {
+    switch (v) {
         case 0x205:
         case 0x20a:
         case 0x20b:

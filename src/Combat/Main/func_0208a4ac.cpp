@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
-extern "C" int func_0208a370(void* arg0, int arg1, int arg2, int* arg3, int arg4);
+extern "C" int func_0208a370(void* a, int selector, int b, int* out, int d);
 
 // USA: func_0208a4ac
-extern "C" ARM int func_0208a4ac(void* arg0, int arg1, int* arg2, int arg3) {
-    return func_0208a370(arg0, 0, arg1, arg2, arg3);
+extern "C" ARM int func_0208a4ac(void* a, int b, int* out, int d) {
+    return func_0208a370(a, 0, b, out, d);
 }

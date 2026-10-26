@@ -59,17 +59,17 @@ static LightingManager s_lightingManager;
 extern "C"
 {
 
-    void _Z20Camera_WorldToScreenPvP16Vec3copy0202ec84PiS2_(void*, const Vector3fix*, int*, int*);
+    void Camera_WorldToScreen(void*, const Vector3fix*, int*, int*);
 
-    bool _Z17Scenario_TestFlagiPhi(void*, void*, int);
+    bool Scenario_TestFlag(void*, void*, int);
 
     char* Scenario_GetInstance();
 
     void func_0207ba28(LightingInfo*, int, float*, float*, float*);
 
-    void _Z20SetFogState_020c54a4ijjt(int, int, int, int);
-    void _Z21G3X_SetEdgeColorTablei(unsigned short*);
-    void _Z28CallWithAddr4000360_020c5574i(void*);
+    void func_020c54a4(int, int, int, int);
+    void G3X_SetEdgeColorTable(unsigned short*);
+    void func_020c5574(void*);
 
     extern "C" int func_ov000_02160fd4(void*, int);
 
@@ -636,7 +636,7 @@ void LightingManager::ModelTransformTintBrightnessContrast(NSBXXInternalModel *m
         return;
 
     int index;
-    if (zone->currentZoneID_ == 6401 && _Z17Scenario_TestFlagiPhi(struct0205ec34, struct0205ec34 + 0x8c, 0x2a))
+    if (zone->currentZoneID_ == 6401 && Scenario_TestFlag(struct0205ec34, struct0205ec34 + 0x8c, 0x2a))
         index = 4;
     else
     {
@@ -754,7 +754,7 @@ void LightingManager::ProcessZoneChange(Zone3D *newZone)
     {
         info->basic_.FillMissingEntries();
 
-        if (zone->currentZoneID_ == 6401 && _Z17Scenario_TestFlagiPhi(struct0205ec34, struct0205ec34 + 0x8c, 0x2a))
+        if (zone->currentZoneID_ == 6401 && Scenario_TestFlag(struct0205ec34, struct0205ec34 + 0x8c, 0x2a))
         {
             index = 4;
         }
@@ -795,7 +795,7 @@ void LightingManager::ProcessZoneChange(Zone3D *newZone)
             edgeColor_, edgeColor_, edgeColor_, edgeColor_,
             edgeColor_, edgeColor_, edgeColor_, edgeColor_
         };
-        _Z21G3X_SetEdgeColorTablei(edgeColors);
+        G3X_SetEdgeColorTable(edgeColors);
         RenderConfig::SetDiffuseAmbientColors(modelDiffuseColor_, 0, false);
         func_ov017_021901ac(GetGameResources());
         tint_4a_ = modelDiffuseColor_;
@@ -811,7 +811,7 @@ void LightingManager::ProcessZoneChange(Zone3D *newZone)
             edgeColor_, edgeColor_, edgeColor_, edgeColor_,
             edgeColor_, edgeColor_, edgeColor_, edgeColor_
         };
-        _Z21G3X_SetEdgeColorTablei(edgeColors);
+        G3X_SetEdgeColorTable(edgeColors);
         RenderConfig::SetDiffuseAmbientColors(modelDiffuseColor_, 0, false);
         func_ov017_021901ac(GetGameResources());
         tint_4a_ = modelDiffuseColor_;
@@ -956,7 +956,7 @@ void LightingManager::SubmitToRenderConfig()
             edgeColor_, edgeColor_, edgeColor_, edgeColor_,
             edgeColor_, edgeColor_, edgeColor_, edgeColor_
         };
-        _Z21G3X_SetEdgeColorTablei(edgeColors);
+        G3X_SetEdgeColorTable(edgeColors);
     }
 }
 
@@ -978,7 +978,7 @@ void LightingManager::MaybeComputeHorizonPosition()
     Vector3fix_Normalize(&cameraRay, &cameraRay);
     Vector3fixMultiplyScalar(&cameraRay, 2048 << 12, &cameraRay);
     int pixelX, pixelY;
-    _Z20Camera_WorldToScreenPvP16Vec3copy0202ec84PiS2_(maybeCameraData, &cameraRay, &pixelX, &pixelY);
+    Camera_WorldToScreen(maybeCameraData, &cameraRay, &pixelX, &pixelY);
     if (pixelY < 192 && pixelY > 0)
     {
         gradientCenterNorm_ = fix32_Divide(pixelY << 12, 191 << 12);
@@ -1155,8 +1155,8 @@ TimeOfDay ConvertToTimeOfDay(float time)
     return TimeOfDay_Night;
 }
 
-extern "C" LightingManager* _ZN15LightingManagerC1Ev(LightingManager* arg0)
+extern "C" LightingManager* _ZN15LightingManagerC1Ev(LightingManager* self)
 {
-    arg0->Initialize();
-    return arg0;
+    self->Initialize();
+    return self;
 }

@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 #include <std_library_functions.h>
-int STD_GetStringLength(const char*);
+extern "C" int STD_GetStringLength(const char*);
 extern "C" int memcmp(const void*, const void*, unsigned int);
 extern char data_020f2d2c[][11];
 extern signed char data_020eeab0[][8];
 extern char data_020ee9d8[][3];
 // USA: func_020e4864
-extern "C" ARM void func_020e4864(const char* arg0, char* arg1, int arg2, int, int, int arg5) {
-    int var0;
+extern "C" ARM void func_020e4864(const char* source, char* destination, int column, int, int, int row) {
+    int replacementLength;
     for (;;) {
-        if (!*arg0) break;
-        if (*arg0 == '[') {
+        if (!*source) break;
+        if (*source == '[') {
             int var1 = 0;
-            int var2 = 0;
+            int index = 0;
             for (;;) {
                 if (!data_020f2d2c[index][0]) break;
                 int length = STD_GetStringLength(data_020f2d2c[index]);
@@ -24,15 +24,15 @@ extern "C" ARM void func_020e4864(const char* arg0, char* arg1, int arg2, int, i
                         memcpy(destination, replacementBase + replacementIndex, replacementLength);
                         destination += replacementLength;
                     }
-                    arg0 += var3 + 1;
+                    source += length + 1;
                     var1 = true;
                     break;
                 }
-                var2++;
+                index++;
             }
             if (var1) continue;
         }
-        *arg1++ = *arg0++;
+        *destination++ = *source++;
     }
-    *arg1 = *arg0;
+    *destination = *source;
 }

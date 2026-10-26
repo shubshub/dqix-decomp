@@ -2,48 +2,48 @@
 
 #include "Combat/Overlay15ViewerContext.h"
 
-struct Struct_ov015_0218ef7c_3 { char unknown_0_[0x1a4]; int unknown_1a4_; };
-struct Struct_ov015_0218ef7c { char unknown_0_[8]; unsigned short unknown_8_; };
-struct Struct_ov015_0218ef7c_2 { void* unknown_0_; char unknown_4_[0x18]; unsigned char unknown_1c_; };
+struct Struct_ov015_0218ef7c_3 { char pad[0x1a4]; int state; };
+struct Struct_ov015_0218ef7c { char pad[8]; unsigned short flag; };
+struct Struct_ov015_0218ef7c_2 { void* src; char pad[0x18]; unsigned char status; };
 
 // USA: func_ov015_0218ef7c
-extern "C" ARM int func_ov015_0218ef7c(Struct_ov015_0218ef7c_2* arg0, Struct_ov015_0218ef7c_3* arg1, Struct_ov015_0218ef7c* arg2) {
-    arg0->unknown_0_ = arg1;
-    int var0 = arg1->unknown_1a4_ - 4;
-    switch (var0) {
+extern "C" ARM int func_ov015_0218ef7c(Struct_ov015_0218ef7c_2* obj, Struct_ov015_0218ef7c_3* src, Struct_ov015_0218ef7c* p) {
+    obj->src = src;
+    int status = src->state - 4;
+    switch (status) {
     case 0:
-        if (arg2->unknown_8_ == 0) {
-            var0 = 0;
-            arg0->unknown_1c_ = 0;
+        if (p->flag == 0) {
+            status = 0;
+            obj->status = 0;
         } else {
-            var0 = 1;
-            arg0->unknown_1c_ = 1;
+            status = 1;
+            obj->status = 1;
         }
         break;
     case 7:
-        var0 = 2;
-        arg0->unknown_1c_ = var0;
+        status = 2;
+        obj->status = status;
         break;
     case 8:
-        var0 = 2;
-        arg0->unknown_1c_ = var0;
+        status = 2;
+        obj->status = status;
         break;
     case 2:
-        var0 = 3;
-        arg0->unknown_1c_ = var0;
+        status = 3;
+        obj->status = status;
         break;
     case 3:
-        var0 = 4;
-        arg0->unknown_1c_ = var0;
+        status = 4;
+        obj->status = status;
         break;
     case 9:
-        var0 = 5;
-        arg0->unknown_1c_ = var0;
+        status = 5;
+        obj->status = status;
         break;
     case 10:
-        var0 = 6;
-        arg0->unknown_1c_ = var0;
+        status = 6;
+        obj->status = status;
         break;
     }
-    return func_ov015_0218bcb0(arg0);
+    return func_ov015_0218bcb0(obj);
 }

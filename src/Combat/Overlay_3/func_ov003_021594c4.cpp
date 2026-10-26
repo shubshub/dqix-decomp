@@ -7,27 +7,27 @@
 #include "NitroSDK/Graphics.h"
 
 #if defined(jpn)
-enum { Enum_ov003_021594c4_2152 = 0x868 };
+enum { kRegionValue998_868 = 0x868 };
 enum { Enum_ov003_021594c4_2160 = 0x870 };
 #else
-enum { Enum_ov003_021594c4_2456 = 0x998 };
+enum { kRegionValue998_868 = 0x998 };
 enum { Enum_ov003_021594c4_2464 = 0x9a0 };
 #endif
 
 
 struct Struct_ov003_021594c4_3 {
-    char unknown_0_[4];
-    Struct_ov003_021594c4* unknown_4_;
-    char unknown_8_[0xe0 - 8];
+    char unk_0[4];
+    BackgroundGraphics* graphics;
+    char unk_8[0xe0 - 8];
 };
 
 struct Struct_ov003_021594c4_4 {
-    unsigned char unknown_0_[2];
+    unsigned char v[2];
 };
 
 struct Struct_ov003_0217f380 {
-    Struct_ov003_021594c4_4 unknown_0_;
-    Struct_ov003_021594c4_4 unknown_2_;
+    Struct_ov003_021594c4_4 screen;
+    Struct_ov003_021594c4_4 priority;
 };
 
 struct Container020e0310;
@@ -36,30 +36,30 @@ struct PacRecord;
 struct WindowPane;
 struct Struct_0205cf78;
 struct WindowPane;
-struct QueueStruct0215917c;
+struct Struct_ov003_0215917c;
 
-int MessageSystem_GetInstance();
+extern "C" int MessageSystem_GetInstance();
 extern "C" void func_ov017_021d243c(int a);
 extern "C" void KeyTable_Load(void* container, SafeAllocator* alloc, void* data, unsigned int size);
-const char* KeyTable_Get(Container020e0310* container, int key);
+extern "C" const char* KeyTable_Get(Container020e0310* container, int key);
 extern "C" int func_02005a94(const char* string);
 extern "C" void func_ov003_02159250(void* self, void* text);
 extern "C" void func_ov003_02159464(void* self);
-void Background_SetMapSize(unsigned char* background, int value);
+extern "C" void Background_SetMapSize(unsigned char* background, int value);
 extern "C" void Background_SetPriority(BackgroundGraphics* background, int screen);
-void Background_AllocateMap(BackgroundGraphics* background, SafeAllocator* allocator);
-void Background_SetScroll(BackgroundGraphics* background, int a, int b);
-int Pac_CountFiles(PacRecord* archive);
-void* Pac_GetFile(PacRecord* archive, int index, void** name, int* size);
+extern "C" void Background_AllocateMap(BackgroundGraphics* background, SafeAllocator* allocator);
+extern "C" void Background_SetScroll(BackgroundGraphics* background, int a, int b);
+extern "C" int Pac_CountFiles(PacRecord* archive);
+extern "C" void* Pac_GetFile(PacRecord* archive, int index, void** name, int* size);
 extern "C" void Background_LoadFile(BackgroundGraphics* background, void* file, SafeAllocator* allocator, unsigned int size);
 extern "C" void Background_FillRect(BackgroundGraphics* background, int a, int b, int c, int d, int e, int f);
-void Background_UploadMap(BackgroundGraphics* background, void* a);
-void WindowPane_AllocateBuffer(WindowPane* obj, SafeAllocator* alloc, int val, unsigned int len);
-void Window_SetPanes(Struct_0205cf78* s, WindowPane* arr, unsigned char count);
+extern "C" void Background_UploadMap(BackgroundGraphics* background, void* a);
+extern "C" void WindowPane_AllocateBuffer(WindowPane* obj, SafeAllocator* alloc, int val, unsigned int len);
+extern "C" void Window_SetPanes(Struct_0205cf78* s, WindowPane* arr, unsigned char count);
 extern "C" void SpriteContext_LoadFile(void* table, void* file, int size, SafeAllocator* alloc);
-int STD_CompareString(const char* a, const char* b);
-void AppendFlagEvents_0215917c(QueueStruct0215917c* obj, int flags);
-unsigned char GameState_GetOwnPartyOrder(char* obj, void* dst);
+extern "C" int STD_CompareString(const char* a, const char* b);
+extern "C" void func_ov003_0215917c(Struct_ov003_0215917c* obj, int flags);
+extern "C" unsigned char GameState_GetOwnPartyOrder(char* obj, void* dst);
 
 #if defined(jpn)
 #include "Filesystem/FileIO.h"
@@ -74,42 +74,42 @@ extern char data_ov003_0217fe6b[];
 extern char data_ov003_0217fe7e[];
 
 struct Struct_ov003_021594c4_2 {
-    SafeAllocator unknown_0_[4];
-    char unknown_50_[0x64 - 0x50];
-    char unknown_64_[0x7c - 0x64];
-    void* unknown_7c_;
+    SafeAllocator allocators_[4];
+    char unk_50[0x64 - 0x50];
+    char strings_[0x7c - 0x64];
+    void* text_;
     char unknown_80_[0x98 - 0x80];
-    char unknown_98_[0xd4 - 0x98];
+    char table_[0xd4 - 0x98];
     int unknown_d4_;
-    int unknown_d8_;
-    char unknown_dc_[0xe4 - 0xdc];
+    int unk_d8;
+    char unk_dc[0xe4 - 0xdc];
     short unknown_e4_;
     char unknown_e6_[2];
     unsigned char unknown_e8_;
     char unknown_e9_[3];
     int unknown_ec_;
     int unknown_f0_;
-    char unknown_f4_[0x18c - 0xf4];
-    Struct_ov003_021594c4* unknown_18c_;
+    char list_[0x18c - 0xf4];
+    BackgroundGraphics* graphics_;
     char unknown_190_[0x1a6 - 0x190];
     unsigned char unknown_1a6_;
     char unknown_1a7_[0x1b0 - 0x1a7];
-    Struct_ov003_021594c4 unknown_1b0_[2];
-    Struct_ov003_021594c4_3 unknown_1f0_[4];
+    BackgroundGraphics backgrounds_[2];
+    Struct_ov003_021594c4_3 layers_[4];
     char unknown_570_[0x578 - 0x570];
-    int unknown_578_;
-    void* unknown_57c_;
-    unsigned char unknown_580_;
+    int task_;
+    void* buffer_;
+    unsigned char state_;
     char unknown_581_[0x587 - 0x581];
     unsigned char unknown_587_;
     unsigned char unknown_588_;
     char unknown_589_[0x590 - 0x589];
-    unsigned char unknown_590_;
-    char unknown_591_[0x59d - 0x591];
+    unsigned char memberCount_;
+    char members_[0x59d - 0x591];
     unsigned char unknown_59d_;
     unsigned char unknown_59e_;
     char unknown_59f_;
-    unsigned char unknown_5a0_;
+    unsigned char mode_;
     char unknown_5a1_[0x5b1 - 0x5a1];
     unsigned char unknown_5b1_;
     unsigned char unknown_5b2_;
@@ -118,7 +118,7 @@ struct Struct_ov003_021594c4_2 {
 };
 
 // USA: func_ov003_021594c4
-extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
+extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* self) {
 #if defined(jpn)
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     int g = MessageSystem_GetInstance();
@@ -137,33 +137,33 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
         KeyTable_Load(self->strings_, &self->allocators_[0], data, size);
         const char* str = KeyTable_Get((Container020e0310*)self->strings_, 0x32);
         if (str != NULL) {
-            self->unk_5b1 = func_02005a94(str);
+            self->unknown_5b1_ = func_02005a94(str);
         }
-        if (arg0->unknown_5b1_ == 3) {
-            arg0->unknown_5b1_ = 0;
-            arg0->unknown_5b2_ = 0;
+        if (self->unknown_5b1_ == 3) {
+            self->unknown_5b1_ = 0;
+            self->unknown_5b2_ = 0;
         }
         *(int*)(g + kRegionValue998_868) = 1;
         *(unsigned char*)(g + 0x17ef) = 1;
         *(unsigned char*)(g + 0x17ff) |= 2;
         func_ov003_02159250(self, self->text_);
-        if (self->mode_ == 2 || self->unk_587 == 1 || self->unk_587 == 2) {
+        if (self->mode_ == 2 || self->unknown_587_ == 1 || self->unknown_587_ == 2) {
             if (self->mode_ == 2) {
-                self->unk_5b4 = 1;
+                self->unknown_5b4_ = 1;
                 self->state_ = 2;
                 self->task_ = loader->QueueLoadFile(data_ov003_0217fe5a, NULL);
                 *(int*)(MessageSystem_GetInstance() + kRegionValue998_868) = 1;
             } else {
-                arg0->unknown_588_ = 10;
-                arg0->unknown_580_ = 0;
+                self->unknown_588_ = 10;
+                self->state_ = 0;
             }
-            arg0->unknown_59d_ = 1;
-            arg0->unknown_59e_ = 0;
-            func_ov003_02159464(arg0);
+            self->unknown_59d_ = 1;
+            self->unknown_59e_ = 0;
+            func_ov003_02159464(self);
             return;
         }
-        BackgroundPair priority = data_ov003_0217f380.priority;
-        BackgroundPair screen = data_ov003_0217f380.screen;
+        Struct_ov003_021594c4_4 priority = data_ov003_0217f380.priority;
+        Struct_ov003_021594c4_4 screen = data_ov003_0217f380.screen;
         BackgroundGraphics* background;
         for (int i = 0; i < 2; i++) {
             background = &self->backgrounds_[i];
@@ -177,19 +177,19 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
         BG1CNT = (BG1CNT & 0x43) | 0x1d00;
         BG2CNT = (BG2CNT & 0x43) | 0x1e00;
         ColorEffect_ConfigureAlphaBlend(0x4000050, 2, 1, 10, 6);
-        arg0->unknown_578_ = var0->QueueLoadFile(data_ov003_0217fe6b, NULL);
-        arg0->unknown_580_++;
+        self->task_ = loader->QueueLoadFile(data_ov003_0217fe6b, NULL);
+        self->state_++;
     }
 
     if (state == 1) {
-        BackgroundLoader* loader2 = BackgroundLoader::GetInstance();
-        if (loader2->GetTaskStatus(self->task_) != 0) {
+        BackgroundLoader* var11 = BackgroundLoader::GetInstance();
+        if (var11->GetTaskStatus(self->task_) != 0) {
             char name[4];
             void* archive;
             unsigned int archiveSize;
             void* files[2];
             int sizes[2];
-            loader2->GetLoadedFileByID(self->task_, &archive, &archiveSize);
+            var11->GetLoadedFileByID(self->task_, &archive, &archiveSize);
             int count = Pac_CountFiles((PacRecord*)archive);
             for (int i = 0; i < count; i++) {
                 files[i] = Pac_GetFile((PacRecord*)archive, i, (void**)name, &sizes[i]);
@@ -199,7 +199,7 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
                     Background_LoadFile(&self->backgrounds_[1], files[i], &self->allocators_[1], sizes[i]);
                 }
             }
-            loader2->RemoveTask(self->task_);
+            var11->RemoveTask(self->task_);
             self->task_ = -1;
             BackgroundGraphics* background;
             for (int i = 0; i < 2; i++) {
@@ -210,14 +210,14 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
             self->allocators_[2].Reset();
             self->buffer_ = self->allocators_[2].Allocate(0x4000);
             for (int i = 0; i < 4; i++) {
-                BackgroundLayer* layer = &self->layers_[i];
+                Struct_ov003_021594c4_3* layer = &self->layers_[i];
                 WindowPane_AllocateBuffer((WindowPane*)layer, &self->allocators_[1], (int)self->buffer_, 0x400);
                 layer->graphics = &self->backgrounds_[1];
             }
             self->graphics_ = &self->backgrounds_[0];
-            self->unk_1a6 = 2;
+            self->unknown_1a6_ = 2;
             Window_SetPanes((Struct_0205cf78*)self->list_, (WindowPane*)self->layers_, 4);
-            self->task_ = loader2->QueueLoadFile(data_ov003_0217fe5a, NULL);
+            self->task_ = var11->QueueLoadFile(data_ov003_0217fe5a, NULL);
             self->state_++;
         }
     }
@@ -228,10 +228,10 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
             void* archive;
             unsigned int archiveSize;
             int size;
-            self->unk_e8 = 0;
-            self->unk_d8 = self->unk_ec;
-            self->unk_e4 = 0xe;
-            self->unk_d4 = self->unk_f0;
+            self->unknown_e8_ = 0;
+            self->unk_d8 = self->unknown_ec_;
+            self->unknown_e4_ = 0xe;
+            self->unknown_d4_ = self->unknown_f0_;
             loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
             int count = Pac_CountFiles((PacRecord*)archive);
             self->allocators_[3].Reset();
@@ -239,22 +239,22 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
                 void* file = Pac_GetFile((PacRecord*)archive, i, (void**)name, &size);
                 SpriteContext_LoadFile(self->table_, file, size, &self->allocators_[3]);
             }
-            var0->RemoveTask(arg0->unknown_578_);
-            arg0->unknown_578_ = -1;
-            if (arg0->unknown_5b4_ != 0) {
-                arg0->unknown_588_ = 3;
-                arg0->unknown_580_ = 0;
+            loader->RemoveTask(self->task_);
+            self->task_ = -1;
+            if (self->unknown_5b4_ != 0) {
+                self->unknown_588_ = 3;
+                self->state_ = 0;
                 return;
             }
-            arg0->unknown_59d_ = 1;
-            arg0->unknown_59e_ = 0;
-            func_ov003_02159464(arg0);
-            arg0->unknown_580_++;
+            self->unknown_59d_ = 1;
+            self->unknown_59e_ = 0;
+            func_ov003_02159464(self);
+            self->state_++;
         }
     }
 
-    if (var2 == 3 && *(int*)(var1 + Enum_ov003_021594c4_2160) == 3) {
-        arg0->unknown_59d_ = 1;
+    if (state == 3 && *(int*)(g + Enum_ov003_021594c4_2160) == 3) {
+        self->unknown_59d_ = 1;
         BG0CNT = (BG0CNT & ~3) | 2;
         BG1CNT = (BG1CNT & ~3) | 1;
         BG2CNT = (BG2CNT & ~3);
@@ -267,9 +267,9 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
                 flags &= ~(1 << i);
             }
         }
-        AppendFlagEvents_0215917c((QueueStruct0215917c*)self, flags);
+        func_ov003_0215917c((Struct_ov003_0215917c*)self, flags);
         self->memberCount_ = GameState_GetOwnPartyOrder((char*)GameState::GetInstance(), self->members_);
-        self->next_ = 1;
+        self->unknown_588_ = 1;
         self->state_ = 1;
     }
 #else
@@ -280,12 +280,12 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
     if (state == 0) {
         self->text_ = *(void**)(MessageSystem_GetInstance() + 0x5c);
         func_ov017_021d243c(1);
-        char var37[0x40];
-        char var38[0x18];
-        sprintf(var37, data_ov003_0217fe2d, arg0->unknown_5a0_);
-        sprintf(var38, data_ov003_0217fe48, arg0->unknown_5a0_);
-        arg0->unknown_578_ = var34->QueueLoadFileInGP2(var37, var38, NULL);
-        arg0->unknown_580_++;
+        char archive[0x40];
+        char file[0x18];
+        sprintf(archive, data_ov003_0217fe2d, self->mode_);
+        sprintf(file, data_ov003_0217fe48, self->mode_);
+        self->task_ = loader->QueueLoadFileInGP2(archive, file, NULL);
+        self->state_++;
     }
 
     if (state == 1) {
@@ -299,33 +299,33 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
         self->task_ = -1;
         const char* str = KeyTable_Get((Container020e0310*)self->strings_, 0x32);
         if (str != NULL) {
-            self->unk_5b1 = func_02005a94(str);
+            self->unknown_5b1_ = func_02005a94(str);
         }
-        if (arg0->unknown_5b1_ == 3) {
-            arg0->unknown_5b1_ = 0;
-            arg0->unknown_5b2_ = 0;
+        if (self->unknown_5b1_ == 3) {
+            self->unknown_5b1_ = 0;
+            self->unknown_5b2_ = 0;
         }
         *(int*)(g + kRegionValue998_868) = 1;
         *(unsigned char*)(g + 0x19bf) = 1;
         *(unsigned char*)(g + 0x19cf) = 1;
         func_ov003_02159250(self, self->text_);
-        if (self->mode_ == 2 || self->unk_587 == 1 || self->unk_587 == 2) {
+        if (self->mode_ == 2 || self->unknown_587_ == 1 || self->unknown_587_ == 2) {
             if (self->mode_ == 2) {
-                self->unk_5b4 = 1;
+                self->unknown_5b4_ = 1;
                 self->state_ = 3;
                 self->task_ = loader->QueueLoadFile(data_ov003_0217fe5a, NULL);
                 *(int*)(MessageSystem_GetInstance() + kRegionValue998_868) = 1;
             } else {
-                arg0->unknown_588_ = 10;
-                arg0->unknown_580_ = 0;
+                self->unknown_588_ = 10;
+                self->state_ = 0;
             }
-            arg0->unknown_59d_ = 1;
-            arg0->unknown_59e_ = 0;
-            func_ov003_02159464(arg0);
+            self->unknown_59d_ = 1;
+            self->unknown_59e_ = 0;
+            func_ov003_02159464(self);
             return;
         }
-        BackgroundPair priority = data_ov003_0217f380.priority;
-        BackgroundPair screen = data_ov003_0217f380.screen;
+        Struct_ov003_021594c4_4 priority = data_ov003_0217f380.priority;
+        Struct_ov003_021594c4_4 screen = data_ov003_0217f380.screen;
         BackgroundGraphics* background;
         for (int i = 0; i < 2; i++) {
             background = &self->backgrounds_[i];
@@ -339,19 +339,19 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
         BG1CNT = (BG1CNT & 0x43) | 0x1d00;
         BG2CNT = (BG2CNT & 0x43) | 0x1e00;
         ColorEffect_ConfigureAlphaBlend(0x4000050, 2, 1, 10, 6);
-        arg0->unknown_578_ = var34->QueueLoadFile(data_ov003_0217fe6b, NULL);
-        arg0->unknown_580_++;
+        self->task_ = loader->QueueLoadFile(data_ov003_0217fe6b, NULL);
+        self->state_++;
     }
 
     if (state == 2) {
-        BackgroundLoader* loader2 = BackgroundLoader::GetInstance();
-        if (loader2->GetTaskStatus(self->task_) != 0) {
+        BackgroundLoader* var46 = BackgroundLoader::GetInstance();
+        if (var46->GetTaskStatus(self->task_) != 0) {
             char name[4];
             void* archive;
             unsigned int archiveSize;
             void* files[2];
             int sizes[2];
-            loader2->GetLoadedFileByID(self->task_, &archive, &archiveSize);
+            var46->GetLoadedFileByID(self->task_, &archive, &archiveSize);
             int count = Pac_CountFiles((PacRecord*)archive);
             for (int i = 0; i < count; i++) {
                 files[i] = Pac_GetFile((PacRecord*)archive, i, (void**)name, &sizes[i]);
@@ -361,7 +361,7 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
                     Background_LoadFile(&self->backgrounds_[1], files[i], &self->allocators_[1], sizes[i]);
                 }
             }
-            loader2->RemoveTask(self->task_);
+            var46->RemoveTask(self->task_);
             self->task_ = -1;
             BackgroundGraphics* background;
             for (int i = 0; i < 2; i++) {
@@ -372,14 +372,14 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
             self->allocators_[2].Reset();
             self->buffer_ = self->allocators_[2].Allocate(0x4000);
             for (int i = 0; i < 4; i++) {
-                BackgroundLayer* layer = &self->layers_[i];
+                Struct_ov003_021594c4_3* layer = &self->layers_[i];
                 WindowPane_AllocateBuffer((WindowPane*)layer, &self->allocators_[1], (int)self->buffer_, 0x400);
                 layer->graphics = &self->backgrounds_[1];
             }
             self->graphics_ = &self->backgrounds_[0];
-            self->unk_1a6 = 2;
+            self->unknown_1a6_ = 2;
             Window_SetPanes((Struct_0205cf78*)self->list_, (WindowPane*)self->layers_, 4);
-            self->task_ = loader2->QueueLoadFile(data_ov003_0217fe5a, NULL);
+            self->task_ = var46->QueueLoadFile(data_ov003_0217fe5a, NULL);
             self->state_++;
         }
     }
@@ -390,10 +390,10 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
             void* archive;
             unsigned int archiveSize;
             int size;
-            self->unk_e8 = 0;
-            self->unk_d8 = self->unk_ec;
-            self->unk_e4 = 0xe;
-            self->unk_d4 = self->unk_f0;
+            self->unknown_e8_ = 0;
+            self->unk_d8 = self->unknown_ec_;
+            self->unknown_e4_ = 0xe;
+            self->unknown_d4_ = self->unknown_f0_;
             loader->GetLoadedFileByID(self->task_, &archive, &archiveSize);
             int count = Pac_CountFiles((PacRecord*)archive);
             self->allocators_[3].Reset();
@@ -401,22 +401,22 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
                 void* file = Pac_GetFile((PacRecord*)archive, i, (void**)name, &size);
                 SpriteContext_LoadFile(self->table_, file, size, &self->allocators_[3]);
             }
-            var34->RemoveTask(arg0->unknown_578_);
-            arg0->unknown_578_ = -1;
-            if (arg0->unknown_5b4_ != 0) {
-                arg0->unknown_588_ = 3;
-                arg0->unknown_580_ = 0;
+            loader->RemoveTask(self->task_);
+            self->task_ = -1;
+            if (self->unknown_5b4_ != 0) {
+                self->unknown_588_ = 3;
+                self->state_ = 0;
                 return;
             }
-            arg0->unknown_59d_ = 1;
-            arg0->unknown_59e_ = 0;
-            func_ov003_02159464(arg0);
-            arg0->unknown_580_++;
+            self->unknown_59d_ = 1;
+            self->unknown_59e_ = 0;
+            func_ov003_02159464(self);
+            self->state_++;
         }
     }
 
-    if (var36 == 4 && *(int*)(var35 + Enum_ov003_021594c4_2464) == 3) {
-        arg0->unknown_59d_ = 1;
+    if (state == 4 && *(int*)(g + Enum_ov003_021594c4_2464) == 3) {
+        self->unknown_59d_ = 1;
         BG0CNT = (BG0CNT & ~3) | 2;
         BG1CNT = (BG1CNT & ~3) | 1;
         BG2CNT = (BG2CNT & ~3);
@@ -429,9 +429,9 @@ extern "C" ARM void func_ov003_021594c4(Struct_ov003_021594c4_2* arg0) {
                 flags &= ~(1 << i);
             }
         }
-        AppendFlagEvents_0215917c((QueueStruct0215917c*)self, flags);
+        func_ov003_0215917c((Struct_ov003_0215917c*)self, flags);
         self->memberCount_ = GameState_GetOwnPartyOrder((char*)GameState::GetInstance(), self->members_);
-        self->next_ = 1;
+        self->unknown_588_ = 1;
         self->state_ = 1;
     }
 #endif

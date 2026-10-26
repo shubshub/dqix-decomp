@@ -29,14 +29,20 @@ struct Struct_ov002_0216cb18 {
 
 extern Type_ov002_0215bba8 data_ov002_0216d10c[PAGES];
 extern unsigned int data_ov002_0216d3b0[2];
-extern PageFn0215bba8 __ptmf_null;
-extern ModePage0215bba8 data_ov002_0216cb18[];
-extern ModePage0215bba8 data_ov002_0216cb1c[];
+extern Type_ov002_0215bba8 __ptmf_null;
+extern Struct_ov002_0216cb18 data_ov002_0216cb18[];
+extern Struct_ov002_0216cb18 data_ov002_0216cb1c[];
 
-extern "C" void *memset(void *dst, int value, unsigned int length);
-extern "C" unsigned char *_Z23FindElementByC40205d81cP15Struct_0205d81ci(char *s, unsigned char key);
+extern "C" void *memset(void *arg0, int arg1, unsigned int arg2);
+extern "C" unsigned char *func_0205d81c(char *arg0, unsigned char arg1);
 struct StructA0205d5d0;
-void Window_SetPaneText(StructA0205d5d0*, int, int, int, unsigned char);
+#if defined(jpn)
+extern "C" void Window_SetPaneText(StructA0205d5d0*, int, int, int);
+#define APPLY(s, k, t) Window_SetPaneText(s, k, t, 1)
+#else
+extern "C" void Window_SetPaneText(StructA0205d5d0*, int, int, int, unsigned char);
+#define APPLY(s, k, t) Window_SetPaneText(s, k, t, 0, 0)
+#endif
 
 struct Struct_ov002_0215bba8 {
     char unknown_0_[0x34];
@@ -62,24 +68,39 @@ extern "C" ARM void func_ov002_0215bba8(Struct_ov002_0215bba8_2 *arg0) {
     }
     memset(*(void **) (var0 + 0x1000 + RG(0xbd0, 0xa98)), 0, RG(0x960, 0x800));
     if (!(data_ov002_0216d3b0[0] & 1)) {
-        PageFn0215bba8 nul      = __ptmf_null;
-        data_ov002_0216d10c[0]  = nul;
-        data_ov002_0216d10c[23] = nul;
-        data_ov002_0216d10c[30] = nul;
-        data_ov002_0216d10c[36] = nul;
-        data_ov002_0216d10c[40] = nul;
-        data_ov002_0216d10c[41] = nul;
-        data_ov002_0216d10c[42] = nul;
-        data_ov002_0216d10c[43] = nul;
+        Type_ov002_0215bba8 var4      = __ptmf_null;
+        data_ov002_0216d10c[0]  = var4;
+#if defined(jpn)
+        data_ov002_0216d10c[24] = var4;
+        data_ov002_0216d10c[31] = var4;
+        data_ov002_0216d10c[34] = var4;
+        data_ov002_0216d10c[35] = var4;
+        data_ov002_0216d10c[39] = var4;
+        data_ov002_0216d10c[43] = var4;
+        data_ov002_0216d10c[44] = var4;
+        data_ov002_0216d10c[45] = var4;
+        data_ov002_0216d10c[46] = var4;
+#else
+        data_ov002_0216d10c[23] = var4;
+        data_ov002_0216d10c[30] = var4;
+        data_ov002_0216d10c[36] = var4;
+        data_ov002_0216d10c[40] = var4;
+        data_ov002_0216d10c[41] = var4;
+        data_ov002_0216d10c[42] = var4;
+        data_ov002_0216d10c[43] = var4;
+#endif
         data_ov002_0216d3b0[0] |= 1;
     }
     int var5 = *(int *) (var0 + 0x1000 + RG(0xbb8, 0xa80));
     if (data_ov002_0216d10c[var5] == 0) {
         return;
     }
-    if (_Z23FindElementByC40205d81cP15Struct_0205d81ci(base + 0x2c8 + 0xc00, (unsigned char) key) != 0) {
-        (self->*data_ov002_0216d10c[*(int *) (base + 0x1000 + 0xbb8)])(*(void **) (base + 0x1000 + 0xbd0), hl);
-        Window_SetPaneText((StructA0205d5d0*)(base + 0x2c8 + 0xc00), (unsigned char) *(int *) (base + 0x1000 + 0xbb8), (int)(*(void **) (base + 0x1000 + 0xbd0)), 0, 0);
+#if !defined(jpn)
+    if (func_0205d81c(OBJ, (unsigned char) var5) != 0) {
+#endif
+        (arg0->*data_ov002_0216d10c[*(int *) (var0 + 0x1000 + RG(0xbb8, 0xa80))])(*(void **) (var0 + 0x1000 + RG(0xbd0, 0xa98)), var2);
+        APPLY((StructA0205d5d0*)OBJ, (unsigned char) *(int *) (var0 + 0x1000 + RG(0xbb8, 0xa80)), (int)(*(void **) (var0 + 0x1000 + RG(0xbd0, 0xa98))));
+#if !defined(jpn)
     }
 #endif
     if (*(int *) (var0 + 0x1000 + RG(0xbcc, 0xa94)) == 0) {
@@ -96,8 +117,9 @@ extern "C" ARM void func_ov002_0215bba8(Struct_ov002_0215bba8_2 *arg0) {
             if (func_0205d81c(OBJ, var7) == 0) {
                 continue;
             }
-            (self->*data_ov002_0216d10c[page])(*(void **) (base + 0x1000 + 0xbd0), hl);
-            Window_SetPaneText((StructA0205d5d0*)(base + 0x2c8 + 0xc00), (unsigned char) page, (int)(*(void **) (base + 0x1000 + 0xbd0)), 0, 0);
+#endif
+            (arg0->*data_ov002_0216d10c[var7])(*(void **) (var0 + 0x1000 + RG(0xbd0, 0xa98)), var2);
+            APPLY((StructA0205d5d0*)OBJ, (unsigned char) var7, (int)(*(void **) (var0 + 0x1000 + RG(0xbd0, 0xa98))));
         }
     }
     *(int *) (var0 + 0x1000 + RG(0xbcc, 0xa94)) = 0;

@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov000_021819c8(void* arg0, int arg1, int* arg2, int arg3);
+extern "C" int func_ov000_021819c8(void* a, int b, int* out, int flag);
 
 // USA: func_ov000_02181fec
-extern "C" ARM int func_ov000_02181fec(void* arg0, void* arg1, int* arg2) {
-    return func_ov000_021819c8(arg1, 0, arg2, 0);
+extern "C" ARM int func_ov000_02181fec(void* unused, void* a, int* out) {
+    return func_ov000_021819c8(a, 0, out, 0);
 }

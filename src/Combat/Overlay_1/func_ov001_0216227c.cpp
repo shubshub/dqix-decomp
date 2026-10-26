@@ -2,7 +2,7 @@
 #include "Resource/Brightness.h"
 
 extern "C" void func_ov028_021d9714(void);
-extern "C" void func_020a1f4c(int arg0);
+extern "C" void func_020a1f4c(int flag);
 
 // USA: func_ov001_0216227c
 extern "C" ARM int func_ov001_0216227c(void) {

@@ -4,15 +4,15 @@
 
 
 
-struct Struct_020fdc4c {
+struct CombatScriptContext {
     unsigned short unknown_0_;
-    unsigned short unknown_2_;
+    unsigned short unknown2;
 #if !defined(jpn)
-    const char* unknown_4_;
+    const char* nameOverride;
 #endif
-    SafeAllocator* unknown_8_;
+    SafeAllocator* allocator;
     unsigned int unknown_c_;
-    char* unknown_10_;
+    char* currentObject;
 };
 
-extern Struct_020fdc4c data_020fdc4c;
+extern CombatScriptContext data_020fdc4c;

@@ -1,44 +1,44 @@
 #include <globaldefs.h>
 
 struct Struct_020e28dc;
-extern "C" int func_020e28dc(struct Struct_020e28dc* arg0);
+extern "C" int func_020e28dc(struct Struct_020e28dc* o);
 
 struct Struct_0205d81c;
-struct Struct_0205d0e0 {
-    unsigned char unknown_0_[0xac];
+struct Elem_0205d81c {
+    unsigned char pad0[0xac];
     short unknown_ac_;
     short unknown_ae_;
     unsigned char unknown_b0_[0xc];
     short unknown_bc_;
     short unknown_be_;
     unsigned char unknown_c0_[0x5];
-    unsigned char unknown_c5_;
+    unsigned char flagsC5;
 };
-struct Elem_0205d81c* Window_GetActivePane(struct Struct_0205d81c* s);
-int WindowPane_IsOpen(unsigned char* p);
+extern "C" struct Elem_0205d81c* Window_GetActivePane(struct Struct_0205d81c* s);
+extern "C" int WindowPane_IsOpen(unsigned char* p);
 
-struct Struct_0205a254;
-struct Struct_0205a254_2 {
-    unsigned char unknown_0_[0x15];
-    unsigned char unknown_15_;
+struct Container0205a3d0;
+struct Elem0205a3d0 {
+    unsigned char pad0[0x15];
+    unsigned char flags;
 };
-struct Elem0205a3d0* SpriteEntryList_Find(struct Container0205a3d0* c, int key);
-void SpriteEntryList_PlayAnimation(struct Container0205a3d0* c, int key);
-void SpriteEntryList_SetPosition(struct Container0205a3d0* c, int key, short a, short b);
-void SpriteEntryList_SetFirstObject(struct Container0205a3d0* c, int key, int val);
+extern "C" struct Elem0205a3d0* SpriteEntryList_Find(struct Container0205a3d0* c, int key);
+extern "C" void SpriteEntryList_PlayAnimation(struct Container0205a3d0* c, int key);
+extern "C" void SpriteEntryList_SetPosition(struct Container0205a3d0* c, int key, short a, short b);
+extern "C" void SpriteEntryList_SetFirstObject(struct Container0205a3d0* c, int key, int val);
 
 struct Container0205a330;
-void SpriteEntryList_AdvanceAnimations(struct Container0205a330* c, int arg);
+extern "C" void SpriteEntryList_AdvanceAnimations(struct Container0205a330* c, int arg);
 
 extern "C" void SpriteContext_DrawEntries(void* obj);
 
 // USA: func_ov003_0215c32c
-extern "C" ARM void func_ov003_0215c32c(char* arg0) {
-	struct Struct_0205a254_2* var0;
+extern "C" ARM void func_ov003_0215c32c(char* obj) {
+	struct Elem0205a3d0* e;
 
 	if (*(unsigned char*)(obj + 0x59f) & 1) {
-		struct Outer020e28dc* choice = *(struct Outer020e28dc**)(obj + 0x570);
-		if (choice != NULL && GetInnerFlagBit0020e28dc(choice)) {
+		struct Struct_020e28dc* choice = *(struct Struct_020e28dc**)(obj + 0x570);
+		if (choice != NULL && func_020e28dc(choice)) {
 			SpriteContext_DrawEntries(obj + 0x98);
 			return;
 		}
@@ -48,10 +48,10 @@ extern "C" ARM void func_ov003_0215c32c(char* arg0) {
 		if (!WindowPane_IsOpen((unsigned char*)elem)) return;
 		if (elem->flagsC5 & 0x20) return;
 
-		short x = (short)(elem->fac * 8);
-		short y = (short)(elem->fae * 8);
-		x += elem->fbc;
-		y += elem->fbe;
+		short x = (short)(elem->unknown_ac_ * 8);
+		short y = (short)(elem->unknown_ae_ * 8);
+		x += elem->unknown_bc_;
+		y += elem->unknown_be_;
 		struct Container0205a3d0* cont = *(struct Container0205a3d0**)(obj + 0xd4);
 		if (cont != NULL) {
 			SpriteEntryList_PlayAnimation(cont, 0);

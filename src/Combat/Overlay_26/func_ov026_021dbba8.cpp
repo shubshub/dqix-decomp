@@ -5,25 +5,25 @@
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Matrix.h"
 
-struct Struct_ov000_0217e870_2;
-struct Struct_02010604;
+struct PartyState;
+struct Bytes02033b88;
 
-struct Struct_020a212c_2 {
-    char unknown_0_[0x4];
-    Vector3i unknown_4_;
-    Vector3i unknown_10_;
+struct BattleCamera {
+    char pad0[0x4];
+    Vector3i eye;
+    Vector3i target;
     char unknown_1c_[0x54];
-    Vector3i unknown_70_;
+    Vector3i offset;
 };
 
 struct Struct_ov000_02160da0 {
 #if defined(jpn)
-    char unknown_0_[0x21c];
+    char pad0[0x21c];
 #else
-    char unknown1_0_[0x2a0];
+    char pad0[0x2a0];
 #endif
 
-    Struct_ov000_0217e870_2* unknown_2a0_;
+    PartyState* party;
 #if defined(jpn)
     char unknown_220_[0x76e4];
 #else
@@ -38,31 +38,31 @@ struct Struct_ov000_02160da0 {
     SafeAllocator unknown_774c_;
 };
 
-int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
-int GameObject_ForceMotionState(Bytes02033b88* p, int val);
-void GameState_SetCamera(GameState* gs, int value);
-void ClearCombatantSlot_0200fd48(GameState* gs, int id);
-void Camera_SetOrbitVector(void* obj, int* vec);
+extern "C" int func_020a35e0(unsigned char*, unsigned char);
+extern "C" int GameObject_ForceMotionState(Bytes02033b88* p, int val);
+extern "C" void GameState_SetCamera(GameState* gs, int value);
+extern "C" void func_0200fd48(GameState* gs, int id);
+extern "C" void Camera_SetOrbitVector(void* obj, int* vec);
 
 extern "C" {
 void* func_02057924();
 void func_02057f00(void*, int);
-Struct_020a212c_2* func_ov000_02160f14(Struct_ov000_02160da0*);
-void func_ov000_0216d370(Struct_020a212c_2*, int, int, int);
+BattleCamera* func_ov000_02160f14(Struct_ov000_02160da0*);
+void func_ov000_0216d370(BattleCamera*, int, int, int);
 }
 
 // USA: func_ov026_021dbba8
-extern "C" ARM void func_ov026_021dbba8(Struct_ov000_02160da0* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
+extern "C" ARM void func_ov026_021dbba8(Struct_ov000_02160da0* self) {
+    GameState* gs = GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
     func_02057f00(func_02057924(), 0x12);
     func_02057f00(func_02057924(), 0x1d);
     func_02057f00(func_02057924(), 0x1e);
 
     for (int i = 0; i < 4; i++) {
-        if (TestBitAt0x34_020a35e0((unsigned char*)self->party, i)) {
-            GameObject* member = GetCombatantWithFlag0x100_0200ff1c(gs, i);
+        if (func_020a35e0((unsigned char*)self->party, i)) {
+            GameObject* member = func_0200ff1c(gs, i);
             if (member != NULL) {
                 member->obj3D_.RemoveAnimationPackageByID(3);
                 GameObject_ForceMotionState((Bytes02033b88*)member, 0);
@@ -78,11 +78,11 @@ extern "C" ARM void func_ov026_021dbba8(Struct_ov000_02160da0* arg0) {
     Camera_SetOrbitVector(cam, &offset.x);
     cam->eye = saved->eye;
     GameState_SetCamera(gs, (int)func_ov000_02160f14(self));
-    ClearCombatantSlot_0200fd48(gs, 0xcf);
+    func_0200fd48(gs, 0xcf);
 
-    var1->RemoveTask(arg0->unknown_7714_);
-    var1->RemoveTask(arg0->unknown_771e_);
-    var1->RemoveTask(arg0->unknown_7720_);
-    arg0->unknown_7714_ = arg0->unknown_771e_ = arg0->unknown_7720_ = -1;
-    arg0->unknown_774c_.Reset();
+    loader->RemoveTask(self->unknown_7714_);
+    loader->RemoveTask(self->unknown_771e_);
+    loader->RemoveTask(self->unknown_7720_);
+    self->unknown_7714_ = self->unknown_771e_ = self->unknown_7720_ = -1;
+    self->unknown_774c_.Reset();
 }

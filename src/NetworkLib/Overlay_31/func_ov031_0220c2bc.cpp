@@ -9,31 +9,31 @@ extern void* (*data_ov031_0224c994)(unsigned int);
 extern void (*data_ov031_0224c9c0)(void*);
 
 // USA: func_ov031_0220c2bc
-extern "C" ARM void func_ov031_0220c2bc(unsigned short* arg0, unsigned short* arg1, unsigned short* arg2, int arg3, unsigned short* arg4) {
-    unsigned short* var0 = (unsigned short*)data_ov031_0224c994(arg3 * 8);
+extern "C" ARM void func_ov031_0220c2bc(unsigned short* result, unsigned short* base, unsigned short* arg2, int length, unsigned short* arg4) {
+    unsigned short* var0 = (unsigned short*)data_ov031_0224c994(length * 8);
     if (!var0) return;
-    unsigned short* var1 = var0 + arg3;
-    VectorizedMemset(arg0 + 1, 0, (arg3 - 1) * 2);
-    arg0[0] = 1;
-    int var2 = (arg3 - func_ov031_0220bb24(arg2, arg3)) * 16;
-    if ((unsigned int)var2 < (unsigned int)(arg3 << 4)) { do {
-        if ((arg2 + (arg3 - (var2 >> 4)))[-1] & (0x8000u >> (var2 & 15))) {
-            VectorizedInvertedMemcpy(arg1, arg0, arg3 * 2);
-            ++var2;
+    unsigned short* scratch = var0 + length;
+    VectorizedMemset(result + 1, 0, (length - 1) * 2);
+    result[0] = 1;
+    int bit = (length - func_ov031_0220bb24(arg2, length)) * 16;
+    if ((unsigned int)bit < (unsigned int)(length << 4)) { do {
+        if ((arg2 + (length - (bit >> 4)))[-1] & (0x8000u >> (bit & 15))) {
+            VectorizedInvertedMemcpy(base, result, length * 2);
+            ++bit;
             break;
         }
-        ++var2;
-    } while ((unsigned int)var2 < (unsigned int)(arg3 << 4)); }
-    if ((unsigned int)var2 < (unsigned int)(arg3 << 4)) { do {
-        func_ov031_0220bf5c(var0, arg0, arg3);
-        VectorizedInvertedMemcpy(var0, arg0, arg3 * 2);
-        if (arg4) func_ov031_0220c0dc(0, arg0, arg4, arg0, arg3, var1);
-        if ((arg2 + (arg3 - (var2 >> 4)))[-1] & (0x8000u >> (var2 & 15))) {
-            func_ov031_0220be38(var0, arg0, arg1, arg3);
-            VectorizedInvertedMemcpy(var0, arg0, arg3 * 2);
-            if (arg4) func_ov031_0220c0dc(0, arg0, arg4, arg0, arg3, var1);
+        ++bit;
+    } while ((unsigned int)bit < (unsigned int)(length << 4)); }
+    if ((unsigned int)bit < (unsigned int)(length << 4)) { do {
+        func_ov031_0220bf5c(var0, result, length);
+        VectorizedInvertedMemcpy(var0, result, length * 2);
+        if (arg4) func_ov031_0220c0dc(0, result, arg4, result, length, scratch);
+        if ((arg2 + (length - (bit >> 4)))[-1] & (0x8000u >> (bit & 15))) {
+            func_ov031_0220be38(var0, result, base, length);
+            VectorizedInvertedMemcpy(var0, result, length * 2);
+            if (arg4) func_ov031_0220c0dc(0, result, arg4, result, length, scratch);
         }
-        ++var2;
-    } while ((unsigned int)var2 < (unsigned int)(arg3 << 4)); }
+        ++bit;
+    } while ((unsigned int)bit < (unsigned int)(length << 4)); }
     data_ov031_0224c9c0(var0);
 }

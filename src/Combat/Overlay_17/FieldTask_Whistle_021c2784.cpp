@@ -9,9 +9,9 @@ extern "C" int sprintf(char* out, const char* format, ...);
 extern "C" void TextQueue_Push(void* receiver, void* input, int style, int flag, unsigned char option);
 extern "C" char data_ov017_021d70e0[];
 extern "C" char data_ov017_021d7108[];
-enum { ResourceFlag = 0x40c8, GrottoReset = 0x27d4 };
+enum { Enum_ov017_021c2784_17128 = 0x40c8, Enum_ov017_021c2784_10132 = 0x27d4 };
 #else
-enum { ResourceFlag = 0x42e8, GrottoReset = 0x2794 };
+enum { Enum_ov017_021c2784_17128 = 0x42e8, Enum_ov017_021c2784_10132 = 0x2794 };
 #endif
 
 struct SearchStruct;
@@ -22,25 +22,25 @@ extern "C" void MessageSystem_FormatText(void* a, int b, int c, void* d, int e, 
 extern "C" int func_ov017_021959b4(void);
 extern "C" int func_ov017_021a23e4(char* c, int a0, unsigned int f8, unsigned int fc);
 
-void* TextQueue_GetInstance(void);
-unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
-void* MessageSystem_GetInstance(void);
-void NameText_InitFromPartyMember(void* obj, int combatantId);
-int StandardStrings_Get(int a);
-void SePlayer_LoadExtraArchiveB(void* obj, int arg1, int arg2);
-void SePlayer_PlayExtra(void* obj, int a, int b);
-void InitContext020e1154(void* obj);
+extern "C" void* TextQueue_GetInstance(void);
+extern "C" unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
+extern "C" void* MessageSystem_GetInstance(void);
+extern "C" void NameText_InitFromPartyMember(void* obj, int combatantId);
+extern "C" int StandardStrings_Get(int a);
+extern "C" void SePlayer_LoadExtraArchiveB(void* obj, int arg1, int arg2);
+extern "C" void SePlayer_PlayExtra(void* obj, int a, int b);
+extern "C" void func_020e1154(void* obj);
 struct Obj020397cc;
-void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
+extern "C" void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
 struct Obj020d7aa0;
-void TextQueue_Reset(struct Obj020d7aa0* obj);
-struct BitFlags02037170;
-struct BitFlags02037180;
-void SePlayer_UnloadExtraArchiveB(void* obj);
-void GameObject_EnableControl(void* obj);
-int GetBitflagForCombatantColor_021a26e8(GameResources* unused0, int combatantId);
-void EnqueueEventTag139_021d09cc(int a, int b, int c, int d);
-GameObject* FindCombatantByField0x16a_0200ffe0(GameState* battleStruct, int id);
+extern "C" void TextQueue_Reset(struct Obj020d7aa0* obj);
+struct Struct_02059cfc_4;
+struct Struct_ov008_021870e4;
+extern "C" void SePlayer_UnloadExtraArchiveB(void* obj);
+extern "C" void GameObject_EnableControl(void* obj);
+extern "C" int func_ov017_021a26e8(GameResources* unused0, int combatantId);
+extern "C" void func_ov017_021d09cc(int a, int b, int c, int d);
+extern "C" GameObject* func_0200ffe0(GameState* battleStruct, int id);
 
 extern int g_sePlayer;
 
@@ -63,7 +63,7 @@ extern "C" ARM void FieldTask_Whistle(WhistleTask* obj) {
     }
 
     if (obj->step == 0) {
-        *(unsigned char*)((char*)ov + ResourceFlag) = 1;
+        *(unsigned char*)((char*)ov + Enum_ov017_021c2784_17128) = 1;
         GameObject_DisableControl((struct Obj020397cc*)c, 1);
         *(unsigned short*)((char*)c + 0xb2) = 0;
         if (obj->silent != 0) {
@@ -99,8 +99,8 @@ extern "C" ARM void FieldTask_Whistle(WhistleTask* obj) {
 
         unsigned short* p = Zone3D_GetInstance();
         if (*p == 0x2710) {
-            *(int*)((char*)p + GrottoReset) = 0;
-            InitContext020e1154((void*)0x7d0);
+            *(int*)((char*)p + Enum_ov017_021c2784_10132) = 0;
+            func_020e1154((void*)0x7d0);
             obj->step = 5;
             return;
         }
@@ -116,8 +116,8 @@ extern "C" ARM void FieldTask_Whistle(WhistleTask* obj) {
             return;
         }
         int fv3 = GameState_GetLeaderIndex(battleStruct);
-        int bitflag = GetBitflagForCombatantColor_021a26e8(ov, fv3);
-        EnqueueEventTag139_021d09cc(0, 0, bitflag, obj->monsterId);
+        int bitflag = func_ov017_021a26e8(ov, fv3);
+        func_ov017_021d09cc(0, 0, bitflag, obj->monsterId);
         obj->step = 4;
         return;
     } else if (obj->step == 2) {
@@ -145,8 +145,8 @@ extern "C" ARM void FieldTask_Whistle(WhistleTask* obj) {
         }
         GameObject* combatant = battleStruct->GetFieldMonsterByIndex(obj->summonedIndex);
         if (obj->summonedIndex > 0 && combatant != NULL) {
-            if (((Object3D*)((struct BitFlags02037170*)combatant))->HasAnimationStopped() == 0) {
-                if (((Object3D*)((struct BitFlags02037180*)combatant))->HasAnimationReachedEnd() == 0) {
+            if (((Object3D*)((struct Struct_02059cfc_4*)combatant))->HasAnimationStopped() == 0) {
+                if (((Object3D*)((struct Struct_ov008_021870e4*)combatant))->HasAnimationReachedEnd() == 0) {
                     return;
                 }
             }
@@ -164,7 +164,7 @@ extern "C" ARM void FieldTask_Whistle(WhistleTask* obj) {
         obj->timer = 0;
         return;
     } else if (obj->step == 5) {
-        GameObject* found = FindCombatantByField0x16a_0200ffe0(battleStruct, obj->summonedId);
+        GameObject* found = func_0200ffe0(battleStruct, obj->summonedId);
         if (obj->summonedId != 0) {
             if (found == NULL) {
                 return;

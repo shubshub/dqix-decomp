@@ -81,7 +81,7 @@ src/Combat/Overlay_28/func_ov028_021d9188.cpp:
     complete
     .text start:0x021d9a48 end:0x021d9ac8
 
-src/Combat/Overlay_23/CharacterCreationUI_CreateNamePane_021d9da4.cpp:
+src/Combat/Overlay_28/func_ov028_021d942c.cpp:
     complete
     .text start:0x021d9da4 end:0x021d9e0c
 

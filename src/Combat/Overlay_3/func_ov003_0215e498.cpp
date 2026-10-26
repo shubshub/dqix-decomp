@@ -1,26 +1,26 @@
 #include <globaldefs.h>
 
 struct Struct_ov003_0215e498 {
-    short unknown_0_;
-    short unknown_2_;
-    int unknown_4_;
-    int unknown_8_;
-    unsigned char unknown_c_;
+    short f0;
+    short f2;
+    int f4;
+    int f8;
+    unsigned char fc;
     unsigned char unknown_d_;
-    unsigned char unknown_e_;
-    unsigned char unknown_f_;
-    short unknown_10_;
+    unsigned char fe;
+    unsigned char ff;
+    short f10;
 };
 
 // USA: func_ov003_0215e498
-extern "C" ARM void func_ov003_0215e498(struct Struct_ov003_0215e498* arg0) {
-    arg0->unknown_2_ = 0;
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_c_ = 0;
-    arg0->unknown_d_ = 0;
-    arg0->unknown_e_ = 0;
-    arg0->unknown_f_ = 0;
-    arg0->unknown_10_ = -1;
+extern "C" ARM void func_ov003_0215e498(struct Struct_ov003_0215e498* s) {
+    s->f2 = 0;
+    s->f0 = 0;
+    s->f4 = 0;
+    s->f8 = 0;
+    s->fc = 0;
+    s->unknown_d_ = 0;
+    s->fe = 0;
+    s->ff = 0;
+    s->f10 = -1;
 }

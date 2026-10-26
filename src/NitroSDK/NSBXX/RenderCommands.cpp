@@ -579,18 +579,18 @@ void RenderCommand_6(RenderCommandHandler* handler, int modifier)
 
                     targetData->rotationMatrix_.entries[form] = unit;
 
-                    uint8_t indexA = data_020e9260[form].unknown_0_;
-                    uint8_t indexB = data_020e9260[form].unknown_1_;
+                    uint8_t indexA = data_020e9260[form].a;
+                    uint8_t indexB = data_020e9260[form].b;
 
                     targetData->rotationMatrix_.entries[indexA] = entryA;
                     targetData->rotationMatrix_.entries[indexB] = entryB;
 
                     fix32_t entryC = (boneMatrix->flags_ & 0x200) ? -entryB : entryB;
-                    uint8_t indexC = data_020e9260[form].unknown_2_;
+                    uint8_t indexC = data_020e9260[form].c;
                     targetData->rotationMatrix_.entries[indexC] = entryC;
 
                     fix32_t entryD = (boneMatrix->flags_ & 0x400) ? -entryA : entryA;
-                    uint8_t indexD = data_020e9260[form].unknown_3_;
+                    uint8_t indexD = data_020e9260[form].d;
                     targetData->rotationMatrix_.entries[indexD] = entryD;
                     boneMatrixExtraPtr += sizeof(*pivot);
                 }

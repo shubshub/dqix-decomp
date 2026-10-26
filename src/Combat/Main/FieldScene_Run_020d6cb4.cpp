@@ -14,7 +14,7 @@ extern "C" void func_ov024_021d92f0(void* obj, void* data, int* out);
 extern char g_mainAllocator;
 
 // Main, originally GuardedOverlayDispatch020d6cb4 (USA 0x020d6cb4, EUR 0x020d6cc4, JPN 0x020d86bc)
-ARM void FieldScene_Run() {
+extern "C" ARM void FieldScene_Run() {
     unsigned int id = OVERLAY_ID(30);
     int result = 0;
     Overlay_Load(id);

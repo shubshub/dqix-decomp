@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_02053c6c(unsigned char* arg0);
+extern "C" int func_02053c6c(unsigned char* combatant);
 
 struct Struct_ov017_021cca00 {
-    unsigned short unknown_0_;
+    unsigned short combatantId;
     unsigned short unknown_2_;
     unsigned char unknown_4_[12];
 };
 
 struct Struct_ov017_021cca00_2 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[3];
-    Struct_ov017_021cca00 unknown_4_;
+    unsigned char tag;
+    unsigned char reserved[3];
+    Struct_ov017_021cca00 payload;
 };
 
 struct Struct_ov017_021cca00_3 {
@@ -27,14 +27,14 @@ struct Struct_ov017_021cca00_3 {
     unsigned short unknown_954_;
 };
 
-extern "C" ARM void func_ov017_021cca00(int arg0, unsigned char* arg1, GameState* arg2, int arg3) {
-    Struct_ov017_021cca00* var0 = &((Struct_ov017_021cca00_2*)arg1)->unknown_4_;
-    GameObject* var1 = func_0200ff1c(arg2, var0->unknown_0_);
-    if (var1 == NULL) return;
-    Struct_ov017_021cca00_3* var2 = (Struct_ov017_021cca00_3*)func_02053c6c((unsigned char*)var1);
-    if (var2 == NULL) return;
-    var2->unknown_954_ = var0->unknown_2_;
-    for (int var3 = 0; var3 < 12; ++var3) {
-        var2->unknown_186_[var3 + 1] = var0->unknown_4_[var3];
+extern "C" ARM void func_ov017_021cca00(int unused0, unsigned char* source, GameState* game, int arg3) {
+    Struct_ov017_021cca00* event = &((Struct_ov017_021cca00_2*)source)->payload;
+    GameObject* combatant = func_0200ff1c(game, event->combatantId);
+    if (combatant == NULL) return;
+    Struct_ov017_021cca00_3* slots = (Struct_ov017_021cca00_3*)func_02053c6c((unsigned char*)combatant);
+    if (slots == NULL) return;
+    slots->unknown_954_ = event->unknown_2_;
+    for (int i = 0; i < 12; ++i) {
+        slots->unknown_186_[i + 1] = event->unknown_4_[i];
     }
 }

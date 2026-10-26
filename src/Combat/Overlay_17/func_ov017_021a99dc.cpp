@@ -1,46 +1,46 @@
 #if defined(jpn)
-enum {Enum_ov017_021a99dc_3736=0xe94, Enum_ov017_021a99dc_516=0x200, Enum_ov017_021a99dc_3568=0xdec, Enum_ov017_021a99dc_540=0x218};
+enum {regionalOffset0=0xe94, regionalOffset1=0x200, regionalOffset2=0xdec, regionalOffset3=0x218};
 #else
-enum {Enum_ov017_021a99dc_3736=0xe98, Enum_ov017_021a99dc_516=0x204, Enum_ov017_021a99dc_3568=0xdf0, Enum_ov017_021a99dc_540=0x21c};
+enum {regionalOffset0=0xe98, regionalOffset1=0x204, regionalOffset2=0xdf0, regionalOffset3=0x21c};
 #endif
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
 struct Struct_ov017_021a99dc {
-    unsigned char unknown_0_[Enum_ov017_021a99dc_3736];
-    unsigned char unknown_e98_;
+    unsigned char pad0[regionalOffset0];
+    unsigned char flags;
 };
 
 struct Struct_ov017_021a99dc_2 {
-    unsigned char unknown_0_[0x20];
-    Struct_ov017_021a99dc* unknown_20_;
-    unsigned char unknown_24_[0x1];
+    unsigned char pad0[0x20];
+    Struct_ov017_021a99dc* target;
+    unsigned char pad1[0x1];
     unsigned char unknown_25_;
     unsigned char unknown_26_;
 };
 
 // USA: func_ov017_021a99dc
-extern "C" ARM void func_ov017_021a99dc(Struct_ov017_021a99dc_2* arg0, void* arg1, int arg2, int arg3, unsigned char arg4) {
-    Struct_ov017_021a99dc* var0 = arg0->unknown_20_;
-    if (var0 == NULL) {
+extern "C" ARM void func_ov017_021a99dc(Struct_ov017_021a99dc_2* self, void* src, int mode, int amount, unsigned char flag) {
+    Struct_ov017_021a99dc* target = self->target;
+    if (target == NULL) {
         return;
     }
-    if (arg2 == 0) {
-        unsigned char var1 = arg0->unknown_25_;
-        memcpy((char*)var0 + Enum_ov017_021a99dc_516 + 0xc00 + var1, arg1, arg3);
-        arg0->unknown_25_ = arg0->unknown_25_ + arg3;
-    } else if (arg2 == 2) {
-        memcpy((char*)var0 + Enum_ov017_021a99dc_3568, arg1, arg3);
-        var0 = arg0->unknown_20_;
-        var0->unknown_e98_ = var0->unknown_e98_ | 0x4;
+    if (mode == 0) {
+        unsigned char b = self->unknown_25_;
+        memcpy((char*)target + regionalOffset1 + 0xc00 + b, src, amount);
+        self->unknown_25_ = self->unknown_25_ + amount;
+    } else if (mode == 2) {
+        memcpy((char*)target + regionalOffset2, src, amount);
+        target = self->target;
+        target->flags = target->flags | 0x4;
     } else {
-        var0->unknown_e98_ = var0->unknown_e98_ | 0x1;
-        unsigned char var2 = arg0->unknown_26_;
-        memcpy((char*)arg0->unknown_20_ + Enum_ov017_021a99dc_540 + 0xc00 + var2, arg1, arg3);
-        arg0->unknown_26_ = arg0->unknown_26_ + arg3;
+        target->flags = target->flags | 0x1;
+        unsigned char b = self->unknown_26_;
+        memcpy((char*)self->target + regionalOffset3 + 0xc00 + b, src, amount);
+        self->unknown_26_ = self->unknown_26_ + amount;
     }
-    if (arg4 != 0) {
-        var0 = arg0->unknown_20_;
-        var0->unknown_e98_ = var0->unknown_e98_ | 0x2;
+    if (flag != 0) {
+        target = self->target;
+        target->flags = target->flags | 0x2;
     }
 }

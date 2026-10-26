@@ -7,16 +7,16 @@
 struct Obj02033874;
 struct Bytes02033b88;
 struct Obj020397cc;
-struct Owner020398b4;
-void GameObject_SnapFacing(Obj02033874*, int);
-void* GameState_GetZoneTransition(GameState*);
+struct Struct_02000c9c_21;
+extern "C" void GameObject_SnapFacing(Obj02033874*, int);
+extern "C" void* GameState_GetZoneTransition(GameState*);
 extern "C" void* Zone3D_GetInstance();
-void GameObject_ResetTrail(unsigned char*);
-int GameObject_ForceMotionState(Bytes02033b88*, int);
-void EnqueueEventTag60Field_021d440c(int);
+extern "C" void GameObject_ResetTrail(unsigned char*);
+extern "C" int GameObject_ForceMotionState(Bytes02033b88*, int);
+extern "C" void func_ov017_021d440c(int);
 int fix32cos(int);
 int fix32sin(int);
-void GameObject_DisableControl(Obj020397cc*, int);
+extern "C" void GameObject_DisableControl(Obj020397cc*, int);
 #if defined(jpn)
 #define data_020efb4e data_020efa3e
 #endif
@@ -91,7 +91,7 @@ extern "C" ARM void GameObject_PlaceInZone(GameObject* self, unsigned short zone
     }
     if (*reinterpret_cast<short*>(settings + ZoneTransition_ladderNodeId) == LadderNodeId_None) {
         self->obj3D_.DisableFlag(Object3DFlag_PauseAnimation);
-        EnqueueEventTag60Field_021d440c(-1);
+        func_ov017_021d440c(-1);
         LinkMessageQueue_SendLadderClimb((SubBlock02038508*)((char*)self + PartyMember_ladderClimb - kActorTailDelta), 0, 1);
         return;
     }
@@ -118,10 +118,10 @@ extern "C" ARM void GameObject_PlaceInZone(GameObject* self, unsigned short zone
     GameObject_SetLadderClimb(self, &climb);
     int difference = climb.end.vec.y - climb.start.vec.y;
     int y = climb.start.vec.y + FIX32_MULTIPLY(difference, *reinterpret_cast<short*>(settings + ZoneTransition_ladderHeight));
-    Vector3i adjusted;
-    adjusted = self->obj3D_.position_;
-    adjusted.y = y;
-    self->obj3D_.position_ = adjusted;
+    Vector3i var9;
+    var9 = self->obj3D_.position_;
+    var9.y = y;
+    self->obj3D_.position_ = var9;
     GameObject_SnapFacing(reinterpret_cast<Obj02033874*>(self), node->angle);
     self->obj3D_.SetAnimationByName(data_020efb4e, 0);
     self->obj3D_.EnableFlag(0x180);

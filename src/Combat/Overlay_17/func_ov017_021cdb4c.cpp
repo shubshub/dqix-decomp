@@ -3,22 +3,22 @@
 
 
 struct SearchStruct0202c1a4;
-int LinkSession_GetOwnSlot(struct SearchStruct0202c1a4*);
+extern "C" int LinkSession_GetOwnSlot(struct SearchStruct0202c1a4*);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
-void SetOrClearBit2_0201bf84(unsigned char* obj, int set);
+extern "C" void func_0201bf84(unsigned char* obj, int set);
 
 struct Struct_ov017_021cdb4c {
-    char unknown_0_[4];
-    signed char unknown_4_;
+    char pad0[4];
+    signed char field4;
     unsigned char unknown_5_;
-    unsigned short unknown_6_;
-    int unknown_8_;
+    unsigned short field6;
+    int field8;
 };
 
 // USA: func_ov017_021cdb4c
-extern "C" ARM void func_ov017_021cdb4c(void* unused0, struct Obj021cdb4c* obj, int unused2, int unused3, struct SearchStruct0202c1a4* search) {
+extern "C" ARM void func_ov017_021cdb4c(void* unused0, struct Struct_ov017_021cdb4c* obj, int arg2, int arg3, struct SearchStruct0202c1a4* search) {
     if (obj->field4 >= 0 && obj->field4 != LinkSession_GetOwnSlot(search)) {
         return;
     }
@@ -26,7 +26,7 @@ extern "C" ARM void func_ov017_021cdb4c(void* unused0, struct Obj021cdb4c* obj, 
     unsigned char* base = (unsigned char*)Scenario_GetInstance();
     unsigned char* other = (unsigned char*)Zone3D_GetInstance();
 
-    switch (arg1->unknown_5_) {
+    switch (obj->unknown_5_) {
     case 0:
     case 2:
     case 3:
@@ -42,7 +42,7 @@ extern "C" ARM void func_ov017_021cdb4c(void* unused0, struct Obj021cdb4c* obj, 
         break;
     case 7:
         Scenario_SetFlag(base, base + 0x8c, obj->field6 + 0x33e, obj->field8);
-        SetOrClearBit2_0201bf84(other, 1);
+        func_0201bf84(other, 1);
         break;
     default:
         break;

@@ -1,97 +1,97 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-void* LinkMessageQueue_GetInstance(void);
+extern "C" void* LinkMessageQueue_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021c8f3c_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_0_ : 4;
-    short unknown_4_4_ : 3;
-    unsigned short unknown_4_7_ : 9;
-    short unknown_6_;
-    unsigned char unknown_8_;
-    unsigned char unknown_9_;
-    unsigned short unknown_a_;
-    unsigned short unknown_c_;
+    unsigned short a;
+    unsigned short b;
+    unsigned short slot : 4;
+    short mode : 3;
+    unsigned short level : 9;
+    short d;
+    unsigned char e;
+    unsigned char f;
+    unsigned short g;
+    unsigned short h;
 };
 
 struct Struct_ov017_021c8f3c_3 {
-    unsigned short unknown_0_;
-    short unknown_2_;
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
-    unsigned short unknown_8_;
-    unsigned char unknown_a_;
+    unsigned short a;
+    short b;
+    unsigned short c;
+    unsigned short d;
+    unsigned short e;
+    unsigned char f;
 };
 
-extern "C" void func_ov017_021c90b4(Struct_ov017_021c8f3c_2* arg0, Struct_ov017_021c8f3c_2* arg1);
-extern "C" void func_ov017_021c90f8(Struct_ov017_021c8f3c_3* arg0, Struct_ov017_021c8f3c_3* arg1);
+extern "C" void func_ov017_021c90b4(Struct_ov017_021c8f3c_2* dst, Struct_ov017_021c8f3c_2* src);
+extern "C" void func_ov017_021c90f8(Struct_ov017_021c8f3c_3* dst, Struct_ov017_021c8f3c_3* src);
 
-struct Struct_ov017_021a1d98_3 {
-    Object3D unknown_0_;
+struct FieldMonster {
+    Object3D obj3D_;
     unsigned char unknown_ac_[0xb8 - 0xac];
-    unsigned short unknown_b8_;
+    unsigned short fieldB8;
     unsigned char unknown_ba_[0x130 - 0xba];
     int unknown_130_;
     unsigned char unknown_134_[0x164 - 0x134];
     unsigned short unknown_164_;
-    unsigned short unknown_166_;
+    unsigned short field166;
     unsigned short unknown_168_;
     unsigned short unknown_16a_;
-    unsigned char unknown_16c_[0x17d - 0x16c];
+    unsigned char pad16c[0x17d - 0x16c];
     unsigned char unknown_17d_;
 };
 
 struct Struct_ov017_021c8f3c {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[3];
-    unsigned char unknown_4_0_ : 2;
-    unsigned char unknown_5_;
+    unsigned char tag;
+    unsigned char pad1[3];
+    unsigned char kind : 2;
+    unsigned char pad5;
     union {
-        Struct_ov017_021c8f3c_2 unknown_0_;
-        Struct_ov017_021c8f3c_3 unknown1_0_;
-    } unknown_6_;
+        Struct_ov017_021c8f3c_2 info;
+        Struct_ov017_021c8f3c_3 pos;
+    } payload;
 };
 
 // USA: func_ov017_021c8f3c
-extern "C" ARM void func_ov017_021c8f3c(int arg0, int arg1) {
-    Struct_ov017_021c8f3c_2 var0;
-    Struct_ov017_021c8f3c_3 var1;
-    struct Struct_ov017_021c8f3c var2;
+extern "C" ARM void func_ov017_021c8f3c(int index, int mode) {
+    Struct_ov017_021c8f3c_2 info;
+    Struct_ov017_021c8f3c_3 pos;
+    struct Struct_ov017_021c8f3c msg;
 
     struct FieldMonster* m = (struct FieldMonster*)GameState::GetInstance()->GetFieldMonsterByIndex(index);
     if (m == NULL) {
         return;
     }
-    var0.unknown_0_ = var3->unknown_16a_;
-    var0.unknown_4_4_ = arg1;
-    var0.unknown_2_ = var3->unknown_0_.GetField06();
-    var0.unknown_6_ = var3->unknown_0_.unknown_2_;
-    var0.unknown_4_0_ = (unsigned short)((arg0 - 0x70) % 12);
-    var0.unknown_4_7_ = var3->unknown_168_;
-    var0.unknown_8_ = var3->unknown_17d_;
-    var0.unknown_a_ = var3->unknown_b8_;
-    var0.unknown_c_ = var3->unknown_164_;
-    var0.unknown_9_ = var3->unknown_166_;
+    info.a = m->unknown_16a_;
+    info.mode = mode;
+    info.b = m->obj3D_.GetField06();
+    info.d = m->obj3D_.unknown_2_;
+    info.slot = (unsigned short)((index - 0x70) % 12);
+    info.level = m->unknown_168_;
+    info.e = m->unknown_17d_;
+    info.g = m->fieldB8;
+    info.h = m->unknown_164_;
+    info.f = m->field166;
 
-    var1.unknown_0_ = var3->unknown_16a_;
-    Vector3i* var4 = &var3->unknown_0_.position_;
-    var1.unknown_4_ = (short)(var4->x >> 7);
-    var1.unknown_6_ = (short)(var4->y >> 7);
-    var1.unknown_8_ = (short)(var4->z >> 7);
-    var1.unknown_2_ = var3->unknown_0_.rotation_.y;
-    var1.unknown_a_ = var3->unknown_130_;
+    pos.a = m->unknown_16a_;
+    Vector3i* p = &m->obj3D_.position_;
+    pos.c = (short)(p->x >> 7);
+    pos.d = (short)(p->y >> 7);
+    pos.e = (short)(p->z >> 7);
+    pos.b = m->obj3D_.rotation_.y;
+    pos.f = m->unknown_130_;
 
     void* data = LinkMessageQueue_GetInstance();
     msg.tag = 0x83;
     msg.kind = 0;
-    CopyStruct021c90b4(&msg.payload.info, &info);
+    func_ov017_021c90b4(&msg.payload.info, &info);
     func_0205e330(data, &msg, 0);
 
-    var2.unknown_0_ = 0x83;
-    var2.unknown_4_0_ = 1;
-    func_ov017_021c90f8(&var2.unknown_6_.unknown1_0_, &var1);
-    func_0205e330(var5, &var2, 0);
+    msg.tag = 0x83;
+    msg.kind = 1;
+    func_ov017_021c90f8(&msg.payload.pos, &pos);
+    func_0205e330(data, &msg, 0);
 }

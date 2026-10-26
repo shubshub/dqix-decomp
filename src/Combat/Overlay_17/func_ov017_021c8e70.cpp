@@ -1,71 +1,71 @@
 #include <globaldefs.h>
 
-extern "C" void* func_ov017_021b8478(void* arg0);
-extern "C" int func_ov017_021b8468(void* arg0);
-extern "C" void* func_ov017_021b8470(void* arg0);
+extern "C" void* func_ov017_021b8478(void* obj);
+extern "C" int func_ov017_021b8468(void* obj);
+extern "C" void* func_ov017_021b8470(void* obj);
 
 struct Struct_ov017_021c8e70 {
-    unsigned char unknown_0_[8];
-    unsigned short unknown_8_;
+    unsigned char pad0[8];
+    unsigned short field8;
 };
 
 struct Struct_ov017_021c8e70_2 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_[6];
-    unsigned char unknown_8_[3];
-    unsigned char unknown_b_;
+    unsigned short id;
+    unsigned char pad2[6];
+    unsigned char values[3];
+    unsigned char count;
 };
 
 struct Struct_ov017_021c8e70_3 {
-    unsigned char unknown_0_[4];
-    Struct_ov017_021c8e70_2 unknown_4_;
+    unsigned char pad0[4];
+    Struct_ov017_021c8e70_2 body;
 };
 
 struct Struct_ov017_021c8e70_4 {
-    unsigned char unknown_0_[0xa];
-    unsigned char unknown_a_0_ : 4;
-    unsigned char unknown_a_4_ : 4;
+    unsigned char pad0[0xa];
+    unsigned char low : 4;
+    unsigned char value : 4;
     unsigned char unknown_b_[0x18 - 0xb];
 };
 
 struct Struct_ov017_021c8e70_5 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_0_ : 4;
-    unsigned char unknown_1_4_ : 4;
-    unsigned char unknown_2_[2];
-    Struct_ov017_021c8e70_4 unknown_4_[1];
+    unsigned char field0;
+    unsigned char total : 4;
+    unsigned char high : 4;
+    unsigned char pad2[2];
+    Struct_ov017_021c8e70_4 entries[1];
 };
 
 struct Struct_ov017_021c8e70_6 {
-    unsigned char unknown_0_[0x81b0];
-    Struct_ov017_021c8e70_5 unknown_81b0_;
+    unsigned char pad0[0x81b0];
+    Struct_ov017_021c8e70_5 table;
 };
 
 // USA: func_ov017_021c8e70
-extern "C" ARM void func_ov017_021c8e70(int arg0, Struct_ov017_021c8e70_3* arg1, int arg2, unsigned char* arg3) {
+extern "C" ARM void func_ov017_021c8e70(int unused0, Struct_ov017_021c8e70_3* src, int arg2, unsigned char* obj) {
 #if defined(jpn)
- enum {Enum_ov017_021c8e70_1816=0x508};
+ enum {regionalOffset=0x508};
 #else
- enum {Enum_ov017_021c8e70_1816=0x718};
+ enum {regionalOffset=0x718};
 #endif
-    Struct_ov017_021c8e70_2* var0;
-    int var1;
-    int var2;
-    Struct_ov017_021c8e70_5* var3;
-    void* var4 = *(void**)(arg3 + 0x3000 + Enum_ov017_021c8e70_1816);
-    Struct_ov017_021c8e70* var5 = (Struct_ov017_021c8e70*)func_ov017_021b8478(var4);
-    if (!var5) return;
-    if (!func_ov017_021b8468(var4)) return;
-    Struct_ov017_021c8e70_6* var6 = (Struct_ov017_021c8e70_6*)func_ov017_021b8470(var4);
-    if (!var6) return;
-    if (var5->unknown_8_ != arg1->unknown_4_.unknown_0_) return;
-    var3 = &var6->unknown_81b0_;
-    var0 = &arg1->unknown_4_;
-    var1 = 0;
-    for (var2 = 0; var2 < var0->unknown_b_; var2++) {
-        Struct_ov017_021c8e70_4* var7 = &var3->unknown_4_[var2];
-        var7->unknown_a_4_ = var0->unknown_8_[var2];
-        var1 += var7->unknown_a_4_;
+    Struct_ov017_021c8e70_2* body;
+    int total;
+    int i;
+    Struct_ov017_021c8e70_5* table;
+    void* h = *(void**)(obj + 0x3000 + regionalOffset);
+    Struct_ov017_021c8e70* r = (Struct_ov017_021c8e70*)func_ov017_021b8478(h);
+    if (!r) return;
+    if (!func_ov017_021b8468(h)) return;
+    Struct_ov017_021c8e70_6* owner = (Struct_ov017_021c8e70_6*)func_ov017_021b8470(h);
+    if (!owner) return;
+    if (r->field8 != src->body.id) return;
+    table = &owner->table;
+    body = &src->body;
+    total = 0;
+    for (i = 0; i < body->count; i++) {
+        Struct_ov017_021c8e70_4* e = &table->entries[i];
+        e->value = body->values[i];
+        total += e->value;
     }
-    var3->unknown_1_0_ = (unsigned char)var1;
+    table->total = (unsigned char)total;
 }

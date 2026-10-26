@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 #include "Resource/GameResources.h"
 
-struct Struct_ov011_02184c30 {
-    int unknown_0_;
-    union { int unknown_0_; float unknown1_0_; } unknown_4_;
+struct TaggedNumber02184c30 {
+    int type;
+    union { int i; float f; } value;
 };
 
 struct GameResources;
 
 void SetBrightness(struct GameResources* resources, int brightness, int duration);
-extern "C" int func_ov011_02184c30(struct Struct_ov011_02184c30* arg0);
+extern "C" int func_ov011_02184c30(struct TaggedNumber02184c30* v);
 
 // USA: func_ov011_02184c7c
-extern "C" ARM int func_ov011_02184c7c(struct Struct_ov011_02184c30* arg0, int arg1) {
-    struct GameResources* var0 = GetGameResources();
-    int var1 = func_ov011_02184c30(&arg0[0]);
-    SetBrightness(var0, var1, func_ov011_02184c30(&arg0[1]) / 34);
+extern "C" ARM int func_ov011_02184c7c(struct TaggedNumber02184c30* params, int count) {
+    struct GameResources* resources = GetGameResources();
+    int brightness = func_ov011_02184c30(&params[0]);
+    SetBrightness(resources, brightness, func_ov011_02184c30(&params[1]) / 34);
     return 1;
 }

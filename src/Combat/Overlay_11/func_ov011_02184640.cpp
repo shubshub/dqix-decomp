@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 
 struct Struct_ov011_02184374;
-extern "C" void func_ov011_02184374(Struct_ov011_02184374* arg0);
+extern "C" void func_ov011_02184374(Struct_ov011_02184374* obj);
 
-struct Struct_0203d028;
-extern "C" void func_0207df50(Struct_0203d028* arg0);
+struct Foo0207df50;
+extern "C" void VramState_Rewind(Foo0207df50* p);
 
-struct Struct_02015ef4_5;
-extern "C" void func_0207dfc8(Struct_02015ef4_5* arg0, Struct_02015ef4_5* arg1);
+struct State0207dfc8;
+extern "C" void VramState_CopyCurrentTo(State0207dfc8* src, State0207dfc8* dst);
 
 // USA: func_ov011_02184640
-extern "C" ARM void func_ov011_02184640(char* arg0, char* arg1) {
-    func_ov011_02184374((Struct_ov011_02184374*)(arg0 + 0x20));
-    func_0207df50((Struct_0203d028*)arg1);
-    func_0207dfc8((Struct_02015ef4_5*)arg1, (Struct_02015ef4_5*)(arg0 + 0x24));
+extern "C" ARM void func_ov011_02184640(char* obj, char* arg) {
+    func_ov011_02184374((Struct_ov011_02184374*)(obj + 0x20));
+    VramState_Rewind((Foo0207df50*)arg);
+    VramState_CopyCurrentTo((State0207dfc8*)arg, (State0207dfc8*)(obj + 0x24));
 }

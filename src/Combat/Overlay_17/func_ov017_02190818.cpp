@@ -2,19 +2,19 @@
 #include "GameState/GameState.h"
 
 // USA: func_ov017_02190818
-extern "C" ARM int func_ov017_02190818(int arg0) {
-	GameState* var0 = GameState::GetInstance();
-	if (var0->GetPartyMemberByIndex(arg0) == NULL)
+extern "C" ARM int func_ov017_02190818(int id) {
+	GameState* bs = GameState::GetInstance();
+	if (bs->GetPartyMemberByIndex(id) == NULL)
 		goto zero;
 	{
-	GameObject* var1 = var0->GetGameObjectByIndex(arg0 * 0xc + 0x14);
-	if (var1 == NULL)
+	GameObject* c = bs->GetGameObjectByIndex(id * 0xc + 0x14);
+	if (c == NULL)
 		goto zero;
 	{
-	short var2 = var1->obj3D_.unknown_2_;
-	if (var2 != 0x2347) {
-		if (var2 != 0x2348) {
-			if (var2 != 0x2349) {
+	short v = c->obj3D_.unknown_2_;
+	if (v != 0x2347) {
+		if (v != 0x2348) {
+			if (v != 0x2349) {
 				goto zero;
 			}
 		}

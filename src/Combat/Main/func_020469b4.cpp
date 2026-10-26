@@ -1,28 +1,28 @@
 #include <globaldefs.h>
 
-struct Struct_0201bdac {
-    char unknown_0_[2];
-    unsigned char unknown_2_;
+struct TailNode020469b4 {
+    char unk0[2];
+    unsigned char inList;
     char unknown_3_;
-    struct Struct_0201bdac* unknown_4_;
+    struct TailNode020469b4* next;
 };
 
-struct Struct_0201bdac_2 {
-    struct Struct_0201bdac* unknown_0_;
-    struct Struct_0201bdac* unknown_4_;
+struct TailList020469b4 {
+    struct TailNode020469b4* head;
+    struct TailNode020469b4* tail;
 };
 
 // USA: func_020469b4
-extern "C" ARM void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1) {
-    if (arg0->unknown_0_ != NULL && arg0->unknown_4_ != NULL) {
-        arg0->unknown_4_->unknown_4_ = arg1;
-        arg0->unknown_4_ = arg1;
-        arg1->unknown_4_ = NULL;
+extern "C" ARM void func_020469b4(struct TailList020469b4* list, struct TailNode020469b4* node) {
+    if (list->head != NULL && list->tail != NULL) {
+        list->tail->next = node;
+        list->tail = node;
+        node->next = NULL;
     } else {
-        arg0->unknown_0_ = arg1;
-        arg0->unknown_4_ = arg1;
-        arg1->unknown_4_ = NULL;
+        list->head = node;
+        list->tail = node;
+        node->next = NULL;
     }
-    arg1->unknown_4_ = NULL;
-    arg1->unknown_2_ = 1;
+    node->next = NULL;
+    node->inList = 1;
 }

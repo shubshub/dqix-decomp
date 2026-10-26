@@ -9,36 +9,36 @@
 
 extern "C" unsigned short* Zone3D_GetInstance(void);
 extern "C" char* OamManager_GetInstance(void);
-ARM void* BgVram_GetInstance(void);
+extern "C" ARM void* BgVram_GetInstance(void);
 
 extern "C" void MapDisplay_FadeOutSubScreen(void* unused0, int amount);
-void InitSubScreenDisplay_020209d0(void* context);
-void BgVram_Reset(char* obj);
-void OamManager_ResetTextTable(char* obj);
-void OamManager_Init(char* obj);
+extern "C" void func_020209d0(void* context);
+extern "C" void BgVram_Reset(char* obj);
+extern "C" void OamManager_ResetTextTable(char* obj);
+extern "C" void OamManager_Init(char* obj);
 
-int BgTransfers_LoadTiles(int* arr1, int idx, int category, int addr, unsigned int len, unsigned int len2);
-void BgVram_FillMap(void* objPtr, int mode, int idx, int fillByte);
+extern "C" int BgTransfers_LoadTiles(int* arr1, int idx, int category, int addr, unsigned int len, unsigned int len2);
+extern "C" void BgVram_FillMap(void* objPtr, int mode, int idx, int fillByte);
 extern "C" void BgTransfers_UploadDirtyScreens(void* obj);
 
-void Sprite_Init(struct Struct0205a198* p);
-void SpriteContext_Init(char* obj);
+extern "C" void Sprite_Init(struct Struct0205a198* p);
+extern "C" void SpriteContext_Init(char* obj);
 
-void MapDisplay_RefreshAllMemberPanels(void* obj);
+extern "C" void MapDisplay_RefreshAllMemberPanels(void* obj);
 
 struct State0xbb1c;
-void BgImage_Clear(struct State0xbb1c* obj);
+extern "C" void BgImage_Clear(struct State0xbb1c* obj);
 
 struct Obj0203bb3c;
-void BgImage_Load(struct Obj0203bb3c* obj, char* src, SafeAllocator* allocator, int category, unsigned short arg5);
+extern "C" void BgImage_Load(struct Obj0203bb3c* obj, char* src, SafeAllocator* allocator, int category, unsigned short arg4);
 
 struct Bcb8Params;
-void BgImage_Place(struct Bcb8Params* s, int arg1, int arg2);
+extern "C" void BgImage_Place(struct Bcb8Params* s, int arg1, int arg2);
 
-struct Struct_0201f040 {
+struct ResetStruct {
     int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    int w4;
+    int w8;
     int unknown_c_;
     int unknown_10_;
     int unknown_14_;
@@ -47,20 +47,20 @@ struct Struct_0201f040 {
     int unknown_20_;
     int unknown_24_;
     int unknown_28_;
-    char unknown_2c_[0x400];
+    char pad[0x400];
     unsigned char unknown_42c_;
 };
 
-struct Struct_02013fb4;
-struct Struct_0201f040_2;
+struct StreamHeader;
+struct StreamState;
 
 struct Struct_0201f040_3;
 
 extern "C" void MapDisplay_CenterOnLeader(void* obj);
 extern "C" void func_ov017_02191234(void* obj);
-void OS_WaitVBlankIntr(void);
+extern "C" void OS_WaitVBlankIntr(void);
 extern "C" void MapDisplay_Draw(void* obj);
-void MapDisplay_RecheckAllMembers(unsigned char* obj);
+extern "C" void MapDisplay_RecheckAllMembers(unsigned char* obj);
 extern "C" void MapDisplay_PlaceMembers(void* obj, int flag);
 
 extern char data_020ef67c;
@@ -77,9 +77,9 @@ enum { Enum_020227dc_0 = 0, Enum_020227dc_0_2 = 0 };
 #endif
 
 struct Struct_020fdc4c_7 {
-    char unknown_0_[0x8 - Enum_020227dc_0_2];
+    char pad[0x8 - Enum_020227dc_0_2];
     void* unknown_8_;
-    char unknown_c_[0x10 - 0xc];
+    char pad2[0x10 - 0xc];
     void* unknown_10_;
 };
 extern struct Struct_020fdc4c_7 data_020fdc4c;
@@ -99,23 +99,23 @@ extern "C" ARM void MapDisplay_LoadWorldMap(MapDisplay* ctx) {
         MapDisplay_FadeOutSubScreen(ctx, 0x19);
         loader->AddFence();
         ctx->taska24 = loader->QueueLoadFile(&data_020ef67c, 0);
-        ctx->taska20 = loader->QueueLoadFileInGP2((const char*)(*(int*)((char*)&data_020ef460 + 8 - GlobalHeaderRegionOffset)), &data_020ef692, 0);
+        ctx->taska20 = loader->QueueLoadFileInGP2((const char*)(*(int*)((char*)&data_020ef460 + 8 - Enum_020227dc_0_2)), &data_020ef692, 0);
         ctx->taska28 = loader->QueueLoadFile(&data_020ef69f, 0);
         ctx->loadStage = ctx->loadStage + 1;
         return;
     }
 
-    if (arg0->unknown_9c2_ != 1) return;
+    if (ctx->loadStage != 1) return;
 
-    if (var0->GetTaskStatus(arg0->unknown_a24_) == 0) return;
-    if (var0->GetTaskStatus(arg0->unknown_a20_) == 0) return;
-    if (var0->GetTaskStatus(arg0->unknown_a28_) == 0) return;
+    if (loader->GetTaskStatus(ctx->taska24) == 0) return;
+    if (loader->GetTaskStatus(ctx->taska20) == 0) return;
+    if (loader->GetTaskStatus(ctx->taska28) == 0) return;
 
     MapDisplay_FadeOutSubScreen(ctx, 0x19);
     if (IsScreenNotFullyFaded((GameResources*)axisObj, true) != 0) return;
 
     MapDisplay_ResetMap(ctx);
-    InitSubScreenDisplay_020209d0(ctx);
+    func_020209d0(ctx);
     BgVram_Reset((char*)dataPtr);
     sb->Reset();
     OamManager_ResetTextTable(p8);
@@ -147,9 +147,9 @@ extern "C" ARM void MapDisplay_LoadWorldMap(MapDisplay* ctx) {
     ctx->nameCount = 1;
     ctx->forwardingCount = 1;
 
-    void* var8 = 0;
-    unsigned int var9 = 0;
-    var0->GetLoadedFileByID(arg0->unknown_a20_, &var8, &var9);
+    void* fileData = 0;
+    unsigned int fileSize = 0;
+    loader->GetLoadedFileByID(ctx->taska20, &fileData, &fileSize);
 
     ctx->names = (Entry02021578*)sb->Allocate(sizeof(Entry02021578));
     BgImage_Clear((struct State0xbb1c*)((char*)ctx->names + 8));
@@ -157,28 +157,28 @@ extern "C" ARM void MapDisplay_LoadWorldMap(MapDisplay* ctx) {
     BgImage_Load((struct Obj0203bb3c*)((char*)ctx->names + 8), (char*)fileData, sb, 1, 0);
     BgImage_Place((struct Bcb8Params*)((char*)ctx->names + 8), 0, 0);
 
-    BackgroundLoader::GetInstance()->RemoveTask(arg0->unknown_a20_);
-    arg0->unknown_a20_ = -1;
+    BackgroundLoader::GetInstance()->RemoveTask(ctx->taska20);
+    ctx->taska20 = -1;
 
-    var0->GetLoadedFileByID(arg0->unknown_a28_, &var8, &var9);
+    loader->GetLoadedFileByID(ctx->taska28, &fileData, &fileSize);
 
-    struct Struct_0201f040 var10;
-    data_020fdc4c.unknown_10_ = arg0;
-    data_020fdc4c.unknown_8_ = var6;
-    ((Script*)&var10)->Initialize();
-    ((Script*)&var10)->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020ef498);
-    ((Script*)((struct Struct_0201f040_2*)&var10))->Load((struct Struct_02013fb4*)var8, (int)var9);
-    ((Script*)((struct Struct_0201f040_3*)&var10))->Execute();
+    struct ResetStruct local;
+    data_020fdc4c.unknown_10_ = ctx;
+    data_020fdc4c.unknown_8_ = sb;
+    ((Script*)&local)->Initialize();
+    ((Script*)&local)->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020ef498);
+    ((Script*)((struct StreamState*)&local))->Load((struct StreamHeader*)fileData, (int)fileSize);
+    ((Script*)((struct Struct_0201f040_3*)&local))->Execute();
 
-    if (*var1 == 10000 || *var1 == 10100) {
-        arg0->unknown_12_ = 1;
-        arg0->unknown_779_ = 0;
-        arg0->unknown_9ba_ = 0;
-        strcpy(arg0->unknown_2_, &data_020ef6b5);
+    if (*p6 == 10000 || *p6 == 10100) {
+        ctx->field12 = 1;
+        ctx->refreshRecords = 0;
+        ctx->field9ba = 0;
+        strcpy(ctx->unknown_2_, &data_020ef6b5);
     }
 
-    BackgroundLoader::GetInstance()->RemoveTask(arg0->unknown_a28_);
-    arg0->unknown_a28_ = -1;
+    BackgroundLoader::GetInstance()->RemoveTask(ctx->taska28);
+    ctx->taska28 = -1;
 
     MapDisplay_CenterOnLeader(ctx);
     func_ov017_02191234(axisObj);

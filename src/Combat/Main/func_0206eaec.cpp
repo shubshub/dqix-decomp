@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 // USA: func_0206eaec
-extern "C" ARM int func_0206eaec(unsigned char *arg0, int arg1, int arg2) {
-    unsigned char *var0 = arg0 + arg1 * 0x20;
-    var0 += (arg2 << 13) >> 16;
-    unsigned short var1 = (arg2 & 7) ^ 7;
-    return ((var0[0x41b] >> var1) & 1) != 0;
+extern "C" ARM int func_0206eaec(unsigned char *base, int row, int col) {
+    unsigned char *p = base + row * 0x20;
+    p += (col << 13) >> 16;
+    unsigned short bit = (col & 7) ^ 7;
+    return ((p[0x41b] >> bit) & 1) != 0;
 }

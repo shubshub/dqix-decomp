@@ -5,8 +5,8 @@
 #include "NitroSDK/HWRegisters.h"
 
 struct ByteHeader0204693c;
-void ResetByteHeader(struct ByteHeader0204693c* p);
-int MessageSystem_GetInstance();
+extern "C" void func_0204693c(struct ByteHeader0204693c* p);
+extern "C" int MessageSystem_GetInstance();
 
 // A FieldTaskKind_SearchPot task (its own copy of the layout, as in the other step files).
 struct SearchPotTask021b57fc : FieldTask {
@@ -36,7 +36,7 @@ struct SearchPotTask021b57fc : FieldTask {
 
 // Overlay 17, originally func_ov017_021b57fc (USA/EUR 0x021b57fc, JPN 0x021b5db0)
 extern "C" ARM void FieldTask_InitSearchPot(SearchPotTask021b57fc* self) {
-    ResetByteHeader((struct ByteHeader0204693c*)self);
+    func_0204693c((struct ByteHeader0204693c*)self);
 
     self->kind = FieldTaskKind_SearchPot;
     self->step = SearchPotStep_Check;

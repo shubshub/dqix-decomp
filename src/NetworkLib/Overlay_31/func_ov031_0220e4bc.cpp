@@ -6,14 +6,14 @@ extern "C" void func_ov031_0220d984(int, int, int, int);
 
 extern void* data_ov031_0224e53c;
 
-struct Struct_ov031_0220e4bc { short unknown_0_; unsigned short unknown_2_; };
+struct Struct_ov031_0220e4bc { short f0; unsigned short type; };
 
 // USA: func_ov031_0220e4bc
-extern "C" ARM void func_ov031_0220e4bc(struct Struct_ov031_0220e4bc *arg0) {
-    switch (arg0->unknown_2_) {
+extern "C" ARM void func_ov031_0220e4bc(struct Struct_ov031_0220e4bc *s) {
+    switch (s->type) {
         case 0: {
-            int var0 = *(int*)((char*)data_ov031_0224e53c + 0x2000 + 0x260);
-            if (var0 == 0xc) {
+            int f260 = *(int*)((char*)data_ov031_0224e53c + 0x2000 + 0x260);
+            if (f260 == 0xc) {
                 func_ov031_0220da1c(0xa);
                 func_ov031_0220db6c();
                 break;

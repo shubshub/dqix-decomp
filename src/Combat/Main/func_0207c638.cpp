@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0207c60c(void* arg0, unsigned int arg1);
-extern "C" signed short func_0207c620(unsigned char* arg0, unsigned int arg1);
+extern "C" void* func_0207c60c(void* base, unsigned int index);
+extern "C" signed short func_0207c620(unsigned char* base, unsigned int index);
 
 // USA: func_0207c638
-extern "C" ARM short func_0207c638(void* arg0, unsigned int arg1) {
-    signed char* var0 = (signed char*)func_0207c60c(arg0, arg1);
-    short var1 = func_0207c620((unsigned char*)arg0, arg1);
-    short var2 = 0;
-    short var3;
-    for (var3 = 0; var3 < var1; var3++) {
-        if (var0[var3] > 0) var2++;
+extern "C" ARM short func_0207c638(void* base, unsigned int index) {
+    signed char* arr = (signed char*)func_0207c60c(base, index);
+    short count = func_0207c620((unsigned char*)base, index);
+    short result = 0;
+    short i;
+    for (i = 0; i < count; i++) {
+        if (arr[i] > 0) result++;
     }
-    return var2;
+    return result;
 }

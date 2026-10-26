@@ -3,10 +3,10 @@
 extern "C" void* func_ov023_021e2418(void*, int);
 
 struct Struct_ov023_021e24b0 {
-    char unknown_0_[3];
+    char pad0[3];
     unsigned char unknown_3_0_ : 4;
     unsigned char unknown_3_4_ : 4;
-    char unknown_4_[8];
+    char pad1[8];
     int unknown_c_;
     unsigned char unknown_10_0_ : 4;
     unsigned char unknown_10_4_ : 1;
@@ -16,14 +16,14 @@ struct Struct_ov023_021e24b0 {
 };
 
 // USA: func_ov023_021e24b0
-extern "C" ARM void func_ov023_021e24b0(void* arg0, int arg1, int arg2, unsigned char arg3, unsigned char arg4, unsigned char arg5, unsigned char arg6, unsigned char arg7, unsigned char arg8) {
-    Struct_ov023_021e24b0* var0 = (Struct_ov023_021e24b0*)func_ov023_021e2418(arg0, arg1);
-    if (!var0) return;
-    var0->unknown_c_ = arg2;
-    var0->unknown_3_0_ = arg3;
-    var0->unknown_3_4_ = arg4;
-    var0->unknown_10_4_ = arg5;
-    var0->unknown_10_0_ = arg6;
-    var0->unknown_10_5_ = arg7;
-    var0->unknown_10_6_ = arg8;
+extern "C" ARM void func_ov023_021e24b0(void* obj, int val, int f0xc, unsigned char arg3, unsigned char p5, unsigned char p6, unsigned char p7, unsigned char p8, unsigned char p9) {
+    Struct_ov023_021e24b0* e = (Struct_ov023_021e24b0*)func_ov023_021e2418(obj, val);
+    if (!e) return;
+    e->unknown_c_ = f0xc;
+    e->unknown_3_0_ = arg3;
+    e->unknown_3_4_ = p5;
+    e->unknown_10_4_ = p6;
+    e->unknown_10_0_ = p7;
+    e->unknown_10_5_ = p8;
+    e->unknown_10_6_ = p9;
 }

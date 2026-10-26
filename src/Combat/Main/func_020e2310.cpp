@@ -2,33 +2,33 @@
 #include "std_library_functions.h"
 
 struct Struct_020e12a8;
-extern "C" void func_020e12a8(struct Struct_020e12a8* arg0, short arg1, short arg2, short arg3, short arg4);
+extern "C" void func_020e12a8(struct Struct_020e12a8* dst, short a, short b, short c, short d);
 
-extern "C" int func_020420e8(int, unsigned char);
+extern "C" int Font_GetTextWidth(int, unsigned char);
 #if defined(jpn)
-extern "C" void func_0205b234(void*, short, short, int, unsigned char, unsigned char);
+extern "C" void GlyphDestination_DrawText(void*, short, short, int, unsigned char, unsigned char);
 #else
-extern "C" int func_0205b234(void*, short, short, int, unsigned char, unsigned char);
+extern "C" int GlyphDestination_DrawText(void*, short, short, int, unsigned char, unsigned char);
 #endif
 
 // USA: func_020e2310
-extern "C" ARM void func_020e2310(char* arg0, int arg1, int arg2, int arg3, int arg4, unsigned char arg5, unsigned char arg6)
+extern "C" ARM void func_020e2310(char* obj, int idx, int a2, int a3, int a4, unsigned char a5, unsigned char a6)
 {
-    if (arg1 >= 0 && arg1 < 3) {
+    if (idx >= 0 && idx < 3) {
         #if defined(jpn)
-        int var0 = strlen((char*)arg4);
-        int var1 = arg5;
-        int var2 = arg5;
+        int ret = strlen((char*)a4);
+        int advance = a5;
+        int height = a5;
 #else
-        int var0 = func_020420e8(arg4, arg6);
-        int var1 = 1;
-        int var2 = 0xc;
+        int ret = Font_GetTextWidth(a4, a6);
+        int advance = 1;
+        int height = 0xc;
 #endif
-        func_020e12a8((struct Struct_020e12a8*)(arg0 + 0xa + arg1 * 8), arg2, arg3, arg2 + var0 * var1, arg3 + var2);
+        func_020e12a8((struct Struct_020e12a8*)(obj + 0xa + idx * 8), a2, a3, a2 + ret * advance, a3 + height);
     }
-    if ((signed char)arg0[8] <= arg1) {
-        arg0[8] = arg1 + 1;
+    if ((signed char)obj[8] <= idx) {
+        obj[8] = idx + 1;
     }
-    void **var3 = *(void***)(arg0 + 4);
-    func_0205b234(var3[1], arg2, arg3, arg4, arg5, arg6);
+    void **p = *(void***)(obj + 4);
+    GlyphDestination_DrawText(p[1], a2, a3, a4, a5, a6);
 }

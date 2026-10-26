@@ -1,24 +1,24 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov031_0220a6bc(void* arg0);
+extern "C" void func_ov031_0220a6bc(void* self);
 
 // USA: func_ov031_0220a800
-extern "C" ARM int func_ov031_0220a800(char* arg0) {
-	char* var0 = *(char**)(arg0 + 0xc);
-	if (!(*(int*)(var0 + 0x824) != 0 && *(unsigned char*)(var0 + 0x456) != 0)) {
-		func_ov031_0220a6bc(arg0);
+extern "C" ARM int func_ov031_0220a800(char* self) {
+	char* ctx = *(char**)(self + 0xc);
+	if (!(*(int*)(ctx + 0x824) != 0 && *(unsigned char*)(ctx + 0x456) != 0)) {
+		func_ov031_0220a6bc(self);
 	}
-	int var1 = *(int*)(var0 + 0x824);
-	if (var1 != 0 && *(unsigned char*)(var0 + 0x456) != 0) {
-		return *(int*)(var0 + 0x828) - *(int*)(var0 + 0x82c);
+	int handle = *(int*)(ctx + 0x824);
+	if (handle != 0 && *(unsigned char*)(ctx + 0x456) != 0) {
+		return *(int*)(ctx + 0x828) - *(int*)(ctx + 0x82c);
 	}
-	if (var1 != 0) {
+	if (handle != 0) {
 		goto ret_zero;
 	}
-	if (*(unsigned char*)(arg0 + 8) != 4) {
+	if (*(unsigned char*)(self + 8) != 4) {
 		goto ret_neg1;
 	}
-	if (*(unsigned char*)(var0 + 0x455) != 9) {
+	if (*(unsigned char*)(ctx + 0x455) != 9) {
 		goto ret_zero;
 	}
 ret_neg1:

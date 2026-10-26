@@ -28,7 +28,7 @@ enum { Enum_ov003_021615bc_552 = 0x228, Enum_ov003_021615bc_200 = 0x464 - 0x39c,
 extern "C" void func_ov003_021602bc(void* self);
 extern "C" void func_ov003_021672e4(void* a, int b, int c);
 struct Struct205563c;
-void ClearSevenWords_0205563c(Struct205563c*);
+extern "C" void func_0205563c(Struct205563c*);
 extern "C" void GameObject_Initialize(void* a);
 extern "C" void WindowPane_Init(void* a);
 extern "C" void KeyTable_Load(void* a, void* b, void* c, unsigned int d);
@@ -40,35 +40,35 @@ extern "C" int func_0207f9f4(void* a);
 extern "C" void func_02081224(void* a, int b);
 extern "C" void* Scenario_GetInstance();
 struct BackgroundGraphics;
-void Background_Init(BackgroundGraphics*);
-void Background_SetMapSize(unsigned char*, int);
-void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
-void Background_SetScroll(BackgroundGraphics*, int, int);
-void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
+extern "C" void Background_Init(BackgroundGraphics*);
+extern "C" void Background_SetMapSize(unsigned char*, int);
+extern "C" void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
+extern "C" void Background_SetScroll(BackgroundGraphics*, int, int);
+extern "C" void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
 struct WindowPane;
-void WindowPane_AllocateBuffer(WindowPane*, SafeAllocator*, int, unsigned int);
+extern "C" void WindowPane_AllocateBuffer(WindowPane*, SafeAllocator*, int, unsigned int);
 struct PacRecord;
-int Pac_CountFiles(PacRecord*);
-void* Pac_GetFile(PacRecord*, int, void**, int*);
-struct Obj0207f914;
-void SetFieldsFromFormattedValue0207f914(Obj0207f914*, int, int, int);
-void* MessageSystem_GetInstance();
-void DispatchEntryOp0x8_0208108c(void* a, int b);
-void SetEntryValueAndFlag02081058(void* a, int b, int c);
-void SetSublistEntryField14LowBits_02080798(void* a, int b, int c);
+extern "C" int Pac_CountFiles(PacRecord*);
+extern "C" void* Pac_GetFile(PacRecord*, int, void**, int*);
+struct Struct_0207f914;
+extern "C" void func_0207f914(Struct_0207f914*, int, int, int);
+extern "C" void* MessageSystem_GetInstance();
+extern "C" void func_0208108c(void* a, int b);
+extern "C" void func_02081058(void* a, int b, int c);
+extern "C" void func_02080798(void* a, int b, int c);
 struct Struct0205a198;
-void Sprite_Init(Struct0205a198*);
+extern "C" void Sprite_Init(Struct0205a198*);
 struct ClearTarget0205a234;
-void ClearField0And40205a234(ClearTarget0205a234*);
-struct EntryManager020e2490;
-void InitEntryManager020e2490(EntryManager020e2490*, int, int, void*, SafeAllocator*, int, unsigned char);
-void Background_UploadMap(BackgroundGraphics*, void*);
-void WrapAddByteField0x22_0205aed0(void*, char*, unsigned int, int);
+extern "C" void func_0205a234(ClearTarget0205a234*);
+struct Struct_020e2490;
+extern "C" void func_020e2490(Struct_020e2490*, int, int, void*, SafeAllocator*, int, unsigned char);
+extern "C" void Background_UploadMap(BackgroundGraphics*, void*);
+extern "C" void func_0205aed0(void*, char*, unsigned int, int);
 struct Manager0207f7f0;
 struct Node0207f7f0;
-void InitNodeChain0207f7f0(Manager0207f7f0*, Node0207f7f0*, int);
-unsigned char CheckField0AndBattleState_02160b50(void* a);
-int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" void func_0207f7f0(Manager0207f7f0*, Node0207f7f0*, int);
+extern "C" unsigned char func_ov003_02160b50(void* a);
+extern "C" int Scenario_TestFlag(int, unsigned char*, int);
 extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
 extern "C" void ColorEffect_ConfigureAlphaBlend(unsigned int* out, unsigned char a, unsigned char b, unsigned char c, int d);
 
@@ -86,72 +86,72 @@ extern short data_ov003_0217f46c[];
 extern char data_ov003_0218008a[];
 
 struct Struct_ov003_021615bc {
-    char unknown_0_[0x28];
+    char pad[0x28];
 };
 
-struct Struct_ov003_021615bc_2 {
-    char unknown_0_[Enum_ov003_021615bc_2456];
+struct Global998 {
+    char pad[Enum_ov003_021615bc_2456];
     int unknown_998_;
-    char unknown_99c_[4];
+    char pad2[4];
     int unknown_9a0_;
 };
 
-struct Scene021615bc {
-    char pad0[kScenePrefix];
+struct Struct_ov003_021615bc_3 {
+    char pad0[Enum_ov003_021615bc_552];
     SafeAllocator a228;
     char pad1[0x264 - 0x228 - sizeof(SafeAllocator)];
     SafeAllocator a264;
     SafeAllocator a278;
-    SafeAllocator a28c;
+    SafeAllocator unknown_28c_;
     SafeAllocator a2a0;
     SafeAllocator a2b4;
-    SafeAllocator a2c8;
+    SafeAllocator unknown_2c8_;
     char x2dc[0x3c];
-    void* p318;
-    void* p31c;
+    void* unknown_318_;
+    void* unknown_31c_;
     void* p320;
-    Manager0207f7f0* p324;
+    Manager0207f7f0* unknown_324_;
     BackgroundGraphics* p328;
     Node0207f7f0* p32c;
     char pad2[4];
     char x334[0x3c];
-    void* p370;
-    void* p374;
+    void* unknown_370_;
+    void* unknown_374_;
     char pad3[0x380 - 0x378];
-    unsigned short h380;
-    char pad3b[2];
-    unsigned char b384;
+    unsigned short unknown_380_;
+    char unknown_382_[2];
+    unsigned char unknown_384_;
     char pad4[3];
-    Entry28* p388;
+    Struct_ov003_021615bc* p388;
     void* p38c;
-    void* p390;
-    void** p394;
+    void* unknown_390_;
+    void** unknown_394_;
     void* p398;
-    char pad5[kSceneExtraPadding];
-    unsigned int flags464;
+    char pad5[Enum_ov003_021615bc_200];
+    unsigned int unknown_464_;
     char pad6[4];
     int taskId;
-    char pad7[0xc];
-    short jpHiraganaEntry;
-    short jpKatakanaEntry;
-    short h480;
-    short h482;
-    short h484;
-    short h486;
+    char unknown_470_[0xc];
+    short unknown_47c_;
+    short unknown_47e_;
+    short unknown_480_;
+    short unknown_482_;
+    short unknown_484_;
+    short unknown_486_;
     char pad8[0x49e - 0x488];
-    unsigned char b49e;
-    char pad9[2];
-    unsigned char b4a1;
+    unsigned char unknown_49e_;
+    char unknown_49f_[2];
+    unsigned char unknown_4a1_;
     char pad10;
-    unsigned char b4a3;
+    unsigned char unknown_4a3_;
     unsigned char step;
-    unsigned char b4a5;
-    char pad11;
-    unsigned char b4a7;
+    unsigned char unknown_4a5_;
+    char unknown_4a6_;
+    unsigned char unknown_4a7_;
 };
 
 // USA: func_ov003_021615bc
-extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
+extern "C" ARM void func_ov003_021615bc(Struct_ov003_021615bc_3* self) {
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     BackgroundGraphics* l;
     int i;
@@ -159,38 +159,38 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
     int k;
     if (self->step == 0) {
         self->a228.Reset();
-        self->p318 = self->a228.Allocate(kFirstAllocation);
-        self->p31c = self->a228.Allocate(0x1c);
+        self->unknown_318_ = self->a228.Allocate(Enum_ov003_021615bc_120);
+        self->unknown_31c_ = self->a228.Allocate(0x1c);
         self->p320 = self->a228.Allocate(0x130);
-        self->p324 = (Manager0207f7f0*)self->a228.Allocate(kManagerAllocation);
+        self->unknown_324_ = (Manager0207f7f0*)self->a228.Allocate(Enum_ov003_021615bc_64);
         self->p328 = (BackgroundGraphics*)self->a228.Allocate(0x60);
         self->p32c = (Node0207f7f0*)self->a228.Allocate(0x380);
-        self->p394 = (void**)self->a228.Allocate(0x10);
+        self->unknown_394_ = (void**)self->a228.Allocate(0x10);
         func_ov003_021602bc(self);
-        func_ov003_021672e4(self->p318, 0, -1);
-        ClearSevenWords_0205563c((Struct205563c*)self->p31c);
+        func_ov003_021672e4(self->unknown_318_, 0, -1);
+        func_0205563c((Struct205563c*)self->unknown_31c_);
         GameObject_Initialize(self->p320);
-        func_0207f84c(self->p324);
+        func_0207f84c(self->unknown_324_);
         for (int i = 0; i < 3; i++) {
             Background_Init((BackgroundGraphics*)(self->p328 + i));
         }
         for (int i = 0; i < 4; i++) {
             WindowPane_Init(self->p32c + i);
         }
-        if (arg0->unknown_464_ & 0x10000) {
+        if (self->unknown_464_ & 0x10000) {
 #if defined(jpn)
-            arg0->unknown_46c_ = var0->QueueLoadFile(data_ov003_0217e7e0, NULL);
+            self->taskId = loader->QueueLoadFile(data_ov003_0217e7e0, NULL);
 #else
-            arg0->unknown_46c_ = var0->QueueLoadFileInGP2(data_ov003_0217fff0, data_ov003_0218000a, NULL);
+            self->taskId = loader->QueueLoadFileInGP2(data_ov003_0217fff0, data_ov003_0218000a, NULL);
 #endif
         } else {
 #if defined(jpn)
-            arg0->unknown_46c_ = var0->QueueLoadFile(data_ov003_0217e7fa, NULL);
+            self->taskId = loader->QueueLoadFile(data_ov003_0217e7fa, NULL);
 #else
-            arg0->unknown_46c_ = var0->QueueLoadFileInGP2(data_ov003_0218001b, data_ov003_02180035, NULL);
+            self->taskId = loader->QueueLoadFileInGP2(data_ov003_0218001b, data_ov003_02180035, NULL);
 #endif
         }
-        arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
+        self->step = self->step + 1;
     }
     if (self->step == 1) {
         if (loader->GetTaskStatus(self->taskId) != 0) {
@@ -224,11 +224,11 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
         BG3CNT = (BG3CNT & 0x43) | 0x1d08;
         ColorEffect_ConfigureAlphaBlend((unsigned int*)0x4000050, 2, 9, 0xa, 6);
 #if defined(jpn)
-            arg0->unknown_46c_ = var0->QueueLoadFile(data_ov003_0217e814, NULL);
+            self->taskId = loader->QueueLoadFile(data_ov003_0217e814, NULL);
 #else
-        arg0->unknown_46c_ = var0->QueueLoadFileInGP2(data_ov003_02180046, data_ov003_0218005a, NULL);
+        self->taskId = loader->QueueLoadFileInGP2(data_ov003_02180046, data_ov003_0218005a, NULL);
 #endif
-        arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
+        self->step = self->step + 1;
     }
     if (self->step == 3) {
         if (loader->GetTaskStatus(self->taskId) != 0) {
@@ -267,79 +267,79 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
                 WindowPane_AllocateBuffer((WindowPane*)o, (SafeAllocator*)&self->a278, (int)self->p398, 0x400);
                 o->lists = self->p328 + 1;
             }
-            arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
+            self->step = self->step + 1;
         }
     }
-    if (arg0->unknown_4a4_ == 4) {
-        arg0->unknown_28c_.Reset();
+    if (self->step == 4) {
+        self->unknown_28c_.Reset();
 #if defined(jpn)
-        func_02080654(arg0->unknown_324_, &arg0->unknown_28c_, data_ov003_0217e82a);
+        func_02080654(self->unknown_324_, &self->unknown_28c_, data_ov003_0217e82a);
 #else
-        func_0207f914((Struct_0207f914*)arg0->unknown_324_, (int)&arg0->unknown_28c_, (int)data_ov003_0218006a, (int)data_ov003_02180083);
+        func_0207f914((Struct_0207f914*)self->unknown_324_, (int)&self->unknown_28c_, (int)data_ov003_0218006a, (int)data_ov003_02180083);
 #endif
-        arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
+        self->step = self->step + 1;
     }
-    if (arg0->unknown_4a4_ == 5) {
-        int var21 = func_0207f9f4(arg0->unknown_324_);
-        if (var21 == 0) {
-            arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
+    if (self->step == 5) {
+        int r = func_0207f9f4(self->unknown_324_);
+        if (r == 0) {
+            self->step = self->step + 1;
         }
-        if (var21 < 0) {
-            arg0->unknown_4a3_ = 0x10;
+        if (r < 0) {
+            self->unknown_4a3_ = 0x10;
         }
     }
-    if (arg0->unknown_4a4_ == 6) {
+    if (self->step == 6) {
 #if defined(jpn)
-        Struct_0207f7f0* var22 = arg0->unknown_324_;
-        var22->unknown_3b_ = 0x12;
-        var22->unknown_3c_ = 0x10;
+        Manager0207f7f0* m = self->unknown_324_;
+        m->unknown_3b_ = 0x12;
+        m->field3c = 0x10;
 #endif
-        if (self->flags464 & 0x20000) {
+        if (self->unknown_464_ & 0x20000) {
             Global998* g = (Global998*)MessageSystem_GetInstance();
-            if (g->f998 != 0 && g->f9a0 != 3) {
+            if (g->unknown_998_ != 0 && g->unknown_9a0_ != 3) {
                 return;
             }
-            arg0->unknown_464_ &= ~0x20000;
+            self->unknown_464_ &= ~0x20000;
         }
 #if !defined(jpn)
-        Struct_0207f7f0* var24 = arg0->unknown_324_;
-        var24->unknown_3b_ = 0x12;
-        var24->unknown_3c_ = 0x10;
-        func_0208108c(var24, 0);
-        func_0208108c(var24, 1);
-        short* var25 = data_ov003_0217f46c;
+        Manager0207f7f0* m = self->unknown_324_;
+        m->unknown_3b_ = 0x12;
+        m->field3c = 0x10;
+        func_0208108c(m, 0);
+        func_0208108c(m, 1);
+        short* p = data_ov003_0217f46c;
         for (;;) {
-            if (*var25 < 0) {
+            if (*p < 0) {
                 break;
             }
-            func_02081058(var24, *var25, 0x90);
-            var25++;
+            func_02081058(m, *p, 0x90);
+            p++;
         }
-        func_02081058(var24, 0xc1, 0x9c);
-        func_02081058(var24, 0xc2, 0x9c);
-        func_02081058(var24, 0xc3, 0x9c);
-        short var26 = 0x64;
-        for (int var27 = 0; var27 < 8; var27++) {
-            func_02080798(var24, var26, 1);
-            var26++;
+        func_02081058(m, 0xc1, 0x9c);
+        func_02081058(m, 0xc2, 0x9c);
+        func_02081058(m, 0xc3, 0x9c);
+        short id = 0x64;
+        for (int i = 0; i < 8; i++) {
+            func_02080798(m, id, 1);
+            id++;
         }
 #endif
         self->a2a0.Reset();
-        self->p388 = (Entry28*)self->a2a0.Allocate(0x3e8);
+        self->p388 = (Struct_ov003_021615bc*)self->a2a0.Allocate(0x3e8);
         self->p38c = self->a2a0.Allocate(8);
         for (int i = 0; i < 0x19; i++) {
             Sprite_Init((Struct0205a198*)(self->p388 + i));
         }
-        func_0205a234((Struct_02043368*)arg0->unknown_38c_);
-        arg0->unknown_384_ = 0;
-        arg0->unknown_374_ = arg0->unknown_388_;
-        arg0->unknown_380_ = 0x19;
-        arg0->unknown_370_ = arg0->unknown_38c_;
-        arg0->unknown_2c8_.Reset();
-        arg0->unknown_390_ = arg0->unknown_2c8_.Allocate(0x24);
-        func_020e2490((Struct_020e2490*)arg0->unknown_390_, 0, 1, arg0->unknown_38c_, &arg0->unknown_2c8_, Enum_ov003_021615bc_4, 0x40);
-        arg0->unknown_46c_ = var0->QueueLoadFile(data_ov003_0218008a, NULL);
-        arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
+        func_0205a234((ClearTarget0205a234*)self->p38c);
+        self->unknown_384_ = 0;
+        self->unknown_374_ = self->p388;
+        self->unknown_380_ = 0x19;
+        self->unknown_370_ = self->p38c;
+        self->unknown_2c8_.Reset();
+        self->unknown_390_ = self->unknown_2c8_.Allocate(0x24);
+        func_020e2490((Struct_020e2490*)self->unknown_390_, 0, 1, self->p38c, &self->unknown_2c8_, Enum_ov003_021615bc_4, 0x40);
+        self->taskId = loader->QueueLoadFile(data_ov003_0218008a, NULL);
+        self->step = self->step + 1;
     }
     if (self->step == 7) {
         if (loader->GetTaskStatus(self->taskId) != 0) {
@@ -353,17 +353,17 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
                 void* rec = Pac_GetFile((PacRecord*)data, i, &out, &idx);
                 SpriteContext_LoadFile(self->x334, rec, idx, &self->a2a0);
             }
-            func_0205aed0(arg0->unknown_334_, (char*)arg0->unknown_388_, 0x19, 0x40);
-            var0->RemoveTask(arg0->unknown_46c_);
-            arg0->unknown_46c_ = -1;
-            arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
+            func_0205aed0(self->x334, (char*)self->p388, 0x19, 0x40);
+            loader->RemoveTask(self->taskId);
+            self->taskId = -1;
+            self->step = self->step + 1;
         }
     }
-    if (arg0->unknown_4a4_ == 8) {
-        Struct_0207f7f0* var36 = arg0->unknown_324_;
+    if (self->step == 8) {
+        Manager0207f7f0* m = self->unknown_324_;
 #if defined(jpn)
-        arg0->unknown_47c_ = func_02081b80(var36, data_ov003_0217e862);
-        arg0->unknown_47e_ = func_02081b80(var36, data_ov003_0217e865);
+        self->unknown_47c_ = func_02081b80(m, data_ov003_0217e862);
+        self->unknown_47e_ = func_02081b80(m, data_ov003_0217e865);
 #endif
         BG0CNT = (BG0CNT & ~3) | 3;
         BG1CNT = (BG1CNT & ~3) | 1;
@@ -371,74 +371,74 @@ extern "C" ARM void func_ov003_021615bc(Scene021615bc* self) {
         BG3CNT = (BG3CNT & ~3) | 2;
         DISPCNT = (DISPCNT & ~0x1f00) | 0x1f00;
         ColorEffect_ConfigureAlphaBlend((unsigned int*)0x4000050, 2, 9, 0xa, 6);
-        var36->unknown_2c_ = arg0->unknown_328_;
-        var36->unknown_38_ = 2;
-        func_0207f7f0(var36, arg0->unknown_32c_, 4);
-        var36->unknown_3a_ = 2;
+        m->lists = self->p328;
+        m->mode = 2;
+        func_0207f7f0(m, self->p32c, 4);
+        m->active = 2;
 #if !defined(jpn)
-        func_02081224(var36, 0x19);
-        func_02081224(var36, 0x1a);
-        func_02081224(var36, 0x1b);
-        arg0->unknown_49e_ = func_ov003_02160b50(arg0);
+        func_02081224(m, 0x19);
+        func_02081224(m, 0x1a);
+        func_02081224(m, 0x1b);
+        self->unknown_49e_ = func_ov003_02160b50(self);
 #endif
         char* save = (char*)Scenario_GetInstance();
-        if (self->flags464 & 0x10000) {
-            self->b4a3 = 0xa;
+        if (self->unknown_464_ & 0x10000) {
+            self->unknown_4a3_ = 0xa;
             self->step = 0;
-        } else if (self->b4a1 == 1) {
-            self->b4a3 = 4;
+        } else if (self->unknown_4a1_ == 1) {
+            self->unknown_4a3_ = 4;
             self->step = 2;
-        } else if (self->b4a1 == 2) {
-            self->b4a3 = 4;
+        } else if (self->unknown_4a1_ == 2) {
+            self->unknown_4a3_ = 4;
             self->step = 0;
-        } else if (self->b4a1 == 3) {
-            self->h484 = 0x50;
-            self->h486 = 2;
+        } else if (self->unknown_4a1_ == 3) {
+            self->unknown_484_ = 0x50;
+            self->unknown_486_ = 2;
             self->step = 0;
-            self->b4a5 = 0;
-            self->b4a3 = 1;
-            self->flags464 |= 0x10;
+            self->unknown_4a5_ = 0;
+            self->unknown_4a3_ = 1;
+            self->unknown_464_ |= 0x10;
             char* g = (char*)GetGameResources();
-            self->h482 = *(unsigned char*)(*(char**)(g + 0x3000 + kResourceSlot) + kResourceByte);
-        } else if (self->b4a1 == 4) {
-            self->h484 = 0xd;
-            self->h486 = 2;
+            self->unknown_482_ = *(unsigned char*)(*(char**)(g + 0x3000 + Enum_ov003_021615bc_1844) + Enum_ov003_021615bc_205);
+        } else if (self->unknown_4a1_ == 4) {
+            self->unknown_484_ = 0xd;
+            self->unknown_486_ = 2;
             self->step = 0;
-            self->b4a5 = 0;
-            self->b4a3 = 1;
-            self->flags464 |= 8;
+            self->unknown_4a5_ = 0;
+            self->unknown_4a3_ = 1;
+            self->unknown_464_ |= 8;
         } else {
 #if defined(jpn)
-            arg0->unknown_49e_ = func_ov003_02160b50(arg0);
+            self->unknown_49e_ = func_ov003_02160b50(self);
 #endif
-            if (arg0->unknown_49e_ != 0 && arg0->unknown_49e_ != 1) {
-                if (arg0->unknown_49e_ == 2) {
-                    var3 = 3;
+            if (self->unknown_49e_ != 0 && self->unknown_49e_ != 1) {
+                if (self->unknown_49e_ == 2) {
+                    x = 3;
                 }
             } else {
-                var3 = 0;
+                x = 0;
             }
-            arg0->unknown_484_ = var3;
-            arg0->unknown_486_ = -1;
-            int var39 = 1;
-            GameObject* var40 = GameState::GetInstance()->GetProtagonist();
-            if (var40 != NULL && (**(unsigned int**)((char*)var40 + 0x130) & 1)) {
-                arg0->unknown_484_ = 3;
-                arg0->unknown_486_ = -1;
-                var39 = 0;
+            self->unknown_484_ = x;
+            self->unknown_486_ = -1;
+            int flag = 1;
+            GameObject* prot = GameState::GetInstance()->GetProtagonist();
+            if (prot != NULL && (**(unsigned int**)((char*)prot + 0x130) & 1)) {
+                self->unknown_484_ = 3;
+                self->unknown_486_ = -1;
+                flag = 0;
             }
-            if (flag != 0 && self->b49e != 2) {
+            if (flag != 0 && self->unknown_49e_ != 2) {
                 if (Scenario_TestFlag((int)save, (unsigned char*)(save + 0x8c), 0x77e) == 0) {
                     Scenario_SetFlag(save, (unsigned char*)(save + 0x8c), 0x77e, 1);
-                    self->h484 = 0x4b;
-                    self->h486 = x;
+                    self->unknown_484_ = 0x4b;
+                    self->unknown_486_ = x;
                 }
             }
-            arg0->unknown_4a3_ = 1;
-            arg0->unknown_4a4_ = 0;
-            arg0->unknown_4a5_ = 0;
+            self->unknown_4a3_ = 1;
+            self->step = 0;
+            self->unknown_4a5_ = 0;
         }
-        arg0->unknown_464_ |= 0x1000;
-        arg0->unknown_4a7_ = 0;
+        self->unknown_464_ |= 0x1000;
+        self->unknown_4a7_ = 0;
     }
 }

@@ -6,21 +6,21 @@ enum { Enum_ov000_02167dd8_672 = 0x2a0, Enum_ov000_02167dd8_2385 = 0x951 };
 #endif
 #include "GameState/GameState.h"
 
-extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
+extern "C" int func_020a35e0(unsigned char* obj, unsigned char index);
 extern "C" void func_02049e00(void);
 
 // USA: func_ov000_02167dd8
-extern "C" ARM void func_ov000_02167dd8(unsigned char* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    for (int var1 = 0; var1 < 4; var1++) {
-        if (func_020a35e0(*(unsigned char**)(arg0 + Enum_ov000_02167dd8_672), var1)) {
-            if (var0->GetCombatantByIndex(var1)) func_02049e00();
+extern "C" ARM void func_ov000_02167dd8(unsigned char* obj) {
+    GameState* battle = GameState::GetInstance();
+    for (int i = 0; i < 4; i++) {
+        if (func_020a35e0(*(unsigned char**)(obj + Enum_ov000_02167dd8_672), i)) {
+            if (battle->GetCombatantByIndex(i)) func_02049e00();
         }
     }
-    for (int var2 = 0xc0; var2 < 0xc8; var2++) {
-        if (var0->GetCombatantByIndex(var2)) func_02049e00();
+    for (int i = 0xc0; i < 0xc8; i++) {
+        if (battle->GetCombatantByIndex(i)) func_02049e00();
     }
-    unsigned char var3 = *(unsigned char*)(arg0 + 0x5000 + Enum_ov000_02167dd8_2385);
-    var3 = (var3 & ~3) | 2;
-    *(unsigned char*)(arg0 + 0x5000 + Enum_ov000_02167dd8_2385) = var3;
+    unsigned char b = *(unsigned char*)(obj + 0x5000 + Enum_ov000_02167dd8_2385);
+    b = (b & ~3) | 2;
+    *(unsigned char*)(obj + 0x5000 + Enum_ov000_02167dd8_2385) = b;
 }

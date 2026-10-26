@@ -1,88 +1,88 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_0222fc48 {
-	unsigned char unknown_0_[4];
-	unsigned char unknown_4_;
-	unsigned char unknown_5_;
-	unsigned char unknown_6_;
+	unsigned char pad0[4];
+	unsigned char field4;
+	unsigned char field5;
+	unsigned char field6;
 	unsigned char unknown_7_;
 };
 
 struct Struct_ov031_02290ca0_10 {
-	unsigned char unknown_0_[8];
-	struct Struct_ov031_0222fc48* unknown_8_;
+	unsigned char pad0[8];
+	struct Struct_ov031_0222fc48* field8;
 };
 
 extern struct Struct_ov031_02290ca0_10 data_ov031_02290ca0;
 
 extern "C" char* func_ov031_02235c70(void);
-extern "C" int func_ov031_0222fd9c(int arg0);
-extern "C" void func_ov031_0222fe30(int arg0, int arg1, int arg2);
+extern "C" int func_ov031_0222fd9c(int idx);
+extern "C" void func_ov031_0222fe30(int a, int b, int c);
 
 // USA: func_ov031_0222fc48
-extern "C" ARM void func_ov031_0222fc48(int arg0, int arg1) {
-	unsigned char* var0 = (unsigned char*)func_ov031_02235c70();
-	int var1;
-	int var2;
+extern "C" ARM void func_ov031_0222fc48(int idx, int arg) {
+	unsigned char* obj = (unsigned char*)func_ov031_02235c70();
+	int mode;
+	int flag;
 
-	switch (arg0) {
+	switch (idx) {
 	case 0:
 	case 1:
-		var1 = 0;
-		var2 = var1;
-		if (func_ov031_0222fd9c(var1) == 0) var2 = 2;
+		mode = 0;
+		flag = mode;
+		if (func_ov031_0222fd9c(mode) == 0) flag = 2;
 		break;
 	case 2: {
-		int var3 = 0;
-		int var4;
-		var2 = var3;
-		if (var0[0xf5] != 0) {
-			var1 = 1;
-			var4 = 4;
+		int second = 0;
+		int code;
+		flag = second;
+		if (obj[0xf5] != 0) {
+			mode = 1;
+			code = 4;
 		} else {
-			var1 = 2;
-			var4 = 3;
+			mode = 2;
+			code = 3;
 		}
-		struct Struct_ov031_0222fc48* var5 = data_ov031_02290ca0.unknown_8_;
-		if (var5->unknown_4_ != 0) var2 = 1;
-		if (var5->unknown_5_ != 0) var3 = 1;
-		func_ov031_0222fe30(var4, var3, arg1);
+		struct Struct_ov031_0222fc48* layer = data_ov031_02290ca0.field8;
+		if (layer->field4 != 0) flag = 1;
+		if (layer->field5 != 0) second = 1;
+		func_ov031_0222fe30(code, second, arg);
 		break;
 	}
 	case 3:
 	case 4:
 	case 5:
-		var1 = 0;
-		var2 = var0[0xf5] != 0 ? 2 : var1;
+		mode = 0;
+		flag = obj[0xf5] != 0 ? 2 : mode;
 		break;
 	case 6: {
-		int var6;
-		int var7 = 0;
-		var2 = var7;
-		if (var0[0xf6] != 0) {
-			var1 = 1;
-			var6 = 4;
+		int first;
+		int second = 0;
+		flag = second;
+		if (obj[0xf6] != 0) {
+			mode = 1;
+			first = 4;
 		} else {
-			if (var0[0xf5] == 0) var2 = 2;
-			var1 = 2;
-			var6 = 3;
+			if (obj[0xf5] == 0) flag = 2;
+			mode = 2;
+			first = 3;
 		}
-		struct Struct_ov031_0222fc48* var8 = data_ov031_02290ca0.unknown_8_;
-		if (var8->unknown_6_ != 0) var2 = 1;
-		if (var8->unknown_7_ != 0) var7 = 1;
-		func_ov031_0222fe30(var6, var7, arg1);
+		struct Struct_ov031_0222fc48* layer = data_ov031_02290ca0.field8;
+		if (layer->field6 != 0) flag = 1;
+		if (layer->unknown_7_ != 0) second = 1;
+		func_ov031_0222fe30(first, second, arg);
 		break;
 	}
 	case 7:
 	case 8:
-		var1 = 0;
-		var2 = var0[0xf6] != 0 ? 2 : var1;
+		mode = 0;
+		flag = obj[0xf6] != 0 ? 2 : mode;
 		break;
 	default:
-		var1 = 0;
-		var2 = 2;
+		mode = 0;
+		flag = 2;
 		break;
 	}
 
-	func_ov031_0222fe30(var1, var2, arg1);
+	func_ov031_0222fe30(mode, flag, arg);
 }

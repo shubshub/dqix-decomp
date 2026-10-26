@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-union Struct_ov017_021d60f4 { int unknown_0_; float unknown1_0_; };
-struct Struct_ov001_0215f344 { int unknown_0_; Struct_ov017_021d60f4 unknown_4_; };
+union Struct_ov017_021d60f4 { int i; float f; };
+struct Struct_ov001_0215f344 { int type; Struct_ov017_021d60f4 value; };
 
 // USA: func_ov017_021d60f4
-extern "C" ARM int func_ov017_021d60f4(Struct_ov001_0215f344 *arg0) {
-	if (arg0->unknown_0_ != 1) {
-		return arg0->unknown_4_.unknown_0_;
+extern "C" ARM int func_ov017_021d60f4(Struct_ov001_0215f344 *a) {
+	if (a->type != 1) {
+		return a->value.i;
 	}
-	return (int)arg0->unknown_4_.unknown1_0_;
+	return (int)a->value.f;
 }

@@ -1,37 +1,37 @@
 #include <globaldefs.h>
 
-extern "C" void* func_ov017_021b8478(void* arg0);
-extern "C" unsigned short func_ov017_021b8480(void* arg0);
-extern "C" void func_ov017_021cbf18(unsigned char arg0, unsigned short arg1);
+extern "C" void* func_ov017_021b8478(void* obj);
+extern "C" unsigned short func_ov017_021b8480(void* obj);
+extern "C" void func_ov017_021cbf18(unsigned char a, unsigned short b);
 
 struct Struct_ov017_021cbf54 {
-	unsigned char unknown_0_[8];
-	unsigned short unknown_8_;
+	unsigned char pad0[8];
+	unsigned short field8;
 };
 
 struct Struct_ov017_021cbf54_2 {
-	unsigned char unknown_0_[4];
-	unsigned char unknown_4_;
-	unsigned char unknown_5_;
-	unsigned short unknown_6_;
+	unsigned char pad0[4];
+	unsigned char field4;
+	unsigned char pad1;
+	unsigned short field6;
 };
 
 // USA: func_ov017_021cbf54
-extern "C" ARM void func_ov017_021cbf54(int arg0, Struct_ov017_021cbf54_2* arg1, int arg2, unsigned char* arg3) {
+extern "C" ARM void func_ov017_021cbf54(int unused0, Struct_ov017_021cbf54_2* src, int arg2, unsigned char* obj) {
 #if defined(jpn)
- enum {Enum_ov017_021cbf54_1816=0x508};
+ enum {regionalOffset0=0x508};
 #else
- enum {Enum_ov017_021cbf54_1816=0x718};
+ enum {regionalOffset0=0x718};
 #endif
-	unsigned char* var0 = *(unsigned char**)(arg3 + 0x3000 + Enum_ov017_021cbf54_1816);
-	Struct_ov017_021cbf54* var1 = (Struct_ov017_021cbf54*)func_ov017_021b8478(var0);
-	if (var1->unknown_8_ != arg1->unknown_6_) return;
-	if (arg1->unknown_4_ == 0) {
-		if (func_ov017_021b8480(var0) == 2) return;
-		func_ov017_021cbf18(1, arg1->unknown_6_);
+	unsigned char* h = *(unsigned char**)(obj + 0x3000 + regionalOffset0);
+	Struct_ov017_021cbf54* r = (Struct_ov017_021cbf54*)func_ov017_021b8478(h);
+	if (r->field8 != src->field6) return;
+	if (src->field4 == 0) {
+		if (func_ov017_021b8480(h) == 2) return;
+		func_ov017_021cbf18(1, src->field6);
 	} else {
-		if (arg1->unknown_4_ == 1) {
-			*(unsigned char*)(var0 + 0x6c7) = 2;
+		if (src->field4 == 1) {
+			*(unsigned char*)(h + 0x6c7) = 2;
 		}
 	}
 }

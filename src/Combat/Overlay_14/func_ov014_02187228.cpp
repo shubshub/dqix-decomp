@@ -1,30 +1,30 @@
 #include <globaldefs.h>
 
-struct Struct_ov014_02187228 { Struct_ov014_02187228* unknown_0_; };
+struct Struct_ov014_02187228 { Struct_ov014_02187228* next; };
 
-extern "C" int func_02080468(void* arg0, int arg1);
+extern "C" int func_02080468(void* a, int b);
 
 // USA: func_ov014_02187228
-extern "C" ARM void func_ov014_02187228(char* arg0, Struct_ov014_02187228* arg1) {
-    *(Struct_ov014_02187228**)(arg0 + 0xbc) = *(Struct_ov014_02187228**)(arg0 + 0xb8);
-    *(short*)(arg0 + 0x176) = 0x1b;
-    void* var0 = *(void**)(arg0 + 0xc0);
-    if (var0 != 0) {
-        *(short*)(arg0 + 0x176) = (short)func_02080468(var0, 5);
+extern "C" ARM void func_ov014_02187228(char* obj, Struct_ov014_02187228* target) {
+    *(Struct_ov014_02187228**)(obj + 0xbc) = *(Struct_ov014_02187228**)(obj + 0xb8);
+    *(short*)(obj + 0x176) = 0x1b;
+    void* src = *(void**)(obj + 0xc0);
+    if (src != 0) {
+        *(short*)(obj + 0x176) = (short)func_02080468(src, 5);
     }
-    if (arg1 == 0) return;
+    if (target == 0) return;
 
-    Struct_ov014_02187228* var1 = *(Struct_ov014_02187228**)(arg0 + 0xb8);
-    Struct_ov014_02187228* var2 = var1;
-    short var3 = 0;
-    Struct_ov014_02187228* var4 = *(Struct_ov014_02187228**)(arg0 + 0xb8);
-    while (var1 != 0) {
-        if (var3 % 16 == 0) { var2 = var1; var3 = 0; }
-        if (var1 == arg1) break;
-        var3 = (short)(var3 + 1);
-        var1 = var1->unknown_0_;
+    Struct_ov014_02187228* node = *(Struct_ov014_02187228**)(obj + 0xb8);
+    Struct_ov014_02187228* var2 = node;
+    short idx = 0;
+    Struct_ov014_02187228* head = *(Struct_ov014_02187228**)(obj + 0xb8);
+    while (node != 0) {
+        if (idx % 16 == 0) { var2 = node; idx = 0; }
+        if (node == target) break;
+        idx = (short)(idx + 1);
+        node = node->next;
     }
-    if (var1 == 0) { var3 = 0; var2 = var4; }
-    *(short*)(arg0 + 0x176) = *(short*)(arg0 + 0x176) + var3;
-    *(Struct_ov014_02187228**)(arg0 + 0xbc) = var2;
+    if (node == 0) { idx = 0; var2 = head; }
+    *(short*)(obj + 0x176) = *(short*)(obj + 0x176) + idx;
+    *(Struct_ov014_02187228**)(obj + 0xbc) = var2;
 }

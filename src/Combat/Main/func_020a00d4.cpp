@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 struct Struct_020a00d4 {
-    char unknown_0_[0x10];
-    unsigned int unknown_10_0_ : 16;
-    unsigned int unknown_12_0_ : 16;
+    char pad[0x10];
+    unsigned int val : 16;
+    unsigned int hi : 16;
 };
 
 // USA: func_020a00d4
-extern "C" ARM void func_020a00d4(struct Struct_020a00d4* arg0, unsigned int arg1) {
-    unsigned int var0 = arg0->unknown_10_0_ + arg1;
-    if (var0 > 0xffff) {
-        var0 = 0xffff;
+extern "C" ARM void func_020a00d4(struct Struct_020a00d4* p, unsigned int amount) {
+    unsigned int v = p->val + amount;
+    if (v > 0xffff) {
+        v = 0xffff;
     }
-    arg0->unknown_10_0_ = var0;
+    p->val = v;
 }

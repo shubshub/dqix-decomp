@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 struct Struct_020a0858 {
-    char unknown_0_[0x48];
-    unsigned int unknown_48_;
+    char pad[0x48];
+    unsigned int value;
 };
 
 // USA: func_020a0858
-extern "C" ARM void func_020a0858(struct Struct_020a0858* arg0, unsigned int arg1) {
-    unsigned int var0 = arg0->unknown_48_;
-    unsigned int var1 = arg1 + var0;
-    if (var1 < var0) {
-        var1 = 0xffffffff;
+extern "C" ARM void func_020a0858(struct Struct_020a0858* p, unsigned int amount) {
+    unsigned int old = p->value;
+    unsigned int sum = amount + old;
+    if (sum < old) {
+        sum = 0xffffffff;
     }
-    arg0->unknown_48_ = var1;
+    p->value = sum;
 }

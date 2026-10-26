@@ -9,33 +9,33 @@
 #include "std_library_functions.h"
 #include "Memory/SafeAllocator.h"
 
-extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
+extern "C" void* func_ov011_021845f8(void* a, int b);
 extern "C" void* func_ov011_021849c8(void*);
 struct Struct_ov004_0216b120;
-extern "C" int func_ov023_021fc408(struct Struct_ov004_0216b120* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9);
+extern "C" int func_ov023_021fc408(struct Struct_ov004_0216b120* obj, int unused, int b, int c, int p5, int p6, int p7, int p8, int p9, int p10);
 
 struct Struct_ov004_0215c30c;
 struct Struct_ov004_0215c30c_2;
-extern "C" void func_ov023_021f67ac(struct Struct_ov004_0215c30c* arg0, struct Struct_ov004_0215c30c_2* arg1);
+extern "C" void func_ov023_021f67ac(struct Struct_ov004_0215c30c* head, struct Struct_ov004_0215c30c_2* node);
 
 extern char data_ov023_021ff4b0;
 
-struct Struct_ov004_0216b120_2 { void* unknown_0_; char unknown_4_[0x30 - 4]; };
+struct Struct_ov004_0216b120_2 { void* magic; char pad[0x30 - 4]; };
 
 // USA: func_ov004_0216b120
-extern "C" ARM void func_ov004_0216b120(void* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
-    void* var0 = func_ov011_021845f8(arg0, arg2);
-    void* var1 = ((SafeAllocator*)((char*)var0 + 4))->Allocate(0x30);
-    if (!var1) {
+extern "C" ARM void func_ov004_0216b120(void* p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+    void* base = func_ov011_021845f8(p0, p2);
+    void* buf = ((SafeAllocator*)((char*)base + 4))->Allocate(0x30);
+    if (!buf) {
         return;
     }
 
-    struct Struct_ov004_0216b120_2 var2;
-    var2.unknown_0_ = &data_ov023_021ff4b0;
-    memcpy(var1, &var2, sizeof(Struct_ov004_0216b120_2));
+    struct Struct_ov004_0216b120_2 local;
+    local.magic = &data_ov023_021ff4b0;
+    memcpy(buf, &local, sizeof(Struct_ov004_0216b120_2));
 
-    func_ov023_021fc408((struct Struct_ov004_0216b120*)var1, (int)arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, 0xf);
+    func_ov023_021fc408((struct Struct_ov004_0216b120*)buf, (int)p0, p1, p2, p3, p4, p5, p6, p7, 0xf);
 
-    void* var3 = func_ov011_021849c8(arg0);
-    func_ov023_021f67ac((struct Struct_ov004_0215c30c*)var3, (struct Struct_ov004_0215c30c_2*)var1);
+    void* list = func_ov011_021849c8(p0);
+    func_ov023_021f67ac((struct Struct_ov004_0215c30c*)list, (struct Struct_ov004_0215c30c_2*)buf);
 }

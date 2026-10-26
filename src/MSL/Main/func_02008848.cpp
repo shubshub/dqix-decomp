@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-extern "C" double func_02008f3c(double arg0);
+extern "C" double func_02008f3c(double x);
 
 static const double data_020e6cc4[] = {
     2.26987774529616870924e-17,
@@ -19,15 +19,15 @@ static const double data_020e6ce4[] = {
 extern const double data_020e6d04[];
 
 // USA: func_02008848
-extern "C" ARM double func_02008848(double arg0) {
-    double var0, var1, var2, var3;
-    int var4, var5, var6;
+extern "C" ARM double func_02008848(double x) {
+    double w, s1, s2, z;
+    int var4, var5, id;
 
-    var5 = ((int*)&arg0)[1];
+    var5 = ((int*)&x)[1];
     var4 = var5 & 0x7fffffff;
     if (var4 >= 0x44100000) {
-        if (var4 > 0x7ff00000 || (var4 == 0x7ff00000 && (((int*)&arg0)[0] != 0)))
-            return arg0 + arg0;
+        if (var4 > 0x7ff00000 || (var4 == 0x7ff00000 && (((int*)&x)[0] != 0)))
+            return x + x;
         if (var5 > 0)
             return data_020e6ce4[3] + data_020e6cc4[3];
         else
@@ -35,38 +35,38 @@ extern "C" ARM double func_02008848(double arg0) {
     }
     if (var4 < 0x3fdc0000) {
         if (var4 < 0x3e200000) {
-            if (1.0e300 + arg0 > 1.0)
-                return arg0;
+            if (1.0e300 + x > 1.0)
+                return x;
         }
-        var6 = -1;
+        id = -1;
     } else {
-        arg0 = func_02008f3c(arg0);
+        x = func_02008f3c(x);
         if (var4 < 0x3ff30000) {
             if (var4 < 0x3fe60000) {
-                var6 = 0;
-                arg0 = (2.0 * arg0 - 1.0) / (2.0 + arg0);
+                id = 0;
+                x = (2.0 * x - 1.0) / (2.0 + x);
             } else {
-                var6 = 1;
-                arg0 = (arg0 - 1.0) / (arg0 + 1.0);
+                id = 1;
+                x = (x - 1.0) / (x + 1.0);
             }
         } else {
             if (var4 < 0x40038000) {
-                var6 = 2;
-                arg0 = (arg0 - 1.5) / (1.0 + 1.5 * arg0);
+                id = 2;
+                x = (x - 1.5) / (1.0 + 1.5 * x);
             } else {
-                var6 = 3;
-                arg0 = -1.0 / arg0;
+                id = 3;
+                x = -1.0 / x;
             }
         }
     }
-    var3 = arg0 * arg0;
-    var0 = var3 * var3;
-    var1 = var3 * (data_020e6d04[0] + var0 * (data_020e6d04[2] + var0 * (data_020e6d04[4] + var0 * (data_020e6d04[6] + var0 * (data_020e6d04[8] + var0 * data_020e6d04[10])))));
-    var2 = var0 * (data_020e6d04[1] + var0 * (data_020e6d04[3] + var0 * (data_020e6d04[5] + var0 * (data_020e6d04[7] + var0 * data_020e6d04[9]))));
-    if (var6 < 0)
-        return arg0 - arg0 * (var1 + var2);
+    z = x * x;
+    w = z * z;
+    s1 = z * (data_020e6d04[0] + w * (data_020e6d04[2] + w * (data_020e6d04[4] + w * (data_020e6d04[6] + w * (data_020e6d04[8] + w * data_020e6d04[10])))));
+    s2 = w * (data_020e6d04[1] + w * (data_020e6d04[3] + w * (data_020e6d04[5] + w * (data_020e6d04[7] + w * data_020e6d04[9]))));
+    if (id < 0)
+        return x - x * (s1 + s2);
     else {
-        var3 = data_020e6ce4[var6] - ((arg0 * (var1 + var2) - data_020e6cc4[var6]) - arg0);
-        return (var5 < 0) ? -var3 : var3;
+        z = data_020e6ce4[id] - ((x * (s1 + s2) - data_020e6cc4[id]) - x);
+        return (var5 < 0) ? -z : z;
     }
 }

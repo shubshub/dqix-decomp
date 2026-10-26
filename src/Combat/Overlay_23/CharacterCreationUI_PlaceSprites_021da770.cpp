@@ -87,10 +87,10 @@ extern "C" ARM void CharacterCreationUI_PlaceSprites(void* obj) {
     int flags = *(int*)(base + 0xd9c);
     char* arr = *(char**)(base + 0x7e8);
     if (!(flags & CreationFlag_HideButtons)) {
-        int sb0 = *(signed char*)(base + 0xc00 + 0x58);
-        int flagsB = *(int*)(base + 0xd9c);
-        if ((sb0 != 9 || *(unsigned char*)(base + 0xc59) < 1) &&
-            sb0 != 0xb && !(flagsB & 0x400000)) {
+        int var13 = *(signed char*)(base + 0xc00 + 0x58);
+        int var14 = *(int*)(base + 0xd9c);
+        if ((var13 != 9 || *(unsigned char*)(base + 0xc59) < 1) &&
+            var13 != 0xb && !(var14 & 0x400000)) {
             char* e;
             e = arr + 0x118;
             *(int*)(e + 0x14) = 0xe000;
@@ -130,8 +130,8 @@ extern "C" ARM void CharacterCreationUI_PlaceSprites(void* obj) {
         int sb = *(signed char*)(base + 0xc00 + 0x58);
         int type = 10;
         if (sb == 9) {
-            unsigned char b59 = *(unsigned char*)(base + 0xc59);
-            if (b59 >= 1 && b59 != 0xff) type = 11;
+            unsigned char var23 = *(unsigned char*)(base + 0xc59);
+            if (var23 >= 1 && var23 != 0xff) type = 11;
         } else if (sb == 0xb) {
             type = 11;
         } else if (i == sb - 1) {
@@ -145,13 +145,13 @@ extern "C" ARM void CharacterCreationUI_PlaceSprites(void* obj) {
 
     if (*(unsigned char*)(base + 0xd94) == 1) return;
 
-    int sb2 = *(signed char*)(base + 0xc00 + 0x58);
+    int var24 = *(signed char*)(base + 0xc00 + 0x58);
     int idx2 = -1;
     int handled = 0;
-    switch (sb2) {
+    switch (var24) {
     case 2: case 3: case 4: case 5: case 6: case 7:
         idx2 = 0x14;
-        if (sb2 == 2) idx2 = 0x13;
+        if (var24 == 2) idx2 = 0x13;
     case 1: case 8:
         handled = 1;
         break;
@@ -161,10 +161,10 @@ extern "C" ARM void CharacterCreationUI_PlaceSprites(void* obj) {
 
     if (idx2 >= 0) {
         char* e = arr + idx2 * 0x28;
-        short y0 = *(short*)(base + 0xc00 + 0x54);
-        short y1 = *(short*)(base + 0xc00 + 0x56);
-        *(int*)(e + 0x14) = y0 << 12;
-        *(int*)(e + 0x18) = y1 << 12;
+        short var28 = *(short*)(base + 0xc00 + 0x54);
+        short var29 = *(short*)(base + 0xc00 + 0x56);
+        *(int*)(e + 0x14) = var28 << 12;
+        *(int*)(e + 0x18) = var29 << 12;
         SpriteContext_DrawSprite(ctx, e);
     }
 

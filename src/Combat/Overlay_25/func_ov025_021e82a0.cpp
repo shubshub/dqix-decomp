@@ -7,27 +7,27 @@ enum { Enum_ov025_021e82a0_12 = 0xc };
 #endif
 
 struct Struct_ov025_021ef988_35 {
-    char unknown_0_[Enum_ov025_021e82a0_12];
-    void* unknown_c_;
+    char pad[Enum_ov025_021e82a0_12];
+    void* ptr;
 };
 
 extern Struct_ov025_021ef988_35 data_ov025_021ef988;
 
 struct Struct_ov025_021e82a0 {
-    char unknown_0_[0x8];
-    short unknown_8_;
-    short unknown_a_;
-    short unknown_c_;
-    unsigned char unknown_e_;
+    char pad1[0x8];
+    short a;
+    short b;
+    short c;
+    unsigned char d;
 };
 
 // USA: func_ov025_021e82a0
-extern "C" ARM int func_ov025_021e82a0(struct Struct_ov025_021e82a0* arg0) {
-    char* var0 = (char*)data_ov025_021ef988.unknown_c_ + 0x540;
-    *(unsigned short*)(var0 + 0x28) |= 2;
-    *(unsigned char*)(var0 + 0x35) = arg0->unknown_e_;
-    *(short*)(var0 + 0x2e) = arg0->unknown_8_;
-    *(short*)(var0 + 0x30) = arg0->unknown_a_;
-    *(short*)(var0 + 0x32) = arg0->unknown_c_;
+extern "C" ARM int func_ov025_021e82a0(struct Struct_ov025_021e82a0* obj) {
+    char* p = (char*)data_ov025_021ef988.ptr + 0x540;
+    *(unsigned short*)(p + 0x28) |= 2;
+    *(unsigned char*)(p + 0x35) = obj->d;
+    *(short*)(p + 0x2e) = obj->a;
+    *(short*)(p + 0x30) = obj->b;
+    *(short*)(p + 0x32) = obj->c;
     return 1;
 }

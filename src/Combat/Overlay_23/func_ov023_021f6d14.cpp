@@ -1,42 +1,42 @@
 #include <globaldefs.h>
 
 struct Struct_ov023_021f6d14_2 {
-    unsigned int unknown_0_;
-    int unknown_4_;
-    struct Struct_ov023_021f6d14_2* unknown_8_;
-    struct Struct_ov023_021f6d14_2* unknown_c_;
+    unsigned int key;
+    int pad4;
+    struct Struct_ov023_021f6d14_2* prev;
+    struct Struct_ov023_021f6d14_2* next;
 };
 
-struct Struct_ov023_021f6d14 { char unknown_0_[0x28]; struct Struct_ov023_021f6d14_2* unknown_28_; };
+struct Struct_ov023_021f6d14 { char pad[0x28]; struct Struct_ov023_021f6d14_2* head; };
 
 // USA: func_ov023_021f6d14
-extern "C" ARM void func_ov023_021f6d14(struct Struct_ov023_021f6d14* arg0, struct Struct_ov023_021f6d14_2* arg1) {
-    if (arg1 == NULL) return;
-    arg1->unknown_8_ = NULL;
-    arg1->unknown_c_ = NULL;
-    struct Struct_ov023_021f6d14_2* var0 = arg0->unknown_28_;
-    if (var0 == NULL) {
-        arg0->unknown_28_ = arg1;
+extern "C" ARM void func_ov023_021f6d14(struct Struct_ov023_021f6d14* list, struct Struct_ov023_021f6d14_2* node) {
+    if (node == NULL) return;
+    node->prev = NULL;
+    node->next = NULL;
+    struct Struct_ov023_021f6d14_2* cur = list->head;
+    if (cur == NULL) {
+        list->head = node;
         return;
     }
-    while (var0 != NULL) {
-        if (arg1->unknown_0_ < var0->unknown_0_) {
-            if (var0->unknown_8_ != NULL) {
-                var0->unknown_8_->unknown_c_ = arg1;
+    while (cur != NULL) {
+        if (node->key < cur->key) {
+            if (cur->prev != NULL) {
+                cur->prev->next = node;
             }
-            arg1->unknown_c_ = var0;
-            arg1->unknown_8_ = var0->unknown_8_;
-            var0->unknown_8_ = arg1;
-            if (var0 == arg0->unknown_28_) {
-                arg0->unknown_28_ = arg1;
+            node->next = cur;
+            node->prev = cur->prev;
+            cur->prev = node;
+            if (cur == list->head) {
+                list->head = node;
             }
             return;
         }
-        if (var0->unknown_c_ == NULL) {
-            var0->unknown_c_ = arg1;
-            arg1->unknown_8_ = var0;
+        if (cur->next == NULL) {
+            cur->next = node;
+            node->prev = cur;
             return;
         }
-        var0 = var0->unknown_c_;
+        cur = cur->next;
     }
 }

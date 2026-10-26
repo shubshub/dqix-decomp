@@ -4,8 +4,8 @@
 #include "NitroSDK/Cache.h"
 #include "Combat/MapDisplay.h"
 
-int MessageSystem_GetInstance(void);
-void OS_WaitVBlankIntr(void);
+extern "C" int MessageSystem_GetInstance(void);
+extern "C" void OS_WaitVBlankIntr(void);
 extern "C" void MapDisplay_DrawMapNameText(void* arg0, void* buf, int flag);
 extern "C" int LoadToSubObjVRAM(void* buf, int a1, int a2);
 
@@ -19,7 +19,7 @@ enum {
 };
 
 // Main, originally InitAndCopyBuffer02023330 (USA 0x02023330, EUR 0x02023340; JPN not identified)
-ARM int MapDisplay_UploadMapName(void* mapDisplay, int waitVBlank)
+extern "C" ARM int MapDisplay_UploadMapName(void* mapDisplay, int waitVBlank)
 {
     void* messageSystem = (void*)MessageSystem_GetInstance();
     int offset = 0;

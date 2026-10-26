@@ -5,13 +5,13 @@
 
 
 extern "C" void* Scenario_GetInstance(void);
-void* GameState_GetZoneTransition(GameState* battleStruct);
-int GetBitmapPixel_0206eaec(unsigned char* base, int row, int col);
-void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
-int Scenario_RunTriggerCommandsById(void* a, int mode, unsigned short id, void* c);
+extern "C" void* GameState_GetZoneTransition(GameState* battleStruct);
+extern "C" int func_0206eaec(unsigned char* base, int row, int col);
+extern "C" void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
+extern "C" int Scenario_RunTriggerCommandsById(void* a, int mode, unsigned short id, void* c);
 
 struct Obj0201b600;
-BmdjSceneElement* FindElemByKeys(Obj0201b600*, int, unsigned short);
+extern "C" BmdjSceneElement* func_0201b600(Obj0201b600*, int, unsigned short);
 
 // The scenario keeps two bits per scene element of script nodes 0 and 1 (func_02017c58 writes them before a battle):
 // bit elementId when it was shown, bit kHiddenBits + elementId when it was hidden
@@ -58,18 +58,18 @@ extern "C" ARM void Zone3D_RestoreElementsFromScenario(Zone3D* zone) {
     if (scenario != NULL && *(unsigned char*)((char*)zone + RestoreElementsFlagOffset) != 0) {
         for (nodeId = 0; nodeId < 2; nodeId++) {
             for (shownBit = 0; shownBit < kLastShownBit; shownBit++) {
-                if (GetBitmapPixel_0206eaec(scenario, (unsigned char)nodeId, (short)shownBit)) {
+                if (func_0206eaec(scenario, (unsigned char)nodeId, (short)shownBit)) {
                     BmdjSceneElement* element =
-                        FindElemByKeys((struct Obj0201b600*)zone, nodeId, shownBit);
+                        func_0201b600((struct Obj0201b600*)zone, nodeId, shownBit);
                     if (element != NULL) {
                         element->flags &= ~BmdjElementFlag_Hidden;
                     }
                 }
             }
             for (hiddenBit = kHiddenBits; hiddenBit < kLastHiddenBit; hiddenBit++) {
-                if (GetBitmapPixel_0206eaec(scenario, (unsigned char)nodeId, (short)hiddenBit)) {
+                if (func_0206eaec(scenario, (unsigned char)nodeId, (short)hiddenBit)) {
                     BmdjSceneElement* element =
-                        FindElemByKeys((struct Obj0201b600*)zone, nodeId, hiddenBit - kHiddenBits);
+                        func_0201b600((struct Obj0201b600*)zone, nodeId, hiddenBit - kHiddenBits);
                     ZoneFeatures::Opcode6aEntry* door;
                     if (element != NULL) {
                         element->flags |= BmdjElementFlag_Hidden;

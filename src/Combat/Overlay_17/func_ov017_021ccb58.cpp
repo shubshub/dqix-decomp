@@ -1,29 +1,29 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* battleStruct, int combatantId);
-int GetFieldAt0x150_02053c6c(unsigned char* obj);
-void* LinkMessageQueue_GetInstance(void);
+extern "C" GameObject* func_0200ff1c(GameState* battleStruct, int combatantId);
+extern "C" int func_02053c6c(unsigned char* obj);
+extern "C" void* LinkMessageQueue_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* buf, int c);
 
 struct Struct_ov017_021ccb58 {
-	unsigned char unknown_0_;
-	char unknown_1_[3];
-	unsigned int unknown_4_[3];
-	unsigned short unknown_10_;
-	unsigned char unknown_12_;
+	unsigned char marker;
+	char pad1[3];
+	unsigned int words[3];
+	unsigned short field10;
+	unsigned char field12;
 };
 
 // USA: func_ov017_021ccb58
-extern "C" ARM void func_ov017_021ccb58(int arg0, int arg1) {
-	GameState* var0 = GameState::GetInstance();
-	GameObject* var1 = func_0200ff1c(var0, arg0);
-	if (!var1) return;
-	unsigned char* var2 = (unsigned char*)func_02053c6c((unsigned char*)var1);
-	if (!var2) return;
+extern "C" ARM void func_ov017_021ccb58(int id, int idx) {
+	GameState* battle = GameState::GetInstance();
+	GameObject* c = func_0200ff1c(battle, id);
+	if (!c) return;
+	unsigned char* base = (unsigned char*)func_02053c6c((unsigned char*)c);
+	if (!base) return;
 
 	void* d = LinkMessageQueue_GetInstance();
-	Dst021ccb58 buf;
+	Struct_ov017_021ccb58 buf;
 	buf.marker = 0xd;
 	buf.field10 = (unsigned short)id;
 	buf.field12 = (unsigned char)idx;
@@ -33,5 +33,5 @@ extern "C" ARM void func_ov017_021ccb58(int arg0, int arg1) {
 		buf.words[i] = v;
 		i++;
 	}
-	func_0205e330(var3, &var4, 0);
+	func_0205e330(d, &buf, 0);
 }

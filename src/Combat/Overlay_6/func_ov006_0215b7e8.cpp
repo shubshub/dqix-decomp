@@ -7,63 +7,63 @@ enum { Enum_ov006_0215b7e8_54 = 0x2a, Enum_ov006_0215b7e8_76 = 0x48, Enum_ov006_
 enum { Enum_ov006_0215b7e8_54 = 0x36, Enum_ov006_0215b7e8_76 = 0x4c, Enum_ov006_0215b7e8_4696 = 0x1258 };
 #endif
 
-struct Obj0208203c;
+struct Struct_02081f20_2;
 struct SePlayer;
-struct Obj2081;
-struct Obj0215f348;
-struct Cont0207fe44;
-struct AlchemyPot;
+struct Struct_0207fdcc_2;
+struct Struct_ov006_0215b7e8_2;
+struct Struct_0207fe44;
+struct Struct_ov006_02154614;
 
 struct Struct_ov006_0215b7e8 {
-    char unknown_0_[0x16];
-    unsigned char unknown_16_;
+    char unk_0[0x16];
+    unsigned char flags_;
 };
 
 struct Struct_ov000_0217ab8c {
-    char unknown_0_[Enum_ov006_0215b7e8_54];
-    short unknown_36_;
+    char unk_0[Enum_ov006_0215b7e8_54];
+    short cursor_;
 };
 
 struct Struct_ov006_02157a60 {
 #if !defined(jpn)
     int unknown_0_;
-    char** unknown_4_;
+    char** texts_;
 #endif
-    void* unknown_8_;
-    void* unknown_c_;
-    Struct_ov006_02154614* unknown_10_;
-    Struct_ov000_0217ab8c* unknown_14_;
-    void* unknown_18_;
-    void* unknown_1c_;
-    void* unknown_20_;
-    void* unknown_24_;
-    void* unknown_28_;
+    void* canvasBuffer_;
+    void* allocators_;
+    Struct_ov006_02154614* pot_;
+    Struct_ov000_0217ab8c* menu_;
+    void* choice_;
+    void* backgrounds_;
+    void* canvases_;
+    void* sprites_;
+    void* animations_;
     void* unknown_2c_;
     void* unknown_30_;
     void* unknown_34_;
     void* unknown_38_;
     char unknown_3c_[8];
-    short* unknown_44_;
-    short** unknown_48_;
+    short* cursor_;
+    short** items_;
     unsigned char** unknown_4c_;
-    unsigned short* unknown_50_;
-    int unknown_54_[0x20 / 4];
-    int unknown_74_[0x28 / 4];
+    unsigned short* sizes_;
+    int subBackground_[0x20 / 4];
+    int ingredients_[0x28 / 4];
     int unknown_9c_[0xc / 4];
     unsigned short unknown_a8_;
     unsigned char unknown_aa_;
-    int unknown_ac_[0x54 / 4];
-    int unknown_100_[Enum_ov006_0215b7e8_76 / 4];
-    int unknown_14c_[0xc / 4];
-    int unknown_158_[0x18 / 4];
-    char unknown_170_[0xc];
+    int renderer_[0x54 / 4];
+    int layout_[Enum_ov006_0215b7e8_76 / 4];
+    int table_[0xc / 4];
+    int menuTexts_[0x18 / 4];
+    char itemNames_[0xc];
 #if defined(jpn)
     char unknown1_170_[0xc];
 #endif
-    int unknown_17c_[4][0x74 / 4];
-    int unknown_34c_;
-    int unknown_350_;
-    int unknown_354_;
+    int results_[4][0x74 / 4];
+    int ticks_;
+    int menuResult_;
+    int task_;
     int unknown_358_;
     short unknown_35c_;
     short unknown_35e_;
@@ -75,29 +75,29 @@ struct Struct_ov006_02157a60 {
     short unknown_36a_;
     short unknown_36c_;
     short unknown_36e_;
-    short unknown_370_;
+    short item_;
     unsigned short unknown_372_[3];
     short unknown_378_[3];
-    short unknown_37e_;
+    short message_;
     unsigned short unknown_380_;
     short unknown_382_;
     signed char unknown_384_;
     signed char unknown_385_;
     unsigned char unknown_386_;
     unsigned char unknown_387_;
-    unsigned char unknown_388_;
-    unsigned char unknown_389_;
-    unsigned char unknown_38a_;
-    unsigned char unknown_38b_;
+    unsigned char page_;
+    unsigned char pages_;
+    unsigned char category_;
+    unsigned char count_;
     unsigned char unknown_38c_[3];
-    unsigned char unknown_38f_;
-    unsigned char unknown_390_;
+    unsigned char state_;
+    unsigned char step_;
     unsigned char unknown_391_;
     unsigned char unknown_392_;
     unsigned char unknown_393_;
-    unsigned short unknown_394_;
-    unsigned char unknown_396_;
-    unsigned char unknown_397_;
+    unsigned short flags_;
+    unsigned char female_;
+    unsigned char background_;
     unsigned char unknown_398_[3];
     int unknown_39c_;
     int unknown_3a0_;
@@ -119,151 +119,151 @@ struct Struct_ov006_02157a60 {
     unsigned char unknown_434_;
 };
 
-extern "C" void func_ov006_021570fc(AlchemyPot* pot, int shown);
-short FindMappedMemberId02080468(void* menu, int group);
+extern "C" void func_ov006_021570fc(Struct_ov006_02154614* arg0, int shown);
+extern "C" short func_02080468(void* menu, int group);
 extern "C" void func_020813ec(void* menu, int group);
-void SyncEntries0215f348(Obj0215f348* self);
-void SetElementFlag0x40_02081ea4(Obj2081* menu, int group, int value);
-void ResetWithSub0208203c(Obj0208203c* repeat);
-void SetElementFlag0x20_02080c04(Obj2081* menu, int id);
-void ClearElementFlag0x20_02080c20(Obj2081* menu, int id);
-extern "C" unsigned char func_ov006_02158a28(AlchemyMenu* self);
-extern "C" unsigned char func_ov006_02158b78(AlchemyMenu* self);
-void SePlayer_Play(SePlayer* sound, int, int);
-void CallFunc0204c804OverAllElems(Cont0207fe44* menu);
-extern "C" LayoutElement* func_ov006_02157368(void* layout, short id);
-extern "C" void func_ov006_02158de0(AlchemyMenu* self);
-void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081* menu, int group);
+extern "C" void func_ov006_0215f348(Struct_ov006_0215b7e8_2* self);
+extern "C" void func_02081ea4(Struct_0207fdcc_2* menu, int group, int value);
+extern "C" void func_0208203c(Struct_02081f20_2* repeat);
+extern "C" void func_02080c04(Struct_0207fdcc_2* menu, int id);
+extern "C" void func_02080c20(Struct_0207fdcc_2* menu, int id);
+extern "C" unsigned char func_ov006_02158a28(Struct_ov006_02157a60* self);
+extern "C" unsigned char func_ov006_02158b78(Struct_ov006_02157a60* self);
+extern "C" void SePlayer_Play(SePlayer* sound, int, int);
+extern "C" void func_0207fe44(Struct_0207fe44* menu);
+extern "C" Struct_ov006_0215b7e8* func_ov006_02157368(void* layout, short id);
+extern "C" void func_ov006_02158de0(Struct_ov006_02157a60* self);
+extern "C" void func_0207fdcc(Struct_0207fdcc_2* menu, int group);
 
 extern "C" char g_sePlayer[];
 
 // USA: func_ov006_0215b7e8
-extern "C" ARM void func_ov006_0215b7e8(Struct_ov006_02157a60* arg0) {
-    Struct_ov000_0217ab8c* var0 = arg0->unknown_14_;
-    if (arg0->unknown_390_ == 0)
+extern "C" ARM void func_ov006_0215b7e8(Struct_ov006_02157a60* self) {
+    Struct_ov000_0217ab8c* menu = self->menu_;
+    if (self->step_ == 0)
     {
-        func_ov006_021570fc(arg0->unknown_10_, 1);
-        arg0->unknown_397_ = 0;
-        arg0->unknown_36e_ = 2;
-        if (arg0->unknown_360_ < 0)
-            arg0->unknown_360_ = func_02080468(var0, arg0->unknown_36e_);
-        var0->unknown_36_ = arg0->unknown_360_;
-        func_020813ec(var0, arg0->unknown_36e_);
-        func_ov006_0215f348((Struct_ov006_0215b7e8_2*)arg0);
-        func_02081ea4((Struct_0207fdcc_2*)var0, arg0->unknown_36e_, 0);
-        func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-        arg0->unknown_44_ = 0;
-        arg0->unknown_390_++;
-        if (arg0->unknown_360_ == 4)
-            func_02080c04((Struct_0207fdcc_2*)var0, 3);
+        func_ov006_021570fc(self->pot_, 1);
+        self->background_ = 0;
+        self->unknown_36e_ = 2;
+        if (self->unknown_360_ < 0)
+            self->unknown_360_ = func_02080468(menu, self->unknown_36e_);
+        menu->cursor_ = self->unknown_360_;
+        func_020813ec(menu, self->unknown_36e_);
+        func_ov006_0215f348((Struct_ov006_0215b7e8_2*)self);
+        func_02081ea4((Struct_0207fdcc_2*)menu, self->unknown_36e_, 0);
+        func_0208203c((Struct_02081f20_2*)self->unknown_9c_);
+        self->cursor_ = 0;
+        self->step_++;
+        if (self->unknown_360_ == 4)
+            func_02080c04((Struct_0207fdcc_2*)menu, 3);
         else
-            func_02080c20((Struct_0207fdcc_2*)var0, 3);
+            func_02080c20((Struct_0207fdcc_2*)menu, 3);
     }
-    else if (arg0->unknown_390_ == 1)
+    else if (self->step_ == 1)
     {
-        arg0->unknown_44_ = &arg0->unknown_360_;
-        if (arg0->unknown_35e_ != *arg0->unknown_44_)
+        self->cursor_ = &self->unknown_360_;
+        if (self->unknown_35e_ != *self->cursor_)
         {
-            if (arg0->unknown_360_ == 4)
-                func_02080c04((Struct_0207fdcc_2*)var0, 3);
+            if (self->unknown_360_ == 4)
+                func_02080c04((Struct_0207fdcc_2*)menu, 3);
             else
-                func_02080c20((Struct_0207fdcc_2*)var0, 3);
-            func_ov006_0215f348((Struct_ov006_0215b7e8_2*)arg0);
+                func_02080c20((Struct_0207fdcc_2*)menu, 3);
+            func_ov006_0215f348((Struct_ov006_0215b7e8_2*)self);
         }
-        arg0->unknown_42c_ = 0;
-        if (func_ov006_02158a28(arg0))
+        self->unknown_42c_ = 0;
+        if (func_ov006_02158a28(self))
         {
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
-            ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+            func_0208203c((Struct_02081f20_2*)self->unknown_9c_);
             self->cursor_ = 0;
-            switch (self->mainCursor_)
+            switch (self->unknown_360_)
             {
             case 2:
-                arg0->unknown_366_ = -1;
-                func_0207fe44((Struct_0207fe44*)var0);
-                arg0->unknown_38f_ = 9;
-                arg0->unknown_390_ = 0;
+                self->unknown_366_ = -1;
+                func_0207fe44((Struct_0207fe44*)menu);
+                self->state_ = 9;
+                self->step_ = 0;
                 {
-                    Struct_ov006_0215b7e8* var1 = func_ov006_02157368(arg0->unknown_100_, 0x50);
-                    if (var1 != 0)
-                        var1->unknown_16_ &= ~1;
+                    Struct_ov006_0215b7e8* element = func_ov006_02157368(self->layout_, 0x50);
+                    if (element != 0)
+                        element->flags_ &= ~1;
                 }
                 {
-                    Struct_ov006_0215b7e8* var2 = func_ov006_02157368(arg0->unknown_100_, 0x4f);
-                    if (var2 != 0)
-                        var2->unknown_16_ |= 1;
+                    Struct_ov006_0215b7e8* element = func_ov006_02157368(self->layout_, 0x4f);
+                    if (element != 0)
+                        element->flags_ |= 1;
                 }
                 {
-                    Struct_ov006_0215b7e8* var3 = func_ov006_02157368(arg0->unknown_100_, 0xe);
-                    if (var3 != 0)
-                        var3->unknown_16_ &= ~1;
+                    Struct_ov006_0215b7e8* element = func_ov006_02157368(self->layout_, 0xe);
+                    if (element != 0)
+                        element->flags_ &= ~1;
                 }
                 {
-                    Struct_ov006_0215b7e8* var4 = func_ov006_02157368(arg0->unknown_100_, 0xf);
-                    if (var4 != 0)
-                        var4->unknown_16_ |= 1;
+                    Struct_ov006_0215b7e8* element = func_ov006_02157368(self->layout_, 0xf);
+                    if (element != 0)
+                        element->flags_ |= 1;
                 }
                 {
-                    Struct_ov006_0215b7e8* var5 = func_ov006_02157368(arg0->unknown_100_, 0x15);
-                    if (var5 != 0)
-                        var5->unknown_16_ &= ~1;
+                    Struct_ov006_0215b7e8* element = func_ov006_02157368(self->layout_, 0x15);
+                    if (element != 0)
+                        element->flags_ &= ~1;
                 }
                 break;
             case 3:
             {
-                func_ov006_02158de0(arg0);
-                unsigned short* var6 = arg0->unknown_50_;
-                unsigned char var7;
-                int var8 = 0;
-                if (var6 != 0)
+                func_ov006_02158de0(self);
+                unsigned short* sizes = self->sizes_;
+                unsigned char i;
+                int found = 0;
+                if (sizes != 0)
                 {
-                    for (var7 = 0; var7 < 9; var7++)
+                    for (i = 0; i < 9; i++)
                     {
-                        if (var6[var7] != 0)
+                        if (sizes[i] != 0)
                         {
-                            var8 = 1;
+                            found = 1;
                             break;
                         }
                     }
-                    if (var6[8] != 0)
-                        var8 = 1;
+                    if (sizes[8] != 0)
+                        found = 1;
                 }
-                if (var8)
+                if (found)
                 {
-                    arg0->unknown_362_ = -1;
-                    arg0->unknown_364_ = -1;
-                    func_0207fe44((Struct_0207fe44*)var0);
-                    arg0->unknown_38f_ = 5;
-                    arg0->unknown_390_ = 0;
-                    func_ov006_021570fc(arg0->unknown_10_, 1);
-                    arg0->unknown_37e_ = 0x24;
-                    arg0->unknown_392_ = 0;
-                    arg0->unknown_394_ |= 0x20 | 0x100;
+                    self->unknown_362_ = -1;
+                    self->unknown_364_ = -1;
+                    func_0207fe44((Struct_0207fe44*)menu);
+                    self->state_ = 5;
+                    self->step_ = 0;
+                    func_ov006_021570fc(self->pot_, 1);
+                    self->message_ = 0x24;
+                    self->unknown_392_ = 0;
+                    self->flags_ |= 0x20 | 0x100;
                     break;
                 }
-                arg0->unknown_394_ |= 0x20;
-                arg0->unknown_37e_ = 0x35;
-                arg0->unknown_392_ = 0;
-                func_02081ea4((Struct_0207fdcc_2*)var0, arg0->unknown_36e_, 1);
-                arg0->unknown_390_ = 0;
-                func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-                arg0->unknown_44_ = 0;
+                self->flags_ |= 0x20;
+                self->message_ = 0x35;
+                self->unknown_392_ = 0;
+                func_02081ea4((Struct_0207fdcc_2*)menu, self->unknown_36e_, 1);
+                self->step_ = 0;
+                func_0208203c((Struct_02081f20_2*)self->unknown_9c_);
+                self->cursor_ = 0;
                 return;
             }
             case 4:
-                arg0->unknown_38f_ = 0xc;
-                arg0->unknown_390_ = 0;
+                self->state_ = 0xc;
+                self->step_ = 0;
                 break;
             }
-            func_0207fdcc((Struct_0207fdcc_2*)var0, 3);
-            func_0207fdcc((Struct_0207fdcc_2*)var0, arg0->unknown_36e_);
+            func_0207fdcc((Struct_0207fdcc_2*)menu, 3);
+            func_0207fdcc((Struct_0207fdcc_2*)menu, self->unknown_36e_);
             return;
         }
-        if (func_ov006_02158b78(arg0) || g_keyManager.TestKeysPressed(0x800))
+        if (func_ov006_02158b78(self) || g_keyManager.TestKeysPressed(0x800))
         {
-            func_0207fe44((Struct_0207fe44*)var0);
-            arg0->unknown_38f_ = 0xc;
-            arg0->unknown_390_ = 0;
+            func_0207fe44((Struct_0207fe44*)menu);
+            self->state_ = 0xc;
+            self->step_ = 0;
         }
     }
 }

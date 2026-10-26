@@ -11,7 +11,7 @@ struct GlobalObj0202e6a8 {
 extern "C" void Camera_SetOrbit(struct GlobalObj0202e6a8* camera, int yaw, int height, int distance);
 
 // Main, originally ApplyField0x70Tail (USA 0x0202e6a8, EUR 0x0202e6b8, JPN 0x0202e218)
-ARM void Camera_SetOrbitYaw(struct GlobalObj0202e6a8* camera, int yaw) {
+extern "C" ARM void Camera_SetOrbitYaw(struct GlobalObj0202e6a8* camera, int yaw) {
     camera->orbitYaw = yaw;
     Camera_SetOrbit(camera, yaw, camera->orbitHeight, camera->orbitDistance);
 }

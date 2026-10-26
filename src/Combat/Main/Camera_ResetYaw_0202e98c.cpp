@@ -9,7 +9,7 @@ struct HalfwordTriple0202e98c {
 };
 
 // Main, originally ClearThreeHalfwords (USA 0x0202e98c, EUR 0x0202e99c, JPN 0x0202e4fc)
-ARM void Camera_ResetYaw(struct HalfwordTriple0202e98c* camera) {
+extern "C" ARM void Camera_ResetYaw(struct HalfwordTriple0202e98c* camera) {
     camera->yaw = 0;
     camera->yawStep = 0;
     camera->yawFrames = 0;

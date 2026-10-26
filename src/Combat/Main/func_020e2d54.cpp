@@ -9,87 +9,87 @@
 #endif
 
 #define REG_GXFIFO (*(volatile unsigned int*)0x04000400)
-struct Struct_020e2d54 { unsigned short unknown_0_; char unknown_2_[0xa]; int unknown_c_; };
+struct Struct_020e2d54 { unsigned short flags; char unknown_2_[0xa]; int scaleZ; };
 struct Struct_020f2c14 {
     union {
-        Vector4fix unknown_0_[3];
-        struct { int unknown1_0_[6]; Vector3fix unknown_18_; Vector3fix unknown_24_; };
+        Vector4fix rows[3];
+        struct { int unknown1_0_[6]; Vector3fix normal; Vector3fix unknown_24_; };
     };
-    Vector3fix unknown_30_;
+    Vector3fix position;
     char unknown_3c_[0xc];
 };
 extern char data_020ee9b8[];
 extern int data_020ef0e8;
 extern "C" void func_020e2fa8(int*, int, int, int);
 extern "C" void* func_020e2fb0(void*);
-static inline int inline_020e2d54(Struct_020e2d54* arg0) { SDK_NULL_ASSERT(arg0); return arg0->unknown_c_; }
-static inline int inline_020e2d54_2(Vector3fix* arg0) { SDK_NULL_ASSERT(arg0); return arg0->z; }
-static inline int inline_020e2d54_3(int arg0, int arg1) { int var0 = fix32_Divide(arg0, arg1); return var0; }
+static inline int inline_020e2d54(Struct_020e2d54* bone) { SDK_NULL_ASSERT(bone); return bone->scaleZ; }
+static inline int inline_020e2d54_2(Vector3fix* vector) { SDK_NULL_ASSERT(vector); return vector->z; }
+static inline int inline_020e2d54_3(int a, int b) { int value = fix32_Divide(a, b); return value; }
 
 // USA: func_020e2d54
-extern "C" ARM void func_020e2d54(int arg0, RenderCommandHandler* arg1, Struct_020f2c14* arg2) {
-    Matrix4x4 var0;
-    Vector3fix var1;
-    Vector3fix var2;
-    if (!(arg1->flags_ & 0x100)) {
+extern "C" ARM void func_020e2d54(int mode, RenderCommandHandler* entry, Struct_020f2c14* output) {
+    Matrix4x4 matrix;
+    Vector3fix scale;
+    Vector3fix offset;
+    if (!(entry->flags_ & 0x100)) {
         SendQueuedDataToGeometryFifo();
         REG_GXFIFO = 0x151110;
         REG_GXFIFO = 0;
-        while (func_020c54fc(&var0)) {}
-        func_020e2fa8(&var1.x, 0x1000, 0x1000, 0x1000);
-        int var3 = 0;
-        if (arg0 == 1) {
-            var1.x = Vector3fix_Length(&var0.rows[0].xyz);
-            var1.y = Vector3fix_Length(&var0.rows[1].xyz);
-            var1.z = Vector3fix_Length(&var0.rows[2].xyz);
+        while (func_020c54fc(&matrix)) {}
+        func_020e2fa8(&scale.x, 0x1000, 0x1000, 0x1000);
+        int correction = 0;
+        if (mode == 1) {
+            scale.x = Vector3fix_Length(&matrix.rows[0].xyz);
+            scale.y = Vector3fix_Length(&matrix.rows[1].xyz);
+            scale.z = Vector3fix_Length(&matrix.rows[2].xyz);
         }
-        if (arg0 == 1) {
-            func_020e2fa8(&var2.x, 0, 0, 0);
-            NSBXXInternalModel* var4 = arg1->modelContext_->internalModel_;
-            NSBXXNameList* var5 = (NSBXXNameList*)func_020e2fb0(var4);
-            int var6 = var5 ? NSBXXNameList_SearchIndex(var5, data_020ee9b8) : -1;
-            if (var6 >= 0) {
-                var5 = (NSBXXNameList*)func_020e2fb0(var4);
-                Struct_020e2d54* var7;
-                if (!var5) goto missingBone;
+        if (mode == 1) {
+            func_020e2fa8(&offset.x, 0, 0, 0);
+            NSBXXInternalModel* model = entry->modelContext_->internalModel_;
+            NSBXXNameList* list = (NSBXXNameList*)func_020e2fb0(model);
+            int index = list ? NSBXXNameList_SearchIndex(list, data_020ee9b8) : -1;
+            if (index >= 0) {
+                list = (NSBXXNameList*)func_020e2fb0(model);
+                Struct_020e2d54* bone;
+                if (!list) goto missingBone;
                 {
                     unsigned int* var8;
-                    if (var5 && (unsigned int)var6 < var5->numEntries_) {
-                        unsigned char* var9 = (unsigned char*)var5 + var5->offsetToDataStart_;
-                        unsigned short var10 = *(unsigned short*)var9;
-                        var8 = (unsigned int*)(var9 + 4 + var10 * var6);
+                    if (list && (unsigned int)index < list->numEntries_) {
+                        unsigned char* data = (unsigned char*)list + list->offsetToDataStart_;
+                        unsigned short stride = *(unsigned short*)data;
+                        var8 = (unsigned int*)(data + 4 + stride * index);
                     } else var8 = 0;
                     if (var8) {
-                        var7 = (Struct_020e2d54*)((char*)var5 + *var8);
+                        bone = (Struct_020e2d54*)((char*)list + *var8);
                         goto foundBone;
                     }
                 }
             missingBone:
-                var7 = 0;
+                bone = 0;
             foundBone:
-                if (!(var7->unknown_0_ & 1)) {
-                    var2.z = FIX32_MULTIPLY(inline_020e2d54_2(&var1), inline_020e2d54(var7));
+                if (!(bone->flags & 1)) {
+                    offset.z = FIX32_MULTIPLY(inline_020e2d54_2(&scale), inline_020e2d54(bone));
                 }
-                if (fix32abs(var0.rows[3].z) >= 4) {
-                    var3 = FIX32_MULTIPLY(inline_020e2d54_2(&var2), inline_020e2d54_3(var0.rows[3].x, var0.rows[3].z));
+                if (fix32abs(matrix.rows[3].z) >= 4) {
+                    correction = FIX32_MULTIPLY(inline_020e2d54_2(&offset), inline_020e2d54_3(matrix.rows[3].x, matrix.rows[3].z));
                 }
             }
         }
-        arg2->unknown_30_.x = var0.rows[3].x + var3;
-        arg2->unknown_30_.y = var0.rows[3].y;
-        arg2->unknown_30_.z = var0.rows[3].z;
-        if (arg0 == 1) {
-            arg2->unknown_0_[0].w = var1.x;
-            arg2->unknown_0_[1].w = var1.y;
-            arg2->unknown_0_[2].w = var1.z;
+        output->position.x = matrix.rows[3].x + correction;
+        output->position.y = matrix.rows[3].y;
+        output->position.z = matrix.rows[3].z;
+        if (mode == 1) {
+            output->rows[0].w = scale.x;
+            output->rows[1].w = scale.y;
+            output->rows[2].w = scale.z;
         }
-        if (arg0 == 0 && (var0.rows[1].y || var0.rows[1].z) && data_020ef0e8) {
-            Vector3fix_Normalize(&var0.rows[1].xyz, &arg2->unknown_18_);
-            arg2->unknown_24_.y = -arg2->unknown_18_.z;
-            arg2->unknown_24_.z = arg2->unknown_18_.y;
+        if (mode == 0 && (matrix.rows[1].y || matrix.rows[1].z) && data_020ef0e8) {
+            Vector3fix_Normalize(&matrix.rows[1].xyz, &output->normal);
+            output->unknown_24_.y = -output->normal.z;
+            output->unknown_24_.z = output->normal.y;
             data_020ef0e8 = 0;
         }
-        func_020ca430(arg2, (void*)0x04000400, 0x48);
+        func_020ca430(output, (void*)0x04000400, 0x48);
     }
-    arg1->flags_ |= 0x40;
+    entry->flags_ |= 0x40;
 }

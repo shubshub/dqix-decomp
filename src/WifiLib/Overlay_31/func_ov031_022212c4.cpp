@@ -13,7 +13,7 @@ extern "C" const unsigned int data_ov031_022460e8[10];
 // USA: func_ov031_022212c4
 extern "C" THUMB int func_ov031_022212c4(unsigned int *arg0, const unsigned char *arg1,
                                           int arg2) {
-    int var0 = 0;
+    int i = 0;
     unsigned int var1;
 
     arg0[0] = GETU32(arg1     );
@@ -28,11 +28,11 @@ extern "C" THUMB int func_ov031_022212c4(unsigned int *arg0, const unsigned char
                 (Te4[(var1 >>  8) & 0xff] & 0x00ff0000) ^
                 (Te4[(var1      ) & 0xff] & 0x0000ff00) ^
                 (Te4[(var1 >> 24)       ] & 0x000000ff) ^
-                rcon[var0];
+                rcon[i];
             arg0[5] = arg0[1] ^ arg0[4];
             arg0[6] = arg0[2] ^ arg0[5];
             arg0[7] = arg0[3] ^ arg0[6];
-            if (++var0 >= 10) {
+            if (++i >= 10) {
                 return 10;
             }
             arg0 += 4;
@@ -48,11 +48,11 @@ extern "C" THUMB int func_ov031_022212c4(unsigned int *arg0, const unsigned char
                 (Te4[(var1 >>  8) & 0xff] & 0x00ff0000) ^
                 (Te4[(var1      ) & 0xff] & 0x0000ff00) ^
                 (Te4[(var1 >> 24)       ] & 0x000000ff) ^
-                rcon[var0];
+                rcon[i];
             arg0[ 7] = arg0[ 1] ^ arg0[ 6];
             arg0[ 8] = arg0[ 2] ^ arg0[ 7];
             arg0[ 9] = arg0[ 3] ^ arg0[ 8];
-            if (++var0 >= 8) {
+            if (++i >= 8) {
                 return 12;
             }
             arg0[10] = arg0[ 4] ^ arg0[ 9];
@@ -70,11 +70,11 @@ extern "C" THUMB int func_ov031_022212c4(unsigned int *arg0, const unsigned char
                 (Te4[(var1 >>  8) & 0xff] & 0x00ff0000) ^
                 (Te4[(var1      ) & 0xff] & 0x0000ff00) ^
                 (Te4[(var1 >> 24)       ] & 0x000000ff) ^
-                rcon[var0];
+                rcon[i];
             arg0[ 9] = arg0[ 1] ^ arg0[ 8];
             arg0[10] = arg0[ 2] ^ arg0[ 9];
             arg0[11] = arg0[ 3] ^ arg0[10];
-            if (++var0 >= 7) {
+            if (++i >= 7) {
                 return 14;
             }
             var1 = arg0[11];

@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 #include "Graphics/GlyphMetrics.h"
 
-extern "C" void func_020292ec(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_02029470(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
+extern "C" void func_020292ec(int a, int b, int c, int d, int e);
+extern "C" void func_02029470(int a, int b, int c, int d, int e, int f);
 
 // USA: func_02029384
-extern "C" ARM int func_02029384(int arg0, int arg1, int arg2, int arg3) {
-    int var0 = data_020ef74c.unknown_c_;
+extern "C" ARM int func_02029384(int a0, int a1, int a2, int a3) {
+    int mode = data_020ef74c.displayMode;
 
-    if (var0 == 2) {
+    if (mode == 2) {
         return 0;
     }
-    if (var0 == 4) {
+    if (mode == 4) {
         return 0;
     }
 
@@ -21,11 +21,11 @@ extern "C" ARM int func_02029384(int arg0, int arg1, int arg2, int arg3) {
 
     func_02029470(0, 1, 3, 0x3b, 0x12, 0);
 
-    func_020292ec(arg0 + 2, arg1 + 2, arg2 - 4, arg3 - 4, 0);
+    func_020292ec(a0 + 2, a1 + 2, a2 - 4, a3 - 4, 0);
 
     func_02029470(0, 1, 3, 0, 0, 0);
 
-    func_020292ec(arg0, arg1, arg2, arg3, 0x7fff);
+    func_020292ec(a0, a1, a2, a3, 0x7fff);
 
     return 1;
 }

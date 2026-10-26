@@ -1,33 +1,33 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov017_021b8468(void* arg0);
-extern "C" void* func_ov017_021b8470(void* arg0);
+extern "C" int func_ov017_021b8468(void* obj);
+extern "C" void* func_ov017_021b8470(void* obj);
 
 // USA: func_ov017_021c86f4
-extern "C" ARM void func_ov017_021c86f4(int arg0, int* arg1, int arg2, unsigned char* arg3) {
+extern "C" ARM void func_ov017_021c86f4(int unused0, int* param1, int arg2, unsigned char* base) {
 #if defined(jpn)
- enum {Enum_ov017_021c86f4_1816=0x508};
+ enum {regionalOffset0=0x508};
 #else
- enum {Enum_ov017_021c86f4_1816=0x718};
+ enum {regionalOffset0=0x718};
 #endif
-    char* var0;
-    int* var1;
-    int var2;
-    unsigned char* var3 = *(unsigned char**)(arg3 + 0x3000 + Enum_ov017_021c86f4_1816);
+    char* out;
+    int* src;
+    int i;
+    unsigned char* table = *(unsigned char**)(base + 0x3000 + regionalOffset0);
 
-	if (!func_ov017_021b8468(var3)) {
+	if (!func_ov017_021b8468(table)) {
 		return;
 	}
-	var0 = (char*)func_ov017_021b8470(var3);
-	if (var0 == NULL) {
+	out = (char*)func_ov017_021b8470(table);
+	if (out == NULL) {
 		return;
 	}
-	var1 = (int*)((char*)arg1 + 4);
-	for (var2 = 0; var2 < 4; var2++) {
-		int var4 = var1[var2];
-		if (var4 >= 0) {
-			int var5 = (var2 << 16) >> 14;
-			*(int*)(var0 + var5 + 0x8e84) = var4;
+	src = (int*)((char*)param1 + 4);
+	for (i = 0; i < 4; i++) {
+		int v = src[i];
+		if (v >= 0) {
+			int off = (i << 16) >> 14;
+			*(int*)(out + off + 0x8e84) = v;
 		}
 	}
 }

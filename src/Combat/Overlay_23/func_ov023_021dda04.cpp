@@ -3,57 +3,57 @@
 
 extern "C" void func_ov023_021dc520(void* obj);
 extern "C" void func_ov023_021dd404(void* obj);
-int DispatchByMode77c_021ddbb8(void* obj, int a, int b);
-struct Obj021ddbf8;
-int Check_021ddbf8(struct Obj021ddbf8* arg);
+extern "C" int func_ov023_021ddbb8(void* obj, int a, int b);
+struct Struct_ov023_021dd59c;
+extern "C" int func_ov023_021ddbf8(struct Struct_ov023_021dd59c* arg);
 extern "C" void func_ov023_021dc354(void* obj);
-void SetCombatModeFromCase020dc2d0(int mode);
+extern "C" void func_020dc2d0(int mode);
 
 struct Struct_ov023_021dda04 {
 #if defined(jpn)
-    char unknown_0_[0x6f0];
+    char pad0[0x6f0];
 #else
-    char unknown1_0_[0x774];
+    char pad0[0x774];
 #endif
-    unsigned short unknown_774_;
+    unsigned short field774;
     unsigned char unknown_776_;
     unsigned char unknown_777_;
     char unknown_778_[0x77b - 0x778];
     signed char unknown_77b_;
 };
 
-// USA: func_ov023_021dda04  (semantic: AdvanceCombatStageState_021dda04)
-extern "C" ARM void func_ov023_021dda04(struct Obj021dda04* obj) {
+// USA: func_ov023_021dda04
+extern "C" ARM void func_ov023_021dda04(struct Struct_ov023_021dda04* obj) {
     GameState::GetInstance()->GetResources();
 
-    if (arg0->unknown_777_ == 0) {
-        func_ov023_021dc520(arg0);
-        func_ov023_021dd404(arg0);
-        if (!(arg0->unknown_774_ & 0x40)) {
-            arg0->unknown_776_ = 3;
+    if (obj->unknown_777_ == 0) {
+        func_ov023_021dc520(obj);
+        func_ov023_021dd404(obj);
+        if (!(obj->field774 & 0x40)) {
+            obj->unknown_776_ = 3;
             return;
         }
-        func_ov023_021ddbb8(arg0, ~0xf, 8);
-        arg0->unknown_777_ = arg0->unknown_777_ + 1;
+        func_ov023_021ddbb8(obj, ~0xf, 8);
+        obj->unknown_777_ = obj->unknown_777_ + 1;
     }
 
-    if (arg0->unknown_777_ == 1) {
-        func_ov023_021dc520(arg0);
-        func_ov023_021dd404(arg0);
-        if (func_ov023_021ddbf8((struct Struct_ov023_021dd59c*)arg0) == 0) {
-            arg0->unknown_777_ = arg0->unknown_777_ + 1;
+    if (obj->unknown_777_ == 1) {
+        func_ov023_021dc520(obj);
+        func_ov023_021dd404(obj);
+        if (func_ov023_021ddbf8((struct Struct_ov023_021dd59c*)obj) == 0) {
+            obj->unknown_777_ = obj->unknown_777_ + 1;
         }
     }
 
-    if (arg0->unknown_777_ != 2) return;
+    if (obj->unknown_777_ != 2) return;
 
-    func_ov023_021dc354(arg0);
-    if (arg0->unknown_774_ & 0x200) {
-        arg0->unknown_776_ = 3;
+    func_ov023_021dc354(obj);
+    if (obj->field774 & 0x200) {
+        obj->unknown_776_ = 3;
         return;
     }
-    if (arg0->unknown_77b_ != 1) {
+    if (obj->unknown_77b_ != 1) {
         func_020dc2d0(0);
     }
-    arg0->unknown_776_ = 3;
+    obj->unknown_776_ = 3;
 }

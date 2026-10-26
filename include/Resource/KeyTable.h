@@ -27,8 +27,8 @@ struct Struct020dfc40 {
     void* allocator;  // what func_020dfd40 loads the table into (KeyTable_Load's allocator)
 };
 
-// One key table entry: {key, text offset}, the offset relocated to a pointer (UpdateNodeField4). The tag stays
-// because UpdateNodeField4's C++ symbol is mangled with it.
+// One key table entry: {key, text offset}, the offset relocated to a pointer (func_020dfbdc). The tag stays
+// because func_020dfbdc's C++ symbol is mangled with it.
 struct Node020dfbdc {
     int key;
     int text;

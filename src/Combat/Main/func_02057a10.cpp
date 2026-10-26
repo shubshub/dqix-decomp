@@ -1,33 +1,33 @@
 #include <globaldefs.h>
 
-extern "C" void func_02059f54(void* arg0, int arg1);
+extern "C" void func_02059f54(void* elem, int idx);
 
 struct Struct_02057a10_2 {
-    char unknown_0_[0xb2];
-    short unknown_b2_;                 // 0xb2
-    char unknown_b4_[0x18];            // 0xb4..0xcb
-    unsigned char unknown_cc_0_ : 1;       // 0xcc bit0
-    unsigned char unknown_cc_1_ : 1;       // bit1 (0x2)
-    unsigned char unknown_cc_2_ : 1;
-    unsigned char unknown_cc_3_ : 1;
+    char pad0[0xb2];
+    short flag;                 // 0xb2
+    char pad1[0x18];            // 0xb4..0xcb
+    unsigned char b0 : 1;       // 0xcc bit0
+    unsigned char b1 : 1;       // bit1 (0x2)
+    unsigned char b2 : 1;
+    unsigned char b3 : 1;
     unsigned char unknown_cc_4_ : 1;
     unsigned char unknown_cc_5_ : 1;
     unsigned char unknown_cc_6_ : 1;
     unsigned char unknown_cc_7_ : 1;
-    char unknown_cd_[7];               // 0xcd..0xd3
+    char pad2[7];               // 0xcd..0xd3
 };
 
 struct Struct_02057a10 {
-    char unknown_0_[8];
-    struct Struct_02057a10_2 unknown_8_[16];
+    char hdr[8];
+    struct Struct_02057a10_2 elems[16];
 };
 
 // USA: func_02057a10
-extern "C" ARM void func_02057a10(struct Struct_02057a10* arg0) {
-    int var0;
-    for (var0 = 0; var0 < 16; var0++) {
-        if (!arg0->unknown_8_[var0].unknown_cc_1_ && arg0->unknown_8_[var0].unknown_b2_ <= -1) {
-            func_02059f54(&arg0->unknown_8_[var0], var0 + 0xd0);
+extern "C" ARM void func_02057a10(struct Struct_02057a10* c) {
+    int i;
+    for (i = 0; i < 16; i++) {
+        if (!c->elems[i].b1 && c->elems[i].flag <= -1) {
+            func_02059f54(&c->elems[i], i + 0xd0);
         }
     }
 }

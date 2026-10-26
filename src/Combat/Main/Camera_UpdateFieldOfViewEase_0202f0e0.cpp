@@ -2,7 +2,7 @@
 // The camera's field of view (+0x58, degrees fx32) and its ease: the target (+0x1f0) and the time left (+0x1f4),
 // which Camera_EaseFieldOfViewTo starts.
 struct AngleTrig0202e9a4 { unsigned char padding0[0x58]; int fieldOfView; unsigned char padding5c[0x194]; int fieldOfViewTarget; unsigned fieldOfViewEaseTime; };
-void Camera_SetFieldOfView(AngleTrig0202e9a4*,int);
+extern "C" void Camera_SetFieldOfView(AngleTrig0202e9a4*,int);
 extern "C" {
 #if defined(jpn)
 extern unsigned data_02104040;

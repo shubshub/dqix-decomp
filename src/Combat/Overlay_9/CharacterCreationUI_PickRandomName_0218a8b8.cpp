@@ -4,10 +4,10 @@
 
 extern int CharacterCreationUI_randomNameCounts[];
 
-int KeyTable_Get(Container020e0310* c, int key);
+extern "C" int KeyTable_Get(Container020e0310* c, int key);
 
 // Overlay 9, originally ResetEntrySkill0218a8b8 (USA/EUR 0x0218a8b8; JPN 0x0218b850, a body of its own)
-ARM void CharacterCreationUI_PickRandomName(void* objRaw) {
+extern "C" ARM void CharacterCreationUI_PickRandomName(void* objRaw) {
     CharacterCreationUI* self = (CharacterCreationUI*)objRaw;
     char** names = self->names;
     char* name = names[self->sex];

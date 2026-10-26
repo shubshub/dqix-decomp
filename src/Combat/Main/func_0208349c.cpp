@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 // USA: func_0208349c
-extern "C" ARM unsigned char* func_0208349c(unsigned char* arg0, int arg1) {
-    unsigned char* var0[11];
-    var0[0] = arg0 + 0x570;
-    var0[1] = arg0 + 0x5a0;
-    var0[2] = arg0 + 0x56f;
-    var0[3] = arg0 + 0x56f;
-    var0[4] = arg0 + 0x56f;
-    var0[5] = arg0 + 0x5d0;
-    var0[6] = arg0 + 0x600;
-    var0[7] = arg0 + 0x630;
-    var0[8] = arg0 + 0x660;
-    var0[9] = arg0 + 0x690;
-    var0[10] = arg0 + 0x6c0;
-    return var0[arg1];
+extern "C" ARM unsigned char* func_0208349c(unsigned char* base, int idx) {
+    unsigned char* table[11];
+    table[0] = base + 0x570;
+    table[1] = base + 0x5a0;
+    table[2] = base + 0x56f;
+    table[3] = base + 0x56f;
+    table[4] = base + 0x56f;
+    table[5] = base + 0x5d0;
+    table[6] = base + 0x600;
+    table[7] = base + 0x630;
+    table[8] = base + 0x660;
+    table[9] = base + 0x690;
+    table[10] = base + 0x6c0;
+    return table[idx];
 }

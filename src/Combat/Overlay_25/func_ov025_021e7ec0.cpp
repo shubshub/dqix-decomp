@@ -6,39 +6,39 @@
 #include "NitroSDK/Cache.h"
 
 struct Struct_ov025_021e7ec0 {
-    char unknown_0_[8];
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    char pad0[8];
+    unsigned short index;
+    unsigned short key;
 };
 
-extern "C" int func_ov000_021820bc(void* arg0, int arg1, int arg2, int arg3);
+extern "C" int func_ov000_021820bc(void* obj, int unused, int index, int arg);
 extern "C" void* func_ov000_02160130(void);
-extern "C" GameObject* func_ov000_02162d88(void* arg0, unsigned short arg1);
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" void func_02048588(unsigned char* arg0, unsigned char* arg1);
-extern "C" void func_ov000_021677fc(void* arg0);
+extern "C" GameObject* func_ov000_02162d88(void* obj, unsigned short key);
+extern "C" GameObject* func_0200fea4(GameState* battleStruct, int combatantId);
+extern "C" void func_02048588(unsigned char* self, unsigned char* dst);
+extern "C" void func_ov000_021677fc(void* work);
 
 // USA: func_ov025_021e7ec0
-extern "C" ARM int func_ov025_021e7ec0(struct Struct_ov025_021e7ec0* arg0, int arg1, int arg2, void* arg3) {
-    GameState* var0 = GameState::GetInstance();
-    int var1[8];
-    int var2 = func_ov000_021820bc(arg3, arg1, arg0->unknown_8_, (int)&var1[0]);
-    void* var3 = func_ov000_02160130();
-    GameObject* var4 = func_ov000_02162d88(var3, arg0->unknown_a_);
-    if (var4 == NULL) return 1;
-    if (var4->obj3D_.pModel_ == NULL) return 1;
-    NSBXXTex* var5 = var4->obj3D_.pModel_->GetTEX0();
-    if (var5 == NULL) return 1;
-    for (int var6 = 0; var6 < var2; var6++) {
-        GameObject* var7 = func_0200fea4(var0, var1[var6]);
-        if (var7) {
-            func_02048588((unsigned char*)var4, (unsigned char*)var7);
-            unsigned int var8 = var7->obj3D_.GetTexturePaletteOffset();
-            CleanInvalidateCacheRange((char*)var5 + var5->block4Offset_, var5->block4NumEightBytes_ << 3);
-            NSBXX_Tex_WritePaletteVRAMOffset(var5, var8);
-            StageTexFilePaletteData(var5, true);
+extern "C" ARM int func_ov025_021e7ec0(struct Struct_ov025_021e7ec0* p, int unused, int arg2, void* obj) {
+    GameState* gs = GameState::GetInstance();
+    int ids[8];
+    int count = func_ov000_021820bc(obj, unused, p->index, (int)&ids[0]);
+    void* work = func_ov000_02160130();
+    GameObject* source = func_ov000_02162d88(work, p->key);
+    if (source == NULL) return 1;
+    if (source->obj3D_.pModel_ == NULL) return 1;
+    NSBXXTex* tex = source->obj3D_.pModel_->GetTEX0();
+    if (tex == NULL) return 1;
+    for (int i = 0; i < count; i++) {
+        GameObject* c = func_0200fea4(gs, ids[i]);
+        if (c) {
+            func_02048588((unsigned char*)source, (unsigned char*)c);
+            unsigned int offset = c->obj3D_.GetTexturePaletteOffset();
+            CleanInvalidateCacheRange((char*)tex + tex->block4Offset_, tex->block4NumEightBytes_ << 3);
+            NSBXX_Tex_WritePaletteVRAMOffset(tex, offset);
+            StageTexFilePaletteData(tex, true);
         }
     }
-    func_ov000_021677fc(var3);
+    func_ov000_021677fc(work);
     return 1;
 }

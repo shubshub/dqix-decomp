@@ -12,7 +12,7 @@ struct ResetStruct;
 struct StreamState;
 struct StreamHeader;
 
-struct Struct02030774;
+struct Struct_0201f040_3;
 
 void* LoadFileIntoMemory(const char*, void*, unsigned int*);
 
@@ -21,7 +21,7 @@ extern char g_fileLoadBuffer[];
 extern char data_020f1574[];
 
 // Main, originally PrepareAndRunBufferedScript02099cb8 (USA 0x02099cb8, EUR 0x02099cc8, JPN 0x0209b9ec)
-ARM void CharacterColors_Load(char* param0) {
+extern "C" ARM void CharacterColors_Load(char* param0) {
     int count;
     char buf[0x430];
 
@@ -33,7 +33,7 @@ ARM void CharacterColors_Load(char* param0) {
         ((Script*)((struct ResetStruct*)buf))->Initialize();
         ((Script*)buf)->SetOpcodeLookup((Script::OpcodeLookupEntry*)data_020f1574);
         ((Script*)((struct StreamState*)buf))->Load(header, count);
-        ((Script*)((struct Struct02030774*)buf))->Execute();
+        ((Script*)((struct Struct_0201f040_3*)buf))->Execute();
     }
     BackgroundLoader::RemoveLockGlobal();
 }

@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
-struct Struct_0210f3c0_2 { int unknown_0_; unsigned int unknown_4_; };
+struct Struct_0210f3c0_2 { int a; unsigned int flags; };
 extern struct Struct_0210f3c0_2 data_0210f3c0;
 
 // USA: func_020bbeb0
 extern "C" ARM int func_020bbeb0(void) {
-    int var0;
-    int var1 = 1;
-    unsigned int var2 = data_0210f3c0.unknown_4_;
-    var0 = 0;
+    int i;
+    int mask = 1;
+    unsigned int val = data_0210f3c0.flags;
+    i = 0;
     do {
-        if (!(var2 & var1)) {
-            data_0210f3c0.unknown_4_ |= var1;
-            return var0;
+        if (!(val & mask)) {
+            data_0210f3c0.flags |= mask;
+            return i;
         }
-        var1 <<= 1;
-        var0++;
-    } while (var0 < 8);
+        mask <<= 1;
+        i++;
+    } while (i < 8);
     return -1;
 }

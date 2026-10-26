@@ -1,5 +1,5 @@
 #include <globaldefs.h>
 
 // USA: func_0205ec2c
-extern "C" ARM void func_0205ec2c(void* arg0) {
+extern "C" ARM void func_0205ec2c(void* obj) {
 }

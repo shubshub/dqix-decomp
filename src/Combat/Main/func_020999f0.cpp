@@ -1,37 +1,37 @@
 #include <globaldefs.h>
 
-struct Struct_020999f0_2 { char unknown_0_[7]; };
+struct Struct_020999f0_2 { char v[7]; };
 
 struct Struct_020995f8_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned char unknown_4_;
+    unsigned short f0;
+    unsigned short f2;
+    unsigned char f4;
     struct Struct_020999f0_2 unknown_5_;
-    unsigned char unknown_c_;
+    unsigned char fc;
     unsigned char unknown_d_;
-    unsigned char unknown_e_;
-    unsigned char unknown_f_;
+    unsigned char fe;
+    unsigned char pad;
 };
 
 struct Struct_020999f0 {
-    struct Struct_020995f8_2* unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    struct Struct_020995f8_2* data;
+    int count;
+    int cap;
 };
 
 // USA: func_020999f0
-extern "C" ARM void func_020999f0(struct Struct_020999f0* arg0, struct Struct_020995f8_2* arg1) {
-    int var0 = arg0->unknown_4_;
-    if (arg0->unknown_8_ <= var0) return;
-    arg0->unknown_4_ = var0 + 1;
+extern "C" ARM void func_020999f0(struct Struct_020999f0* list, struct Struct_020995f8_2* src) {
+    int i = list->count;
+    if (list->cap <= i) return;
+    list->count = i + 1;
     {
-        struct Struct_020995f8_2* var1 = &arg0->unknown_0_[var0];
-        var1->unknown_0_ = arg1->unknown_0_;
-        var1->unknown_2_ = arg1->unknown_2_;
-        var1->unknown_4_ = arg1->unknown_4_;
-        var1->unknown_5_ = arg1->unknown_5_;
-        var1->unknown_c_ = arg1->unknown_c_;
-        var1->unknown_d_ = arg1->unknown_d_;
-        var1->unknown_e_ = arg1->unknown_e_;
+        struct Struct_020995f8_2* elem = &list->data[i];
+        elem->f0 = src->f0;
+        elem->f2 = src->f2;
+        elem->f4 = src->f4;
+        elem->unknown_5_ = src->unknown_5_;
+        elem->fc = src->fc;
+        elem->unknown_d_ = src->unknown_d_;
+        elem->fe = src->fe;
     }
 }

@@ -13,39 +13,39 @@ enum { Enum_02046cc8_716 = 0x2cc };
 extern "C" void NSBXX_Model_SetPolygonID(void* obj, unsigned int value);
 
 struct Foo0207df50;
-void VramState_Rewind(struct Foo0207df50* p);
-void VramState_Restore(char* obj);
-void VramState_Save(char* obj);
+extern "C" void VramState_Rewind(struct Foo0207df50* p);
+extern "C" void VramState_Restore(char* obj);
+extern "C" void VramState_Save(char* obj);
 struct Fields020407b4;
-void SetFields0x44(struct Fields020407b4* obj, int a, int b, int c);
+extern "C" void func_020407b4(struct Fields020407b4* obj, int a, int b, int c);
 
 // USA: func_02046cc8
-extern "C" ARM int func_02046cc8(void* arg0) {
-    char* var0;
-    void* var1;
-    BackgroundLoader* var2;
-    SafeAllocator* var3;
-    void* var4;
-    unsigned int var5;
-    ObjectArchiveLoadInfo var6;
+extern "C" ARM int func_02046cc8(void* self) {
+    char* pool;
+    void* base;
+    BackgroundLoader* loader;
+    SafeAllocator* allocator;
+    void* fileData;
+    unsigned int fileSize;
+    ObjectArchiveLoadInfo info;
 
-    if (*(int*)((char*)arg0 + 0xe8) != 0) {
+    if (*(int*)((char*)self + 0xe8) != 0) {
         return 1;
     }
-    if (*(int*)((char*)arg0 + 0xec) < 0) {
+    if (*(int*)((char*)self + 0xec) < 0) {
         return 0;
     }
 
     GameState::GetInstance();
-    var1 = GetGameResources();
-    var3 = *(SafeAllocator**)((char*)arg0 + 0x38);
-    if (var3 == NULL) {
-        var3 = (SafeAllocator*)((char*)arg0 + 0x24);
+    base = GetGameResources();
+    allocator = *(SafeAllocator**)((char*)self + 0x38);
+    if (allocator == NULL) {
+        allocator = (SafeAllocator*)((char*)self + 0x24);
     }
-    var2 = BackgroundLoader::GetInstance();
+    loader = BackgroundLoader::GetInstance();
 
     if (loader->GetTaskStatus(*(int*)((char*)self + 0xec)) != 0) {
-        pool = (char*)base + PoolOffset;
+        pool = (char*)base + Enum_02046cc8_716;
         if (*(unsigned char*)((char*)self + 0x1d) != 0) {
             VramState_Rewind((struct Foo0207df50*)(pool + 0xc40));
             VramState_Restore(pool + 0xc40);
@@ -59,15 +59,15 @@ extern "C" ARM int func_02046cc8(void* arg0) {
                 info.allocator = allocator;
                 info.unk_10 = 1;
                 obj->LoadFromCHRArchive(&info);
-                void* mdl = *(void**)((char*)self + 0x44);
-                NSBXX_Model_SetPolygonID(*(void**)((char*)mdl + 0x54), 0x3d);
-                SetFields0x44((struct Fields020407b4*)obj, 0, -0xa000, 0x1000);
+                void* var8 = *(void**)((char*)self + 0x44);
+                NSBXX_Model_SetPolygonID(*(void**)((char*)var8 + 0x54), 0x3d);
+                func_020407b4((struct Fields020407b4*)obj, 0, -0xa000, 0x1000);
                 obj->SetAnimationByIndex(0, 0);
             }
             VramState_Save(pool + 0xc40);
         }
-        var2->RemoveTask(*(int*)((char*)arg0 + 0xec));
-        *(int*)((char*)arg0 + 0xec) = -1;
+        loader->RemoveTask(*(int*)((char*)self + 0xec));
+        *(int*)((char*)self + 0xec) = -1;
         return 1;
     }
     return 0;

@@ -7,16 +7,16 @@ enum { Enum_ov006_0215bb7c_2786 = 0x962 };
 enum { Enum_ov006_0215bb7c_2786 = 0xae2 };
 #endif
 
-struct Obj0208203c;
+struct Struct_02081f20_2;
 struct SePlayer;
-struct Obj2081;
-struct Obj0215951c;
-struct Cont0207fe44;
-struct StructC28;
-struct Struct021596f0;
+struct Struct_0207fdcc_2;
+struct Struct_ov006_0215951c;
+struct Struct_0207fe44;
+struct Struct_ov006_02158c28;
+struct Struct_ov006_021596f0;
 
 struct Struct_ov006_02154614 {
-    char unknown_0_[Enum_ov006_0215bb7c_2786];
+    char unk_0[Enum_ov006_0215bb7c_2786];
     unsigned short unknown_ae2_;
 };
 
@@ -25,43 +25,43 @@ struct Struct_ov000_0217ab8c;
 struct Struct_ov006_02157a60 {
 #if !defined(jpn)
     int unknown_0_;
-    char** unknown_4_;
+    char** texts_;
 #endif
-    void* unknown_8_;
-    void* unknown_c_;
-    Struct_ov006_02154614* unknown_10_;
-    Struct_ov000_0217ab8c* unknown_14_;
-    void* unknown_18_;
-    void* unknown_1c_;
-    void* unknown_20_;
-    void* unknown_24_;
-    void* unknown_28_;
+    void* canvasBuffer_;
+    void* allocators_;
+    Struct_ov006_02154614* pot_;
+    Struct_ov000_0217ab8c* menu_;
+    void* choice_;
+    void* backgrounds_;
+    void* canvases_;
+    void* sprites_;
+    void* animations_;
     void* unknown_2c_;
     void* unknown_30_;
     void* unknown_34_;
     void* unknown_38_;
     char unknown_3c_[8];
-    short* unknown_44_;
-    short** unknown_48_;
+    short* cursor_;
+    short** items_;
     unsigned char** unknown_4c_;
-    unsigned short* unknown_50_;
-    int unknown_54_[0x20 / 4];
-    int unknown_74_[0x28 / 4];
+    unsigned short* sizes_;
+    int subBackground_[0x20 / 4];
+    int ingredients_[0x28 / 4];
     int unknown_9c_[0xc / 4];
     unsigned short unknown_a8_;
     unsigned char unknown_aa_;
-    int unknown_ac_[0x54 / 4];
-    int unknown_100_[0x4c / 4];
-    int unknown_14c_[0xc / 4];
-    int unknown_158_[0x18 / 4];
-    char unknown_170_[0xc];
+    int renderer_[0x54 / 4];
+    int layout_[0x4c / 4];
+    int table_[0xc / 4];
+    int menuTexts_[0x18 / 4];
+    char itemNames_[0xc];
 #if defined(jpn)
     char unknown_174_[8];
 #endif
-    int unknown_17c_[4][0x74 / 4];
-    int unknown_34c_;
-    int unknown_350_;
-    int unknown_354_;
+    int results_[4][0x74 / 4];
+    int ticks_;
+    int menuResult_;
+    int task_;
     int unknown_358_;
     short unknown_35c_;
     short unknown_35e_;
@@ -73,29 +73,29 @@ struct Struct_ov006_02157a60 {
     short unknown_36a_;
     short unknown_36c_;
     short unknown_36e_;
-    short unknown_370_;
+    short item_;
     unsigned short unknown_372_[3];
     short unknown_378_[3];
-    short unknown_37e_;
+    short message_;
     unsigned short unknown_380_;
     short unknown_382_;
     signed char unknown_384_;
     signed char unknown_385_;
     unsigned char unknown_386_;
     unsigned char unknown_387_;
-    unsigned char unknown_388_;
-    unsigned char unknown_389_;
-    unsigned char unknown_38a_;
-    unsigned char unknown_38b_;
+    unsigned char page_;
+    unsigned char pages_;
+    unsigned char category_;
+    unsigned char count_;
     unsigned char unknown_38c_[3];
-    unsigned char unknown_38f_;
-    unsigned char unknown_390_;
+    unsigned char state_;
+    unsigned char step_;
     unsigned char unknown_391_;
     unsigned char unknown_392_;
     unsigned char unknown_393_;
-    unsigned short unknown_394_;
-    unsigned char unknown_396_;
-    unsigned char unknown_397_;
+    unsigned short flags_;
+    unsigned char female_;
+    unsigned char background_;
     unsigned char unknown_398_[3];
     int unknown_39c_;
     int unknown_3a0_;
@@ -117,142 +117,142 @@ struct Struct_ov006_02157a60 {
     unsigned char unknown_434_;
 };
 
-void ClearElementFlag0x20_02080c20(Obj2081* menu, int id);
-void SetEntryLowNibbleAndElement02080c68(void* menu, int group, int value);
-void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081* menu, int group);
-short FindMappedMemberId02080468(void* menu, int group);
-void SetElementFlag0x40_02081ea4(Obj2081* menu, int group, int value);
+extern "C" void func_02080c20(Struct_0207fdcc_2* menu, int id);
+extern "C" void func_02080c68(void* menu, int group, int value);
+extern "C" void func_0207fdcc(Struct_0207fdcc_2* menu, int group);
+extern "C" short func_02080468(void* menu, int group);
+extern "C" void func_02081ea4(Struct_0207fdcc_2* menu, int group, int value);
 extern "C" void func_020813ec(void* menu, int group);
-void CalcField389_0215951c(Obj0215951c* self);
-void ClearSublistEntriesFlag4_020804fc(void* menu, int group);
-extern "C" void func_ov006_0215f4dc(AlchemyMenu* self);
-void ClearFlagsForIds_021573c8(void* layout);
-extern "C" void func_ov006_021553bc(AlchemyPot* pot, short* items, unsigned char* amounts);
-void ResetWithSub0208203c(Obj0208203c* repeat);
-extern "C" void func_ov006_02155710(AlchemyPot* pot, short paramB, unsigned char paramC);
-extern "C" int func_ov006_021595b4(AlchemyMenu* self);
-extern "C" unsigned char func_ov006_02158a28(AlchemyMenu* self);
-void SePlayer_Play(SePlayer* sound, int, int);
-extern "C" int func_ov006_02159218(AlchemyMenu* self);
-extern "C" unsigned char func_ov006_02158b78(AlchemyMenu* self);
-void CallFunc0204c804OverAllElems(Cont0207fe44* menu);
-void ClearField44IfSet_02158c28(StructC28* self);
-extern "C" void func_ov006_0215943c(AlchemyMenu* self);
-int Check02159564(void* self);
-extern "C" void func_ov006_02159274(AlchemyMenu* self, unsigned char* category, short* item, unsigned char* count);
-void UpdateEntryFlags021596f0(Struct021596f0* self);
-extern "C" int func_ov006_02159834(AlchemyMenu* self);
-extern "C" void func_ov006_02159108(AlchemyMenu* self, unsigned char category, short item, unsigned char count);
+extern "C" void func_ov006_0215951c(Struct_ov006_0215951c* self);
+extern "C" void func_020804fc(void* menu, int group);
+extern "C" void func_ov006_0215f4dc(Struct_ov006_02157a60* self);
+extern "C" void func_ov006_021573c8(void* layout);
+extern "C" void func_ov006_021553bc(Struct_ov006_02154614* arg0, short* items, unsigned char* arg2);
+extern "C" void func_0208203c(Struct_02081f20_2* repeat);
+extern "C" void func_ov006_02155710(Struct_ov006_02154614* arg0, short arg1, unsigned char arg2);
+extern "C" int func_ov006_021595b4(Struct_ov006_02157a60* self);
+extern "C" unsigned char func_ov006_02158a28(Struct_ov006_02157a60* self);
+extern "C" void SePlayer_Play(SePlayer* sound, int, int);
+extern "C" int func_ov006_02159218(Struct_ov006_02157a60* self);
+extern "C" unsigned char func_ov006_02158b78(Struct_ov006_02157a60* self);
+extern "C" void func_0207fe44(Struct_0207fe44* menu);
+extern "C" void func_ov006_02158c28(Struct_ov006_02158c28* self);
+extern "C" void func_ov006_0215943c(Struct_ov006_02157a60* self);
+extern "C" int func_ov006_02159564(void* self);
+extern "C" void func_ov006_02159274(Struct_ov006_02157a60* self, unsigned char* category, short* item, unsigned char* count);
+extern "C" void func_ov006_021596f0(Struct_ov006_021596f0* self);
+extern "C" int func_ov006_02159834(Struct_ov006_02157a60* self);
+extern "C" void func_ov006_02159108(Struct_ov006_02157a60* self, unsigned char category, short item, unsigned char count);
 
 extern "C" char g_sePlayer[];
 
-static inline unsigned char inline_ov006_0215bb7c(Struct_ov006_02157a60* arg0) { return arg0->unknown_38a_; }
+static inline unsigned char inline_ov006_0215bb7c(Struct_ov006_02157a60* self) { return self->category_; }
 
-static inline unsigned char inline_ov003_0216e714(Struct_ov006_02157a60* arg0) { return arg0->unknown_38b_; }
+static inline unsigned char inline_ov003_0216e714(Struct_ov006_02157a60* self) { return self->count_; }
 
 // USA: func_ov006_0215bb7c
-extern "C" ARM void func_ov006_0215bb7c(Struct_ov006_02157a60* arg0) {
-    Struct_ov000_0217ab8c* var0 = arg0->unknown_14_;
-    if (arg0->unknown_390_ == 0)
+extern "C" ARM void func_ov006_0215bb7c(Struct_ov006_02157a60* self) {
+    Struct_ov000_0217ab8c* menu = self->menu_;
+    if (self->step_ == 0)
     {
-        func_02080c20((Struct_0207fdcc_2*)var0, 0x10);
-        func_02080c20((Struct_0207fdcc_2*)var0, 0x11);
-        func_02080c68(var0, 0x11, 1);
-        arg0->unknown_10_->unknown_ae2_ &= ~0x10;
-        func_0207fdcc((Struct_0207fdcc_2*)var0, 0);
-        func_0207fdcc((Struct_0207fdcc_2*)var0, 1);
-        arg0->unknown_36e_ = 0x10;
-        if (arg0->unknown_362_ < 0)
-            arg0->unknown_362_ = func_02080468(var0, arg0->unknown_36e_);
-        func_02081ea4((Struct_0207fdcc_2*)var0, arg0->unknown_36e_, 0);
-        func_020813ec(var0, arg0->unknown_36e_);
-        func_02080c68(var0, arg0->unknown_36e_, 0);
-        unsigned char var1;
-        arg0->unknown_370_ = -1;
-        arg0->unknown_38b_ = 0;
-        for (var1 = 0; var1 < 3; var1++)
+        func_02080c20((Struct_0207fdcc_2*)menu, 0x10);
+        func_02080c20((Struct_0207fdcc_2*)menu, 0x11);
+        func_02080c68(menu, 0x11, 1);
+        self->pot_->unknown_ae2_ &= ~0x10;
+        func_0207fdcc((Struct_0207fdcc_2*)menu, 0);
+        func_0207fdcc((Struct_0207fdcc_2*)menu, 1);
+        self->unknown_36e_ = 0x10;
+        if (self->unknown_362_ < 0)
+            self->unknown_362_ = func_02080468(menu, self->unknown_36e_);
+        func_02081ea4((Struct_0207fdcc_2*)menu, self->unknown_36e_, 0);
+        func_020813ec(menu, self->unknown_36e_);
+        func_02080c68(menu, self->unknown_36e_, 0);
+        unsigned char i;
+        self->item_ = -1;
+        self->count_ = 0;
+        for (i = 0; i < 3; i++)
         {
-            arg0->unknown_378_[var1] = -1;
-            arg0->unknown_38c_[var1] = 0;
+            self->unknown_378_[i] = -1;
+            self->unknown_38c_[i] = 0;
         }
-        func_ov006_0215951c((Struct_ov006_0215951c*)arg0);
-        func_02081ea4((Struct_0207fdcc_2*)var0, 0x11, 0);
-        func_020804fc(var0, 0x11);
-        func_ov006_0215f4dc(arg0);
-        arg0->unknown_394_ |= 0x10;
-        func_ov006_021573c8(arg0->unknown_100_);
-        func_ov006_021553bc(arg0->unknown_10_, arg0->unknown_378_, arg0->unknown_38c_);
-        func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-        arg0->unknown_44_ = 0;
-        func_ov006_02155710(arg0->unknown_10_, -1, 0);
-        arg0->unknown_390_++;
+        func_ov006_0215951c((Struct_ov006_0215951c*)self);
+        func_02081ea4((Struct_0207fdcc_2*)menu, 0x11, 0);
+        func_020804fc(menu, 0x11);
+        func_ov006_0215f4dc(self);
+        self->flags_ |= 0x10;
+        func_ov006_021573c8(self->layout_);
+        func_ov006_021553bc(self->pot_, self->unknown_378_, self->unknown_38c_);
+        func_0208203c((Struct_02081f20_2*)self->unknown_9c_);
+        self->cursor_ = 0;
+        func_ov006_02155710(self->pot_, -1, 0);
+        self->step_++;
     }
-    else if (arg0->unknown_390_ == 1)
+    else if (self->step_ == 1)
     {
-        if (func_ov006_021595b4(arg0))
+        if (func_ov006_021595b4(self))
             return;
-        arg0->unknown_44_ = &arg0->unknown_362_;
-        if (arg0->unknown_35e_ != *arg0->unknown_44_)
+        self->cursor_ = &self->unknown_362_;
+        if (self->unknown_35e_ != *self->cursor_)
         {
-            func_ov006_0215951c((Struct_ov006_0215951c*)arg0);
-            func_ov006_0215f4dc(arg0);
+            func_ov006_0215951c((Struct_ov006_0215951c*)self);
+            func_ov006_0215f4dc(self);
         }
-        if (func_ov006_02158a28(arg0))
+        if (func_ov006_02158a28(self))
         {
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
-            ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+            func_0208203c((Struct_02081f20_2*)self->unknown_9c_);
             self->cursor_ = 0;
             if (!func_ov006_02159218(self))
                 return;
-            func_02080c68(var0, arg0->unknown_36e_, 1);
-            func_02081ea4((Struct_0207fdcc_2*)var0, arg0->unknown_36e_, 1);
-            func_02080c68(var0, 0x11, 0);
-            arg0->unknown_390_++;
+            func_02080c68(menu, self->unknown_36e_, 1);
+            func_02081ea4((Struct_0207fdcc_2*)menu, self->unknown_36e_, 1);
+            func_02080c68(menu, 0x11, 0);
+            self->step_++;
         }
-        else if (func_ov006_02158b78(arg0))
+        else if (func_ov006_02158b78(self))
         {
-            arg0->unknown_432_ = 1;
-            func_0207fe44((Struct_0207fe44*)var0);
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-            arg0->unknown_44_ = 0;
-            arg0->unknown_364_ = -1;
-            arg0->unknown_38f_ = 4;
-            arg0->unknown_390_ = 0;
-            arg0->unknown_394_ &= ~0x10;
-            arg0->unknown_394_ |= 0x20;
-            arg0->unknown_37e_ = 0;
-            arg0->unknown_392_ = 0;
+            self->unknown_432_ = 1;
+            func_0207fe44((Struct_0207fe44*)menu);
+            func_0208203c((Struct_02081f20_2*)self->unknown_9c_);
+            self->cursor_ = 0;
+            self->unknown_364_ = -1;
+            self->state_ = 4;
+            self->step_ = 0;
+            self->flags_ &= ~0x10;
+            self->flags_ |= 0x20;
+            self->message_ = 0;
+            self->unknown_392_ = 0;
         }
-        func_ov006_02158c28((Struct_ov006_02158c28*)arg0);
+        func_ov006_02158c28((Struct_ov006_02158c28*)self);
     }
-    else if (arg0->unknown_390_ == 2)
+    else if (self->step_ == 2)
     {
-        unsigned char var2;
-        for (var2 = 0; var2 < 3; var2++)
+        unsigned char i;
+        for (i = 0; i < 3; i++)
         {
-            arg0->unknown_378_[var2] = -1;
-            arg0->unknown_38c_[var2] = 0;
+            self->unknown_378_[i] = -1;
+            self->unknown_38c_[i] = 0;
         }
-        func_ov006_0215943c(arg0);
-        func_ov006_021553bc(arg0->unknown_10_, arg0->unknown_378_, arg0->unknown_38c_);
-        arg0->unknown_390_++;
+        func_ov006_0215943c(self);
+        func_ov006_021553bc(self->pot_, self->unknown_378_, self->unknown_38c_);
+        self->step_++;
     }
-    else if (arg0->unknown_390_ == 3)
+    else if (self->step_ == 3)
     {
-        if (func_ov006_02159564(arg0))
+        if (func_ov006_02159564(self))
             return;
-        if (func_ov006_02158a28(arg0) && arg0->unknown_35e_ == *arg0->unknown_44_)
+        if (func_ov006_02158a28(self) && self->unknown_35e_ == *self->cursor_)
         {
-            unsigned char var3 = 0;
-            unsigned char var4 = 0;
-            short var5 = 0;
-            func_ov006_02159274(arg0, &var3, &var5, &var4);
-            if (var4)
+            unsigned char category = 0;
+            unsigned char count = 0;
+            short item = 0;
+            func_ov006_02159274(self, &category, &item, &count);
+            if (count)
             {
                 SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
-                ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+                func_0208203c((Struct_02081f20_2*)self->unknown_9c_);
                 self->cursor_ = 0;
-                SetElementFlag0x40_02081ea4((Obj2081*)self->menu_, 0x11, 1);
+                func_02081ea4((Struct_0207fdcc_2*)self->menu_, 0x11, 1);
                 self->category_ = category;
                 self->item_ = item;
                 self->count_ = 1;
@@ -260,61 +260,61 @@ extern "C" ARM void func_ov006_0215bb7c(Struct_ov006_02157a60* arg0) {
                 self->flags_ &= ~0x10;
                 self->flags_ |= 0x20;
                 self->message_ = 9;
-                self->messageStep_ = 0;
+                self->unknown_392_ = 0;
                 return;
             }
         }
-        else if (func_ov006_02158b78(arg0))
+        else if (func_ov006_02158b78(self))
         {
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-            arg0->unknown_44_ = 0;
-            arg0->unknown_364_ = -1;
-            arg0->unknown_390_ = 0;
+            func_0208203c((Struct_02081f20_2*)self->unknown_9c_);
+            self->cursor_ = 0;
+            self->unknown_364_ = -1;
+            self->step_ = 0;
         }
-        func_ov006_02158c28((Struct_ov006_02158c28*)arg0);
+        func_ov006_02158c28((Struct_ov006_02158c28*)self);
     }
-    else if (arg0->unknown_390_ == 4)
+    else if (self->step_ == 4)
     {
-        func_ov006_021596f0((Struct_ov006_021596f0*)arg0);
-        arg0->unknown_393_ = 0;
-        arg0->unknown_390_++;
+        func_ov006_021596f0((Struct_ov006_021596f0*)self);
+        self->unknown_393_ = 0;
+        self->step_++;
     }
-    else if (arg0->unknown_390_ == 5)
+    else if (self->step_ == 5)
     {
-        arg0->unknown_42c_ = 0;
-        int var6 = func_ov006_02159834(arg0);
-        if (var6 == 1)
+        self->unknown_42c_ = 0;
+        int result = func_ov006_02159834(self);
+        if (result == 1)
             return;
-        if (g_keyManager.TestKeysPressed(1) || var6 == 2)
+        if (g_keyManager.TestKeysPressed(1) || result == 2)
         {
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
-            ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+            func_0208203c((Struct_02081f20_2*)self->unknown_9c_);
             self->cursor_ = 0;
             self->flags_ &= ~8;
-            CallFunc0204c804OnMatchingKey_0207fdcc((Obj2081*)menu, 6);
-            unsigned char category = GetCategory(self);
-            unsigned char count = GetCount(self);
+            func_0207fdcc((Struct_0207fdcc_2*)menu, 6);
+            unsigned char category = inline_ov006_0215bb7c(self);
+            unsigned char count = inline_ov003_0216e714(self);
             func_ov006_02159108(self, category, self->item_, count);
-            func_ov006_021553bc(self->pot_, self->chosenItems_, self->chosenCounts_);
+            func_ov006_021553bc(self->pot_, self->unknown_378_, self->unknown_38c_);
             self->state_ = 6;
             self->step_ = 0;
 #if !defined(jpn)
-            arg0->unknown_387_ = arg0->unknown_38b_;
+            self->unknown_387_ = self->count_;
 #endif
-            arg0->unknown_37e_ = 0x39;
-            arg0->unknown_392_ = 0;
-            arg0->unknown_394_ |= 0x20 | 0x100;
+            self->message_ = 0x39;
+            self->unknown_392_ = 0;
+            self->flags_ |= 0x20 | 0x100;
         }
-        else if (func_ov006_02158b78(arg0) || var6 == 3)
+        else if (func_ov006_02158b78(self) || result == 3)
         {
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_9c_);
-            arg0->unknown_44_ = 0;
-            arg0->unknown_394_ &= ~8;
-            func_0207fdcc((Struct_0207fdcc_2*)var0, 6);
-            arg0->unknown_390_ = 0;
-            arg0->unknown_37e_ = 0x24;
-            arg0->unknown_392_ = 0;
-            arg0->unknown_394_ |= 0x20 | 0x100;
+            func_0208203c((Struct_02081f20_2*)self->unknown_9c_);
+            self->cursor_ = 0;
+            self->flags_ &= ~8;
+            func_0207fdcc((Struct_0207fdcc_2*)menu, 6);
+            self->step_ = 0;
+            self->message_ = 0x24;
+            self->unknown_392_ = 0;
+            self->flags_ |= 0x20 | 0x100;
         }
     }
 }

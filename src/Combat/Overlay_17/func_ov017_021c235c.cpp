@@ -3,8 +3,8 @@
 
 
 // USA: func_ov017_021c235c
-extern "C" ARM void func_ov017_021c235c(char* arg0) {
-	int var0 = (int)BackgroundLoader::GetInstance();
-	short var1 = *(short*)(arg0 + 8);
-	if (var1 > -1) ((BackgroundLoader*)(var0))->RemoveTask((int)(var1));
+extern "C" ARM void func_ov017_021c235c(char* self) {
+	int list = (int)BackgroundLoader::GetInstance();
+	short v = *(short*)(self + 8);
+	if (v > -1) ((BackgroundLoader*)(list))->RemoveTask((int)(v));
 }

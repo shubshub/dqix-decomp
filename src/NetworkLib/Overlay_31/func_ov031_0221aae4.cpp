@@ -4,31 +4,31 @@
 extern signed char* data_ov031_0224a2dc;
 
 // USA: func_ov031_0221aae4
-extern "C" ARM int func_ov031_0221aae4(unsigned char* arg0, unsigned int arg1, char* arg2, unsigned int arg3) {
-    unsigned int var0 = arg1 % 3 ? 4 : 0;
-    unsigned int var1 = var0 + arg1 / 3 * 4;
-    if (!arg2) return var1;
-    if (arg3 < var1) return -1;
+extern "C" ARM int func_ov031_0221aae4(unsigned char* source, unsigned int length, char* output, unsigned int capacity) {
+    unsigned int padding = length % 3 ? 4 : 0;
+    unsigned int var1 = padding + length / 3 * 4;
+    if (!output) return var1;
+    if (capacity < var1) return -1;
     int var2;
-    unsigned char* var3 = arg0 + arg1;
-    char* var4 = arg2;
-    if (arg0 != var3) do {
-        int var5 = var3 - arg0;
-        int var6 = var5 * 8;
-        var2 = var6 / 6 + (var6 % 6 != 0);
-        if (var5 >= 3) var5 = 3;
-        unsigned char var7[3];
-        VectorizedMemset(var7, 0, 3);
-        VectorizedInvertedMemcpy(arg0, var7, var5);
-        var4[0] = data_ov031_0224a2dc[var7[0] >> 2];
-        if (var2 < 2) var4[1] = '*';
-        else var4[1] = data_ov031_0224a2dc[((var7[0] << 4) & 0x3f) | (var7[1] >> 4)];
-        if (var2 < 3) var4[2] = '*';
-        else var4[2] = data_ov031_0224a2dc[((var7[1] << 2) & 0x3f) | (var7[2] >> 6)];
-        if (var2 < 4) var4[3] = '*';
-        else var4[3] = data_ov031_0224a2dc[var7[2] & 0x3f];
-        arg0 += var5;
-        var4 += 4;
-    } while (arg0 != var3);
-    return var4 - arg2;
+    unsigned char* end = source + length;
+    char* cursor = output;
+    if (source != end) do {
+        int remaining = end - source;
+        int bits = remaining * 8;
+        var2 = bits / 6 + (bits % 6 != 0);
+        if (remaining >= 3) remaining = 3;
+        unsigned char group[3];
+        VectorizedMemset(group, 0, 3);
+        VectorizedInvertedMemcpy(source, group, remaining);
+        cursor[0] = data_ov031_0224a2dc[group[0] >> 2];
+        if (var2 < 2) cursor[1] = '*';
+        else cursor[1] = data_ov031_0224a2dc[((group[0] << 4) & 0x3f) | (group[1] >> 4)];
+        if (var2 < 3) cursor[2] = '*';
+        else cursor[2] = data_ov031_0224a2dc[((group[1] << 2) & 0x3f) | (group[2] >> 6)];
+        if (var2 < 4) cursor[3] = '*';
+        else cursor[3] = data_ov031_0224a2dc[group[2] & 0x3f];
+        source += remaining;
+        cursor += 4;
+    } while (source != end);
+    return cursor - output;
 }

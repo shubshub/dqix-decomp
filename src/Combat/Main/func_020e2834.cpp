@@ -1,43 +1,43 @@
 #include <globaldefs.h>
 
 struct Struct_020e1674 {
-    char unknown_0_[0x3e];
-    unsigned char unknown_3e_;
+    char pad[0x3e];
+    unsigned char flag;
 };
 struct Struct_020e1674_2 {
-    char unknown_0_[4];
-    struct Struct_020e1674* unknown_4_;
+    char pad[4];
+    struct Struct_020e1674* ptr;
 };
-extern "C" void func_020e1674(struct Struct_020e1674_2* arg0, int arg1, int arg2);
+extern "C" void func_020e1674(struct Struct_020e1674_2* obj, int idx, int sel);
 
-extern "C" void func_020e1a74(struct Struct_020e1674_2* arg0);
+extern "C" void func_020e1a74(struct Struct_020e1674_2* obj);
 
 struct Struct_020e2834 {
-    char unknown_0_[0x10];
-    struct Struct_020e1674_2* unknown_10_;
+    char pad[0x10];
+    struct Struct_020e1674_2* obj;
     signed char unknown_14_;
-    char unknown_15_[0x17 - 0x15];
+    char pad2[0x17 - 0x15];
     unsigned char unknown_17_;
 };
 
 // USA: func_020e2834
-extern "C" ARM void func_020e2834(struct Struct_020e2834* arg0)
+extern "C" ARM void func_020e2834(struct Struct_020e2834* self)
 {
-    *(short*)((char*)arg0->unknown_10_ + 0x22) = 0x7fff;
-    *(short*)((char*)arg0->unknown_10_ + 0x24) = 0xf0a;
+    *(short*)((char*)self->obj + 0x22) = 0x7fff;
+    *(short*)((char*)self->obj + 0x24) = 0xf0a;
 
-    if (arg0->unknown_17_ != 0) {
-        if (arg0->unknown_14_ == 0) {
-            func_020e1674(arg0->unknown_10_, 9, 1);
-            func_020e1674(arg0->unknown_10_, 0xb, 0);
+    if (self->unknown_17_ != 0) {
+        if (self->unknown_14_ == 0) {
+            func_020e1674(self->obj, 9, 1);
+            func_020e1674(self->obj, 0xb, 0);
         } else {
-            func_020e1674(arg0->unknown_10_, 9, 0);
-            func_020e1674(arg0->unknown_10_, 0xb, 1);
+            func_020e1674(self->obj, 9, 0);
+            func_020e1674(self->obj, 0xb, 1);
         }
     } else {
-        func_020e1674(arg0->unknown_10_, 9, 0);
-        func_020e1674(arg0->unknown_10_, 0xb, 0);
+        func_020e1674(self->obj, 9, 0);
+        func_020e1674(self->obj, 0xb, 0);
     }
 
-    func_020e1a74(arg0->unknown_10_);
+    func_020e1a74(self->obj);
 }

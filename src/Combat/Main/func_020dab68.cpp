@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
-struct Struct_020dab68 { int unknown_0_; int unknown_4_; };
+struct Struct_020dab68 { int a; int b; };
 
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
+extern "C" void VramState_Restore(char* obj);
+extern "C" void VramState_Save(char* obj);
 extern "C" int func_02057924(void);
 extern "C" int func_02057e6c(int, int, int, int, int, int);
 
 // USA: func_020dab68
-extern "C" ARM int func_020dab68(struct Struct_020dab68* arg0, int arg1, int arg2) {
-    int var0 = func_02057924();
-    int var1 = arg0->unknown_0_;
-    int var2 = arg0->unknown_4_;
-    if (var0 && var1 && var2) {
-        func_0207df90((char*)var2);
-        func_02057e6c(var0, 0x16, var1, arg1, arg2, var2);
-        func_0207dfac((char*)var2);
+extern "C" ARM int func_020dab68(struct Struct_020dab68* obj, int p1, int p2) {
+    int x = func_02057924();
+    int a = obj->a;
+    int b = obj->b;
+    if (x && a && b) {
+        VramState_Restore((char*)b);
+        func_02057e6c(x, 0x16, a, p1, p2, b);
+        VramState_Save((char*)b);
         return 1;
     }
     return 0;

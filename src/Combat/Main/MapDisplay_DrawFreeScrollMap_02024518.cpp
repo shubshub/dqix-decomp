@@ -6,13 +6,13 @@
 #include "std_library_functions.h"
 
 #if defined(jpn)
-enum { kActionStateOffset = 0x914, kVisitedIndex = 0x4c };
+enum { Enum_02024518_2496 = 0x914, Enum_02024518_12 = 0x4c };
 #define data_020e7074 data_020e7940
 #define data_020e7076 data_020e7942
 #define data_020e7056 data_020e7922
 #define data_020e7057 data_020e7923
 #else
-enum { kActionStateOffset = 0x9c0, kVisitedIndex = 12 };
+enum { Enum_02024518_2496 = 0x9c0, Enum_02024518_12 = 12 };
 #endif
 
 // Where the map script places one map piece (MapDisplay::names[pieceIndex]), in tiles from the pieces' origin
@@ -34,7 +34,7 @@ struct MapReceiver02024518 {
     int placementCount;
     unsigned char unknown34[4];
     fix32_t scale;
-    unsigned char unknown3c[8];
+    unsigned char unknown_3c_[8];
     int screenX;                          // the camera in map pixels
     int screenY;
     unsigned char unknown4c[0x6c - 0x4c];
@@ -43,12 +43,12 @@ struct MapReceiver02024518 {
     int blankTile;                        // MapDisplay_LoadBackgroundPattern: the empty tile after the background pattern
     unsigned char unknown78[0x55c - 0x78];
     unsigned char redrawPending;          // set when a mode has loaded
-    unsigned char unknown55d[0x5a4 - 0x55d];
+    unsigned char unknown_55d_[0x5a4 - 0x55d];
     int flags;                            // bit 0: draw only the party members' icons
-    unsigned char unknown5a8[4];
+    unsigned char unknown_5a8_[4];
     fix32_t cameraX;                      // world units (MapDisplay_CenterOnLeader)
     fix32_t cameraZ;
-    unsigned char unknown5b4[kActionStateOffset - 0x5b4];
+    unsigned char unknown_5b4_[Enum_02024518_2496 - 0x5b4];
     unsigned char blinkPhase;             // MapDisplay_UpdateBlink
 };
 
@@ -74,19 +74,19 @@ struct Bcb8Params;
 struct BattleTimer0202441c;
 struct Actor02024d48;
 
-void *BgVram_GetInstance();
+extern "C" void *BgVram_GetInstance();
 extern "C" Zone3D *Zone3D_GetInstance();
-int ZoneId_IsMainGrottoFloor(int id);
+extern "C" int ZoneId_IsMainGrottoFloor(int id);
 extern "C" void func_02027974(void *object, const unsigned char* adjacencyData, int grottoMap);
 extern "C" void BgTransfers_PlaceMap(void *data, int mode, int index, int x, int y, int state, int width, int height,
                               unsigned short palette);
-void BgVram_FillMap(void *owner, int mode, int index, int value);
-Entry_02027878 *MapDisplay_GetMapPiece(List_02027878 *list, int index);
-void BgImage_Place(Bcb8Params *params, int a, int b);
-void MapDisplay_UpdateBlink(BattleTimer0202441c *receiver);
-int MapDisplay_IsMemberVisible(void *receiver, int objectIndex);
-int MapIcon_IsShownInBlinkPhase(CombatActionPosition* icon, int blinkPhase);
-void MapDisplay_DrawSprite(void *receiver, int x, int y, int spriteIndex, unsigned char oamSlot, unsigned char priority,
+extern "C" void BgVram_FillMap(void *owner, int mode, int index, int value);
+extern "C" Entry_02027878 *MapDisplay_GetMapPiece(List_02027878 *list, int index);
+extern "C" void BgImage_Place(Bcb8Params *params, int a, int b);
+extern "C" void MapDisplay_UpdateBlink(BattleTimer0202441c *receiver);
+extern "C" int MapDisplay_IsMemberVisible(void *receiver, int objectIndex);
+extern "C" int MapIcon_IsShownInBlinkPhase(CombatActionPosition* icon, int blinkPhase);
+extern "C" void MapDisplay_DrawSprite(void *receiver, int x, int y, int spriteIndex, unsigned char oamSlot, unsigned char priority,
                               unsigned short palette, unsigned char matrixIndex, int scaleX, int scaleY);
 
 // USA: MapDisplay_DrawFreeScrollMap
@@ -140,7 +140,7 @@ extern "C" ARM void MapDisplay_DrawFreeScrollMap(MapReceiver02024518 *self) {
         if (self->grottoMap == 0) return;
         if (zone->unknown_424_ == 0) {
             unsigned char *visitedTiles =
-                (unsigned char*)&gameState->unk_6fc0[kVisitedIndex] + ((zoneId % 20) - 1) * 32;
+                (unsigned char*)&gameState->unk_6fc0[Enum_02024518_12] + ((zoneId % 20) - 1) * 32;
             fix32_t angle = fix32_Divide(FIX32_MULTIPLY(leader->obj3D_.rotation_.y, 0xb4000), 0x3243); // radians to degrees
             if (angle > 0xb4000) angle -= 0x168000;
             angle >>= 12;
@@ -196,16 +196,16 @@ extern "C" ARM void MapDisplay_DrawFreeScrollMap(MapReceiver02024518 *self) {
     for (int i = 0; i < iconCount; i++) {
         CombatActionPosition *entry = &icons[i];
         if (!MapDisplay_IsMemberVisible(self, entry->combatantId)) continue;
-        fix32_t entryScale = self->scale;
-        int x = (int) ((float) FIX32_MULTIPLY(entry->position.x, entryScale) / 4096.0f) - self->screenX;
-        int z = (int) ((float) FIX32_MULTIPLY(entry->position.z, entryScale) / 4096.0f) - self->screenY;
+        fix32_t var34 = self->scale;
+        int x = (int) ((float) FIX32_MULTIPLY(entry->position.x, var34) / 4096.0f) - self->screenX;
+        int z = (int) ((float) FIX32_MULTIPLY(entry->position.z, var34) / 4096.0f) - self->screenY;
         if (entry->variant >= 0) {
             int group = groupCounts[entry->group] - 1;
             x += data_020e70f0[group][entry->variant][0];
             z += data_020e70f4[group][entry->variant][0];
         }
         if (self->flags & 1) {
-            if (IsNonCombatantAction(entry->type)) continue;
+            if (inline_02024518(entry->type)) continue;
         }
         if (!MapIcon_IsShownInBlinkPhase(entry, self->blinkPhase)) continue;
         MapDisplay_DrawSprite(self, (x + kMapCentreX) << 12, (z + kMapCentreY) << 12, entry->elementId, entry->type, 0,

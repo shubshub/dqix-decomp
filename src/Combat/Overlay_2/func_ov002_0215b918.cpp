@@ -1,29 +1,29 @@
 #include <globaldefs.h>
 
 struct Struct_0205d81c;
-struct Struct_0205d0e0;
+struct Elem_0205d81c;
 
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" struct Struct_0205d0e0* func_0205e00c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" void func_02050400(unsigned char* arg0, int arg1);
-extern "C" void func_0205042c(unsigned char* arg0, unsigned char arg1);
-extern "C" void func_02050440(unsigned char* arg0, int arg1);
+extern "C" struct Elem_0205d81c* func_0205d81c(struct Struct_0205d81c* s, int key);
+extern "C" struct Elem_0205d81c* func_0205e00c(struct Struct_0205d81c* s, int key);
+extern "C" void func_02050400(unsigned char* obj, int value);
+extern "C" void WindowPane_SetIndicatorPage(unsigned char* obj, unsigned char value);
+extern "C" void WindowPane_SetIndicatorPageCount(unsigned char* obj, int val);
 
 // USA: func_ov002_0215b918
-extern "C" ARM void func_ov002_0215b918(unsigned char* arg0, int arg1, int arg2, int arg3) {
-    struct Struct_0205d81c* var0 = (struct Struct_0205d81c*)(arg0 + 0x2c8 + 0xc00);
-    struct Struct_0205d0e0* var1 = func_0205d81c(var0, arg1);
-    if (var1 == 0) {
-        var1 = func_0205e00c(var0, arg1);
-        if (var1 == 0) return;
+extern "C" ARM void func_ov002_0215b918(unsigned char* obj, int key, int b, int c) {
+    struct Struct_0205d81c* s = (struct Struct_0205d81c*)(obj + 0x2c8 + 0xc00);
+    struct Elem_0205d81c* elem = func_0205d81c(s, key);
+    if (elem == 0) {
+        elem = func_0205e00c(s, key);
+        if (elem == 0) return;
     }
-    if (arg3 != 0) {
-        func_02050400((unsigned char*)var1, 1);
-        func_0205042c((unsigned char*)var1, arg2 & 0xff);
-        func_02050440((unsigned char*)var1, arg3 & 0xff);
+    if (c != 0) {
+        func_02050400((unsigned char*)elem, 1);
+        WindowPane_SetIndicatorPage((unsigned char*)elem, b & 0xff);
+        WindowPane_SetIndicatorPageCount((unsigned char*)elem, c & 0xff);
     } else {
-        func_02050400((unsigned char*)var1, 0);
-        func_0205042c((unsigned char*)var1, 0);
-        func_02050440((unsigned char*)var1, 0);
+        func_02050400((unsigned char*)elem, 0);
+        WindowPane_SetIndicatorPage((unsigned char*)elem, 0);
+        WindowPane_SetIndicatorPageCount((unsigned char*)elem, 0);
     }
 }

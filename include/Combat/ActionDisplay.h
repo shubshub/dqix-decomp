@@ -4,28 +4,28 @@
 #include "NitroSDK/Memory.h"
 #include <globaldefs.h>
 
-struct Struct_020236dc {
-    Vector3i unknown_0_;
-    unsigned char unknown_c_;
-    unsigned char unknown_d_;
-    unsigned char unknown_e_;
-    signed char unknown_f_;
-    unsigned char unknown_10_;
-    unsigned char unknown_11_;
+struct CombatActionPosition {
+    Vector3i position;
+    unsigned char elementId;
+    unsigned char palette;
+    unsigned char type;
+    signed char variant;
+    unsigned char group;
+    unsigned char flag11;
     unsigned char unknown_12_;
-    unsigned char unknown_13_;
-    unsigned char unknown_14_;
-    unsigned char unknown_15_[3];
+    unsigned char flag13;
+    unsigned char combatantId;
+    unsigned char unknown15[3];
 
-    inline Struct_020236dc() {
-        VectorizedMemset(this, 0, sizeof(Struct_020236dc));
-        unknown_f_     = -1;
-        unknown_14_ = 0xff;
+    inline CombatActionPosition() {
+        VectorizedMemset(this, 0, sizeof(CombatActionPosition));
+        variant     = -1;
+        combatantId = 0xff;
     }
 };
 
-static inline int inline_02024518(unsigned char arg0) {
-    return arg0 >= 0x74;
+static inline int inline_02024518(unsigned char type) {
+    return type >= 0x74;
 }
 
 extern int data_020e70f0[][4][2];

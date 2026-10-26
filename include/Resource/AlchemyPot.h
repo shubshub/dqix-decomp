@@ -4,18 +4,18 @@
 #include "World/Object3D.h"
 
 struct Struct_02000c9c_5 {
-    char unknown_0_[0x10];
-    int unknown_10_;
-    unsigned char unknown_14_;
+    char unk_0[0x10];
+    int state_;
+    unsigned char unk_14;
 };
 
 struct Struct_02000c9c {
 #if defined(jpn)
-    char unknown_0_[0x6f0];
+    char unk_0[0x6f0];
 #else
-    char unknown1_0_[0x774];
+    char unk_0[0x774];
 #endif
-    unsigned short unknown_774_;
+    unsigned short flags_;
     char unknown_776_[0x7];
     signed char unknown_77d_;
     char unknown_77e_[0x1d];
@@ -24,15 +24,15 @@ struct Struct_02000c9c {
 };
 
 struct Struct_02000c9c_2 {
-    char unknown_0_[0x7c];
+    char unk_0[0x7c];
 };
 
 struct Struct_02000c9c_3 {
-    short unknown_0_;
+    short id_;
 };
 
 struct Struct_02000c9c_4 {
-    short unknown_0_;
+    short id_;
     unsigned short unknown_2_0_ : 1;
     unsigned short unknown_2_1_ : 1;
     unsigned short unknown_2_2_ : 14;
@@ -40,54 +40,54 @@ struct Struct_02000c9c_4 {
 
 struct Struct_ov006_02154614 {
 #if !defined(jpn)
-    char unknown_0_[3][0x80];
+    char names_[3][0x80];
 #endif
-    SafeAllocator* unknown_180_;
+    SafeAllocator* allocators_;
     SafeAllocator* unknown_184_;
     SafeAllocator* unknown_188_;
     SafeAllocator unknown_18c_;
-    void* unknown_1a0_;
-    void* unknown_1a4_;
+    void* previousCamera_;
+    void* canvasBuffer_;
     unsigned char* unknown_1a8_;
-    void* unknown_1ac_;
-    void* unknown_1b0_;
+    void* itemNames_;
+    void* texts_;
     Struct_02000c9c_3* unknown_1b4_;
-    Struct_02000c9c_3* unknown_1b8_;
+    Struct_02000c9c_3* nextRecipe_;
     int unknown_1bc_;
     Struct_02000c9c_4* unknown_1c0_;
     unsigned char* unknown_1c4_;
-    void* unknown_1c8_;
-    void* unknown_1cc_;
-    void* unknown_1d0_;
-    void* unknown_1d4_;
-    void* unknown_1d8_;
-    void* unknown_1dc_;
-    void* unknown_1e0_;
-    char unknown_1e4_[0x54];
+    void* layout_;
+    void* backgrounds_;
+    void* canvases_;
+    void* menu_;
+    void* item_;
+    void* nextItem_;
+    void* sprites_;
+    char renderer_[0x54];
     Object3D unknown_238_;
-    Object3D unknown_2e4_;
+    Object3D pot_;
     Object3D unknown_390_;
-    Object3D unknown_43c_;
-    Object3D unknown_4e8_;
+    Object3D effect_;
+    Object3D steam_;
     char unknown_594_[0x38];
-    char unknown_5cc_[0x2c8];
-    Struct_02000c9c_2 unknown_894_[4];
+    char camera_[0x2c8];
+    Struct_02000c9c_2 ingredients_[4];
     SafeAllocator unknown_a84_[4];
-    int unknown_ad4_;
+    int task_;
     int unknown_ad8_;
-    unsigned char unknown_adc_;
+    unsigned char state_;
     unsigned char unknown_add_;
     unsigned char unknown_ade_;
     unsigned char unknown_adf_;
     unsigned char unknown_ae0_;
     unsigned char unknown_ae1_;
-    unsigned short unknown_ae2_;
-    Struct_02000c9c unknown_ae4_;
+    unsigned short flags_;
+    Struct_02000c9c window_;
     SafeAllocator* unknown_1280_;
     SafeAllocator* unknown_1284_;
-    char unknown_1288_[0x18];
+    char partNames_[0x18];
     Struct_02000c9c_5 unknown_12a0_;
-    short unknown_12b8_;
+    short itemId_;
     signed char unknown_12ba_;
     unsigned char unknown_12bb_;
     unsigned char unknown_12bc_;

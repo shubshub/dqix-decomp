@@ -4,17 +4,17 @@
 
 // Existing 20-byte script state at data_02109404.
 struct Struct_02109404 {
-    unsigned char unknown_0_;
+    unsigned char f0;
     unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
-    unsigned char unknown_4_;
-    unsigned char unknown_5_;
-    unsigned short unknown_6_;
-    unsigned short unknown_8_;
-    unsigned char unknown_a_[2];
-    SafeAllocator* unknown_c_;
-    unsigned char* unknown_10_;
+    unsigned char selected;
+    unsigned char f3;
+    unsigned char f4;
+    unsigned char pad5;
+    unsigned short index;
+    unsigned short f8;
+    unsigned char padA[2];
+    SafeAllocator* allocator;
+    unsigned char* table;
 };
 
 extern Struct_02109404 data_02109404;

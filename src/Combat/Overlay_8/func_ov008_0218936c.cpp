@@ -27,38 +27,38 @@ extern "C" void func_ov008_02184754(void* obj);
 extern "C" void func_ov008_0218b084(void* obj);
 
 struct Struct_ov008_0218936c {
-    char unknown_0_[R(0xe95, 0xe99)];
+    char pad[R(0xe95, 0xe99)];
     signed char unknown_e99_;
     signed char unknown_e9a_;
     signed char unknown_e9b_;
-    char unknown_e9c_[R(0xeb0 - 0xe98, 0xeb8 - 0xe9c)];
+    char pad2[R(0xeb0 - 0xe98, 0xeb8 - 0xe9c)];
     unsigned char unknown_eb8_;
 };
 
 // USA: func_ov008_0218936c
-ARM unsigned char Dispatch0218936c(Manager0218936c* obj, unsigned int ticks) {
+extern "C" ARM unsigned char func_ov008_0218936c(Struct_ov008_0218936c* obj, unsigned int ticks) {
     Window_Update((char*)obj + 0x18);
-    switch (obj->sub99) {
+    switch (obj->unknown_e99_) {
     case 0:
-        func_ov008_021895a8(arg0);
+        func_ov008_021895a8(obj);
         break;
     case 1:
-        func_ov008_02189c70(arg0);
+        func_ov008_02189c70(obj);
         break;
     case 2:
-        arg0->unknown_e9a_ = 0;
+        obj->unknown_e9a_ = 0;
         break;
     }
-    switch (arg0->unknown_e9b_) {
+    switch (obj->unknown_e9b_) {
     case 0:
-        func_ov008_0218af80(arg0);
+        func_ov008_0218af80(obj);
         break;
     case 1:
-        func_ov008_02184754((char*)arg0 + 0x2a8);
+        func_ov008_02184754((char*)obj + 0x2a8);
         break;
     case 2:
-        func_ov008_0218b084(arg0);
+        func_ov008_0218b084(obj);
         break;
     }
-    return arg0->unknown_eb8_;
+    return obj->unknown_eb8_;
 }

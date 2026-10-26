@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_02061c04_21 {
-    int unknown_0_;
-    int unknown_4_;
-    char unknown_8_[0xc];
-    int unknown_14_;
+struct Sub {
+    int p0;
+    int field4;
+    char p8[0xc];
+    int value;
     char unknown_18_[0x38];
 };
-struct Struct_ov000_0217636c {
-    char unknown_0_[4];
-    Struct_02061c04_21 unknown_4_;
-    Struct_02061c04_21 unknown_54_;
+struct Window {
+    char p0[4];
+    Sub a;
+    Sub b;
 };
 struct Struct_ov000_0217ab8c {
-    char unknown_0_[0xc];
-    short unknown_c_;
+    char p0[0xc];
+    short s0c;
     char unknown_e_[2];
     signed char unknown_10_[8];
     signed char unknown_18_;
@@ -25,24 +25,24 @@ struct Struct_ov000_0217ab8c {
     signed char unknown_1c_;
     signed char unknown_1d_;
     short unknown_1e_;
-    signed char unknown_20_;
+    signed char v20;
     signed char unknown_21_;
     signed char unknown_22_;
     signed char unknown_23_;
     unsigned char unknown_24_;
     char unknown_25_[0x30 - 0x25];
-    signed char* unknown_30_;
-    signed char unknown_34_;
+    signed char* list;
+    signed char count;
     char unknown_35_[3];
-    Struct_ov000_0217636c* unknown_38_;
+    Window* window;
     char unknown_3c_[0x4c - 0x3c];
-    int unknown_4c_;
+    int member;
 #if defined(jpn)
     char unknown_50_[0xc6 - 0x50];
 #else
     char unknown1_50_[0x86 - 0x50];
 #endif
-    signed char unknown_86_;
+    signed char total;
     char unknown_87_[0x442 - 0x87];
     signed char unknown_442_;
     char unknown_443_;
@@ -50,152 +50,152 @@ struct Struct_ov000_0217ab8c {
 };
 struct Struct_ov000_0217ab8c_2 {
 #if defined(jpn)
-    char unknown_0_[0x1faa];
+    char p[0x1faa];
 #else
-    char unknown1_0_[0x1d72];
+    char p[0x1d72];
 #endif
-    unsigned short unknown_1d72_;
+    unsigned short flags;
 };
 struct Struct_ov000_02184294_2 {
 #if defined(jpn)
-    Struct_ov000_0217ab8c_2* unknown1_8_;
-    int unknown_4_;
-    int unknown_8_;
+    Struct_ov000_0217ab8c_2* root;
+    int field0;
+    int field4;
 #else
-    int unknown_0_;
-    int unknown1_4_;
-    Struct_ov000_0217ab8c_2* unknown1_8_;
+    int field0;
+    int field4;
+    Struct_ov000_0217ab8c_2* root;
 #endif
 };
-struct Slots02083960;
+struct Struct_0207d300;
 struct GridCursor;
 
 extern Struct_ov000_02184294_2 data_ov000_02184294;
 
 struct S02171698;
-int CountNonZero02171698(S02171698*);
+extern "C" int func_ov000_02171698(S02171698*);
 struct S021719c0;
-int CountNonZero021719c0(S021719c0*);
-GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
-int GetFieldAt0x150_02053c6c(unsigned char*);
-int CountPositiveSlots02083960(Slots02083960*);
-void ClearChannelAFlag0205cf10(void*);
-struct Struct0205cf1c;
-void ClearFlagByte0205cf1c(Struct0205cf1c*);
-void SetChannelAFlag0205cef8(void*);
-void SetChannelBFlag0205cf04(void*);
-void GridCursor_SetDimensions(GridCursor*, int, int, int);
-void GridCursor_SetCount(GridCursor*, int);
+extern "C" int func_ov000_021719c0(S021719c0*);
+extern "C" GameObject* func_0200ff1c(GameState*, int);
+extern "C" int func_02053c6c(unsigned char*);
+extern "C" int func_02083960(Struct_0207d300*);
+extern "C" void func_0205cf10(void*);
+struct Struct_0205cf1c;
+extern "C" void func_0205cf1c(Struct_0205cf1c*);
+extern "C" void func_0205cef8(void*);
+extern "C" void func_0205cf04(void*);
+extern "C" void GridCursor_SetDimensions(GridCursor*, int, int, int);
+extern "C" void GridCursor_SetCount(GridCursor*, int);
 struct Struct_0205bcdc;
-void GridCursor_SelectIfValid(Struct_0205bcdc*, int);
+extern "C" void GridCursor_SelectIfValid(Struct_0205bcdc*, int);
 extern "C" void GridCursor_SetSelectedIndex(Sub*, int);
 
 // USA: func_ov000_0217ab8c
-extern "C" ARM void func_ov000_0217ab8c(Struct_ov000_0217ab8c* arg0, int arg1, int arg2) {
-    int var0, var1, var2, var3, var4;
-    Struct_ov000_0217636c* var5;
-    if (arg0->unknown_4c_ < 0 || !(arg0->unknown_24_ & 1) || arg0->unknown_c_ == 0 || (var5 = arg0->unknown_38_) == 0) {
+extern "C" ARM void func_ov000_0217ab8c(Struct_ov000_0217ab8c* self, int arg1, int arg2) {
+    int step, visible, pages, total, selected;
+    Window* w;
+    if (self->member < 0 || !(self->unknown_24_ & 1) || self->s0c == 0 || (w = self->window) == 0) {
         return;
     }
-    switch (arg0->unknown_10_[arg0->unknown_18_]) {
+    switch (self->unknown_10_[self->unknown_18_]) {
     case 13:
-        var4 = arg0->unknown_1c_;
-        var0 = 2;
-        var1 = 3;
-        var2 = 1;
-        var3 = 6;
+        selected = self->unknown_1c_;
+        step = 2;
+        visible = 3;
+        pages = 1;
+        total = 6;
         break;
     case 14:
-        var1 = 1;
-        var0 = arg2;
-        var2 = var1;
-        var3 = arg2;
-        var4 = arg0->unknown_1d_;
+        visible = 1;
+        step = arg2;
+        pages = visible;
+        total = arg2;
+        selected = self->unknown_1d_;
         break;
     case 15:
-        if (func_ov000_02171698((Struct_ov000_02171640*)arg0) >= 4) {
-            var0 = 1;
-            var1 = 4;
-            var2 = (func_ov000_02171698((Struct_ov000_02171640*)arg0) + 3) / 4;
+        if (func_ov000_02171698((S02171698*)self) >= 4) {
+            step = 1;
+            visible = 4;
+            pages = (func_ov000_02171698((S02171698*)self) + 3) / 4;
         } else {
-            var0 = 1;
-            var1 = func_ov000_02171698((Struct_ov000_02171640*)arg0);
-            var2 = var0;
+            step = 1;
+            visible = func_ov000_02171698((S02171698*)self);
+            pages = step;
         }
-        arg0->unknown_19_ = var5->unknown_54_.unknown_14_;
-        var3 = func_ov000_02171698((Struct_ov000_02171640*)arg0);
-        var4 = arg0->unknown_20_;
-        if (var4 < 0 || var3 <= var4) {
-            var4 = 0;
-            arg0->unknown_20_ = 0;
+        self->unknown_19_ = w->b.value;
+        total = func_ov000_02171698((S02171698*)self);
+        selected = self->v20;
+        if (selected < 0 || total <= selected) {
+            selected = 0;
+            self->v20 = 0;
         }
         break;
     case 16:
-        if (func_ov000_021719c0((Struct_ov000_02171968*)arg0) >= 4) {
-            var0 = 1;
-            var1 = 4;
-            var2 = (func_ov000_021719c0((Struct_ov000_02171968*)arg0) + 3) / 4;
+        if (func_ov000_021719c0((S021719c0*)self) >= 4) {
+            step = 1;
+            visible = 4;
+            pages = (func_ov000_021719c0((S021719c0*)self) + 3) / 4;
         } else {
-            var0 = 1;
-            var1 = func_ov000_021719c0((Struct_ov000_02171968*)arg0);
-            var2 = var0;
+            step = 1;
+            visible = func_ov000_021719c0((S021719c0*)self);
+            pages = step;
         }
-        arg0->unknown_1a_ = var5->unknown_54_.unknown_14_;
-        var3 = func_ov000_021719c0((Struct_ov000_02171968*)arg0);
-        var4 = arg0->unknown_1e_;
-        if (var4 < 0 || var3 <= var4) {
-            var4 = 0;
-            arg0->unknown_1e_ = 0;
+        self->unknown_1a_ = w->b.value;
+        total = func_ov000_021719c0((S021719c0*)self);
+        selected = self->unknown_1e_;
+        if (selected < 0 || total <= selected) {
+            selected = 0;
+            self->unknown_1e_ = 0;
         }
         break;
     case 17: {
-        GameState* var6 = GameState::GetInstance();
-        GameObject* var7 = func_0200ff1c(var6, arg0->unknown_4c_);
-        int var8 = func_02053c6c((unsigned char*)var7);
-        if (var8 != 0) {
-            int var9 = func_02083960((Struct_0207d300*)var8);
-            var2 = (arg0->unknown_86_ - var9 + 3) / 4 + (var9 + 3) / 4;
-            arg0->unknown_1b_ = var5->unknown_54_.unknown_14_;
-            var3 = var2 * 4;
-            var4 = arg0->unknown_22_;
-            var0 = 1;
-            var1 = 4;
+        GameState* gs = GameState::GetInstance();
+        GameObject* unit = func_0200ff1c(gs, self->member);
+        int field = func_02053c6c((unsigned char*)unit);
+        if (field != 0) {
+            int n = func_02083960((Struct_0207d300*)field);
+            pages = (self->total - n + 3) / 4 + (n + 3) / 4;
+            self->unknown_1b_ = w->b.value;
+            total = pages * 4;
+            selected = self->unknown_22_;
+            step = 1;
+            visible = 4;
         }
         break;
     }
     case 18:
     case 19:
     case 20:
-        if (arg0->unknown_444_ != 0) {
-            for (int var10 = 0; var10 < arg0->unknown_34_; var10++) {
-                if (arg0->unknown_442_ == arg0->unknown_30_[var10]) {
-                    arg0->unknown_21_ = var10;
+        if (self->unknown_444_ != 0) {
+            for (int i = 0; i < self->count; i++) {
+                if (self->unknown_442_ == self->list[i]) {
+                    self->unknown_21_ = i;
                     break;
                 }
             }
-            arg0->unknown_442_ = -1;
-            arg0->unknown_444_ = 0;
+            self->unknown_442_ = -1;
+            self->unknown_444_ = 0;
         }
-        var1 = arg0->unknown_34_;
-        var0 = 1;
-        var2 = var0;
-        var3 = var1;
-        var4 = arg0->unknown_21_;
+        visible = self->count;
+        step = 1;
+        pages = step;
+        total = visible;
+        selected = self->unknown_21_;
         break;
     case 21:
-        var0 = 1;
-        var1 = var0;
-        var2 = var0;
-        var3 = var0;
-        var4 = arg0->unknown_23_;
+        step = 1;
+        visible = step;
+        pages = step;
+        total = step;
+        selected = self->unknown_23_;
         break;
     default:
-        func_0205cf10(var5);
-        func_0205cf1c((Struct_0205cf1c*)arg0->unknown_38_);
+        func_0205cf10(w);
+        func_0205cf1c((Struct_0205cf1c*)self->window);
         return;
     }
-    SetChannelAFlag0205cef8(self->window);
-    SetChannelBFlag0205cf04(self->window);
+    func_0205cef8(self->window);
+    func_0205cf04(self->window);
     GridCursor_SetDimensions((GridCursor*)&w->a, step, visible, 0);
     GridCursor_SetDimensions((GridCursor*)&w->b, step, visible, 0);
     GridCursor_SetCount((GridCursor*)&w->a, total);

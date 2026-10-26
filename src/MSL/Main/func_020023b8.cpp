@@ -26,106 +26,106 @@ typedef struct {
 #define conversion_max 509
 
 // USA: func_020023b8
-extern "C" ARM char*func_020023b8(long long arg0, char* arg1, Struct_02001bdc arg2) {
-    unsigned long long var0, var1;
-    char*              var2;
-    int                var3, var4;
+extern "C" ARM char*func_020023b8(long long num, char* arg1, Struct_02001bdc fmt) {
+    unsigned long long var0, base;
+    char*              p;
+    int                n, digits;
     int                var5 = 0;
-    var0             = arg0;
+    var0             = num;
     var5                    = 0;
-    var2                        = arg1;
-    *--var2                     = 0;
-    var4                   = 0;
+    p                        = arg1;
+    *--p                     = 0;
+    digits                   = 0;
 
-    if (!arg0 && !arg2.unknown_c_ && !(arg2.unknown_3_ && arg2.unknown_5_ == 'o')) {
-        return var2;
+    if (!num && !fmt.unknown_c_ && !(fmt.unknown_3_ && fmt.unknown_5_ == 'o')) {
+        return p;
     }
 
-    switch (arg2.unknown_5_) {
+    switch (fmt.unknown_5_) {
         case 'd':
         case 'i':
-            var1 = 10;
+            base = 10;
 
-            if (arg0 < 0) {
-                if (arg0 != 0x8000000000000000) {
-                    var0 = -arg0;
+            if (num < 0) {
+                if (num != 0x8000000000000000) {
+                    var0 = -num;
                 }
 
                 var5 = 1;
             }
             break;
         case 'o':
-            var1             = 8;
-            arg2.unknown_1_ = Enum_02001bdc_0_3;
+            base             = 8;
+            fmt.unknown_1_ = Enum_02001bdc_0_3;
             break;
         case 'u':
-            var1             = 10;
-            arg2.unknown_1_ = Enum_02001bdc_0_3;
+            base             = 10;
+            fmt.unknown_1_ = Enum_02001bdc_0_3;
             break;
         case 'x':
         case 'X':
-            var1             = 16;
-            arg2.unknown_1_ = Enum_02001bdc_0_3;
+            base             = 16;
+            fmt.unknown_1_ = Enum_02001bdc_0_3;
             break;
     }
 
     do {
-        var3 = var0 % var1;
-        var0 /= var1;
+        n = var0 % base;
+        var0 /= base;
 
-        if (var3 < 10) {
-            var3 += '0';
+        if (n < 10) {
+            n += '0';
         } else {
-            var3 -= 10;
-            if (arg2.unknown_5_ == 'x') {
-                var3 += 'a';
+            n -= 10;
+            if (fmt.unknown_5_ == 'x') {
+                n += 'a';
             } else {
-                var3 += 'A';
+                n += 'A';
             }
         }
 
-        *--var2 = var3;
-        ++var4;
+        *--p = n;
+        ++digits;
     } while (var0 != 0);
 
-    if (var1 == 8 && arg2.unknown_3_ && *var2 != '0') {
-        *--var2 = '0';
-        ++var4;
+    if (base == 8 && fmt.unknown_3_ && *p != '0') {
+        *--p = '0';
+        ++digits;
     }
 
-    if (arg2.unknown_0_ == Enum_02001bdc_C_2_3) {
-        arg2.unknown_c_ = arg2.unknown_8_;
+    if (fmt.unknown_0_ == Enum_02001bdc_C_2_3) {
+        fmt.unknown_c_ = fmt.unknown_8_;
 
-        if (var5 || arg2.unknown_1_ != Enum_02001bdc_0_3) {
-            --arg2.unknown_c_;
+        if (var5 || fmt.unknown_1_ != Enum_02001bdc_0_3) {
+            --fmt.unknown_c_;
         }
 
-        if (var1 == 16 && arg2.unknown_3_) {
-            arg2.unknown_c_ -= 2;
+        if (base == 16 && fmt.unknown_3_) {
+            fmt.unknown_c_ -= 2;
         }
     }
 
-    if (arg1 - var2 + arg2.unknown_c_ > conversion_max) {
+    if (arg1 - p + fmt.unknown_c_ > conversion_max) {
         return 0;
     }
 
-    while (var4 < arg2.unknown_c_) {
-        *--var2 = '0';
-        ++var4;
+    while (digits < fmt.unknown_c_) {
+        *--p = '0';
+        ++digits;
     }
 
-    if (var1 == 16 && arg2.unknown_3_) {
-        *--var2 = arg2.unknown_5_;
-        *--var2 = '0';
+    if (base == 16 && fmt.unknown_3_) {
+        *--p = fmt.unknown_5_;
+        *--p = '0';
     }
 
     if (var5) {
-        *--var2 = '-';
-    } else if (arg2.unknown_1_ == Enum_02001bdc_1_3) {
-        *--var2 = '+';
-    } else if (arg2.unknown_1_ == Enum_02001bdc_2_3) {
-        *--var2 = ' ';
+        *--p = '-';
+    } else if (fmt.unknown_1_ == Enum_02001bdc_1_3) {
+        *--p = '+';
+    } else if (fmt.unknown_1_ == Enum_02001bdc_2_3) {
+        *--p = ' ';
     }
 
-    return var2;
+    return p;
 }

@@ -2,11 +2,11 @@
 #include "World/FieldTask.h"
 
 struct ByteHeader0204693c;
-extern void ResetByteHeader(ByteHeader0204693c* p);
+extern "C" void func_0204693c(ByteHeader0204693c* p);
 
 // Overlay 17, originally InitState69_021c2744 (USA/EUR 0x021c2744, JPN 0x021c2cb0)
-ARM void FieldTask_InitWhistle(WhistleTask* p) {
-	ResetByteHeader((ByteHeader0204693c*)p);
+extern "C" ARM void FieldTask_InitWhistle(WhistleTask* p) {
+	func_0204693c((ByteHeader0204693c*)p);
 	p->kind = FieldTaskKind_Whistle;
 	p->step = 0;
 	p->timer = 0x7d0;

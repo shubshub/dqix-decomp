@@ -1,28 +1,28 @@
 #include <globaldefs.h>
 
-struct Struct_ov000_0216d234 { int unknown_0_; int unknown_4_; int unknown_8_; };
-struct Struct_ov000_0216d234_2 { Struct_ov000_0216d234 unknown_0_; Struct_ov000_0216d234 unknown_c_; Struct_ov000_0216d234 unknown_18_; Struct_ov000_0216d234 unknown_24_; };
+struct Struct_ov000_0216d234 { int x; int y; int z; };
+struct Struct_ov000_0216d234_2 { Struct_ov000_0216d234 right; Struct_ov000_0216d234 up; Struct_ov000_0216d234 forward; Struct_ov000_0216d234 pos; };
 
 extern "C" void Vector3fix_CrossProduct(int*, int*, int*);
 
 // USA: func_ov000_0216d234
-extern "C" ARM void func_ov000_0216d234(int* arg0, int* arg1, struct Struct_ov000_0216d234_2* arg2) {
-    int var0[3];
-    var0[0] = 0;
-    var0[1] = 0x1000;
-    var0[2] = 0;
-    int var1[3];
-    Vector3fix_CrossProduct(arg0, var0, var1);
-    arg2->unknown_0_.unknown_0_ = var1[0];
-    arg2->unknown_0_.unknown_4_ = var1[1];
-    arg2->unknown_0_.unknown_8_ = var1[2];
-    arg2->unknown_c_.unknown_0_ = var0[0];
-    arg2->unknown_c_.unknown_4_ = var0[1];
-    arg2->unknown_c_.unknown_8_ = var0[2];
-    arg2->unknown_18_.unknown_0_ = arg0[0];
-    arg2->unknown_18_.unknown_4_ = arg0[1];
-    arg2->unknown_18_.unknown_8_ = arg0[2];
-    arg2->unknown_24_.unknown_0_ = arg1[0];
-    arg2->unknown_24_.unknown_4_ = arg1[1];
-    arg2->unknown_24_.unknown_8_ = arg1[2];
+extern "C" ARM void func_ov000_0216d234(int* forward, int* position, struct Struct_ov000_0216d234_2* dest) {
+    int up[3];
+    up[0] = 0;
+    up[1] = 0x1000;
+    up[2] = 0;
+    int out[3];
+    Vector3fix_CrossProduct(forward, up, out);
+    dest->right.x = out[0];
+    dest->right.y = out[1];
+    dest->right.z = out[2];
+    dest->up.x = up[0];
+    dest->up.y = up[1];
+    dest->up.z = up[2];
+    dest->forward.x = forward[0];
+    dest->forward.y = forward[1];
+    dest->forward.z = forward[2];
+    dest->pos.x = position[0];
+    dest->pos.y = position[1];
+    dest->pos.z = position[2];
 }

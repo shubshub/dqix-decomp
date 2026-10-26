@@ -9,7 +9,7 @@ class AllocatorUnion
 public:
     union 
     {
-        AllocatorBase unknown_0_;
+        AllocatorBase base;
         AllocatorTypeA unknown1_0_;
         AllocatorTypeB unknown2_0_;
     } versions;

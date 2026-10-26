@@ -45,7 +45,7 @@ struct PatternSyntax0218a518 {
     unsigned char wildcardId;
 };
 typedef PatternSyntax0218a518 NameFilter;
-int NameFilter_GroupContains(NameFilter*, unsigned char*, int, int);
+extern "C" int NameFilter_GroupContains(NameFilter*, unsigned char*, int, int);
 
 // Overlay 9, originally func_ov009_0218a518 (USA/EUR 0x0218a518; JPN not identified)
 extern "C" ARM int NameFilter_MatchPattern(NameFilter* self, const unsigned char* pattern, const unsigned char* input, int length, int count) {

@@ -8,6 +8,6 @@ enum { PartyMember_gestureSlot = 0x260 };
 #endif
 
 // Main, originally GetIntField0x260_02039750 (USA 0x02039750, EUR 0x02039760, JPN 0x020391a8)
-ARM int GameObject_GetGestureSlot(void* partyMember) {
+extern "C" ARM int GameObject_GetGestureSlot(void* partyMember) {
     return *(int*)((char*)partyMember + PartyMember_gestureSlot);
 }

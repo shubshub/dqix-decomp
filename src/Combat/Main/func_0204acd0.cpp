@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
-struct Struct_02020cb8_7;
-extern "C" void func_0204acb0(struct Struct_02020cb8_7* arg0);
+struct BackgroundScreen;
+extern "C" void ClearRecordFields(struct BackgroundScreen* rec);
 
-// USA: func_0204acd0
-extern "C" ARM void func_0204acd0(struct Struct_02020cb8_7* arg0) {
-    func_0204acb0(arg0);
+// USA: Forward0204acd0
+extern "C" ARM void Forward0204acd0(struct BackgroundScreen* rec) {
+    ClearRecordFields(rec);
 }

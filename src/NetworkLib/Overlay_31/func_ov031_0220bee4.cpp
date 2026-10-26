@@ -1,24 +1,24 @@
 #include <globaldefs.h>
 #include "NitroSDK/Memory.h"
 
-extern "C" ARM int func_ov031_0220bb24(unsigned short* arg0, int arg1);
+extern "C" ARM int func_ov031_0220bb24(unsigned short* arr, int len);
 
 // USA: func_ov031_0220bee4
-extern "C" ARM void func_ov031_0220bee4(unsigned short* arg0, unsigned short* arg1, int arg2, int arg3) {
-	int var0 = func_ov031_0220bb24(arg1, arg3);
+extern "C" ARM void func_ov031_0220bee4(unsigned short* dst, unsigned short* src, int arg2, int len) {
+	int n = func_ov031_0220bb24(src, len);
 	int var1 = 0;
-	int var2 = 0;
-	if (var0 > 0) {
+	int i = 0;
+	if (n > 0) {
 		do {
-			int var3 = arg2 * arg1[var2] + var1;
-			arg0[var2] = (unsigned short)var3;
-			var2++;
-			var1 = (unsigned int)var3 >> 16;
-		} while (var2 < var0);
+			int v = arg2 * src[i] + var1;
+			dst[i] = (unsigned short)v;
+			i++;
+			var1 = (unsigned int)v >> 16;
+		} while (i < n);
 	}
-	if (var2 < arg3) {
-		arg0[var2] = (unsigned short)var1;
-		var2++;
+	if (i < len) {
+		dst[i] = (unsigned short)var1;
+		i++;
 	}
-	VectorizedMemset(arg0 + var2, 0, (arg3 - var2) * 2);
+	VectorizedMemset(dst + i, 0, (len - i) * 2);
 }

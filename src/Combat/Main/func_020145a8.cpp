@@ -4,8 +4,8 @@
 #include "World/Zone3D.h"
 #include "std_library_functions.h"
 
-int ZoneId_IsMainGrottoFloor(int id);
-int ZoneId_IsGrottoBossFloor(int id);
+extern "C" int ZoneId_IsMainGrottoFloor(int id);
+extern "C" int ZoneId_IsGrottoBossFloor(int id);
 
 #if defined(jpn)
 #define data_020ef156 data_020ef092
@@ -28,7 +28,7 @@ extern char data_020ef18e[];
 enum { kFirstGrottoEnvironment = 1, kLastGrottoEnvironment = 5 };
 
 // KEEP-NAME: the ROM symbol here is the mangled C++ name, not a func_ tag.
-// USA: func_020145a8
+// USA: QueueLoadMapAMDJ
 // Main, originally Zone3D::LoadMapAMDJ_020145a8 (USA 0x020145a8, EUR 0x020145b8, JPN 0x02014374)
 void Zone3D::QueueLoadMapAMDJ() {
     BackgroundLoader* loader = BackgroundLoader::GetInstance();

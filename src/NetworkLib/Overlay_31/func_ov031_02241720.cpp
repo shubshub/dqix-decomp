@@ -8,9 +8,9 @@ struct Struct_ov031_02241720 {
 };
 
 // USA: func_ov031_02241720
-extern "C" ARM void func_ov031_02241720(Struct_ov031_02241720* arg0) {
-	if (!arg0) return;
-	if (arg0->unknown_800_)
-		data_ov031_02290fc8(arg0->unknown_800_);
-	data_ov031_02290fc8(arg0);
+extern "C" ARM void func_ov031_02241720(Struct_ov031_02241720* obj) {
+	if (!obj) return;
+	if (obj->unknown_800_)
+		data_ov031_02290fc8(obj->unknown_800_);
+	data_ov031_02290fc8(obj);
 }

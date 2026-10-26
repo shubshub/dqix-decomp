@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 struct Struct_ov011_02184750;
-extern "C" ARM void func_ov023_021f69bc(struct Struct_ov011_02184750* arg0);
+extern "C" ARM void func_ov023_021f69bc(struct Struct_ov011_02184750* head);
 
 // USA: func_ov011_02184750
-extern "C" ARM void func_ov011_02184750(void* arg0) {
-    func_ov023_021f69bc((struct Struct_ov011_02184750*)((char*)arg0 + 0x118));
+extern "C" ARM void func_ov011_02184750(void* obj) {
+    func_ov023_021f69bc((struct Struct_ov011_02184750*)((char*)obj + 0x118));
 }

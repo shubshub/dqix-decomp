@@ -3,7 +3,7 @@
 #pragma define_section initcode ".init" RX
 
 struct Struct_02108d5c;
-extern "C" void func_020709b4(struct Struct_02108d5c* arg0);
+extern "C" void func_020709b4(struct Struct_02108d5c* obj);
 
 extern struct Struct_02108d5c data_02108d5c;
 

@@ -2,20 +2,20 @@
 
 struct Struct_02011b24 {
 #if defined(jpn)
-    char unknown1_0_[0x617C];
+    char unk[0x617C];
 #else
-    char unknown_0_[0x63DC];
+    char unk[0x63DC];
 #endif
     union {
-        unsigned char unknown_0_;
+        unsigned char raw;
         struct {
-            unsigned char unknown_0_0_ : 1;
-        } unknown1_0_;
-    } unknown_63dc_;
+            unsigned char active : 1;
+        } bits;
+    } flags;
 };
 
 // USA: func_02011b24
-extern "C" ARM void func_02011b24(struct Struct_02011b24* arg0) {
-    arg0->unknown_63dc_.unknown_0_ = 0;
-    arg0->unknown_63dc_.unknown1_0_.unknown_0_0_ = 1;
+extern "C" ARM void func_02011b24(struct Struct_02011b24* block) {
+    block->flags.raw = 0;
+    block->flags.bits.active = 1;
 }

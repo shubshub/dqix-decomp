@@ -3,32 +3,32 @@
 
 struct Struct_ov024_021ea584_3 {
     unsigned char unknown_0_[0x8e50];
-    short unknown_8e50_;
-    short unknown_8e52_;
+    short target;
+    short skill;
     unsigned char unknown_8e54_[4];
-    int unknown_8e58_;
+    int action;
     unsigned char unknown_8e5c_[0x26];
     signed char unknown_8e82_;
-    signed char unknown_8e83_;
+    signed char count;
 };
 struct Struct_ov024_021ea584 {
     unsigned char unknown_0_[4];
-    int unknown_4_;
+    int action;
     unsigned char unknown_8_[8];
-    Struct_ov024_021ea584_3* unknown_10_;
+    Struct_ov024_021ea584_3* battle;
     unsigned char unknown_14_[4];
-    int unknown_18_;
+    int state;
     unsigned char unknown_1c_[0x5c];
     unsigned char unknown_78_;
 };
 struct Struct_ov024_021ea584_2 {
     unsigned int unknown_0_;
-    unsigned int unknown_4_0_ : 12;
+    unsigned int skill : 12;
     unsigned int unknown_5_4_ : 20;
     unsigned char unknown_8_[8];
-    unsigned int unknown_10_;
+    unsigned int flags;
     unsigned char unknown_14_[8];
-    unsigned int unknown_1c_0_ : 14;
+    unsigned int field_1c : 14;
     unsigned int unknown_1d_6_ : 5;
     unsigned int unknown_1e_3_ : 13;
     unsigned char unknown_20_[0xc];
@@ -46,31 +46,31 @@ struct Struct_ov024_021ea584_4 : GameObject {
 };
 extern "C" int func_020850d0(unsigned char*);
 extern "C" void func_ov000_0215cd80(void*);
-static inline int inline_ov000_02169850(int arg0) { return arg0 >= 0 && arg0 <= 3; }
+static inline int IsPartyMember(int id) { return id >= 0 && id <= 3; }
 
 // USA: func_ov024_021ea584
-extern "C" ARM void func_ov024_021ea584(Struct_ov024_021ea584* arg0, int arg1, int arg2, Struct_ov024_021ea584_2* arg3) {
-    if (arg3->unknown_4_0_ == 0x61 && arg0->unknown_18_ > 0) return;
-    if (arg3->unknown_1d_6_ && arg0->unknown_18_ > 0) return;
-    if (arg0->unknown_78_ && arg0->unknown_18_ > 0) return;
-    if (inline_ov000_02169850(arg1)) {
-        Struct_ov024_021ea584_4* var0 = (Struct_ov024_021ea584_4*)func_0200ff1c(GameState::GetInstance(), arg1);
-        if (var0 && (arg3->unknown_10_ & 0x100000) && func_020850d0(var0->unknown_150_) && arg0->unknown_18_ > 0) return;
+extern "C" ARM void func_ov024_021ea584(Struct_ov024_021ea584* action, int actor, int target, Struct_ov024_021ea584_2* parameters) {
+    if (parameters->skill == 0x61 && action->state > 0) return;
+    if (parameters->unknown_1d_6_ && action->state > 0) return;
+    if (action->unknown_78_ && action->state > 0) return;
+    if (IsPartyMember(actor)) {
+        Struct_ov024_021ea584_4* combatant = (Struct_ov024_021ea584_4*)func_0200ff1c(GameState::GetInstance(), actor);
+        if (combatant && (parameters->flags & 0x100000) && func_020850d0(combatant->unknown_150_) && action->state > 0) return;
     }
-    if (arg3->unknown_2f_3_) {
-        if (inline_ov000_02169850(arg1)) {
-            if (arg0->unknown_10_->unknown_8e82_ != 1) arg0->unknown_10_->unknown_8e83_ = 0;
-            else if (arg0->unknown_10_->unknown_8e58_ != arg0->unknown_4_) arg0->unknown_10_->unknown_8e83_++;
-            arg0->unknown_10_->unknown_8e82_ = 1;
+    if (parameters->unknown_2f_3_) {
+        if (IsPartyMember(actor)) {
+            if (action->battle->unknown_8e82_ != 1) action->battle->count = 0;
+            else if (action->battle->action != action->action) action->battle->count++;
+            action->battle->unknown_8e82_ = 1;
         } else {
-            if (arg0->unknown_10_->unknown_8e82_ != 2) arg0->unknown_10_->unknown_8e83_ = 0;
-            else if (arg0->unknown_10_->unknown_8e58_ != arg0->unknown_4_) arg0->unknown_10_->unknown_8e83_++;
-            arg0->unknown_10_->unknown_8e82_ = 2;
+            if (action->battle->unknown_8e82_ != 2) action->battle->count = 0;
+            else if (action->battle->action != action->action) action->battle->count++;
+            action->battle->unknown_8e82_ = 2;
         }
-        if (arg3->unknown_4_0_ != arg0->unknown_10_->unknown_8e52_) arg0->unknown_10_->unknown_8e83_ = 0;
-        arg0->unknown_10_->unknown_8e52_ = arg3->unknown_4_0_;
-        if (arg2 != arg0->unknown_10_->unknown_8e50_) arg0->unknown_10_->unknown_8e83_ = 0;
-        arg0->unknown_10_->unknown_8e50_ = arg2;
-        arg0->unknown_10_->unknown_8e58_ = arg0->unknown_4_;
-    } else func_ov000_0215cd80(arg0->unknown_10_);
+        if (parameters->skill != action->battle->skill) action->battle->count = 0;
+        action->battle->skill = parameters->skill;
+        if (target != action->battle->target) action->battle->count = 0;
+        action->battle->target = target;
+        action->battle->action = action->action;
+    } else func_ov000_0215cd80(action->battle);
 }

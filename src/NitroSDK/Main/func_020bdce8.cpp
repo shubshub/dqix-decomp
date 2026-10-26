@@ -1,62 +1,62 @@
 #include <globaldefs.h>
 
 struct Struct_020bdce8_2 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned short unknown_2_;
-    int unknown_4_;
+    unsigned char type;
+    unsigned char key;
+    unsigned short pad;
+    int val;
 };
 
 struct Struct_020bdce8 {
-    unsigned int unknown_0_;
-    Struct_020bdce8_2 unknown_4_[1];
+    unsigned int count;
+    Struct_020bdce8_2 entries[1];
 };
 
-extern "C" Struct_020bdce8* func_020bd710(int arg0);
-extern "C" int func_020bddec(int arg0, int arg1, int arg2, int arg3, int* arg4);
-extern "C" int func_020bde70(int arg0, int arg1, int arg2, int arg3, int* arg4);
-extern "C" int func_020bded0(int arg0, int arg1, int arg2, int arg3, int* arg4);
+extern "C" Struct_020bdce8* func_020bd710(int id);
+extern "C" int func_020bddec(int val, int key, int arg2, int flag, int* out);
+extern "C" int func_020bde70(int val, int key, int arg2, int flag, int* out);
+extern "C" int func_020bded0(int val, int key, int arg2, int flag, int* out);
 extern "C" int func_020be010(int, unsigned int, int, int, int*);
 
 // USA: func_020bdce8
-extern "C" ARM int func_020bdce8(int arg0, int arg1) {
-    Struct_020bdce8* var0 = func_020bd710(arg0);
-    if (var0 == 0) {
+extern "C" ARM int func_020bdce8(int id, int arg1) {
+    Struct_020bdce8* list = func_020bd710(id);
+    if (list == 0) {
         return 1;
     }
 
-    int* var1 = 0;
-    int* var2 = 0;
-    int* var3 = 0;
-    int* var4 = 0;
-    unsigned int var5 = 0;
-    Struct_020bdce8_2* var6;
+    int* a = 0;
+    int* b = 0;
+    int* c = 0;
+    int* d = 0;
+    unsigned int i = 0;
+    Struct_020bdce8_2* entry;
 
-    if (var5 < var0->unknown_0_) {
-        var6 = var0->unknown_4_;
+    if (i < list->count) {
+        entry = list->entries;
         do {
-            int var7;
-            switch (var6->unknown_0_) {
+            int ret;
+            switch (entry->type) {
             case 0:
-                var7 = func_020bddec(var6->unknown_4_, var6->unknown_1_, arg1, 1, var1);
-                if (var7 != 0) return var7;
+                ret = func_020bddec(entry->val, entry->key, arg1, 1, a);
+                if (ret != 0) return ret;
                 break;
             case 3:
-                var7 = func_020bde70(var6->unknown_4_, var6->unknown_1_, arg1, 1, var2);
-                if (var7 != 0) return var7;
+                ret = func_020bde70(entry->val, entry->key, arg1, 1, b);
+                if (ret != 0) return ret;
                 break;
             case 1:
-                var7 = func_020bded0(var6->unknown_4_, var6->unknown_1_, arg1, 1, var3);
-                if (var7 != 0) return var7;
+                ret = func_020bded0(entry->val, entry->key, arg1, 1, c);
+                if (ret != 0) return ret;
                 break;
             case 2:
-                var7 = func_020be010(var6->unknown_4_, var6->unknown_1_, arg1, 1, var4);
-                if (var7 != 0) return var7;
+                ret = func_020be010(entry->val, entry->key, arg1, 1, d);
+                if (ret != 0) return ret;
                 break;
             }
-            var6++;
-            var5++;
-        } while (var5 < var0->unknown_0_);
+            entry++;
+            i++;
+        } while (i < list->count);
     }
     return 0;
 }

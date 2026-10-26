@@ -7,7 +7,7 @@ struct BackgroundScreen {
     unsigned char unk_4;
     unsigned char unk_5;
     unsigned short unk_6;
-    unsigned int tilesSize_;       // bytes at tiles_: the SCRN file's data size (BackgroundScreen_Flush, DeserializeAndAllocate)
+    unsigned int tilesSize_;       // bytes at tiles_: the SCRN file's data size (BackgroundScreen_Flush, func_0204acdc)
     unsigned short* tiles_;        // width_ x height_ map entries
 };
 

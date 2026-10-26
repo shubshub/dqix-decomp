@@ -10,12 +10,12 @@
 #endif
 
 // USA: func_ov002_02157480
-extern "C" ARM void func_ov002_02157480(void* arg0, int* arg1) {
-    if (arg1 == NULL) return;
-    for (int var0 = 0; var0 < 4; var0++) arg1[var0] = -1;
-    int var1 = 0;
-    while (var1 < *((signed char*)arg0 + LIST_BASE + LIST_COUNT)) {
-        arg1[var1] = *((signed char*)arg0 + var1 + LIST_BASE + LIST_DATA);
-        var1++;
+extern "C" ARM void func_ov002_02157480(void* obj, int* arr) {
+    if (arr == NULL) return;
+    for (int j = 0; j < 4; j++) arr[j] = -1;
+    int i = 0;
+    while (i < *((signed char*)obj + LIST_BASE + LIST_COUNT)) {
+        arr[i] = *((signed char*)obj + i + LIST_BASE + LIST_DATA);
+        i++;
     }
 }

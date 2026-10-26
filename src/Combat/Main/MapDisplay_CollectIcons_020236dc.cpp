@@ -7,8 +7,8 @@
 #include "Resource/GameResources.h"
 
 
-struct Member020236dc : CombatantRecovery {
-    unsigned char padding190[0x1b2 - 0x190];
+struct Struct_020236dc_5 : CombatantRecovery {
+    unsigned char unknown_190_[0x1b2 - 0x190];
     unsigned short field1b2;
 };
 struct Node02021f88 {
@@ -27,19 +27,19 @@ struct SaveFlags020236dc {
     unsigned char flags[1];
 };
 struct FlagWord02046708;
-struct S3f58;
+struct Struct_020236dc_7;
 extern "C" void* Zone3D_GetInstance();
 extern "C" void* LinkSession_GetInstance();
 extern "C" void* Scenario_GetInstance();
-void* GlobalFlags_GetInstance();
-GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState*, int);
-int FlagWord_TestBits(FlagWord02046708*, unsigned int);
-void GetFields1a8And1ac_02053f58(S3f58*, int*, int*);
-unsigned char GetField0x1b0_02053f74(void*);
-int GameState_GetProtagonistIndex(GameState*);
-int GameObject_GetLinePosition(void*);
-int Scenario_TestFlag(int, unsigned char*, int);
-int MapDisplay_FindShipPosition(Container02021394*, int, int, short*, short*);
+extern "C" void* GlobalFlags_GetInstance();
+extern "C" GameObject* func_0200ff58(GameState*, int);
+extern "C" int FlagWord_TestBits(FlagWord02046708*, unsigned int);
+extern "C" void func_02053f58(Struct_020236dc_7*, int*, int*);
+extern "C" unsigned char func_02053f74(void*);
+extern "C" int GameState_GetProtagonistIndex(GameState*);
+extern "C" int GameObject_GetLinePosition(void*);
+extern "C" int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" int MapDisplay_FindShipPosition(Container02021394*, int, int, short*, short*);
 #if defined(jpn)
 #define data_020e704c data_020e78e8
 #endif
@@ -83,9 +83,9 @@ extern "C" ARM int MapDisplay_CollectIcons(CombatActionPosition* entries, unsign
     icons.entries = entries;
     icons.count = 0;
     for (int i = 0; i < 4; ++i) {
-        Member020236dc* member = (Member020236dc*)GetCombatantWithFlag0x100_0200ff1c(game, i);
+        Struct_020236dc_5* member = (Struct_020236dc_5*)func_0200ff1c(game, i);
         if (!member || !(member->recoveryFlags & 8)) continue; // MapDisplay_PlaceMembers: the member is on this map
-        if (GetCombatantWithFlag0x1000_0200ff58(game, i)) {
+        if (func_0200ff58(game, i)) {
             unsigned char index = 0;
             unsigned short zoneValue = zone->unknown_4_;
             int excluded = 0;
@@ -101,10 +101,10 @@ extern "C" ARM int MapDisplay_CollectIcons(CombatActionPosition* entries, unsign
         entry->combatantId = i;
         ++icons.count;
         entry->flag11 = member->field1b2 && !FlagWord_TestBits(globalFlags, 0x80000) ? 1 : 0;
-        entry->flag12 = protagonist ? protagonist->obj3D_.GetField06() == member->obj3D_.GetField06() : 0;
+        entry->unknown_12_ = protagonist ? protagonist->obj3D_.GetField06() == member->obj3D_.GetField06() : 0;
         if (member->recoveryFlags & 0x10) { // MapDisplay_PlaceMembers: drawn at its zone list entry's point
-            GetFields1a8And1ac_02053f58((S3f58*)member, &entry->position.x, &entry->position.z);
-            entry->group = GetField0x1b0_02053f74(member);
+            func_02053f58((Struct_020236dc_7*)member, &entry->position.x, &entry->position.z);
+            entry->group = func_02053f74(member);
             entry->variant = groupCounts[entry->group];
             ++groupCounts[entry->group];
             if (i == GameState_GetProtagonistIndex(game)) {
@@ -112,16 +112,16 @@ extern "C" ARM int MapDisplay_CollectIcons(CombatActionPosition* entries, unsign
                 heroPosition->z = entry->position.z;
             }
         } else {
-            Vector3i memberPosition = member->obj3D_.position_;
-            entry->position.x = memberPosition.x;
-            entry->position.y = memberPosition.y;
-            entry->position.z = memberPosition.z;
+            Vector3i var14 = member->obj3D_.position_;
+            entry->position.x = var14.x;
+            entry->position.y = var14.y;
+            entry->position.z = var14.z;
             entry->variant = -1;
         }
         entry->elementId = kMemberSprite;
         entry->palette = member->obj3D_.actorIndex_ + kMemberPaletteBase;
         GameObject* party = game->GetPartyMemberByIndex(i);
-        GameObject* active = GetCombatantWithFlag0x1000_0200ff58(game, i);
+        GameObject* active = func_0200ff58(game, i);
         if (party && (member->obj3D_.actorIndex_ == 0 || active)) entry->type = GameObject_GetLinePosition(party) + kHeroOamSlotBase;
         else entry->type = member->obj3D_.actorIndex_ + kMemberOamSlotBase;
         if (party) entry->flag13 = GameObject_GetLinePosition(party);

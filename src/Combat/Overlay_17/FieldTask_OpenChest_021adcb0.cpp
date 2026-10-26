@@ -41,57 +41,57 @@ struct ItemTable;
 typedef LootableContainerManager::Container Container;
 
 
-void* MessageSystem_GetInstance(void);
+extern "C" void* MessageSystem_GetInstance(void);
 extern "C" unsigned char* Zone3D_GetInstance(void);
-void* TextQueue_GetInstance(void);
+extern "C" void* TextQueue_GetInstance(void);
 extern "C" void FieldTask_EndOpenChest(OpenChestTask* self);
-void GameResources_UpdateSpecialItemEffect(void* res);
-void* GameState_GetFollowCamera(char* gs);
-void FollowCamera_DisableFollow(void* obj);
-void FollowCamera_EnableFollow(void* obj);
-void GameObject_SetFacing(Obj02033834* obj, int arg);
+extern "C" void GameResources_UpdateSpecialItemEffect(void* res);
+extern "C" void* GameState_GetFollowCamera(char* gs);
+extern "C" void FollowCamera_DisableFollow(void* obj);
+extern "C" void FollowCamera_EnableFollow(void* obj);
+extern "C" void GameObject_SetFacing(Obj02033834* obj, int arg);
 extern "C" int* LinkSession_GetInstance(void);
-unsigned char* Zone3D_GetChest(unsigned char* p, int i);
-Container* GrottoChestList_Get(GetElement02094d5cList* list, int id);
-void* GameState_GetParty(GameState* gs);
-int LinkSession_IsActive(int* p);
+extern "C" unsigned char* Zone3D_GetChest(unsigned char* p, int i);
+extern "C" Container* GrottoChestList_Get(GetElement02094d5cList* list, int id);
+extern "C" void* GameState_GetParty(GameState* gs);
+extern "C" int LinkSession_IsActive(int* p);
 extern "C" int LinkSession_IsGuest(void* p);
-void NameText_InitFromPartyMember(void* obj, int combatantId);
-int StandardStrings_Get(int key);
+extern "C" void NameText_InitFromPartyMember(void* obj, int combatantId);
+extern "C" int StandardStrings_Get(int key);
 extern "C" void MessageSystem_FormatText(void* messages, int mode, int fmt, char* out, int size, int a, int b);
-void GameObject_DisableControl(Obj020397cc* obj, int arg);
-int GetByte0x150Bit6(BitFlags020d805c* obj);
-void TextQueue_Reset(Obj020d7aa0* obj);
-short Party_CountItem(Obj02086aec* obj, int key);
+extern "C" void GameObject_DisableControl(Obj020397cc* obj, int arg);
+extern "C" int func_020d805c(BitFlags020d805c* obj);
+extern "C" void TextQueue_Reset(Obj020d7aa0* obj);
+extern "C" short Party_CountItem(Obj02086aec* obj, int key);
 extern "C" int sprintf(char* dst, const char* fmt, ...);
-void GameState_SetGrottoChestOpened(void* arr, int bit, int value);
-void GameObject_SetMotionState(Obj02033b68* obj, int v);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void GameState_SetGrottoChestOpened(void* arr, int bit, int value);
+extern "C" void GameObject_SetMotionState(Obj02033b68* obj, int v);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 extern "C" void GameResources_LoadSpecialItemEffect(GameResources* res, SafeAllocator* alloc);
-void GameObject_EnableControl(void* obj);
+extern "C" void GameObject_EnableControl(void* obj);
 struct UpdateStateStruct;
-void ZoneChest_StartOpening(UpdateStateStruct*, int, int, int);
-void LinkMessageQueue_SendChestOpened(unsigned char a, unsigned short b, unsigned short c);
-int GameResources_IsSpecialItemEffectLoaded(Struct0218d618* obj);
+extern "C" void ZoneChest_StartOpening(UpdateStateStruct*, int, int, int);
+extern "C" void LinkMessageQueue_SendChestOpened(unsigned char a, unsigned short b, unsigned short c);
+extern "C" int GameResources_IsSpecialItemEffectLoaded(Struct0218d618* obj);
 extern "C" void* memset(void* dst, int c, unsigned int n);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void FieldTask_InitAcquireTreasureMap(void* node, int flag);
 extern "C" void AcquireTreasureMapTask_CreateMap(void* node, int a, int b, int c, int d);
-void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
-void* ItemTable_Construct(void*);
-void InitStruct0207cbe8(char*);
+extern "C" void func_020469b4(TailList020469b4* list, TailNode020469b4* node);
+extern "C" void* ItemTable_Construct(void*);
+extern "C" void func_0207cbe8(char*);
 extern "C" int func_0207d538(void*, int, int, char*, int);
 extern "C" void GameResources_PlaySpecialItemEffect(GameResources*, Vector3fix*, int);
-void SePlayer_UnloadExtraArchiveA(void* obj);
-void SePlayer_LoadExtraArchiveA(void* obj, int arg1, int arg2);
-void DispatchIfField0xc4NonNeg_0205eb90(void* obj, int a, int b);
-void SePlayer_Play(SePlayer* obj, int a, int b);
+extern "C" void SePlayer_UnloadExtraArchiveA(void* obj);
+extern "C" void SePlayer_LoadExtraArchiveA(void* obj, int arg1, int arg2);
+extern "C" void func_0205eb90(void* obj, int a, int b);
+extern "C" void SePlayer_Play(SePlayer* obj, int a, int b);
 extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
 extern "C" void func_ov017_021cdb00(int, int, int, int);
-int GameResources_IsSpecialItemEffectPlaying(void* obj);
-void MessageSystem_SetStringArgument(Obj02046574* obj, int index, char* str);
-void FieldTask_InitWhistle(WhistleTask* self);
-void InsertNodeAfterHead(List02046a3c* list, Node02046a3c* node);
+extern "C" int GameResources_IsSpecialItemEffectPlaying(void* obj);
+extern "C" void MessageSystem_SetStringArgument(Obj02046574* obj, int index, char* str);
+extern "C" void FieldTask_InitWhistle(WhistleTask* self);
+extern "C" void func_02046a3c(List02046a3c* list, Node02046a3c* node);
 
 extern AllocatorUnion g_mainAllocator;
 extern char g_sePlayer;
@@ -157,7 +157,7 @@ extern "C" ARM void FieldTask_OpenChest(OpenChestTask* self) {
         } else if (container && container->lock != 0) {
             GameObject_DisableControl((Obj020397cc*)opener, 1);
             void* textQueue2 = TextQueue_GetInstance();
-            if (GetByte0x150Bit6((BitFlags020d805c*)textQueue2)) {
+            if (func_020d805c((BitFlags020d805c*)textQueue2)) {
                 TextQueue_Reset((Obj020d7aa0*)textQueue2);
             }
             int canOpen = 0;
@@ -295,7 +295,7 @@ extern "C" ARM void FieldTask_OpenChest(OpenChestTask* self) {
                         void* node = res->fieldTasks_[0x1b];
                         FieldTask_InitAcquireTreasureMap(node, 0);
                         AcquireTreasureMapTask_CreateMap(node, 1, 0, 0, 0);
-                        AppendNodeToTail(taskQueue, (TailNode020469b4*)node);
+                        func_020469b4(taskQueue, (TailNode020469b4*)node);
                         done = 1;
                     } else if (container->lootType == LootType_Ambush) {
                         done = 1;
@@ -305,9 +305,9 @@ extern "C" ARM void FieldTask_OpenChest(OpenChestTask* self) {
                         LootTextContext context;
                         context.allocator.ResetAllocatorPointer();
                         ItemTable_Construct(context.itemTable);
-                        InitStruct0207cbe8((char*)&context);
+                        func_0207cbe8((char*)&context);
                         char item[0x80] = {};
-                        InitStruct0207cbe8((char*)&context);
+                        func_0207cbe8((char*)&context);
                         context.containerItems = (ItemTable*)(zone + ContainerItemsOffset);
                         if (func_0207d538(&context, container->lootType, container->itemIDOrRank, item, 1)) {
 #if defined(jpn)
@@ -353,7 +353,7 @@ extern "C" ARM void FieldTask_OpenChest(OpenChestTask* self) {
                     if (self->ambush) {
                         SePlayer_UnloadExtraArchiveA(&g_sePlayer);
                         SePlayer_LoadExtraArchiveA(&g_sePlayer, 0x15e, 0x15e);
-                        DispatchIfField0xc4NonNeg_0205eb90(&g_sePlayer, 0, 0);
+                        func_0205eb90(&g_sePlayer, 0, 0);
                     } else if (chest->lootType != 0 && chest->itemIDOrRank != 0x5617) {
                         SePlayer_Play((SePlayer*)&g_sePlayer, 0xe, 0);
                     }
@@ -421,7 +421,7 @@ extern "C" ARM void FieldTask_OpenChest(OpenChestTask* self) {
             whistle->partyMember = opener->obj3D_.actorIndex_;
             whistle->silent = 1;
             whistle->monsterId = self->monsterId;
-            InsertNodeAfterHead((List02046a3c*)taskQueue, (Node02046a3c*)whistle);
+            func_02046a3c((List02046a3c*)taskQueue, (Node02046a3c*)whistle);
         }
         FieldTask_EndOpenChest(self);
     }

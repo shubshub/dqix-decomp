@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
 struct Struct_ov000_0215767c_6 {
-    char unknown_0_[0x30];
-    struct Struct_ov000_0215767c_6* unknown_30_;
+    char pad0[0x30];
+    struct Struct_ov000_0215767c_6* next;
 };
 struct Struct_ov000_0215767c_7 {
-    char unknown_0_[8];
-    unsigned char unknown_8_;
-    char unknown_9_[7];
-    struct Struct_ov000_0215767c_6* unknown_10_;
+    char pad0[8];
+    unsigned char count;
+    char pad1[7];
+    struct Struct_ov000_0215767c_6* head;
 };
 
 // USA: func_ov000_02160068
-extern "C" ARM void func_ov000_02160068(struct Struct_ov000_0215767c_7* arg0, struct Struct_ov000_0215767c_6* arg1) {
-    struct Struct_ov000_0215767c_6** var0 = &arg0->unknown_10_;
-    while (*var0 != NULL) {
-        var0 = &(*var0)->unknown_30_;
+extern "C" ARM void func_ov000_02160068(struct Struct_ov000_0215767c_7* obj, struct Struct_ov000_0215767c_6* arg1) {
+    struct Struct_ov000_0215767c_6** p = &obj->head;
+    while (*p != NULL) {
+        p = &(*p)->next;
     }
-    *var0 = arg1;
-    arg0->unknown_8_++;
+    *p = arg1;
+    obj->count++;
 }

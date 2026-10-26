@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
-void* GetOffsetEntry0xc_020bd4b8(int index);
-int GetListEntryWord8020bd8ac(unsigned int index);
+extern "C" void* func_020bd4b8(int index);
+extern "C" int func_020bd8ac(unsigned int index);
 
-struct Elem020c01ac { int f0; int f4; int f8; };
-struct List020c01ac { char pad[0x1c]; unsigned int count; struct Elem020c01ac elems[1]; };
-struct Elem020c01ac *GetValidElement020c01ac(struct List020c01ac *list, int index);
+struct Struct_020be7a8 { int f0; int f4; int f8; };
+struct Struct_020be7a8_2 { char pad[0x1c]; unsigned int count; struct Struct_020be7a8 elems[1]; };
+extern "C" struct Struct_020be7a8 *func_020c01ac(struct Struct_020be7a8_2 *list, int index);
 
-extern "C" int func_020be924(void *obj, unsigned char b9, unsigned short h4, unsigned char b8,
-    struct Elem020c01ac *entry, int val, int id, int index);
+extern "C" int func_020be924(void *obj, unsigned char arg1, unsigned short h4, unsigned char b8,
+    struct Struct_020be7a8 *entry, int val, int id, int index);
 
 // Main, originally TrySetActionFromListEntry_020be7a8 (USA 0x020be7a8, EUR 0x020be7b8, JPN 0x020c0274)
-ARM int NNS_SndArcPlayerStartSeqArc(void *obj, int id, int index) {
-    void *p = GetOffsetEntry0xc_020bd4b8(id);
+extern "C" ARM int NNS_SndArcPlayerStartSeqArc(void *obj, int id, int index) {
+    void *p = func_020bd4b8(id);
     if (p == NULL) {
         return 0;
     }
-    int rel = *(int*)p;
-    int val = GetListEntryWord8020bd8ac((unsigned int)rel);
+    int var1 = *(int*)p;
+    int val = func_020bd8ac((unsigned int)var1);
     if (val == 0) {
         return 0;
     }
-    struct Elem020c01ac *entry = GetValidElement020c01ac((struct List020c01ac*)val, index);
+    struct Struct_020be7a8 *entry = func_020c01ac((struct Struct_020be7a8_2*)val, index);
     if (entry == NULL) {
         return 0;
     }

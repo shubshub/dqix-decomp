@@ -29,7 +29,7 @@ struct Canvas {
     BackgroundGraphics* backgrounds;
     char pad0[0xe0 - 8];
 };
-struct BattleRecords {
+struct Struct_ov008_021842a0_2 {
     char pad0[0x14];
     SafeAllocator backgroundAllocator;
     char pad1[0xa0 - 0x28];
@@ -46,46 +46,46 @@ struct BattleRecords {
     int task;
 };
 
-const char* KeyTable_Get(Container020e0310*, int);
-void Window_ClosePane(Entry_0205d6a0*, int);
-void Background_Init(BackgroundGraphics*);
-void Background_SetMapSize(unsigned char*, int);
+extern "C" const char* KeyTable_Get(Container020e0310*, int);
+extern "C" void Window_ClosePane(Entry_0205d6a0*, int);
+extern "C" void Background_Init(BackgroundGraphics*);
+extern "C" void Background_SetMapSize(unsigned char*, int);
 extern "C" void Background_SetPriority(BackgroundGraphics*, int);
-void Background_SetScroll(BackgroundGraphics*, int, int);
-void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
-void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
-int Pac_CountFiles(PacRecord*);
-void* Pac_GetFile(PacRecord*, int, void**, int*);
+extern "C" void Background_SetScroll(BackgroundGraphics*, int, int);
+extern "C" void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
+extern "C" void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
+extern "C" int Pac_CountFiles(PacRecord*);
+extern "C" void* Pac_GetFile(PacRecord*, int, void**, int*);
 extern "C" void Background_LoadFile(BackgroundGraphics*, void*, SafeAllocator*, int);
-void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
-void Background_UploadMap(BackgroundGraphics*, void*);
+extern "C" void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
+extern "C" void Background_UploadMap(BackgroundGraphics*, void*);
 extern "C" void Background_FillRect(BackgroundGraphics*, int, int, int, int, int, int);
-void WindowPane_AllocateBuffer(WindowPane*, SafeAllocator*, int, unsigned int);
-void Window_SetPanes(Struct_0205cf78*, WindowPane*, unsigned char);
+extern "C" void WindowPane_AllocateBuffer(WindowPane*, SafeAllocator*, int, unsigned int);
+extern "C" void Window_SetPanes(Struct_0205cf78*, WindowPane*, unsigned char);
 
 // USA: func_ov008_02188a54
-extern "C" ARM int func_ov008_02188a54(Struct_ov008_021842a0_2* arg0, int arg1) {
-    GameResources* var0 = GetGameResources();
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    int var2 = arg0->unknown_b12_;
-    if (var2 == 0) {
+extern "C" ARM int func_ov008_02188a54(Struct_ov008_021842a0_2* self, int arg1) {
+    GameResources* resources = GetGameResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    int step = self->loadStep;
+    if (step == 0) {
 #if defined(jpn)
         int fileKey = 1;
-        if (lastClear) fileKey = 2;
+        if (arg1) fileKey = 2;
         const char* file = KeyTable_Get(&self->texts, fileKey);
         self->task = loader->QueueLoadFile(file, 0);
 #else
-        int var5 = 1;
-        int var6 = 2;
+        int archiveKey = 1;
+        int fileKey = 2;
         if (arg1) {
-            var5 = 3;
-            var6 = 4;
+            archiveKey = 3;
+            fileKey = 4;
         }
         const char* file = KeyTable_Get(&self->texts, fileKey);
         const char* archive = KeyTable_Get(&self->texts, archiveKey);
         self->task = loader->QueueLoadFileInGP2(archive, file, 0);
 #endif
-        ++arg0->unknown_b12_;
+        ++self->loadStep;
     }
     if (step == 1) {
         if (IsBrightnessTransitionActive(resources)) return 0;

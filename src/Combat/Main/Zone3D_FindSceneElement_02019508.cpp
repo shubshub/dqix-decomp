@@ -12,7 +12,7 @@ struct Base02019508 {
 };
 
 // Main, originally FindEntryByKeys02019508 (USA 0x02019508, EUR 0x02019518, JPN 0x020192a8)
-ARM BmdjSceneElement* Zone3D_FindSceneElement(struct Base02019508* zone, int nodeId, int elementId) {
+extern "C" ARM BmdjSceneElement* Zone3D_FindSceneElement(struct Base02019508* zone, int nodeId, int elementId) {
     BmdjSceneElement* result;
     BmdjScriptNode* node;
     result = 0;

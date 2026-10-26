@@ -1,58 +1,58 @@
 #include <globaldefs.h>
 
-#define cpd ((unsigned char*)arg0)
-#define lpd ((unsigned int*)arg0)
+#define cpd ((unsigned char*)dst)
+#define lpd ((unsigned int*)dst)
 
 #define deref_auto_inc(p) *(p)++
 
 // USA: func_02001b2c
-extern "C" ARM void func_02001b2c(void* arg0, int arg1, unsigned int arg2) {
-    unsigned int var0 = (unsigned char)arg1;
-    unsigned int var1;
+extern "C" ARM void func_02001b2c(void* dst, int val, unsigned int n) {
+    unsigned int v = (unsigned char)val;
+    unsigned int i;
 
-    if (arg2 >= 32) {
-        var1 = (-(unsigned int)arg0) & 3;
+    if (n >= 32) {
+        i = (-(unsigned int)dst) & 3;
 
-        if (var1) {
-            arg2 -= var1;
+        if (i) {
+            n -= i;
             do {
-                deref_auto_inc(cpd) = var0;
-            } while (--var1);
+                deref_auto_inc(cpd) = v;
+            } while (--i);
         }
 
-        if (var0) {
-            var0 |= var0 << 24 | var0 << 16 | var0 << 8;
+        if (v) {
+            v |= v << 24 | v << 16 | v << 8;
         }
 
-        var1 = arg2 >> 5;
+        i = n >> 5;
 
-        if (var1) {
+        if (i) {
             do {
-                deref_auto_inc(lpd) = var0;
-                deref_auto_inc(lpd) = var0;
-                deref_auto_inc(lpd) = var0;
-                deref_auto_inc(lpd) = var0;
-                deref_auto_inc(lpd) = var0;
-                deref_auto_inc(lpd) = var0;
-                deref_auto_inc(lpd) = var0;
-                deref_auto_inc(lpd) = var0;
-            } while (--var1);
+                deref_auto_inc(lpd) = v;
+                deref_auto_inc(lpd) = v;
+                deref_auto_inc(lpd) = v;
+                deref_auto_inc(lpd) = v;
+                deref_auto_inc(lpd) = v;
+                deref_auto_inc(lpd) = v;
+                deref_auto_inc(lpd) = v;
+                deref_auto_inc(lpd) = v;
+            } while (--i);
         }
 
-        var1 = (arg2 & 31) >> 2;
+        i = (n & 31) >> 2;
 
-        if (var1) {
+        if (i) {
             do {
-                deref_auto_inc(lpd) = var0;
-            } while (--var1);
+                deref_auto_inc(lpd) = v;
+            } while (--i);
         }
 
-        arg2 &= 3;
+        n &= 3;
     }
 
-    if (arg2) {
+    if (n) {
         do {
-            deref_auto_inc(cpd) = var0;
-        } while (--arg2);
+            deref_auto_inc(cpd) = v;
+        } while (--n);
     }
 }

@@ -1,69 +1,69 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_0202b2f0;
+struct SearchStruct;
 struct Struct_0207d798;
 
-struct Struct_0207d7f4 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    signed char unknown_4_;
-    unsigned char unknown_5_;
-    char unknown_6_[2];
-    signed char unknown_8_[4];
+struct Entry0207d9bc {
+    unsigned short id;
+    unsigned short field2;
+    signed char field4;
+    unsigned char field5;
+    char pad6[2];
+    signed char bytes[4];
 };
 
-void* FindEntryByFlagByte_0207d9f4(unsigned char* arr, int offset);
-void InitStruct0207d7c0(struct Init0207d7c0* o);
-struct Entry0207d9bc* FindEntryByHalfword(struct Entry0207d9bc* arr, unsigned short key);
+extern "C" void* func_0207d9f4(unsigned char* arr, int offset);
+extern "C" void func_0207d7c0(struct Struct_0207d798* o);
+extern "C" struct Entry0207d9bc* func_0207d9bc(struct Entry0207d9bc* arr, unsigned short key);
 extern "C" void* LinkSession_GetInstance(void);
-int LinkSession_IsSlotMember(struct SearchStruct* obj, int value);
-int CheckEntryBytes0207d978(struct Entry0207d9bc* arr, unsigned short key);
-GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
-int GetSignedByte0x2d0_020546a8(void* obj);
+extern "C" int LinkSession_IsSlotMember(struct SearchStruct* obj, int value);
+extern "C" int func_0207d978(struct Entry0207d9bc* arr, unsigned short key);
+extern "C" GameObject* func_0200ff58(GameState* battleStruct, int combatantId);
+extern "C" int func_020546a8(void* obj);
 
 // USA: func_0207d7f4
-extern "C" ARM int func_0207d7f4(struct Struct_0207d7f4* arg0, unsigned short arg1, int arg2, int arg3,
-                      signed char arg4, unsigned short arg5, unsigned char arg6) {
-    signed char var0;
-    GameState* var1 = GameState::GetInstance();
-    struct Struct_0207d7f4* var2;
-    struct Struct_0202b2f0* var3;
-    GameObject* var4;
-    int var5;
+extern "C" ARM int func_0207d7f4(struct Entry0207d9bc* entries, unsigned short id, int arg2, int flag,
+                      signed char field4, unsigned short field2, unsigned char field5) {
+    signed char v;
+    GameState* game = GameState::GetInstance();
+    struct Entry0207d9bc* entry;
+    struct SearchStruct* search;
+    GameObject* combatant;
+    int i;
 
-    if (arg3 != 0) {
-        var2 = (struct Struct_0207d7f4*)func_0207d9f4((unsigned char*)arg0, arg2);
-        if (var2 != NULL && var2->unknown_0_ != arg1) {
-            func_0207d7c0((struct Struct_0207d798*)var2);
+    if (flag != 0) {
+        entry = (struct Entry0207d9bc*)func_0207d9f4((unsigned char*)entries, arg2);
+        if (entry != NULL && entry->id != id) {
+            func_0207d7c0((struct Struct_0207d798*)entry);
         }
     }
-    entry = FindEntryByHalfword(entries, id);
+    entry = func_0207d9bc(entries, id);
     if (entry == NULL) {
-        entry = FindEntryByHalfword(entries, 0);
+        entry = func_0207d9bc(entries, 0);
         if (entry == NULL) return 0;
-        InitStruct0207d7c0((struct Init0207d7c0*)entry);
+        func_0207d7c0((struct Struct_0207d798*)entry);
         entry->id = id;
         search = (struct SearchStruct*)LinkSession_GetInstance();
         for (i = 0; i < 4; i++) {
             if (!LinkSession_IsSlotMember(search, i) || game->GetPartyMemberByIndex(i) == NULL)
                 entry->bytes[i] = 0;
         }
-    } else if (var1->GetGameObjectByIndex(arg2) == NULL) {
-        var2->unknown_8_[arg2] = 0;
-        return func_0207d978(arg0, arg1);
+    } else if (game->GetGameObjectByIndex(arg2) == NULL) {
+        entry->bytes[arg2] = 0;
+        return func_0207d978(entries, id);
     }
-    var0 = (signed char)arg3;
-    var2->unknown_8_[arg2] = var0;
-    for (var5 = 0; var5 < 4; var5++) {
-        var4 = func_0200ff58(var1, var5);
-        if (var4 != NULL && func_020546a8(var4) == arg2)
-            var2->unknown_8_[var5] = var0;
+    v = (signed char)flag;
+    entry->bytes[arg2] = v;
+    for (i = 0; i < 4; i++) {
+        combatant = func_0200ff58(game, i);
+        if (combatant != NULL && func_020546a8(combatant) == arg2)
+            entry->bytes[i] = v;
     }
-    if (arg3 != 0 && var2->unknown_4_ < 0 && arg4 >= 0) {
-        var2->unknown_4_ = arg4;
-        var2->unknown_2_ = arg5;
-        var2->unknown_5_ = arg6;
+    if (flag != 0 && entry->field4 < 0 && field4 >= 0) {
+        entry->field4 = field4;
+        entry->field2 = field2;
+        entry->field5 = field5;
     }
-    return func_0207d978(arg0, arg1);
+    return func_0207d978(entries, id);
 }

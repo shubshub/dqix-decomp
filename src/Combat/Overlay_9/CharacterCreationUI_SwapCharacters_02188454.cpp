@@ -4,14 +4,14 @@
 #include "Graphics/CharacterModel.h"
 #include "GameState/PartyMember.h"
 
-void CharacterModel_SetAngle(void*, unsigned int);
+extern "C" void CharacterModel_SetAngle(void*, unsigned int);
 extern "C" Vector3i CharacterModel_GetRotation(void* character);
 struct Words021e60c4;
-void CharacterModel_SetRotation(void*, Words021e60c4*);
+extern "C" void CharacterModel_SetRotation(void*, Words021e60c4*);
 extern "C" Object3D* CharacterModel_GetBody(void* character);
-void CharacterCreationUI_GetBodyDimensions(unsigned char*, int, short*, short*);
+extern "C" void CharacterCreationUI_GetBodyDimensions(unsigned char*, int, short*, short*);
 extern "C" void CharacterModel_SetScale(void* character, int width, int height);
-int STD_GetStringLength(const char* s);
+extern "C" int STD_GetStringLength(const char* s);
 
 // Overlay 9, originally func_ov009_02188454 (USA/EUR 0x02188454, JPN 0x02189214)
 extern "C" ARM void CharacterCreationUI_SwapCharacters(CharacterCreationUI* self) {

@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
 extern "C" void __clear(void* dst, int count);
-int IsPrefixMatch020d857c(signed char* a, signed char* b);
+extern "C" int func_020d857c(signed char* a, signed char* b);
 extern "C" char* strcpy(char* dst, const char* src);
 extern "C" void* memcpy(void* dst, void* src, unsigned int length);
-int STD_GetStringLength(const char* s);
+extern "C" int STD_GetStringLength(const char* s);
 
 struct Struct_ov003_0217f600 {
-    signed char* unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    signed char* value;
+    int pad4;
+    int pad8;
 };
 
 struct Struct_ov003_0217f608 {
-    const char* unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    const char* value;
+    int pad4;
+    int pad8;
 };
 
 extern Struct_ov003_0217f600 data_ov003_0217f600[];
@@ -33,13 +33,13 @@ extern "C" ARM void func_ov003_02170a7c(signed char* str, void* outBuf) {
         int cursor = index;
         while (data_ov003_0217f600[index].value != 0 && remaining != 0) {
             int matched = 0;
-            if (IsPrefixMatch020d857c(str, data_ov003_0217f600[index].value) != 0) {
+            if (func_020d857c(str, data_ov003_0217f600[index].value) != 0) {
                 matched = 1;
-            } else if (IsPrefixMatch020d857c(str, data_ov003_0217f604[index].value) != 0) {
+            } else if (func_020d857c(str, data_ov003_0217f604[index].value) != 0) {
                 matched = 1;
             }
-            if (var5 == 0) {
-                var3 = var3 + 1;
+            if (matched == 0) {
+                index = index + 1;
                 continue;
             }
             const char* repl = *(const char* const*)((char*)data_ov003_0217f608 + (int)index * 12);
@@ -49,6 +49,6 @@ extern "C" ARM void func_ov003_02170a7c(signed char* str, void* outBuf) {
             str += 2;
             index = 0;
         }
-        memcpy(arg1, var0, 8);
+        memcpy(outBuf, localBuf, 8);
     }
 }

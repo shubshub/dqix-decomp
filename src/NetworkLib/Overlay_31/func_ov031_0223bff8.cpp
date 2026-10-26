@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-extern "C" void* func_ov031_0223cf4c(unsigned int arg0, int arg1);
+extern "C" void* func_ov031_0223cf4c(unsigned int len, int align);
 extern "C" ARM void ColorEffect_ConfigureBrightnessAdjust(unsigned short* dst, int flag, int value);
 extern void* data_ov031_02290d34;
 

@@ -4,6 +4,6 @@
 extern "C" void SoundPlayer_PlayArchiveEntry(void*, int, int, int);
 
 // Main, originally DispatchWithShortB4_0205eaa0 (USA 0x0205eaa0, EUR 0x0205eab0, JPN 0x0205fd8c)
-ARM void SePlayer_Play(struct SePlayer* player, int effect, int handle) {
+extern "C" ARM void SePlayer_Play(struct SePlayer* player, int effect, int handle) {
     SoundPlayer_PlayArchiveEntry(player, player->archive, effect, handle);
 }

@@ -13,18 +13,18 @@
 #if defined(jpn)
 #define func_02043224 func_02043998
 #endif
-extern "C" void func_0202f1dc(char*);
+extern "C" void WindowFrame_Unload(char*);
 
-extern "C" void func_02043224(void* arg0);
-extern "C" void func_02043124(void* arg0);
+extern "C" void func_02043224(void* self);
+extern "C" void MessageSystem_Stop(void* self);
 
 // USA: func_02043000
-extern "C" ARM void func_02043000(char* arg0) {
-    func_0202f1dc((char*)(arg0 + CONTROLLER_SUBOBJECT_OFFSET));
-    func_02043224(arg0);
-    Struct_02021b84* var0 = (Struct_02021b84*)arg0;
-    func_02043040(var0);
-    func_02043124(arg0);
-    func_020430b0(var0);
-    *(int*)(arg0 + CONTROLLER_STATE_OFFSET) = 0;
+extern "C" ARM void func_02043000(char* self) {
+    WindowFrame_Unload((char*)(self + CONTROLLER_SUBOBJECT_OFFSET));
+    func_02043224(self);
+    MessageSystem* window = (MessageSystem*)self;
+    func_02043040(window);
+    MessageSystem_Stop(self);
+    func_020430b0(window);
+    *(int*)(self + CONTROLLER_STATE_OFFSET) = 0;
 }

@@ -6,51 +6,51 @@ struct Struct_ov031_0223c7e8_2 {
     unsigned short unknown_2_;
     signed char unknown_4_;
     unsigned char unknown_5_;
-    unsigned char unknown_6_;
-    unsigned char unknown_7_;
+    unsigned char bpp;
+    unsigned char flags;
 };
 struct Struct_ov031_0223c7e8 {
-    unsigned char unknown_0_[8];
-    Struct_ov031_0223c7e8_2* unknown_8_;
+    unsigned char pad[8];
+    Struct_ov031_0223c7e8_2* glyph;
 };
 struct Struct_ov031_0223c7e8_3 {
-    Struct_ov031_0223c7e8* unknown_0_;
+    Struct_ov031_0223c7e8* info;
 };
 struct Struct_ov031_0223c7e8_4 {
     void* unknown_0_;
-    Struct_ov031_0223c7e8_3* unknown_4_;
+    Struct_ov031_0223c7e8_3* font;
     int unknown_8_;
     int unknown_c_;
 };
 struct Struct_ov031_0223c7e8_5 {
-    char unknown_0_[0x18];
-    Struct_ov031_0223c7e8_4 unknown_18_;
+    char pad[0x18];
+    Struct_ov031_0223c7e8_4 canvas;
 };
-struct Struct_ov031_0223c7e8_6 { signed char unknown_0_, unknown_1_; };
+struct Struct_ov031_0223c7e8_6 { signed char x, y; };
 
-extern "C" void func_020b25c4(Struct_ov031_0223c7e8_4* arg0, int arg1, int arg2, int arg3, int arg4, const char* arg5, Struct_ov031_0223c7e8_6 arg6);
+extern "C" void func_020b25c4(Struct_ov031_0223c7e8_4* canvas, int x, int y, int color, int flags, const char* text, Struct_ov031_0223c7e8_6 direction);
 
 // USA: func_ov031_0223c7e8
-extern "C" ARM void func_ov031_0223c7e8(Struct_ov031_0223c7e8_5* arg0, int arg1, int arg2, int arg3, int arg4, const char* arg5) {
-    Struct_ov031_0223c7e8_3* var0 = arg0->unknown_18_.unknown_4_;
-    Struct_ov031_0223c7e8_6 var1 = {0, 0};
-    switch (var0->unknown_0_->unknown_8_->unknown_7_) {
+extern "C" ARM void func_ov031_0223c7e8(Struct_ov031_0223c7e8_5* window, int x, int y, int color, int flags, const char* text) {
+    Struct_ov031_0223c7e8_3* font = window->canvas.font;
+    Struct_ov031_0223c7e8_6 dir = {0, 0};
+    switch (font->info->glyph->flags) {
     case 0:
     case 7:
-        var1.unknown_0_ = 1;
+        dir.x = 1;
         break;
     case 1:
     case 2:
-        var1.unknown_1_ = 1;
+        dir.y = 1;
         break;
     case 3:
     case 4:
-        var1.unknown_0_ = -1;
+        dir.x = -1;
         break;
     case 5:
     case 6:
-        var1.unknown_1_ = -1;
+        dir.y = -1;
         break;
     }
-    func_020b25c4(&arg0->unknown_18_, arg1, arg2, arg3, arg4, arg5, var1);
+    func_020b25c4(&window->canvas, x, y, color, flags, text, dir);
 }

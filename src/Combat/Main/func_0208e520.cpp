@@ -25,21 +25,21 @@ extern Script::OpcodeLookupEntry data_020f1278[];
 extern Script::OpcodeLookupEntry data_020f1290[];
 
 struct Struct_0208e4f8 {
-    char unknown_0_[4];
-    int unknown_4_;
-    short unknown_8_;
-    unsigned char unknown_a_;
+    char field0[4];
+    int field4;
+    short field8;
+    unsigned char fielda;
 };
 
 extern "C" void func_0208e4f8(struct Struct_0208e4f8*);
 
 // USA: func_0208e520
-extern "C" ARM void func_0208e520(struct Struct_0208e4f8* arg0, char* arg1) {
-    char var0[0x40];
-    unsigned int var1;
-    char var2[4];
-    unsigned int var3;
-    const void* var4;
+extern "C" ARM void func_0208e520(struct Struct_0208e4f8* p, char* name) {
+    char path[0x40];
+    unsigned int len;
+    char tag[4];
+    unsigned int fileLen;
+    const void* fileData;
 
     if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() > 0) {
         return;
@@ -48,7 +48,7 @@ extern "C" ARM void func_0208e520(struct Struct_0208e4f8* arg0, char* arg1) {
     len = 0;
     if (memcmp(name, data_020f12b8, 6) == 0 && memcmp(name, p->field0, 3) != 0 &&
         LoadFileIntoMemory(data_020f12bf, g_fileLoadBuffer, &len)) {
-        ResetAllocatorAndClearState(p);
+        func_0208e4f8(p);
         Script scriptC;
         scriptC.Initialize();
         scriptC.SetOpcodeLookup(data_020f1278);
@@ -56,7 +56,7 @@ extern "C" ARM void func_0208e520(struct Struct_0208e4f8* arg0, char* arg1) {
         scriptC.Execute();
         strncpy(p->field0, name, 3);
     }
-    if (arg1[0] != 'F') {
+    if (name[0] != 'F') {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
@@ -70,22 +70,22 @@ extern "C" ARM void func_0208e520(struct Struct_0208e4f8* arg0, char* arg1) {
     sprintf(path, data_020f12d3, tag);
     if (LoadFileIntoMemory(data_020f12e1, g_fileLoadBuffer, &len)) {
         if (p->fielda == 0 && GetFileInNarc(g_fileLoadBuffer, data_020f12fb, &fileData, &fileLen, 0)) {
-            Script scriptB;
-            scriptB.Initialize();
-            scriptB.SetOpcodeLookup(data_020f1290);
-            scriptB.Load(fileData, fileLen);
-            scriptB.Execute();
+            Script var6;
+            var6.Initialize();
+            var6.SetOpcodeLookup(data_020f1290);
+            var6.Load(fileData, fileLen);
+            var6.Execute();
             p->fielda = 1;
         }
-        ResetAllocatorAndClearState(p);
+        func_0208e4f8(p);
         if (GetFileInNarc(g_fileLoadBuffer, path, &fileData, &fileLen, 0)) {
-            Script scriptA;
-            scriptA.Initialize();
-            scriptA.SetOpcodeLookup(data_020f1290);
-            scriptA.Load(fileData, fileLen);
-            scriptA.Execute();
+            Script var7;
+            var7.Initialize();
+            var7.SetOpcodeLookup(data_020f1290);
+            var7.Load(fileData, fileLen);
+            var7.Execute();
         }
-        strcpy(arg0->unknown_0_, var2);
+        strcpy(p->field0, tag);
     }
     BackgroundLoader::RemoveLockGlobal();
 }

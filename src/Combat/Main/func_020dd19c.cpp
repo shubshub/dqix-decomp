@@ -1,19 +1,19 @@
 #include <globaldefs.h>
 
-extern "C" ARM int func_020dd11c(unsigned int arg0, unsigned int arg1);
+extern "C" ARM int func_020dd11c(unsigned int a, unsigned int b);
 extern unsigned char data_020ee700[];
 
 // USA: func_020dd19c
-extern "C" ARM int func_020dd19c(unsigned int arg0, int arg1) {
-    int var0 = 0;
-    for (unsigned char var1 = 0; var1 < 4; var1++) {
-        unsigned int var2 = func_020dd11c(arg0, var1);
-        if (var2 != 0 && var2 <= 0xe) {
-            if (data_020ee700[var2] == arg1) {
-                var0 = 1;
+extern "C" ARM int func_020dd19c(unsigned int p0, int p1) {
+    int found = 0;
+    for (unsigned char i = 0; i < 4; i++) {
+        unsigned int idx = func_020dd11c(p0, i);
+        if (idx != 0 && idx <= 0xe) {
+            if (data_020ee700[idx] == p1) {
+                found = 1;
                 break;
             }
         }
     }
-    return var0;
+    return found;
 }

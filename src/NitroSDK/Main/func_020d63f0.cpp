@@ -5,75 +5,75 @@
 struct Struct_020d5fd0;
 
 struct Struct_020d63f0_3 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_[0x1fe];
+    unsigned short flagsA;
+    unsigned char pad[0x1fe];
 };
 
 struct Struct_020d63f0 {
     unsigned short unknown_0_[4];
-    unsigned short unknown_8_;
-    unsigned char unknown_a_[0xe];
-    unsigned short unknown_18_;
-    unsigned char unknown_1a_[2];
-    unsigned short unknown_1c_;
+    unsigned short cur;
+    unsigned char pad0[0xe];
+    unsigned short state;
+    unsigned char pad1[2];
+    unsigned short status;
 };
 
 struct Struct_020d5fd0_2 {
-    Struct_020d63f0_3 unknown_0_[4];
-    Struct_020d63f0 unknown_800_;
+    Struct_020d63f0_3 blocks[4];
+    Struct_020d63f0 sub;
 };
 
 struct Struct_020d63f0_2 {
-    unsigned char unknown_0_[2];
+    unsigned char pad0[2];
     unsigned short unknown_2_;
-    unsigned short unknown_4_;
-    unsigned char unknown_6_[6];
-    int unknown_c_;
-    unsigned char unknown_10_[2];
-    unsigned short unknown_12_;
+    unsigned short event;
+    unsigned char pad6[6];
+    int param;
+    unsigned char pad10[2];
+    unsigned short bit;
     unsigned char unknown_14_[8];
-    Struct_020d5fd0_2* unknown_1c_;
+    Struct_020d5fd0_2* obj;
 };
 
-extern "C" void func_020d6610(Struct_020d5fd0* arg0, int arg1, int arg2);
-extern "C" void func_020d66dc(Struct_020d5fd0_2* arg0, int arg1);
+extern "C" void func_020d6610(Struct_020d5fd0* obj, int bit, int extra);
+extern "C" void func_020d66dc(Struct_020d5fd0_2* obj, int mode);
 
 // USA: func_020d63f0
-extern "C" ARM void func_020d63f0(Struct_020d63f0_2* arg0) {
-    Struct_020d5fd0_2* var0 = arg0->unknown_1c_;
-    if (var0 == 0) return;
-    if (arg0->unknown_2_ == 0) {
-        switch (arg0->unknown_4_) {
+extern "C" ARM void func_020d63f0(Struct_020d63f0_2* msg) {
+    Struct_020d5fd0_2* obj = msg->obj;
+    if (obj == 0) return;
+    if (msg->unknown_2_ == 0) {
+        switch (msg->event) {
         case 0x15:
-            func_020d6610((Struct_020d5fd0*)var0, arg0->unknown_12_, arg0->unknown_c_);
-            func_020d66dc(var0, 0);
+            func_020d6610((Struct_020d5fd0*)obj, msg->bit, msg->param);
+            func_020d66dc(obj, 0);
             break;
         case 7:
-            func_020d66dc(var0, 0);
+            func_020d66dc(obj, 0);
             break;
         case 0x19:
             break;
         case 9:
         case 0x1a: {
-            unsigned short var1 = arg0->unknown_12_;
-            unsigned int var2 = 1U << var1;
-            int var3 = DisableIRQInterrupts();
-            unsigned short var4 = var0->unknown_800_.unknown_8_;
-            var2 = ~var2;
-            var0->unknown_0_[var4].unknown_0_ &= var2;
-            if (var0->unknown_800_.unknown_18_ == 1) {
-                unsigned short var5 = (var4 + 1) & 3;
-                var0->unknown_0_[var5].unknown_0_ &= var2;
+            unsigned short bit = msg->bit;
+            unsigned int mask = 1U << bit;
+            int state = DisableIRQInterrupts();
+            unsigned short cur = obj->sub.cur;
+            mask = ~mask;
+            obj->blocks[cur].flagsA &= mask;
+            if (obj->sub.state == 1) {
+                unsigned short next = (cur + 1) & 3;
+                obj->blocks[next].flagsA &= mask;
             }
-            SetIRQInterruptState(var3);
-            func_020d66dc(var0, 0);
-            if (var0->unknown_800_.unknown_18_ == 1) {
-                func_020d66dc(var0, 0);
+            SetIRQInterruptState(state);
+            func_020d66dc(obj, 0);
+            if (obj->sub.state == 1) {
+                func_020d66dc(obj, 0);
             }
             break;
         }
         }
     } else {
-        var0->unknown_800_.unknown_1c_ = 5;
+        obj->sub.status = 5;
     }
 }

@@ -6,7 +6,7 @@ extern "C" void func_ov031_022239f4(void);
 extern "C" void func_ov031_022235a0(int);
 extern "C" void func_ov031_02236878(int);
 extern "C" void func_ov031_02231a44(void);
-extern "C" void func_ov031_022274c0(int arg0);
+extern "C" void func_ov031_022274c0(int v);
 
 // USA: func_ov031_02231988
 extern "C" ARM void func_ov031_02231988(void) {

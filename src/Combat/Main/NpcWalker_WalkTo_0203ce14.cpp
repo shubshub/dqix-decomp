@@ -14,7 +14,7 @@ struct NpcWalker {
     char pad68[0x78 - 0x68];
     Vector3i target;            // where it walks to
 };
-void NpcWalker_SetFacing(NpcWalker* obj, int value);
+extern "C" void NpcWalker_SetFacing(NpcWalker* obj, int value);
 
 // Main, originally func_0203ce14 (USA 0x0203ce14, EUR 0x0203ce24, JPN 0x0203d34c)
 extern "C" ARM void NpcWalker_WalkTo(NpcWalker* self, Vector3i* target) {

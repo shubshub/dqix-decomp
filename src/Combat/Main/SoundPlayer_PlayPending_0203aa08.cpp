@@ -10,14 +10,14 @@ struct SoundPlayer {
     int seqHandle;
     int streamHandle;
     int baseHeapLevel;          // the heap level saved once the archive was open (SoundPlayer_OpenArchive)
-    short streamId;             // the stream SetKeyAndApplyRecord0203ad14 started, -1 for none
-    int streamResumeMs;         // where UpdateScaleOrApplyRecord0203ae4c paused it
+    short streamId;             // the stream func_0203ad14 started, -1 for none
+    int streamResumeMs;         // where func_0203ae4c paused it
     short pendingArchive;       // the entry SoundPlayer_PlayArchiveEntry deferred, -1 for none
     short pendingEntry;
 };
 
 // Main, originally ResetXYField0203aa08 (USA 0x0203aa08, EUR 0x0203aa18, JPN 0x0203a460)
-ARM void SoundPlayer_PlayPending(void* playerRaw) {
+extern "C" ARM void SoundPlayer_PlayPending(void* playerRaw) {
     SoundPlayer* player = (SoundPlayer*)playerRaw;
     short archive;
     if (player->heap == NULL) return;

@@ -10,6 +10,6 @@ struct FieldBlock63d6_115b4 {
 };
 
 // Main, originally SetByteField0x63d6_020115b4 (USA 0x020115b4, EUR 0x020115c4, JPN 0x02011324)
-ARM void GameState_SetMovieId(struct FieldBlock63d6_115b4* gameState, unsigned char movieId) {
+extern "C" ARM void GameState_SetMovieId(struct FieldBlock63d6_115b4* gameState, unsigned char movieId) {
     gameState->movieId = movieId;
 }

@@ -4,19 +4,19 @@
 extern "C" void func_ov000_02169b78(void*);
 
 struct Struct_ov000_02184264_2 {
-	unsigned char unknown_0_[8];
-	SafeAllocator* unknown_8_;
+	unsigned char pad[8];
+	SafeAllocator* alloc;
 };
 extern struct Struct_ov000_02184264_2 data_ov000_02184264;
 
 struct Struct_ov000_02169e54 {
-	int unknown_0_;
+	int tag;
 };
 
 // USA: func_ov000_02169e54
 extern "C" ARM int func_ov000_02169e54() {
-	struct Struct_ov000_02169e54* var0 = (struct Struct_ov000_02169e54*)data_ov000_02184264.unknown_8_->Allocate(8);
-	var0->unknown_0_ = 4;
-	func_ov000_02169b78(var0);
+	struct Struct_ov000_02169e54* node = (struct Struct_ov000_02169e54*)data_ov000_02184264.alloc->Allocate(8);
+	node->tag = 4;
+	func_ov000_02169b78(node);
 	return 1;
 }

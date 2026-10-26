@@ -1,54 +1,54 @@
 #include <globaldefs.h>
 
-struct Struct_ov031_0223c458_2 { unsigned char unknown_0_[4]; int (*unknown_4_)(void*, int); };
+struct Struct_ov031_0223c458_2 { unsigned char pad0[4]; int (*unknown_4_)(void*, int); };
 
 struct Struct_ov031_0223c458 {
-    unsigned char unknown_0_[0x14];
+    unsigned char pad0[0x14];
     Struct_ov031_0223c458_2* unknown_14_;
-    unsigned char unknown_18_[0x18 - 0x14 - 4];
+    unsigned char pad1[0x18 - 0x14 - 4];
     void* unknown1_18_;
-    void* unknown_1c_;
-    int unknown_20_;
-    int unknown_24_;
-    int unknown_28_;
-    short unknown_2c_;
-    unsigned char unknown_2e_[0x2e - 0x2c - 2];
+    void* field1c;
+    int field20;
+    int field24;
+    int field28;
+    short field2c;
+    unsigned char pad2[0x2e - 0x2c - 2];
     unsigned char unknown1_2e_;
     unsigned char unknown_2f_;
 };
 
-extern "C" void* func_ov031_0223bfa0(int arg0);
-extern "C" int func_ov031_0223db7c(int arg0, int arg1, int arg2, int* arg3);
-extern "C" int func_020b2054(int arg0, int arg1);
-extern "C" int func_020b1ec0(void* arg0, int arg1, int arg2, int arg3, int arg4);
+extern "C" void* func_ov031_0223bfa0(int a);
+extern "C" int func_ov031_0223db7c(int a, int b, int c, int* out);
+extern "C" int func_020b2054(int a, int b);
+extern "C" int func_020b1ec0(void* obj, int offset, int b, int c, int flag);
 
 extern void* data_ov031_02290d38;
 
 // USA: func_ov031_0223c458
-extern "C" ARM void* func_ov031_0223c458(int arg0, int arg1, int arg2, int arg3, void** arg4, int arg5) {
-    unsigned char* var0 = (unsigned char*)data_ov031_02290d38;
-    Struct_ov031_0223c458* var1 = (Struct_ov031_0223c458*)func_ov031_0223bfa0(*(int*)(var0 + 0x670));
+extern "C" ARM void* func_ov031_0223c458(int a0, int a1, int a2, int a3, void** arg4, int a6) {
+    unsigned char* g = (unsigned char*)data_ov031_02290d38;
+    Struct_ov031_0223c458* obj = (Struct_ov031_0223c458*)func_ov031_0223bfa0(*(int*)(g + 0x670));
 
-    var1->unknown1_2e_ = (unsigned char)arg1;
-    var1->unknown_2f_ = (unsigned char)arg2;
+    obj->unknown1_2e_ = (unsigned char)a1;
+    obj->unknown_2f_ = (unsigned char)a2;
 
     int var2;
-    var1->unknown_28_ = func_ov031_0223db7c(arg0, arg1 * arg2, arg3, &var2);
-    var1->unknown_2c_ = (short)var2;
+    obj->field28 = func_ov031_0223db7c(a0, a1 * a2, a3, &var2);
+    obj->field2c = (short)var2;
 
-    int var3 = func_020b2054(arg1, arg2);
-    *arg4 = (void*)var3;
+    int r = func_020b2054(a1, a2);
+    *arg4 = (void*)r;
 
     int var4 = var2 << 7;
-    int var5 = (arg0 == 1) ? 0x6600000 : 0x6400000;
-    func_020b1ec0(var1, var5 + var4, arg1, arg2, 4);
+    int off = (a0 == 1) ? 0x6600000 : 0x6400000;
+    func_020b1ec0(obj, off + var4, a1, a2, 4);
 
-    var1->unknown_14_->unknown_4_(var1, 0);
+    obj->unknown_14_->unknown_4_(obj, 0);
 
-    void* var6 = data_ov031_02290d38;
-    var1->unknown1_18_ = var1;
-    var1->unknown_1c_ = (char*)var6 + arg5 * 8;
-    var1->unknown_20_ = 1;
-    var1->unknown_24_ = 1;
-    return var1;
+    void* g2 = data_ov031_02290d38;
+    obj->unknown1_18_ = obj;
+    obj->field1c = (char*)g2 + a6 * 8;
+    obj->field20 = 1;
+    obj->field24 = 1;
+    return obj;
 }

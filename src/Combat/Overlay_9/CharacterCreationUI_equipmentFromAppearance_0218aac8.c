@@ -1,6 +1,6 @@
 // Which appearance model fills which equipment slot of the new party member (CharacterCreationUI_HandleConfirm
 // copies the item record of appearance.models_[appearanceSlot] into equipment[equipmentSlot]).
-// Originally data_ov009_0218aac8 (USA/EUR 0x0218aac8, JPN 0x0218ba7c).
+// Originally CharacterCreationUI_equipmentFromAppearance (USA/EUR 0x0218aac8, JPN 0x0218ba7c).
 typedef struct AppearanceEquipment {
     unsigned char appearanceSlot;
     unsigned char equipmentSlot;

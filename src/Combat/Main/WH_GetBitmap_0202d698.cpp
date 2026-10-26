@@ -11,6 +11,6 @@ struct WHState_0202d698 {
 extern WHState_0202d698 data_021015a0;
 
 // Main, originally GetField0xa_0202d698 (USA 0x0202d698, EUR 0x0202d6a8, JPN 0x0202d208)
-ARM unsigned short WH_GetBitmap(void) {
+extern "C" ARM unsigned short WH_GetBitmap(void) {
     return data_021015a0.connectBitmap;
 }

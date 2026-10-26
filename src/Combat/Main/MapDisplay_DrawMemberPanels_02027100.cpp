@@ -12,14 +12,14 @@ enum { kMemberIdsOffset = 0x758, kRowCountOffset = 0x75c, kHiddenMaskOffset = 0x
 enum { kPanelWidth = 64, kPanelSpriteOamSlot = 0x3c, kNoAffineMatrix = 0xff, kScaleOne = 0x1000 };
 
 extern "C" void OamManager_GetInstance(void);
-int GetFieldAt0x150_02053c6c(unsigned char* member);
-void MapDisplay_DrawSprite(void* display, int x, int y, int spriteIndex,
+extern "C" int func_02053c6c(unsigned char* member);
+extern "C" void MapDisplay_DrawSprite(void* display, int x, int y, int spriteIndex,
         unsigned char oamSlot, unsigned char priority, unsigned short palette, unsigned char matrixIndex, int scaleX, int scaleY);
 extern Display0201fdd0 data_020fdc60[];
 extern int data_020fdcb0;
 
 // Main, originally ProcessCombatantElements02027100 (USA 0x02027100, EUR 0x02027110, JPN 0x02026a64)
-ARM void MapDisplay_DrawMemberPanels(unsigned char* display) {
+extern "C" ARM void MapDisplay_DrawMemberPanels(unsigned char* display) {
     GameState* gameState = GameState::GetInstance();
     OamManager_GetInstance();
     ((int)GetGameResources());
@@ -29,11 +29,11 @@ ARM void MapDisplay_DrawMemberPanels(unsigned char* display) {
         if (display[kHiddenMaskOffset] & (1 << memberId)) {
             continue;
         }
-        GameObject* member = GetCombatantWithFlag0x100_0200ff1c(gameState, memberId);
+        GameObject* member = func_0200ff1c(gameState, memberId);
         if (member == NULL) {
             continue;
         }
-        if (GetFieldAt0x150_02053c6c((unsigned char*)member) == 0) {
+        if (func_02053c6c((unsigned char*)member) == 0) {
             continue;
         }
         if (*(int*)((char*)&data_020fdcb0 + (memberId << 5)) < 0) {

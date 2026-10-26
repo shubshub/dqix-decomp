@@ -6,9 +6,9 @@ void UnlockCardReadManager(unsigned short, int);
 typedef void (*Type_020d0050)(int, int);
 
 // USA: func_020d0050
-extern "C" ARM void func_020d0050(int arg0) {
+extern "C" ARM void func_020d0050(int a) {
     if (!func_020d0840()) {
         func_020d0834();
     }
-    ((Type_020d0050)&UnlockCardReadManager)(arg0, 2);
+    ((Type_020d0050)&UnlockCardReadManager)(a, 2);
 }

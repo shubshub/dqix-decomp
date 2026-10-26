@@ -9,7 +9,7 @@ namespace DuplicatePool {
 extern char* data_ov031_02290cf8;
 #endif
 extern "C" int func_020d4aa8(void);
-extern "C" unsigned int func_ov031_0223cf70(void** arg0);
+extern "C" unsigned int func_ov031_0223cf70(void** a);
 
 // USA: func_ov031_022357b4
 extern "C" ARM void func_ov031_022357b4(void) {

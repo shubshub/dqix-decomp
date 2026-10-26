@@ -2,54 +2,54 @@
 
 struct Struct_ov031_02249ad4 {
     signed char* unknown_0_;
-    int unknown_4_;
+    int unused4;
     signed char* unknown_8_;
 };
 
 struct Struct_ov031_02246083 {
-    unsigned char unknown_0_[0x18];
+    unsigned char slot[0x18];
 };
 
-extern "C" void func_ov031_02215b64(void* arg0, unsigned char* arg1, int arg2, int arg3);
+extern "C" void func_ov031_02215b64(void* obj, unsigned char* buf, int a, int b);
 
 extern Struct_ov031_02246083 data_ov031_02246083;
 extern Struct_ov031_02249ad4 data_ov031_02249ad4;
 
 // USA: func_ov031_022157f8
-extern "C" ARM void func_ov031_022157f8(void* arg0, unsigned char* arg1) {
-    Struct_ov031_02246083 var0 = data_ov031_02246083;
+extern "C" ARM void func_ov031_022157f8(void* obj, unsigned char* buf) {
+    Struct_ov031_02246083 order = data_ov031_02246083;
 
-    func_ov031_02215b64(arg0, arg1, 0x20, 0x18);
+    func_ov031_02215b64(obj, buf, 0x20, 0x18);
 
-    for (int var1 = 0; var1 < 0x18; var1++) {
-        arg1[var1] ^= data_ov031_02249ad4.unknown_8_[var1];
+    for (int i = 0; i < 0x18; i++) {
+        buf[i] ^= data_ov031_02249ad4.unknown_8_[i];
     }
 
     {
         unsigned char var2 = 0;
-        unsigned char var3 = 0;
-        unsigned char var4 = 0;
-        int var5 = 0;
+        unsigned char slot = 0;
+        unsigned char v = 0;
+        int i = 0;
         do {
-            var2 = (unsigned char)var5;
-            var3 = var2;
-            var4 = arg1[var5];
-            if (var0.unknown_0_[var2] != 0xff) {
+            var2 = (unsigned char)i;
+            slot = var2;
+            v = buf[i];
+            if (order.slot[var2] != 0xff) {
                 do {
-                    unsigned char var6 = var0.unknown_0_[var3];
-                    unsigned char var7 = arg1[var6];
-                    arg1[var0.unknown_0_[var2]] = var4;
-                    var0.unknown_0_[var3] = 0xff;
-                    var2 = var6;
-                    var3 = var6;
-                    var4 = var7;
-                } while (var0.unknown_0_[var3] != 0xff);
+                    unsigned char next = order.slot[slot];
+                    unsigned char t = buf[next];
+                    buf[order.slot[var2]] = v;
+                    order.slot[slot] = 0xff;
+                    var2 = next;
+                    slot = next;
+                    v = t;
+                } while (order.slot[slot] != 0xff);
             }
-            var5++;
-        } while (var5 < 0x18);
+            i++;
+        } while (i < 0x18);
     }
 
-    for (int var8 = 0; var8 < 0x18; var8++) {
-        arg1[var8] ^= data_ov031_02249ad4.unknown_0_[var8];
+    for (int i = 0; i < 0x18; i++) {
+        buf[i] ^= data_ov031_02249ad4.unknown_0_[i];
     }
 }

@@ -8,6 +8,6 @@
 
 
 // USA: func_ov000_0217f5d0
-extern "C" ARM void func_ov000_0217f5d0(void* arg0) {
-    *(unsigned char*)((char*)arg0 + REGION_OFFSET_0) = 0;
+extern "C" ARM void func_ov000_0217f5d0(void* obj) {
+    *(unsigned char*)((char*)obj + REGION_OFFSET_0) = 0;
 }

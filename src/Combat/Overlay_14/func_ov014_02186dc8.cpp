@@ -18,9 +18,9 @@ extern "C" unsigned int func_0207fd88(Struct_0207fd88*);
 extern "C" void func_ov014_02185c90(char*);
 
 // USA: func_ov014_02186dc8
-extern "C" ARM void func_ov014_02186dc8(char* arg0) {
-    if (*(unsigned char*)(arg0 + 0x17a) != 0) {
-        func_0207fd88((Struct_0207fd88*)(*(unsigned int*)(arg0 + 0xc0)));
+extern "C" ARM void func_ov014_02186dc8(char* self) {
+    if (*(unsigned char*)(self + 0x17a) != 0) {
+        func_0207fd88((Struct_0207fd88*)(*(unsigned int*)(self + 0xc0)));
     }
-    func_ov014_02185c90(arg0);
+    func_ov014_02185c90(self);
 }

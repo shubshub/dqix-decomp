@@ -9,12 +9,12 @@ enum { Enum_ov025_021e628c_12 = 0xc };
 extern void* data_ov025_021ef988;
 
 struct Struct_ov025_021e628c {
-    char unknown_0_[8];
-    int unknown_8_;
+    char pad0[8];
+    int field8;
 };
 
 // USA: func_ov025_021e628c
-extern "C" ARM int func_ov025_021e628c(struct Struct_ov025_021e628c* arg0) {
-    *(int*)((char*)*(void**)((char*)&data_ov025_021ef988 + Enum_ov025_021e628c_12) + 0x54c) = arg0->unknown_8_;
+extern "C" ARM int func_ov025_021e628c(struct Struct_ov025_021e628c* in) {
+    *(int*)((char*)*(void**)((char*)&data_ov025_021ef988 + Enum_ov025_021e628c_12) + 0x54c) = in->field8;
     return 1;
 }

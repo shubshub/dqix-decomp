@@ -6,6 +6,6 @@
 #endif
 
 // USA: func_ov017_021bd398
-extern "C" ARM void func_ov017_021bd398(void* arg0) {
-    *(unsigned char*)((char*)arg0 + REGION_FIELD) = 1;
+extern "C" ARM void func_ov017_021bd398(void* obj) {
+    *(unsigned char*)((char*)obj + REGION_FIELD) = 1;
 }

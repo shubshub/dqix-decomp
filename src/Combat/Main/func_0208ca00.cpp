@@ -1,36 +1,36 @@
 #include <globaldefs.h>
 
-extern "C" double func_02009424(double arg0);
+extern "C" double func_02009424(double v);
 
 struct Struct_0208bb78 {
-    char unknown_0_[0xc8];
-    float unknown_c8_;
-    char unknown_cc_[0xd7 - 0xcc];
-    unsigned char unknown_d7_;
-    char unknown_d8_[0xda - 0xd8];
-    unsigned short unknown_da_;
+    char pad0[0xc8];
+    float angle;
+    char pad1[0xd7 - 0xcc];
+    unsigned char counter;
+    char pad2[0xda - 0xd8];
+    unsigned short flags;
 };
 
 // USA: func_0208ca00
-extern "C" ARM int func_0208ca00(struct Struct_0208bb78* arg0, int arg1) {
-    unsigned short var0 = arg0->unknown_da_;
-    if (!(var0 & 0x80)) goto ret_zero;
-    if (arg0->unknown_d7_ > 10) {
-        arg0->unknown_da_ = var0 & ~0x80;
+extern "C" ARM int func_0208ca00(struct Struct_0208bb78* obj, int delta) {
+    unsigned short flags = obj->flags;
+    if (!(flags & 0x80)) goto ret_zero;
+    if (obj->counter > 10) {
+        obj->flags = flags & ~0x80;
         *(volatile int*)0x4001010 = 0;
-        arg0->unknown_d7_ = 0;
+        obj->counter = 0;
         goto ret_zero;
     }
     {
-        float var1 = 5.0f - 0.3f * (float)(unsigned int)arg0->unknown_d7_;
-        arg0->unknown_c8_ = arg0->unknown_c8_ + 1.8f * (float)arg1;
-        arg0->unknown_d7_ = arg0->unknown_d7_ + arg1;
-        if (3.14f < arg0->unknown_c8_) {
-            arg0->unknown_c8_ = arg0->unknown_c8_ - 6.28f;
+        float speed = 5.0f - 0.3f * (float)(unsigned int)obj->counter;
+        obj->angle = obj->angle + 1.8f * (float)delta;
+        obj->counter = obj->counter + delta;
+        if (3.14f < obj->angle) {
+            obj->angle = obj->angle - 6.28f;
         }
-        int var2 = (int)(var1 * (float)func_02009424((double)(arg0->unknown_c8_)));
-        *(volatile int*)0x4001010 = var2 & 0x1ff;
-        return var2;
+        int val = (int)(speed * (float)func_02009424((double)(obj->angle)));
+        *(volatile int*)0x4001010 = val & 0x1ff;
+        return val;
     }
 ret_zero:
     return 0;

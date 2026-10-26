@@ -6,17 +6,17 @@
 #define RG(u, j) (u)
 #endif
 
-extern "C" void func_ov017_021acd7c(void* arg0);
-struct Struct_02046a3c_2;
-struct Struct_02046a3c;
-extern "C" void func_02046a3c(Struct_02046a3c_2*, Struct_02046a3c*);
+extern "C" void func_ov017_021acd7c(void* p);
+struct List02046a3c;
+struct Node02046a3c;
+extern "C" void func_02046a3c(List02046a3c*, Node02046a3c*);
 
 // USA: func_ov017_021acd30
-extern "C" ARM void func_ov017_021acd30(char* arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3) {
-	func_ov017_021acd7c(*(void**)(arg0 + 0x3000 + RG(0xb20, 0x900)));
-	((unsigned char*)(*(void**)(arg0 + 0x3000 + RG(0xb20, 0x900))))[RG(0x27c, 0x20c)] = arg1;
-	((unsigned char*)(*(void**)(arg0 + 0x3000 + RG(0xb20, 0x900))))[RG(0x27d, 0x20d)] = arg2;
-	((unsigned char*)(*(void**)(arg0 + 0x3000 + RG(0xb20, 0x900))))[RG(0x27e, 0x20e)] = arg3;
-	void* var0 = *(void**)(arg0 + 0x3000 + RG(0x6fc, 0x4ec));
-	func_02046a3c((Struct_02046a3c_2*)var0, (Struct_02046a3c*)(*(void**)(arg0 + 0x3000 + RG(0xb20, 0x900))));
+extern "C" ARM void func_ov017_021acd30(char* self, unsigned char a, unsigned char b, unsigned char c) {
+	func_ov017_021acd7c(*(void**)(self + 0x3000 + RG(0xb20, 0x900)));
+	((unsigned char*)(*(void**)(self + 0x3000 + RG(0xb20, 0x900))))[RG(0x27c, 0x20c)] = a;
+	((unsigned char*)(*(void**)(self + 0x3000 + RG(0xb20, 0x900))))[RG(0x27d, 0x20d)] = b;
+	((unsigned char*)(*(void**)(self + 0x3000 + RG(0xb20, 0x900))))[RG(0x27e, 0x20e)] = c;
+	void* list = *(void**)(self + 0x3000 + RG(0x6fc, 0x4ec));
+	func_02046a3c((List02046a3c*)list, (Node02046a3c*)(*(void**)(self + 0x3000 + RG(0xb20, 0x900))));
 }

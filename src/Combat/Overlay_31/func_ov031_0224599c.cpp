@@ -4,89 +4,89 @@
 
 void SleepCurrentContext(unsigned int ticks);
 extern "C" int func_ov031_0220d540(void);
-extern "C" void* func_ov031_0220ec04(int arg0);
+extern "C" void* func_ov031_0220ec04(int index);
 extern "C" int func_ov031_0220ca88(void);
-extern "C" int func_ov031_0220c970(void* arg0, unsigned int arg1);
-extern "C" int func_ov031_02245c68(int arg0);
+extern "C" int func_ov031_0220c970(void* arg0, unsigned int size);
+extern "C" int func_ov031_02245c68(int mode);
 extern "C" void func_ov031_0220eadc(void);
-extern "C" int func_ov031_0220eb88(int arg0);
+extern "C" int func_ov031_0220eb88(int newVal);
 extern "C" int func_ov031_0220eb30(void);
 extern "C" int func_020c7ea0(void* queue, int* msg, int flags);
 extern "C" void MIi_CpuClearFast(unsigned int value, void* dest, int count);
 extern "C" void func_020ca4b4(const void* src, void* dest, int count);
 
 struct Struct_ov031_0224599c {
-	int unknown_0_;
-	void* unknown_4_;
-	unsigned int unknown_8_;
+	int kind;
+	void* allocation;
+	unsigned int size;
 	int unknown_c_;
 };
 
 struct Struct_ov031_02291f24_3 {
-	unsigned char unknown_0_;
-	int unknown_4_;
-	int unknown_8_;
-	int unknown_c_;
-	int unknown_10_;
-	void* unknown_14_;
-	char unknown_18_[0x14];
-	struct Struct_ov031_0224599c unknown_2c_;
+	unsigned char b0;
+	int field4;
+	int field8;
+	int fieldC;
+	int field10;
+	void* field14;
+	char field18[0x14];
+	struct Struct_ov031_0224599c arena;
 };
 
 struct Struct_ov031_02292040 {
-	unsigned short unknown_0_;
-	char unknown_2_[0xbe];
+	unsigned short length;
+	char rest[0xbe];
 };
 
 extern struct Struct_ov031_02291f24_3 data_ov031_02291f24;
 extern struct Struct_ov031_02292040 data_ov031_02292040;
 extern int data_ov031_02291f60;
 
-static inline void CpuClear8(void* dest, int count) {
+static inline void inline_ov031_0224599c(void* dest, int count) {
 	MIi_CpuClearFast(0, dest, count);
 }
 
-static inline void inline_ov031_0224599c_2(const void* arg0, void* arg1, int arg2) {
-	func_020ca4b4(arg0, arg1, arg2);
+static inline void inline_ov031_0224599c_2(const void* src, void* dest, int count) {
+	func_020ca4b4(src, dest, count);
 }
 
 enum Enum_ov031_0224599c { Enum_ov031_0224599c_1 = 1, Enum_ov031_0224599c_4 = 4, Enum_ov031_0224599c_5 = 5 };
 
 // USA: func_ov031_0224599c
 extern "C" ARM void func_ov031_0224599c(void) {
-	void* var0 = data_ov031_02291f24.unknown_14_;
-	unsigned int var1;
-	char* var2;
-	int var3;
+	void* buf = data_ov031_02291f24.field14;
+	unsigned int size;
+	char* heap;
+	int msg;
 
-	if (var0 == NULL) {
+	if (buf == NULL) {
 		return;
 	}
-	if (data_ov031_02291f24.unknown_0_ != 0) {
-		var1 = data_ov031_02291f24.unknown_0_ * 0xd0 + 0xc;
+	if (data_ov031_02291f24.b0 != 0) {
+		size = data_ov031_02291f24.b0 * 0xd0 + 0xc;
 	} else {
-		var1 = 0x11ec;
+		size = 0x11ec;
 	}
-	memset(var0, 0, var1 + 0x2300);
-	if (var0 == NULL) {
+	memset(buf, 0, size + 0x2300);
+	if (buf == NULL) {
 		return;
 	}
-	var2 = (char*)var0 + 0x2300;
-	if (func_ov031_0220c970(var0, 0x2300) != 0) {
+	heap = (char*)buf + 0x2300;
+	if (func_ov031_0220c970(buf, 0x2300) != 0) {
 		return;
 	}
-	data_ov031_02291f24.unknown_2c_.unknown_0_ = 2;
-	data_ov031_02291f24.unknown_2c_.unknown_4_ = var2;
-	data_ov031_02291f24.unknown_2c_.unknown_8_ = var1;
-	data_ov031_02291f24.unknown_2c_.unknown_c_ = 0;
+	data_ov031_02291f24.arena.kind = 2;
+	data_ov031_02291f24.arena.allocation = heap;
+	data_ov031_02291f24.arena.size = size;
+	data_ov031_02291f24.arena.unknown_c_ = 0;
 
-	while (data_ov031_02291f24.unknown_4_ == 0) {
+	while (data_ov031_02291f24.field4 == 0) {
 		switch (func_ov031_0220d540()) {
 		case 1:
 			func_ov031_02245c68(1);
 			break;
 		case 3:
-			if (data_ov031_02292040.unknown_0_ == 0) {
+			if (data_ov031_02292040.length == 0) {
 				func_ov031_0220eadc();
 				func_ov031_02245c68(3);
 			} else if (func_ov031_02245c68(5) == 0) {
@@ -94,12 +94,12 @@ extern "C" ARM void func_ov031_0224599c(void) {
 			}
 			break;
 		case 6:
-			func_020c7ea0(&data_ov031_02291f60, &var3, 1);
+			func_020c7ea0(&data_ov031_02291f60, &msg, 1);
 			{
-				Enum_ov031_0224599c var4 = Enum_ov031_0224599c_1;
+				Enum_ov031_0224599c found = Enum_ov031_0224599c_1;
 				Enum_ov031_0224599c var5 = Enum_ov031_0224599c_4;
-				if (var3 == var4) {
-					if (data_ov031_02291f24.unknown_c_ == 0) {
+				if (msg == found) {
+					if (data_ov031_02291f24.fieldC == 0) {
 						func_ov031_0220eb88(1);
 						if (func_ov031_0220eb30() >= 1) {
 							inline_ov031_0224599c_2(func_ov031_0220ec04(0), &data_ov031_02292040, 0xc0);
@@ -107,16 +107,16 @@ extern "C" ARM void func_ov031_0224599c(void) {
 						func_ov031_0220eb88(0);
 						func_ov031_02245c68(4);
 					}
-				} else if (var3 == var5) {
+				} else if (msg == var5) {
 					func_ov031_02245c68(4);
 				}
 			}
 			break;
 		case 9:
-			func_020c7ea0(&data_ov031_02291f60, &var3, 1);
+			func_020c7ea0(&data_ov031_02291f60, &msg, 1);
 			{
-				Enum_ov031_0224599c var6 = Enum_ov031_0224599c_5;
-				if (var3 == var6) {
+				Enum_ov031_0224599c done = Enum_ov031_0224599c_5;
+				if (msg == done) {
 					func_ov031_02245c68(6);
 				}
 			}
@@ -132,10 +132,10 @@ extern "C" ARM void func_ov031_0224599c(void) {
 		}
 	}
 
-	while (data_ov031_02291f24.unknown_4_ != 0) {
+	while (data_ov031_02291f24.field4 != 0) {
 		switch (func_ov031_0220d540()) {
 		case 1:
-			data_ov031_02291f24.unknown_4_ = 0;
+			data_ov031_02291f24.field4 = 0;
 			break;
 		case 3:
 			func_ov031_02245c68(2);

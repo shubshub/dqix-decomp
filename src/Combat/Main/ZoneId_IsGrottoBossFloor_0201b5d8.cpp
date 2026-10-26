@@ -8,7 +8,7 @@ enum {
 };
 
 // Main, originally IsValueInRange0201b5d8 (USA 0x0201b5d8, EUR 0x0201b5e8, JPN 0x0201b350)
-ARM int ZoneId_IsGrottoBossFloor(int zoneId) {
+extern "C" ARM int ZoneId_IsGrottoBossFloor(int zoneId) {
     if (zoneId >= kFirstGrottoBossFloorZoneId) {
         if (zoneId <= kLastGrottoBossFloorZoneId) return 1;
     }

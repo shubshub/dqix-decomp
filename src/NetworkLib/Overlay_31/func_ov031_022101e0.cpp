@@ -3,7 +3,7 @@
 
 extern void* data_ov031_0224e588;
 
-extern "C" void func_ov031_0221038c(int arg0);
+extern "C" void func_ov031_0221038c(int state);
 extern "C" void func_ov031_02210618(void);
 bool IsContextInactive(ProcessorContext* context);
 void UnblockContexts(struct BlockedContextList* list);

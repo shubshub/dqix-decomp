@@ -5,14 +5,14 @@
 #include "NitroSDK/Memory.h"
 #include <globaldefs.h>
 
-struct Struct_ov003_0216bcfc_2 {
+struct Global0216bcfc {
 #if defined(jpn)
-    char unknown_0_[0x28];
-    char *unknown_28_;
-    char unknown_2c_[0x868 - 0x2c];
+    char unk_0[0x28];
+    char *text_;
+    char unk_2c[0x868 - 0x2c];
 #else
-    char unknown1_0_[0x5c];
-    char *unknown_5c_;
+    char unk_0[0x5c];
+    char *text_;
     char unknown_60_[0x998 - 0x60];
 #endif
     int unknown_998_;
@@ -21,18 +21,18 @@ struct Struct_ov003_0216bcfc_2 {
 };
 
 struct Struct_ov003_0216bcfc_3 {
-    char unknown_0_[4];
-    short unknown_4_;
-    short unknown_6_;
-    char unknown_8_[4];
-    int unknown_c_;
+    char unk_0[4];
+    short state_;
+    short step_;
+    char unk_8[4];
+    int task_;
 #if defined(jpn)
-    char unknown_10_[0x428 - 0x10];
+    char unk_10[0x428 - 0x10];
     char unknown_410_[0x500 - 0x428];
     void *unknown_4e8_;
     char unknown_504_[0x10f4 - 0x504];
 #else
-    char unknown1_10_[0x410 - 0x10];
+    char unk_10[0x410 - 0x10];
     char unknown_410_[0x4e8 - 0x410];
     void *unknown_4e8_;
     char unknown_4ec_[0x1264 - 0x4ec];
@@ -47,47 +47,47 @@ struct Struct_ov003_0216bcfc_3 {
     char unknown_12ba_[2];
     unsigned char unknown_12bc_;
     char unknown_12bd_[0x12d4 - 0x12bd];
-    SafeAllocator unknown_12d4_;
+    SafeAllocator allocator_;
     char unknown_12e8_[0x1310 - 0x12e8];
-    SafeAllocator unknown_1310_[1];
+    SafeAllocator allocators_[1];
     char unknown_1324_[0x1334 - 0x1324];
 };
 
 struct AllocatorUnion;
-struct S021700bc;
+struct Struct_ov003_0216bcfc;
 struct PacRecord;
 
-int LinkSession_IsActive(int *p);
-int Pac_CountFiles(PacRecord *archive);
-void *Pac_GetFile(PacRecord *archive, int index, void **name, int *size);
-void *AllocatorUnion_AllocateRounded(AllocatorUnion *alloc, unsigned int size);
-void AllocatorUnion_Free(AllocatorUnion *alloc, void *p);
-void SpriteContext_Destroy(void *p);
-void InitField170_021700bc(S021700bc *p);
+extern "C" int LinkSession_IsActive(int *p);
+extern "C" int Pac_CountFiles(PacRecord *archive);
+extern "C" void *Pac_GetFile(PacRecord *archive, int index, void **name, int *size);
+extern "C" void *AllocatorUnion_AllocateRounded(AllocatorUnion *alloc, unsigned int size);
+extern "C" void AllocatorUnion_Free(AllocatorUnion *alloc, void *p);
+extern "C" void SpriteContext_Destroy(void *p);
+extern "C" void func_ov003_021700bc(Struct_ov003_0216bcfc *p);
 extern "C" void *LinkSession_GetInstance();
 extern "C" void LinkSession_UpdateMemberCount();
 extern "C" void MessageSystem_Stop(void *p);
 extern "C" void SpriteContext_LoadFile(void *renderer, void *file, unsigned int size, SafeAllocator *allocator);
 #if defined(jpn)
-extern "C" void func_ov003_0216d8d4(void *arg0, int arg1);
-extern "C" void func_ov003_0216e02c(void *arg0, SafeAllocator *arg1);
+extern "C" void func_ov003_0216d8d4(void *self, int a);
+extern "C" void func_ov003_0216e02c(void *sub, SafeAllocator *allocator);
 extern char data_ov003_0217e985[];
 #define func_ov003_0216d8d4(self, a, b, c, d) func_ov003_0216d8d4(self, a)
 #define data_ov003_021801c9 data_ov003_0217e985
 #else
-extern "C" void func_ov003_0216d8d4(void *arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov003_0216e02c(void *arg0, SafeAllocator *arg1);
+extern "C" void func_ov003_0216d8d4(void *self, int a, int b, int c, int d);
+extern "C" void func_ov003_0216e02c(void *sub, SafeAllocator *allocator);
 #endif
 extern "C" int func_ov003_0216e124(void *sub);
 extern "C" void func_ov003_021700dc(void *sub);
-void *MessageSystem_GetInstance();
+extern "C" void *MessageSystem_GetInstance();
 extern "C" void *memset(void *dst, int value, unsigned int length);
 
 extern char g_mainAllocator;
 extern char data_ov003_021801c9[];
 
 // USA: func_ov003_0216bcfc
-extern "C" ARM void func_ov003_0216bcfc(Menu0216bcfc *self) {
+extern "C" ARM void func_ov003_0216bcfc(Struct_ov003_0216bcfc_3 *self) {
     Global0216bcfc *global   = (Global0216bcfc *) MessageSystem_GetInstance();
     BackgroundLoader *loader = BackgroundLoader::GetInstance();
     void *obj                = LinkSession_GetInstance();
@@ -103,17 +103,17 @@ extern "C" ARM void func_ov003_0216bcfc(Menu0216bcfc *self) {
         }
         Global0216bcfc *global2 = (Global0216bcfc *) MessageSystem_GetInstance();
 #if defined(jpn)
-        memset(var3->unknown_28_, 0, 0x800);
+        memset(global2->text_, 0, 0x800);
 #else
-        memset(var3->unknown_5c_, 0, 0x960);
+        memset(global2->text_, 0, 0x960);
 #endif
         void *buffer = AllocatorUnion_AllocateRounded((AllocatorUnion *) &g_mainAllocator, 0x8000);
         VectorizedMemset(buffer, 0, 0x8000);
         self->allocator_.CreateTypeA(buffer, 0x8000);
         self->allocator_.Reset();
-        InitField170_021700bc((S021700bc *) self->sub_410);
-        func_ov003_0216e02c(self->sub_410, &self->allocator_);
-        self->unk_4e8 = &self->unk_1324;
+        func_ov003_021700bc((Struct_ov003_0216bcfc *) self->unknown_410_);
+        func_ov003_0216e02c(self->unknown_410_, &self->allocator_);
+        self->unknown_4e8_ = &self->unknown_1324_;
         char pixels[0x20];
         memset(pixels, 0, 0x20);
         CleanInvalidateCacheRange(pixels, 0x20);
@@ -121,11 +121,11 @@ extern "C" ARM void func_ov003_0216bcfc(Menu0216bcfc *self) {
         self->step_ = 1;
         MessageSystem_Stop(global2);
     }
-    if (arg0->unknown_6_ == 1) {
-        if (func_ov003_0216e124(arg0->unknown_410_) == 0) arg0->unknown_6_ = 2;
+    if (self->step_ == 1) {
+        if (func_ov003_0216e124(self->unknown_410_) == 0) self->step_ = 2;
     }
     if (self->step_ == 2) {
-        func_ov003_021700dc(self->sub_410);
+        func_ov003_021700dc(self->unknown_410_);
         SignedAllocatorHeader *signedAlloc = self->allocator_.GetSignedAllocator();
         if (signedAlloc != 0) {
             self->allocator_.Destroy();
@@ -136,13 +136,13 @@ extern "C" ARM void func_ov003_0216bcfc(Menu0216bcfc *self) {
 #else
         SpriteContext_Destroy((char *) self + 0x126c);
 #endif
-        arg0->unknown_12bc_ = 0;
-        arg0->unknown_12ac_ = arg0->unknown_1264_;
-        arg0->unknown_12b8_ = 0xf;
-        arg0->unknown_12a8_ = arg0->unknown_1268_;
-        arg0->unknown_1310_[0].Reset();
-        arg0->unknown_c_ = var1->QueueLoadFile(data_ov003_021801c9, 0);
-        arg0->unknown_6_ = 3;
+        self->unknown_12bc_ = 0;
+        self->unknown_12ac_ = self->unknown_1264_;
+        self->unknown_12b8_ = 0xf;
+        self->unknown_12a8_ = self->unknown_1268_;
+        self->allocators_[0].Reset();
+        self->task_ = loader->QueueLoadFile(data_ov003_021801c9, 0);
+        self->step_ = 3;
     }
     if (self->step_ == 3 && loader->GetTaskStatus(self->task_) != 0) {
         void *name;
@@ -160,18 +160,18 @@ extern "C" ARM void func_ov003_0216bcfc(Menu0216bcfc *self) {
             SpriteContext_LoadFile((char *) self + 0x126c, data, fileSize, alloc);
 #endif
         }
-        var1->RemoveTask(arg0->unknown_c_);
-        arg0->unknown_c_ = -1;
-        func_ov003_0216d8d4(arg0, 0x29, -1, -1, -1);
-        var0->unknown_998_ = 1;
-        arg0->unknown_6_     = 0;
-        arg0->unknown_4_    = 2;
-        arg0->unknown_6_     = 0;
+        loader->RemoveTask(self->task_);
+        self->task_ = -1;
+        func_ov003_0216d8d4(self, 0x29, -1, -1, -1);
+        global->unknown_998_ = 1;
+        self->step_     = 0;
+        self->state_    = 2;
+        self->step_     = 0;
     }
-    if (arg0->unknown_6_ == 0xc8 && var0->unknown_9a0_ == 0) {
-        func_ov003_0216d8d4(arg0, 0x29, -1, -1, -1);
-        arg0->unknown_6_  = 0;
-        arg0->unknown_4_ = 2;
-        arg0->unknown_6_  = 0;
+    if (self->step_ == 0xc8 && global->unknown_9a0_ == 0) {
+        func_ov003_0216d8d4(self, 0x29, -1, -1, -1);
+        self->step_  = 0;
+        self->state_ = 2;
+        self->step_  = 0;
     }
 }

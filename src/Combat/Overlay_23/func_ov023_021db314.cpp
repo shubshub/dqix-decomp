@@ -1,45 +1,45 @@
 #include <globaldefs.h>
 
 struct Struct_ov023_021db314_2 {
-    char unknown_0_[2];
-    short unknown_2_;
-    void* unknown_4_;
+    char pad0[2];
+    short limit;
+    void* head;
 };
 
 struct Struct_ov023_021db314 {
-    char unknown_0_[1];
-    unsigned char unknown_1_;
-    char unknown_2_[2];
-    void* unknown_4_;
+    char pad0[1];
+    unsigned char flag1;
+    char pad2[2];
+    void* target;
 };
 
-extern "C" int func_02005a94(signed char* arg0);
-extern "C" int func_ov023_021db564(char* arg0);
+extern "C" int func_02005a94(signed char* s);
+extern "C" int func_ov023_021db564(char* str);
 
 // USA: func_ov023_021db314
-extern "C" ARM void func_ov023_021db314(void* arg0, short* arg1, short* arg2) {
-    struct Struct_ov023_021db314_2* var0 = *(struct Struct_ov023_021db314_2**)((char*)arg0 + 0x8);
-    struct Struct_ov023_021db314* var1 = (struct Struct_ov023_021db314*)var0->unknown_4_;
-    short var2 = 0;
-    short var3 = var0->unknown_2_;
+extern "C" ARM void func_ov023_021db314(void* obj, short* out, short* outCount) {
+    struct Struct_ov023_021db314_2* list = *(struct Struct_ov023_021db314_2**)((char*)obj + 0x8);
+    struct Struct_ov023_021db314* entry = (struct Struct_ov023_021db314*)list->head;
+    short count = 0;
+    short limit = list->limit;
 
-    int var4;
-    for (var4 = 0; var4 < var3; var4++, var1 = (struct Struct_ov023_021db314*)((char*)var1 + 8)) {
-        if (var1->unknown_1_ != 0 && var1->unknown_4_ != NULL) {
-            signed char* var5 = (signed char*)var1->unknown_4_;
+    int i;
+    for (i = 0; i < limit; i++, entry = (struct Struct_ov023_021db314*)((char*)entry + 8)) {
+        if (entry->flag1 != 0 && entry->target != NULL) {
+            signed char* ptr = (signed char*)entry->target;
 
-            if (*var5 == 'f') {
-                arg1[var2] = (short)func_02005a94(var5 + 5);
-                var2++;
-            } else if (*var5 >= 'A' && *var5 <= 'Z') {
-                unsigned short var6 = (unsigned short)func_ov023_021db564((char*)var5);
-                if (var6 != 0) {
-                    arg1[var2] = var6;
-                    var2++;
+            if (*ptr == 'f') {
+                out[count] = (short)func_02005a94(ptr + 5);
+                count++;
+            } else if (*ptr >= 'A' && *ptr <= 'Z') {
+                unsigned short v = (unsigned short)func_ov023_021db564((char*)ptr);
+                if (v != 0) {
+                    out[count] = v;
+                    count++;
                 }
             }
         }
     }
 
-    *arg2 = var2;
+    *outCount = count;
 }

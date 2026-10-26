@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" GameObject* func_ov000_021536f8(int arg0, int arg1);
+extern "C" GameObject* func_ov000_021536f8(int unused, int id);
 
 // USA: func_ov024_021f5558
-extern "C" ARM int func_ov024_021f5558(int* arg0, int arg1, int arg2, int* arg3, short* arg4) {
-	GameObject* var0 = func_ov000_021536f8(*arg0, arg1);
-	if (!var0) return 0;
-	if (((unsigned char*)var0->currentStats_)[0x39] != 0) return 0;
-	*arg3 = 1;
-	*arg4 = (short)arg1;
+extern "C" ARM int func_ov024_021f5558(int* a0, int a1, int a2, int* a3, short* a4) {
+	GameObject* c = func_ov000_021536f8(*a0, a1);
+	if (!c) return 0;
+	if (((unsigned char*)c->currentStats_)[0x39] != 0) return 0;
+	*a3 = 1;
+	*a4 = (short)a1;
 	return 1;
 }

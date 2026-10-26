@@ -22,34 +22,34 @@ extern "C" ARM void AcquireTreasureMapTask_CreateMap(void* obj, unsigned char ty
  enum {regionalOffset0=0x26d, regionalOffset1=0x26e, regionalOffset2=0x270};
 #endif
     unsigned char* base = (unsigned char*)obj;
-    TreasureMapMetadata* metadata = (TreasureMapMetadata*)(base + 0xa);
-    DetailedTreasureMapData* detailed = (DetailedTreasureMapData*)(base + 0x28);
+    TreasureMapMetadata* var1 = (TreasureMapMetadata*)(base + 0xa);
+    DetailedTreasureMapData* var2 = (DetailedTreasureMapData*)(base + 0x28);
 
     base[regionalOffset0] = type;
-    VectorizedMemset(metadata, 0, 0x1c);
-    detailed->Clear();
+    VectorizedMemset(var1, 0, 0x1c);
+    var2->Clear();
     srand(GetMain16BitTimerCounter());
 
     if (base[regionalOffset0] == 1) {
-        metadata->InitialiseAsNonLegacyMap(quality, seed);
-        base[regionalOffset1] = metadata->QualityOrLegacyBossID;
-        *(unsigned short*)(base + regionalOffset2) = metadata->SeedOrMinTurns;
+        var1->InitialiseAsNonLegacyMap(quality, seed);
+        base[regionalOffset1] = var1->QualityOrLegacyBossID;
+        *(unsigned short*)(base + regionalOffset2) = var1->SeedOrMinTurns;
     } else if (base[regionalOffset0] == 2) {
-        metadata->InitialiseAsLegacyBossMap(quality, (unsigned char)seed);
-        base[regionalOffset1] = metadata->QualityOrLegacyBossID;
-        *(unsigned short*)(base + regionalOffset2) = metadata->LegacyBossLevel;
+        var1->InitialiseAsLegacyBossMap(quality, (unsigned char)seed);
+        base[regionalOffset1] = var1->QualityOrLegacyBossID;
+        *(unsigned short*)(base + regionalOffset2) = var1->LegacyBossLevel;
     } else {
-        metadata->InitialiseAsNonLegacyMap(quality, seed);
-        base[regionalOffset1] = metadata->QualityOrLegacyBossID;
-        *(unsigned short*)(base + regionalOffset2) = metadata->SeedOrMinTurns;
+        var1->InitialiseAsNonLegacyMap(quality, seed);
+        base[regionalOffset1] = var1->QualityOrLegacyBossID;
+        *(unsigned short*)(base + regionalOffset2) = var1->SeedOrMinTurns;
     }
 
     if (locationOverride != 0) {
-        metadata->Location = locationOverride;
+        var1->Location = locationOverride;
     }
 
     func_020a3720();
-    ExportDetailedTreasureMapData(metadata, detailed, false, NULL);
+    ExportDetailedTreasureMapData(var1, var2, false, NULL);
     func_020a395c();
 
 #if defined(jpn)

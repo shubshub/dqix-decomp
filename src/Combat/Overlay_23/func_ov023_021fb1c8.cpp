@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 
 struct Struct_ov023_021fb1c8_2 {
-    int unknown_0_;
-    int unknown_4_;
+    int field0;
+    int field4;
 };
 
 struct Struct_ov023_021fb1c8 {
-    char unknown_0_[0x28];
-    int unknown_28_;
-    int unknown_2c_;
+    char pad[0x28];
+    int field28;
+    int field2c;
 };
 
 // USA: func_ov023_021fb1c8
-extern "C" ARM void func_ov023_021fb1c8(struct Struct_ov023_021fb1c8* arg0, struct Struct_ov023_021fb1c8_2* arg1) {
-    arg0->unknown_28_ = arg1->unknown_0_;
-    arg0->unknown_2c_ = arg1->unknown_4_;
+extern "C" ARM void func_ov023_021fb1c8(struct Struct_ov023_021fb1c8* dst, struct Struct_ov023_021fb1c8_2* src) {
+    dst->field28 = src->field0;
+    dst->field2c = src->field4;
 }

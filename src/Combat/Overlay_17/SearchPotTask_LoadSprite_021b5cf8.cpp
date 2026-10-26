@@ -9,13 +9,13 @@
 
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void GameResources_LoadSpecialItemEffect(int a, void* b);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 extern AllocatorUnion g_mainAllocator;
-int GameState_GetProtagonistIndex(GameState* gs);
+extern "C" int GameState_GetProtagonistIndex(GameState* gs);
 struct Holder020159c0;
-void Zone3D_ClearChestIconsByOpener(struct Holder020159c0* zone, int opener);
+extern "C" void Zone3D_ClearChestIconsByOpener(struct Holder020159c0* zone, int opener);
 #if defined(jpn)
-extern char SearchPotTask_spritePathFormat[];  // jpn's copy of the path format below (0x021d8314, originally data_ov017_021d7bf8); not checked against a jpn ROM
+extern char SearchPotTask_spritePathFormat[];  // jpn's copy of the path format below (0x021d8314, originally @stringBase0); not checked against a jpn ROM
 #endif
 
 // A FieldTaskKind_SearchPot task (its own copy of the layout, as in the other step files).
@@ -60,7 +60,7 @@ extern "C" ARM int SearchPotTask_LoadSprite(SearchPotTask021b5cf8* self) {
 #if defined(jpn)
         sprintf(path, SearchPotTask_spritePathFormat, self->spriteLetter, self->spriteNumber);
 #else
-        // Originally data_ov017_021d7bf8 (USA/EUR 0x021d7bf8): the item icon's file (gold is d_i127.spr).
+        // Originally @stringBase0 (USA/EUR 0x021d7bf8): the item icon's file (gold is d_i127.spr).
         sprintf(path, "/data/ani/d_%c%03d.spr", self->spriteLetter, self->spriteNumber);
 #endif
         self->loadTask = ((BackgroundLoader*)((int)BackgroundLoader::GetInstance()))->QueueLoadFile((const char*)((int)path), (SafeAllocator*)(0));

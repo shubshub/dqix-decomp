@@ -1,19 +1,19 @@
 #include <globaldefs.h>
 
 // USA: func_ov003_0217063c
-extern "C" ARM void func_ov003_0217063c(unsigned char* arg0, unsigned short* arg1, unsigned short* arg2) {
-	signed char var0 = (signed char)arg0[1];
-	unsigned short var1;
-	if (var0 == 5) {
-		var1 = *(unsigned short*)(arg0 + 0x20);
-		if ((var1 & 0x10) || (var1 & 0x4)) {
-			signed char var2;
-			*arg1 = 0x2c;
-			var2 = (signed char)arg0[8];
-			*arg2 = var2 + (var2 << 4) + 0x3a;
+extern "C" ARM void func_ov003_0217063c(unsigned char* obj, unsigned short* out1, unsigned short* out2) {
+	signed char b1 = (signed char)obj[1];
+	unsigned short flags;
+	if (b1 == 5) {
+		flags = *(unsigned short*)(obj + 0x20);
+		if ((flags & 0x10) || (flags & 0x4)) {
+			signed char b8;
+			*out1 = 0x2c;
+			b8 = (signed char)obj[8];
+			*out2 = b8 + (b8 << 4) + 0x3a;
 			return;
 		}
 	}
-	*arg1 = 0;
-	*arg2 = 0;
+	*out1 = 0;
+	*out2 = 0;
 }

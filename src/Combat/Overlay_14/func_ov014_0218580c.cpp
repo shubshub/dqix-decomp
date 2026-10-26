@@ -20,26 +20,26 @@
 #define BGCNT_MASK_MOSAIC 0x40
 
 struct Struct_ov006_0215b7e8 {
-    short unknown_0_;
-    unsigned short unknown_2_;
-    short* unknown_4_;
-    short unknown_8_;
-    short unknown_a_;
+    short id_;
+    unsigned short count_;
+    short* items_;
+    short x_;
+    short y_;
     short unknown_c_;
     short unknown_e_;
-    short unknown_10_;
+    short previous_;
     short unknown_12_;
-    short unknown_14_;
-    unsigned char unknown_16_;
+    short unk_14;
+    unsigned char flags_;
     unsigned char unknown_17_;
 };
 
-struct Struct_ov006_021580b8 {
-    char unknown_0_[0x14];
-    int unknown_14_;
-    int unknown_18_;
-    char unknown_1c_[6];
-    unsigned char unknown_22_;
+struct Sprite {
+    char unk_0[0x14];
+    int x_;
+    int y_;
+    char unk_1c[6];
+    unsigned char unk_22;
     char unknown_23_[2];
     unsigned char unknown_25_;
     unsigned char unknown_26_;
@@ -51,96 +51,96 @@ struct PacRecord;
 
 struct Struct_ov014_02184dcc {
     void** unknown_0_;
-    Struct_ov008_02188d74* unknown_4_;
-    Struct_ov006_021580b8* unknown_8_;
-    char unknown_c_[0x3c - 0xc];
-    SafeAllocator* unknown_3c_;
-    void* unknown_40_;
-    void* unknown_44_;
+    SpriteRenderer* spriteRenderer_;
+    Sprite* sprites_;
+    char unk_c[0x3c - 0xc];
+    SafeAllocator* allocators_;
+    void* model_;
+    void* camera_;
     char unknown_48_[0x58 - 0x48];
-    void* unknown_58_;
-    char unknown_5c_[0x6c - 0x5c];
+    void* layout_;
+    char unk_5c[0x6c - 0x5c];
     int unknown_6c_;
     int unknown_70_;
     int unknown_74_;
     int unknown_78_;
-    unsigned char unknown_7c_;
+    unsigned char state_;
     unsigned char unknown_7d_;
     unsigned char unknown_7e_;
     unsigned char unknown_7f_;
-    unsigned char unknown_80_;
-    unsigned char unknown_81_;
+    unsigned char page_;
+    unsigned char flags_;
 };
 
 struct Struct_ov014_02189800 {
-    char unknown_0_[0xc];
-    void* unknown_c_;
+    char unk_0[0xc];
+    void* previousCamera;
 };
 extern Struct_ov014_02189800 data_ov014_02189800;
 extern char data_ov014_02189692[];
 extern char data_ov014_021896a7[];
 
-void ClearFields_021e20c0(void* layout);
+extern "C" void func_ov023_021e20c0(void* layout);
 extern "C" int func_ov023_021e20f0(void* layout, SafeAllocator* allocator, void* file, unsigned int size);
-extern "C" LayoutElement* func_ov014_021842a0(void* layout, short id);
-int Pac_CountFiles(PacRecord* pac);
-void* Pac_GetFile(PacRecord* pac, int index, void** outName, int* outSize);
+extern "C" Struct_ov006_0215b7e8* func_ov014_021842a0(void* layout, short id);
+extern "C" int Pac_CountFiles(PacRecord* pac);
+extern "C" void* Pac_GetFile(PacRecord* pac, int index, void** outName, int* outSize);
 extern "C" void SpriteContext_LoadFile(SpriteRenderer* renderer, void* file, unsigned int size, SafeAllocator* allocator);
-void ComputeShortPair_021e2bdc(void* layout, int id, short* x, short* y);
-void* GameState_GetFollowCamera(char* gameState);
-void InitCombatController020a2010(void* camera);
-void Camera_SetTarget(struct Camera* camera, int x, int y, int z);
+extern "C" void func_ov023_021e2bdc(void* layout, int id, short* x, short* y);
+extern "C" void* GameState_GetFollowCamera(char* gameState);
+extern "C" void func_020a2010(void* camera);
+extern "C" void Camera_SetTarget(struct Camera* camera, int x, int y, int z);
 extern "C" void Camera_SetOrbit(void* camera, int x, int y, int z);
 extern "C" void Camera_Update(void* camera);
-void FollowCamera_DisableFollow(void* camera);
-void GameState_SetCamera(GameState* gameState, int camera);
-void SetFogState_020c54a4(int, unsigned int, unsigned int, unsigned short);
-void Set3DClearColor(int, int, int, int, int);
+extern "C" void FollowCamera_DisableFollow(void* camera);
+extern "C" void GameState_SetCamera(GameState* gameState, int camera);
+extern "C" void func_020c54a4(int, unsigned int, unsigned int, unsigned short);
+extern "C" void Set3DClearColor(int, int, int, int, int);
 
 #define HIDE_ELEMENT(layout, id)                                        \
     {                                                                   \
         Struct_ov006_0215b7e8* element = func_ov014_021842a0(layout, id);       \
         if (element != NULL)                                            \
-            element->unknown_16_ &= ~1;                                      \
+            element->flags_ &= ~1;                                      \
     }
 
 // USA: func_ov014_0218580c
-extern "C" ARM void func_ov014_0218580c(Struct_ov014_02184dcc* arg0) {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    if (arg0->unknown_7d_ == 0) {
+extern "C" ARM void func_ov014_0218580c(Struct_ov014_02184dcc* self) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (self->unknown_7d_ == 0) {
         BG1CNT = (BG1CNT & (BGCNT_MASK_PRIORITY | BGCNT_MASK_MOSAIC)) | (0x1f << 8);
-        arg0->unknown_81_ |= 0x10;
-        arg0->unknown_7d_++;
+        self->flags_ |= 0x10;
+        self->unknown_7d_++;
     }
 
-    if (arg0->unknown_7d_ == 1) {
-        func_ov023_021e20c0(arg0->unknown_58_);
-        arg0->unknown_6c_ = var0->QueueLoadFile(data_ov014_02189692, NULL);
-        arg0->unknown_7d_++;
+    if (self->unknown_7d_ == 1) {
+        func_ov023_021e20c0(self->layout_);
+        self->unknown_6c_ = loader->QueueLoadFile(data_ov014_02189692, NULL);
+        self->unknown_7d_++;
     }
 
-    if (arg0->unknown_7d_ == 2 && var0->GetTaskStatus(arg0->unknown_6c_)) {
-        void* var1;
-        unsigned int var2;
-        var0->GetLoadedFileByID(arg0->unknown_6c_, &var1, &var2);
-        if (var1 != NULL) {
-            SafeAllocator* var3 = arg0->unknown_3c_;
-            var3[3].Reset();
-            func_ov023_021e20f0(arg0->unknown_58_, &var3[3], var1, var2);
-            HIDE_ELEMENT(arg0->unknown_58_, 1);
+    if (self->unknown_7d_ == 2 && loader->GetTaskStatus(self->unknown_6c_)) {
+        void* file;
+        unsigned int size;
+        loader->GetLoadedFileByID(self->unknown_6c_, &file, &size);
+        if (file != NULL) {
+            SafeAllocator* allocators = self->allocators_;
+            allocators[3].Reset();
+            func_ov023_021e20f0(self->layout_, &allocators[3], file, size);
+            HIDE_ELEMENT(self->layout_, 1);
         }
-        var0->RemoveTask(arg0->unknown_6c_);
-        arg0->unknown_6c_ = -1;
-        arg0->unknown_6c_ = var0->QueueLoadFile(data_ov014_021896a7, NULL);
-        arg0->unknown_7d_++;
+        loader->RemoveTask(self->unknown_6c_);
+        self->unknown_6c_ = -1;
+        self->unknown_6c_ = loader->QueueLoadFile(data_ov014_021896a7, NULL);
+        self->unknown_7d_++;
     }
 
-    if (self->initStep_ == 3 && loader->GetTaskStatus(self->taskID_)) {
+    if (self->unknown_7d_ == 3 && loader->GetTaskStatus(self->unknown_6c_)) {
         void* name;
         void* file;
         unsigned int size;
         int cellsSize;
-        loader->GetLoadedFileByID(self->taskID_, &file, &size);
+        loader->GetLoadedFileByID(self->unknown_6c_, &file, &size);
         int numFiles = Pac_CountFiles((PacRecord*)file);
         self->allocators_[5].Reset();
         for (int i = 0; i < numFiles; i++) {
@@ -149,35 +149,35 @@ extern "C" ARM void func_ov014_0218580c(Struct_ov014_02184dcc* arg0) {
                 SpriteContext_LoadFile(self->spriteRenderer_, cells, cellsSize, &self->allocators_[5]);
         }
 
-        short var11 = 0;
-        short var12 = 0;
-        Struct_ov006_021580b8* var13;
-        HIDE_ELEMENT(arg0->unknown_58_, 0x1a);
-        func_ov023_021e2bdc(arg0->unknown_58_, 0x1a, &var11, &var12);
-        var13 = &arg0->unknown_8_[0];
-        var13->unknown_14_ = var11 << 12;
-        var13->unknown_18_ = var12 << 12;
-        var13->unknown_22_ = 0x21;
-        var13->unknown_26_ = 0;
-        HIDE_ELEMENT(arg0->unknown_58_, 0x1b);
-        func_ov023_021e2bdc(arg0->unknown_58_, 0x1b, &var11, &var12);
-        var13 = &arg0->unknown_8_[1];
-        var13->unknown_14_ = var11 << 12;
-        var13->unknown_18_ = var12 << 12;
-        var13->unknown_22_ = 0x22;
-        var13->unknown_26_ = 0;
-        func_ov023_021e2bdc(arg0->unknown_58_, 0x14, &var11, &var12);
-        var13 = &arg0->unknown_8_[2];
-        var13->unknown_14_ = var11 << 12;
-        var13->unknown_18_ = var12 << 12;
-        var13->unknown_22_ = 0x20;
-        var13->unknown_26_ = 0;
-        var0->RemoveTask(arg0->unknown_6c_);
-        arg0->unknown_6c_ = -1;
-        arg0->unknown_7d_++;
+        short x = 0;
+        short y = 0;
+        Sprite* sprite;
+        HIDE_ELEMENT(self->layout_, 0x1a);
+        func_ov023_021e2bdc(self->layout_, 0x1a, &x, &y);
+        sprite = &self->sprites_[0];
+        sprite->x_ = x << 12;
+        sprite->y_ = y << 12;
+        sprite->unk_22 = 0x21;
+        sprite->unknown_26_ = 0;
+        HIDE_ELEMENT(self->layout_, 0x1b);
+        func_ov023_021e2bdc(self->layout_, 0x1b, &x, &y);
+        sprite = &self->sprites_[1];
+        sprite->x_ = x << 12;
+        sprite->y_ = y << 12;
+        sprite->unk_22 = 0x22;
+        sprite->unknown_26_ = 0;
+        func_ov023_021e2bdc(self->layout_, 0x14, &x, &y);
+        sprite = &self->sprites_[2];
+        sprite->x_ = x << 12;
+        sprite->y_ = y << 12;
+        sprite->unk_22 = 0x20;
+        sprite->unknown_26_ = 0;
+        loader->RemoveTask(self->unknown_6c_);
+        self->unknown_6c_ = -1;
+        self->unknown_7d_++;
     }
 
-    if (arg0->unknown_7d_ == 4) {
+    if (self->unknown_7d_ == 4) {
         BG0CNT = (BG0CNT & ~BGCNT_MASK_PRIORITY);
         BG1CNT = (BG1CNT & ~BGCNT_MASK_PRIORITY) | 1;
         BG2CNT = (BG2CNT & ~BGCNT_MASK_PRIORITY) | 2;
@@ -185,7 +185,7 @@ extern "C" ARM void func_ov014_0218580c(Struct_ov014_02184dcc* arg0) {
         DISPCNT = (DISPCNT & ~0x1f00) | (0x13 << 8);
         GameState* gameState = GameState::GetInstance();
         data_ov014_02189800.previousCamera = GameState_GetFollowCamera((char*)gameState);
-        InitCombatController020a2010(self->camera_);
+        func_020a2010(self->camera_);
         Camera_SetTarget((struct Camera*)self->camera_, 0, 0, 0);
         Camera_SetOrbit(self->camera_, 0, 0, 0xa000);
         Camera_Update(self->camera_);
@@ -194,10 +194,10 @@ extern "C" ARM void func_ov014_0218580c(Struct_ov014_02184dcc* arg0) {
         GameResources* resources = GetGameResources();
         SetFlags04(resources, 0x6093e);
         ClearFlags04(resources, 0x20);
-        SetFogState_020c54a4(0, 0, 0, 0);
+        func_020c54a4(0, 0, 0, 0);
         Set3DClearColor(0, 0, 0x7fff, 0, 0);
         LightingManager::GetInstance()->fogEnabled_ = false;
-        arg0->unknown_7c_ = 1;
-        arg0->unknown_7d_ = 0;
+        self->state_ = 1;
+        self->unknown_7d_ = 0;
     }
 }

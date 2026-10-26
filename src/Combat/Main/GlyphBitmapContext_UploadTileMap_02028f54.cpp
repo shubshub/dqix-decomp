@@ -19,14 +19,14 @@ extern "C" ARM void GlyphBitmapContext_UploadTileMap(void) {
     if (glyphBitmapContext.buffer != 0) {
         memset(glyphBitmapContext.buffer, 0, kBitmapSize);
     }
-    unsigned short* screenEntry = static_cast<unsigned short*>(glyphBitmapContext.buffer);
+    unsigned short* var0 = static_cast<unsigned short*>(glyphBitmapContext.buffer);
     unsigned short tile = 0;
     int row;
     int col;
     for (row = 0; row < kScreenRows; row++) {
         for (col = 0; col < kScreenColumns; col++) {
-            *screenEntry = tile;
-            screenEntry++;
+            *var0 = tile;
+            var0++;
             tile++;
         }
     }

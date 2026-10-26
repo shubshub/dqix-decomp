@@ -8,7 +8,7 @@ struct Node020130e0 {
 };
 
 // Main, originally AppendNodeToList020130e0 (USA 0x020130e0, EUR 0x020130f0, JPN 0x02012ea8)
-ARM void BmdjSceneElement_AppendSibling(struct Node020130e0* first, struct Node020130e0* node) {
+extern "C" ARM void BmdjSceneElement_AppendSibling(struct Node020130e0* first, struct Node020130e0* node) {
     struct Node020130e0* last = first->next;
     if (last == 0) {
         first->next = node;

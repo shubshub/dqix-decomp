@@ -13,7 +13,7 @@ struct SyntaxCharacter { char text[5]; };
 #if !defined(jpn)
 extern struct SyntaxCharacter NameFilter_syntaxCharacters[];
 #endif
-int Font_FindCharacterIndex(int key, int tableIdx);
+extern "C" int Font_FindCharacterIndex(int key, int tableIdx);
 
 #if defined(jpn)
 extern "C" int func_ov009_02185888(NameFilter*);

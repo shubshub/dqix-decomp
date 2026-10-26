@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
-struct Struct_020fdd44;
-extern struct Struct_020fdd44 data_020fdd44;
-extern "C" struct Struct_020fdd44* func_02028bd0(struct Struct_020fdd44* arg0, int arg1);
+struct Entry_02028bd0;
+extern struct Entry_02028bd0 data_020fdd44;
+extern "C" struct Entry_02028bd0* ZoneRecords_Find(struct Entry_02028bd0* base, int key);
 
 // USA: func_02027ccc
-extern "C" ARM struct Struct_020fdd44* func_02027ccc(int arg0) {
-    return func_02028bd0(&data_020fdd44, arg0);
+extern "C" ARM struct Entry_02028bd0* func_02027ccc(int key) {
+    return ZoneRecords_Find(&data_020fdd44, key);
 }

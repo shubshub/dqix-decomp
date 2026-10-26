@@ -1,19 +1,19 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov031_022119d0(int* arg0, int* arg1);
+extern "C" int func_ov031_022119d0(int* out, int* arg1);
 
-struct Struct_ov031_0224e598 { int unknown_0_; int unknown_4_; };
+struct Struct_ov031_0224e598 { int field0; int field4; };
 extern Struct_ov031_0224e598 data_ov031_0224e598;
 
 // USA: func_ov031_02211764
-extern "C" ARM int func_ov031_02211764(int* arg0, int* arg1) {
-    int var0 = func_ov031_022119d0(arg0, arg1);
+extern "C" ARM int func_ov031_02211764(int* out, int* arg1) {
+    int var0 = func_ov031_022119d0(out, arg1);
     if (var0 != 0) return var0;
-    if (arg0 != 0) {
-        *arg0 = data_ov031_0224e598.unknown_4_;
+    if (out != 0) {
+        *out = data_ov031_0224e598.field4;
     }
     if (arg1 != 0) {
-        switch (data_ov031_0224e598.unknown_0_) {
+        switch (data_ov031_0224e598.field0) {
         case 0:
             *arg1 = 0;
             break;
@@ -27,5 +27,5 @@ extern "C" ARM int func_ov031_02211764(int* arg0, int* arg1) {
             break;
         }
     }
-    return data_ov031_0224e598.unknown_0_;
+    return data_ov031_0224e598.field0;
 }

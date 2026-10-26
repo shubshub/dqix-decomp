@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov031_0223c054(int arg0);
+extern "C" int func_ov031_0223c054(int flag);
 extern "C" unsigned int func_ov031_02227558(void);
-extern "C" void func_ov031_022274d0(int arg0, int arg1);
-extern "C" void func_ov031_022274c0(int arg0);
+extern "C" void func_ov031_022274d0(int a, int b);
+extern "C" void func_ov031_022274c0(int v);
 extern "C" void func_ov031_02228024(void);
 extern "C" void func_ov031_02232508(void);
 

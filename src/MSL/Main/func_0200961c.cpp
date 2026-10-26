@@ -1,25 +1,25 @@
 #include <globaldefs.h>
 
 struct Struct_0200961c {
-    char unknown_0_[2];
-    short unknown_2_;
+    char pad0[2];
+    short total;
 };
 
 // USA: func_0200961c
-extern "C" ARM void func_0200961c(struct Struct_0200961c* arg0, int arg1) {
-    unsigned char* var0 = (unsigned char*)arg0 + 5;
-    unsigned char* var1 = var0 + arg1 - 1;
+extern "C" ARM void func_0200961c(struct Struct_0200961c* obj, int count) {
+    unsigned char* first = (unsigned char*)obj + 5;
+    unsigned char* p = first + count - 1;
     for (;;) {
-        unsigned char var2 = *var1;
-        if (var2 < 9) {
-            *var1 = var2 + 1;
+        unsigned char digit = *p;
+        if (digit < 9) {
+            *p = digit + 1;
             return;
         }
-        if (var1 == var0) {
-            *var1 = 1;
-            arg0->unknown_2_ = arg0->unknown_2_ + 1;
+        if (p == first) {
+            *p = 1;
+            obj->total = obj->total + 1;
             return;
         }
-        *var1-- = 0;
+        *p-- = 0;
     }
 }

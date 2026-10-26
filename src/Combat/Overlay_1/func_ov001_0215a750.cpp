@@ -11,7 +11,7 @@ void* LoadFileIntoMemory(const char*, void*, unsigned int*);
 extern char g_fileLoadBuffer[];
 
 // USA: func_ov001_0215a750
-extern "C" ARM unsigned int func_ov001_0215a750(const char* arg0, void** arg1) {
+extern "C" ARM unsigned int func_ov001_0215a750(const char* path, void** outPtr) {
     BackgroundLoader::AddLockGlobal();
     unsigned int size = 0;
     void* result = LoadFileIntoMemory(path, g_fileLoadBuffer, &size);

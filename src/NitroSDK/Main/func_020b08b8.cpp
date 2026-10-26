@@ -3,73 +3,73 @@
 #include "NitroSDK/LoadToVRAM.h"
 
 struct Struct_020b08b8_3 {
-    int unknown_0_;
-    int unknown_4_;
-    unsigned int unknown_8_;
-    const unsigned char* unknown_c_;
+    int f0;
+    int f4;
+    unsigned int f8;
+    const unsigned char* f0c;
 };
 
 struct Struct_020b08b8 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    const unsigned short* unknown_4_;
+    unsigned short count;
+    unsigned short pad2;
+    const unsigned short* table;
 };
 
 struct Struct_020b08b8_2 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_[3];
+    int f0;
+    int f4;
+    int arr[3];
 };
 
-extern "C" void func_020b035c(char* arg0, int arg1, int arg2);
+extern "C" void func_020b035c(char* base, int index, int value);
 
 // USA: func_020b08b8
-extern "C" ARM void func_020b08b8(Struct_020b08b8_3* arg0, Struct_020b08b8* arg1, int arg2, int arg3,
-                                  Struct_020b08b8_2* arg4) {
-    unsigned int var0 = (arg0->unknown_0_ == 3) ? 0x20 : 0x200;
-    unsigned short var1 = arg1->unknown_0_;
-    unsigned int var2;
-    const unsigned char* var3;
-    unsigned int var4;
-    unsigned short var5 = 0;
+extern "C" ARM void func_020b08b8(Struct_020b08b8_3* res, Struct_020b08b8* arg1, int base, int arg3,
+                                  Struct_020b08b8_2* out) {
+    unsigned int size = (res->f0 == 3) ? 0x20 : 0x200;
+    unsigned short count = arg1->count;
+    unsigned int dst;
+    const unsigned char* data;
+    unsigned int src;
+    unsigned short i = 0;
 
-    if (var1 != 0) {
+    if (count != 0) {
         do {
-            var3 = arg0->unknown_c_;
-            unsigned int var6 = arg1->unknown_4_[var5];
-            var2 = var0 * var5;
-            var4 = var0 * var6;
-            CleanInvalidateCacheRange(var3, arg0->unknown_8_);
+            data = res->f0c;
+            unsigned int idx = arg1->table[i];
+            dst = size * i;
+            src = size * idx;
+            CleanInvalidateCacheRange(data, res->f8);
             switch (arg3) {
             case 1:
-                if (arg0->unknown_4_) {
+                if (res->f4) {
                     MemoryMapMainObjExtendedPalette();
-                    LoadToMainObjExtendedPalette(var3 + var2, arg2 + var4, var0);
+                    LoadToMainObjExtendedPalette(data + dst, base + src, size);
                     MemoryUnmapMainObjExtendedPalette();
                 } else {
-                    LoadToMainObjStandardPalette(var3 + var2, arg2 + var4, var0);
+                    LoadToMainObjStandardPalette(data + dst, base + src, size);
                 }
                 break;
             case 2:
-                if (arg0->unknown_4_) {
+                if (res->f4) {
                     MemoryMapSubObjExtendedPalette();
-                    LoadToSubObjExtendedPalette(var3 + var2, arg2 + var4, var0);
+                    LoadToSubObjExtendedPalette(data + dst, base + src, size);
                     MemoryUnmapSubObjExtendedPalette();
                 } else {
-                    LoadToSubObjStandardPalette(var3 + var2, arg2 + var4, var0);
+                    LoadToSubObjStandardPalette(data + dst, base + src, size);
                 }
                 break;
             case 0:
                 MemoryMapTexturePalette();
-                LoadToTexturePalette(var3 + var2, arg2 + var4, var0);
+                LoadToTexturePalette(data + dst, base + src, size);
                 MemoryUnmapTexturePalette();
                 break;
             }
-            var5++;
-        } while (var5 < var1);
+            i++;
+        } while (i < count);
     }
 
-    arg4->unknown_0_ = arg0->unknown_0_;
-    arg4->unknown_4_ = arg0->unknown_4_;
-    func_020b035c((char*)arg4, arg3, arg2);
+    out->f0 = res->f0;
+    out->f4 = res->f4;
+    func_020b035c((char*)out, arg3, base);
 }

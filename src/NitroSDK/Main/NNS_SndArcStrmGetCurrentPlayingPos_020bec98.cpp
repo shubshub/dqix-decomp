@@ -1,30 +1,30 @@
 #include <globaldefs.h>
 
-struct StreamPlayer020bec98
+struct Struct_020bec98_2
 {
-    char pad_0x0[0xc4];
-    unsigned short sampleRate_;
-    char pad_0xc6[0x9a];
-    unsigned int currentSample_;
+    char unknown_0_[0xc4];
+    unsigned short unknown_c4_;
+    char unknown_c6_[0x9a];
+    unsigned int unknown_160_;
 };
-struct StreamHandle020bec98 { StreamPlayer020bec98* player_; };
+struct Struct_020bec98 { Struct_020bec98_2* player_; };
 
-static inline bool IsStreamHandleValid020bec98(const StreamHandle020bec98* handle)
+static inline bool inline_020bec98(const Struct_020bec98* handle)
 {
     return handle->player_ != NULL;
 }
 
 // Main, originally ScaleField0x160By1000_020bec98 (USA 0x020bec98, EUR 0x020beca8, JPN 0x020c0764)
-ARM unsigned int NNS_SndArcStrmGetCurrentPlayingPos(void* object)
+extern "C" ARM unsigned int NNS_SndArcStrmGetCurrentPlayingPos(void* object)
 {
-    StreamHandle020bec98* handle = (StreamHandle020bec98*)object;
-    StreamPlayer020bec98* player;
+    Struct_020bec98* handle = (Struct_020bec98*)object;
+    Struct_020bec98_2* player;
     unsigned long long position;
-    if (!IsStreamHandleValid020bec98(handle))
+    if (!inline_020bec98(handle))
         return 0;
     player = handle->player_;
-    position = player->currentSample_;
+    position = player->unknown_160_;
     position *= 1000;
-    position /= (unsigned int)player->sampleRate_;
+    position /= (unsigned int)player->unknown_c4_;
     return (unsigned int)position;
 }

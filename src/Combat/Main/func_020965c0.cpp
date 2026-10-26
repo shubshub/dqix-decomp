@@ -4,15 +4,15 @@
 #define func_020965c0 func_jpn_02098210
 #endif
 
-struct Struct_02069d08_2 { unsigned char unknown_0_[0xac]; unsigned char unknown_ac_[0xcc]; };
+struct Struct_02069d08_2 { unsigned char pad[0xac]; unsigned char tbl[0xcc]; };
 
 // USA: func_020965c0
-extern "C" ARM unsigned char func_020965c0(struct Struct_02069d08_2 *arg0, unsigned int arg1) {
-    int var0;
-    if (arg1 < 0xcc) {
-        for (var0 = 0; var0 < 0xcc; var0++) {
-            if (arg0->unknown_ac_[var0] == arg1) {
-                return var0;
+extern "C" ARM unsigned char func_020965c0(struct Struct_02069d08_2 *s, unsigned int val) {
+    int i;
+    if (val < 0xcc) {
+        for (i = 0; i < 0xcc; i++) {
+            if (s->tbl[i] == val) {
+                return i;
             }
         }
     }

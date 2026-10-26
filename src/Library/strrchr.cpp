@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 #include <std_library_functions.h>
 
-ARM char* strrchr(const char* arg0, int arg1) {
-    char var0 = (char)arg1;
-    char* var1 = (char*)0;
-    char var2 = *arg0;
-    char* var3 = (char*)arg0 + 1;
-    if (var2 != 0) {
+ARM char* strrchr(const char* str, int ch) {
+    char c = (char)ch;
+    char* result = (char*)0;
+    char cur = *str;
+    char* p = (char*)str + 1;
+    if (cur != 0) {
         do {
-            if (var2 == var0) var1 = var3 - 1;
-            var2 = *var3++;
-        } while (var2 != 0);
+            if (cur == c) result = p - 1;
+            cur = *p++;
+        } while (cur != 0);
     }
-    if (var1 != 0) return var1;
-    if (var0 != 0) return (char*)0;
-    return var3 - 1;
+    if (result != 0) return result;
+    if (c != 0) return (char*)0;
+    return p - 1;
 }

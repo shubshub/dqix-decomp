@@ -32,11 +32,11 @@ struct EffectScriptData
 
 extern "C"
 {
-    void* _Z28GameObject_GetFloorAttributePv(void*);
-    bool _Z28CheckBits5To9Equal2_0204be20Pt(void*);
+    void* GameObject_GetFloorAttribute(void*);
+    bool func_0204be20(void*);
 
-    void _Z17VramState_RestorePc(void*);
-    void _Z14VramState_SavePc(void*);
+    void VramState_Restore(void*);
+    void VramState_Save(void*);
 }
 
 void AtmosphericEffect::Initialize()
@@ -360,7 +360,7 @@ void AtmosphericEffectSet::ProcessArchive(AtmosphericEffectSet *target, SafeAllo
                 fileID++;
                 continue;
             }
-            unsigned int innerFileLength = vm.fileInfo.unknown_8_ - vm.fileInfo.unknown_4_;
+            unsigned int innerFileLength = vm.fileInfo.endOffset - vm.fileInfo.startOffset;
             NitroVM_FinishRead(&vm);
             const void* innerFile = narc.GetFileByIndex(fileID);
             if (strcmp(".cmed", extension) == 0)
@@ -424,7 +424,7 @@ void AtmosphericEffectSet::ProcessArchive(AtmosphericEffectSet *target, SafeAllo
                     fileID++;
                     continue;
                 }
-                unsigned int innerFileLength = vm.fileInfo.unknown_8_ - vm.fileInfo.unknown_4_;
+                unsigned int innerFileLength = vm.fileInfo.endOffset - vm.fileInfo.startOffset;
                 NitroVM_FinishRead(&vm);
                 const void* innerFile = narc.GetFileByIndex(fileID);
                 if (strcmp(".chr", extension) == 0)
@@ -436,13 +436,13 @@ void AtmosphericEffectSet::ProcessArchive(AtmosphericEffectSet *target, SafeAllo
                 fileID++;
             }
             narc.Destroy();
-            _Z17VramState_RestorePc(pZone50Thing);
+            VramState_Restore(pZone50Thing);
             loadInfo.allocator = allocator;
             loadInfo.fileData = loopObject->archiveFileData_;
             loadInfo.fileSize = loopObject->archiveFileSize_;
             loadInfo.unk_10 = 1;
             loopObject->object_.LoadFromCHRArchive(&loadInfo);
-            _Z14VramState_SavePc(pZone50Thing);
+            VramState_Save(pZone50Thing);
         }
     }
 
@@ -727,7 +727,7 @@ void AtmosphericEffectSet::DetermineVisibilityFromTimeOfDay()
 
 void AtmosphericEffectSet::DetermineVisibilityFromUnknown()
 {
-    bool inputShouldHide = _Z28CheckBits5To9Equal2_0204be20Pt(_Z28GameObject_GetFloorAttributePv(GameState::GetInstance()->GetLeader()));
+    bool inputShouldHide = func_0204be20(GameObject_GetFloorAttribute(GameState::GetInstance()->GetLeader()));
 
     if (inputShouldHide != unknown_14_bit_2_ || visibilityDirty_)
     {

@@ -2,30 +2,30 @@
 #include "GameState/GameState.h"
 #include "NitroSDK/Matrix.h"
 
-struct Struct_02048cf0 { int unknown_0_; int unknown_4_; };
-extern "C" struct Struct_02048cf0 func_ov000_0216f74c(int* arg0);
+struct Struct_02048cf0 { int x; int y; };
+extern "C" struct Struct_02048cf0 func_ov000_0216f74c(int* in);
 
 // USA: func_ov025_021e1540
-extern "C" ARM unsigned char func_ov025_021e1540(int arg0) {
-    GameObject* var0 = GameState::GetInstance()->GetGameObjectByIndex(arg0);
+extern "C" ARM unsigned char func_ov025_021e1540(int index) {
+    GameObject* obj = GameState::GetInstance()->GetGameObjectByIndex(index);
     int var1 = 0;
-    if (var0 != NULL) {
-        Vector3fix var2 = var0->obj3D_.position_;
-        var2.y = 0;
+    if (obj != NULL) {
+        Vector3fix origin = obj->obj3D_.position_;
+        origin.y = 0;
         fix32_t var3 = 0x400000;
-        int var4;
-        for (var4 = 0; var4 < 0x51; var4++) {
-            if (var4 % 18 == 17) {
+        int cell;
+        for (cell = 0; cell < 0x51; cell++) {
+            if (cell % 18 == 17) {
                 continue;
             }
-            Struct_02048cf0 var5 = func_ov000_0216f74c(&var4);
-            Vector3fix var6 = {0};
-            var6.x = var5.unknown_0_;
-            var6.z = var5.unknown_4_;
-            fix32_t var7 = Vector3fix_Distance(&var2, &var6);
-            if (var7 < var3) {
-                var1 = var4;
-                var3 = var7;
+            Struct_02048cf0 pos = func_ov000_0216f74c(&cell);
+            Vector3fix target = {0};
+            target.x = pos.x;
+            target.z = pos.y;
+            fix32_t dist = Vector3fix_Distance(&origin, &target);
+            if (dist < var3) {
+                var1 = cell;
+                var3 = dist;
             }
         }
     }

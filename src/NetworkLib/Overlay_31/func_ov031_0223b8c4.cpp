@@ -3,69 +3,69 @@
 
 
 struct Struct_ov031_0223b8c4 {
-    Struct_ov031_0223b8c4* unknown_0_;
-    Struct_ov031_0223b8c4* unknown_4_;
-    unsigned char* unknown_8_;
-    unsigned char unknown_c_;
-    char unknown_d_[3];
+    Struct_ov031_0223b8c4* prev;
+    Struct_ov031_0223b8c4* next;
+    unsigned char* buffer;
+    unsigned char count;
+    char pad0d[3];
 };
 
 struct Struct_ov031_0223b8c4_2 {
-    char unknown_0_[0x200];
-    Struct_ov031_0223b8c4 unknown_200_;
-    Struct_ov031_0223b8c4 unknown_210_;
+    char pad0[0x200];
+    Struct_ov031_0223b8c4 front;
+    Struct_ov031_0223b8c4 back;
     int unknown_220_;
     void* unknown_224_;
 };
 
-extern AllocationRegion0223b8c4* data_ov031_02290d28;
-extern "C" AllocationNode0223b8c4* func_ov031_0223bfa0(void*);
-extern "C" void func_ov031_0223d8d8(AllocationNode0223b8c4*, AllocationNode0223b8c4*);
+extern Struct_ov031_0223b8c4_2* data_ov031_02290d28;
+extern "C" Struct_ov031_0223b8c4* func_ov031_0223bfa0(void*);
+extern "C" void func_ov031_0223d8d8(Struct_ov031_0223b8c4*, Struct_ov031_0223b8c4*);
 extern "C" void HaltSystem();
 
-static inline Struct_ov031_0223b8c4_2* inline_ov031_0223b8c4(int arg0) {
-    Struct_ov031_0223b8c4_2* var0 = data_ov031_02290d28;
-    var0 += arg0;
-    return var0;
+static inline Struct_ov031_0223b8c4_2* inline_ov031_0223b8c4(int index) {
+    Struct_ov031_0223b8c4_2* region = data_ov031_02290d28;
+    region += index;
+    return region;
 }
 
 // USA: func_ov031_0223b8c4
-extern "C" ARM Struct_ov031_0223b8c4* func_ov031_0223b8c4(int arg0, int arg1, int arg2) {
-    Struct_ov031_0223b8c4* var0 = func_ov031_0223bfa0(inline_ov031_0223b8c4(arg0)->unknown_224_);
-    Struct_ov031_0223b8c4* var1;
+extern "C" ARM Struct_ov031_0223b8c4* func_ov031_0223b8c4(int region, int count, int fromFront) {
+    Struct_ov031_0223b8c4* result = func_ov031_0223bfa0(inline_ov031_0223b8c4(region)->unknown_224_);
+    Struct_ov031_0223b8c4* node;
     unsigned int var2 = DisableSpecificInterrupts(1);
-    if (arg2) {
-        var1 = &inline_ov031_0223b8c4(arg0)->unknown_200_;
-        if (var1 != &inline_ov031_0223b8c4(arg0)->unknown_210_) {
+    if (fromFront) {
+        node = &inline_ov031_0223b8c4(region)->front;
+        if (node != &inline_ov031_0223b8c4(region)->back) {
             do {
-                Struct_ov031_0223b8c4* var3 = var1->unknown_4_;
-                unsigned char* var4 = var1->unknown_8_ + var1->unknown_c_ * 8;
-                if (var4 + arg1 * 8 <= var3->unknown_8_) {
-                    var0->unknown_8_ = var4;
-                    func_ov031_0223d8d8(var3, var0);
+                Struct_ov031_0223b8c4* next = node->next;
+                unsigned char* start = node->buffer + node->count * 8;
+                if (start + count * 8 <= next->buffer) {
+                    result->buffer = start;
+                    func_ov031_0223d8d8(next, result);
                     break;
                 }
-                var1 = var3;
-            } while (var1 != &data_ov031_02290d28[arg0].unknown_210_);
+                node = next;
+            } while (node != &data_ov031_02290d28[region].back);
         }
         if (node == &data_ov031_02290d28[region].back) HaltSystem();
     } else {
-        var1 = &inline_ov031_0223b8c4(arg0)->unknown_210_;
-        if (var1 != &inline_ov031_0223b8c4(arg0)->unknown_200_) {
+        node = &inline_ov031_0223b8c4(region)->back;
+        if (node != &inline_ov031_0223b8c4(region)->front) {
             do {
-                Struct_ov031_0223b8c4* var5 = var1->unknown_0_;
-                unsigned char* var6 = var1->unknown_8_ - arg1 * 8;
-                if (var6 >= var5->unknown_8_ + var5->unknown_c_ * 8) {
-                    var0->unknown_8_ = var6;
-                    func_ov031_0223d8d8(var1, var0);
+                Struct_ov031_0223b8c4* prev = node->prev;
+                unsigned char* start = node->buffer - count * 8;
+                if (start >= prev->buffer + prev->count * 8) {
+                    result->buffer = start;
+                    func_ov031_0223d8d8(node, result);
                     break;
                 }
-                var1 = var5;
-            } while (var1 != &data_ov031_02290d28[arg0].unknown_200_);
+                node = prev;
+            } while (node != &data_ov031_02290d28[region].front);
         }
         if (node == &data_ov031_02290d28[region].front) HaltSystem();
     }
     EnableSpecificInterrupts(var2);
-    var0->unknown_c_ = arg1;
-    return var0;
+    result->count = count;
+    return result;
 }

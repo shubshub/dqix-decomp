@@ -2,7 +2,7 @@
 #include "NitroSDK/DMA.h"
 
 
-extern "C" void func_020ca3ec(int arg0, void* arg1, int arg2);
+extern "C" void func_020ca3ec(int value, void* dst, int size);
 extern int data_020f2270;
 
 // USA: func_020c55b0
@@ -14,9 +14,9 @@ extern "C" ARM void func_020c55b0() {
         func_020ca3ec(0, (void*)0x4000330, 0x10);
         func_020ca3ec(0, (void*)0x4000360, 0x60);
     }
-    int var0 = 0;
+    int i = 0;
     do {
-        var0++;
+        i++;
         *(volatile unsigned int*)0x40004d0 = 0;
-    } while (var0 < 0x20);
+    } while (i < 0x20);
 }

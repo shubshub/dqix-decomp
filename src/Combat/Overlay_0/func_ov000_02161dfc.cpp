@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 // USA: func_ov000_02161dfc
-extern "C" ARM void func_ov000_02161dfc(unsigned char* arg0, unsigned char* arg1) {
-    int var0 = 0x16;
-    unsigned char* var1 = arg0 + 0x3e;
-    unsigned char* var2 = arg1;
+extern "C" ARM void func_ov000_02161dfc(unsigned char* dst, unsigned char* src) {
+    int n = 0x16;
+    unsigned char* d = dst + 0x3e;
+    unsigned char* s = src;
     do {
-        *var1 = *var2;
-        var2++;
-        var0--;
-        var1++;
-    } while (var0 != 0);
-    arg0[0x54] = arg1[0x16];
-    arg0[0x55] = arg1[0x17];
+        *d = *s;
+        s++;
+        n--;
+        d++;
+    } while (n != 0);
+    dst[0x54] = src[0x16];
+    dst[0x55] = src[0x17];
 }

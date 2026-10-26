@@ -9,62 +9,62 @@
 
 
 struct Struct_0203cf58;
-struct Struct_020e385c;
+struct TagValueEntry020e385c;
 struct Struct_ov001_02154f24_3
 {
     char unknown_0_[8];
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    unsigned short lookupId;
+    unsigned short state;
     char unknown_c_[7];
     unsigned char unknown_13_;
     char unknown_14_[4];
-    unsigned short unknown_18_;
+    unsigned short tag;
     char unknown_1a_[0x3e - 0x1a];
-    char unknown_3e_[0x50 - 0x3e];
-    unsigned short unknown_50_;
+    char name[0x50 - 0x3e];
+    unsigned short flags;
     char unknown_52_[0x74 - 0x52];
     int unknown_74_;
 #if !defined(jpn)
     int unknown_78_;
 #endif
-    SafeAllocator unknown_7c_;
+    SafeAllocator allocator;
     unsigned int unknown_90_;
     char unknown_94_[8];
     unsigned char unknown_9c_;
     char unknown_9d_[0x110 - 0x9d];
     int unknown_110_;
 };
-struct Struct_ov001_02154f24
+struct LoadArguments02154f24
 {
-    unsigned short unknown_0_;
+    unsigned short slot;
 };
 struct Struct_ov001_02154f24_2
 {
     char unknown_0_[8];
-    unsigned int unknown_8_;
+    unsigned int index;
     char unknown_c_[0x34 - 0xc];
 };
-void* GetGlobalPtr021075f4_0203cf4c();
+extern "C" void* func_0203cf4c();
 extern "C" LoadArguments02154f24* Zone3D_GetInstance();
 extern "C" void* LinkSession_GetInstance();
-void EmptyStub02012de4(AllocatorUnion*);
+extern "C" void func_02012de4(AllocatorUnion*);
 extern "C" void func_020a0cc4(int);
 extern "C" void func_0203e0a0(void*, int);
 extern "C" void func_ov017_021a316c(GameResources*);
-void InitWithExtendedRegion0203cf58(Struct_0203cf58*);
-void AllocatorUnion_Free(AllocatorUnion*, void*);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
+extern "C" void func_0203cf58(Struct_0203cf58*);
+extern "C" void AllocatorUnion_Free(AllocatorUnion*, void*);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
 extern "C" void __clear(void*, unsigned int);
 extern "C" void* Scenario_GetInstance();
-int Scenario_RunTrigger(void*, int, void*);
+extern "C" int Scenario_RunTrigger(void*, int, void*);
 extern "C" void EventQuery_RunQueuedCommands(void*);
-TagValueEntry020e385c* GetData02153660_020e3808();
-void* FindEntryByTagAndValue(TagValueEntry020e385c*, int, int);
+extern "C" TagValueEntry020e385c* func_020e3808();
+extern "C" void* func_020e385c(TagValueEntry020e385c*, int, int);
 extern "C" int LinkSession_IsHostOrSolo(void*);
-void ResetTaggedEntryAndNotifyOverlay020e3994(TagValueEntry020e385c*, int, int);
-void RegisterTaggedEntryAndNotifyOverlay020e392c(TagValueEntry020e385c*, int, int);
-int GameState_GetProtagonistIndex(GameState*);
-void SetEntryBitUnlessMatching020e39d4(TagValueEntry020e385c*, int, int, int);
+extern "C" void func_020e3994(TagValueEntry020e385c*, int, int);
+extern "C" void func_020e392c(TagValueEntry020e385c*, int, int);
+extern "C" int GameState_GetProtagonistIndex(GameState*);
+extern "C" void func_020e39d4(TagValueEntry020e385c*, int, int, int);
 extern AllocatorUnion g_mainAllocator;
 extern const char data_ov001_02164bef[];
 extern const char data_ov001_02164c01[];
@@ -78,62 +78,62 @@ extern const char data_ov001_02164c26[];
 extern const char data_ov001_02164c2d[];
 extern const char data_ov001_02164c39[];
 
-static inline SafeAllocator* inline_ov001_02154f24(GameResources* arg0, int arg1)
+static inline SafeAllocator* inline_ov001_02154f24(GameResources* resources, int index)
 {
-    return &arg0->allocator_array_38[arg1];
+    return &resources->allocator_array_38[index];
 }
 
 // USA: func_ov001_02154f24
-extern "C" ARM int func_ov001_02154f24(Struct_ov001_02154f24_3* arg0)
+extern "C" ARM int func_ov001_02154f24(Struct_ov001_02154f24_3* self)
 {
     GameState* game = GameState::GetInstance();
     GameResources* resources = GetGameResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
-    void* list = GetGlobalPtr021075f4_0203cf4c();
+    void* list = func_0203cf4c();
     LoadArguments02154f24* arguments = Zone3D_GetInstance();
     void* other = LinkSession_GetInstance();
     if (!TestFlags00(resources, 0x1000))
     {
-        if (!AlwaysTrue02094b4c(FontBankLoader_GetInstance()))
+        if (!func_02094b4c(FontBankLoader_GetInstance()))
         {
-            return arg0->unknown_a_;
+            return self->state;
         }
     }
-    if (IsBrightnessTransitionActive(var1))
+    if (IsBrightnessTransitionActive(resources))
     {
-        return arg0->unknown_a_;
+        return self->state;
     }
-    EmptyStub02012de4(&g_mainAllocator);
+    func_02012de4(&g_mainAllocator);
     func_020a0cc4(0x40400);
-    EmptyStub02012de4(&g_mainAllocator);
+    func_02012de4(&g_mainAllocator);
     if ((self->flags & 1) && !TestFlags00(resources, 0x1000))
     {
         func_0203e0a0(list, arguments->slot);
         func_ov017_021a316c(resources);
-        InitWithExtendedRegion0203cf58((Struct_0203cf58*)GetGlobalPtr021075f4_0203cf4c());
-        SafeAllocator* previousAllocator = GetAllocator02154f24(resources, 7);
-        self->savedSize = previousAllocator->GetSize();
-        void* oldAllocator = previousAllocator->GetSignedAllocator();
-        previousAllocator->Destroy();
+        func_0203cf58((Struct_0203cf58*)func_0203cf4c());
+        SafeAllocator* var6 = inline_ov001_02154f24(resources, 7);
+        self->unknown_90_ = var6->GetSize();
+        void* oldAllocator = var6->GetSignedAllocator();
+        var6->Destroy();
         AllocatorUnion_Free(&g_mainAllocator, oldAllocator);
     }
-    else if (arg0->unknown_50_ & 4)
+    else if (self->flags & 4)
     {
-        func_0203e0a0(var3, var4->unknown_0_);
-        func_ov017_021a316c(var1);
+        func_0203e0a0(list, arguments->slot);
+        func_ov017_021a316c(resources);
         func_0203cf58((Struct_0203cf58*)func_0203cf4c());
-        var1->allocator_array_38[7].Reset();
+        resources->allocator_array_38[7].Reset();
     }
-    unsigned int var8 = 0x40400;
-    if (arg0->unknown_50_ & 8)
+    unsigned int size = 0x40400;
+    if (self->flags & 8)
     {
-        var8 -= 0xa000;
+        size -= 0xa000;
     }
-    if (arg0->unknown_50_ & 1)
+    if (self->flags & 1)
     {
-        var8 += arg0->unknown_90_;
+        size += self->unknown_90_;
     }
-    if (!TestFlags00(var1, 0x1000))
+    if (!TestFlags00(resources, 0x1000))
     {
         void* memory = AllocatorUnion_AllocateRounded(&g_mainAllocator, size);
         self->allocator.CreateTypeA(memory, size);
@@ -141,58 +141,58 @@ extern "C" ARM int func_ov001_02154f24(Struct_ov001_02154f24_3* arg0)
     }
     else
     {
-        ((HMRFAllocator*)arg0->unknown_7c_.pSignedAlloc)->Free(1);
+        ((HMRFAllocator*)self->allocator.pSignedAlloc)->Free(1);
     }
-    EmptyStub02012de4(&g_mainAllocator);
+    func_02012de4(&g_mainAllocator);
     char filename[80];
-    if (self->alternatePath)
+    if (self->unknown_9c_)
     {
-        sprintf(var10, data_ov001_02164bef, arg0->unknown_3e_);
+        sprintf(filename, data_ov001_02164bef, self->name);
     }
-    else if (arg0->unknown_13_)
+    else if (self->unknown_13_)
     {
-        sprintf(var10, data_ov001_02164c01, arg0->unknown_3e_);
+        sprintf(filename, data_ov001_02164c01, self->name);
     }
     else
     {
-        sprintf(var10, data_ov001_02164c13, arg0->unknown_3e_);
+        sprintf(filename, data_ov001_02164c13, self->name);
     }
-    int var11 = strlen(var10) - 4;
+    int length = strlen(filename) - 4;
 #if defined(jpn)
-    memcpy(var10 + var11, data_ov001_021661c1, 4);
-    var2->AddFence();
-    arg0->unknown_74_ = var2->QueueLoadFile(var10, &arg0->unknown_7c_);
+    memcpy(filename + length, data_ov001_021661c1, 4);
+    loader->AddFence();
+    self->unknown_74_ = loader->QueueLoadFile(filename, &self->allocator);
 #else
-    memcpy(var10 + var11, data_ov001_02164c21, 4);
+    memcpy(filename + length, data_ov001_02164c21, 4);
     char var12[16];
     __clear(var12, 16);
-    memcpy(var12, arg0->unknown_3e_, strlen(arg0->unknown_3e_) - 4);
+    memcpy(var12, self->name, strlen(self->name) - 4);
     char var13[16];
     sprintf(var13, data_ov001_02164c26, var12);
     char var14[32];
     sprintf(var14, data_ov001_02164c2d, var12);
-    var2->AddFence();
-    arg0->unknown_74_ = var2->QueueLoadFileInGP2(var10, var13, &arg0->unknown_7c_);
-    arg0->unknown_78_ = var2->QueueLoadFileInGP2(var10, var14, &arg0->unknown_7c_);
+    loader->AddFence();
+    self->unknown_74_ = loader->QueueLoadFileInGP2(filename, var13, &self->allocator);
+    self->unknown_78_ = loader->QueueLoadFileInGP2(filename, var14, &self->allocator);
 #endif
-    if (arg0->unknown_50_ & 0x200)
+    if (self->flags & 0x200)
     {
-        arg0->unknown_110_ = var2->QueueLoadFile(data_ov001_02164c39, &arg0->unknown_7c_);
+        self->unknown_110_ = loader->QueueLoadFile(data_ov001_02164c39, &self->allocator);
     }
     void* context = Scenario_GetInstance();
-    LookupRecord02154f24 record;
+    Struct_ov001_02154f24_2 record;
     record.index = self->lookupId;
     if (Scenario_RunTrigger(context, 10, &record))
     {
         EventQuery_RunQueuedCommands(&record);
     }
-    TagValueEntry020e385c* table = GetData02153660_020e3808();
-    void* found = FindEntryByTagAndValue(table, 1, 0x71e8);
-    if (LinkSession_IsHostOrSolo(other) && !found && !FindEntryByTagAndValue(table, 1, self->tag))
+    TagValueEntry020e385c* table = func_020e3808();
+    void* found = func_020e385c(table, 1, 0x71e8);
+    if (LinkSession_IsHostOrSolo(other) && !found && !func_020e385c(table, 1, self->tag))
     {
-        func_020e3994(var17, 1, -1);
-        func_020e392c(var17, 1, arg0->unknown_18_);
+        func_020e3994(table, 1, -1);
+        func_020e392c(table, 1, self->tag);
     }
-    SetEntryBitUnlessMatching020e39d4(table, GameState_GetProtagonistIndex(game), 1, self->tag);
+    func_020e39d4(table, GameState_GetProtagonistIndex(game), 1, self->tag);
     return 2;
 }

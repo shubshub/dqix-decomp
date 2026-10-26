@@ -1,25 +1,25 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" ARM int func_020019ac(void* arg0, void* arg1);
+extern "C" ARM int func_020019ac(void* a, void* b);
 
 // USA: func_020019c8
-extern "C" ARM int func_020019c8(char* arg0, unsigned short* arg1, int arg2) {
+extern "C" ARM int func_020019c8(char* dest, unsigned short* src, int maxLen) {
     int var0 = 0;
-    if (arg0 == 0 || arg1 == 0) return 0;
-    char var1[4];
+    if (dest == 0 || src == 0) return 0;
+    char buf[4];
     do {
-        unsigned short var2 = *arg1;
-        if (var2 == 0) {
-            arg0[var0] = 0;
+        unsigned short code = *src;
+        if (code == 0) {
+            dest[var0] = 0;
             goto done;
         }
-        arg1++;
-        int var3 = func_020019ac(var1, (void*)(int)var2);
-        if ((unsigned)(var0 + var3) > (unsigned)arg2) goto done;
-        strncpy(arg0 + var0, var1, var3);
-        var0 += var3;
-    } while ((unsigned)var0 <= (unsigned)arg2);
+        src++;
+        int len = func_020019ac(buf, (void*)(int)code);
+        if ((unsigned)(var0 + len) > (unsigned)maxLen) goto done;
+        strncpy(dest + var0, buf, len);
+        var0 += len;
+    } while ((unsigned)var0 <= (unsigned)maxLen);
 done:
     return var0;
 }

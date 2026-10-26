@@ -6,52 +6,52 @@
 struct Struct_020534ac;
 
 struct PacRecord;
-int Pac_CountFiles(struct PacRecord* entry);
+extern "C" int Pac_CountFiles(struct PacRecord* entry);
 
-void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
+extern "C" void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 
 struct BackgroundGraphics;
-void Background_Init(struct BackgroundGraphics* obj);
+extern "C" void Background_Init(struct BackgroundGraphics* obj);
 
-void Background_FlushFile(void* obj, char* str);
+extern "C" void Background_FlushFile(void* obj, char* str);
 
-void Background_UploadFile(struct BackgroundGraphics* self, char* str);
+extern "C" void Background_UploadFile(struct BackgroundGraphics* self, char* str);
 
 
 struct Struct_ov004_02163144 {
-    unsigned char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
+    unsigned char pad0[0x1c];
+    unsigned char lo : 4;
+    unsigned char hi : 4;
     unsigned char unknown_1d_[3];
 };
 
 #if defined(jpn)
-struct Struct_ov004_021707e8_9 { char unknown_0_[0x10]; int unknown_20_; char unknown_14_[0xc]; int unknown_24_; };
+struct Struct_ov004_021707e8_9 { char pad0[0x10]; int handle; char unknown_14_[0xc]; int state; };
 #else
-struct Struct_ov004_021707e8_9 { char unknown_0_[0x20]; int unknown_20_; int unknown_24_; };
+struct Struct_ov004_021707e8_9 { char pad0[0x20]; int handle; int state; };
 #endif
 extern Struct_ov004_021707e8_9 data_ov004_021707e8;
 extern char data_ov004_02170542;
 
 // USA: func_ov004_02163144
 extern "C" ARM int func_ov004_02163144() {
-    int var0 = 1;
-    int var1 = (int)BackgroundLoader::GetInstance();
+    int ret = 1;
+    int data4 = (int)BackgroundLoader::GetInstance();
 
-    if (data_ov004_021707e8.unknown_24_ == 0) {
+    if (data_ov004_021707e8.state == 0) {
         *(int*)0x4001010 = 0;
         *(int*)0x4001014 = 0;
-        data_ov004_021707e8.unknown_20_ = ((BackgroundLoader*)(var1))->QueueLoadFile((const char*)((int)&data_ov004_02170542), (SafeAllocator*)(0));
-        data_ov004_021707e8.unknown_24_ = data_ov004_021707e8.unknown_24_ + 1;
-    } else if (data_ov004_021707e8.unknown_24_ == 1) {
-        if (((BackgroundLoader*)(var1))->GetTaskStatus((int)(data_ov004_021707e8.unknown_20_))) {
-            int var2;
+        data_ov004_021707e8.handle = ((BackgroundLoader*)(data4))->QueueLoadFile((const char*)((int)&data_ov004_02170542), (SafeAllocator*)(0));
+        data_ov004_021707e8.state = data_ov004_021707e8.state + 1;
+    } else if (data_ov004_021707e8.state == 1) {
+        if (((BackgroundLoader*)(data4))->GetTaskStatus((int)(data_ov004_021707e8.handle))) {
+            int recListHead;
             int var3;
-            int var4;
-            void* var5;
-            Struct_ov004_02163144 var6;
+            int dummyOut44;
+            void* dummyPtr;
+            Struct_ov004_02163144 s;
 
-            ((BackgroundLoader*)((struct List0202fec8*)data4))->GetLoadedFileByID((int)(data_ov004_021707e8.handle), (void**)(&recListHead), (unsigned int*)(&val2Ignored));
+            ((BackgroundLoader*)((struct Struct_020534ac*)data4))->GetLoadedFileByID((int)(data_ov004_021707e8.handle), (void**)(&recListHead), (unsigned int*)(&var3));
             int count = Pac_CountFiles((struct PacRecord*)recListHead);
             Background_Init((struct BackgroundGraphics*)&s);
             s.lo = 1;
@@ -63,10 +63,10 @@ extern "C" ARM int func_ov004_02163144() {
                     Background_UploadFile((struct BackgroundGraphics*)&s, (char*)rec);
                 }
             }
-            ((BackgroundLoader*)(var1))->RemoveTask((int)(data_ov004_021707e8.unknown_20_));
-            data_ov004_021707e8.unknown_20_ = -1;
-            var0 = 0;
+            ((BackgroundLoader*)(data4))->RemoveTask((int)(data_ov004_021707e8.handle));
+            data_ov004_021707e8.handle = -1;
+            ret = 0;
         }
     }
-    return var0;
+    return ret;
 }

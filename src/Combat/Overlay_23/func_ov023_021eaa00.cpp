@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-void* GameState_GetParty(GameState* battleStruct);
+extern "C" void* GameState_GetParty(GameState* battleStruct);
 
 struct Obj02086aec;
-short Party_CountItem(struct Obj02086aec* obj, int key);
+extern "C" short Party_CountItem(struct Obj02086aec* obj, int key);
 extern "C" void func_ov017_021d6134(void* obj, int v);
 
 // USA: func_ov023_021eaa00

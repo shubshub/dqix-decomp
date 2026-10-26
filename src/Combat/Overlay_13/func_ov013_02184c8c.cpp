@@ -9,19 +9,19 @@
 #endif
 #include <globaldefs.h>
 
-extern "C" int func_02053c6c(unsigned char* arg0);
+extern "C" int func_02053c6c(unsigned char* obj);
 
 // USA: func_ov013_02184c8c
-extern "C" ARM void func_ov013_02184c8c(unsigned char* arg0, unsigned char* arg1) {
-    if (arg1 == 0 || *(unsigned char*)(arg0 + R(0x5ec,0x664)) == 0) return;
+extern "C" ARM void func_ov013_02184c8c(unsigned char* obj, unsigned char* other) {
+    if (other == 0 || *(unsigned char*)(obj + R(0x5ec,0x664)) == 0) return;
 
-    unsigned char* var0 = (unsigned char*)func_02053c6c(arg1);
-    *(unsigned short*)(var0 + 0x564) = *(int*)(arg0 + R(0x5f4,0x66c));
+    unsigned char* fieldPtr = (unsigned char*)func_02053c6c(other);
+    *(unsigned short*)(fieldPtr + 0x564) = *(int*)(obj + R(0x5f4,0x66c));
 
-    for (int var1 = 0; var1 < 5; var1++) {
-        unsigned char* var2 = arg0 + var1;
-        unsigned char var3 = var2[R(0x631,0x6a9)];
-        int var4 = *(int*)(arg0 + R(0x5fc,0x674) + var1 * 4) + *(int*)(arg0 + R(0x610,0x688) + var1 * 4);
-        *(unsigned char*)(var0 + var3 + 0x464) = (unsigned char)var4;
+    for (int i = 0; i < 5; i++) {
+        unsigned char* var2 = obj + i;
+        unsigned char idx = var2[R(0x631,0x6a9)];
+        int sum = *(int*)(obj + R(0x5fc,0x674) + i * 4) + *(int*)(obj + R(0x610,0x688) + i * 4);
+        *(unsigned char*)(fieldPtr + idx + 0x464) = (unsigned char)sum;
     }
 }

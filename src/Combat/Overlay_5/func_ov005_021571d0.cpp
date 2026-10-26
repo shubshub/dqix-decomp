@@ -8,78 +8,78 @@
 struct GridCursor;
 
 struct Struct_ov005_021571d0 {
-    int unknown_0_;
-    int unknown_4_;
-    char unknown_8_[0x3c - 0x8];
-    unsigned char unknown_3c_;
+    int unk_0;
+    int active_;
+    char unk_8[0x3c - 0x8];
+    unsigned char unk_3c;
     unsigned char unknown_3d_;
 };
 
-struct Struct_ov005_02153954 {
-    char unknown_0_[R(0x196c, 0x19f4)];
-    Struct_ov005_021571d0 unknown_19f4_;
+struct EquipmentMenu {
+    char unk_0[R(0x196c, 0x19f4)];
+    Struct_ov005_021571d0 cursor_;
     char unknown_1a34_[0x3db8 - 0x19f4 - sizeof(Struct_ov005_021571d0)];
-    unsigned char unknown_3db8_;
+    unsigned char state_;
     char unknown_3db9_[0x3dbb - 0x3db9];
-    signed char unknown_3dbb_;
-    unsigned char unknown_3dbc_;
+    signed char slot_;
+    unsigned char kind_;
 };
 
-void GridCursor_Init(GridCursor* s);
-void GridCursor_SetDimensions(GridCursor* s, int a, int count, int mode);
-void GridCursor_SetCount(GridCursor* s, int val);
+extern "C" void GridCursor_Init(GridCursor* s);
+extern "C" void GridCursor_SetDimensions(GridCursor* s, int a, int count, int mode);
+extern "C" void GridCursor_SetCount(GridCursor* s, int val);
 extern "C" void GridCursor_SetSelectedIndex(void* s, int index);
 
 // USA: func_ov005_021571d0
-extern "C" ARM void func_ov005_021571d0(Struct_ov005_02153954* arg0) {
-    int var0;
-    short var1;
-    int var2;
-    int var3;
-    int var4;
-    short var5;
-    unsigned char var6;
+extern "C" ARM void func_ov005_021571d0(EquipmentMenu* self) {
+    int cols;
+    short rows;
+    int mode;
+    int count;
+    int active;
+    short index;
+    unsigned char flagA;
     unsigned char var7;
-    switch (arg0->unknown_3db8_) {
+    switch (self->state_) {
     case 0:
-        var1 = 8;
-        var0 = 1;
-        var2 = 0;
-        var3 = 8;
-        var4 = 1;
-        var6 = 0;
+        rows = 8;
+        cols = 1;
+        mode = 0;
+        count = 8;
+        active = 1;
+        flagA = 0;
         var7 = 1;
-        var5 = arg0->unknown_3dbc_;
+        index = self->kind_;
         break;
     case 2:
-        var1 = 1;
-        var0 = 8;
-        var2 = 0;
-        var4 = 1;
-        var3 = 8;
-        var6 = 1;
+        rows = 1;
+        cols = 8;
+        mode = 0;
+        active = 1;
+        count = 8;
+        flagA = 1;
         var7 = 0;
-        var5 = arg0->unknown_3dbc_;
+        index = self->kind_;
         break;
     case 3:
-        var1 = 1;
-        var0 = 8;
-        var2 = 0;
-        var4 = 1;
-        var3 = 8;
-        var6 = 1;
+        rows = 1;
+        cols = 8;
+        mode = 0;
+        active = 1;
+        count = 8;
+        flagA = 1;
         var7 = 0;
-        var5 = arg0->unknown_3dbc_;
+        index = self->kind_;
         break;
     case 4:
     case 6:
-        var2 = 1;
-        var0 = 4;
-        var1 = 4;
-        var4 = 1;
-        var6 = 1;
-        var5 = arg0->unknown_3dbb_ - 8;
-        var3 = 0x10;
+        mode = 1;
+        cols = 4;
+        rows = 4;
+        active = 1;
+        flagA = 1;
+        index = self->slot_ - 8;
+        count = 0x10;
         var7 = 0;
         break;
     }
@@ -89,5 +89,5 @@ extern "C" ARM void func_ov005_021571d0(Struct_ov005_02153954* arg0) {
     self->cursor_.active_ = active;
     GridCursor_SetSelectedIndex(&self->cursor_, index);
     self->cursor_.unk_3c = flagA;
-    self->cursor_.unk_3d = flagB;
+    self->cursor_.unknown_3d_ = var7;
 }

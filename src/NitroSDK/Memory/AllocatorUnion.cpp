@@ -4,14 +4,14 @@
 // JPN: func_020b1938
 void* AllocatorUnion::Allocate(unsigned int len)
 {
-    return versions.unknown_0_.pVTable->allocate(&versions.unknown_0_, len);
+    return versions.base.pVTable->allocate(&versions.base, len);
 }
 
 // USA: func_020afe80
 // JPN: func_020b194c
 void AllocatorUnion::Free(void* data)
 {
-    versions.unknown_0_.pVTable->free(&versions.unknown_0_, data);
+    versions.base.pVTable->free(&versions.base, data);
 }
 
 // USA: func_020afe94

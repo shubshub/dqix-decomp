@@ -8,12 +8,12 @@ extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, 
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice);
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 #if defined(jpn)
-void CharacterCreationUI_SwitchTab(unsigned char*, int);
+extern "C" void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #else
-void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
+extern "C" void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
 #endif
-void Camera_EasePositionTo(struct Camera* camera, int position, int duration);
-void Camera_EaseTargetTo(struct Camera* camera, int target, int duration);
+extern "C" void Camera_EasePositionTo(struct Camera* camera, int position, int duration);
+extern "C" void Camera_EaseTargetTo(struct Camera* camera, int target, int duration);
 
 extern const Vector3fix CharacterCreationUI_eyeTabCameraPosition;
 extern const Vector3fix CharacterCreationUI_eyeTabCameraTarget;

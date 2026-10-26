@@ -1,26 +1,26 @@
 #include <globaldefs.h>
 
-struct Struct_ov003_0215e9a4 {
-    char unknown_0_;
-    signed char unknown_1_;
-    signed char unknown_2_;
-    char unknown_3_;
-    short* unknown_4_;
+struct Table0215e9a4 {
+    char pad0;
+    signed char width;
+    signed char height;
+    char pad3;
+    short* data;
 };
 
-struct Struct_ov003_0215e930 {
-    char unknown_0_;
+struct LookupTable0215e930 {
+    char pad0;
     signed char unknown_1_;
-    char unknown_2_;
-    signed char unknown_3_;
-    short* unknown_4_;
+    char pad2;
+    signed char count;
+    short* entries;
 };
 
-struct Struct_ov003_0215e824;
+struct List0215e824;
 
-struct Struct_ov003_0215e9ec {
-    char unknown_0_[0x10];
-    short unknown_10_;
+struct Cell0215e8f4 {
+    char pad0[0x10];
+    short id;
 };
 
 struct Keyboard {
@@ -30,10 +30,10 @@ struct Keyboard {
     unsigned char wrap;
 };
 
-struct Table0215e9a4* Keyboard_GetPageGrid(struct Keyboard*);
+extern "C" struct Table0215e9a4* Keyboard_GetPageGrid(struct Keyboard*);
 extern "C" ARM int KeyboardPageGrid_FindKeyCell(struct LookupTable0215e930* obj, short target, unsigned char* outMod, unsigned char* outDiv);
-int GetTableEntry0215e9a4(struct Table0215e9a4*, int, int);
-struct Cell0215e8f4* FindElemByKey_0215e824(struct List0215e824*, int);
+extern "C" int func_ov003_0215e9a4(struct Table0215e9a4*, int, int);
+extern "C" struct Cell0215e8f4* func_ov003_0215e824(struct List0215e824*, int);
 
 // Overlay 3, originally func_ov003_0215e9ec (USA/EUR 0x0215e9ec; JPN not identified)
 extern "C" ARM void Keyboard_MoveCursor(struct Keyboard* self, int dx, int dy) {
@@ -48,63 +48,63 @@ extern "C" ARM void Keyboard_MoveCursor(struct Keyboard* self, int dx, int dy) {
     target = self->key->id;
     if (KeyboardPageGrid_FindKeyCell((struct LookupTable0215e930*)table, target, (unsigned char*)&x, (unsigned char*)&y) != 0) return;
 
-    var4 = arg0->unknown_21_;
-    var2 += arg1;
-    var3 += arg2;
-    var5 = func_ov003_0215e9a4(var0, var2, var3);
-    if (var3 < 0) {
-        var3 = 0;
-        if (var4) var3 = var0->unknown_2_ - 1;
-        arg1 = -1;
-        arg2 = 0;
-        if (var5 == -2) arg1 = 1;
-    } else if (var0->unknown_2_ <= var3) {
-        var3 = var0->unknown_2_ - 1;
-        if (var4) var3 = 0;
-        arg1 = -1;
-        arg2 = 0;
-        if (var5 == -2) arg1 = 1;
+    wrap = self->wrap;
+    x += dx;
+    y += dy;
+    v = func_ov003_0215e9a4(table, x, y);
+    if (y < 0) {
+        y = 0;
+        if (wrap) y = table->height - 1;
+        dx = -1;
+        dy = 0;
+        if (v == -2) dx = 1;
+    } else if (table->height <= y) {
+        y = table->height - 1;
+        if (wrap) y = 0;
+        dx = -1;
+        dy = 0;
+        if (v == -2) dx = 1;
     }
 
-    var5 = func_ov003_0215e9a4(var0, var2, var3);
-    if (arg2 != 0) {
-        if (var5 == -2) {
-            while (var5 < 0) {
-                var2++;
-                if (var0->unknown_1_ <= var2) break;
-                var5 = func_ov003_0215e9a4(var0, var2, var3);
+    v = func_ov003_0215e9a4(table, x, y);
+    if (dy != 0) {
+        if (v == -2) {
+            while (v < 0) {
+                x++;
+                if (table->width <= x) break;
+                v = func_ov003_0215e9a4(table, x, y);
             }
-            while (var5 < 0) {
-                var2--;
-                if (var2 < 0) break;
-                var5 = func_ov003_0215e9a4(var0, var2, var3);
+            while (v < 0) {
+                x--;
+                if (x < 0) break;
+                v = func_ov003_0215e9a4(table, x, y);
             }
         } else {
-            while (var5 < 0) {
-                var2--;
-                if (var2 < 0) break;
-                var5 = func_ov003_0215e9a4(var0, var2, var3);
+            while (v < 0) {
+                x--;
+                if (x < 0) break;
+                v = func_ov003_0215e9a4(table, x, y);
             }
-            while (var5 < 0) {
-                var2++;
-                if (var0->unknown_1_ <= var2) break;
-                var5 = func_ov003_0215e9a4(var0, var2, var3);
+            while (v < 0) {
+                x++;
+                if (table->width <= x) break;
+                v = func_ov003_0215e9a4(table, x, y);
             }
         }
     }
 
-    var4 = 0;
-    while (var5 < 0) {
-        if (arg1 < 0) {
-            var2--;
-            if (var2 < 0) var2 = var0->unknown_1_ - 1;
-            var5 = func_ov003_0215e9a4(var0, var2, var3);
-        } else if (arg1 > 0) {
-            var2++;
-            if (var0->unknown_1_ <= var2) var2 = var4;
-            var5 = func_ov003_0215e9a4(var0, var2, var3);
+    wrap = 0;
+    while (v < 0) {
+        if (dx < 0) {
+            x--;
+            if (x < 0) x = table->width - 1;
+            v = func_ov003_0215e9a4(table, x, y);
+        } else if (dx > 0) {
+            x++;
+            if (table->width <= x) x = wrap;
+            v = func_ov003_0215e9a4(table, x, y);
         }
     }
 
-    self->key = FindElemByKey_0215e824(self->layout, v);
+    self->key = func_ov003_0215e824(self->layout, v);
 }

@@ -6,11 +6,11 @@
 // its scale (4.12 shorts), as this function combines them with the parent's
 struct ZoneResourceTreeRecordTransform
 {
-    char pad_0[8];
+    char unknown_0_[8];
     Vector3fix position;
-    char pad_14[2];
+    char unknown_14_[2];
     int16_t angleY;
-    char pad_18[2];
+    char unknown_18_[2];
     int16_t scaleX;
     int16_t scaleY;
     int16_t scaleZ;
@@ -22,12 +22,12 @@ struct ZoneResourceTreeRecordTransform
 // computes (angle, position, scale) from the element's source record and its parent's
 struct BmdjSceneElementTransform
 {
-    char pad_0[6];
+    char unknown_0_[6];
     int16_t angle;
     Vector3fix position;
     Vector3fix scale;
     ZoneResourceTreeRecordTransform* source;
-    char pad_24[8];
+    char unknown_24_[8];
     BmdjSceneElementTransform* firstChild;
     BmdjSceneElementTransform* next;
 };

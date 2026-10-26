@@ -6,16 +6,16 @@ void SetMainBrightness(GameResources*, int, int);
 void SetSubBrightness(GameResources*, int, int);
 
 struct Struct_020db3f4_3 {
-    unsigned char unknown_0_[0x6c];
-    unsigned char unknown_6c_;
+    unsigned char pad[0x6c];
+    unsigned char f6c;
 };
 
 // USA: func_020db844
-extern "C" ARM void func_020db844(struct Struct_020db3f4_3* arg0, int arg1, int arg2, int arg3) {
-    int var0 = (int)GetGameResources();
-    if (var0 == 0) return;
-    arg0->unknown_6c_ = 0;
-    if (arg1 == 0) SetMainBrightness((GameResources*)var0, arg2, arg3);
-    else SetSubBrightness((GameResources*)var0, arg2, arg3);
-    arg0->unknown_6c_ = 1;
+extern "C" ARM void func_020db844(struct Struct_020db3f4_3* a, int b, int c, int d) {
+    int base = (int)GetGameResources();
+    if (base == 0) return;
+    a->f6c = 0;
+    if (b == 0) SetMainBrightness((GameResources*)base, c, d);
+    else SetSubBrightness((GameResources*)base, c, d);
+    a->f6c = 1;
 }

@@ -5,7 +5,7 @@
 enum { kDoorFeatureType = 2 };
 
 // Main, originally FindEntryByNodeIdAndKey_02018b34 (USA 0x02018b34, EUR 0x02018b44, JPN 0x020188d4)
-ARM BmdjSceneElement* Zone3D_FindDoorElement(Zone3D* zone, ZoneFeatures::Opcode6aEntry* door) {
+extern "C" ARM BmdjSceneElement* Zone3D_FindDoorElement(Zone3D* zone, ZoneFeatures::Opcode6aEntry* door) {
     BmdjScriptNode* node;
     BmdjSceneElement* result;
     int count;

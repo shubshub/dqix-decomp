@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "NitroSDK/Timing.h"
 
-extern "C" unsigned long long _ll_udiv(unsigned long long dividend, unsigned int divisor, unsigned int flag);
+extern "C" unsigned long long _ll_udiv(unsigned long long arg0, unsigned int arg1, unsigned int flag);
 
 // MapDisplayMemberPanel::state: hidden (only the top strip shows), sliding up, shown, sliding down
 enum MemberPanelState {
@@ -29,7 +29,7 @@ struct StateObj0201fa2c {
 };
 
 // Main, originally UpdateStateTimer0201fa2c (USA 0x0201fa2c, EUR 0x0201fa3c, JPN 0x0201f750)
-ARM void MapDisplayMemberPanel_Update(StateObj0201fa2c* panel, unsigned int deltaTime) {
+extern "C" ARM void MapDisplayMemberPanel_Update(StateObj0201fa2c* panel, unsigned int deltaTime) {
     if (panel->state == MemberPanelState_Hidden) {
         if (panel->nextState == MemberPanelState_SlidingIn) {
             panel->state = MemberPanelState_SlidingIn;

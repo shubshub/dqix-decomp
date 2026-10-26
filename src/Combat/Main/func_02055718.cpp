@@ -2,26 +2,26 @@
 #include "Memory/SafeAllocator.h"
 
 struct Struct_02055660_2;
-extern "C" bool func_020556dc(void** arg0, SafeAllocator* arg1);
-extern "C" void func_020556cc(struct Struct_02055660_2* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_02056d80(void* arg0);
+extern "C" bool func_020556dc(void** out, SafeAllocator* alloc);
+extern "C" void func_020556cc(struct Struct_02055660_2* p, int a, int b, int c);
+extern "C" void func_02056d80(void* obj);
 
 struct Struct_02055718 {
-    int unknown_0_;
-    void* unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
+    int f0;
+    void* f4;
+    int f8;
+    int fc;
 };
 
 // USA: func_02055718
-extern "C" ARM int func_02055718(Struct_02055718* arg0, int arg1, int arg2) {
-    if (arg1 == 0) return 0;
-    if (arg2 == 0) return 0;
-    arg0->unknown_0_ = arg2;
-    arg0->unknown_8_ = arg1;
-    if (func_020556dc(&arg0->unknown_4_, (SafeAllocator*)arg0->unknown_0_)) {
-        func_020556cc((struct Struct_02055660_2*)arg0->unknown_4_, arg0->unknown_c_, arg0->unknown_8_, arg0->unknown_0_);
-        func_02056d80(arg0->unknown_4_);
+extern "C" ARM int func_02055718(Struct_02055718* p, int a, int b) {
+    if (a == 0) return 0;
+    if (b == 0) return 0;
+    p->f0 = b;
+    p->f8 = a;
+    if (func_020556dc(&p->f4, (SafeAllocator*)p->f0)) {
+        func_020556cc((struct Struct_02055660_2*)p->f4, p->fc, p->f8, p->f0);
+        func_02056d80(p->f4);
     }
     return 1;
 }

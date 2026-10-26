@@ -3,43 +3,43 @@
 #include "NitroSDK/WirelessScanDescriptor.h"
 #include "Resource/Script.h"
 
-struct Struct_0201c3a4 {
-    int unknown_0_;
-    void* unknown_4_;
+struct Struct02030b7c {
+    int field0;
+    void* field4;
 };
 
 struct Struct_ov031_02291e04_2 {
-    unsigned char unknown_0_;
+    unsigned char count;
 #if defined(jpn)
-    unsigned char unknown_1_[3];
+    unsigned char pad0[3];
 #else
-    unsigned char unknown1_1_[4];
+    unsigned char pad0[4];
 #endif
-    unsigned char unknown_5_;
+    unsigned char field5;
 #if defined(jpn)
-    unsigned char unknown1_5_[0x2b];
+    unsigned char pad1[0x2b];
 #else
-    unsigned char unknown_6_[0x26];
+    unsigned char pad1[0x26];
 #endif
-    Struct_ov031_0220ec04_3* unknown_2c_;
+    Struct_ov031_0220ec04_3* entries;
 };
 
 extern Struct_ov031_02291e04_2 data_ov031_02291e04;
 
 // USA: func_ov031_02243348
-extern "C" ARM int func_ov031_02243348(struct Struct_0201c3a4* arg0) {
-    void* var0 = (void*)((Script::Parameter*)arg0)->ToString();
-    int var1 = 0;
-    int var2 = 0;
-    while (var2 < data_ov031_02291e04.unknown_0_) {
-        Struct_ov031_0220ec04_3* var3 = func_ov031_0220ec04(var2);
-        if (strcmp((char*)var3->unknown_c_, (char*)var0) == 0) {
-            memcpy(&data_ov031_02291e04.unknown_2c_[var1], var3, sizeof(*var3));
-            var1++;
-            if (var1 >= 8) break;
+extern "C" ARM int func_ov031_02243348(struct Struct02030b7c* s) {
+    void* target = (void*)((Script::Parameter*)s)->ToString();
+    int matched = 0;
+    int i = 0;
+    while (i < data_ov031_02291e04.count) {
+        Struct_ov031_0220ec04_3* entry = func_ov031_0220ec04(i);
+        if (strcmp((char*)entry->ssid, (char*)target) == 0) {
+            memcpy(&data_ov031_02291e04.entries[matched], entry, sizeof(*entry));
+            matched++;
+            if (matched >= 8) break;
         }
-        var2++;
+        i++;
     }
-    data_ov031_02291e04.unknown_5_ = var1;
+    data_ov031_02291e04.field5 = matched;
     return 1;
 }

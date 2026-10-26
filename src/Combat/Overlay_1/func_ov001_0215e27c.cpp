@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov001_021537a0(int* arg0);
+extern "C" void func_ov001_021537a0(int* obj);
 extern int data_ov001_021658d8;
 extern unsigned char data_ov001_021658b8[];
 

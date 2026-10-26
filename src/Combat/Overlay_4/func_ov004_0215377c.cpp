@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-struct Struct_ov004_0215377c { unsigned int unknown_0_[3]; };
+struct Struct_ov004_0215377c { unsigned int v[3]; };
 
-extern "C" void __clear(void* arg0, int arg1);
+extern "C" void __clear(void* ptr, int size);
 
 // USA: func_ov004_0215377c
-extern "C" ARM void func_ov004_0215377c(Struct_ov004_0215377c* arg0) {
-	Struct_ov004_0215377c var0;
-	__clear(&var0, 0xc);
-	*arg0 = var0;
+extern "C" ARM void func_ov004_0215377c(Struct_ov004_0215377c* dst) {
+	Struct_ov004_0215377c local;
+	__clear(&local, 0xc);
+	*dst = local;
 }

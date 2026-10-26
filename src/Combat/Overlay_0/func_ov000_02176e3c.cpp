@@ -2,19 +2,19 @@
 
 struct Struct_0205d81c;
 
-struct Struct_0205d0e0 {
-    char unknown_0_[0xc5];
-    unsigned char unknown_c5_;
+struct Elem_0205d81c {
+    char pad0[0xc5];
+    unsigned char flags;
 };
 
-struct Struct_ov000_02176e3c {
-    char unknown_0_[0x118];
-    int unknown_118_;
+struct BattleMenu {
+    char pad0[0x118];
+    int mode;
     char unknown_11c_[0x188 - 0x11c];
-    char unknown_188_[1];
+    char elements[1];
 };
 
-extern "C" Struct_0205d0e0* func_0205d81c(Struct_0205d81c* arg0, int arg1);
+extern "C" Elem_0205d81c* func_0205d81c(Struct_0205d81c* list, int key);
 extern "C" void func_ov000_02177330(void*);
 extern "C" void func_ov000_02177558(void*);
 extern "C" void func_ov000_02177798(void*);
@@ -24,90 +24,90 @@ extern "C" void func_ov000_02177f28(void*);
 extern "C" void func_ov000_0217819c(void*);
 extern "C" void func_ov000_021785fc(void*);
 extern "C" int func_ov000_0217542c(void*);
-extern "C" void func_ov000_02176498(void* arg0, int arg1);
+extern "C" void func_ov000_02176498(void* obj, int flag);
 extern "C" void func_ov000_021788d8(void*, int, int);
-extern "C" void func_ov000_02178cbc(void* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02179128(void* arg0, int arg1, int arg2);
-extern "C" void func_ov000_021795e0(void* arg0, int arg1, int arg2);
+extern "C" void func_ov000_02178cbc(void* menu, int a, int b);
+extern "C" void func_ov000_02179128(void* menu, int a, int b);
+extern "C" void func_ov000_021795e0(void* menu, int a, int b);
 extern "C" void func_ov000_02179a14(void*, int, int);
 extern "C" void func_ov000_02179c6c(void*, int);
-extern "C" void func_ov000_0217a0a4(Struct_ov000_02176e3c* arg0, int arg1);
+extern "C" void func_ov000_0217a0a4(BattleMenu* menu, int a);
 extern "C" void func_ov000_0217a628(void*, int, int);
 
 // USA: func_ov000_02176e3c
-extern "C" ARM void func_ov000_02176e3c(Struct_ov000_02176e3c* arg0, int arg1, int arg2, int arg3, int arg4, unsigned char arg5) {
-    Struct_0205d0e0* var0 = func_0205d81c(
-        (Struct_0205d81c*)arg0->unknown_188_, (unsigned char)arg2);
-    if (var0 == 0) {
+extern "C" ARM void func_ov000_02176e3c(BattleMenu* menu, int arg, int slot, int arg3, int arg4, unsigned char highlight) {
+    Elem_0205d81c* elem = func_0205d81c(
+        (Struct_0205d81c*)menu->elements, (unsigned char)slot);
+    if (elem == 0) {
         return;
     }
-    int var1 = arg0->unknown_118_;
-    int var2 = (var0->unknown_c5_ & 2) ? 1 : 0;
-    arg0->unknown_118_ = 1;
+    int var1 = menu->mode;
+    int var2 = (elem->flags & 2) ? 1 : 0;
+    menu->mode = 1;
     if (var2) {
-        arg0->unknown_118_ = 2;
+        menu->mode = 2;
     }
-    if (arg5) {
-        var0->unknown_c5_ |= 0x40;
+    if (highlight) {
+        elem->flags |= 0x40;
     } else {
-        var0->unknown_c5_ &= ~0x40;
+        elem->flags &= ~0x40;
     }
-    switch (arg2) {
+    switch (slot) {
     case 1:
-        func_ov000_02177330(arg0);
+        func_ov000_02177330(menu);
         break;
     case 2:
-        func_ov000_02177558(arg0);
+        func_ov000_02177558(menu);
         break;
     case 3:
-        func_ov000_02177798(arg0);
+        func_ov000_02177798(menu);
         break;
     case 4:
-        func_ov000_02177a7c(arg0);
+        func_ov000_02177a7c(menu);
         break;
     case 5:
-        func_ov000_02177cb8(arg0);
+        func_ov000_02177cb8(menu);
         break;
     case 6:
-        func_ov000_02177f28(arg0);
+        func_ov000_02177f28(menu);
         break;
     case 7:
-        func_ov000_0217819c(arg0);
+        func_ov000_0217819c(menu);
         break;
     case 8:
-        func_ov000_021785fc(arg0);
+        func_ov000_021785fc(menu);
         break;
     case 13:
-        if (arg1 != 0) {
-            func_ov000_02176498((void*)arg1, func_ov000_0217542c(arg0));
+        if (arg != 0) {
+            func_ov000_02176498((void*)arg, func_ov000_0217542c(menu));
         }
         break;
     case 14:
-        func_ov000_021788d8(arg0, arg1, arg4);
+        func_ov000_021788d8(menu, arg, arg4);
         break;
     case 15:
-        func_ov000_02178cbc(arg0, arg3, arg4);
+        func_ov000_02178cbc(menu, arg3, arg4);
         break;
     case 16:
-        func_ov000_02179128(arg0, arg3, arg4);
+        func_ov000_02179128(menu, arg3, arg4);
         break;
     case 17:
-        func_ov000_021795e0(arg0, arg3, arg4);
+        func_ov000_021795e0(menu, arg3, arg4);
         break;
     case 18:
     case 19:
     case 20:
-        func_ov000_02179a14(arg0, arg1, arg3);
+        func_ov000_02179a14(menu, arg, arg3);
         break;
     case 21:
-        func_ov000_02179c6c(arg0, arg1);
+        func_ov000_02179c6c(menu, arg);
         break;
     case 23:
-        func_ov000_0217a0a4(arg0, arg1);
+        func_ov000_0217a0a4(menu, arg);
         break;
     case 25:
-        func_ov000_0217a628(arg0, arg1, arg4);
+        func_ov000_0217a628(menu, arg, arg4);
         break;
     }
-    arg0->unknown_118_ = var1;
+    menu->mode = var1;
 }

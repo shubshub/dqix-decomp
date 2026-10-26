@@ -1,10 +1,13 @@
 #include <globaldefs.h>
 
-// USA: func_02039dcc
-extern "C" ARM unsigned int func_02039dcc(unsigned char* arg0) {
+// The GameObject's flag byte (+0x1ce, jpn +0x1c2). Bit 8's setter is not identified.
 #if defined(jpn)
-    return arg0[0x1c2] & 0x8;
+enum { kActorFlagsOffset = 0x1c2 };
 #else
-    return arg0[0x1ce] & 0x8;
+enum { kActorFlagsOffset = 0x1ce };
 #endif
+
+// USA: func_02039dcc
+extern "C" ARM unsigned int func_02039dcc(unsigned char* actor) {
+    return actor[kActorFlagsOffset] & 0x8;
 }

@@ -7,24 +7,24 @@
 
 extern "C" void* Zone3D_GetInstance(void);
 struct Entry_02028bd0;
-struct Entry_02028bd0* ZoneRecords_GetInstance(void);
+extern "C" struct Entry_02028bd0* ZoneRecords_GetInstance(void);
 struct Element0x318_02028bac {
 	unsigned short kind;
 	unsigned short flags;
 	unsigned char unk4[0xc];
 	SafeAllocator* allocator;
-	unsigned char unk14[0x2f8];
+	unsigned char unknown_14_[0x2f8];
 	unsigned char buffers[0xc];
 };
-struct Element0x318_02028bac* ZoneRecords_GetAt(struct Element0x318_02028bac* base, int index);
+extern "C" struct Element0x318_02028bac* ZoneRecords_GetAt(struct Element0x318_02028bac* base, int index);
 struct BigRecord020289c4;
-void ZoneRecord_Reset(struct BigRecord020289c4* obj);
-void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void Clear12Bytes020a8e88(void* p);
-void ClearCombatantSlot_0200fd48(GameState* battleStruct, int id);
+extern "C" void ZoneRecord_Reset(struct BigRecord020289c4* obj);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void func_020a8e88(void* p);
+extern "C" void func_0200fd48(GameState* battleStruct, int id);
 struct Obj020a8e9c;
-void DeserializeElementBuffers020a8e9c(Obj020a8e9c*, SafeAllocator*, void*, unsigned int);
+extern "C" void func_020a8e9c(Obj020a8e9c*, SafeAllocator*, void*, unsigned int);
 
 extern AllocatorUnion g_mainAllocator;
 extern const char data_ov017_021d7638[];
@@ -45,8 +45,8 @@ extern "C" ARM void func_ov017_0219fda0(void) {
 			AllocatorUnion_Free(&g_mainAllocator, signedAlloc);
 		}
 	}
-	for (int var5 = 0x70; var5 <= 0x9f; var5++) {
-		func_0200fd48(var0, var5);
+	for (int id = 0x70; id <= 0x9f; id++) {
+		func_0200fd48(battle, id);
 	}
 	struct Element0x318_02028bac* elem0 = ZoneRecords_GetAt((struct Element0x318_02028bac*)entryTable, 0);
 	unsigned int size = 0xa000;
@@ -55,11 +55,11 @@ extern "C" ARM void func_ov017_0219fda0(void) {
 	void* buffer = AllocatorUnion_AllocateRounded(&g_mainAllocator, size);
 	elem0->allocator->CreateTypeA(buffer, size);
 	if (elem0 == NULL) return;
-	Clear12Bytes020a8e88(elem0->buffers);
+	func_020a8e88(elem0->buffers);
 	BackgroundLoader::AddLockGlobal();
 	unsigned int fileSize;
 	if (LoadFileIntoMemory(data_ov017_021d7638, g_fileLoadBuffer, &fileSize) != NULL) {
-		DeserializeElementBuffers020a8e9c((Obj020a8e9c*)elem0->buffers, elem0->allocator, g_fileLoadBuffer, fileSize);
+		func_020a8e9c((Obj020a8e9c*)elem0->buffers, elem0->allocator, g_fileLoadBuffer, fileSize);
 	}
 	BackgroundLoader::RemoveLockGlobal();
 }

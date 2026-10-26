@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
-struct Struct_ov017_021a3ef0_7 { unsigned char unknown_0_; unsigned char unknown_1_; };
+struct S021befcc { unsigned char f0; unsigned char f1; };
 
-extern "C" void func_ov017_021bef84(Struct_ov017_021a3ef0_7*);
+extern "C" void func_ov017_021bef84(S021befcc*);
 
 // USA: func_ov017_021befcc
-extern "C" ARM void func_ov017_021befcc(Struct_ov017_021a3ef0_7* arg0) {
-	func_ov017_021bef84(arg0);
-	arg0->unknown_1_ = 1;
+extern "C" ARM void func_ov017_021befcc(S021befcc* obj) {
+	func_ov017_021bef84(obj);
+	obj->f1 = 1;
 }

@@ -3,17 +3,17 @@
 extern "C" void func_0200efb8();
 
 // USA: func_0200ef44
-extern "C" ARM void func_0200ef44(unsigned char* arg0, unsigned int arg1,
-    unsigned int arg2, void (*arg3)(void*))
+extern "C" ARM void func_0200ef44(unsigned char* array, unsigned int count,
+    unsigned int stride, void (*arg3)(void*))
 {
     if (arg3) {
-        unsigned char* var0 = arg0 + arg1 * arg2;
+        unsigned char* end = array + count * stride;
         try {
-            if (arg1) {
+            if (count) {
                 do {
-                    var0 -= arg2;
-                    arg3(var0);
-                } while (--arg1);
+                    end -= stride;
+                    arg3(end);
+                } while (--count);
             }
         } catch (...) {
             func_0200efb8();

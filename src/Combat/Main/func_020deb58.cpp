@@ -1,48 +1,48 @@
 #include <globaldefs.h>
 
-extern "C" void func_020de3f4(int arg0, int arg1, int arg2, int arg3, char* arg4, char* arg5, char* arg6, void** arg7);
+extern "C" void func_020de3f4(int a, int b, int c, int d, char* outA, char* outB, char* arg6, void** arg7);
 
 typedef int (*Type_020deb58)(void*, int, int, int);
 
 struct Struct_020deb58 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned int unknown_4_;
-    unsigned int unknown_8_;
-    void* unknown_c_;
+    unsigned short count;
+    unsigned short pad2;
+    unsigned int pad4;
+    unsigned int pad8;
+    void* base;
 };
 
 struct Struct_020deb58_2 {
-    unsigned int unknown_0_;
-    unsigned int unknown_4_;
-    unsigned int unknown_8_;
-    unsigned int unknown_c_;
+    unsigned int pad0;
+    unsigned int pad4;
+    unsigned int pad8;
+    unsigned int fieldC;
 };
 
 // USA: func_020deb58
-extern "C" ARM int func_020deb58(void* arg0, int arg1, int arg2, int arg3, signed char arg4) {
-    char var0 = -1;
-    char var1 = -1;
+extern "C" ARM int func_020deb58(void* obj, int arg1, int arg2, int arg3, signed char arg4) {
+    char outA = -1;
+    char outB = -1;
     char var2 = -1;
-    void* var3 = 0;
-    func_020de3f4(arg1, arg2, arg3, arg4, &var0, &var1, &var2, &var3);
-    if (var3 == 0) {
+    void* fn = 0;
+    func_020de3f4(arg1, arg2, arg3, arg4, &outA, &outB, &var2, &fn);
+    if (fn == 0) {
         return 0;
     }
-    Struct_020deb58* var4 = (Struct_020deb58*)arg0;
-    int var5 = var4->unknown_0_;
-    short var6 = 0;
-    char* var7 = (char*)var4->unknown_c_;
-    int var8 = var6;
-    for (; var8 < var5; var8++, var7 += 0x20) {
-        Struct_020deb58_2* var9 = (Struct_020deb58_2*)var7;
-        int var10 = (int)((var9->unknown_c_ << 9) >> 21);
-        var10 = (unsigned short)var10;
-        if (var10 != 0) {
-            if (((Type_020deb58)var3)(var7, var0, var1, var2) != 0) {
-                var6 = var6 + 1;
+    Struct_020deb58* list = (Struct_020deb58*)obj;
+    int count = list->count;
+    short total = 0;
+    char* elem = (char*)list->base;
+    int i = total;
+    for (; i < count; i++, elem += 0x20) {
+        Struct_020deb58_2* e = (Struct_020deb58_2*)elem;
+        int bits = (int)((e->fieldC << 9) >> 21);
+        bits = (unsigned short)bits;
+        if (bits != 0) {
+            if (((Type_020deb58)fn)(elem, outA, outB, var2) != 0) {
+                total = total + 1;
             }
         }
     }
-    return var6;
+    return total;
 }

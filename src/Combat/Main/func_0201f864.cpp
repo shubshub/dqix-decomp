@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8 { int unknown_0_; union { int unknown_0_; float unknown1_0_; } unknown_4_; };
-struct Struct_0201c3a4;
+struct Variant02030b0c { int tag; union { int i; float f; } u; };
+struct Struct02030b7c;
 
 // USA: func_0201f864
-extern "C" ARM int func_0201f864(Struct_0201c1c8* arg0) {
-    void* var0;
-    ((Script::Parameter*)arg0)->ToInt();
-    var0 = (void*)((Script::Parameter*)((Struct_0201c3a4*)(arg0 + 1)))->ToString();
-    ((Script::Parameter*)(arg0 + 2))->ToInt();
-    return var0 != NULL ? 1 : 0;
+extern "C" ARM int func_0201f864(Variant02030b0c* args) {
+    void* p;
+    ((Script::Parameter*)args)->ToInt();
+    p = (void*)((Script::Parameter*)((Struct02030b7c*)(args + 1)))->ToString();
+    ((Script::Parameter*)(args + 2))->ToInt();
+    return p != NULL ? 1 : 0;
 }

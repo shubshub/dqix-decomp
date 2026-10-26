@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
 // USA: func_020e29b8
-extern "C" ARM void func_020e29b8(int arg0, int arg1, int arg2, int arg3) {
-    volatile unsigned short* var0 = (volatile unsigned short*)0x4001042;
-    var0[0] = ((arg0 << 8) & 0xff00) | (arg2 & 0xff);
-    var0[2] = ((arg1 << 8) & 0xff00) | (arg3 & 0xff);
+extern "C" ARM void func_020e29b8(int left, int top, int right, int bottom) {
+    volatile unsigned short* reg = (volatile unsigned short*)0x4001042;
+    reg[0] = ((left << 8) & 0xff00) | (right & 0xff);
+    reg[2] = ((top << 8) & 0xff00) | (bottom & 0xff);
 }

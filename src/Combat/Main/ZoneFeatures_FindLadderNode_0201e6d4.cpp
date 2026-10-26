@@ -2,7 +2,7 @@
 #include "World/ZoneFeatures.h"
 
 // Main, originally FindNodeKind9ById_0201e6d4 (USA 0x0201e6d4, EUR 0x0201e6e4, JPN 0x0201e460)
-ARM ZoneFeatures::Opcode6aEntry* ZoneFeatures_FindLadderNode(ZoneFeatures* owner, int id) {
+extern "C" ARM ZoneFeatures::Opcode6aEntry* ZoneFeatures_FindLadderNode(ZoneFeatures* owner, int id) {
     ZoneFeatures::Opcode6aEntry* node;
     if (id < 0) {
         return 0;

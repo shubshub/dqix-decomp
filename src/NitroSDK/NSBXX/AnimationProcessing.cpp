@@ -105,6 +105,7 @@ bool ProcessJointAnimationsOnBoneMatrix(BoneMatrixRenderData* bone, AnimationDat
         return true;
     }
 
+    // Multiple animations to deal with
     MIi_CpuClearFast(0, bone, sizeof(BoneMatrixRenderData));
     bone->flags_ = 0xffffffff;
 

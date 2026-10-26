@@ -1,76 +1,76 @@
 #include <globaldefs.h>
 
 #if defined(jpn)
-enum { Enum_ov006_02159c64_20 = 0xc, Enum_ov006_02159c64_332 = 0x140 };
+enum { kEntries = 0xc, Enum_ov006_02159c64_332 = 0x140 };
 #else
-enum { Enum_ov006_02159c64_20 = 0x14, Enum_ov006_02159c64_332 = 0x14c };
+enum { kEntries = 0x14, Enum_ov006_02159c64_332 = 0x14c };
 #endif
 
 struct Struct_ov006_02158cfc {
-    char unknown_0_[0x10];
+    char pad0[0x10];
     unsigned int unknown_10_0_:22;
-    unsigned int unknown_12_6_:1;
+    unsigned int enabled:1;
     unsigned int unknown_12_7_:9;
     char unknown_14_[8];
-    Struct_ov006_02158cfc* unknown_1c_;
+    Struct_ov006_02158cfc* next;
 };
-struct Struct_02071ffc_4 { Struct_ov006_02158cfc* unknown_0_; };
+struct Struct_02071ffc_4 { Struct_ov006_02158cfc* head; };
 struct Struct_ov006_02158cfc_2 {
-    char unknown_0_[Enum_ov006_02159c64_20];
-    void* unknown_14_;
-    char unknown_18_[0x14];
-    Struct_ov006_02158cfc* unknown_2c_;
+    char pad0[kEntries];
+    void* entries;
+    char pad18[0x14];
+    Struct_ov006_02158cfc* head;
     Struct_ov006_02158cfc* unknown_30_;
-    char unknown_34_[Enum_ov006_02159c64_332 - Enum_ov006_02159c64_20 - 0x20];
+    char unknown_34_[Enum_ov006_02159c64_332 - kEntries - 0x20];
     Struct_02071ffc_4 unknown_14c_;
     char unknown_150_[0x35e - Enum_ov006_02159c64_332 - 4];
     short unknown_35e_;
     char unknown_360_[0xa];
-    short unknown_36a_;
+    short selection;
     char unknown_36c_[0x18];
     signed char unknown_384_;
-    signed char unknown_385_;
+    signed char category;
     unsigned char unknown_386_;
     char unknown_387_;
-    unsigned char unknown_388_;
+    unsigned char page;
 };
-Node02158cfc* FindNodeOrMark_02158d8c(void*, short);
-void FilterAndSortEntries02071ffc(Container02071ffc*, int, int, int, short, short*);
-void ComputeField_02158cac_02158cac(void*);
+extern "C" Struct_ov006_02158cfc* func_ov006_02158d8c(void*, short);
+extern "C" void func_02071ffc(Struct_02071ffc_4*, int, int, int, short, short*);
+extern "C" void func_ov006_02158cac(void*);
 struct SePlayer;
 extern SePlayer g_sePlayer __attribute__((aligned(4)));
-void SePlayer_Play(SePlayer*, int, int);
-void Checkpoint02158cfc(Cont02158cfc*, Node02158cfc*);
-void ClearSublistEntriesFlag4_020804fc(void*, int);
-extern "C" void func_ov006_0215f7e8(Cont02158cfc*);
-extern "C" void func_ov006_0215fcf0(Cont02158cfc*);
+extern "C" void SePlayer_Play(SePlayer*, int, int);
+extern "C" void func_ov006_02158cfc(Struct_ov006_02158cfc_2*, Struct_ov006_02158cfc*);
+extern "C" void func_020804fc(void*, int);
+extern "C" void func_ov006_0215f7e8(Struct_ov006_02158cfc_2*);
+extern "C" void func_ov006_0215fcf0(Struct_ov006_02158cfc_2*);
 
 // USA: func_ov006_02159c64
-extern "C" ARM void func_ov006_02159c64(Struct_ov006_02158cfc_2* arg0) {
-    Struct_ov006_02158cfc* var0 = func_ov006_02158d8c(arg0, arg0->unknown_36a_ - 0x29);
-    if (!var0) return;
-    if (!var0->unknown_12_6_) {
-        arg0->unknown_36a_ = -1;
-        arg0->unknown_35e_ = -1;
-        var0 = 0;
+extern "C" ARM void func_ov006_02159c64(Struct_ov006_02158cfc_2* self) {
+    Struct_ov006_02158cfc* selected = func_ov006_02158d8c(self, self->selection - 0x29);
+    if (!selected) return;
+    if (!selected->enabled) {
+        self->selection = -1;
+        self->unknown_35e_ = -1;
+        selected = 0;
     }
-    self->reverse = !self->reverse;
+    self->unknown_386_ = !self->unknown_386_;
     short count = 0;
-    FilterAndSortEntries02071ffc(&self->filtered, self->filter, self->category, self->reverse, 16, &count);
-    self->checkpoint = self->head = self->filtered.head;
-    if (!selected) selected = self->checkpoint;
-    ComputeField_02158cac_02158cac(self);
+    func_02071ffc(&self->unknown_14c_, self->unknown_384_, self->category, self->unknown_386_, 16, &count);
+    self->unknown_30_ = self->head = self->unknown_14c_.head;
+    if (!selected) selected = self->unknown_30_;
+    func_ov006_02158cac(self);
     SePlayer_Play(&g_sePlayer, 1, 0);
     short index = 0;
-    for (Node02158cfc* node = self->checkpoint; node; node = node->next) {
+    for (Struct_ov006_02158cfc* node = self->unknown_30_; node; node = node->next) {
         if (node == selected) break;
         ++index;
     }
-    short var4 = var2 % 16;
-    arg0->unknown_388_ = var2 / 16;
-    func_ov006_02158cfc(arg0, var0);
-    arg0->unknown_36a_ = var4 + 0x29;
-    func_020804fc(arg0->unknown_14_, 9);
-    func_ov006_0215f7e8(arg0);
-    func_ov006_0215fcf0(arg0);
+    short row = index % 16;
+    self->page = index / 16;
+    func_ov006_02158cfc(self, selected);
+    self->selection = row + 0x29;
+    func_020804fc(self->entries, 9);
+    func_ov006_0215f7e8(self);
+    func_ov006_0215fcf0(self);
 }

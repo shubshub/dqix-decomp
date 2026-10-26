@@ -3,22 +3,22 @@
 #include "std_library_functions.h"
 
 // USA: func_0206f170
-extern "C" ARM int func_0206f170(Struct_0206ef48* arg0, Struct_0206efd8* arg1,
-                                      unsigned char* arg2, Type_0206f110 arg3) {
+extern "C" ARM int func_0206f170(Struct_0206ef48* table, Struct_0206efd8* source,
+                                      unsigned char* arg2, Type_0206f110 relocate) {
     int var0;
     *arg2 = 0;
-    if (arg1 == NULL) return 0;
+    if (source == NULL) return 0;
 
-    memcpy(&arg0->unknown_0_.unknown_0_, &arg1->unknown_0_, sizeof(Struct_0206f01c));
-    arg0->unknown_0_.unknown_4_ = reinterpret_cast<Struct_0206ef40*>(arg1 + 1);
-    var0 = func_0206f0f8(&arg0->unknown_0_.unknown_0_);
-    arg0->unknown_8_ = reinterpret_cast<char*>(arg1) + (var0 + sizeof(Struct_0206f01c));
-    if (arg0->unknown_0_.unknown_0_.unknown_3_7_) {
+    memcpy(&table->table.header, &source->header, sizeof(Struct_0206f01c));
+    table->table.arr = reinterpret_cast<MonsterDefinition*>(source + 1);
+    var0 = func_0206f0f8(&table->table.header);
+    table->strings = reinterpret_cast<char*>(source) + (var0 + sizeof(Struct_0206f01c));
+    if (table->table.header.relocated) {
         *arg2 = 1;
         return 1;
     }
-    func_0206f110(arg0, arg3);
-    arg0->unknown_0_.unknown_0_.unknown_3_7_ = 1;
-    arg1->unknown_0_.unknown_3_7_ = 1;
+    func_0206f110(table, relocate);
+    table->table.header.relocated = 1;
+    source->header.relocated = 1;
     return 1;
 }

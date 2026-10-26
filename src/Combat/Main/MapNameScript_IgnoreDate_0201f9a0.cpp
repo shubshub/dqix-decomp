@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
 // Main, originally ReturnTrue0201f9a0 (USA 0x0201f9a0, EUR 0x0201f9b0; JPN not identified)
-ARM int MapNameScript_IgnoreDate(void) {
+extern "C" ARM int MapNameScript_IgnoreDate(void) {
     return 1;
 }

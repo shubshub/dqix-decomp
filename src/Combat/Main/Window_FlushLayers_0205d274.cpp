@@ -19,7 +19,7 @@ struct Cont0205d274 {
 };
 
 // Main, originally CallFunc0204b04cOverList0x98 (USA 0x0205d274, EUR 0x0205d284, JPN 0x0205e5a4)
-ARM void Window_FlushLayers(Cont0205d274* window) {
+extern "C" ARM void Window_FlushLayers(Cont0205d274* window) {
     unsigned char i;
     if (window->layers == NULL) return;
     for (i = 0; i < window->layerCount; i++) {

@@ -4,58 +4,58 @@ extern "C" void func_020474a8(void*, int, int, char*);
 #endif
 #include "GameState/GameState.h"
 
-void* MessageSystem_GetInstance();
+extern "C" void* MessageSystem_GetInstance();
 extern "C" void func_02046380(void* global);
 struct StoreStruct;
-void StoreInArray0x8b0_020465c0(struct StoreStruct* base, int index, int value);
-void SetByteInRange_020465f0(unsigned char* base, int index, unsigned char value);
+extern "C" void func_020465c0(struct StoreStruct* base, int index, int value);
+extern "C" void func_020465f0(unsigned char* base, int index, unsigned char value);
 struct Obj02046574;
-void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* name);
+extern "C" void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* name);
 struct Container020e0310;
-int KeyTable_Get(struct Container020e0310* container, int key);
+extern "C" int KeyTable_Get(struct Container020e0310* container, int key);
 extern "C" void MessageSystem_FormatText(void* global, int mode, int fmt, char* dst, int size, int a5, int a6);
-int Text_Append(char* dst, const char* src);
+extern "C" int Text_Append(char* dst, const char* src);
 
-struct Struct_ov003_0216abd8 {
-    char unknown_0_[0xf68];
-    int unknown_f68_;
+struct PartyData0216abd8 {
+    char pad0[0xf68];
+    int amount;
 };
 
 struct Struct_ov003_0216abd8_2 {
-    char unknown_0_[0x600];
-    char unknown_600_[0x100];
+    char pad0[0x600];
+    char text[0x100];
 };
 
 struct Struct_ov003_0216abd8_3 {
-    char unknown_0_[0x64];
-    char unknown_64_[0x18];
-    struct Struct_ov003_0216abd8_2* unknown_7c_;
+    char pad0[0x64];
+    char messages[0x18];
+    struct Struct_ov003_0216abd8_2* buf;
 };
 
 // USA: func_ov003_0216abd8
-extern "C" ARM void func_ov003_0216abd8(struct Struct_ov003_0216abd8_3* arg0, char* arg1) {
+extern "C" ARM void func_ov003_0216abd8(struct Struct_ov003_0216abd8_3* self, char* out) {
 #if defined(jpn)
-    const volatile struct Struct_ov003_0216abd8_3* var0 = arg0;
+    const volatile struct Struct_ov003_0216abd8_3* self_v = self;
 #else
-    struct Struct_ov003_0216abd8_3* var0 = arg0;
+    struct Struct_ov003_0216abd8_3* self_v = self;
 #endif
-    if (arg1 == NULL) {
+    if (out == NULL) {
         return;
     }
     GameState* gameState = GameState::GetInstance();
     void* global = MessageSystem_GetInstance();
     struct PartyData0216abd8* party = (struct PartyData0216abd8*)GameState_GetParty(gameState);
-    struct TextBuf0216abd8* buf = self_v->buf;
+    struct Struct_ov003_0216abd8_2* buf = self_v->buf;
     func_02046380(global);
     if (party->amount != 0) {
-        StoreInArray0x8b0_020465c0((struct StoreStruct*)global, 0, party->amount);
-        SetByteInRange_020465f0((unsigned char*)global, 0, 0);
+        func_020465c0((struct StoreStruct*)global, 0, party->amount);
+        func_020465f0((unsigned char*)global, 0, 0);
         int fmt = KeyTable_Get((struct Container020e0310*)self_v->messages, 0x443);
 #if defined(jpn)
-        func_020474a8(var2, 0xc, var5, var4->unknown_600_);
+        func_020474a8(global, 0xc, fmt, buf->text);
 #else
 #if defined(jpn)
-        func_020474a8(var2, 0xc, fmt, var4->text);
+        func_020474a8(global, 0xc, fmt, buf->text);
 #else
         MessageSystem_FormatText(global, 0xc, fmt, buf->text, 0xe3, 0, 1);
 #endif
@@ -66,10 +66,10 @@ extern "C" ARM void func_ov003_0216abd8(struct Struct_ov003_0216abd8_3* arg0, ch
         MessageSystem_SetStringArgument((struct Obj02046574*)global, 0, name);
         int fmt = KeyTable_Get((struct Container020e0310*)self_v->messages, 0x442);
 #if defined(jpn)
-        func_020474a8(var2, 0xc, var7, var4->unknown_600_);
+        func_020474a8(global, 0xc, fmt, buf->text);
 #else
 #if defined(jpn)
-        func_020474a8(var2, 0xc, fmt, var4->text);
+        func_020474a8(global, 0xc, fmt, buf->text);
 #else
         MessageSystem_FormatText(global, 0xc, fmt, buf->text, 0xe3, 0, 1);
 #endif

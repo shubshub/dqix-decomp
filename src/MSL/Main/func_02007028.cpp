@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-extern "C" double func_02008f3c(double arg0);
+extern "C" double func_02008f3c(double x);
 extern "C" int func_02007a10(double*, double*, int, int, int, const int*);
 
 extern const int data_020e6aec[];
@@ -18,101 +18,101 @@ static const double pio2_3 = 2.02226624871116645580e-21;
 static const double pio2_3t = 8.47842766036889956997e-32;
 
 // USA: func_02007028
-extern "C" ARM int func_02007028(double arg0, double* arg1) {
-    double var0, var1, var2, var3, var4;
-    double var5[3];
-    int var6, var7, var8, var9, var10, var11, var12;
+extern "C" ARM int func_02007028(double x, double* y) {
+    double z, w, t, r, fn;
+    double tx[3];
+    int e0, i, j, var9, n, var11, var12;
 
-    var12 = ((int*)&arg0)[1];
+    var12 = ((int*)&x)[1];
     var11 = var12 & 0x7fffffff;
     if (var11 <= 0x3fe921fb) {
-        arg1[0] = arg0;
-        arg1[1] = 0;
+        y[0] = x;
+        y[1] = 0;
         return 0;
     }
     if (var11 < 0x4002d97c) {
         if (var12 > 0) {
-            var0 = arg0 - pio2_1;
+            z = x - pio2_1;
             if (var11 != 0x3ff921fb) {
-                arg1[0] = var0 - pio2_1t;
-                arg1[1] = (var0 - arg1[0]) - pio2_1t;
+                y[0] = z - pio2_1t;
+                y[1] = (z - y[0]) - pio2_1t;
             } else {
-                var0 -= pio2_2;
-                arg1[0] = var0 - pio2_2t;
-                arg1[1] = (var0 - arg1[0]) - pio2_2t;
+                z -= pio2_2;
+                y[0] = z - pio2_2t;
+                y[1] = (z - y[0]) - pio2_2t;
             }
             return 1;
         } else {
-            var0 = arg0 + pio2_1;
+            z = x + pio2_1;
             if (var11 != 0x3ff921fb) {
-                arg1[0] = var0 + pio2_1t;
-                arg1[1] = (var0 - arg1[0]) + pio2_1t;
+                y[0] = z + pio2_1t;
+                y[1] = (z - y[0]) + pio2_1t;
             } else {
-                var0 += pio2_2;
-                arg1[0] = var0 + pio2_2t;
-                arg1[1] = (var0 - arg1[0]) + pio2_2t;
+                z += pio2_2;
+                y[0] = z + pio2_2t;
+                y[1] = (z - y[0]) + pio2_2t;
             }
             return -1;
         }
     }
     if (var11 <= 0x413921fb) {
-        var2 = func_02008f3c(arg0);
-        var10 = (int)(var2 * invpio2 + half);
-        var4 = (double)var10;
-        var3 = var2 - var4 * pio2_1;
-        var1 = var4 * pio2_1t;
-        if (var10 < 32 && var11 != data_020e6aec[var10 - 1]) {
-            arg1[0] = var3 - var1;
+        t = func_02008f3c(x);
+        n = (int)(t * invpio2 + half);
+        fn = (double)n;
+        r = t - fn * pio2_1;
+        w = fn * pio2_1t;
+        if (n < 32 && var11 != data_020e6aec[n - 1]) {
+            y[0] = r - w;
         } else {
-            var8 = var11 >> 20;
-            arg1[0] = var3 - var1;
-            var7 = var8 - ((((int*)arg1)[1] >> 20) & 0x7ff);
-            if (var7 > 16) {
-                var2 = var3;
-                var1 = var4 * pio2_2;
-                var3 = var2 - var1;
-                var1 = var4 * pio2_2t - ((var2 - var3) - var1);
-                arg1[0] = var3 - var1;
-                var7 = var8 - ((((int*)arg1)[1] >> 20) & 0x7ff);
-                if (var7 > 49) {
-                    var2 = var3;
-                    var1 = var4 * pio2_3;
-                    var3 = var2 - var1;
-                    var1 = var4 * pio2_3t - ((var2 - var3) - var1);
-                    arg1[0] = var3 - var1;
+            j = var11 >> 20;
+            y[0] = r - w;
+            i = j - ((((int*)y)[1] >> 20) & 0x7ff);
+            if (i > 16) {
+                t = r;
+                w = fn * pio2_2;
+                r = t - w;
+                w = fn * pio2_2t - ((t - r) - w);
+                y[0] = r - w;
+                i = j - ((((int*)y)[1] >> 20) & 0x7ff);
+                if (i > 49) {
+                    t = r;
+                    w = fn * pio2_3;
+                    r = t - w;
+                    w = fn * pio2_3t - ((t - r) - w);
+                    y[0] = r - w;
                 }
             }
         }
-        arg1[1] = (var3 - arg1[0]) - var1;
+        y[1] = (r - y[0]) - w;
         if (var12 < 0) {
-            arg1[0] = -arg1[0];
-            arg1[1] = -arg1[1];
-            return -var10;
+            y[0] = -y[0];
+            y[1] = -y[1];
+            return -n;
         } else {
-            return var10;
+            return n;
         }
     }
     if (var11 >= 0x7ff00000) {
-        arg1[0] = arg1[1] = arg0 - arg0;
+        y[0] = y[1] = x - x;
         return 0;
     }
-    ((int*)&var0)[0] = ((int*)&arg0)[0];
-    var6 = (var11 >> 20) - 1046;
-    ((int*)&var0)[1] = var11 - (var6 << 20);
-    for (var7 = 0; var7 < 2; var7++) {
-        var5[var7] = (double)((int)(var0));
-        var0 = (var0 - var5[var7]) * two24;
+    ((int*)&z)[0] = ((int*)&x)[0];
+    e0 = (var11 >> 20) - 1046;
+    ((int*)&z)[1] = var11 - (e0 << 20);
+    for (i = 0; i < 2; i++) {
+        tx[i] = (double)((int)(z));
+        z = (z - tx[i]) * two24;
     }
-    var5[2] = var0;
+    tx[2] = z;
     var9 = 3;
-    while (var5[var9 - 1] == zero) {
+    while (tx[var9 - 1] == zero) {
         var9--;
     }
-    var10 = func_02007a10(var5, arg1, var6, var9, 2, data_020e6b6c);
+    n = func_02007a10(tx, y, e0, var9, 2, data_020e6b6c);
     if (var12 < 0) {
-        arg1[0] = -arg1[0];
-        arg1[1] = -arg1[1];
-        return -var10;
+        y[0] = -y[0];
+        y[1] = -y[1];
+        return -n;
     }
-    return var10;
+    return n;
 }

@@ -7,6 +7,6 @@ enum { Enum_02039dd8_462 = 0x1ce };
 #endif
 
 // USA: func_02039dd8
-extern "C" ARM void func_02039dd8(unsigned char* arg0) {
-    arg0[Enum_02039dd8_462] |= 0x10;
+extern "C" ARM void func_02039dd8(unsigned char* obj) {
+    obj[Enum_02039dd8_462] |= 0x10;
 }

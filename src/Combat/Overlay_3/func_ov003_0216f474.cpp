@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-char *MessageSystem_GetInstance(void);
+extern "C" char *MessageSystem_GetInstance(void);
 extern "C" char *Zone3D_GetInstance(void);
 extern "C" void func_ov003_0216fc58(void *self, int a, int b);
 extern "C" void func_ov003_0216ff90(void *self);
@@ -9,43 +9,43 @@ extern "C" void func_ov003_0216fe74(void *self, int a, int b, int c);
 extern "C" void func_ov003_02170960(void *self, int a, void *item);
 #if defined(jpn)
 struct Obj02046574;
-void MessageSystem_SetStringArgument(Obj02046574 *, int, char *);
+extern "C" void MessageSystem_SetStringArgument(Obj02046574 *, int, char *);
 extern "C" void func_ov003_021701e4(void *self, int a);
 #define REGION_NOTIFY(self, a, item) func_ov003_021701e4(self, a)
 #else
 #define REGION_NOTIFY(self, a, item) func_ov003_02170960(self, a, item)
 #endif
-extern "C" void func_ov003_02170898(void *arg0);
-extern "C" void func_ov003_02170688(void *arg0);
-extern "C" void func_02098630(void *arg0, void *arg1, int arg2, int arg3);
-extern "C" int func_020457e0(void *arg0);
+extern "C" void func_ov003_02170898(void *self);
+extern "C" void func_ov003_02170688(void *self);
+extern "C" void func_02098630(void *pool, void *item, int a, int b);
+extern "C" int func_020457e0(void *global);
 
-struct Obj_0216f414;
-struct Entry0216f474;
+struct Struct_ov003_0216efdc_2;
+struct Struct_ov003_0216f474;
 struct SePlayer;
-struct Pool02098970;
-struct Entry02098970;
-struct NibbleElem02098e70;
-struct NibbleElem02098eac;
-Entry0216f474 *FindEntryByShortId_0216f414(Obj_0216f414 *list, int id);
-void SePlayer_Play(SePlayer *obj, int a, int b);
-int ReleaseEntryIfInPool(Pool02098970 *pool, Entry02098970 *entry);
-void ResetFieldsB68AndB74_0216fb6c(char *pool);
-int CountNibble0xcEquals9(NibbleElem02098e70 *p);
-int CountNibble0xcEqualsA(NibbleElem02098eac *p);
+struct Struct_02098970;
+struct Struct_02098970_2;
+struct Struct_02098e70;
+struct Struct_02098eac;
+extern "C" Struct_ov003_0216f474 *func_ov003_0216f414(Struct_ov003_0216efdc_2 *list, int id);
+extern "C" void SePlayer_Play(SePlayer *obj, int a, int b);
+extern "C" int func_02098970(Struct_02098970 *pool, Struct_02098970_2 *entry);
+extern "C" void func_ov003_0216fb6c(char *pool);
+extern "C" int func_02098e70(Struct_02098e70 *p);
+extern "C" int func_02098eac(Struct_02098eac *p);
 
 extern int g_sePlayer;
 
 struct Struct_ov003_0216f474 {
-    unsigned char unknown_0_[0x16];
-    unsigned char unknown_16_;
+    unsigned char pad0[0x16];
+    unsigned char flags;
 };
 
-struct Struct_ov003_0216f474_2 {
+struct Global0216f474 {
 #if defined(jpn)
-    char unknown_0_[0x868];
+    char unk_0[0x868];
 #else
-    char unknown1_0_[0x998];
+    char unk_0[0x998];
 #endif
     int unknown_998_;
     char unknown_99c_[4];
@@ -53,99 +53,99 @@ struct Struct_ov003_0216f474_2 {
 };
 
 struct Struct_ov003_0216f474_3 {
-    char unknown_0_[0xc];
+    char unk_0[0xc];
     unsigned int unknown_c_0_ : 4;
-    unsigned int unknown_c_4_ : 4;
+    unsigned int kind_ : 4;
     unsigned int unknown_d_0_ : 22;
     unsigned int unknown_f_6_ : 1;
     unsigned int unknown_f_7_ : 1;
-    char unknown_10_[0xe8 - 0x10];
+    char unk_10[0xe8 - 0x10];
 };
 
 struct Struct_ov003_0216f474_4 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    signed char unknown_2_;
-    char unknown_3_;
-    char unknown_4_[2];
-    signed char unknown_6_;
+    unsigned char unk_0;
+    unsigned char unk_1;
+    signed char state_;
+    char unk_3;
+    char unk_4[2];
+    signed char unk_6;
     signed char unknown_7_;
-    signed char unknown_8_;
+    signed char unk_8;
     signed char unknown_9_;
-    signed char unknown_a_;
+    signed char unk_a;
     char unknown_b_;
-    short unknown_c_;
+    short unk_c;
     short unknown_e_;
-    char unknown_10_[0x20 - 0x10];
-    unsigned short unknown_20_;
-    char unknown_22_[0xd4 - 0x22];
+    char unk_10[0x20 - 0x10];
+    unsigned short unk_20;
+    char unk_22[0xd4 - 0x22];
     Struct_ov003_0216efdc_2 *unknown_d4_;
-    char unknown_d8_[0xf4 - 0xd8];
-    Struct_ov003_0216f474_3 *unknown_f4_[30];
+    char unk_d8[0xf4 - 0xd8];
+    Struct_ov003_0216f474_3 *items_[30];
     int unknown_16c_;
 };
 
 #if defined(jpn)
-enum { Enum_ov003_0216f474_2112 = 0x860 };
+enum { regionalOffset0 = 0x860 };
 #else
-enum { Enum_ov003_0216f474_2112 = 0x840 };
+enum { regionalOffset0 = 0x840 };
 #endif
 
 // USA: func_ov003_0216f474
-extern "C" ARM void func_ov003_0216f474(Menu0216f474 *self) {
+extern "C" ARM void func_ov003_0216f474(Struct_ov003_0216f474_4 *self) {
     char *base;
     Global0216f474 *global;
     global    = (Global0216f474 *) MessageSystem_GetInstance();
     base      = Zone3D_GetInstance();
     int state = self->state_;
     if (state == 0) {
-        if (self->unk_d4 != 0) {
-            Entry0216f474 *e = FindEntryByShortId_0216f414(self->unk_d4, 0x19);
+        if (self->unknown_d4_ != 0) {
+            Struct_ov003_0216f474 *e = func_ov003_0216f414(self->unknown_d4_, 0x19);
             if (e != 0) {
                 e->flags &= ~2;
             }
-            var3 = func_ov003_0216f414(arg0->unknown_d4_, 0x1a);
-            if (var3 != 0) {
-                var3->unknown_16_ |= 2;
+            e = func_ov003_0216f414(self->unknown_d4_, 0x1a);
+            if (e != 0) {
+                e->flags |= 2;
             }
         }
         SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
-        Item0216f474 *item = self->items_[(self->unk_0 - 1) * 8 + self->unk_6];
+        Struct_ov003_0216f474_3 *item = self->items_[(self->unk_0 - 1) * 8 + self->unk_6];
         if (item->kind_ == 9 || item->kind_ == 0xa) {
             func_ov003_0216fc58(self, 1, 0);
         } else {
-            func_ov003_0216fc58(arg0, 0, 0);
+            func_ov003_0216fc58(self, 0, 0);
         }
-        arg0->unknown_2_ = 1;
-    } else if (var2 == 1) {
-        Struct_ov003_0216f474_3 *var5 = arg0->unknown_f4_[(arg0->unknown_0_ - 1) * 8 + arg0->unknown_6_];
+        self->state_ = 1;
+    } else if (state == 1) {
+        Struct_ov003_0216f474_3 *item = self->items_[(self->unk_0 - 1) * 8 + self->unk_6];
         if (g_keyManager.TestKeysPressed(0x80) != 0) {
-            arg0->unknown_8_ = arg0->unknown_8_ + 1;
-            if (arg0->unknown_8_ > 2) {
-                arg0->unknown_8_ = 0;
+            self->unk_8 = self->unk_8 + 1;
+            if (self->unk_8 > 2) {
+                self->unk_8 = 0;
             }
-            arg0->unknown_9_ = -1;
+            self->unknown_9_ = -1;
         } else if (g_keyManager.TestKeysPressed(0x40) != 0) {
-            arg0->unknown_8_ = arg0->unknown_8_ - 1;
-            if (arg0->unknown_8_ < 0) {
-                arg0->unknown_8_ = 2;
+            self->unk_8 = self->unk_8 - 1;
+            if (self->unk_8 < 0) {
+                self->unk_8 = 2;
             }
-            arg0->unknown_9_ = -1;
+            self->unknown_9_ = -1;
         }
-        int var6 = -2;
-        if (arg0->unknown_e_ <= 0x18) {
-            if (arg0->unknown_e_ >= 0x16) {
-                var6 = arg0->unknown_e_ - 0x16;
+        int sel = -2;
+        if (self->unknown_e_ <= 0x18) {
+            if (self->unknown_e_ >= 0x16) {
+                sel = self->unknown_e_ - 0x16;
             }
         }
         if (g_keyManager.TestKeysPressed(2) != 0) {
-            arg0->unknown_7_ = -1;
-            func_ov003_0216ff90(arg0);
-            arg0->unknown_1_  = 2;
-            arg0->unknown_2_ = 0;
+            self->unknown_7_ = -1;
+            func_ov003_0216ff90(self);
+            self->unk_1  = 2;
+            self->state_ = 0;
         } else {
-            if (g_keyManager.TestKeysPressed(0x401) != 0 || var6 == arg0->unknown_9_) {
-                switch (arg0->unknown_8_) {
+            if (g_keyManager.TestKeysPressed(0x401) != 0 || sel == self->unknown_9_) {
+                switch (self->unk_8) {
                     case 0:
                         SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
                         func_ov003_0216ff90(self);
@@ -159,145 +159,145 @@ extern "C" ARM void func_ov003_0216f474(Menu0216f474 *self) {
                     case 2:
                         SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
                         func_ov003_0216ff90(self);
-                        self->unk_7  = -1;
+                        self->unknown_7_  = -1;
                         self->unk_1  = 2;
                         self->state_ = 0;
                         break;
                 }
             }
         }
-        if (arg0->unknown_c_ <= 0x18 && arg0->unknown_c_ >= 0x16) {
-            arg0->unknown_8_ = arg0->unknown_c_ - 0x16;
-            if (arg0->unknown_9_ != arg0->unknown_8_) {
-                arg0->unknown_9_ = arg0->unknown_8_;
+        if (self->unk_c <= 0x18 && self->unk_c >= 0x16) {
+            self->unk_8 = self->unk_c - 0x16;
+            if (self->unknown_9_ != self->unk_8) {
+                self->unknown_9_ = self->unk_8;
             }
         }
-        if (var5->unknown_c_4_ == 9 || var5->unknown_c_4_ == 0xa) {
-            func_ov003_0216fe74(arg0, 1, arg0->unknown_8_, arg0->unknown_9_);
+        if (item->kind_ == 9 || item->kind_ == 0xa) {
+            func_ov003_0216fe74(self, 1, self->unk_8, self->unknown_9_);
         } else {
-            func_ov003_0216fe74(arg0, 0, arg0->unknown_8_, arg0->unknown_9_);
+            func_ov003_0216fe74(self, 0, self->unk_8, self->unknown_9_);
         }
-    } else if (var2 == 2) {
-        Struct_ov003_0216f474_3 *var7 = arg0->unknown_f4_[(arg0->unknown_0_ - 1) * 8 + arg0->unknown_6_];
+    } else if (state == 2) {
+        Struct_ov003_0216f474_3 *item = self->items_[(self->unk_0 - 1) * 8 + self->unk_6];
 #if defined(jpn)
         MessageSystem_SetStringArgument((Obj02046574 *) global, 0, (char *) item);
 #endif
-        if (var7->unknown_c_4_ == 9 || var7->unknown_c_4_ == 0xa) {
-            REGION_NOTIFY(arg0, 0x25, var7);
-            var1->unknown_998_   = 1;
-            Struct_ov003_0216f474_3 var8 = *var7;
-            func_02098970((Struct_02098970 *) (var0 + Enum_ov003_0216f474_2112), (Struct_02098970_2 *) var7);
-            func_ov003_02170898(arg0);
-            func_ov003_02170688(arg0);
-            func_ov003_0216fb6c(var0 + Enum_ov003_0216f474_2112);
-            func_02098630(var0 + Enum_ov003_0216f474_2112, &var8, 0, 0);
-            func_ov003_0216fb6c(var0 + Enum_ov003_0216f474_2112);
-            func_ov003_02170898(arg0);
-            func_ov003_02170688(arg0);
-            arg0->unknown_16c_ = 1;
-            arg0->unknown_20_ |= 8;
-            arg0->unknown_2_ = 0x64;
+        if (item->kind_ == 9 || item->kind_ == 0xa) {
+            REGION_NOTIFY(self, 0x25, item);
+            global->unknown_998_   = 1;
+            Struct_ov003_0216f474_3 copy = *item;
+            func_02098970((Struct_02098970 *) (base + regionalOffset0), (Struct_02098970_2 *) item);
+            func_ov003_02170898(self);
+            func_ov003_02170688(self);
+            func_ov003_0216fb6c(base + regionalOffset0);
+            func_02098630(base + regionalOffset0, &copy, 0, 0);
+            func_ov003_0216fb6c(base + regionalOffset0);
+            func_ov003_02170898(self);
+            func_ov003_02170688(self);
+            self->unknown_16c_ = 1;
+            self->unk_20 |= 8;
+            self->state_ = 0x64;
         } else {
-            int var9 = func_02098e70((Struct_02098e70 *) (var0 + Enum_ov003_0216f474_2112));
-            int var10 = func_02098eac((Struct_02098eac *) (var0 + Enum_ov003_0216f474_2112));
+            int var9 = func_02098e70((Struct_02098e70 *) (base + regionalOffset0));
+            int var10 = func_02098eac((Struct_02098eac *) (base + regionalOffset0));
             if (var9 + var10 >= 6) {
-                REGION_NOTIFY(arg0, 0x21, var7);
-                var1->unknown_998_ = 1;
-                arg0->unknown_2_    = 0x64;
+                REGION_NOTIFY(self, 0x21, item);
+                global->unknown_998_ = 1;
+                self->state_    = 0x64;
             } else {
-                REGION_NOTIFY(arg0, 0x23, var7);
-                var1->unknown_998_ = 1;
+                REGION_NOTIFY(self, 0x23, item);
+                global->unknown_998_ = 1;
                 if (var10 > var9) {
-                    var7->unknown_c_4_ = 9;
+                    item->kind_ = 9;
                 } else {
-                    var7->unknown_c_4_ = 0xa;
+                    item->kind_ = 0xa;
                 }
-                var7->unknown_f_6_ = 1;
-                func_ov003_02170898(arg0);
-                func_ov003_02170688(arg0);
-                arg0->unknown_16c_ = 1;
-                arg0->unknown_20_ |= 8;
-                arg0->unknown_2_ = 0x64;
+                item->unknown_f_6_ = 1;
+                func_ov003_02170898(self);
+                func_ov003_02170688(self);
+                self->unknown_16c_ = 1;
+                self->unk_20 |= 8;
+                self->state_ = 0x64;
             }
         }
-    } else if (var2 == 3) {
+    } else if (state == 3) {
 #if defined(jpn)
         MessageSystem_SetStringArgument((Obj02046574 *) global, 0, (char *) self->items_[(self->unk_0 - 1) * 8 + self->unk_6]);
         func_ov003_021701e4(self, 0x26);
 #else
-        func_ov003_02170960(arg0, 0x26, arg0->unknown_f4_[(arg0->unknown_0_ - 1) * 8 + arg0->unknown_6_]);
+        func_ov003_02170960(self, 0x26, self->items_[(self->unk_0 - 1) * 8 + self->unk_6]);
 #endif
-        var1->unknown_998_ = 1;
-        arg0->unknown_2_    = 0x65;
-    } else if (var2 == 4) {
-        if (arg0->unknown_20_ & 2) {
-            arg0->unknown_2_ = 5;
+        global->unknown_998_ = 1;
+        self->state_    = 0x65;
+    } else if (state == 4) {
+        if (self->unk_20 & 2) {
+            self->state_ = 5;
         }
-    } else if (var2 == 5) {
-        Struct_ov003_0216f474_3 *var11 = arg0->unknown_f4_[(arg0->unknown_0_ - 1) * 8 + arg0->unknown_6_];
-        if (arg0->unknown_d4_ != 0) {
-            Struct_ov003_0216f474 *var12 = func_ov003_0216f414(arg0->unknown_d4_, 0x19);
-            if (var12 != 0) {
-                var12->unknown_16_ &= ~2;
+    } else if (state == 5) {
+        Struct_ov003_0216f474_3 *item = self->items_[(self->unk_0 - 1) * 8 + self->unk_6];
+        if (self->unknown_d4_ != 0) {
+            Struct_ov003_0216f474 *e = func_ov003_0216f414(self->unknown_d4_, 0x19);
+            if (e != 0) {
+                e->flags &= ~2;
             }
-            var12 = func_ov003_0216f414(arg0->unknown_d4_, 0x1a);
-            if (var12 != 0) {
-                var12->unknown_16_ &= ~2;
+            e = func_ov003_0216f414(self->unknown_d4_, 0x1a);
+            if (e != 0) {
+                e->flags &= ~2;
             }
-            var12 = func_ov003_0216f414(arg0->unknown_d4_, 0x1b);
-            if (var12 != 0) {
-                var12->unknown_16_ |= 2;
+            e = func_ov003_0216f414(self->unknown_d4_, 0x1b);
+            if (e != 0) {
+                e->flags |= 2;
             }
         }
-        if ((arg0->unknown_20_ & 0x10) == 0) {
-            if (arg0->unknown_a_ != 0) {
-                REGION_NOTIFY(arg0, 0x27, var11);
-                if (func_02098970((Struct_02098970 *) (var0 + Enum_ov003_0216f474_2112), (Struct_02098970_2 *) var11) != 0) {
-                    func_ov003_02170898(arg0);
-                    func_ov003_02170688(arg0);
+        if ((self->unk_20 & 0x10) == 0) {
+            if (self->unk_a != 0) {
+                REGION_NOTIFY(self, 0x27, item);
+                if (func_02098970((Struct_02098970 *) (base + regionalOffset0), (Struct_02098970_2 *) item) != 0) {
+                    func_ov003_02170898(self);
+                    func_ov003_02170688(self);
                 }
-                arg0->unknown_20_ |= 8;
-                arg0->unknown_2_ = 0x65;
+                self->unk_20 |= 8;
+                self->state_ = 0x65;
             } else {
-                REGION_NOTIFY(arg0, 0x28, var11);
-                arg0->unknown_2_ = 0x64;
+                REGION_NOTIFY(self, 0x28, item);
+                self->state_ = 0x64;
             }
         }
-    } else if (var2 == 0x64) {
-        if (var1->unknown_9a0_ == 0 && var1->unknown_998_ == 0) {
-            if (arg0->unknown_20_ & 8) {
-                arg0->unknown_7_ = -1;
-                arg0->unknown_20_ &= ~8;
-                arg0->unknown_1_  = 2;
-                arg0->unknown_2_ = 0;
+    } else if (state == 0x64) {
+        if (global->unknown_9a0_ == 0 && global->unknown_998_ == 0) {
+            if (self->unk_20 & 8) {
+                self->unknown_7_ = -1;
+                self->unk_20 &= ~8;
+                self->unk_1  = 2;
+                self->state_ = 0;
             } else {
-                arg0->unknown_7_  = -1;
-                arg0->unknown_1_  = 2;
-                arg0->unknown_2_ = 0;
+                self->unknown_7_  = -1;
+                self->unk_1  = 2;
+                self->state_ = 0;
             }
         }
-    } else if (var2 == 0x65) {
-        if (var1->unknown_9a0_ != 0 || var1->unknown_998_ != 0) {
+    } else if (state == 0x65) {
+        if (global->unknown_9a0_ != 0 || global->unknown_998_ != 0) {
             return;
         }
         {
-            Struct_ov003_0216f474_3 *var13 = arg0->unknown_f4_[(arg0->unknown_0_ - 1) * 8 + arg0->unknown_6_];
-            if (func_020457e0(var1) == 0) {
-                if (func_02098970((Struct_02098970 *) (var0 + Enum_ov003_0216f474_2112), (Struct_02098970_2 *) var13) != 0) {
-                    func_ov003_02170898(arg0);
-                    func_ov003_02170688(arg0);
+            Struct_ov003_0216f474_3 *item = self->items_[(self->unk_0 - 1) * 8 + self->unk_6];
+            if (func_020457e0(global) == 0) {
+                if (func_02098970((Struct_02098970 *) (base + regionalOffset0), (Struct_02098970_2 *) item) != 0) {
+                    func_ov003_02170898(self);
+                    func_ov003_02170688(self);
                 }
-                arg0->unknown_20_ |= 8;
+                self->unk_20 |= 8;
             }
-            if (arg0->unknown_20_ & 8) {
-                arg0->unknown_7_ = -1;
-                arg0->unknown_20_ &= ~8;
-                arg0->unknown_1_  = 2;
-                arg0->unknown_2_ = 0;
+            if (self->unk_20 & 8) {
+                self->unknown_7_ = -1;
+                self->unk_20 &= ~8;
+                self->unk_1  = 2;
+                self->state_ = 0;
             } else {
-                arg0->unknown_7_  = -1;
-                arg0->unknown_1_  = 2;
-                arg0->unknown_2_ = 0;
+                self->unknown_7_  = -1;
+                self->unk_1  = 2;
+                self->state_ = 0;
             }
         }
     }

@@ -1,53 +1,53 @@
 #include <globaldefs.h>
 
 struct Struct_ov017_021c8f3c_2 {
-	unsigned short unknown_0_;
-	unsigned short unknown_2_;
-	unsigned short unknown_4_;
-	unsigned short unknown_6_;
-	unsigned char unknown_8_;
-	unsigned char unknown_9_;
-	unsigned short unknown_a_;
-	unsigned short unknown_c_;
+	unsigned short a;
+	unsigned short b;
+	unsigned short c;
+	unsigned short d;
+	unsigned char e;
+	unsigned char f;
+	unsigned short g;
+	unsigned short h;
 };
-extern "C" void func_ov017_021c90b4(Struct_ov017_021c8f3c_2* arg0, Struct_ov017_021c8f3c_2* arg1);
+extern "C" void func_ov017_021c90b4(Struct_ov017_021c8f3c_2* dst, Struct_ov017_021c8f3c_2* src);
 
 struct Struct_ov017_021d451c {
-	unsigned char unknown_0_;
-	unsigned char unknown_1_;
-	unsigned short unknown_2_;
-	Struct_ov017_021c8f3c_2 unknown_4_;
-	unsigned char unknown_12_[0x1e - 0x12];
+	unsigned char flags;
+	unsigned char pad1;
+	unsigned short id;
+	Struct_ov017_021c8f3c_2 data;
+	unsigned char pad2[0x1e - 0x12];
 };
 
-extern "C" void func_ov017_021d46a4(Struct_ov017_021d451c* arg0, Struct_ov017_021d451c* arg1);
+extern "C" void func_ov017_021d46a4(Struct_ov017_021d451c* arr, Struct_ov017_021d451c* slot);
 
 // USA: func_ov017_021d451c
-extern "C" ARM void func_ov017_021d451c(Struct_ov017_021d451c* arg0, Struct_ov017_021c8f3c_2* arg1) {
-	Struct_ov017_021d451c* var0 = NULL;
+extern "C" ARM void func_ov017_021d451c(Struct_ov017_021d451c* arr, Struct_ov017_021c8f3c_2* rec) {
+	Struct_ov017_021d451c* found = NULL;
 	Struct_ov017_021d451c* var1 = NULL;
-	int var2;
-	for (var2 = 0; var2 < 0x30; var2++) {
-		if (arg1->unknown_0_ == arg0[var2].unknown_2_) {
-			var0 = &arg0[var2];
+	int i;
+	for (i = 0; i < 0x30; i++) {
+		if (rec->a == arr[i].id) {
+			found = &arr[i];
 			break;
 		}
-		if (var1 == NULL && arg0[var2].unknown_0_ == 0) {
-			var1 = &arg0[var2];
+		if (var1 == NULL && arr[i].flags == 0) {
+			var1 = &arr[i];
 		}
 	}
-	if (var0 != NULL) {
-		func_ov017_021c90b4(&var0->unknown_4_, arg1);
-		var0->unknown_2_ = arg1->unknown_0_;
-		var0->unknown_0_ |= 0x1;
-		func_ov017_021d46a4(arg0, var0);
+	if (found != NULL) {
+		func_ov017_021c90b4(&found->data, rec);
+		found->id = rec->a;
+		found->flags |= 0x1;
+		func_ov017_021d46a4(arr, found);
 		return;
 	}
 	if (var1 == NULL) {
 		return;
 	}
-	func_ov017_021c90b4(&var1->unknown_4_, arg1);
-	var1->unknown_2_ = arg1->unknown_0_;
-	var1->unknown_0_ |= 0x1;
-	func_ov017_021d46a4(arg0, var1);
+	func_ov017_021c90b4(&var1->data, rec);
+	var1->id = rec->a;
+	var1->flags |= 0x1;
+	func_ov017_021d46a4(arr, var1);
 }

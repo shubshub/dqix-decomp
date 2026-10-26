@@ -1,35 +1,35 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov000_0217f480(char* arg0);
+extern "C" void func_ov000_0217f480(char* self);
 
 struct Struct_ov000_02180394_2 {
-    char unknown_0_[0x4c];
-    int unknown_4c_;
+    char pad0[0x4c];
+    int combatantId;
 #if defined(jpn)
-    char unknown_50_[0xc7 - 0x50];
+    char pad1[0xc7 - 0x50];
 #else
-    char unknown1_50_[0x87 - 0x50];
+    char pad1[0x87 - 0x50];
 #endif
-    unsigned char unknown_87_;
-    char unknown_88_[0x448 - 0x88];
+    unsigned char active;
+    char pad2[0x448 - 0x88];
 };
 
 struct Struct_ov000_02180394 {
-    char unknown_0_[0x6c];
-    signed char unknown_6c_[4];
-    char unknown_70_[0x958 - 0x70];
+    char pad0[0x6c];
+    signed char order[4];
+    char pad1[0x958 - 0x70];
     struct Struct_ov000_02180394_2 unknown_958_[1];
 };
 
 // USA: func_ov000_02180394
-extern "C" ARM void func_ov000_02180394(struct Struct_ov000_02180394* arg0) {
-    for (int var0 = 0; var0 < 4; var0++) {
-        struct Struct_ov000_02180394_2* var1 = &arg0->unknown_958_[arg0->unknown_6c_[var0]];
+extern "C" ARM void func_ov000_02180394(struct Struct_ov000_02180394* battle) {
+    for (int i = 0; i < 4; i++) {
+        struct Struct_ov000_02180394_2* c = &battle->unknown_958_[battle->order[i]];
         int var2 = 0;
-        int var3 = var1->unknown_4c_;
-        if (var3 >= 0 && var3 <= 3) var2 = 1;
-        if (var2 && var1->unknown_87_) {
-            func_ov000_0217f480((char*)var1);
+        int id = c->combatantId;
+        if (id >= 0 && id <= 3) var2 = 1;
+        if (var2 && c->active) {
+            func_ov000_0217f480((char*)c);
         }
     }
 }

@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_0223c40c {
-    char unknown_0_[0x670];
-    int unknown_670_;
+    char padding[0x670];
+    int allocator;
     int unknown_674_[2];
 };
 struct Struct_ov031_0223bf2c;
@@ -15,11 +15,11 @@ typedef void (*Type_ov031_0223c40c)(int);
 
 // USA: func_ov031_0223c40c
 extern "C" ARM void func_ov031_0223c40c() {
-    int var0 = 0;
+    int i = 0;
     do {
-        func_ov031_0223b710(data_ov031_02290d38->unknown_674_[var0]);
-        var0++;
-    } while (var0 < 2);
-    ((Type_ov031_0223c40c)func_ov031_0223bf2c)(data_ov031_02290d38->unknown_670_);
+        func_ov031_0223b710(data_ov031_02290d38->unknown_674_[i]);
+        i++;
+    } while (i < 2);
+    ((Type_ov031_0223c40c)func_ov031_0223bf2c)(data_ov031_02290d38->allocator);
     func_ov031_0223cf70(&data_ov031_02290d38_dup);
 }

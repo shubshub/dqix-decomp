@@ -11,15 +11,16 @@ enum { Enum_ov003_0217ce3c_144 = 0x90 };
 enum { Enum_ov003_0217ce3c_24 = 0x18 };
 #endif
 
-struct Struct6_0217dc94;
-extern "C" void func_ov003_0217dc94(Struct6_0217dc94* obj);
-extern "C" int Window_Update(void* p, int val);
 
-struct Block10Words0217ce3c { unsigned int w[10]; };
-extern struct Block10Words0217ce3c data_ov003_0217fbc8;
-struct Pair0217ce3c { unsigned int a; unsigned int b; };
-extern struct Pair0217ce3c __ptmf_null;
-struct DispatchEntry0217ce3c { unsigned int fn; unsigned int locator; };
+struct Struct_ov003_0217ce3c;
+extern "C" void func_ov003_0217dc94(Struct_ov003_0217ce3c* arg0);
+extern "C" int Window_Update(void* arg0, int arg1);
+
+struct Struct_ov003_0217fbc8 { unsigned int unknown_0_[10]; };
+extern struct Struct_ov003_0217fbc8 data_ov003_0217fbc8;
+struct Struct_020e6d5c_19 { unsigned int unknown_0_; unsigned int unknown_4_; };
+extern struct Struct_020e6d5c_19 __ptmf_null;
+struct Struct_ov003_0217ce3c_2 { unsigned int unknown_0_; unsigned int unknown_4_; };
 
 struct Struct_ov003_0217ce3c_3 {
     char unknown_0_[4];
@@ -38,18 +39,18 @@ extern "C" ARM int func_ov003_0217ce3c(struct Struct_ov003_0217ce3c_3* arg0) {
     func_ov003_0217dc94((struct Struct_ov003_0217ce3c*)arg0);
     if (arg0->unknown_8_ & 1) return 1;
 
-    unsigned int scaleCount = bs->GetTickCount();
-    if (obj->field90 != 0) {
-        obj->field14 = Window_Update(obj->field90, scaleCount);
+    unsigned int var1 = var0->GetTickCount();
+    if (arg0->unknown_90_ != 0) {
+        arg0->unknown_14_ = Window_Update(arg0->unknown_90_, var1);
     }
 
-    struct Block10Words0217ce3c buf;
-    buf = data_ov003_0217fbc8;
-    struct Pair0217ce3c* pr = &__ptmf_null;
-    unsigned int tmp1 = pr->b;
-    unsigned int tmp0 = pr->a;
-    ((struct DispatchEntry0217ce3c*)&buf)[4].locator = tmp1;
-    ((struct DispatchEntry0217ce3c*)&buf)[4].fn = tmp0;
+    struct Struct_ov003_0217fbc8 var2;
+    var2 = data_ov003_0217fbc8;
+    struct Struct_020e6d5c_19* var3 = &__ptmf_null;
+    unsigned int var4 = var3->unknown_4_;
+    unsigned int var5 = var3->unknown_0_;
+    ((struct Struct_ov003_0217ce3c_2*)&var2)[4].unknown_4_ = var4;
+    ((struct Struct_ov003_0217ce3c_2*)&var2)[4].unknown_0_ = var5;
 
     signed char var6 = arg0->unknown_4_;
     struct Struct_ov003_0217ce3c_2* var7 = (struct Struct_ov003_0217ce3c_2*)&var2;

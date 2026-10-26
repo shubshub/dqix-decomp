@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 // USA: func_ov024_021da644
-extern "C" ARM unsigned short func_ov024_021da644(int arg0, int arg1, int arg2) {
-	int var0 = (arg0 >= 0 && arg0 <= 3);
-	return var0 ? (unsigned short)arg1 : (unsigned short)arg2;
+extern "C" ARM unsigned short func_ov024_021da644(int idx, int a, int b) {
+	int inRange = (idx >= 0 && idx <= 3);
+	return inRange ? (unsigned short)a : (unsigned short)b;
 }

@@ -3,24 +3,24 @@
 struct Elem0205a370 {
     char unk0[0x10];
     unsigned short unk10;
-    unsigned short unk12;
-    unsigned char unk14;
-    unsigned char flags15;
-    char unk16[2];
+    unsigned short unknown_12_;
+    unsigned char unknown_14_;
+    unsigned char unknown_15_;
+    char unknown_16_[2];
 };
 
 struct Container0205a3d0;
 
-extern struct Elem0205a370* SpriteEntryList_Find(struct Container0205a3d0*, int);
+extern "C" struct Elem0205a370* SpriteEntryList_Find(struct Container0205a3d0*, int);
 
 // Main, originally SetEntryFlag2ByKey0205a370 (USA 0x0205a370, EUR 0x0205a380, JPN 0x0205b6e8)
-ARM void SpriteEntryList_PlayAnimation(struct Container0205a3d0* c, int key) {
+extern "C" ARM void SpriteEntryList_PlayAnimation(struct Container0205a3d0* c, int key) {
     struct Elem0205a370* e = SpriteEntryList_Find(c, key);
     if (e == NULL) return;
-    if (e->flags15 & 1) {
+    if (e->unknown_15_ & 1) {
         e->unk10 = 0;
-        e->unk12 = 0;
+        e->unknown_12_ = 0;
     }
-    e->flags15 &= ~7;
-    e->flags15 |= 2;
+    e->unknown_15_ &= ~7;
+    e->unknown_15_ |= 2;
 }

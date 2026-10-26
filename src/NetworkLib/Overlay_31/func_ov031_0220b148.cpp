@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
 // USA: func_ov031_0220b148
-extern "C" ARM unsigned int func_ov031_0220b148(unsigned int arg0, unsigned int* arg1) {
-	unsigned int var0 = arg1[(arg0 + 13) & 0xf];
-	unsigned int var1 = arg1[arg0 ^ 8];
-	unsigned int var2 = arg1[(arg0 + 2) & 0xf];
-	unsigned int var3 = arg1[arg0];
-	unsigned int var4 = var3 ^ (var2 ^ (var0 ^ var1));
-	unsigned int var5 = (var4 << 1) | (var4 >> 31);
-	arg1[arg0] = var5;
-	return var5;
+extern "C" ARM unsigned int func_ov031_0220b148(unsigned int t, unsigned int* w) {
+	unsigned int A = w[(t + 13) & 0xf];
+	unsigned int B = w[t ^ 8];
+	unsigned int C = w[(t + 2) & 0xf];
+	unsigned int var3 = w[t];
+	unsigned int x = var3 ^ (C ^ (A ^ B));
+	unsigned int rot = (x << 1) | (x >> 31);
+	w[t] = rot;
+	return rot;
 }

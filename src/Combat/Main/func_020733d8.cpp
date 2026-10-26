@@ -7,93 +7,93 @@
 #if defined(jpn)
 #define data_020e88a8 data_020e89bc
 struct Struct_020733d8_2;
-enum { Enum_020733d8_24 = 0x14, Enum_020733d8_96 = 0x5c };
+enum { regionalOffsetList = 0x14, Enum_020733d8_96 = 0x5c };
 #else
-enum { Enum_020733d8_24 = 0x18, Enum_020733d8_96 = 0x60 };
+enum { regionalOffsetList = 0x18, Enum_020733d8_96 = 0x60 };
 #endif
 
 extern "C" void* Scenario_GetInstance(void);
-int Scenario_TestFlag(int unused, unsigned char* arr, int index);
-int FindCombatantWithNegativeField2_021a20c0(int unused, int mult, int limit);
+extern "C" int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+extern "C" int func_ov017_021a20c0(int unused, int mult, int limit);
 extern "C" void* __clear(void* dst, int count);
 extern "C" void* LinkSession_GetInstance(void);
 extern "C" void VectorizedInvertedMemcpy(const void* src, void* dst, unsigned int length);
-int LinkSession_IsActive(int* obj);
+extern "C" int LinkSession_IsActive(int* obj);
 
 struct SearchStruct;
-int LinkSession_IsSlotMember(struct SearchStruct* obj, int value);
-int GameObject_GetLineLeader(void* obj);
+extern "C" int LinkSession_IsSlotMember(struct SearchStruct* obj, int value);
+extern "C" int GameObject_GetLineLeader(void* obj);
 
-extern "C" void func_02034104(void* arg0, GameObject* arg1);
+extern "C" void func_02034104(void* out, GameObject* obj);
 
 struct ListEntry_02028430 { unsigned char id; unsigned char unk[0xF]; };
-struct List_02028430 { unsigned char unk0[2]; unsigned char count; unsigned char unk3; struct ListEntry_02028430* entries; };
-struct ListEntry_02028430* NodeGraph_GetNode(struct List_02028430* list, int index);
+struct List_02028430 { unsigned char unk0[2]; unsigned char count; unsigned char unknown_3_; struct ListEntry_02028430* entries; };
+extern "C" struct ListEntry_02028430* NodeGraph_GetNode(struct List_02028430* list, int index);
 
-struct Struct_020283c0 { unsigned char unknown_0_; unsigned char unknown_1_[0xF]; };
-struct Struct_0201a300_11 { unsigned char unknown_0_[2]; unsigned char unknown_2_; unsigned char unknown_3_; struct Struct_020283c0* unknown_4_; };
-extern "C" struct Struct_020283c0* func_020283c0(struct Struct_0201a300_11* arg0, int arg1);
+struct Struct_020283c0 { unsigned char id; unsigned char unk[0xF]; };
+struct Struct_0201a300_11 { unsigned char unk0[2]; unsigned char count; unsigned char unknown_3_; struct Struct_020283c0* entries; };
+extern "C" struct Struct_020283c0* func_020283c0(struct Struct_0201a300_11* list, int id);
 
 struct SearchCtx_02028460 { unsigned char pad0[2]; unsigned char count; unsigned char pad1[1]; void* nodes; };
 extern "C" int NodeGraph_FindClosestNode(struct SearchCtx_02028460* ctx, Vector3i* pos);
 
-struct Bounds02031118 { Vector3i min; Vector3i max; };
+struct Bounds02031118 { Vector3i unknown_0_; Vector3i max; };
 extern "C" int Bounds3D_ContainsPoint(Vector3i* p, struct Bounds02031118* b);
 extern "C" int Vector3fix_DistanceToSegment(Vector3i* a, Vector3i* b, Vector3i* p, Vector3i* out);
 
-extern "C" void func_02073d50(struct Struct_020733d8_2* arg0, int arg1, int arg2, int arg3);
-extern "C" int func_02073d58(int arg0, void* arg1, int arg2);
-extern "C" int func_02073dfc(unsigned char* arg0, Vector3i* arg1);
-extern "C" void* func_02073ec4(int arg0, void* arg1);
-extern "C" int func_02073fdc(void* arg0);
-extern "C" int func_ov017_021a2128(void* arg0, int arg1, int arg2, int arg3, Vector3i* arg4, int arg5, int arg6, int arg7);
+extern "C" void func_02073d50(struct Struct_020733d8_2* obj, int x, int y, int z);
+extern "C" int func_02073d58(int a, void* b, int c);
+extern "C" int func_02073dfc(unsigned char* self, Vector3i* pos);
+extern "C" void* func_02073ec4(int mask, void* list);
+extern "C" int func_02073fdc(void* p);
+extern "C" int func_ov017_021a2128(void* a, int b, int c, int d, Vector3i* e, int f, int g, int h);
 
 extern "C" int rand(void);
 
-struct Struct_020e88a8 { int unknown_0_[4]; };
+struct Struct_020e88a8 { int v[4]; };
 extern struct Struct_020e88a8 data_020e88a8;
 
-struct Struct_020733d8_3 { int unknown_0_[3]; };
+struct Struct_020733d8_3 { int v[3]; };
 
 struct Struct_020733d8_4 {
-    unsigned short unknown_0_0_ : 2;
-    unsigned short unknown_0_2_ : 14;
+    unsigned short mode : 2;
+    unsigned short rest : 14;
 };
 
 struct Struct_020733d8_5 {
-    unsigned char unknown_0_0_ : 6;
+    unsigned char pad : 6;
     unsigned char unknown_0_6_ : 1;
-    unsigned char unknown_0_7_ : 1;
+    unsigned char pad2 : 1;
 };
 
 struct Struct_020733d8_6 {
     unsigned int unknown_0_0_ : 21;
-    unsigned int unknown_2_5_ : 4;
+    unsigned int level : 4;
     unsigned int unknown_3_1_ : 7;
 };
 
-struct Struct_020733d8_7 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
-    short unknown_4_;
-    short unknown_6_;
-    short unknown_8_;
-    unsigned char unknown_a_[2];
-    struct Struct_020733d8_7** unknown_c_;
+struct ZoneNode020733d8 {
+    unsigned char id;
+    unsigned char mask;
+    unsigned char count;
+    unsigned char flags;
+    short x;
+    short y;
+    short z;
+    unsigned char pad[2];
+    struct ZoneNode020733d8** unknown_c_;
 };
 
-static inline int inline_020733d8(unsigned char* arg0) {
-    return ((struct Struct_0201a300_11*)(arg0 + Enum_020733d8_24))->unknown_2_;
+static inline int inline_020733d8(unsigned char* self) {
+    return ((struct Struct_0201a300_11*)(self + regionalOffsetList))->count;
 }
 
-#define SELF_MODE(self) (((struct Struct_020733d8_4*)((self) + 2))->unknown_0_0_)
+#define SELF_MODE(self) (((struct Struct_020733d8_4*)((self) + 2))->mode)
 #define SET_VEC3(v, x, y, z) func_02073d50((struct Struct_020733d8_2*)(v), x, y, z)
 
 // USA: func_020733d8
-extern "C" ARM void func_020733d8(unsigned char* arg0, int arg1) {
-    if (arg0 == 0 || arg0[0xc] == 0) {
+extern "C" ARM void func_020733d8(unsigned char* self, int unused) {
+    if (self == 0 || self[0xc] == 0) {
         return;
     }
 
@@ -103,16 +103,16 @@ extern "C" ARM void func_020733d8(unsigned char* arg0, int arg1) {
         return;
     }
 
-    GameState* var1 = GameState::GetInstance();
+    GameState* gameState = GameState::GetInstance();
     GameResources* var2 = GetGameResources();
-    unsigned short var3 = *(unsigned short*)arg0;
-    int var4 = *(int*)(arg0 + 8) + var1->GetTrueDeltaTime();
-    *(int*)(arg0 + 8) = var4;
-    if (var4 < 0x3e8) {
+    unsigned short var3 = *(unsigned short*)self;
+    int timer = *(int*)(self + 8) + gameState->GetTrueDeltaTime();
+    *(int*)(self + 8) = timer;
+    if (timer < 0x3e8) {
         return;
     }
 
-    if (func_ov017_021a20c0((int)var2, SELF_MODE(arg0), 0xc) < 0) {
+    if (func_ov017_021a20c0((int)var2, SELF_MODE(self), 0xc) < 0) {
         return;
     }
 
@@ -120,18 +120,18 @@ extern "C" ARM void func_020733d8(unsigned char* arg0, int arg1) {
     void* var6 = 0;
     __clear(&var5, sizeof(var5));
 
-    struct Struct_020e88a8 var7 = data_020e88a8;
+    struct Struct_020e88a8 weights = data_020e88a8;
     int var8;
     int var9 = -1;
-    int var10 = -1;
+    int status = -1;
     var8 = 0;
     int var11;
-    struct Struct_020733d8_7* var12;
-    int var13;
-    int var14;
+    struct ZoneNode020733d8* dest;
+    int level;
+    int wait;
     int var15;
-    GameObject* var16;
-    int var17;
+    GameObject* combatant;
+    int angle;
     struct Struct_020733d8_3 var18;
     Vector3i var19;
     struct Struct_020733d8_3 var20;
@@ -143,54 +143,54 @@ extern "C" ARM void func_020733d8(unsigned char* arg0, int arg1) {
 
         do {
             struct Struct_020733d8_3 var21;
-            int var22;
-            int var23;
+            int d;
+            int best;
             int var24;
-            int var25;
-            int var26;
-            int var27;
+            int count;
+            int c;
+            int outCount;
             int var28[4];
-            int var29[4];
-            GameObject* var30;
-            int var31;
-            struct Struct_020733d8 var32;
-            struct Struct_020733d8_3 var33;
-            GameObject* var34;
-            int var35;
-            int var36[4];
-            int var37;
-            int var38;
-            int var39;
-            GameObject* var40;
-            int var41;
-            GameObject* var42;
-            int var43[4];
+            int ids[4];
+            GameObject* obj;
+            int m;
+            struct Bounds02031118 box;
+            struct Struct_020733d8_3 base;
+            GameObject* monster;
+            int k;
+            int counts[4];
+            int idx;
+            int found;
+            int slot;
+            GameObject* member;
+            int j;
+            GameObject* unknown;
+            int candIds[4];
             int var44;
             int var45[4];
-            int* var46;
-            GameState* var47;
+            int* counter;
+            GameState* gs;
 
             gs = GameState::GetInstance();
             counter = (int*)LinkSession_GetInstance();
-            VectorizedInvertedMemcpy(weights.v, localWeights, 0x10);
+            VectorizedInvertedMemcpy(weights.v, var45, 0x10);
 
-            candCount = 0;
+            var44 = 0;
             if (LinkSession_IsActive(counter) == 0) {
                 unknown = gs->GetLeader();
-                if (unknown != 0 && localWeights[0] == -1) {
+                if (unknown != 0 && var45[0] == -1) {
                     candIds[0] = unknown->obj3D_.actorIndex_;
-                    candCount = 1;
+                    var44 = 1;
                 }
             } else {
                 for (j = 0; j < 4; j++) {
                     if (!LinkSession_IsSlotMember((struct SearchStruct*)counter, j)) {
                         continue;
                     }
-                    var40 = var47->GetPartyMemberByIndex(var41);
-                    if (var40 == 0) {
+                    member = gs->GetPartyMemberByIndex(j);
+                    if (member == 0) {
                         continue;
                     }
-                    if (*(unsigned short*)arg0 != var40->obj3D_.GetField06()) {
+                    if (*(unsigned short*)self != member->obj3D_.GetField06()) {
                         continue;
                     }
 
@@ -200,18 +200,18 @@ extern "C" ARM void func_020733d8(unsigned char* arg0, int arg1) {
                         slot = GameObject_GetLineLeader(member);
                     }
 
-                    var38 = 0;
-                    for (var37 = 0; var37 < 4; var37++) {
-                        if (var39 == var45[var37]) {
-                            var38 = 1;
+                    found = 0;
+                    for (idx = 0; idx < 4; idx++) {
+                        if (slot == var45[idx]) {
+                            found = 1;
                             break;
                         }
                     }
-                    if (var38) {
+                    if (found) {
                         continue;
                     }
-                    if (var39 != -1) {
-                        var43[var44++] = var39;
+                    if (slot != -1) {
+                        candIds[var44++] = slot;
                     }
                 }
             }
@@ -221,23 +221,23 @@ extern "C" ARM void func_020733d8(unsigned char* arg0, int arg1) {
                 break;
             }
 
-            for (k = 0; k < candCount; k++) {
+            for (k = 0; k < var44; k++) {
                 counts[k] = 0;
                 monster = gs->GetWanderingMonsterByIndex(candIds[k]);
-                func_02034104(&baseTmp, monster);
-                base = baseTmp;
+                func_02034104(&var21, monster);
+                base = var21;
 
-                var32.unknown_0_.x = var33.unknown_0_[0] + 0xf000;
-                var32.unknown_0_.y = var33.unknown_0_[1] + 0x1800;
-                var32.unknown_0_.z = var33.unknown_0_[2] + 0xf000;
-                SET_VEC3(&var32.unknown_c_, var33.unknown_0_[0] - 0xf000, var33.unknown_0_[1] - 0x800, var33.unknown_0_[2] - 0xf000);
+                box.unknown_0_.x = base.v[0] + 0xf000;
+                box.unknown_0_.y = base.v[1] + 0x1800;
+                box.unknown_0_.z = base.v[2] + 0xf000;
+                SET_VEC3(&box.max, base.v[0] - 0xf000, base.v[1] - 0x800, base.v[2] - 0xf000);
 
-                for (var31 = 0; var31 < 0xc; var31++) {
-                    var30 = var47->GetGameObjectByIndex(var31 + (SELF_MODE(arg0) * 0xc + 0x70));
-                    if (var30 == 0) {
+                for (m = 0; m < 0xc; m++) {
+                    obj = gs->GetGameObjectByIndex(m + (SELF_MODE(self) * 0xc + 0x70));
+                    if (obj == 0) {
                         continue;
                     }
-                    if (!var30->obj3D_.IsVisible()) {
+                    if (!obj->obj3D_.IsVisible()) {
                         continue;
                     }
                     if (Bounds3D_ContainsPoint(&obj->obj3D_.position_, &box)) {
@@ -246,74 +246,74 @@ extern "C" ARM void func_020733d8(unsigned char* arg0, int arg1) {
                 }
             }
 
-            var27 = 0;
-            for (var26 = 0; var26 < var44; var26++) {
-                var25 = var36[var26];
-                if (var25 < 3) {
-                    var29[var27] = var43[var26];
-                    var28[var27] = var25;
-                    var27++;
+            outCount = 0;
+            for (c = 0; c < var44; c++) {
+                count = counts[c];
+                if (count < 3) {
+                    ids[outCount] = candIds[c];
+                    var28[outCount] = count;
+                    outCount++;
                 }
             }
 
-            if (var27 == 0) {
+            if (outCount == 0) {
                 var9 = -1;
                 break;
             }
 
             var24 = 0xc;
-            var23 = -1;
-            for (var22 = 0; var22 < var27; var22++) {
-                if (var28[var22] < var24) {
-                    var23 = var29[var22];
-                    var24 = var28[var22];
+            best = -1;
+            for (d = 0; d < outCount; d++) {
+                if (var28[d] < var24) {
+                    best = ids[d];
+                    var24 = var28[d];
                 }
             }
-            var9 = var23;
+            var9 = best;
         } while (0);
 
         if (var9 < 0) {
             return;
         }
-        var7.unknown_0_[var8++] = var9;
+        weights.v[var8++] = var9;
 
         do {
             struct Struct_020733d8_3 var48;
-            Vector3i var49;
-            int var50;
-            Vector3i var51;
+            Vector3i zoneTmp;
+            int len;
+            Vector3i diff;
             int var52;
-            int var53;
-            Vector3i var54;
-            Vector3i var55;
-            struct Struct_020733d8_7* var56;
-            int var57;
-            Vector3i var58;
-            Vector3i var59;
+            int closestDist;
+            Vector3i closest;
+            Vector3i entryPos;
+            struct ZoneNode020733d8* entry;
+            int dot;
+            Vector3i dir;
+            Vector3i nodePos;
             int var60;
-            int var61;
-            struct Struct_020733d8_7* var62;
-            int var63;
+            int q;
+            struct ZoneNode020733d8* node;
+            int i;
             int var64;
-            unsigned char var65;
-            Vector3i var66;
-            int var67;
-            struct Struct_020733d8_7* var68[16];
-            int var69;
-            int var70;
-            Vector3i var71;
-            struct Struct_020733d8_3 var72;
-            int var73;
-            struct Struct_020733d8_7* var74;
-            GameObject* var75;
+            unsigned char zoneId;
+            Vector3i zonePos;
+            int p;
+            struct ZoneNode020733d8* var68[16];
+            int pick;
+            int matchCount;
+            Vector3i facing;
+            struct Struct_020733d8_3 selfPos;
+            int closestIdx;
+            struct ZoneNode020733d8* zone;
+            GameObject* slotObj;
 
-            var75 = func_0200ff1c(GameState::GetInstance(), var9);
-            if (var75 == 0) {
-                var10 = -1;
+            slotObj = func_0200ff1c(GameState::GetInstance(), var9);
+            if (slotObj == 0) {
+                status = -1;
                 break;
             }
-            if (!((struct Struct_020733d8_5*)((char*)var75 + 0xc2))->unknown_0_6_) {
-                var10 = -1;
+            if (!((struct Struct_020733d8_5*)((char*)slotObj + 0xc2))->unknown_0_6_) {
+                status = -1;
                 break;
             }
 
@@ -331,140 +331,140 @@ extern "C" ARM void func_020733d8(unsigned char* arg0, int arg1) {
                     status = -1;
                     break;
                 }
-                *(unsigned short*)((char*)var75 + 0xb8) = var73;
+                *(unsigned short*)((char*)slotObj + 0xb8) = closestIdx;
             }
-            if (var74 == 0 || var74->unknown_2_ == 0) {
-                var10 = -1;
+            if (zone == 0 || zone->count == 0) {
+                status = -1;
                 break;
             }
 
-            func_02034104(&var48, var75);
-            var72 = var48;
-            __clear(&var71, sizeof(var71));
-            var71.x = fix32sin(var75->obj3D_.rotation_.y);
-            var71.z = fix32cos(var75->obj3D_.rotation_.y);
+            func_02034104(&var48, slotObj);
+            selfPos = var48;
+            __clear(&facing, sizeof(facing));
+            facing.x = fix32sin(slotObj->obj3D_.rotation_.y);
+            facing.z = fix32cos(slotObj->obj3D_.rotation_.y);
 
-            var69 = -1;
-            var70 = 0;
-            for (var67 = 0; var67 < var74->unknown_2_; var67++) {
-                if (func_02073d58(var74->unknown_c_[var67]->unknown_0_, arg0, var69) != 0) {
+            pick = -1;
+            matchCount = 0;
+            for (p = 0; p < zone->count; p++) {
+                if (func_02073d58(zone->unknown_c_[p]->id, self, pick) != 0) {
                     continue;
                 }
-                var68[var70++] = var74->unknown_c_[var67];
+                var68[matchCount++] = zone->unknown_c_[p];
             }
 
-            var66.x = var74->unknown_4_ << 12;
-            var66.y = var74->unknown_6_ << 12;
-            var66.z = var74->unknown_8_ << 12;
-            if (Vector3fix_Distance(&var66, (Vector3fix*)&var72) > 0x5000) {
-                var65 = var74->unknown_0_;
+            zonePos.x = zone->x << 12;
+            zonePos.y = zone->y << 12;
+            zonePos.z = zone->z << 12;
+            if (Vector3fix_Distance(&zonePos, (Vector3fix*)&selfPos) > 0x5000) {
+                zoneId = zone->id;
                 var64 = 1;
-                for (var63 = 0; var63 < var70; var63++) {
-                    if (var65 == var68[var63]->unknown_0_) {
+                for (i = 0; i < matchCount; i++) {
+                    if (zoneId == var68[i]->id) {
                         var64 = 0;
                         break;
                     }
                 }
                 if (var64) {
-                    if (func_02073d58(var65, arg0, -1) == 0) {
-                        var68[var70++] = var74;
+                    if (func_02073d58(zoneId, self, -1) == 0) {
+                        var68[matchCount++] = zone;
                     }
                 }
             }
 
             var60 = 0;
-            for (var61 = 0; var61 < var70; var61++) {
-                var62 = var68[var61];
-                SET_VEC3(&var59, var62->unknown_4_ << 12, var62->unknown_6_ << 12, var62->unknown_8_ << 12);
-                Vector3fix_Subtract(&var59, (Vector3fix*)&var72, &var58);
-                var71.y = 0;
-                Vector3fix_Normalize(&var58, &var58);
-                var57 = Vector3fix_InnerProduct(&var71, &var58);
-                if (var57 <= 0) {
+            for (q = 0; q < matchCount; q++) {
+                node = var68[q];
+                SET_VEC3(&nodePos, node->x << 12, node->y << 12, node->z << 12);
+                Vector3fix_Subtract(&nodePos, (Vector3fix*)&selfPos, &dir);
+                facing.y = 0;
+                Vector3fix_Normalize(&dir, &dir);
+                dot = Vector3fix_InnerProduct(&facing, &dir);
+                if (dot <= 0) {
                     continue;
                 }
-                if (var60 < var57) {
-                    var60 = var57;
-                    var69 = var62->unknown_0_;
+                if (var60 < dot) {
+                    var60 = dot;
+                    pick = node->id;
                 }
             }
 
-            if (var69 < 0) {
-                if (var70 == 0) {
-                    var10 = -1;
+            if (pick < 0) {
+                if (matchCount == 0) {
+                    status = -1;
                     break;
                 }
-                var69 = var68[rand() % var70]->unknown_0_;
+                pick = var68[rand() % matchCount]->id;
             }
 
-            var56 = (struct Struct_020733d8_7*)func_020283c0((struct Struct_0201a300_11*)(arg0 + Enum_020733d8_24), var69);
-            if (var56 == 0) {
-                var10 = -1;
+            entry = (struct ZoneNode020733d8*)func_020283c0((struct Struct_0201a300_11*)(self + regionalOffsetList), pick);
+            if (entry == 0) {
+                status = -1;
                 break;
             }
 
-            var55.x = var56->unknown_4_ << 12;
-            var55.y = var56->unknown_6_ << 12;
-            var55.z = var56->unknown_8_ << 12;
-            var5 = var55;
+            entryPos.x = entry->x << 12;
+            entryPos.y = entry->y << 12;
+            entryPos.z = entry->z << 12;
+            var5 = entryPos;
 
             if (zone != entry && Vector3fix_Distance(&entryPos, (Vector3fix*)&selfPos) > 0xa000) {
                 closestDist = Vector3fix_DistanceToSegment(&entryPos, &zonePos, (Vector3fix*)&selfPos, &closest);
                 if (closestDist > 0) {
                     if (closestDist < 0xa000) {
-                        reach = FIX32_MULTIPLY(fix32_Sqrt(0x1000 - fix32_Divide(FIX32_MULTIPLY(closestDist, closestDist), 0x64000)), 0xa000);
-                        if (reach > 0x5000) {
+                        var52 = FIX32_MULTIPLY(fix32_Sqrt(0x1000 - fix32_Divide(FIX32_MULTIPLY(closestDist, closestDist), 0x64000)), 0xa000);
+                        if (var52 > 0x5000) {
                             Vector3fix_Subtract(&entryPos, &closest, &diff);
                             len = Vector3fix_Length(&diff);
                             Vector3fix_Normalize(&diff, &diff);
-                            if (len < reach) {
+                            if (len < var52) {
                                 Vector3fixMultiplyScalar(&diff, len, &diff);
                             } else {
-                                Vector3fixMultiplyScalar(&var51, var52, &var51);
+                                Vector3fixMultiplyScalar(&diff, var52, &diff);
                             }
-                            Vector3fix_Add(&var54, &var51, &var5);
+                            Vector3fix_Add(&closest, &diff, &var5);
                         }
                     } else {
-                        var10 = -1;
+                        status = -1;
                         break;
                     }
                 }
             }
 
-            if (func_02073dfc(arg0, &var5) != 0 && inline_020733d8(arg0) > 4) {
-                var10 = -1;
+            if (func_02073dfc(self, &var5) != 0 && inline_020733d8(self) > 4) {
+                status = -1;
                 break;
             }
-            var10 = var69;
+            status = pick;
         } while (0);
 
-        if (var10 < 0) {
+        if (status < 0) {
             continue;
         }
-        if (func_02073dfc(arg0, &var5) != 0) {
+        if (func_02073dfc(self, &var5) != 0) {
             continue;
         }
 
         int var76;
         {
-            GameObject* var77;
-            int var78;
-            struct Struct_020733d8 var79;
-            GameState* var80;
+            GameObject* obj;
+            int i;
+            struct Bounds02031118 area;
+            GameState* gs;
 
-            var80 = GameState::GetInstance();
-            SET_VEC3(&var79.unknown_0_, var5.x + 0x3000, var5.y + 0x5000, var5.z + 0x3000);
-            SET_VEC3(&var79.unknown_c_, var5.x - 0x3000, var5.y - 0x5000, var5.z - 0x3000);
-            for (var78 = 0; var78 < 0xc; var78++) {
-                var77 = var80->GetGameObjectByIndex(var78 + (SELF_MODE(arg0) * 0xc + 0x70));
-                if (var77 == 0) {
+            gs = GameState::GetInstance();
+            SET_VEC3(&area.unknown_0_, var5.x + 0x3000, var5.y + 0x5000, var5.z + 0x3000);
+            SET_VEC3(&area.max, var5.x - 0x3000, var5.y - 0x5000, var5.z - 0x3000);
+            for (i = 0; i < 0xc; i++) {
+                obj = gs->GetGameObjectByIndex(i + (SELF_MODE(self) * 0xc + 0x70));
+                if (obj == 0) {
                     continue;
                 }
-                if (!var77->obj3D_.IsVisible()) {
+                if (!obj->obj3D_.IsVisible()) {
                     continue;
                 }
                 if (Bounds3D_ContainsPoint(&obj->obj3D_.position_, &area)) {
-                    crowded = 1;
+                    var76 = 1;
                     goto crowdChecked;
                 }
             }
@@ -475,22 +475,22 @@ extern "C" ARM void func_020733d8(unsigned char* arg0, int arg1) {
             continue;
         }
 
-        var12 = (struct Struct_020733d8_7*)func_020283c0((struct Struct_0201a300_11*)(arg0 + Enum_020733d8_24), var10);
-        if (var12 == 0) {
+        dest = (struct ZoneNode020733d8*)func_020283c0((struct Struct_0201a300_11*)(self + regionalOffsetList), status);
+        if (dest == 0) {
             continue;
         }
-        if (var12 != 0 && (var12->unknown_3_ & 2)) {
+        if (dest != 0 && (dest->flags & 2)) {
             continue;
         }
-        var6 = func_02073ec4(var12->unknown_1_, arg0 + Enum_020733d8_96);
+        var6 = func_02073ec4(dest->mask, self + Enum_020733d8_96);
         if (var6 == 0) {
             continue;
         }
 
-        var13 = ((struct Struct_020733d8_6*)((char*)var6 + 4))->unknown_2_5_;
-        var14 = 6 - var13;
-        var14 = var14 + 1;
-        if (*(int*)(arg0 + 8) >= var14 * 0x3e8) {
+        level = ((struct Struct_020733d8_6*)((char*)var6 + 4))->level;
+        wait = 6 - level;
+        wait = wait + 1;
+        if (*(int*)(self + 8) >= wait * 0x3e8) {
             break;
         }
     }
@@ -503,18 +503,18 @@ extern "C" ARM void func_020733d8(unsigned char* arg0, int arg1) {
         return;
     }
 
-    var16 = func_0200ff1c(var1, var9);
-    var17 = 0;
-    if (var16 != 0) {
-        func_02034104(&var20, var16);
+    combatant = func_0200ff1c(gameState, var9);
+    angle = 0;
+    if (combatant != 0) {
+        func_02034104(&var20, combatant);
         var18 = var20;
         Vector3fix_Subtract((Vector3fix*)&var18, &var5, &var19);
         Vector3fix_Normalize(&var19, &var19);
-        var17 = fix32_Atan2(var19.x, var19.z);
+        angle = fix32_Atan2(var19.x, var19.z);
     }
 
-    if (func_ov017_021a2128(var2, var3, var15, *(unsigned short*)var6, &var5, var17,
-                            (unsigned short)var10, 0) != 0) {
-        *(int*)(arg0 + 8) = 0;
+    if (func_ov017_021a2128(var2, var3, var15, *(unsigned short*)var6, &var5, angle,
+                            (unsigned short)status, 0) != 0) {
+        *(int*)(self + 8) = 0;
     }
 }

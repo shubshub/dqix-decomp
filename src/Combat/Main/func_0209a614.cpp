@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
 struct Struct_0209a614_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    char unknown_4_[8];
+    unsigned short field0;
+    unsigned short id;
+    char pad[8];
 };
 struct Struct_0209a614 {
-    struct Struct_0209a614_2* unknown_0_;
-    int unknown_4_;
+    struct Struct_0209a614_2* entries;
+    int count;
 };
 
 // USA: func_0209a614
-extern "C" ARM struct Struct_0209a614_2* func_0209a614(struct Struct_0209a614* arg0, int arg1) {
-    int var0;
-    for (var0 = 0; var0 < arg0->unknown_4_; var0++) {
-        if (arg1 == arg0->unknown_0_[var0].unknown_2_) {
-            return &arg0->unknown_0_[var0];
+extern "C" ARM struct Struct_0209a614_2* func_0209a614(struct Struct_0209a614* list, int id) {
+    int i;
+    for (i = 0; i < list->count; i++) {
+        if (id == list->entries[i].id) {
+            return &list->entries[i];
         }
     }
     return NULL;

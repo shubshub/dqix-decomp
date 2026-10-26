@@ -3,9 +3,9 @@
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Filesystem/NarcHandle.h"
 
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 void* LoadFileIntoMemory(const char*, void*, unsigned int*);
-void WindowFrame_LoadPieces(char*, void*, void*);
+extern "C" void WindowFrame_LoadPieces(char*, void*, void*);
 
 extern AllocatorUnion g_mainAllocator;
 extern char data_020ef7ac[]; // "data/bin/icon.nsarc"

@@ -1,34 +1,34 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov000_02156068(void* arg0, int arg1, int arg2, int arg3);
+extern "C" int func_ov000_02156068(void* obj, int val, int zero, int one);
 
 struct Struct_ov024_021e2bd0_2 {
-    char unknown_0_[0x10];
-    void* unknown_10_;
+    char unk[0x10];
+    void* field10;
 };
 
 struct Struct_ov024_021fe820 {
-    short unknown_0_;
-    short unknown_2_;
+    short value;
+    short pad;
 };
 
 extern struct Struct_ov024_021fe820 data_ov024_021fe820[];
 extern struct Struct_ov024_021fe820 data_ov024_021fe822[];
 
 // USA: func_ov024_021e8fa4
-extern "C" ARM int func_ov024_021e8fa4(struct Struct_ov024_021e2bd0_2* arg0, int arg1, int arg2) {
-    if (arg2 == 2) {
-        int var0 = func_ov000_02156068(arg0->unknown_10_, arg1, 0, 2);
-        if (var0 != 0) {
+extern "C" ARM int func_ov024_021e8fa4(struct Struct_ov024_021e2bd0_2* self, int unused, int id) {
+    if (id == 2) {
+        int result = func_ov000_02156068(self->field10, unused, 0, 2);
+        if (result != 0) {
             return 0;
         }
     }
-    int var1 = 0;
-    while (data_ov024_021fe820[var1].unknown_0_ != -1) {
-        if (arg2 == data_ov024_021fe820[var1].unknown_0_) {
-            return data_ov024_021fe822[var1].unknown_0_;
+    int idx = 0;
+    while (data_ov024_021fe820[idx].value != -1) {
+        if (id == data_ov024_021fe820[idx].value) {
+            return data_ov024_021fe822[idx].value;
         }
-        var1++;
+        idx++;
     }
     return 0;
 }

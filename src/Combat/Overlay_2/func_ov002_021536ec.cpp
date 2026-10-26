@@ -6,54 +6,54 @@
 
 class Struct_ov002_021536ec {
 public:
-    char *unknown_0_;
+    char *f0;
 };
 typedef int (Struct_ov002_021536ec::*Type_ov002_021536ec)(void *arg, void *item, int mode);
 
 struct Struct_ov002_0216ccc0 {
-    short unknown_0_;
-    Type_ov002_021536ec unknown_4_;
+    short key;
+    Type_ov002_021536ec fn;
 };
 struct Struct_ov002_021536ec_2 {
-    char unknown_0_[0x18];
+    char pad[0x18];
     unsigned int unknown_18_0_ : 5;
-    unsigned int unknown_18_5_ : 7;
-    unsigned int unknown_19_4_ : 20;
+    unsigned int keyA : 7;
+    unsigned int rest : 20;
 };
 struct Struct_ov002_0216ccc4 {
-    int unknown_0_;
-    int unknown_4_[2];
+    int ptr;
+    int pad[2];
 };
 
-extern "C" void *func_02079e2c(char *arg0, int arg1);
+extern "C" void *func_02079e2c(char *p, int key);
 
 extern "C" unsigned int data_ov002_0216d3a0[2];
-extern "C" MemFn021536ec __ptmf_null;
-extern "C" struct Entry021536ec data_ov002_0216cce4[12];
-extern "C" struct Slot021536ec data_ov002_0216cce8[12];
-extern "C" struct Entry021536ec data_ov002_0216ccc0[3];
-extern "C" struct Slot021536ec data_ov002_0216ccc4[3];
+extern "C" Type_ov002_021536ec __ptmf_null;
+extern "C" struct Struct_ov002_0216ccc0 data_ov002_0216cce4[12];
+extern "C" struct Struct_ov002_0216ccc4 data_ov002_0216cce8[12];
+extern "C" struct Struct_ov002_0216ccc0 data_ov002_0216ccc0[3];
+extern "C" struct Struct_ov002_0216ccc4 data_ov002_0216ccc4[3];
 
 // USA: func_ov002_021536ec
-extern "C" ARM int func_ov002_021536ec(Struct_ov002_021536ec *arg0, short *arg1) {
-    if (arg0->unknown_0_ == NULL) return 0;
-    if (arg1 == NULL) return 0;
-    struct Struct_ov002_021536ec_2 *var0 = (struct Struct_ov002_021536ec_2 *) func_02079e2c(arg0->unknown_0_, *arg1);
-    if (var0 == NULL) return 0;
-    struct Struct_ov002_0216ccc0 *var1;
+extern "C" ARM int func_ov002_021536ec(Struct_ov002_021536ec *obj, short *arg) {
+    if (obj->f0 == NULL) return 0;
+    if (arg == NULL) return 0;
+    struct Struct_ov002_021536ec_2 *item = (struct Struct_ov002_021536ec_2 *) func_02079e2c(obj->f0, *arg);
+    if (item == NULL) return 0;
+    struct Struct_ov002_0216ccc0 *tb;
 
     int var2 = 0;
     if (!(data_ov002_0216d3a0[1] & 1)) {
-        MemFn021536ec t            = __ptmf_null;
+        Type_ov002_021536ec t            = __ptmf_null;
         data_ov002_0216cce4[0].fn  = t;
         data_ov002_0216cce4[11].fn = t;
         data_ov002_0216d3a0[1] |= 1;
     }
-    unsigned int var4 = var0->unknown_18_5_;
-    for (int var5 = 0; data_ov002_0216cce4[var5].unknown_0_ >= 0; var5++) {
-        if (var4 == data_ov002_0216cce4[var5].unknown_0_) {
-            if (data_ov002_0216cce8[var5].unknown_0_ != 0) {
-                var2 = (arg0->*data_ov002_0216cce4[var5].unknown_4_)(arg1, var0, 0);
+    unsigned int key = item->keyA;
+    for (int i = 0; data_ov002_0216cce4[i].key >= 0; i++) {
+        if (key == data_ov002_0216cce4[i].key) {
+            if (data_ov002_0216cce8[i].ptr != 0) {
+                var2 = (obj->*data_ov002_0216cce4[i].fn)(arg, item, 0);
             }
             break;
         }
@@ -61,17 +61,17 @@ extern "C" ARM int func_ov002_021536ec(Struct_ov002_021536ec *arg0, short *arg1)
 
     int var6 = 0;
     if (!(data_ov002_0216d3a0[0] & 1)) {
-        MemFn021536ec t           = __ptmf_null;
+        Type_ov002_021536ec t           = __ptmf_null;
         data_ov002_0216ccc0[0].fn = t;
         data_ov002_0216ccc0[2].fn = t;
         data_ov002_0216d3a0[0] |= 1;
     }
-    unsigned int var8 = var0->unknown_18_0_;
-    int var9;
-    for (var9 = 0, var1 = (data_ov002_0216cce4 - 3); var1[var9].unknown_0_ >= 0; var9++) {
-        if (var8 == var1[var9].unknown_0_) {
-            if (data_ov002_0216ccc4[var9].unknown_0_ != 0) {
-                var6 = (arg0->*var1[var9].unknown_4_)(arg1, var0, 1);
+    unsigned int key2 = item->unknown_18_0_;
+    int i;
+    for (i = 0, tb = (data_ov002_0216cce4 - 3); tb[i].key >= 0; i++) {
+        if (key2 == tb[i].key) {
+            if (data_ov002_0216ccc4[i].ptr != 0) {
+                var6 = (obj->*tb[i].fn)(arg, item, 1);
             }
             break;
         }

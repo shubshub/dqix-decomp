@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 
-struct Struct_020e385c {
-    unsigned int unknown_0_;
-    unsigned char unknown_4_;
+struct TagValueEntry020e385c {
+    unsigned int val;
+    unsigned char tag;
     unsigned char unknown_5_;
     unsigned char unknown_6_;
     unsigned char unknown_7_;
 };
 
-extern "C" struct Struct_020e385c* func_020e385c(struct Struct_020e385c* arg0, int arg1, int arg2);
+extern "C" struct TagValueEntry020e385c* func_020e385c(struct TagValueEntry020e385c* entries, int tag, int val);
 
 // USA: func_020e3ad0
-extern "C" ARM int func_020e3ad0(struct Struct_020e385c* arg0, int arg1, int arg2) {
-    struct Struct_020e385c* var0 = func_020e385c(arg0, arg1, arg2);
-    if (var0 == NULL) {
+extern "C" ARM int func_020e3ad0(struct TagValueEntry020e385c* entries, int tag, int val) {
+    struct TagValueEntry020e385c* e = func_020e385c(entries, tag, val);
+    if (e == NULL) {
         return 1;
     }
-    if (var0->unknown_5_ != 0) {
-        if (var0->unknown_5_ == var0->unknown_6_) {
+    if (e->unknown_5_ != 0) {
+        if (e->unknown_5_ == e->unknown_6_) {
             return 1;
         }
     }

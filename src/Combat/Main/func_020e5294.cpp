@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
-extern "C" void* func_020e52a0(void* arg0, int arg1);
+extern "C" void* func_020e52a0(void* arr, int key);
 
 #if defined(jpn)
 #include "std_library_functions.h"
 
-struct Struct_0201099c_3;
+struct Container020e0310;
 
-extern "C" int func_020e0440(Struct_0201099c_3* arg0, int arg1);
+extern "C" int KeyTable_Lookup(Container020e0310* names, int nameId);
 // USA: func_020e5294
-extern "C" ARM char* func_020e207c(Struct_0201099c_3* arg0, char* arg1, int arg2) {
-    if (arg1 == NULL) return NULL;
-    const char* var0 = reinterpret_cast<const char*>(func_020e0440(arg0, arg2));
-    if (var0 == NULL) {
-        arg1[0] = 0;
+extern "C" ARM char* func_020e207c(Container020e0310* names, char* destination, int nameId) {
+    if (destination == NULL) return NULL;
+    const char* name = reinterpret_cast<const char*>(KeyTable_Lookup(names, nameId));
+    if (name == NULL) {
+        destination[0] = 0;
         return NULL;
     }
-    strcpy(arg1, var0);
-    return arg1;
+    strcpy(destination, name);
+    return destination;
 }
 #else
 // USA: func_020e5294
-extern "C" ARM void* func_020e5294(void* arg0, int arg1) {
-    return func_020e52a0(arg0, arg1);
+extern "C" ARM void* func_020e5294(void* arr, int key) {
+    return func_020e52a0(arr, key);
 }
 #endif

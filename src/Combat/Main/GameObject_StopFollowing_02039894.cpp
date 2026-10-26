@@ -9,6 +9,6 @@ enum { PartyMember_followFlags = 0x1ce };
 enum { FollowFlag_Stopped = 1 };
 
 // Main, originally SetFlag0x1ceBit0x1_02039894 (USA 0x02039894, EUR 0x020398a4, JPN 0x020392ec)
-ARM void GameObject_StopFollowing(unsigned char* partyMember) {
+extern "C" ARM void GameObject_StopFollowing(unsigned char* partyMember) {
     partyMember[PartyMember_followFlags] |= FollowFlag_Stopped;
 }

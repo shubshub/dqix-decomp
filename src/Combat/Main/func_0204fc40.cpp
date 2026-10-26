@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-int STD_GetStringLength(const char* s);
+extern "C" int STD_GetStringLength(const char* s);
 extern "C" int memcmp(unsigned char* a, unsigned char* b, int n);
 extern "C" int func_02005a94(void* p);
 
@@ -18,8 +18,8 @@ extern "C" ARM int func_0204fc40(void* unused0, char** cursor, char* tag, short*
             while (*p != ',') p++;
             p++;
         }
-        while (*var1 != '>' && *var1 != 0) var1++;
-        *arg1 = var1 + 1;
+        while (*p != '>' && *p != 0) p++;
+        *cursor = p + 1;
         return 1;
     }
     return 0;

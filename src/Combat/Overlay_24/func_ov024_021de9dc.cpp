@@ -15,49 +15,49 @@ extern "C" void* func_ov000_0215e958(void*);
 extern "C" void func_ov024_021e8bf0(Struct_ov024_021de9dc_2*,void*,unsigned short*);
 extern "C" void func_ov000_0215a88c(void*,void*,int);
 extern "C" void func_ov000_0215ccbc(void*,void*,GameObject*,short,short,short,unsigned long long,unsigned char);
-struct Struct_ov024_021de9dc_4 {char unknown_0_[0x1c];unsigned char unknown_1c_0_:7;unsigned char unknown_1c_7_:1;};
-struct Struct_ov024_021de9dc_2 {char unknown_0_[0xc];Struct_ov024_021de9dc_4* unknown_c_;void* unknown_10_;};
-struct Struct_ov024_021de9dc {unsigned int unknown_0_0_:10;unsigned int unknown_1_2_:10;unsigned int unknown_2_4_:10;unsigned int unknown_3_6_:2;};
-struct Struct_ov024_021de9dc_3 {char unknown_0_[0x20];Struct_ov024_021de9dc unknown_20_;Struct_ov024_021de9dc unknown_24_;Struct_ov024_021de9dc unknown_28_;};
-static inline unsigned short inline_ov000_0215a908_2(GameObject* arg0){ SDK_NULL_ASSERT(arg0); return arg0->currentStats_->primaryStats.currHP; }
+struct Struct_ov024_021de9dc_4 {char pad[0x1c];unsigned char unused:7;unsigned char flag:1;};
+struct Struct_ov024_021de9dc_2 {char pad[0xc];Struct_ov024_021de9dc_4* action;void* context;};
+struct Struct_ov024_021de9dc {unsigned int a:10;unsigned int b:10;unsigned int c:10;unsigned int rest:2;};
+struct Struct_ov024_021de9dc_3 {char pad[0x20];Struct_ov024_021de9dc field20;Struct_ov024_021de9dc field24;Struct_ov024_021de9dc field28;};
+static inline unsigned short inline_ov000_0215a908_2(GameObject* c){ SDK_NULL_ASSERT(c); return c->currentStats_->primaryStats.currHP; }
 // USA: func_ov024_021de9dc
-extern "C" ARM void* func_ov024_021de9dc(Struct_ov024_021de9dc_2* arg0,int arg1,int arg2,Struct_ov024_021de9dc_3* arg3,int arg4,int arg5,unsigned char arg6){
-    GameObject* var0=GetCombatantByID((int)arg0->unknown_10_,arg2);
-    if(!var0)return 0;
-    short var1;
-    int var2=0;
-    unsigned short var3=0;
-    union {struct{int unknown_0_;int unknown_4_;};unsigned long long unknown1_0_;} var4;
-    var4.unknown_0_=0;var4.unknown_4_=0;
-    var1=var0->currentStats_->primaryStats.currHP;
-    if(arg6 && arg4>0){
-        if(((unsigned char*)arg0->unknown_10_)[0x8e94] && func_ov024_021ea78c((Struct_ov024_021dd028_7*)arg0, arg2, (Struct_ov024_021dd028_6*)arg3)){
-            arg4=0;
-            var1=func_ov000_0215a004(arg0->unknown_10_,arg1,arg2,inline_ov000_0215a908_2(var0)-1,&var4,arg3,arg0->unknown_c_->unknown_1c_7_!=0,0x20);
-            func_ov000_02159eac(arg0->unknown_10_,&var4,0x29);
-            func_02088b34((unsigned char*)var0->currentStats_);
-            var3=0xc8;
-            var2=1;
+extern "C" ARM void* func_ov024_021de9dc(Struct_ov024_021de9dc_2* obj,int arg1,int id,Struct_ov024_021de9dc_3* params,int amount,int unused,unsigned char enabled){
+    GameObject* c=GetCombatantByID((int)obj->context,id);
+    if(!c)return 0;
+    short hp;
+    int handled=0;
+    unsigned short selection=0;
+    union {struct{int low;int high;};unsigned long long value;} effects;
+    effects.low=0;effects.high=0;
+    hp=c->currentStats_->primaryStats.currHP;
+    if(enabled && amount>0){
+        if(((unsigned char*)obj->context)[0x8e94] && func_ov024_021ea78c((Struct_ov024_021dd028_7*)obj, id, (Struct_ov024_021dd028_6*)params)){
+            amount=0;
+            hp=func_ov000_0215a004(obj->context,arg1,id,inline_ov000_0215a908_2(c)-1,&effects,params,obj->action->flag!=0,0x20);
+            func_ov000_02159eac(obj->context,&effects,0x29);
+            func_02088b34((unsigned char*)c->currentStats_);
+            selection=0xc8;
+            handled=1;
         }
-        if(!var2){
-            var1=func_ov000_0215a004(arg0->unknown_10_,arg1,arg2,arg4,&var4,arg3,arg0->unknown_c_->unknown_1c_7_!=0,0x20);
-            if(func_ov000_02159f18(arg0->unknown_10_,var4.unknown1_0_,2)){
-                arg4=0;
-                var3=func_ov024_021da644(arg2,arg3->unknown_28_.unknown_0_0_,arg3->unknown_28_.unknown_1_2_);
+        if(!handled){
+            hp=func_ov000_0215a004(obj->context,arg1,id,amount,&effects,params,obj->action->flag!=0,0x20);
+            if(func_ov000_02159f18(obj->context,effects.value,2)){
+                amount=0;
+                selection=func_ov024_021da644(id,params->field28.a,params->field28.b);
             }else{
-                var3=func_ov024_021da644(arg2,arg3->unknown_20_.unknown_2_4_,arg3->unknown_24_.unknown_0_0_);
+                selection=func_ov024_021da644(id,params->field20.c,params->field24.a);
             }
         }
     }else{
-        var3=func_ov024_021da644(arg2,arg3->unknown_24_.unknown_1_2_,arg3->unknown_24_.unknown_2_4_);
+        selection=func_ov024_021da644(id,params->field24.b,params->field24.c);
     }
-    void* var5=func_ov000_0215e958(arg0->unknown_10_);
-    if(!var5)return 0;
-    func_ov024_021e8bf0(arg0,arg0->unknown_c_,&var3);
-    func_ov000_0215a88c(arg0->unknown_10_,var5,var3);
-    unsigned short var6=var0->currentStats_->primaryStats.currMP;
-    unsigned char var7;
-    if(arg0->unknown_c_->unknown_1c_7_)var7=1;else var7=0;
-    func_ov000_0215ccbc(arg0->unknown_10_,var5,var0,arg4,var1,var6,var4.unknown1_0_,var7);
-    return var5;
+    void* entry=func_ov000_0215e958(obj->context);
+    if(!entry)return 0;
+    func_ov024_021e8bf0(obj,obj->action,&selection);
+    func_ov000_0215a88c(obj->context,entry,selection);
+    unsigned short mp=c->currentStats_->primaryStats.currMP;
+    unsigned char flag;
+    if(obj->action->flag)flag=1;else flag=0;
+    func_ov000_0215ccbc(obj->context,entry,c,amount,hp,mp,effects.value,flag);
+    return entry;
 }

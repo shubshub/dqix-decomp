@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-struct Struct_ov031_02218a38_2 { char* unknown_0_; char* unknown_4_; };
-struct Struct_ov031_02218a38 { Struct_ov031_02218a38_2* unknown_0_; int unknown_4_; int unknown_8_; };
+struct Struct_ov031_02218a38_2 { char* name; char* value; };
+struct Struct_ov031_02218a38 { Struct_ov031_02218a38_2* entries; int capacity; int count; };
 typedef char* (*Type_ov031_02218a38)(const char*, unsigned int);
 typedef void (*Type_ov031_02218a38_2)(const char*, char*, int);
 #if defined(jpn)
@@ -17,29 +17,29 @@ extern char data_ov031_02249f80[];
 extern char data_ov031_02249f9c[];
 
 // USA: func_ov031_02218a38
-extern "C" ARM int func_ov031_02218a38(void* arg0, Struct_ov031_02218a38* arg1, const char* arg2, const char* arg3) {
-    Type_ov031_02218a38 var0 = *(Type_ov031_02218a38*)((char*)arg0 + 0x1010);
-    Type_ov031_02218a38_2 var1 = *(Type_ov031_02218a38_2*)((char*)arg0 + 0x1014);
-    if (arg1->unknown_8_ > arg1->unknown_4_) return 0;
-    arg1->unknown_0_[arg1->unknown_8_].unknown_0_ = var0(data_ov031_02249f40, strlen(arg2) + 1);
-    if (arg1->unknown_0_[arg1->unknown_8_].unknown_0_ != NULL) {
-        arg1->unknown_0_[arg1->unknown_8_].unknown_4_ = var0(data_ov031_02249f60, strlen(arg3) + 1);
-        if (arg1->unknown_0_[arg1->unknown_8_].unknown_4_ != NULL) {
-            strcpy(arg1->unknown_0_[arg1->unknown_8_].unknown_0_, arg2);
-            strcpy(arg1->unknown_0_[arg1->unknown_8_].unknown_4_, arg3);
-            arg1->unknown_8_++;
+extern "C" ARM int func_ov031_02218a38(void* allocator, Struct_ov031_02218a38* list, const char* name, const char* value) {
+    Type_ov031_02218a38 var0 = *(Type_ov031_02218a38*)((char*)allocator + 0x1010);
+    Type_ov031_02218a38_2 var1 = *(Type_ov031_02218a38_2*)((char*)allocator + 0x1014);
+    if (list->count > list->capacity) return 0;
+    list->entries[list->count].name = var0(data_ov031_02249f40, strlen(name) + 1);
+    if (list->entries[list->count].name != NULL) {
+        list->entries[list->count].value = var0(data_ov031_02249f60, strlen(value) + 1);
+        if (list->entries[list->count].value != NULL) {
+            strcpy(list->entries[list->count].name, name);
+            strcpy(list->entries[list->count].value, value);
+            list->count++;
             return 1;
         }
     }
-    if (arg1->unknown_0_[arg1->unknown_8_].unknown_0_ != NULL) {
-        var1(data_ov031_02249f80, arg1->unknown_0_[arg1->unknown_8_].unknown_0_, 0);
-        arg1->unknown_0_[arg1->unknown_8_].unknown_0_ = NULL;
+    if (list->entries[list->count].name != NULL) {
+        var1(data_ov031_02249f80, list->entries[list->count].name, 0);
+        list->entries[list->count].name = NULL;
     }
-    Struct_ov031_02218a38_2* var2 = arg1->unknown_0_;
-    int var3 = arg1->unknown_8_;
-    if (var2[var3].unknown_4_ != NULL) {
-        var1(data_ov031_02249f9c, var2[var3].unknown_4_, 0);
-        arg1->unknown_0_[arg1->unknown_8_].unknown_4_ = NULL;
+    Struct_ov031_02218a38_2* entries = list->entries;
+    int count = list->count;
+    if (entries[count].value != NULL) {
+        var1(data_ov031_02249f9c, entries[count].value, 0);
+        list->entries[list->count].value = NULL;
     }
     return 0;
 }

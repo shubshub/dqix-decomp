@@ -24,10 +24,10 @@ struct Struct_021117ec_5
 extern Struct_021117ec_5 data_021117ec;
 
 extern "C" void func_020c976c(unsigned long cycles);
-void OS_WaitVBlankIntr();
-unsigned long IssueRequestAndPumpHandler020ce614(int status);
-unsigned long RemapRequestTypeAndRunHandler_020ce5b0(int led, void (*callback)(), int* arg);
-unsigned long InvokeReg0x10IfPowcntBit0Set_020ce7e0(int value);
+extern "C" void OS_WaitVBlankIntr();
+extern "C" unsigned long func_020ce614(int status);
+extern "C" unsigned long func_020ce5b0(int arg0, void (*callback)(), int* arg);
+extern "C" unsigned long func_020ce7e0(int value);
 
 // USA: func_020ceba8
 extern "C" ARM int func_020ceba8(int arg0, int arg1, int arg2, int arg3)

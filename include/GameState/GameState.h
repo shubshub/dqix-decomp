@@ -23,8 +23,8 @@ public:
             char unknown_8_[0xb8 - 0xb4];
             unsigned short unknown_b8_;
             char unknown_e_[0x130 - 0xba];
-            Struct_020200c0* unknown_84_;
-        } unknown_ac_;
+            Struct_020200c0* savedState_130_;
+        } combatFields_;
     };
     BaseCombatStats* baseStats_;
     ModifiableCombatStats* currentStats_;

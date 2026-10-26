@@ -2,15 +2,15 @@
 #include "NitroSDK/Filesystem/FileAccessor.h"
 
 struct Struct_ov016_0218f678 {
-	char unknown_0_[0xc];
-	NitroVM* unknown_c_;
-	unsigned char unknown_10_;
+	char pad[0xc];
+	NitroVM* vm;
+	unsigned char active;
 };
 
 // USA: func_ov016_0218f678
-extern "C" ARM void func_ov016_0218f678(Struct_ov016_0218f678* arg0) {
-	if (arg0->unknown_10_ == 1) {
-		NitroVM_AwaitCommandCompletion(arg0->unknown_c_);
+extern "C" ARM void func_ov016_0218f678(Struct_ov016_0218f678* o) {
+	if (o->active == 1) {
+		NitroVM_AwaitCommandCompletion(o->vm);
 	}
-	arg0->unknown_10_ = 0;
+	o->active = 0;
 }

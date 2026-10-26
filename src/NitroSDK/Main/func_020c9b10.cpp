@@ -2,11 +2,11 @@
 
 struct Struct_020c9b10
 {
-    char unknown_0_[0x3c];
+    char unknown_0[0x3c];
     unsigned long unknown_3c_;
     char unknown_40_[0x80 - 0x40];
     unsigned char unknown_80_[0x74];
-    unsigned char unknown_f4_[6];
+    unsigned char macAddress[6];
     char unknown_fa_[0x1e8 - 0xfa];
     unsigned char unknown_1e8_[8];
     char unknown_1f0_[0x390 - 0x1f0];
@@ -34,18 +34,18 @@ static inline long inline_020c94e4()
 }
 
 // USA: func_020c9b10
-extern "C" ARM void func_020c9b10(unsigned long* arg0)
+extern "C" ARM void func_020c9b10(unsigned long* buffer)
 {
-    const Struct_020c9b10* var0 = SYSTEM_WORK;
-    const unsigned char* var1 = var0->unknown_f4_;
+    const Struct_020c9b10* work = SYSTEM_WORK;
+    const unsigned char* macAddress = work->macAddress;
 
-    arg0[0] = (unsigned long)((inline_020c94e4() << 16) | GetMain16BitTimerCounter());
-    arg0[1] = (unsigned long)(*(unsigned short*)(var1 + 4) << 16) ^ (unsigned long)data_02111640;
-    arg0[2] = (unsigned long)(data_02111640 >> 32) ^ *(unsigned long*)var1 ^ var0->unknown_3c_;
-    arg0[2] ^= GXSTAT;
-    arg0[3] = *(unsigned long*)&var0->unknown_1e8_[0];
-    arg0[4] = *(unsigned long*)&var0->unknown_1e8_[4];
-    arg0[5] = ((unsigned long)var0->unknown_394_ << 16) ^ var0->unknown_390_;
-    arg0[6] = (unsigned long)((*(unsigned short*)&var0->unknown_3aa_[0] << 16) | *(unsigned short*)&var0->unknown_3aa_[2]);
-    arg0[7] = (unsigned long)((var0->unknown_398_ << 16) | (KEYINPUT | BUTTONS_XY));
+    buffer[0] = (unsigned long)((inline_020c94e4() << 16) | GetMain16BitTimerCounter());
+    buffer[1] = (unsigned long)(*(unsigned short*)(macAddress + 4) << 16) ^ (unsigned long)data_02111640;
+    buffer[2] = (unsigned long)(data_02111640 >> 32) ^ *(unsigned long*)macAddress ^ work->unknown_3c_;
+    buffer[2] ^= GXSTAT;
+    buffer[3] = *(unsigned long*)&work->unknown_1e8_[0];
+    buffer[4] = *(unsigned long*)&work->unknown_1e8_[4];
+    buffer[5] = ((unsigned long)work->unknown_394_ << 16) ^ work->unknown_390_;
+    buffer[6] = (unsigned long)((*(unsigned short*)&work->unknown_3aa_[0] << 16) | *(unsigned short*)&work->unknown_3aa_[2]);
+    buffer[7] = (unsigned long)((work->unknown_398_ << 16) | (KEYINPUT | BUTTONS_XY));
 }

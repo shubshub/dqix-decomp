@@ -2,14 +2,14 @@
 #include "World/ZoneChest.h"
 #include "Graphics/Vector.h"
 
-struct Struct_020fdd44 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_;
-    char unknown_6_[0x318 - 6];
+struct Entry_02028bd0 {
+    unsigned short id;
+    unsigned short field2;
+    unsigned short activeMask;
+    char pad6[0x318 - 6];
 };
-Entry_02028bd0* ZoneRecords_GetInstance();
-Entry_02028bd0* ZoneRecords_Find(Entry_02028bd0*, int);
+extern "C" Entry_02028bd0* ZoneRecords_GetInstance();
+extern "C" Entry_02028bd0* ZoneRecords_Find(Entry_02028bd0*, int);
 
 // USA: func_02018918
 extern "C" ARM void func_02018918(Zone3D* owner, ZoneFeatures::Opcode6aEntry* parameter) {

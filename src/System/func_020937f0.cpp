@@ -3,9 +3,9 @@
 #include "NitroSDK/VRAM.h"
 
 // USA: func_020937f0
-extern "C" ARM int func_020937f0(int arg0) {
+extern "C" ARM int func_020937f0(int engine) {
     int var0 = 0;
-    if (arg0 == 0) {
+    if (engine == 0) {
         switch (GetMainObjVRAMBanks()) {
             case 0: var0 = 0; break;
             case VRAM_BANK_F:

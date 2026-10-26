@@ -218,7 +218,7 @@ src/Combat/Overlay_14/func_ov014_02187074.cpp:
 src/Combat/Overlay_14/func_ov014_021872dc.cpp:
     .text start:0x02188270 end:0x021882d4
 
-src/Combat/Overlay_14/UpdateCounterState_021882d4.cpp:
+src/Combat/Overlay_14/func_ov014_02187340.cpp:
     .text start:0x021882d4 end:0x02188334
 
 src/Combat/Overlay_14/func_ov014_02188bfc.cpp:

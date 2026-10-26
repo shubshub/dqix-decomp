@@ -3,30 +3,30 @@
 #include "Combat/BattleSkillEligibility.h"
 #include "Grotto/Main/ActiveGrottoClass.h"
 
-GameObject* GetCombatantWithFlag0x400_0200fea4(GameState* gameState, int combatantId);
-void* FindEntryForCombatant02153758(void* obj, int idx);
+extern "C" GameObject* func_0200fea4(GameState* gameState, int combatantId);
+extern "C" void* func_ov000_02153758(void* obj, int idx);
 extern "C" char* Zone3D_GetInstance(void);
 
 struct Struct_ov000_02159dbc {
-    char unknown_0_[0xa];
-    unsigned short unknown_a_0_ : 7;
+    char pad0[0xa];
+    unsigned short level : 7;
 };
 
-struct Struct_ov000_02159dbc_2 {
-    char unknown_0_[0x25];
-    unsigned char unknown_25_;
+struct PartyWork_02159dbc {
+    char pad[0x25];
+    unsigned char field_0x25;
 };
 
 // USA: func_ov000_02159dbc
-extern "C" ARM int func_ov000_02159dbc(char* arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    GameObject* var1 = func_0200fea4(GameState::GetInstance(), arg1);
-    if (var1 == 0) {
+extern "C" ARM int func_ov000_02159dbc(char* battle, int combatantId) {
+    GameState* gs = GameState::GetInstance();
+    GameObject* combatant = func_0200fea4(GameState::GetInstance(), combatantId);
+    if (combatant == 0) {
         return 1;
     }
-    struct Struct_ov000_02159dbc* var2 =
-        (struct Struct_ov000_02159dbc*)func_ov000_02153758(arg0, arg1);
-    if (var2 == 0) {
+    struct Struct_ov000_02159dbc* entry =
+        (struct Struct_ov000_02159dbc*)func_ov000_02153758(battle, combatantId);
+    if (entry == 0) {
         return 1;
     }
     char* zone = Zone3D_GetInstance();
@@ -36,12 +36,12 @@ extern "C" ARM int func_ov000_02159dbc(char* arg0, int arg1) {
 #else
         enum { Enum_ov000_02159dbc_9196 = 0x23ec };
 #endif
-        DetailedTreasureMapData* var4 = ((ActiveGrottoClass*)(var3 + Enum_ov000_02159dbc_9196))->GetDetailedData();
-        short var5 = var1->obj3D_.unknown_2_;
-        unsigned short var6 = var4->legacy_.MaybeGetCurrentAlternateID();
-        if (var6 == var5) {
-            return var4->legacy_.level_;
+        DetailedTreasureMapData* detail = ((ActiveGrottoClass*)(zone + Enum_ov000_02159dbc_9196))->GetDetailedData();
+        short monsterId = combatant->obj3D_.unknown_2_;
+        unsigned short var6 = detail->legacy_.MaybeGetCurrentAlternateID();
+        if (var6 == monsterId) {
+            return detail->legacy_.level_;
         }
     }
-    return var2->unknown_a_0_;
+    return entry->level;
 }

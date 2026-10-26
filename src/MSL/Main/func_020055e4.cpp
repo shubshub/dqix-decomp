@@ -3,20 +3,20 @@
 extern const unsigned short data_020e69ac[128];
 extern const unsigned char data_020e692c[128];
 
-static inline int inline_020055e4(int arg0) {
-    return ((arg0 < 0) || (arg0 >= 128)) ? 0 : (int)(data_020e69ac[arg0] & 0x001);
+static inline int inline_020055e4(int c) {
+    return ((c < 0) || (c >= 128)) ? 0 : (int)(data_020e69ac[c] & 0x001);
 }
 
-static inline int inline_020055e4_2(int arg0) {
-    return ((arg0 < 0) || (arg0 >= 128)) ? 0 : (int)(data_020e69ac[arg0] & 0x008);
+static inline int inline_020055e4_2(int c) {
+    return ((c < 0) || (c >= 128)) ? 0 : (int)(data_020e69ac[c] & 0x008);
 }
 
-static inline int inline_020055e4_3(int arg0) {
-    return ((arg0 < 0) || (arg0 >= 128)) ? 0 : (int)(data_020e69ac[arg0] & 0x100);
+static inline int inline_020055e4_3(int c) {
+    return ((c < 0) || (c >= 128)) ? 0 : (int)(data_020e69ac[c] & 0x100);
 }
 
-static inline int inline_020055e4_4(int arg0) {
-    return ((arg0 < 0) || (arg0 >= 128)) ? arg0 : (int)(data_020e692c[arg0]);
+static inline int inline_020055e4_4(int c) {
+    return ((c < 0) || (c >= 128)) ? c : (int)(data_020e692c[c]);
 }
 
 enum Enum_020055e4 {
@@ -32,39 +32,39 @@ enum Enum_020055e4 {
 typedef int (*Type_020055e4)(void* arg, int c, int action);
 
 // USA: func_020055e4
-extern "C" ARM unsigned long func_020055e4(int arg0, int arg1, Type_020055e4 arg2, void* arg3,
+extern "C" ARM unsigned long func_020055e4(int base, int arg1, Type_020055e4 arg2, void* arg3,
                                            int* arg4, int* arg5, int* arg6) {
     int var0 = Enum_020055e4_1;
-    int var1 = 0;
+    int count = 0;
     int var2 = 0;
-    unsigned long var3 = 0;
+    unsigned long value = 0;
     unsigned long var4 = 0;
-    int var5;
+    int c;
 
     *arg5 = *arg6 = 0;
 
-    if (arg0 < 0 || arg0 == 1 || arg0 > 36 || arg1 < 1)
+    if (base < 0 || base == 1 || base > 36 || arg1 < 1)
         var0 = Enum_020055e4_64;
     else
-        var5 = (var1++, arg2(arg3, 0, 0));
+        c = (count++, arg2(arg3, 0, 0));
 
-    if (arg0)
-        var4 = 0xffffffff / arg0;
+    if (base)
+        var4 = 0xffffffff / base;
 
-    while (var1 <= arg1 && var5 != -1 && !(var0 & (Enum_020055e4_32 | Enum_020055e4_64))) {
+    while (count <= arg1 && c != -1 && !(var0 & (Enum_020055e4_32 | Enum_020055e4_64))) {
         switch (var0) {
             case Enum_020055e4_1:
-                if (inline_020055e4_3(var5)) {
-                    var5 = (var1++, arg2(arg3, 0, 0));
-                    var1--;
+                if (inline_020055e4_3(c)) {
+                    c = (count++, arg2(arg3, 0, 0));
+                    count--;
                     var2++;
                     break;
                 }
 
-                if (var5 == '+')
-                    var5 = (var1++, arg2(arg3, 0, 0));
-                else if (var5 == '-') {
-                    var5 = (var1++, arg2(arg3, 0, 0));
+                if (c == '+')
+                    c = (count++, arg2(arg3, 0, 0));
+                else if (c == '-') {
+                    c = (count++, arg2(arg3, 0, 0));
                     *arg5 = 1;
                 }
 
@@ -72,10 +72,10 @@ extern "C" ARM unsigned long func_020055e4(int arg0, int arg1, Type_020055e4 arg
                 break;
 
             case Enum_020055e4_2:
-                if (arg0 == 0 || arg0 == 16) {
-                    if (var5 == '0') {
+                if (base == 0 || base == 16) {
+                    if (c == '0') {
                         var0 = Enum_020055e4_4;
-                        var5 = (var1++, arg2(arg3, 0, 0));
+                        c = (count++, arg2(arg3, 0, 0));
                         break;
                     }
                 }
@@ -84,38 +84,38 @@ extern "C" ARM unsigned long func_020055e4(int arg0, int arg1, Type_020055e4 arg
                 break;
 
             case Enum_020055e4_4:
-                if (var5 == 'X' || var5 == 'x') {
-                    arg0 = 16;
+                if (c == 'X' || c == 'x') {
+                    base = 16;
                     var0 = Enum_020055e4_8;
-                    var5 = (var1++, arg2(arg3, 0, 0));
+                    c = (count++, arg2(arg3, 0, 0));
                     break;
                 }
 
-                if (arg0 == 0)
-                    arg0 = 8;
+                if (base == 0)
+                    base = 8;
 
                 var0 = Enum_020055e4_16;
                 break;
 
             case Enum_020055e4_8:
             case Enum_020055e4_16:
-                if (arg0 == 0)
-                    arg0 = 10;
+                if (base == 0)
+                    base = 10;
 
                 if (!var4)
-                    var4 = 0xffffffff / arg0;
+                    var4 = 0xffffffff / base;
 
-                if (inline_020055e4_2(var5)) {
-                    if ((var5 -= '0') >= arg0) {
+                if (inline_020055e4_2(c)) {
+                    if ((c -= '0') >= base) {
                         if (var0 == Enum_020055e4_16)
                             var0 = Enum_020055e4_32;
                         else
                             var0 = Enum_020055e4_64;
 
-                        var5 += '0';
+                        c += '0';
                         break;
                     }
-                } else if (!inline_020055e4(var5) || (inline_020055e4_4(var5) - 'A' + 10) >= arg0) {
+                } else if (!inline_020055e4(c) || (inline_020055e4_4(c) - 'A' + 10) >= base) {
                     if (var0 == Enum_020055e4_16)
                         var0 = Enum_020055e4_32;
                     else
@@ -123,35 +123,35 @@ extern "C" ARM unsigned long func_020055e4(int arg0, int arg1, Type_020055e4 arg
 
                     break;
                 } else
-                    var5 = inline_020055e4_4(var5) - 'A' + 10;
+                    c = inline_020055e4_4(c) - 'A' + 10;
 
-                if (var3 > var4)
+                if (value > var4)
                     *arg6 = 1;
 
-                var3 *= arg0;
+                value *= base;
 
-                if (var5 > (0xffffffff - var3))
+                if (c > (0xffffffff - value))
                     *arg6 = 1;
 
-                var3 += var5;
+                value += c;
 
                 var0 = Enum_020055e4_16;
 
-                var5 = (var1++, arg2(arg3, 0, 0));
+                c = (count++, arg2(arg3, 0, 0));
                 break;
         }
     }
 
     if (!(var0 & (Enum_020055e4_4 | Enum_020055e4_16 | Enum_020055e4_32))) {
-        var1 = 0;
-        var3 = 0;
+        count = 0;
+        value = 0;
         *arg4 = 0;
     } else {
-        var1--;
-        *arg4 = var1 + var2;
+        count--;
+        *arg4 = count + var2;
     }
 
-    arg2(arg3, var5, 1);
+    arg2(arg3, c, 1);
 
-    return var3;
+    return value;
 }

@@ -2,7 +2,7 @@
 #include "std_library_functions.h"
 
 extern char* data_02105244;  // the CachedTextTable
-void CachedTextTable_ReleaseText(char* table, short* indexPtr);
+extern "C" void CachedTextTable_ReleaseText(char* table, short* indexPtr);
 
 // Offsets in a text label (Struct0203c1c8)
 #if defined(jpn)
@@ -16,7 +16,7 @@ enum { kEntryIndex = 0x14 };
 #endif
 
 // Main, originally ReleaseGlobalEntry0203c198 (USA 0x0203c198, EUR 0x0203c1a8, JPN 0x0203bd00)
-ARM void CachedTextLabel_Release(char* label) {
+extern "C" ARM void CachedTextLabel_Release(char* label) {
     if (data_02105244 == NULL) return;
 #if defined(jpn)
     CachedTextTable_ReleaseText(data_02105244, reinterpret_cast<short*>(label));

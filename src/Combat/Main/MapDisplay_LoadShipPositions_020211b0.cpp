@@ -6,8 +6,8 @@
 struct State0xbb1c;
 struct Obj0203bb3c;
 
-void BgImage_Clear(State0xbb1c *state);
-void BgImage_Load(Obj0203bb3c *state, char *source, SafeAllocator *allocator, int category,
+extern "C" void BgImage_Clear(State0xbb1c *state);
+extern "C" void BgImage_Load(Obj0203bb3c *state, char *source, SafeAllocator *allocator, int category,
                                           unsigned short flags);
 
 // One piece of the map (MapDisplay::names): a name the map script gives, whose "<name>.obg" BG tile image is
@@ -31,7 +31,7 @@ struct MapDisplayPieces_020210f8 {
 struct Stream0200fd14 {
     char *ptr;
 };
-void ByteStream_Read(Stream0200fd14 *stream, void *dst, unsigned int length);
+extern "C" void ByteStream_Read(Stream0200fd14 *stream, void *dst, unsigned int length);
 extern "C" void *__clear(void *dst, int count);
 
 // One entry of the MapDisplay's zone list (header field754, built by the map script): the zones this map covers.

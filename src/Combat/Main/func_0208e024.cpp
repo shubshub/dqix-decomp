@@ -1,41 +1,41 @@
 #include <globaldefs.h>
 
 struct Struct_0208e024_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_0_ : 9;
+    unsigned short field0;
+    unsigned short low : 9;
 #if defined(jpn)
-    unsigned short unknown_3_1_ : 7;
-    int unknown_4_;
-    int unknown_8_;
+    unsigned short kind : 7;
+    int field4;
+    int field8;
 #else
-    unsigned short unknown_3_1_ : 6;
-    unsigned short unknown_3_7_ : 1;
-    int unknown1_4_;
+    unsigned short kind : 6;
+    unsigned short high : 1;
+    int field4;
 #endif
-    struct Struct_0208e024_2* unknown1_8_;
+    struct Struct_0208e024_2* next;
 };
 
 struct Struct_0208e024 {
-    struct Struct_0208e024_2* unknown_0_;
+    struct Struct_0208e024_2* head;
 };
 
 // USA: func_0208e024
-extern "C" ARM struct Struct_0208e024_2* func_0208e024(struct Struct_0208e024* arg0, int arg1, int arg2) {
-    struct Struct_0208e024_2* var0;
-    unsigned char var1;
-    var0 = arg0->unknown_0_;
-    if (var0 == NULL) {
+extern "C" ARM struct Struct_0208e024_2* func_0208e024(struct Struct_0208e024* list, int kind, int index) {
+    struct Struct_0208e024_2* n;
+    unsigned char count;
+    n = list->head;
+    if (n == NULL) {
         return NULL;
     }
-    var1 = 0;
-    while (var0 != NULL) {
-        if (arg1 == var0->unknown_3_1_) {
-            if (var1 == arg2) {
-                return var0;
+    count = 0;
+    while (n != NULL) {
+        if (kind == n->kind) {
+            if (count == index) {
+                return n;
             }
-            var1++;
+            count++;
         }
-        var0 = var0->unknown1_8_;
+        n = n->next;
     }
-    return var0;
+    return n;
 }

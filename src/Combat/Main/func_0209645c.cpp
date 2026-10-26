@@ -1,32 +1,32 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void func_020960cc(int arg0, unsigned char* arg1, int arg2);
+extern "C" void func_020960cc(int unused, unsigned char* arr, int index);
 
 struct Struct_0209645c {
-    unsigned int unknown_0_0_ : 9;
-    unsigned char unknown_2_[12];
+    unsigned int id : 9;
+    unsigned char pad[12];
 };
 
 struct Struct_0209645c_2 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[3];
-    Struct_0209645c unknown_4_[9];
+    unsigned char count;
+    unsigned char pad[3];
+    Struct_0209645c entries[9];
 };
 
 // USA: func_0209645c
-extern "C" ARM int func_0209645c(Struct_0209645c_2* arg0, int arg1) {
-    if (arg1 < 0 || arg0->unknown_0_ == 0) return 0;
-    int var0;
-    for (var0 = 0; var0 < arg0->unknown_0_; var0++) {
-        if (arg1 == (int)arg0->unknown_4_[var0].unknown_0_0_) break;
+extern "C" ARM int func_0209645c(Struct_0209645c_2* list, int value) {
+    if (value < 0 || list->count == 0) return 0;
+    int i;
+    for (i = 0; i < list->count; i++) {
+        if (value == (int)list->entries[i].id) break;
     }
-    if (var0 == arg0->unknown_0_) return 0;
-    func_020960cc((int)arg0, (unsigned char*)arg0 + 0x4a8, arg1);
+    if (i == list->count) return 0;
+    func_020960cc((int)list, (unsigned char*)list + 0x4a8, value);
     Struct_0209645c var1[9];
     memset(var1, 0, sizeof(var1));
-    memcpy(var1, arg0->unknown_4_, 0x80);
-    memcpy(&arg0->unknown_4_[var0], &var1[var0 + 1], (arg0->unknown_0_ - var0) * 16);
-    arg0->unknown_0_ = arg0->unknown_0_ - 1;
+    memcpy(var1, list->entries, 0x80);
+    memcpy(&list->entries[i], &var1[i + 1], (list->count - i) * 16);
+    list->count = list->count - 1;
     return 1;
 }

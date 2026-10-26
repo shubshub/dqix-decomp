@@ -4,6 +4,6 @@ extern "C" unsigned char* func_ov017_0219219c(void);
 
 // USA: func_ov017_02191b58
 extern "C" ARM int func_ov017_02191b58(void*, int) {
-	unsigned char* var0 = func_ov017_0219219c();
-	return var0 ? *var0 : 0;
+	unsigned char* p = func_ov017_0219219c();
+	return p ? *p : 0;
 }

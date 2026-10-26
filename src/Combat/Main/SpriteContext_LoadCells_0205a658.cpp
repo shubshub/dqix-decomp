@@ -2,43 +2,43 @@
 #include <Memory/SafeAllocator.h>
 #include <std_library_functions.h>
 
-struct Struct_0205a658 { unsigned short unknown_0_, unknown_2_, unknown_4_; };
-struct Struct_02043368_2 {
-    unsigned short unknown_0_, unknown_2_;
-    Struct_0205a658* unknown_4_;
-    Struct_0205a658* unknown_8_;
+struct Struct_0205a658 { unsigned short y, x, attributes; };
+struct Struct0205a198 {
+    unsigned short count, flags;
+    Struct_0205a658* cells;
+    Struct_0205a658* copy;
     char unknown_c_[0x12];
-    unsigned short unknown_1e_;
+    unsigned short index;
     char unknown_20_[2];
-    unsigned char unknown_22_;
+    unsigned char firstCell;
     char unknown_23_[5];
 };
 struct Struct_0205a658_2 {
-    unsigned short unknown_0_, unknown_2_;
+    unsigned short count, unknown_2_;
     int unknown_4_, unknown_8_;
 };
-struct Struct_0205a658_3 {
+struct CellScript0205a658 {
     char unknown_0_[0x38];
     int unknown_38_;
     int unknown_3c_;
-    Struct_02043368_2* unknown_40_;
+    Struct0205a198* records;
     int unknown_44_;
-    unsigned int unknown_48_;
-    unsigned short unknown_4c_, unknown_4e_;
+    unsigned int capacity;
+    unsigned short recordCount, unknown_4e_;
 };
-int GetCellBankBlock_020b00a4(void*, void**);
-void* GetEntryVarStride_020b00e0(Hdr02b00e0*, unsigned int);
-void Sprite_Init(Struct0205a198*);
+extern "C" int func_020b00a4(void*, void**);
+extern "C" void* func_020b00e0(Struct_0205a658_2*, unsigned int);
+extern "C" void Sprite_Init(Struct0205a198*);
 
 // Main, originally func_0205a658 (USA 0x0205a658, EUR 0x0205a668, JPN 0x0205b9f4)
 extern "C" ARM int SpriteContext_LoadCells(CellScript0205a658* self, void* data, unsigned int length, SafeAllocator* allocator) {
     void* buffer = data;
-    Hdr02b00e0* header;
+    Struct_0205a658_2* header;
     if (!buffer) buffer = 0;
     else if (!length) buffer = 0;
     else {
-        memcpy(var0, arg1, arg2);
-        if (!func_020b00a4(var0, (void**)&var1)) var0 = 0;
+        memcpy(buffer, data, length);
+        if (!func_020b00a4(buffer, (void**)&header)) buffer = 0;
     }
     if (!buffer) return 1;
     if (allocator && !self->records) {
@@ -46,85 +46,85 @@ extern "C" ARM int SpriteContext_LoadCells(CellScript0205a658* self, void* data,
         self->records = (Struct0205a198*)allocator->Allocate(self->recordCount * sizeof(Struct0205a198));
         for (unsigned short i = 0; i < self->recordCount; ++i) Sprite_Init(&self->records[i]);
     }
-    Struct_02043368_2* var3;
-    unsigned short var4 = arg0->unknown_4c_;
-    unsigned short var5;
-    var3 = arg0->unknown_40_;
-    if (var3 && var4 && arg3) {
-        Struct_02043368_2* var6;
-        Struct_02043368_2* var7;
-        unsigned short var8;
-        var5 = var1->unknown_0_;
-        unsigned short var9 = 0;
-        for (var8 = 0; var8 < var5; ++var8) {
-            if (var4 <= var8) break;
-            var7 = (Struct_02043368_2*)func_020b00e0(var1, var8);
-            if (!var7) break;
-            unsigned short var10 = var7->unknown_0_;
-            var6 = &var3[var8];
-            var6->unknown_1e_ = var8;
-            var6->unknown_22_ = var9;
-            var6->unknown_0_ = var7->unknown_0_;
-            var6->unknown_2_ = var7->unknown_2_;
-            var6->unknown_4_ = var7->unknown_4_;
-            Struct_0205a658* var11 = (Struct_0205a658*)arg3->Allocate(var10 * sizeof(Struct_0205a658));
-            var6->unknown_8_ = var11;
-            var6->unknown_4_ = var11;
-            for (unsigned short var12 = 0; var12 < var7->unknown_0_; ++var12) {
-                Struct_0205a658* var13 = &var7->unknown_4_[var12];
-                Struct_0205a658* var14 = &var6->unknown_8_[var12];
-                var14->unknown_0_ = var13->unknown_0_;
-                var14->unknown_2_ = var13->unknown_2_;
-                var14->unknown_4_ = var13->unknown_4_;
+    Struct0205a198* records;
+    unsigned short recordCount = self->recordCount;
+    unsigned short count;
+    records = self->records;
+    if (records && recordCount && allocator) {
+        Struct0205a198* record;
+        Struct0205a198* entry;
+        unsigned short i;
+        count = header->count;
+        unsigned short total = 0;
+        for (i = 0; i < count; ++i) {
+            if (recordCount <= i) break;
+            entry = (Struct0205a198*)func_020b00e0(header, i);
+            if (!entry) break;
+            unsigned short cellCount = entry->count;
+            record = &records[i];
+            record->index = i;
+            record->firstCell = total;
+            record->count = entry->count;
+            record->flags = entry->flags;
+            record->cells = entry->cells;
+            Struct_0205a658* allocated = (Struct_0205a658*)allocator->Allocate(cellCount * sizeof(Struct_0205a658));
+            record->copy = allocated;
+            record->cells = allocated;
+            for (unsigned short j = 0; j < entry->count; ++j) {
+                Struct_0205a658* from = &entry->cells[j];
+                Struct_0205a658* to = &record->copy[j];
+                to->y = from->y;
+                to->x = from->x;
+                to->attributes = from->attributes;
             }
-            var9 += var7->unknown_0_;
+            total += entry->count;
         }
     }
-    arg0->unknown_4e_ = var1->unknown_0_;
-    arg0->unknown_38_ = var1->unknown_8_;
-    int var15;
-    Struct_02043368_2* var16 = (Struct_02043368_2*)func_020b00e0(var1, (unsigned short)(var1->unknown_0_ - 1));
-    if (!var16) return 1;
-    struct { int unknown_0_; Struct_0205a658* unknown_4_; } var17;
-    var17.unknown_0_ = arg0->unknown_38_;
-    var17.unknown_4_ = &var16->unknown_4_[var16->unknown_0_ - 1];
-    var15 = var17.unknown_0_;
-    Struct_0205a658* var18 = var17.unknown_4_;
-    unsigned int var19 = var18->unknown_4_;
-    int var20 = var18->unknown_2_;
-    int var21 = var18->unknown_0_;
-    unsigned int var22 = var15 + 5;
-    unsigned int var23 = (var19 & 0x3ff) << var22;
-    unsigned int var24 = (var20 & 0xc000) >> 14;
-    unsigned int var25 = (var21 & 0xc000) >> 14;
-    unsigned int var26 = 5;
-    switch (var25) {
+    self->unknown_4e_ = header->count;
+    self->unknown_38_ = header->unknown_8_;
+    int mode;
+    Struct0205a198* last = (Struct0205a198*)func_020b00e0(header, (unsigned short)(header->count - 1));
+    if (!last) return 1;
+    struct { int unknown_0_; Struct_0205a658* cell; } var17;
+    var17.unknown_0_ = self->unknown_38_;
+    var17.cell = &last->cells[last->count - 1];
+    mode = var17.unknown_0_;
+    Struct_0205a658* cell = var17.cell;
+    unsigned int attributes = cell->attributes;
+    int x = cell->x;
+    int y = cell->y;
+    unsigned int minimum = mode + 5;
+    unsigned int tiles = (attributes & 0x3ff) << minimum;
+    unsigned int size = (x & 0xc000) >> 14;
+    unsigned int shape = (y & 0xc000) >> 14;
+    unsigned int shift = 5;
+    switch (shape) {
     case 0:
-        switch (var24) {
-        case 0: var26 = 5; break;
-        case 1: var26 = 7; break;
-        case 2: var26 = 9; break;
-        case 3: var26 = 11; break;
+        switch (size) {
+        case 0: shift = 5; break;
+        case 1: shift = 7; break;
+        case 2: shift = 9; break;
+        case 3: shift = 11; break;
         }
         break;
     case 1:
-        switch (var24) {
-        case 0: var26 = 6; break;
-        case 1: var26 = 7; break;
-        case 2: var26 = 8; break;
-        case 3: var26 = 10; break;
+        switch (size) {
+        case 0: shift = 6; break;
+        case 1: shift = 7; break;
+        case 2: shift = 8; break;
+        case 3: shift = 10; break;
         }
         break;
     case 2:
-        switch (var24) {
-        case 0: var26 = 6; break;
-        case 1: var26 = 7; break;
-        case 2: var26 = 8; break;
-        case 3: var26 = 10; break;
+        switch (size) {
+        case 0: shift = 6; break;
+        case 1: shift = 7; break;
+        case 2: shift = 8; break;
+        case 3: shift = 10; break;
         }
         break;
     }
-    if (var22 < var26) var22 = var26;
-    arg0->unknown_48_ = var23 + (1 << var22);
+    if (minimum < shift) minimum = shift;
+    self->capacity = tiles + (1 << minimum);
     return 0;
 }

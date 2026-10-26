@@ -9,22 +9,22 @@ enum { Enum_ov000_02163928_30524 = 0x773c, Enum_ov000_02163928_30528 = 0x7740 };
 extern char data_ov000_021838df[];
 
 // USA: func_ov000_02163928
-extern "C" ARM void func_ov000_02163928(char* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1;
-    for (var1 = 0; var1 < 4; var1++) {
-        signed char var2 = *(signed char*)(arg0 + Enum_ov000_02163928_30524 + var1);
+extern "C" ARM void func_ov000_02163928(char* obj) {
+    GameState* battle = GameState::GetInstance();
+    int i;
+    for (i = 0; i < 4; i++) {
+        signed char var2 = *(signed char*)(obj + Enum_ov000_02163928_30524 + i);
         if (var2 < 0) continue;
-        int var3 = *(unsigned char*)(arg0 + Enum_ov000_02163928_30528 + var1);
-        var3--;
-        if (var3 <= 0) {
-            *(signed char*)(arg0 + Enum_ov000_02163928_30524 + var1) = -1;
-            GameObject* var4 = func_0200ff1c(var0, var2);
-            if (var4 != 0) {
-                var4->obj3D_.MaybeSetRegularAnimation((char const*)data_ov000_021838df, 1);
+        int counter = *(unsigned char*)(obj + Enum_ov000_02163928_30528 + i);
+        counter--;
+        if (counter <= 0) {
+            *(signed char*)(obj + Enum_ov000_02163928_30524 + i) = -1;
+            GameObject* c = func_0200ff1c(battle, var2);
+            if (c != 0) {
+                c->obj3D_.SetAnimationByName((char const*)data_ov000_021838df, 1);
             }
         } else {
-            *(unsigned char*)(arg0 + Enum_ov000_02163928_30528 + var1) = var3;
+            *(unsigned char*)(obj + Enum_ov000_02163928_30528 + i) = counter;
         }
     }
 }

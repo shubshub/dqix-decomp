@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 struct Struct_02057334_2 {
-    char unknown_0_[0x4];
-    unsigned int unknown_4_;
-    unsigned int unknown_8_;
+    char pad0[0x4];
+    unsigned int field4;
+    unsigned int field8;
     unsigned char unknown_c_;
     char unknown_d_[0x34 - 0xd];
     struct Struct_02057334_2* unknown_34_;
@@ -14,20 +14,20 @@ struct Struct_02057334_2 {
 };
 
 // USA: func_02057854
-extern "C" ARM int func_02057854(struct Struct_02057334_2* arg0) {
-    struct Struct_02057334_2* var0;
-    if (arg0->unknown_c_ != 0) return 0;
-    if (arg0->unknown_39_ != 0) return 0;
-    if (arg0->unknown_38_ == 0) {
-        for (var0 = arg0->unknown_34_; var0 != 0; var0 = var0->unknown_148_) {
-            int var1;
-            if (var0->unknown_c_ != 0) {
-                var1 = 0;
+extern "C" ARM int func_02057854(struct Struct_02057334_2* node) {
+    struct Struct_02057334_2* child;
+    if (node->unknown_c_ != 0) return 0;
+    if (node->unknown_39_ != 0) return 0;
+    if (node->unknown_38_ == 0) {
+        for (child = node->unknown_34_; child != 0; child = child->unknown_148_) {
+            int ok;
+            if (child->unknown_c_ != 0) {
+                ok = 0;
             } else {
-                var1 = var0->unknown_8_ <= var0->unknown_4_;
+                ok = child->field8 <= child->field4;
             }
-            if (!var1) return 0;
+            if (!ok) return 0;
         }
     }
-    return arg0->unknown_8_ < arg0->unknown_4_;
+    return node->field8 < node->field4;
 }

@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
-extern "C" int func_020ce4e8(int arg0, int arg1, int arg2, void* arg3, int* arg4);
+extern "C" int func_020ce4e8(int a, int b, int c, void* callback, int* out);
 
 // USA: func_020ce5b0
-extern "C" ARM int func_020ce5b0(int arg0, void (*arg1)(void), int* arg2) {
+extern "C" ARM int func_020ce5b0(int a, void (*callback)(void), int* out) {
     int var0;
-    switch (arg0) {
+    switch (a) {
         case 1: var0 = 1; break;
         case 3: var0 = 2; break;
         case 2: var0 = 3; break;
@@ -14,5 +14,5 @@ extern "C" ARM int func_020ce5b0(int arg0, void (*arg1)(void), int* arg2) {
     if (var0 == 0) {
         return 0xffff;
     }
-    return func_020ce4e8(var0, 0, 0, (void*)arg1, arg2);
+    return func_020ce4e8(var0, 0, 0, (void*)callback, out);
 }

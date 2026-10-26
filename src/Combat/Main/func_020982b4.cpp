@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
-extern "C" void func_02098364(void* arg0);
+extern "C" void func_02098364(void* entry);
 
 struct Struct_020982b4_2 {
-    unsigned char unknown_0_[0xe8];
+    unsigned char pad[0xe8];
 };
 
 struct Struct_020982b4 {
-    unsigned char unknown_0_[0xb34];
+    unsigned char pad0[0xb34];
     int unknown_b34_;
     int unknown_b38_;
     int unknown_b3c_;
@@ -28,32 +28,32 @@ struct Struct_020982b4 {
 };
 
 // USA: func_020982b4
-extern "C" ARM void func_020982b4(Struct_020982b4_2* arg0) {
-    Struct_020982b4* var0 = (Struct_020982b4*)((char*)arg0 + 0x1000);
-    int var1 = 0;
-    var0->unknown_b34_ = var1;
-    var0->unknown_b38_ = var1;
-    var0->unknown_b3c_ = 1;
-    var0->unknown_b40_ = 1;
-    var0->unknown_b41_ = 1;
-    var0->unknown_b42_ = var1;
-    var0->unknown_b44_ = var1;
-    var0->unknown_b48_ = var1;
-    var0->unknown_b4c_ = var1;
-    var0->unknown_b50_ = var1;
-    var0->unknown_b54_ = var1;
-    var0->unknown_b60_ = 1;
-    var0->unknown_b61_ = var1;
-    var0->unknown_b62_ = var1;
-    *(unsigned short*)((char*)arg0 + 0x1b64) = var1;
-    var0->unknown_b58_ = var1;
-    Struct_020982b4_2* var2 = arg0;
-    var0->unknown_b5c_ = var1;
-    for (int var3 = 0; var3 < 30; var3++, var2++) {
-        func_02098364(var2);
+extern "C" ARM void func_020982b4(Struct_020982b4_2* arr) {
+    Struct_020982b4* ctx = (Struct_020982b4*)((char*)arr + 0x1000);
+    int zero = 0;
+    ctx->unknown_b34_ = zero;
+    ctx->unknown_b38_ = zero;
+    ctx->unknown_b3c_ = 1;
+    ctx->unknown_b40_ = 1;
+    ctx->unknown_b41_ = 1;
+    ctx->unknown_b42_ = zero;
+    ctx->unknown_b44_ = zero;
+    ctx->unknown_b48_ = zero;
+    ctx->unknown_b4c_ = zero;
+    ctx->unknown_b50_ = zero;
+    ctx->unknown_b54_ = zero;
+    ctx->unknown_b60_ = 1;
+    ctx->unknown_b61_ = zero;
+    ctx->unknown_b62_ = zero;
+    *(unsigned short*)((char*)arr + 0x1b64) = zero;
+    ctx->unknown_b58_ = zero;
+    Struct_020982b4_2* p = arr;
+    ctx->unknown_b5c_ = zero;
+    for (int i = 0; i < 30; i++, p++) {
+        func_02098364(p);
     }
-    for (int var4 = 0; var4 < 3; var4++) {
-        *(int*)((char*)arg0 + var4 * 4 + 0x1b68) = -1;
+    for (int i = 0; i < 3; i++) {
+        *(int*)((char*)arr + i * 4 + 0x1b68) = -1;
     }
-    *(int*)((char*)arg0 + 0x1b74) = 0;
+    *(int*)((char*)arr + 0x1b74) = 0;
 }

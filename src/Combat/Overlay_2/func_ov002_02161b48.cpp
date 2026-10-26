@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-extern "C" int func_0205d97c(void* arg0);
+extern "C" int func_0205d97c(void* p);
 
 #if defined(jpn)
 #define RG(u, j) (j)
@@ -10,12 +10,12 @@ extern "C" int func_0205d97c(void* arg0);
 #endif
 
 // USA: func_ov002_02161b48
-extern "C" ARM int func_ov002_02161b48(char* arg0, int arg1) {
+extern "C" ARM int func_ov002_02161b48(char* base, int flag) {
     if (g_keyManager.TestKeysPressed(2)) {
         return 1;
     }
-    if (arg1) {
-        if (func_0205d97c(arg0 + RG(0xec8, 0xe20)) == 2) {
+    if (flag) {
+        if (func_0205d97c(base + RG(0xec8, 0xe20)) == 2) {
             return 1;
         }
     }

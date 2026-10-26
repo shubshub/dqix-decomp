@@ -9,8 +9,8 @@
 #endif
 
 // USA: func_ov000_02163b60
-extern "C" ARM void func_ov000_02163b60(void* arg0) {
-    unsigned char* var0 = (unsigned char*)arg0;
-    var0[REGION_OFFSET_0] = 0;
-    for (int var1 = 0; var1 < 3; var1++) *(unsigned short*)(var0 + REGION_OFFSET_1 + var1 * 2) = 0;
+extern "C" ARM void func_ov000_02163b60(void* obj) {
+    unsigned char* p = (unsigned char*)obj;
+    p[REGION_OFFSET_0] = 0;
+    for (int i = 0; i < 3; i++) *(unsigned short*)(p + REGION_OFFSET_1 + i * 2) = 0;
 }

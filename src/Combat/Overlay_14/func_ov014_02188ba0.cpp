@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
 struct Struct_ov014_02188ba0 {
-	int unknown_0_;
-	int unknown_4_;
+	int unused0;
+	int unused4;
 	int unknown_8_;
 	int unknown_c_;
-	char* unknown_10_;
+	char* buf;
 };
 
 // USA: func_ov014_02188ba0
-extern "C" ARM char* func_ov014_02188ba0(struct Struct_ov014_02188ba0* arg0, char* arg1, char* arg2) {
+extern "C" ARM char* func_ov014_02188ba0(struct Struct_ov014_02188ba0* s, char* key, char* arg2) {
 	int var0 = 1;
-	int var1 = (int)(arg1 - (char*)0);
-	if (var1 != -1 && arg0->unknown_10_ != NULL) {
+	int offset = (int)(key - (char*)0);
+	if (offset != -1 && s->buf != NULL) {
 		var0 = 0;
 	}
 	if (var0 == 0) {
-		arg2 = arg0->unknown_10_ + var1;
+		arg2 = s->buf + offset;
 	}
 	return arg2;
 }

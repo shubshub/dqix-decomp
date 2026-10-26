@@ -1,25 +1,25 @@
 #include <globaldefs.h>
 
-struct Struct_02039e7c;
-extern "C" void func_02039ee8(struct Struct_02039e7c* arg0);
+struct ResetStruct_39ee8;
+extern "C" void NumberPopup_Clear(struct ResetStruct_39ee8* s);
 
 struct Struct_0203a588 {
-    char unknown_0_[5];
-    signed char unknown_5_;
-    char unknown_6_[18];
+    char pad0[5];
+    signed char flag;
+    char pad1[18];
 };
 
-struct Struct_0203a588_2 {
-    char unknown_0_[0x550];
-    struct Struct_0203a588 unknown_550_[16];
+struct Obj0203a588 {
+    char pad0[0x550];
+    struct Struct_0203a588 entries[16];
 };
 
 // USA: func_0203a588
-extern "C" ARM void func_0203a588(struct Struct_0203a588_2* arg0) {
-    int var0;
-    for (var0 = 0; var0 < 16; var0++) {
-        if (arg0->unknown_550_[var0].unknown_5_ < 0x23) {
-            func_02039ee8((struct Struct_02039e7c*)&arg0->unknown_550_[var0]);
+extern "C" ARM void func_0203a588(struct Obj0203a588* obj) {
+    int i;
+    for (i = 0; i < 16; i++) {
+        if (obj->entries[i].flag < 0x23) {
+            NumberPopup_Clear((struct ResetStruct_39ee8*)&obj->entries[i]);
         }
     }
 }

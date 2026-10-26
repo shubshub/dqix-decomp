@@ -6,32 +6,32 @@
 extern "C" void func_ov000_02169b78(void*);
 
 struct Struct_ov000_02184264_2 {
-    unsigned char unknown_0_[8];
-    SafeAllocator* unknown_8_;
+    unsigned char pad[8];
+    SafeAllocator* alloc;
 };
 extern struct Struct_ov000_02184264_2 data_ov000_02184264;
 
-struct Struct_0201c1c8 { int unknown_0_; int unknown_4_; };
-struct Struct_0201c3a4 { unsigned char unknown_0_[0x8]; };
+struct Variant02030b0c { int tag; int u; };
+struct Struct02030b7c { unsigned char pad[0x8]; };
 
 struct Struct_ov000_0216ac90 {
-    int unknown_0_;
-    int unknown_4_;
-    unsigned char unknown_8_;
-    char* unknown_c_;
+    int tag;
+    int unused;
+    unsigned char value;
+    char* str;
 };
 
 // USA: func_ov000_0216ac90
-extern "C" ARM int func_ov000_0216ac90(struct Struct_0201c1c8* arg0) {
-    struct Struct_ov000_0216ac90* var0 = (struct Struct_ov000_0216ac90*)data_ov000_02184264.unknown_8_->Allocate(sizeof(struct Struct_ov000_0216ac90));
-    var0->unknown_0_ = 0;
-    var0->unknown_4_ = 0;
-    var0->unknown_0_ = 0x21;
-    var0->unknown_8_ = (unsigned char)((Script::Parameter*)arg0)->ToInt();
-    char* var1 = (char*)((Script::Parameter*)((struct Struct_0201c3a4*)((char*)arg0 + 8)))->ToString();
-    char* var2 = (char*)data_ov000_02184264.unknown_8_->Allocate(strlen(var1) + 1);
-    var0->unknown_c_ = var2;
-    strcpy(var2, var1);
-    func_ov000_02169b78(var0);
+extern "C" ARM int func_ov000_0216ac90(struct Variant02030b0c* v) {
+    struct Struct_ov000_0216ac90* node = (struct Struct_ov000_0216ac90*)data_ov000_02184264.alloc->Allocate(sizeof(struct Struct_ov000_0216ac90));
+    node->tag = 0;
+    node->unused = 0;
+    node->tag = 0x21;
+    node->value = (unsigned char)((Script::Parameter*)v)->ToInt();
+    char* src = (char*)((Script::Parameter*)((struct Struct02030b7c*)((char*)v + 8)))->ToString();
+    char* dst = (char*)data_ov000_02184264.alloc->Allocate(strlen(src) + 1);
+    node->str = dst;
+    strcpy(dst, src);
+    func_ov000_02169b78(node);
     return 1;
 }

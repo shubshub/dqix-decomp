@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
 // USA: func_02088234
-extern "C" ARM void func_02088234(void* arg0) {
-    unsigned char* var0 = (unsigned char*)arg0;
-    *(int*)(var0 + 0x14) &= ~0x800000;
-    var0[0x24] = 0;
+extern "C" ARM void func_02088234(void* obj) {
+    unsigned char* base = (unsigned char*)obj;
+    *(int*)(base + 0x14) &= ~0x800000;
+    base[0x24] = 0;
 }

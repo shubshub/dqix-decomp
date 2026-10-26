@@ -6,9 +6,9 @@ struct SearchStruct0202c1a4 {
     signed char slotOfAid[16];
 };
 
-extern unsigned short WH_GetCurrentAid(void);
+extern "C" unsigned short WH_GetCurrentAid(void);
 
 // Main, originally GetSearchStructCurrentArrEntry (USA 0x0202c1a4, EUR 0x0202c1b4, JPN 0x0202bd54)
-ARM signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* session) {
+extern "C" ARM signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* session) {
     return session->slotOfAid[WH_GetCurrentAid()];
 }

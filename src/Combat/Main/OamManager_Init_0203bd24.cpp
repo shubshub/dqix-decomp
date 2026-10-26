@@ -18,10 +18,10 @@ enum {
 
 extern char data_021056b4;   // the sub screen's OAM buffer
 extern void* data_02105244;  // the CachedTextTable (CachedTextTable_GetInstance)
-void CachedTextTable_Clear(char* table);
+extern "C" void CachedTextTable_Clear(char* table);
 
 // Main, originally InitBattleContext0203bd24 (USA 0x0203bd24, EUR 0x0203bd34, JPN 0x0203b77c)
-ARM void OamManager_Init(char* oamManager) {
+extern "C" ARM void OamManager_Init(char* oamManager) {
     *(int*)(oamManager + kUnknown8) = 0;
     *(unsigned char*)(oamManager + kUploadMainOam) = 1;
     *(unsigned char*)(oamManager + kUploadSubOam) = 1;

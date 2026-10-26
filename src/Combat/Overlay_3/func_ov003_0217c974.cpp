@@ -6,44 +6,44 @@
 #include "Resource/GameResources.h"
 
 #if defined(jpn)
-enum { Enum_ov003_0217c974_716 = 0x27c };
+enum { kRegionValue2CC_27C = 0x27c };
 #else
-enum { Enum_ov003_0217c974_716 = 0x2cc };
+enum { kRegionValue2CC_27C = 0x2cc };
 #endif
 
 struct Struct_020534ac;
 
 struct Foo0207df50;
-void VramState_Rewind(struct Foo0207df50* p);
-void VramState_Restore(char* obj);
-void VramState_Save(char* obj);
+extern "C" void VramState_Rewind(struct Foo0207df50* p);
+extern "C" void VramState_Restore(char* obj);
+extern "C" void VramState_Save(char* obj);
 struct Vector3i;
 
 extern char data_ov003_02180c1d;
 extern char data_ov003_02180c23;
 
-struct Struct_ov003_0217fb8c { unsigned int unknown_0_[3]; };
+struct Struct_ov003_0217fb8c { unsigned int v[3]; };
 extern struct Struct_ov003_0217fb8c data_ov003_0217fb8c;
 
 // USA: func_ov003_0217c974
-extern "C" ARM void func_ov003_0217c974(char* arg0) {
-    int var0 = (int)BackgroundLoader::GetInstance();
-    int var1, var2;
-    ((BackgroundLoader*)((struct Struct_020534ac*)var0))->GetLoadedFileByID((int)(*(int*)(arg0 + 0x130)), (void**)(&var1), (unsigned int*)(&var2));
+extern "C" ARM void func_ov003_0217c974(char* self) {
+    int list = (int)BackgroundLoader::GetInstance();
+    int out1, out2;
+    ((BackgroundLoader*)((struct Struct_020534ac*)list))->GetLoadedFileByID((int)(*(int*)(self + 0x130)), (void**)(&out1), (unsigned int*)(&out2));
 
     void* mgr = GetGameResources();
     VramState_Rewind((struct Foo0207df50*)((char*)mgr + kRegionValue2CC_27C));
     VramState_Restore((char*)mgr + kRegionValue2CC_27C);
 
-    unsigned int var4;
-    const void* var5;
-    if (FindFilesInNarcBySubstring((const void*)var1, &data_ov003_02180c1d, &var5, &var4, 1) == 0) {
+    unsigned int fileSize;
+    const void* filePtr;
+    if (FindFilesInNarcBySubstring((const void*)out1, &data_ov003_02180c1d, &filePtr, &fileSize, 1) == 0) {
         return;
     }
 
-    unsigned int var6;
-    void* var7 = DecompressLZ77FileIntoAllocatedSpace(*(SafeAllocator*)(arg0 + 4), var5, var6);
-    if (var7 == 0) {
+    unsigned int decompSize;
+    void* decompressed = DecompressLZ77FileIntoAllocatedSpace(*(SafeAllocator*)(self + 4), filePtr, decompSize);
+    if (decompressed == 0) {
         return;
     }
 
@@ -60,11 +60,11 @@ extern "C" ARM void func_ov003_0217c974(char* arg0) {
 
     VramState_Save((char*)mgr + kRegionValue2CC_27C);
 
-    struct Struct_ov003_0217fb8c var9 = data_ov003_0217fb8c;
-    *(int*)(arg0 + 0xc4) = 0;
-    *(int*)(arg0 + 0xc8) = 0xfae;
-    *(int*)(arg0 + 0xcc) = 0;
-    ((Object3D*)((unsigned char*)(arg0 + 0x80)))->SetScale((Vector3i const*)&var9);
+    struct Struct_ov003_0217fb8c v = data_ov003_0217fb8c;
+    *(int*)(self + 0xc4) = 0;
+    *(int*)(self + 0xc8) = 0xfae;
+    *(int*)(self + 0xcc) = 0;
+    ((Object3D*)((unsigned char*)(self + 0x80)))->SetScale((Vector3i const*)&v);
 
     ((Object3D*)(self + 0x80))->SetAnimationByName((char const*)&data_ov003_02180c23, 0);
 }

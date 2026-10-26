@@ -4,34 +4,34 @@
 
 extern "C" void func_0208b9a0(void*, int);
 
-extern "C" void* func_020d6c00(void);
-struct Struct_02038598_4;
-extern "C" void func_020466f4(struct Struct_02038598_4* arg0, unsigned int arg1);
+extern "C" void* GlobalFlags_GetInstance(void);
+struct FlagWord020466f4;
+extern "C" void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
 
 struct Struct_0208ba54 {
     SafeAllocator* unknown_0_; // 0x0
-    unsigned char unknown_4_[0xbc - 4];
+    unsigned char pad[0xbc - 4];
     int unknown_bc_;
     int unknown_c0_;
 };
 
 // USA: func_0208ba54
-extern "C" ARM void func_0208ba54(struct Struct_0208ba54* arg0) {
-    int var0 = (int)BackgroundLoader::GetInstance();
-    ((BackgroundLoader*)(var0))->RemoveTask((int)(arg0->unknown_bc_));
-    arg0->unknown_bc_ = -1;
-    ((BackgroundLoader*)(var0))->RemoveTask((int)(arg0->unknown_c0_));
-    arg0->unknown_c0_ = -1;
+extern "C" ARM void func_0208ba54(struct Struct_0208ba54* self) {
+    int v = (int)BackgroundLoader::GetInstance();
+    ((BackgroundLoader*)(v))->RemoveTask((int)(self->unknown_bc_));
+    self->unknown_bc_ = -1;
+    ((BackgroundLoader*)(v))->RemoveTask((int)(self->unknown_c0_));
+    self->unknown_c0_ = -1;
 
-    if (arg0->unknown_0_ != NULL) {
-        int var1;
-        for (var1 = 0; var1 < 5; var1++) {
-            if (arg0->unknown_0_[var1].GetSignedAllocator() != NULL) {
-                arg0->unknown_0_[var1].Destroy();
+    if (self->unknown_0_ != NULL) {
+        int i;
+        for (i = 0; i < 5; i++) {
+            if (self->unknown_0_[i].GetSignedAllocator() != NULL) {
+                self->unknown_0_[i].Destroy();
             }
         }
     }
 
-    func_020466f4((struct Struct_02038598_4*)func_020d6c00(), 1);
-    func_0208b9a0(arg0, 0);
+    FlagWord_ClearBits((struct FlagWord020466f4*)GlobalFlags_GetInstance(), 1);
+    func_0208b9a0(self, 0);
 }

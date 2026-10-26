@@ -3,15 +3,15 @@
 #include "Filesystem/BackgroundLoader.h"
 
 struct SafeAllocator;
-int KeyTable_EndLoad(Struct020dfc40*);
+extern "C" int KeyTable_EndLoad(Struct020dfc40*);
 extern "C" void KeyTable_Load(void* p, void* a, void* b, unsigned int c);
 extern "C" void func_020e0028(void* p, void* a, void* b, unsigned int c, short* e, int f);
 extern "C" int func_020dfd40(void* self, void* a, void* b);
 
 // USA: func_020dfd40
-extern "C" ARM int func_020dfd40(void* arg0, void* arg1, void* arg2) {
-    Struct_0201099c_14* var0 = (Struct_0201099c_14*)arg0;
-    void* var1 = BackgroundLoader::GetInstance();
+extern "C" ARM int func_020dfd40(void* self, void* a, void* b) {
+    Struct020dfc40* p = (Struct020dfc40*)self;
+    void* loader = BackgroundLoader::GetInstance();
 
     switch (p->loadStep) {
     case KeyTableLoadStep_Queue:

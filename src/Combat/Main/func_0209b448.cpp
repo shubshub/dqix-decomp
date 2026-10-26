@@ -7,209 +7,209 @@
 #endif
 
 struct Struct_0209b448_3 {
-    unsigned int unknown_0_0_ : 12;
+    unsigned int key : 12;
     unsigned int unknown_1_4_ : 3;
     unsigned int unknown_1_7_ : 3;
     unsigned int unknown_2_2_ : 3;
     unsigned int unknown_2_5_ : 3;
     unsigned int unknown_3_0_ : 3;
-    unsigned int unknown_3_3_ : 5;
-    int unknown_4_;
+    unsigned int rest : 5;
+    int unk4;
 };
 
 struct Struct_0209b448_4 {
-    unsigned int unknown_0_0_ : 12;
-    unsigned int unknown_1_4_ : 3;
+    unsigned int id : 12;
+    unsigned int weight : 3;
     unsigned int unknown_1_7_ : 3;
     unsigned int unknown_2_2_ : 3;
-    unsigned int unknown_2_5_ : 11;
+    unsigned int rest : 11;
 };
 
 struct Struct_0209b448_5 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
+    unsigned short id;
+    unsigned short pad2;
     struct Struct_0209b448_3 unknown_4_[6];
-    struct Struct_0209b448_4 unknown_34_[6];
+    struct Struct_0209b448_4 members[6];
 };
 
 struct Struct_02073ec4_3 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
+    unsigned short key;
+    unsigned short pad2;
     unsigned int unknown_4_0_ : 10;
-    unsigned int unknown_5_2_ : 3;
+    unsigned int maxCount : 3;
     unsigned int unknown_5_5_ : 19;
-    unsigned char unknown_8_[0x18];
+    unsigned char pad8[0x18];
 };
 
 struct Struct_02073ec4_2 {
-    struct Struct_02073ec4_3 unknown_0_[6];
-    int unknown_c0_;
+    struct Struct_02073ec4_3 entries[6];
+    int count;
 };
 
 struct Struct_0209b448 {
 #if defined(jpn)
-    unsigned char unknown_0_[0x5c];
+    unsigned char pad[0x5c];
 #else
-    unsigned char unknown1_0_[0x60];
+    unsigned char pad[0x60];
 #endif
-    struct Struct_02073ec4_2 unknown_60_;
+    struct Struct_02073ec4_2 table;
 };
 
 struct Struct_0209b448_2 {
-    short unknown_0_[3];
-    short unknown_6_[3];
+    short ids[3];
+    short counts[3];
 };
 
-extern "C" struct Struct_0209b448_3* func_0209b944(struct Struct_0209b448_5* arg0, int arg1, int arg2, int* arg3);
-extern "C" struct Struct_02073ec4_3* func_0209bd94(struct Struct_02073ec4_2* arg0, int arg1);
+extern "C" struct Struct_0209b448_3* func_0209b944(struct Struct_0209b448_5* entries, int index, int key, int* arg3);
+extern "C" struct Struct_02073ec4_3* func_0209bd94(struct Struct_02073ec4_2* table, int key);
 
 extern const int data_020e8e74[6][3];
 
 // USA: func_0209b448
-extern "C" ARM void func_0209b448(struct Struct_0209b448_5* arg0, int arg1, struct Struct_0209b448_2* arg2, struct Struct_0209b448* arg3) {
-    int var0;
-    int var1;
-    int var2;
+extern "C" ARM void func_0209b448(struct Struct_0209b448_5* rows, int key, struct Struct_0209b448_2* out, struct Struct_0209b448* state) {
+    int slot;
+    int prev;
+    int step;
     int var3;
-    int var4;
-    int var5;
-    int var6;
-    int var7;
-    int var8;
-    int var9;
-    int var10;
-    int var11;
-    int var12;
-    int var13;
-    int var14;
-    struct Struct_02073ec4_3* var15;
-    struct Struct_0209b448_4* var16;
+    int maxCount;
+    int sum;
+    int l;
+    int k;
+    int j;
+    int i;
+    int weights;
+    int pick;
+    int roll;
+    int kind;
+    int index;
+    struct Struct_02073ec4_3* entry;
+    struct Struct_0209b448_4* member;
     int var17;
     int var18;
     int var19;
-    int var20;
-    struct Struct_0209b448_3* var21;
+    int total;
+    struct Struct_0209b448_3* sub;
     struct Random* var22;
 
     var22 = GetBTRandom();
-    var13 = 1;
-    var14 = 0;
-    var21 = func_0209b944(arg0, 0, arg1, &var14);
-    if (var21 == NULL) {
-        var13 = 1;
-        arg2->unknown_6_[0] = 1;
-        arg2->unknown_0_[0] = 0x10;
+    kind = 1;
+    index = 0;
+    sub = func_0209b944(rows, 0, key, &index);
+    if (sub == NULL) {
+        kind = 1;
+        out->counts[0] = 1;
+        out->ids[0] = 0x10;
     } else {
-        var10 = var21->unknown_2_2_ + var21->unknown_2_5_ + var21->unknown_3_0_;
-        var12 = rand() % var10 + 1;
-        if (var12 <= var21->unknown_2_2_) {
-            var13 = 1;
-        } else if (var12 <= var21->unknown_2_2_ + var21->unknown_2_5_) {
-            var13 = 2;
-        } else if (var12 <= var21->unknown_2_2_ + var21->unknown_2_5_ + var21->unknown_3_0_) {
-            var13 = 3;
+        weights = sub->unknown_2_2_ + sub->unknown_2_5_ + sub->unknown_3_0_;
+        roll = rand() % weights + 1;
+        if (roll <= sub->unknown_2_2_) {
+            kind = 1;
+        } else if (roll <= sub->unknown_2_2_ + sub->unknown_2_5_) {
+            kind = 2;
+        } else if (roll <= sub->unknown_2_2_ + sub->unknown_2_5_ + sub->unknown_3_0_) {
+            kind = 3;
         }
-        var20 = 0;
-        for (var9 = 0; var9 < 6; var9++) {
-            var16 = &arg0[var14].unknown_34_[var9];
-            var20 += var16->unknown_1_4_;
+        total = 0;
+        for (i = 0; i < 6; i++) {
+            member = &rows[index].members[i];
+            total += member->weight;
         }
-        if (var20 == 0) {
-            var13 = 1;
-            arg2->unknown_6_[0] = 1;
-            arg2->unknown_0_[0] = 0x10;
+        if (total == 0) {
+            kind = 1;
+            out->counts[0] = 1;
+            out->ids[0] = 0x10;
         } else {
-            var11 = rand() % var20 + 1;
-            var5 = 0;
-            for (var8 = 0; var8 < 6; var8++) {
-                var16 = &arg0[var14].unknown_34_[var8];
-                var5 += var16->unknown_1_4_;
-                if (var11 <= var5) {
+            pick = rand() % total + 1;
+            sum = 0;
+            for (j = 0; j < 6; j++) {
+                member = &rows[index].members[j];
+                sum += member->weight;
+                if (pick <= sum) {
                     break;
                 }
             }
-            arg2->unknown_0_[0] = var16->unknown_0_0_;
-            var17 = var16->unknown_2_2_ - var16->unknown_1_7_;
-            arg2->unknown_6_[0] = rand() % (var17 + 1) + var16->unknown_1_7_;
-            if (var13 != 1) {
-                var11 = rand() % var20 + 1;
-                var5 = 0;
-                for (var7 = 0; var7 < 6; var7++) {
-                    var16 = &arg0[var14].unknown_34_[var7];
-                    var5 += var16->unknown_1_4_;
-                    if (var11 <= var5) {
+            out->ids[0] = member->id;
+            var17 = member->unknown_2_2_ - member->unknown_1_7_;
+            out->counts[0] = rand() % (var17 + 1) + member->unknown_1_7_;
+            if (kind != 1) {
+                pick = rand() % total + 1;
+                sum = 0;
+                for (k = 0; k < 6; k++) {
+                    member = &rows[index].members[k];
+                    sum += member->weight;
+                    if (pick <= sum) {
                         break;
                     }
                 }
-                arg2->unknown_0_[1] = var16->unknown_0_0_;
-                var18 = var16->unknown_2_2_ - var16->unknown_1_7_;
-                arg2->unknown_6_[1] = rand() % (var18 + 1) + var16->unknown_1_7_;
-                if (var13 != 2) {
-                    var11 = rand() % var20 + 1;
-                    var5 = 0;
-                    for (var6 = 0; var6 < 6; var6++) {
-                        var16 = &arg0[var14].unknown_34_[var6];
-                        var5 += var16->unknown_1_4_;
-                        if (var11 <= var5) {
+                out->ids[1] = member->id;
+                var18 = member->unknown_2_2_ - member->unknown_1_7_;
+                out->counts[1] = rand() % (var18 + 1) + member->unknown_1_7_;
+                if (kind != 2) {
+                    pick = rand() % total + 1;
+                    sum = 0;
+                    for (l = 0; l < 6; l++) {
+                        member = &rows[index].members[l];
+                        sum += member->weight;
+                        if (pick <= sum) {
                             break;
                         }
                     }
-                    arg2->unknown_0_[2] = var16->unknown_0_0_;
-                    var19 = var16->unknown_2_2_ - var16->unknown_1_7_;
-                    arg2->unknown_6_[2] = rand() % (var19 + 1) + var16->unknown_1_7_;
+                    out->ids[2] = member->id;
+                    var19 = member->unknown_2_2_ - member->unknown_1_7_;
+                    out->counts[2] = rand() % (var19 + 1) + member->unknown_1_7_;
                 }
             }
         }
     }
 
-    var15 = func_0209bd94(&arg3->unknown_60_, arg1);
-    if (var15 != NULL) {
-        var4 = var15->unknown_5_2_;
+    entry = func_0209bd94(&state->table, key);
+    if (entry != NULL) {
+        maxCount = entry->maxCount;
     } else {
-        var4 = 5;
+        maxCount = 5;
     }
-    var3 = arg2->unknown_6_[0] + arg2->unknown_6_[1] + arg2->unknown_6_[2] - var4;
+    var3 = out->counts[0] + out->counts[1] + out->counts[2] - maxCount;
     if (var3 > 0) {
-        var2 = var3 / 3;
-        if (var2 == 0) {
-            var2 = 1;
+        step = var3 / 3;
+        if (step == 0) {
+            step = 1;
         }
-        var0 = 0;
+        slot = 0;
         while (var3 > 0) {
-            var1 = arg2->unknown_6_[var0];
-            arg2->unknown_6_[var0] -= var2;
-            if (arg2->unknown_6_[var0] < 0) {
-                arg2->unknown_6_[var0] = 0;
+            prev = out->counts[slot];
+            out->counts[slot] -= step;
+            if (out->counts[slot] < 0) {
+                out->counts[slot] = 0;
             }
-            if (var0 == 0 && arg2->unknown_6_[var0] == 0) {
-                arg2->unknown_6_[var0] = 1;
+            if (slot == 0 && out->counts[slot] == 0) {
+                out->counts[slot] = 1;
             }
-            var3 -= var1 - arg2->unknown_6_[var0];
-            var0++;
-            if (var0 >= 3) {
-                var0 = 0;
+            var3 -= prev - out->counts[slot];
+            slot++;
+            if (slot >= 3) {
+                slot = 0;
             }
         }
     }
 
-    if (var13 == 2) {
+    if (kind == 2) {
         if (NextRandomMax(var22, 2) != 0) {
-            short var23 = arg2->unknown_0_[0];
-            short var24 = arg2->unknown_6_[0];
-            arg2->unknown_0_[0] = arg2->unknown_0_[1];
-            arg2->unknown_6_[0] = arg2->unknown_6_[1];
-            arg2->unknown_0_[1] = var23;
-            arg2->unknown_6_[1] = var24;
+            short id = out->ids[0];
+            short count = out->counts[0];
+            out->ids[0] = out->ids[1];
+            out->counts[0] = out->counts[1];
+            out->ids[1] = id;
+            out->counts[1] = count;
         }
-    } else if (var13 == 3) {
-        struct Struct_0209b448_2 var25;
-        int var26 = NextRandomMax(var22, 6);
-        var25 = *arg2;
-        arg2->unknown_0_[data_020e8e74[var26][0]] = var25.unknown_0_[0];
-        arg2->unknown_6_[data_020e8e74[var26][0]] = var25.unknown_6_[0];
-        arg2->unknown_0_[data_020e8e74[var26][1]] = var25.unknown_0_[1];
-        arg2->unknown_6_[data_020e8e74[var26][1]] = var25.unknown_6_[1];
-        arg2->unknown_0_[data_020e8e74[var26][2]] = var25.unknown_0_[2];
-        arg2->unknown_6_[data_020e8e74[var26][2]] = var25.unknown_6_[2];
+    } else if (kind == 3) {
+        struct Struct_0209b448_2 saved;
+        int order = NextRandomMax(var22, 6);
+        saved = *out;
+        out->ids[data_020e8e74[order][0]] = saved.ids[0];
+        out->counts[data_020e8e74[order][0]] = saved.counts[0];
+        out->ids[data_020e8e74[order][1]] = saved.ids[1];
+        out->counts[data_020e8e74[order][1]] = saved.counts[1];
+        out->ids[data_020e8e74[order][2]] = saved.ids[2];
+        out->counts[data_020e8e74[order][2]] = saved.counts[2];
     }
 }

@@ -11,12 +11,12 @@ extern char data_020f0d40[];
 extern unsigned char g_fileLoadBuffer[];
 
 // USA: func_02074114
-extern "C" ARM int func_02074114(Struct_02074060* arg0, int arg1) {
-    unsigned int var0;
+extern "C" ARM int func_02074114(Struct_02074060* result, int key) {
+    unsigned int length;
     BackgroundLoader::AddLockGlobal();
     void* bytecode = LoadFileIntoMemory(data_020f0d40, g_fileLoadBuffer, &length);
     if (bytecode != 0) {
-        RunBufferedStream0207416c(result, key, bytecode, length);
+        func_0207416c(result, key, bytecode, length);
         BackgroundLoader::RemoveLockGlobal();
         return 1;
     }

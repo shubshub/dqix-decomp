@@ -6,9 +6,9 @@ struct Struct_020f1f14
     unsigned int unknown_0_;
     unsigned int unknown_4_;
     unsigned int unknown_8_;
-    char unknown_c_[4];
+    char unk_c[4];
     unsigned short unknown_10_;
-    char unknown_12_[2];
+    char unk_12[2];
     unsigned int unknown_14_;
 } extern data_020f1f14[5];
 
@@ -27,14 +27,14 @@ struct Struct_0210cf88
 #pragma optimize_for_size off
 
 // I wasn't able to get this to match, so the file isn't delinked yet
-extern "C" unsigned int inline_020f1f14_2(unsigned int arg0, bool arg1, unsigned int arg2)
+extern "C" unsigned int inline_020f1f14_2(unsigned int amount, bool arg1, unsigned int arg2)
 {
     unsigned int var0 = arg2;
-    unsigned int var1 = arg0 + 0xf;
-    if (arg0 == 0)
+    unsigned int var1 = amount + 0xf;
+    if (amount == 0)
         var1 = 0x10;
     else
-        var1 = (arg0 + 0xf) & ~0xf;
+        var1 = (amount + 0xf) & ~0xf;
 
     if (var1 >= 0x7fff0)
         return 0;
@@ -42,20 +42,20 @@ extern "C" unsigned int inline_020f1f14_2(unsigned int arg0, bool arg1, unsigned
     bool var2;
     if (arg1)
     {
-        int var3 = 0;
+        int pass = 0;
         do
         {
-            unsigned int var4;
+            unsigned int start;
             Struct_020f1f14* var5;
             Struct_020f1f14* var6;
             
-            var6 = data_020f1ef8[var3];
+            var6 = data_020f1ef8[pass];
             
             if (var6->unknown_8_ == 0)
                 continue;
                 
-            var4 = var6->unknown_0_;
-            if (var6->unknown_4_ - var4 < var1)
+            start = var6->unknown_0_;
+            if (var6->unknown_4_ - start < var1)
                 continue;
             
             switch (var6->unknown_10_)
@@ -77,29 +77,29 @@ extern "C" unsigned int inline_020f1f14_2(unsigned int arg0, bool arg1, unsigned
                 var6->unknown_0_ += var1;
                 var2 = true;
                 var5->unknown_0_ += (var1 >> 1);
-                var0 = var4 + var6->unknown_14_;
+                var0 = start + var6->unknown_14_;
                 goto end;
             }
-        } while (var3++, var3 < 2);
+        } while (pass++, pass < 2);
         var2 = false;
     }
     else
     {
-        int var7 = 0;
+        int pass = 0;
         do
         {
-            Struct_020f1f14* var8;
-            var8 = data_020f1f00[var7];
-            if (var8->unknown_8_ == 0)
+            Struct_020f1f14* pool;
+            pool = data_020f1f00[pass];
+            if (pool->unknown_8_ == 0)
                 continue;
-            if (var8->unknown_4_ - var8->unknown_0_ >= var1)
+            if (pool->unknown_4_ - pool->unknown_0_ >= var1)
             {
                 var2 = true;
-                var8->unknown_4_ = (volatile unsigned int&)var8->unknown_4_ - var1;
-                var0 = var8->unknown_4_ + var8->unknown_14_;
+                pool->unknown_4_ = (volatile unsigned int&)pool->unknown_4_ - var1;
+                var0 = pool->unknown_4_ + pool->unknown_14_;
                 goto end;
             }
-        } while (var7++, var7 < 5);
+        } while (pass++, pass < 5);
         var2 = false;
     }
 
@@ -111,17 +111,17 @@ end:
 }
 
 // What a horrible, horrible way to write a function
-unsigned int inline_020f1f14(unsigned int arg0, bool arg1, bool arg2)
+unsigned int inline_020f1f14(unsigned int amount, bool arg1, bool unknown)
 {  
     unsigned int var0 = 0;
     unsigned int var1;
     unsigned int var2;
     unsigned int var3;
 
-    if (arg0 == 0)
+    if (amount == 0)
         var2 = 8;
     else
-        var2 = (arg0 + 7) & ~7;
+        var2 = (amount + 7) & ~7;
 
     // this is 512k, which is better suited as a bound for texture image VRAM
     // but I guess it's general purpose
@@ -130,19 +130,19 @@ unsigned int inline_020f1f14(unsigned int arg0, bool arg1, bool arg2)
 
     bool var4;
     
-    if (arg2 == true)
+    if (unknown == true)
     {
-        unsigned int var5 = data_0210cf88.unknown_0_;
+        unsigned int start = data_0210cf88.unknown_0_;
         if (arg1)
-            var1 = (8 - (var5 & 7)) & 7;
+            var1 = (8 - (start & 7)) & 7;
         else
-            var1 = (16 - (var5 & 15)) & 15;
+            var1 = (16 - (start & 15)) & 15;
         
         var3 = var2 + var1;
         unsigned var6;
-        if (data_0210cf88.unknown_4_ - var5 < var3)
+        if (data_0210cf88.unknown_4_ - start < var3)
             goto lab_a4;
-        var6 = var5 + var3;
+        var6 = start + var3;
         if (!arg1)
             goto lab_88;
         if (var6 > 0x10000)
@@ -191,6 +191,6 @@ end:
     if (!var4)
         return 0;
 
-    int var8 = (var2 >> 3) << 16 | ((var0 << 13) >> 16);
-    return var8;
+    int mask = (var2 >> 3) << 16 | ((var0 << 13) >> 16);
+    return mask;
 }

@@ -6,25 +6,25 @@ extern "C" void func_02042ea4(unsigned char*, const unsigned char*);
 #endif
 
 // USA: func_020429e4
-extern "C" ARM char* func_020429e4(Struct_0203bebc* arg0, const unsigned char* arg1) {
-    if (arg0 == NULL) return NULL;
-    Struct_020429e4 var0;
+extern "C" ARM char* func_020429e4(FontGlyphTable* table, const unsigned char* encodedCharacter) {
+    if (table == NULL) return NULL;
+    Struct_020429e4 wanted;
 #if defined(jpn)
-    func_02042ea4(reinterpret_cast<unsigned char*>(&var0), arg1);
+    func_02042ea4(reinterpret_cast<unsigned char*>(&wanted), encodedCharacter);
 #else
-    if (arg1 == NULL) {
-        var0.unknown_0_ = 0;
-        var0.unknown_1_ = 0;
+    if (encodedCharacter == NULL) {
+        wanted.first = 0;
+        wanted.second = 0;
     } else {
-        var0.unknown_0_ = arg1[0];
-        var0.unknown_1_ = arg1[1];
+        wanted.first = encodedCharacter[0];
+        wanted.second = encodedCharacter[1];
     }
 #endif
-    int var1 = arg0->unknown_6_;
-    Struct_020429e4* var2 = arg0->unknown_8_;
-    for (int var3 = 0; var3 < var1; ++var2, ++var3) {
-        if (var0.unknown_0_ == var2->unknown_0_ && var0.unknown_1_ == var2->unknown_1_) {
-            return arg0->unknown_c_ + var3 * arg0->unknown_0_;
+    int count = table->glyphCount;
+    Struct_020429e4* key = table->keys;
+    for (int index = 0; index < count; ++key, ++index) {
+        if (wanted.first == key->first && wanted.second == key->second) {
+            return table->glyphs + index * table->unknown_0_;
         }
     }
     return NULL;

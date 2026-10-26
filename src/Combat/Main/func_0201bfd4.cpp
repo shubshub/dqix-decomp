@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 #include "World/ZoneLifecycle.h"
-extern "C" int func_0201b588(int);
+extern "C" int ZoneId_IsGrotto(int);
 #include "GameState/GameState.h"
 #include "Grotto/Main/GrottoStruct.h"
 
-extern unsigned short data_020fb3f0;
+extern unsigned short Zone3D_instance;
 
 // USA: func_0201bfd4
-extern "C" ARM void func_0201bfd4(Zone3D* arg0) {
-    GrottoStruct* var0 = GameState::GetInstance()->GetGrottoStruct();
-    if (func_0201b588((int)(data_020fb3f0)) != 0) return;
-    if (var0->unknown_0[4] != 0) {
-        var0->unknown_0[3] = 0;
-        var0->unknown_0[4] = 0;
+extern "C" ARM void func_0201bfd4(Zone3D* zone) {
+    GrottoStruct* grotto = GameState::GetInstance()->GetGrottoStruct();
+    if (ZoneId_IsGrotto((int)(Zone3D_instance)) != 0) return;
+    if (grotto->unknown_0[4] != 0) {
+        grotto->unknown_0[3] = 0;
+        grotto->unknown_0[4] = 0;
     }
 }

@@ -3,56 +3,56 @@
 #include "GameState/GameState.h"
 #include "Util/Random.h"
 
-extern "C" int func_ov000_0215ec80(int arg0, short* arg1, int arg2, int arg3, int arg4);
+extern "C" int func_ov000_0215ec80(int battle, short* buf, int max, int group, int flag);
 
 struct Struct_ov024_021ef074 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_0_ : 4;
-    unsigned char unknown_1_4_ : 2;
+    unsigned char b0;
+    unsigned char lo : 4;
+    unsigned char groupCount : 2;
 };
 
 struct Struct_ov024_021ef074_2 {
-    struct Random unknown_0_;
-    char unknown_20_[0x81b0 - sizeof(struct Random)];
-    struct Struct_ov024_021ef074 unknown_81b0_;
+    struct Random rng;
+    char pad[0x81b0 - sizeof(struct Random)];
+    struct Struct_ov024_021ef074 groups;
 };
 
 struct Struct_ov024_021ef074_3 {
-    struct Struct_ov024_021ef074_2* unknown_0_;
+    struct Struct_ov024_021ef074_2* battle;
 };
 
-static inline struct Struct_ov024_021ef074* inline_ov024_021ef074(struct Struct_ov024_021ef074_2* arg0) {
-    return &arg0->unknown_81b0_;
+static inline struct Struct_ov024_021ef074* inline_ov024_021ef074(struct Struct_ov024_021ef074_2* battle) {
+    return &battle->groups;
 }
 
-struct Struct_ov024_021fea1c_2 { short unknown_0_[3]; };
-struct Struct_ov024_021fed1c { short unknown_0_[8]; };
+struct Struct_ov024_021fea1c_2 { short v[3]; };
+struct Struct_ov024_021fed1c { short v[8]; };
 
 extern struct Struct_ov024_021fea1c_2 data_ov024_021fea1c[];
 extern struct Struct_ov024_021fed1c data_ov024_021fed1c;
 
 // USA: func_ov024_021ef074
-extern "C" ARM int func_ov024_021ef074(struct Struct_ov024_021ef074_3* arg0, int arg1, int arg2, int* arg3, short* arg4) {
-    struct Struct_ov024_021ef074* var0 = inline_ov024_021ef074(arg0->unknown_0_);
-    if (var0 == 0) return 0;
+extern "C" ARM int func_ov024_021ef074(struct Struct_ov024_021ef074_3* ctx, int unused1, int arg2, int* out, short* outIds) {
+    struct Struct_ov024_021ef074* groups = inline_ov024_021ef074(ctx->battle);
+    if (groups == 0) return 0;
     struct Struct_ov024_021fea1c_2 var1 = data_ov024_021fea1c[1];
     short var2 = 0;
-    for (int var3 = 0; var3 < var0->unknown_1_4_; var3++) {
-        struct Struct_ov024_021fed1c var4 = data_ov024_021fed1c;
-        int var5 = func_ov000_0215ec80((int)arg0->unknown_0_, var4.unknown_0_, 8, var3 & 0xff, 1);
-        if (var5 <= 0) continue;
+    for (int i = 0; i < groups->groupCount; i++) {
+        struct Struct_ov024_021fed1c ids = data_ov024_021fed1c;
+        int count = func_ov000_0215ec80((int)ctx->battle, ids.v, 8, i & 0xff, 1);
+        if (count <= 0) continue;
         short var6 = 0;
-        for (int var7 = 0; var7 < var5; var7++) {
-            GameObject* var8 = GetCombatantByID((int)arg0->unknown_0_, var4.unknown_0_[var7]);
-            if (var8 == 0) continue;
-            ModifiableCombatStats* var9 = var8->currentStats_;
-            if (var9->primaryStats.defense >= 0xffff) continue;
-            if (var9->defenseBuff < 2) var6++;
+        for (int j = 0; j < count; j++) {
+            GameObject* c = GetCombatantByID((int)ctx->battle, ids.v[j]);
+            if (c == 0) continue;
+            ModifiableCombatStats* stats = c->currentStats_;
+            if (stats->primaryStats.defense >= 0xffff) continue;
+            if (stats->defenseBuff < 2) var6++;
         }
-        if (var6 > 0) var1.unknown_0_[var2++] = var3;
+        if (var6 > 0) var1.v[var2++] = i;
     }
     if (var2 <= 0) return 0;
-    int var10 = NextRandomMax(&arg0->unknown_0_->unknown_0_, var2);
-    *arg3 = func_ov000_0215ec80((int)arg0->unknown_0_, arg4, 8, var1.unknown_0_[var10] & 0xff, 1);
+    int r = NextRandomMax(&ctx->battle->rng, var2);
+    *out = func_ov000_0215ec80((int)ctx->battle, outIds, 8, var1.v[r] & 0xff, 1);
     return 1;
 }

@@ -11,11 +11,11 @@ extern int data_ov031_02257180;
 
 extern "C" void SoundPlayer_OpenArchive(void* obj, int addr, void* ovAddr, int size, int flag);
 
-int SoundPlayer_SaveHeapState(void* obj);
-int SoundPlayer_LoadGroup(void* obj, int index);
+extern "C" int SoundPlayer_SaveHeapState(void* obj);
+extern "C" int SoundPlayer_LoadGroup(void* obj, int index);
 
 // Main, originally SetupContextForMode0205ea20 (USA 0x0205ea20, EUR 0x0205ea30, JPN 0x0205fd0c)
-ARM void SePlayer_LoadArchive(void* objRaw, int mode) {
+extern "C" ARM void SePlayer_LoadArchive(void* objRaw, int mode) {
     char* obj = (char*)objRaw;
     int addr = 0;
     if (mode == 0x64) {

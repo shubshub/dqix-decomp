@@ -13,32 +13,32 @@ struct Struct_0200f1a0_2 {
 
 struct Struct_0200f1a0 {
     unsigned char* unknown_0_;
-    void* unknown_4_;
-    void* unknown_8_;
+    void* location;
+    void* dtor;
     void* unknown_c_;
     char* unknown_10_;
     char* unknown_14_;
-    char* unknown_18_;
-    Struct_0200f1a0_2 unknown_1c_;
+    char* fp;
+    Struct_0200f1a0_2 target;
 };
 
 struct Struct_0200f1a0_3;
 
 // USA: func_0200f1a0
-extern "C" ARM char* func_0200f1a0(Struct_0200f1a0* arg0, Struct_0200f1a0_3* arg1) {
+extern "C" ARM char* func_0200f1a0(Struct_0200f1a0* context, Struct_0200f1a0_3* info) {
     unsigned long var0, var1, *var2;
-    int var3;
+    int i;
 
-    var0 = arg0->unknown_1c_.unknown_44_;
-    var1 = arg0->unknown_1c_.unknown_4e_ ? 16 : 0;
+    var0 = context->target.unknown_44_;
+    var1 = context->target.unknown_4e_ ? 16 : 0;
 
-    var2 = (unsigned long*)(arg0->unknown_18_ + var0 - var1);
-    for (var3 = 15; var3 >= 0; var3--) {
-        if (arg0->unknown_1c_.unknown_4c_ & (1 << var3))
-            arg0->unknown_1c_.unknown_0_[var3] = *--var2;
+    var2 = (unsigned long*)(context->fp + var0 - var1);
+    for (i = 15; i >= 0; i--) {
+        if (context->target.unknown_4c_ & (1 << i))
+            context->target.unknown_0_[i] = *--var2;
     }
 
-    arg0->unknown_14_ = arg0->unknown_18_ + var0;
+    context->unknown_14_ = context->fp + var0;
 
-    return (char*)arg0->unknown_1c_.unknown_0_[14];
+    return (char*)context->target.unknown_0_[14];
 }

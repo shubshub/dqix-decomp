@@ -3,19 +3,19 @@
 
 
 struct Struct_020dbdc0 {
-    char unknown_0_[0xc];
+    char pad[0xc];
     int unknown_c_;
     int unknown_10_;
 };
 
-static inline void inline_020dbf70(int& arg0) {
-    BackgroundLoader::GetInstance()->RemoveTask(arg0);
-    arg0 = -1;
+static inline void inline_020dbf70(int& taskId) {
+    BackgroundLoader::GetInstance()->RemoveTask(taskId);
+    taskId = -1;
 }
 
 // USA: func_020dbf70
-extern "C" ARM void func_020dbf70(struct Struct_020dbdc0* arg0) {
-    if (arg0->unknown_c_ < 0) return;
-    inline_020dbf70(arg0->unknown_c_);
-    arg0->unknown_10_ = 0;
+extern "C" ARM void func_020dbf70(struct Struct_020dbdc0* o) {
+    if (o->unknown_c_ < 0) return;
+    inline_020dbf70(o->unknown_c_);
+    o->unknown_10_ = 0;
 }

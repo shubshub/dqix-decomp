@@ -10,10 +10,10 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_ov012_02187320
+struct Messages02187320
 {
-    char unknown_0_[R(0x868,0x998)];
-    int unknown_998_;
+    char unk_0[R(0x868,0x998)];
+    int busy_;
     int unknown_99c_;
     int unknown_9a0_;
     char unknown_9a4_[R(0x17de,0x19ae) - R(0x874,0x9a4)];
@@ -26,7 +26,7 @@ struct Struct_ov012_02187320_2
     unsigned int unknown_1_4_ : 4;
     unsigned int unknown_2_0_ : 5;
     unsigned int unknown_2_5_ : 4;
-    unsigned int unknown_3_1_ : 1;
+    unsigned int female_ : 1;
     unsigned int unknown_3_2_ : 1;
     unsigned int unknown_3_3_ : 1;
     unsigned int unknown_3_4_ : 1;
@@ -37,18 +37,18 @@ struct Struct_ov012_02187320_2
 
 struct Struct_ov012_02187320_3
 {
-    char unknown_0_[R(0x90,0xac)];
-    char unknown_ac_[R(0x1314,0x133c) - R(0x90,0xac)];
-    char unknown_133c_[R(0x1340,0x1370) - R(0x1314,0x133c)];
-    unsigned char unknown_1370_;
-    unsigned char unknown_1371_;
+    char unk_0[R(0x90,0xac)];
+    char window_[R(0x1314,0x133c) - R(0x90,0xac)];
+    char strings_[R(0x1340,0x1370) - R(0x1314,0x133c)];
+    unsigned char step_;
+    unsigned char state_;
     char unknown_1372_[R(0x1368,0x13a0) - R(0x1342,0x1372)];
     unsigned char unknown_13a0_;
     char unknown_13a1_[R(0x1370,0x13a8) - R(0x1369,0x13a1)];
     signed char unknown_13a8_;
     signed char unknown_13a9_;
     char unknown_13aa_[R(0x1450,0x13f8) - R(0x1372,0x13aa)];
-    unsigned int unknown_13f8_;
+    unsigned int unk_13f8;
 };
 
 struct TableA68;
@@ -58,107 +58,107 @@ struct SePlayer;
 struct Struct_0205c570;
 struct Struct_ov012_02186a7c;
 
-Messages02187320* MessageSystem_GetInstance();
-const char* FindEntryByKey_02072a68(TableA68* table, int key);
+extern "C" Messages02187320* MessageSystem_GetInstance();
+extern "C" const char* func_02072a68(TableA68* table, int key);
 #if defined(jpn)
-extern "C" void func_0204500c(Struct_ov012_02187320* arg0, const char* arg1, int arg2);
+extern "C" void func_0204500c(Messages02187320* messages, const char* text, int a);
 #else
-extern "C" void func_0204500c(Struct_ov012_02187320* arg0, const char* arg1, int arg2, int arg3);
+extern "C" void func_0204500c(Messages02187320* messages, const char* text, int a, int b);
 #endif
-void Window_ClosePane(Entry_0205d6a0* window, int a);
-void FindAndLinkMatchingEntry0205de24(Struct0205de24* window, unsigned char a, unsigned char b);
-extern "C" void func_ov023_021e6e60(ProfileEditor02187320* self);
-void BuildMessageD_02189f38(char* self);
-void SePlayer_Play(SePlayer* sound, int effect, int a);
-int Window_GetSelectedIndex(Struct_0205c570* window);
-extern "C" int func_ov023_021e6de4(ProfileEditor02187320* self);
-int TestFlagsAndActiveElement2_021e6e20(Obj021e6e20* self);
-extern "C" void func_ov012_02185bf0(ProfileEditor02187320* self, unsigned char item, int selected);
+extern "C" void Window_ClosePane(Entry_0205d6a0* window, int a);
+extern "C" void func_0205de24(Struct0205de24* window, unsigned char a, unsigned char b);
+extern "C" void func_ov023_021e6e60(Struct_ov012_02187320_3* self);
+extern "C" void func_ov012_02189f38(char* self);
+extern "C" void SePlayer_Play(SePlayer* sound, int effect, int a);
+extern "C" int Window_GetSelectedIndex(Struct_0205c570* window);
+extern "C" int func_ov023_021e6de4(Struct_ov012_02187320_3* self);
+extern "C" int func_ov023_021e6e20(Struct_ov012_02186a7c* self);
+extern "C" void func_ov012_02185bf0(Struct_ov012_02187320_3* self, unsigned char item, int selected);
 #if defined(jpn)
-extern "C" void func_ov012_0218adac(Struct_ov012_02187320_3* arg0, int arg1, int arg2);
+extern "C" void func_ov012_0218adac(Struct_ov012_02187320_3* self, int arg1, int arg2);
 #else
-extern "C" void func_ov012_0218adac(Struct_ov012_02187320_3* arg0, int arg1, int arg2, int arg3);
+extern "C" void func_ov012_0218adac(Struct_ov012_02187320_3* self, int arg1, int arg2, int arg3);
 #endif
-void MessageSystem_Reset(char* messages);
-extern "C" void func_ov012_0218943c(ProfileEditor02187320* self);
+extern "C" void MessageSystem_Reset(char* messages);
+extern "C" void func_ov012_0218943c(Struct_ov012_02187320_3* self);
 extern "C" int func_020457e0(Messages02187320* messages);
 
 extern "C" char g_sePlayer[];
 
-static inline Struct_ov012_02187320_2* inline_ov012_02187320(GameState* arg0)
+static inline Struct_ov012_02187320_2* inline_ov012_02187320(GameState* gameState)
 {
-    return (Struct_ov012_02187320_2*)((char*)arg0 + R(0x543c,0x569c));
+    return (Struct_ov012_02187320_2*)((char*)gameState + R(0x543c,0x569c));
 }
 
 // USA: func_ov012_02187320
-extern "C" ARM void func_ov012_02187320(Struct_ov012_02187320_3* arg0)
+extern "C" ARM void func_ov012_02187320(Struct_ov012_02187320_3* self)
 {
     Messages02187320* messages = MessageSystem_GetInstance();
-    int windowState = messages->unk_9a0;
-    if (windowState == 3)
-        messages->unk_19ae = 0;
+    int var1 = messages->unknown_9a0_;
+    if (var1 == 3)
+        messages->unknown_19ae_ = 0;
     if (self->step_ == 0)
     {
 #if defined(jpn)
-        func_0204500c(var0, func_02072a68((Struct_02072a68_2*)arg0->unknown_133c_, 0xf), 0);
+        func_0204500c(messages, func_02072a68((TableA68*)self->strings_, 0xf), 0);
 #else
-        func_0204500c(var0, func_02072a68((Struct_02072a68_2*)arg0->unknown_133c_, 0xf), 0, 0xe3);
+        func_0204500c(messages, func_02072a68((TableA68*)self->strings_, 0xf), 0, 0xe3);
 #endif
         messages->busy_ = 1;
         Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
         self->step_ = 10;
         return;
     }
-    else if (arg0->unknown_1370_ == 1)
+    else if (self->step_ == 1)
     {
         if (var1 == 0 || var1 == 3)
-            arg0->unknown_1370_++;
+            self->step_++;
         return;
     }
-    else if (arg0->unknown_1370_ == 2)
+    else if (self->step_ == 2)
     {
-        self->unk_13a0 = 0;
+        self->unknown_13a0_ = 0;
         self->unk_13f8 = 0;
-        FindAndLinkMatchingEntry0205de24((Struct0205de24*)self->window_, 0, 2);
+        func_0205de24((Struct0205de24*)self->window_, 0, 2);
         func_ov023_021e6e60(self);
-        BuildMessageD_02189f38((char*)self);
+        func_ov012_02189f38((char*)self);
         SePlayer_Play((SePlayer*)g_sePlayer, 5, 0);
         self->step_++;
         return;
     }
-    else if (arg0->unknown_1370_ == 3)
+    else if (self->step_ == 3)
     {
-        self->unk_13a0 = 1;
+        self->unknown_13a0_ = 1;
         self->unk_13f8 = Window_GetSelectedIndex((Struct_0205c570*)self->window_);
         int done = 0;
-        if (func_ov023_021e6de4(self) || TestFlagsAndActiveElement2_021e6e20((Obj021e6e20*)self))
+        if (func_ov023_021e6de4(self) || func_ov023_021e6e20((Struct_ov012_02186a7c*)self))
         {
             func_ov012_02185bf0(self, self->state_, 1);
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
-            Profile02187320* profile = GetProfile02187320(GameState::GetInstance());
+            Struct_ov012_02187320_2* profile = inline_ov012_02187320(GameState::GetInstance());
             switch (self->unk_13f8)
             {
                 case 1:
-                    var3->unknown_3_7_ = 1;
+                    profile->unknown_3_7_ = 1;
                     break;
                 case 0:
-                    var3->unknown_3_7_ = 0;
+                    profile->unknown_3_7_ = 0;
                     break;
             }
-            if (func_ov023_021e6e20((Struct_ov012_02186a7c*)arg0))
-                var3->unknown_3_7_ = 1;
+            if (func_ov023_021e6e20((Struct_ov012_02186a7c*)self))
+                profile->unknown_3_7_ = 1;
 #if defined(jpn)
-            func_ov012_0218adac(arg0, 0, -1);
+            func_ov012_0218adac(self, 0, -1);
 #else
     #if defined(jpn)
-        func_ov012_0218adac(arg0, 0, -1);
+        func_ov012_0218adac(self, 0, -1);
 #else
-        func_ov012_0218adac(arg0, 0, -1, 0);
+        func_ov012_0218adac(self, 0, -1, 0);
 #endif
 #endif
-            var2 = 1;
+            done = 1;
         }
-        if (!var2)
+        if (!done)
             return;
         Messages02187320* system = MessageSystem_GetInstance();
         int busy = system->busy_ == 0 ? 1 : 0;
@@ -168,38 +168,38 @@ extern "C" ARM void func_ov012_02187320(Struct_ov012_02187320_3* arg0)
         self->step_++;
         return;
     }
-    else if (arg0->unknown_1370_ == 4)
+    else if (self->step_ == 4)
     {
-        arg0->unknown_1370_++;
+        self->step_++;
         return;
     }
-    else if (arg0->unknown_1370_ == 5)
+    else if (self->step_ == 5)
     {
-        arg0->unknown_1370_++;
+        self->step_++;
         return;
     }
-    else if (arg0->unknown_1370_ == 6)
+    else if (self->step_ == 6)
     {
-        arg0->unknown_1371_ = 1;
-        func_ov023_021e6e60(arg0);
-        func_ov012_0218943c(arg0);
-        arg0->unknown_13a0_ = 1;
-        arg0->unknown_13a8_ = -1;
-        arg0->unknown_13a9_ = 0;
-        arg0->unknown_1370_ = 1;
+        self->state_ = 1;
+        func_ov023_021e6e60(self);
+        func_ov012_0218943c(self);
+        self->unknown_13a0_ = 1;
+        self->unknown_13a8_ = -1;
+        self->unknown_13a9_ = 0;
+        self->step_ = 1;
         return;
     }
-    else if (arg0->unknown_1370_ == 10 && var0->unknown_998_ == 0)
+    else if (self->step_ == 10 && messages->busy_ == 0)
     {
-        Struct_ov012_02187320_2* var6 = inline_ov012_02187320(GameState::GetInstance());
-        if (func_020457e0(var0) == 0)
-            var6->unknown_3_7_ = 0;
+        Struct_ov012_02187320_2* profile = inline_ov012_02187320(GameState::GetInstance());
+        if (func_020457e0(messages) == 0)
+            profile->unknown_3_7_ = 0;
         else
-            var6->unknown_3_7_ = 1;
+            profile->unknown_3_7_ = 1;
 #if defined(jpn)
-        func_ov012_0218adac(arg0, 0, -1);
+        func_ov012_0218adac(self, 0, -1);
 #else
-        func_ov012_0218adac(arg0, 0, -1, 0);
+        func_ov012_0218adac(self, 0, -1, 0);
 #endif
         Window_ClosePane((Entry_0205d6a0*)self->window_, 1);
         self->step_ = 5;

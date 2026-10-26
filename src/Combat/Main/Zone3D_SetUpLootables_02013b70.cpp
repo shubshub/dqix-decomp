@@ -4,7 +4,7 @@
 #include "World/LootableContainer.h"
 #include "Graphics/LightingManager.h"
 
-void ZoneLootable_Init(ZoneLootableRecord* base);
+extern "C" void ZoneLootable_Init(ZoneLootableRecord* base);
 extern "C" void Zone3D_SetUpLootableModels(Zone3D* zone);
 
 // The scale on each axis a pot's or barrel's first sprite gets (1.0 is 0x1000)

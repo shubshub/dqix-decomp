@@ -16,18 +16,18 @@
 #define REG_BG3_SCROLL_SUB (*(volatile unsigned int*)0x0400101c)
 #define REG_POWER_CONTROL (*(volatile unsigned short*)0x04000304)
 
-void SetVBlankIrqEnable(int);
-void GX_SetGraphicsMode(int, int, int);
+extern "C" void SetVBlankIrqEnable(int);
+extern "C" void GX_SetGraphicsMode(int, int, int);
 extern "C" void GXx_SetMasterBrightness_(short*, int);
-void GXS_SetGraphicsMode(unsigned int);
-void RestoreDisplayMode_020c38d4();
+extern "C" void GXS_SetGraphicsMode(unsigned int);
+extern "C" void func_020c38d4();
 extern "C" void func_ov031_0223c308();
 extern "C" void func_ov031_0223d928();
 extern "C" void func_ov031_0223dabc();
 extern "C" void func_ov031_0223b79c();
 
-static inline unsigned int inline_ov031_022271f0(unsigned int arg0) {
-    return DISPCNTSUB & ~arg0;
+static inline unsigned int inline_ov031_022271f0(unsigned int mask) {
+    return DISPCNTSUB & ~mask;
 }
 
 // USA: func_ov031_022271f0
@@ -52,8 +52,8 @@ extern "C" ARM void func_ov031_022271f0() {
     MapVRAMBanksToSubBG(0x80);
     MapVRAMBanksToSubObj(0x100);
     GXS_SetGraphicsMode(0);
-    DISPCNTSUB = SubDisplayWithClearedLayers(0x1f00);
-    DISPCNTSUB = SubDisplayWithClearedLayers(0xe000);
+    DISPCNTSUB = inline_ov031_022271f0(0x1f00);
+    DISPCNTSUB = inline_ov031_022271f0(0xe000);
     GXx_SetMasterBrightness_((short*)&REG_MASTER_BRIGHTNESS_SUB, 0);
     DISPCNTSUB = (DISPCNTSUB & 0xffcfffef) | 0x10;
     BG0CNTSUB &= ~0x40;

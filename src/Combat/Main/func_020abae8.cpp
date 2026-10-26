@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" int func_02075910(int arg0, void* arg1, int arg2, int arg3);
-extern "C" int func_01ff85b8(void* arg0, int arg1);
-extern "C" void func_02075acc(int arg0, void* arg1, int arg2, int arg3);
+extern "C" int func_02075910(int a0, void* out, int a1, int a2);
+extern "C" int func_01ff85b8(void* buf, int size);
+extern "C" void func_02075acc(int id, void* buf, int size, int flag);
 
 struct Struct_020abae8 {
-    int unknown_0_;
-    char unknown_4_[0x50];
+    int hdr;
+    char data[0x50];
 };
 
 // USA: func_020abae8
-extern "C" ARM int func_020abae8(int arg0) {
-    int var0;
-    if (!func_02075910(0, &var0, 1, 0)) return 0;
+extern "C" ARM int func_020abae8(int flag) {
+    int local0;
+    if (!func_02075910(0, &local0, 1, 0)) return 0;
 
-    struct Struct_020abae8 var1;
-    memset(&var1, 0, 0x54);
-    var1.unknown_0_ = func_01ff85b8((char*)&var1 + 4, 0x50);
-    func_02075acc(arg0 ? 0x8024 : 0x24, &var1, 0x54, 0);
+    struct Struct_020abae8 buf;
+    memset(&buf, 0, 0x54);
+    buf.hdr = func_01ff85b8((char*)&buf + 4, 0x50);
+    func_02075acc(flag ? 0x8024 : 0x24, &buf, 0x54, 0);
     return 1;
 }

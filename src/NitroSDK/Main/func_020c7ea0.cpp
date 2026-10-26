@@ -8,29 +8,29 @@ void UnblockContexts(struct BlockedContextList* p);
 extern "C" int _s32_div_f(int a, int b);
 
 // USA: func_020c7ea0
-extern "C" ARM int func_020c7ea0(void* arg0, unsigned int* arg1, int arg2) {
-    unsigned int var0 = DisableIRQInterrupts();
-    if (*(int*)((char*)arg0 + 0x1c) == 0) {
-        int var1 = arg2 & 1;
+extern "C" ARM int func_020c7ea0(void* obj, unsigned int* out, int arg2) {
+    unsigned int mask = DisableIRQInterrupts();
+    if (*(int*)((char*)obj + 0x1c) == 0) {
+        int wait = arg2 & 1;
         while (1) {
-            if (!var1) {
-                SetIRQInterruptState(var0);
+            if (!wait) {
+                SetIRQInterruptState(mask);
                 return 0;
             }
-            BlockCurrentContext((struct BlockedContextList*)((char*)arg0 + 8));
-            if (*(int*)((char*)arg0 + 0x1c) != 0) break;
+            BlockCurrentContext((struct BlockedContextList*)((char*)obj + 8));
+            if (*(int*)((char*)obj + 0x1c) != 0) break;
         }
     }
-    if (arg1 != NULL) {
-        unsigned int* var2 = *(unsigned int**)((char*)arg0 + 0x10);
-        unsigned int var3 = *(unsigned int*)((char*)arg0 + 0x18);
-        *arg1 = var2[var3];
+    if (out != NULL) {
+        unsigned int* arr = *(unsigned int**)((char*)obj + 0x10);
+        unsigned int idx = *(unsigned int*)((char*)obj + 0x18);
+        *out = arr[idx];
     }
-    int var4 = *(int*)((char*)arg0 + 0x18);
-    int var5 = *(int*)((char*)arg0 + 0x14);
-    *(int*)((char*)arg0 + 0x18) = (var4 + 1) % var5;
-    *(int*)((char*)arg0 + 0x1c) = *(int*)((char*)arg0 + 0x1c) - 1;
-    UnblockContexts((struct BlockedContextList*)arg0);
-    SetIRQInterruptState(var0);
+    int base = *(int*)((char*)obj + 0x18);
+    int capacity = *(int*)((char*)obj + 0x14);
+    *(int*)((char*)obj + 0x18) = (base + 1) % capacity;
+    *(int*)((char*)obj + 0x1c) = *(int*)((char*)obj + 0x1c) - 1;
+    UnblockContexts((struct BlockedContextList*)obj);
+    SetIRQInterruptState(mask);
     return 1;
 }

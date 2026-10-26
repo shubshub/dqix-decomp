@@ -18,7 +18,7 @@ struct BgVram {
 enum { kTileBytes = 0x20 };     // one 16-colour 8x8 tile
 
 // Main, originally SetupBankModeAndTransfer_0203b678 (USA 0x0203b678, EUR 0x0203b688, JPN 0x0203b0d0)
-ARM void BgVram_ResetWithBlankTile(int* bgVramWords, int screen, int bg) {
+extern "C" ARM void BgVram_ResetWithBlankTile(int* bgVramWords, int screen, int bg) {
     BgVram* bgVram = (BgVram*)bgVramWords;
     char blankTile[kTileBytes];
     bgVram->charOffset[screen] = kTileBytes;

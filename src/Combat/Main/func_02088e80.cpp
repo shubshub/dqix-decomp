@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-struct Struct_02088e80 {
-    char unknown_0_[0x14];
-    int unknown_14_;
-    int unknown_18_;
+struct Obj02088e80 {
+    char pad0[0x14];
+    int f14;
+    int f18;
     char unknown_1c_[0x21 - 0x1c];
     unsigned char unknown_21_;
     unsigned short unknown_22_;
@@ -21,28 +21,28 @@ struct Struct_02088e80 {
 };
 
 // USA: func_02088e80
-extern "C" ARM void func_02088e80(Struct_02088e80* arg0, int) {
+extern "C" ARM void func_02088e80(Obj02088e80* obj, int) {
     int var0 = 0;
-    if (arg0->unknown_14_ & 0x4) var0 = 1;
-    arg0->unknown_14_ = 1;
-    arg0->unknown_18_ = 0;
-    arg0->unknown_21_ = 0;
-    arg0->unknown_22_ &= ~0x3;
-    arg0->unknown_22_ &= ~0x3c;
-    arg0->unknown_22_ &= ~0x1c0;
-    arg0->unknown_22_ &= ~0xe00;
-    arg0->unknown_22_ &= ~0x3000;
-    arg0->unknown_24_ = 0;
-    arg0->unknown_22_ &= ~0x4000;
-    arg0->unknown_3b_ &= ~0x8;
-    arg0->unknown_3b_ &= ~0xf0;
-    arg0->unknown_3b_ &= ~0x4;
-    arg0->unknown_32_ = -1;
-    arg0->unknown_34_ = -1;
+    if (obj->f14 & 0x4) var0 = 1;
+    obj->f14 = 1;
+    obj->f18 = 0;
+    obj->unknown_21_ = 0;
+    obj->unknown_22_ &= ~0x3;
+    obj->unknown_22_ &= ~0x3c;
+    obj->unknown_22_ &= ~0x1c0;
+    obj->unknown_22_ &= ~0xe00;
+    obj->unknown_22_ &= ~0x3000;
+    obj->unknown_24_ = 0;
+    obj->unknown_22_ &= ~0x4000;
+    obj->unknown_3b_ &= ~0x8;
+    obj->unknown_3b_ &= ~0xf0;
+    obj->unknown_3b_ &= ~0x4;
+    obj->unknown_32_ = -1;
+    obj->unknown_34_ = -1;
     if (var0) {
-        arg0->unknown_14_ |= 0x4;
+        obj->f14 |= 0x4;
     }
-    memset(arg0->unknown_58_, 0, 4);
-    memset(arg0->unknown_5c_, 0, 0x23);
-    memset(arg0->unknown_7f_, 0, 0x23);
+    memset(obj->unknown_58_, 0, 4);
+    memset(obj->unknown_5c_, 0, 0x23);
+    memset(obj->unknown_7f_, 0, 0x23);
 }

@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 
 struct Struct_0204f41c_2 {
-    char unknown_0_[0xb6];
-    short unknown_b6_;
+    char pad0[0xb6];
+    short lineHeight;
 };
 
-struct Struct_0204f41c {
-    int unknown_0_;
-    signed char unknown_4_;
-    signed char unknown_5_0_ : 6;
+struct Glyph0204f41c {
+    int data;
+    signed char width;
+    signed char length : 6;
 };
 
-extern "C" int func_0204fc40(Window0204f41c* window, const char** cursor, const char* tag, short* out, int count);
-extern "C" void func_0204df9c(Window0204f41c* window, Glyph0204f41c* glyph, short x, short y, unsigned char color, int font);
-Glyph0204f41c* Font_FindCharacter(int key, int tableIdx);
-Glyph0204f41c* Font_GetCharacter(int idx, int tableIdx);
+extern "C" int func_0204fc40(Struct_0204f41c_2* window, const char** cursor, const char* tag, short* out, int count);
+extern "C" void func_0204df9c(Struct_0204f41c_2* window, Glyph0204f41c* glyph, short x, short y, unsigned char color, int font);
+extern "C" Glyph0204f41c* Font_FindCharacter(int key, int tableIdx);
+extern "C" Glyph0204f41c* Font_GetCharacter(int idx, int tableIdx);
 
 extern const unsigned char data_020e7bd8[];
 extern const char data_020f0248[];
@@ -27,90 +27,90 @@ extern const char data_020f0254[];
 extern const char data_020f028c[];
 
 // USA: func_0204f41c
-extern "C" ARM void func_0204f41c(Struct_0204f41c_2* arg0, short arg1, short arg2, const char* arg3, unsigned char arg4,
-                                  unsigned char arg5, short* arg6, short* arg7, int arg8) {
+extern "C" ARM void func_0204f41c(Struct_0204f41c_2* window, short x, short y, const char* text, unsigned char size,
+                                  unsigned char color, short* arg6, short* outHeight, int font) {
     int var0;
     short var1;
     short var2;
-    short var3[8];
-    if (arg3 == NULL) return;
-    const char* var4 = arg3;
-    unsigned char var5 = arg5;
-    if (arg4 == 12) arg8 = 1;
-    *arg7 = 0;
+    short args[8];
+    if (text == NULL) return;
+    const char* p = text;
+    unsigned char curColor = color;
+    if (size == 12) font = 1;
+    *outHeight = 0;
     *arg6 = 0;
-    var1 = arg1;
-    var2 = arg2;
-    var0 = arg4;
-    while (*var4 != 0) {
-        char var6 = *var4;
-        char var7 = var4[1];
-        if ((var6 == '\\' && var7 == 'n') || (var6 == '\r' && var7 == '\n')) {
-            arg2 += arg0->unknown_b6_;
-            arg1 = var1;
-            var4 += 2;
+    var1 = x;
+    var2 = y;
+    var0 = size;
+    while (*p != 0) {
+        char c = *p;
+        char next = p[1];
+        if ((c == '\\' && next == 'n') || (c == '\r' && next == '\n')) {
+            y += window->lineHeight;
+            x = var1;
+            p += 2;
             continue;
         }
-        if (var6 == '\n') {
-            arg2 += arg0->unknown_b6_;
-            arg1 = var1;
-            var4 += 1;
+        if (c == '\n') {
+            y += window->lineHeight;
+            x = var1;
+            p += 1;
             continue;
         }
-        if (var6 == '<') {
-            var4++;
-            if (func_0204fc40(arg0, &var4, data_020f0248, var3, 1)) continue;
-            if (func_0204fc40(arg0, &var4, data_020f0258, var3, 1)) {
-                arg1 += var3[0];
+        if (c == '<') {
+            p++;
+            if (func_0204fc40(window, &p, data_020f0248, args, 1)) continue;
+            if (func_0204fc40(window, &p, data_020f0258, args, 1)) {
+                x += args[0];
                 continue;
             }
-            if (func_0204fc40(arg0, &var4, data_020f025b, var3, 1)) {
-                arg2 += var3[0];
+            if (func_0204fc40(window, &p, data_020f025b, args, 1)) {
+                y += args[0];
                 continue;
             }
-            if (func_0204fc40(arg0, &var4, data_020f025e, var3, 2)) {
-                arg1 += var3[0];
-                arg2 += var3[1];
+            if (func_0204fc40(window, &p, data_020f025e, args, 2)) {
+                x += args[0];
+                y += args[1];
                 continue;
             }
-            if (func_0204fc40(arg0, &var4, data_020f024e, var3, 1)) {
-                arg1 = var3[0];
+            if (func_0204fc40(window, &p, data_020f024e, args, 1)) {
+                x = args[0];
                 continue;
             }
-            if (func_0204fc40(arg0, &var4, data_020f0251, var3, 1)) {
-                arg2 = var3[0];
+            if (func_0204fc40(window, &p, data_020f0251, args, 1)) {
+                y = args[0];
                 continue;
             }
-            if (func_0204fc40(arg0, &var4, data_020f0254, var3, 2)) {
-                arg1 = var3[0];
-                arg2 = var3[1];
+            if (func_0204fc40(window, &p, data_020f0254, args, 2)) {
+                x = args[0];
+                y = args[1];
                 continue;
             }
-            if (func_0204fc40(arg0, &var4, data_020f028c, var3, 1)) {
-                var3[0] &= 0xf;
-                var5 = var3[0];
+            if (func_0204fc40(window, &p, data_020f028c, args, 1)) {
+                args[0] &= 0xf;
+                curColor = args[0];
                 continue;
             }
-            var4--;
+            p--;
         }
         unsigned char advance = data_020e7bd8[font] + 1;
         Glyph0204f41c* glyph = Font_FindCharacter((int)p, font);
         if (glyph != NULL) {
             func_0204df9c(window, glyph, x, y, curColor, font);
             advance = glyph->width + 1;
-            short bottom = y + lineAdvance;
+            short bottom = y + var0;
             short right = x + advance;
-            if (*outWidth < right) *outWidth = right;
+            if (*arg6 < right) *arg6 = right;
             if (*outHeight < bottom) *outHeight = bottom;
             p += glyph->length;
         } else {
             if (*p != ' ') {
                 func_0204df9c(window, Font_GetCharacter(0, font), x, y, curColor, font);
             }
-            var4++;
+            p++;
         }
-        arg1 += var8;
+        x += advance;
     }
     *arg6 -= var1;
-    *arg7 -= var2;
+    *outHeight -= var2;
 }

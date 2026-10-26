@@ -4,101 +4,101 @@
 
 extern "C" void Window_Update(void* obj, int val);
 struct TimeStamp020103f0;
-void GameState_GetTimeSinceMainTimestamp(struct TimeStamp020103f0* obj, unsigned short* outHours, unsigned char* outMinutes, unsigned char* outSeconds);
-void AddPlayClockHours020ac614(struct BattleRecordPlayClock* clock, int amount);
-void AddPlayClockMinutes020ac644(struct BattleRecordPlayClock* clock, int amount);
-struct ShortBytePair021e71a0;
-void ClearShortAndTwoBytes_021e71a0(struct ShortBytePair021e71a0* p);
-class PMFObj021e7c58;
-void DispatchEntryByIndex_021e7c58(PMFObj021e7c58* obj, unsigned int selector, int idx);
+extern "C" void GameState_GetTimeSinceMainTimestamp(struct TimeStamp020103f0* obj, unsigned short* outHours, unsigned char* outMinutes, unsigned char* outSeconds);
+extern "C" void func_020ac614(struct Struct_020ac4f8* arg0, int amount);
+extern "C" void func_020ac644(struct Struct_020ac4f8* arg0, int amount);
+struct Struct_ov023_021e71a0;
+extern "C" void func_ov023_021e71a0(struct Struct_ov023_021e71a0* p);
+class Struct_ov012_0218adac;
+extern "C" void func_ov023_021e7c58(Struct_ov012_0218adac* obj, unsigned int selector, int idx);
 
 // USA: func_ov023_021e7404
-extern "C" ARM void func_ov023_021e7404(char* arg0, int arg1) {
+extern "C" ARM void func_ov023_021e7404(char* obj, int amount) {
 #if defined(jpn)
- enum {Enum_ov023_021e7404_260=0x2c4, Enum_ov023_021e7404_29696=0x7000, Enum_ov023_021e7404_1552=0x606, Enum_ov023_021e7404_1550=0x604, Enum_ov023_021e7404_1553=0x607};
+ enum {regionalOffset0=0x2c4, regionalOffset1=0x7000, regionalOffset2=0x606, regionalOffset3=0x604, regionalOffset4=0x607};
 #else
- enum {Enum_ov023_021e7404_260=0x104, Enum_ov023_021e7404_29696=0x7400, Enum_ov023_021e7404_1552=0x610, Enum_ov023_021e7404_1550=0x60e, Enum_ov023_021e7404_1553=0x611};
+ enum {regionalOffset0=0x104, regionalOffset1=0x7400, regionalOffset2=0x610, regionalOffset3=0x60e, regionalOffset4=0x611};
 #endif
-    int var0 = arg1;
-    if (var0 == 0) var0 = 1;
+    int useAmount = amount;
+    if (useAmount == 0) useAmount = 1;
 
-    if (*(int*)(arg0 + 0x5dc) == 0) {
+    if (*(int*)(obj + 0x5dc) == 0) {
         return;
     }
 
     Window_Update(obj + 0x78, useAmount);
     *(int*)0x4001010 = 0;
 
-    if (*(int*)(arg0 + 0x3c) == 0) {
-        void* var1 = GameState::GetInstance();
-        char* var2 = (char*)var1 + Enum_ov023_021e7404_260 + Enum_ov023_021e7404_29696;
+    if (*(int*)(obj + 0x3c) == 0) {
+        void* battleStruct = GameState::GetInstance();
+        char* var2 = (char*)battleStruct + regionalOffset0 + regionalOffset1;
         int var3 = 0;
-        unsigned char var4 = *(unsigned char*)(arg0 + Enum_ov023_021e7404_1552);
+        unsigned char var4 = *(unsigned char*)(obj + regionalOffset2);
 
-        unsigned short var5;
-        unsigned char var6;
-        unsigned char var7;
-        var5 = 0;
-        var7 = 0;
-        var6 = 0;
+        unsigned short hoursOut;
+        unsigned char secondsOut;
+        unsigned char minutesOut;
+        hoursOut = 0;
+        minutesOut = 0;
+        secondsOut = 0;
 
-        if (*(unsigned short*)(arg0 + Enum_ov023_021e7404_1550) == 0 && *(unsigned char*)(arg0 + Enum_ov023_021e7404_1552) == 0) {
+        if (*(unsigned short*)(obj + regionalOffset3) == 0 && *(unsigned char*)(obj + regionalOffset2) == 0) {
             var3 = 1;
         }
 
         battleStruct = GameState::GetInstance();
         GameState_GetTimeSinceMainTimestamp((struct TimeStamp020103f0*)battleStruct, &hoursOut, &minutesOut, &secondsOut);
 
-        func_ov023_021e71a0((struct Struct_ov023_021e71a0*)(arg0 + Enum_ov023_021e7404_1550));
+        func_ov023_021e71a0((struct Struct_ov023_021e71a0*)(obj + regionalOffset3));
 
         unsigned short var8 = *(unsigned short*)(var2 + 0x3c);
-        func_020ac614((struct Struct_020ac4f8*)(arg0 + Enum_ov023_021e7404_1550), (unsigned short)(var8 + var5));
+        func_020ac614((struct Struct_020ac4f8*)(obj + regionalOffset3), (unsigned short)(var8 + hoursOut));
 
         unsigned char var9 = *(unsigned char*)(var2 + 0x3e);
-        func_020ac644((struct Struct_020ac4f8*)(arg0 + Enum_ov023_021e7404_1550), (unsigned char)(var9 + var7));
+        func_020ac644((struct Struct_020ac4f8*)(obj + regionalOffset3), (unsigned char)(var9 + minutesOut));
 
         unsigned char var10 = *(unsigned char*)(var2 + 0x3f);
-        *(unsigned char*)(arg0 + Enum_ov023_021e7404_1553) = *(unsigned char*)(arg0 + Enum_ov023_021e7404_1553) + (unsigned char)(var10 + var6);
+        *(unsigned char*)(obj + regionalOffset4) = *(unsigned char*)(obj + regionalOffset4) + (unsigned char)(var10 + secondsOut);
 
-        if (*(unsigned char*)(arg0 + Enum_ov023_021e7404_1553) > 0x3b) {
-            unsigned char var11 = *(unsigned char*)(arg0 + Enum_ov023_021e7404_1553) / 60;
+        if (*(unsigned char*)(obj + regionalOffset4) > 0x3b) {
+            unsigned char var11 = *(unsigned char*)(obj + regionalOffset4) / 60;
 
-            if (*(unsigned short*)(arg0 + Enum_ov023_021e7404_1550) == 0x270f) {
-                int var12 = *(unsigned char*)(arg0 + Enum_ov023_021e7404_1552) + var11;
+            if (*(unsigned short*)(obj + regionalOffset3) == 0x270f) {
+                int var12 = *(unsigned char*)(obj + regionalOffset2) + var11;
                 if (var12 > 0x3b) {
-                    *(short*)(arg0 + Enum_ov023_021e7404_1550) = 0x270f;
-                    *(unsigned char*)(arg0 + Enum_ov023_021e7404_1552) = 0x3b;
-                    *(unsigned char*)(arg0 + Enum_ov023_021e7404_1553) = 0x3b;
+                    *(short*)(obj + regionalOffset3) = 0x270f;
+                    *(unsigned char*)(obj + regionalOffset2) = 0x3b;
+                    *(unsigned char*)(obj + regionalOffset4) = 0x3b;
                     goto afterMinuteCarry;
                 }
             }
 
-            func_020ac644((struct Struct_020ac4f8*)(arg0 + Enum_ov023_021e7404_1550), var11);
-            *(unsigned char*)(arg0 + Enum_ov023_021e7404_1553) = *(unsigned char*)(arg0 + Enum_ov023_021e7404_1553) % 60;
+            func_020ac644((struct Struct_020ac4f8*)(obj + regionalOffset3), var11);
+            *(unsigned char*)(obj + regionalOffset4) = *(unsigned char*)(obj + regionalOffset4) % 60;
         }
 afterMinuteCarry:
 
-        int var13;
+        int cond;
         if (var3 != 0) {
-            var13 = 1;
+            cond = 1;
         } else {
-            var13 = (var4 != *(unsigned char*)(arg0 + Enum_ov023_021e7404_1552)) ? 1 : 0;
+            cond = (var4 != *(unsigned char*)(obj + regionalOffset2)) ? 1 : 0;
         }
-        if (var13 != 0) {
-            func_ov023_021e7c58((Struct_ov012_0218adac*)arg0, 0, 0);
+        if (cond != 0) {
+            func_ov023_021e7c58((Struct_ov012_0218adac*)obj, 0, 0);
         }
     }
 
-    *(int*)(arg0 + 0x5e8) = *(int*)(arg0 + 0x5e8) - (var0 << 11);
-    *(int*)(arg0 + 0x5ec) = *(int*)(arg0 + 0x5ec) + (var0 << 11);
+    *(int*)(obj + 0x5e8) = *(int*)(obj + 0x5e8) - (useAmount << 11);
+    *(int*)(obj + 0x5ec) = *(int*)(obj + 0x5ec) + (useAmount << 11);
 
-    if (*(int*)(arg0 + 0x5e8) < -0x100000) {
-        *(int*)(arg0 + 0x5e8) += 0x100000;
+    if (*(int*)(obj + 0x5e8) < -0x100000) {
+        *(int*)(obj + 0x5e8) += 0x100000;
     }
-    if (*(int*)(arg0 + 0x5ec) > 0x100000) {
-        *(int*)(arg0 + 0x5ec) = *(int*)(arg0 + 0x5ec) - 0x100000;
+    if (*(int*)(obj + 0x5ec) > 0x100000) {
+        *(int*)(obj + 0x5ec) = *(int*)(obj + 0x5ec) - 0x100000;
     }
 
-    int var14 = *(int*)(arg0 + 0x5ec) >> 12;
-    *(int*)0x4001014 = ((*(int*)(arg0 + 0x5e8) >> 12) & 0x1ff) | ((0x1ff << 16) & (var14 << 16));
+    int var14 = *(int*)(obj + 0x5ec) >> 12;
+    *(int*)0x4001014 = ((*(int*)(obj + 0x5e8) >> 12) & 0x1ff) | ((0x1ff << 16) & (var14 << 16));
 }

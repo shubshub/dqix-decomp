@@ -3,32 +3,32 @@
 #include "Util/Random.h"
 #include "GameState/GameState.h"
 
-extern "C" int func_ov000_0215e9fc(int arg0, short* arg1, int arg2, int arg3);
-extern "C" int func_ov024_021ed890(struct Random** arg0, int* arg1, short* arg2);
+extern "C" int func_ov000_0215e9fc(int battle, short* buf, int max, int start);
+extern "C" int func_ov024_021ed890(struct Random** arg0, int* arg1, short* table);
 
-struct Struct_ov024_021feb1c { short unknown_0_[4]; };
+struct Struct_ov024_021feb1c { short v[4]; };
 extern struct Struct_ov024_021feb1c data_ov024_021feb1c;
 
 // USA: func_ov024_021f57a8
-extern "C" ARM int func_ov024_021f57a8(int* arg0, int arg1, int arg2, int* arg3, short* arg4) {
-	struct Struct_ov024_021feb1c var0 = data_ov024_021feb1c;
-	int var1 = func_ov000_0215e9fc(*arg0, var0.unknown_0_, 4, 1);
-	if (var1 <= 0) {
+extern "C" ARM int func_ov024_021f57a8(int* a0, int a1, int a2, int* outCount, short* arg4) {
+	struct Struct_ov024_021feb1c buf = data_ov024_021feb1c;
+	int count = func_ov000_0215e9fc(*a0, buf.v, 4, 1);
+	if (count <= 0) {
 		return 0;
 	}
 
-	*arg3 = 0;
-	for (int var2 = 0; var2 < var1; var2++) {
-		GameObject* var3 = GetCombatantByID(*arg0, var0.unknown_0_[var2]);
-		if (!var3) continue;
-		if (*((unsigned char*)var3->currentStats_ + 0x24) == 0) continue;
-		int var4 = *arg3;
-		*arg3 = var4 + 1;
-		arg4[var4] = var0.unknown_0_[var2];
+	*outCount = 0;
+	for (int i = 0; i < count; i++) {
+		GameObject* c = GetCombatantByID(*a0, buf.v[i]);
+		if (!c) continue;
+		if (*((unsigned char*)c->currentStats_ + 0x24) == 0) continue;
+		int idx = *outCount;
+		*outCount = idx + 1;
+		arg4[idx] = buf.v[i];
 	}
-	if (*arg3 <= 0) {
+	if (*outCount <= 0) {
 		return 0;
 	}
-	func_ov024_021ed890((struct Random**)arg0, arg3, arg4);
+	func_ov024_021ed890((struct Random**)a0, outCount, arg4);
 	return 1;
 }

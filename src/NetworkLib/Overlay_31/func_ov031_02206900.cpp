@@ -1,45 +1,45 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov031_022071b4(void* arg0);
-extern "C" int func_ov031_02207180(void* arg0);
-extern "C" int func_ov031_022051a8(void* arg0, void* arg1);
-extern "C" void* func_ov031_02205134(void* arg0, void* arg1, int arg2);
+extern "C" int func_ov031_022071b4(void* item);
+extern "C" int func_ov031_02207180(void* v);
+extern "C" int func_ov031_022051a8(void* a, void* b);
+extern "C" void* func_ov031_02205134(void* a, void* b, int c);
 struct Struct_ov031_02205194;
-extern "C" int func_ov031_022051f4(Struct_ov031_02205194* arg0, void* arg1);
+extern "C" int func_ov031_022051f4(Struct_ov031_02205194* obj, void* extra);
 extern "C" void func_ov031_022069d0(void);
 
 // USA: func_ov031_02206900
-extern "C" ARM int func_ov031_02206900(void* arg0) {
-	if ((int)arg0 <= 0) {
+extern "C" ARM int func_ov031_02206900(void* obj) {
+	if ((int)obj <= 0) {
 		return ~0x1b;
 	}
-	if (func_ov031_022071b4(arg0) != 0) {
+	if (func_ov031_022071b4(obj) != 0) {
 		return ~0x19;
 	}
-	if (func_ov031_02207180(arg0) != 0) {
+	if (func_ov031_02207180(obj) != 0) {
 		return 0;
 	}
-	int var0 = 0;
-	if (arg0 != 0) {
-		var0 = (*(volatile short*)((char*)arg0 + 0x70) & 1) != 0;
+	int flag1 = 0;
+	if (obj != 0) {
+		flag1 = (*(volatile short*)((char*)obj + 0x70) & 1) != 0;
 	}
-	if (!var0) {
+	if (!flag1) {
 		return ~0x26;
 	}
-	if (*(volatile short*)((char*)arg0 + 0x70) & 0x10) {
+	if (*(volatile short*)((char*)obj + 0x70) & 0x10) {
 		return ~0x19;
 	}
-	int var1 = 1;
-	*(volatile short*)((char*)arg0 + 0x70) |= 0x18;
-	signed char var2 = *((signed char*)arg0 + 0x73);
-	if (var2 != 0 && var2 != 4) {
-		var1 = 0;
+	int flag2 = 1;
+	*(volatile short*)((char*)obj + 0x70) |= 0x18;
+	signed char b = *((signed char*)obj + 0x73);
+	if (b != 0 && b != 4) {
+		flag2 = 0;
 	}
-	if (var1 != 0) {
-		func_ov031_022051a8(*(void**)((char*)arg0 + 0x68), NULL);
+	if (flag2 != 0) {
+		func_ov031_022051a8(*(void**)((char*)obj + 0x68), NULL);
 	}
-	void* var3 = func_ov031_02205134((void*)func_ov031_022069d0, arg0, 1);
-	*(int*)((char*)var3 + 8) = 0;
-	func_ov031_022051f4((Struct_ov031_02205194*)arg0, var3);
+	void* p = func_ov031_02205134((void*)func_ov031_022069d0, obj, 1);
+	*(int*)((char*)p + 8) = 0;
+	func_ov031_022051f4((Struct_ov031_02205194*)obj, p);
 	return 0;
 }

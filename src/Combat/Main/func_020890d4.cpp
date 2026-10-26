@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
 // USA: func_020890d4
-extern "C" ARM void func_020890d4(unsigned char* arg0) {
-    arg0[0x78] = 5;
-    arg0[0x9b] = 0;
-    ((unsigned int*)arg0)[6] |= 0x200;
+extern "C" ARM void func_020890d4(unsigned char* obj) {
+    obj[0x78] = 5;
+    obj[0x9b] = 0;
+    ((unsigned int*)obj)[6] |= 0x200;
 }

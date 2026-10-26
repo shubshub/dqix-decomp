@@ -5,11 +5,11 @@
 #include "Combat/MenuNodeChain.h"
 
 struct Struct_020e2490;
-struct Struct_02043368;
+struct ClearTarget0205a234;
 struct Struct_ov003_02173f70 {
-    Struct_020e2490* unknown_0_;
-    SafeAllocator* unknown_4_;
-    unsigned char unknown_8_[0x38 - 8];
+    Struct_020e2490* manager;
+    SafeAllocator* allocators;
+    unsigned char unknown8[0x38 - 8];
     int unknown_38_;
 #if defined(jpn)
     unsigned char unknown_3c_[0x790 - 0x3c];
@@ -18,12 +18,12 @@ struct Struct_ov003_02173f70 {
 #endif
     ClearTarget0205a234* list;
     Struct0205a198* records;
-    unsigned char unknown81c[8];
+    unsigned char unknown_81c_[8];
     unsigned short count;
-    unsigned char unknown826[2];
+    unsigned char unknown_826_[2];
     unsigned char active;
-    unsigned char unknown829[3];
-    ClearTarget0205a234* allocatedList;
+    unsigned char unknown_829_[3];
+    ClearTarget0205a234* unknown_82c_;
     Struct0205a198* allocatedRecords;
     unsigned char unknown834[0x89c - 0x834];
     Manager0207f7f0* menu;

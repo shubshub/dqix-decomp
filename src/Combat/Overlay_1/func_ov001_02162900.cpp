@@ -5,21 +5,21 @@ extern "C" int LoadToMainBG3ScreenData(int arg0, int arg1, unsigned int arg2);
 extern "C" int LoadToSubBG3ScreenData(int arg0, int arg1, unsigned int arg2);
 extern "C" int LoadToMainBG3CharacterData(int arg0, int arg1, unsigned int arg2);
 extern "C" int LoadToSubBG3CharacterData(int arg0, int arg1, unsigned int arg2);
-extern "C" int func_ov017_021d60f4(void* arg0);
+extern "C" int func_ov017_021d60f4(void* a);
 
 // USA: func_ov001_02162900
-extern "C" ARM int func_ov001_02162900(void* arg0) {
-	unsigned char var0[0x20];
-	unsigned char var1[0x600];
-	int var2 = func_ov017_021d60f4(arg0);
-	VectorizedMemset(var0, 0, sizeof(var0));
-	VectorizedMemset(var1, 0, sizeof(var1));
-	if (var2 == 0) {
-		LoadToMainBG3CharacterData((int)var0, 0, sizeof(var0));
-		LoadToMainBG3ScreenData((int)var1, 0, sizeof(var1));
+extern "C" ARM int func_ov001_02162900(void* param) {
+	unsigned char buf1[0x20];
+	unsigned char buf2[0x600];
+	int mode = func_ov017_021d60f4(param);
+	VectorizedMemset(buf1, 0, sizeof(buf1));
+	VectorizedMemset(buf2, 0, sizeof(buf2));
+	if (mode == 0) {
+		LoadToMainBG3CharacterData((int)buf1, 0, sizeof(buf1));
+		LoadToMainBG3ScreenData((int)buf2, 0, sizeof(buf2));
 	} else {
-		LoadToSubBG3CharacterData((int)var0, 0, sizeof(var0));
-		LoadToSubBG3ScreenData((int)var1, 0, sizeof(var1));
+		LoadToSubBG3CharacterData((int)buf1, 0, sizeof(buf1));
+		LoadToSubBG3ScreenData((int)buf2, 0, sizeof(buf2));
 	}
 	return 1;
 }

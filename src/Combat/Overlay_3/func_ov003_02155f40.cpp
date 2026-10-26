@@ -8,19 +8,19 @@ enum { Enum_ov003_02155f40_2384 = 0x950 };
 #endif
 #include "GameState/GameState.h"
 
-extern "C" void* func_ov003_02156034(void* arg0);
+extern "C" void* func_ov003_02156034(void* obj);
 
 // USA: func_ov003_02155f40
-extern "C" ARM int func_ov003_02155f40(void* arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    GameObject* var1 = var0->GetPartyMemberByIndex(arg1);
-    int var2;
-    if (var1 != NULL) {
-        void* var3 = *(void**)((char*)var1 + Enum_ov003_02155f40_336);
-        int var4 = *(int*)((char*)var3 + Enum_ov003_02155f40_2384);
-        var2 = (var4 == (int)func_ov003_02156034(arg0)) ? 1 : 0;
+extern "C" ARM int func_ov003_02155f40(void* obj, int combatantId) {
+    GameState* bs = GameState::GetInstance();
+    GameObject* combatant = bs->GetPartyMemberByIndex(combatantId);
+    int result;
+    if (combatant != NULL) {
+        void* inner = *(void**)((char*)combatant + Enum_ov003_02155f40_336);
+        int val = *(int*)((char*)inner + Enum_ov003_02155f40_2384);
+        result = (val == (int)func_ov003_02156034(obj)) ? 1 : 0;
     } else {
-        var2 = 0;
+        result = 0;
     }
-    return var2;
+    return result;
 }

@@ -7,9 +7,9 @@ extern unsigned char data_ov031_02290ca0;
 // USA: func_ov031_0222ee34
 extern "C" ARM void func_ov031_0222ee34(void) {
 	func_ov031_02235c70();
-	int var0;
-	func_ov031_02227520(NULL, &var0);
-	if (var0 != 0) return;
+	int idx;
+	func_ov031_02227520(NULL, &idx);
+	if (idx != 0) return;
 	*(unsigned short*)((char*)&data_ov031_02290ca0 + 4) = 0;
 	(&data_ov031_02290ca0)[0] = 0;
 	(&data_ov031_02290ca0)[2] = 0;

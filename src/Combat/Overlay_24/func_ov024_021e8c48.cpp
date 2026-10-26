@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
 // USA: func_ov024_021e8c48
-extern "C" ARM int func_ov024_021e8c48(void* arg0, signed char arg1) {
-	switch (arg1) {
+extern "C" ARM int func_ov024_021e8c48(void* unused, signed char category) {
+	switch (category) {
 		case -1:
 			return 0x36;
 		case 1:

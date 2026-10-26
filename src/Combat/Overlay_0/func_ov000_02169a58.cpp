@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 // USA: func_ov000_02169a58
-extern "C" ARM void* func_ov000_02169a58(char* arg0, int arg1) {
-    while (arg0 != 0) {
-        int var0 = 0;
-        while (var0 < *(unsigned short*)(arg0 + 4)) {
-            if (arg1 == (*(unsigned short**)(arg0 + 0))[var0]) {
-                return arg0;
+extern "C" ARM void* func_ov000_02169a58(char* node, int value) {
+    while (node != 0) {
+        int i = 0;
+        while (i < *(unsigned short*)(node + 4)) {
+            if (value == (*(unsigned short**)(node + 0))[i]) {
+                return node;
             }
-            var0++;
+            i++;
         }
-        arg0 = *(char**)(arg0 + 0xc);
+        node = *(char**)(node + 0xc);
     }
     return 0;
 }

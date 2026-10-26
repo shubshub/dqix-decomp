@@ -5,7 +5,7 @@
 
 extern "C" void* __clear(void*, int);
 struct Vec3copy0202ec84 { unsigned int v[3]; };
-int Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
+extern "C" int Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
 
 // One number popup (see NumberPopups_Init).
 struct NumberPopup {
@@ -58,7 +58,7 @@ extern "C" ARM void NumberPopups_AvoidOverlap(NumberPopups* numberPopups, int in
                 clampedYs[i] = y;
             }
         }
-        for (int attempt = 0; attempt < 16; attempt++) {
+        for (int var13 = 0; var13 < 16; var13++) {
             bool overlaps = false;
             int* ys = screenYs;
             int candidateY = shiftY + ys[index];

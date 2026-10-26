@@ -3,27 +3,27 @@
 struct Struct_ov023_021e257c_3;
 
 struct Struct_ov023_021e2868 {
-    char unknown_0_[8];
-    int unknown_8_;
-    int unknown_c_;
-    char unknown_10_[4];
-    unsigned short unknown_14_;
+    char pad0[8];
+    int f8;
+    int fc;
+    char pad10[4];
+    unsigned short f14;
     unsigned short unknown_16_;
 };
 
-extern "C" ARM void* func_ov023_021e2450(void* arg0, int arg1);
-extern "C" ARM void* func_ov023_021e27f8(struct Struct_ov023_021e257c_3* arg0, int arg1);
-extern "C" void func_ov023_021e2acc(void* arg0, int arg1, short* arg2, short* arg3);
+extern "C" ARM void* func_ov023_021e2450(void* obj, int val);
+extern "C" ARM void* func_ov023_021e27f8(struct Struct_ov023_021e257c_3* obj, int key);
+extern "C" void func_ov023_021e2acc(void* obj, int val, short* out1, short* out2);
 
 // USA: func_ov023_021e2b5c
-extern "C" ARM void func_ov023_021e2b5c(struct Struct_ov023_021e2868* arg0, int arg1, short* arg2, short* arg3) {
-    if (arg0->unknown_8_ == 0 || arg0->unknown_14_ == 0 || arg0->unknown_c_ == 0 || arg0->unknown_16_ == 0) return;
-    void* var0 = func_ov023_021e2450(arg0, arg1);
-    if (!var0) return;
-    *arg2 = *(short*)((char*)var0 + 4);
-    *arg3 = *(short*)((char*)var0 + 6);
-    void* var1 = func_ov023_021e27f8((struct Struct_ov023_021e257c_3*)arg0, arg1);
-    if (!var1) return;
-    short var2 = *(short*)var1;
-    func_ov023_021e2acc(arg0, var2, arg2, arg3);
+extern "C" ARM void func_ov023_021e2b5c(struct Struct_ov023_021e2868* obj, int key, short* out1, short* out2) {
+    if (obj->f8 == 0 || obj->f14 == 0 || obj->fc == 0 || obj->unknown_16_ == 0) return;
+    void* e = func_ov023_021e2450(obj, key);
+    if (!e) return;
+    *out1 = *(short*)((char*)e + 4);
+    *out2 = *(short*)((char*)e + 6);
+    void* e2 = func_ov023_021e27f8((struct Struct_ov023_021e257c_3*)obj, key);
+    if (!e2) return;
+    short v = *(short*)e2;
+    func_ov023_021e2acc(obj, v, out1, out2);
 }

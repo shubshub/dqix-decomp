@@ -1,71 +1,71 @@
 #include <globaldefs.h>
 
 
-extern "C" void func_020ca3ec(int arg0, void* arg1, int arg2);
-extern "C" int func_ov031_02213230(int arg0, void* arg1);
-extern "C" int func_ov031_0221add4(int arg0);
-extern "C" int func_ov031_0220c970(void* arg0, int arg1);
+extern "C" void func_020ca3ec(int value, void* dst, int size);
+extern "C" int func_ov031_02213230(int mask, void* arg);
+extern "C" int func_ov031_0221add4(int v);
+extern "C" int func_ov031_0220c970(void* p, int size);
 extern "C" void func_ov031_022132d4(void);
 
 struct Struct_ov031_02212d40 {
-    void* unknown_0_;
-    void* unknown_4_;
-    unsigned char unknown_8_;
-    unsigned char unknown_9_;
-    unsigned char unknown_a_;
-    unsigned char unknown_b_;
+    void* field0;
+    void* field4;
+    unsigned char field8;
+    unsigned char field9;
+    unsigned char fieldA;
+    unsigned char fieldB;
 };
 
 struct Struct_ov031_0224e5c4_2 {
-    void* unknown_0_;
-    void* unknown_4_;
-    void* unknown_8_;
-    void* unknown_c_;
-    void* unknown_10_;
+    void* field0;
+    void* field4;
+    void* field8;
+    void* fieldC;
+    void* field10;
 };
 
 extern Struct_ov031_0224e5c4_2 data_ov031_0224e5c4;
 
 // USA: func_ov031_02212d40
-extern "C" ARM int func_ov031_02212d40(Struct_ov031_02212d40* arg0) {
-    Struct_ov031_0224e5c4_2* var0 = &data_ov031_0224e5c4;
-    void* var1 = (void*)((int (*)(int, int))arg0->unknown_0_)(1, 0x24);
-    var0->unknown_c_ = var1;
-    func_020ca3ec(0, var1, 0x24);
+extern "C" ARM int func_ov031_02212d40(Struct_ov031_02212d40* obj) {
+    Struct_ov031_0224e5c4_2* g = &data_ov031_0224e5c4;
+    void* alloc = (void*)((int (*)(int, int))obj->field0)(1, 0x24);
+    g->fieldC = alloc;
+    func_020ca3ec(0, alloc, 0x24);
 
-    void* var2 = var0->unknown_c_;
-    *(void**)var2 = arg0->unknown_0_;
-    *(void**)((char*)var2 + 4) = arg0->unknown_4_;
-    *((unsigned char*)var2 + 9) = 1;
-    *((unsigned char*)var2 + 0x16) = 1;
-    *((unsigned char*)var2 + 8) = 1;
+    void* p = g->fieldC;
+    *(void**)p = obj->field0;
+    *(void**)((char*)p + 4) = obj->field4;
+    *((unsigned char*)p + 9) = 1;
+    *((unsigned char*)p + 0x16) = 1;
+    *((unsigned char*)p + 8) = 1;
 
-    var0->unknown_10_ = (void*)func_ov031_02213230(0x10, (void*)0xd18);
-    var0->unknown_0_  = (void*)func_ov031_02213230(2, (void*)0x2300);
-    var0->unknown_4_  = (void*)func_ov031_02213230(4, (void*)0x58);
-    var0->unknown_8_  = (void*)func_ov031_02213230(8, (void*)0xc);
+    g->field10 = (void*)func_ov031_02213230(0x10, (void*)0xd18);
+    g->field0  = (void*)func_ov031_02213230(2, (void*)0x2300);
+    g->field4  = (void*)func_ov031_02213230(4, (void*)0x58);
+    g->field8  = (void*)func_ov031_02213230(8, (void*)0xc);
 
-    func_020ca3ec(0, var0->unknown_10_, 0xd18);
-    func_020ca3ec(0, var0->unknown_0_, 0x2300);
-    func_020ca3ec(0, var0->unknown_4_, 0x58);
-    func_020ca3ec(0, var0->unknown_8_, 0xc);
+    func_020ca3ec(0, g->field10, 0xd18);
+    func_020ca3ec(0, g->field0, 0x2300);
+    func_020ca3ec(0, g->field4, 0x58);
+    func_020ca3ec(0, g->field8, 0xc);
 
-    unsigned char* var3 = (unsigned char*)var0->unknown_10_;
-    var3[0xd0a] = arg0->unknown_8_;
-    var3[0xd0b] = (var3[0xd0b] & ~0x3) | (arg0->unknown_9_ & 0x3);
+    unsigned char* big = (unsigned char*)g->field10;
+    big[0xd0a] = obj->field8;
+    big[0xd0b] = (big[0xd0b] & ~0x3) | (obj->field9 & 0x3);
 
-    void* var4 = var0->unknown_8_;
-    *(void**)var4 = arg0->unknown_0_;
-    *(void**)((char*)var4 + 4) = arg0->unknown_4_;
-    *(int*)((char*)var4 + 8) = 0;
+    void* h = g->field8;
+    *(void**)h = obj->field0;
+    *(void**)((char*)h + 4) = obj->field4;
+    *(int*)((char*)h + 8) = 0;
 
-    var3[0xd0c] = (var3[0xd0c] & ~0xf) | (arg0->unknown_a_ & 0xf);
-    var3[0xd0c] = (var3[0xd0c] & ~0x30) | ((arg0->unknown_b_ & 3) << 4);
+    big[0xd0c] = (big[0xd0c] & ~0xf) | (obj->fieldA & 0xf);
+    big[0xd0c] = (big[0xd0c] & ~0x30) | ((obj->fieldB & 3) << 4);
 
-    func_ov031_0221add4((int)var3);
+    func_ov031_0221add4((int)big);
 
-    int var5 = func_ov031_0220c970(var0->unknown_0_, 0x2300);
-    if (var5 == 1 || var5 > 4) {
+    int r = func_ov031_0220c970(g->field0, 0x2300);
+    if (r == 1 || r > 4) {
         func_ov031_022132d4();
         return 0;
     }

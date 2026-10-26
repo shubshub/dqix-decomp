@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
 // USA: func_02005aa8
-extern "C" ARM int func_02005aa8(unsigned short* arg0) {
-    int var0 = -1;
-    unsigned short var1;
+extern "C" ARM int func_02005aa8(unsigned short* s) {
+    int n = -1;
+    unsigned short c;
     do {
-        var1 = *arg0++;
-        var0++;
-    } while (var1 != 0);
-    return var0;
+        c = *s++;
+        n++;
+    } while (c != 0);
+    return n;
 }

@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
-extern "C" void* func_020e523c(void* arg0, void* arg1, int arg2);
+extern "C" void* func_020e523c(void* a, void* b, int c);
 
 struct Struct_020e5204 {
-    void* unknown_0_;
-    void* unknown_4_;
+    void* field0;
+    void* field4;
 };
 
 // USA: func_020e5204
-extern "C" ARM int func_020e5204(void* arg0, struct Struct_020e5204* arg1) {
-    arg1->unknown_0_ = func_020e523c(arg0, arg1->unknown_0_, 0);
-    arg1->unknown_4_ = func_020e523c(arg0, arg1->unknown_4_, 0);
+extern "C" ARM int func_020e5204(void* arg0, struct Struct_020e5204* p) {
+    p->field0 = func_020e523c(arg0, p->field0, 0);
+    p->field4 = func_020e523c(arg0, p->field4, 0);
     return 1;
 }

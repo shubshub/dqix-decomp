@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int memberId);
-int MapDisplay_GetMemberHpTier(int memberId);
+extern "C" GameObject* func_0200ff1c(GameState* gameState, int memberId);
+extern "C" int MapDisplay_GetMemberHpTier(int memberId);
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 extern "C" int LoadToSubObjStandardPalette(int source, int offset, unsigned int size);
 
@@ -11,11 +11,11 @@ extern unsigned char data_020e703e[];
 // RGB555 white, yellow, orange, red
 extern unsigned short data_020e7044[] __attribute__((aligned(4)));
 
-struct Global020fdc4c_020276dc {
+struct Struct_020fdc4c_8 {
     unsigned short uploadColor;
     char pad[0x12];
 };
-extern struct Global020fdc4c_020276dc data_020fdc4c;
+extern struct Struct_020fdc4c_8 data_020fdc4c;
 #if defined(jpn)
 #define data_020fdc50 data_020fdc54
 #endif
@@ -41,7 +41,7 @@ extern "C" ARM void MapDisplay_UpdateHpColors(MapDisplayHpColors* self) {
 
         int k;
 
-        if (GetCombatantWithFlag0x100_0200ff1c(gameState, memberId) == 0) continue;
+        if (func_0200ff1c(gameState, memberId) == 0) continue;
         wantedColor = data_020e703e[MapDisplay_GetMemberHpTier(memberId)];
         allColors = self->hpColors;
         shift = memberId << 1;

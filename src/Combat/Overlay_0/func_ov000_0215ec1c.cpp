@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
+extern "C" GameObject* func_0200fea4(GameState* battleStruct, int combatantId);
 
 // USA: func_ov000_0215ec1c
-extern "C" ARM int func_ov000_0215ec1c(void* arg0, short* arg1, int arg2) {
-    int var0 = 0;
-    int var1;
-    for (var1 = 0; var1 < 8; var1++) {
-        short var2 = (short)(var1 + 0xc0);
-        GameState* var3 = GameState::GetInstance();
-        GameObject* var4 = func_0200fea4(var3, var2);
-        if (var4 != NULL) {
-            arg1[var0++] = var2;
-            if (var0 == arg2) return var0;
+extern "C" ARM int func_ov000_0215ec1c(void* unused, short* out, int max) {
+    int found = 0;
+    int i;
+    for (i = 0; i < 8; i++) {
+        short id = (short)(i + 0xc0);
+        GameState* bs = GameState::GetInstance();
+        GameObject* c = func_0200fea4(bs, id);
+        if (c != NULL) {
+            out[found++] = id;
+            if (found == max) return found;
         }
     }
-    return var0;
+    return found;
 }

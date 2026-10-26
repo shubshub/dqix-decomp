@@ -3,4 +3,4 @@
 #include "RenderCommands.h"
 
 struct Struct_020f2c14;
-extern "C" void func_020e2d54(int arg0, RenderCommandHandler* arg1, Struct_020f2c14* arg2);
+extern "C" void func_020e2d54(int mode, RenderCommandHandler* handler, Struct_020f2c14* output);

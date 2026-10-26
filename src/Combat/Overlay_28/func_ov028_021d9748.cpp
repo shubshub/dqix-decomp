@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Struct_ov028_021d9b14 {
-    char unknown_0_[0xa8];
+    char pad[0xa8];
     unsigned long long unknown_a8_;
 };
 

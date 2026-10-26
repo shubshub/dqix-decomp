@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-struct Struct_ov031_02290cbc { unsigned char unknown_0_; unsigned short unknown_2_; };
+struct Struct_ov031_02290cbc { unsigned char b0; unsigned short h2; };
 extern Struct_ov031_02290cbc data_ov031_02290cbc;
 
 extern "C" void func_ov031_0223208c(void);
@@ -17,8 +17,8 @@ extern "C" ARM void func_ov031_022274c0(int);
 
 // USA: func_ov031_02232024
 extern "C" ARM void func_ov031_02232024(void) {
-	data_ov031_02290cbc.unknown_2_ = 0;
-	data_ov031_02290cbc.unknown_0_ = 0;
+	data_ov031_02290cbc.h2 = 0;
+	data_ov031_02290cbc.b0 = 0;
 	func_ov031_0223208c();
 	func_ov031_0222336c(0x33, -1, 0);
 	func_ov031_022239f4();

@@ -24,11 +24,11 @@ struct Struct_ov015_02194564
 {
 #if defined(jpn)
     Matrix4x3* unknown_8_;
-    Matrix4x3* unknown_4_;
+    Matrix4x3* position_;
     Matrix4x3* unknown_0_;
 #else
     Matrix4x3* unknown_0_;
-    Matrix4x3* unknown_4_;
+    Matrix4x3* position_;
     Matrix4x3* unknown_8_;
 #endif
     Matrix4x3 unknown_c_;
@@ -36,39 +36,39 @@ struct Struct_ov015_02194564
     Matrix4x3 unknown_6c_;
 };
 
-extern "C" int func_ov015_0218bc9c(Struct_ov015_0218bb3c_2* arg0);
+extern "C" int func_ov015_0218bc9c(Struct_ov015_0218bb3c_2* s);
 
 extern unsigned char data_ov015_02193fe0[];
 extern Struct_ov015_02194564 data_ov015_02194564;
 
 struct Struct_ov015_0218bb3c
 {
-    char unknown_0_[8];
-    unsigned int unknown_8_;
+    char unk_0[8];
+    unsigned int flags_;
 };
 
 // USA: func_ov015_0218bb3c
-extern "C" ARM void func_ov015_0218bb3c(Struct_ov015_0218bb3c* arg0)
+extern "C" ARM void func_ov015_0218bb3c(Struct_ov015_0218bb3c* handler)
 {
-    if (!(arg0->unknown_8_ & 0x10))
+    if (!(handler->flags_ & 0x10))
         return;
-    if (data_ov015_02193fe0[1] == func_ov015_0218bc9c((Struct_ov015_0218bb3c_2*)arg0) && data_ov015_02194564.unknown_8_ != NULL)
+    if (data_ov015_02193fe0[1] == func_ov015_0218bc9c((Struct_ov015_0218bb3c_2*)handler) && data_ov015_02194564.unknown_8_ != NULL)
     {
         GetCurrentPositionAndDirectionMatrices(data_ov015_02194564.unknown_8_, NULL);
         data_ov015_02194564.unknown_c_ = *data_ov015_02194564.unknown_8_;
         Mat4x3_Multiply(data_ov015_02194564.unknown_8_, RenderConfig::GetInverseViewMatrix(), data_ov015_02194564.unknown_8_);
     }
-    if (data_ov015_02193fe0[R(0, 2)] == func_ov015_0218bc9c((Struct_ov015_0218bb3c_2*)arg0) && data_ov015_02194564.unknown_0_ != NULL)
+    if (data_ov015_02193fe0[R(0, 2)] == func_ov015_0218bc9c((Struct_ov015_0218bb3c_2*)handler) && data_ov015_02194564.unknown_0_ != NULL)
     {
         GetCurrentPositionAndDirectionMatrices(data_ov015_02194564.unknown_0_, NULL);
         data_ov015_02194564.unknown_3c_ = *data_ov015_02194564.unknown_0_;
         Mat4x3_Multiply(data_ov015_02194564.unknown_0_, RenderConfig::GetInverseViewMatrix(), data_ov015_02194564.unknown_0_);
     }
-    if (data_ov015_02193fe0[R(2, 0)] != func_ov015_0218bc9c((Struct_ov015_0218bb3c_2*)arg0))
+    if (data_ov015_02193fe0[R(2, 0)] != func_ov015_0218bc9c((Struct_ov015_0218bb3c_2*)handler))
         return;
-    if (data_ov015_02194564.unknown_4_ == NULL)
+    if (data_ov015_02194564.position_ == NULL)
         return;
-    GetCurrentPositionAndDirectionMatrices(data_ov015_02194564.unknown_4_, NULL);
-    data_ov015_02194564.unknown_6c_ = *data_ov015_02194564.unknown_4_;
-    Mat4x3_Multiply(data_ov015_02194564.unknown_4_, RenderConfig::GetInverseViewMatrix(), data_ov015_02194564.unknown_4_);
+    GetCurrentPositionAndDirectionMatrices(data_ov015_02194564.position_, NULL);
+    data_ov015_02194564.unknown_6c_ = *data_ov015_02194564.position_;
+    Mat4x3_Multiply(data_ov015_02194564.position_, RenderConfig::GetInverseViewMatrix(), data_ov015_02194564.position_);
 }

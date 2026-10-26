@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
 // USA: func_ov000_0215fe2c
-extern "C" ARM void* func_ov000_0215fe2c(void* arg0, int arg1) {
-    if (*((unsigned char*)arg0 + 0x1f) <= arg1) return 0;
-    void* var0 = *(void**)((char*)arg0 + 8);
-    int var1 = 0;
-    while (var1 < arg1 && var0 != 0) {
-        var0 = *(void**)((char*)var0 + 4);
-        var1++;
+extern "C" ARM void* func_ov000_0215fe2c(void* obj, int idx) {
+    if (*((unsigned char*)obj + 0x1f) <= idx) return 0;
+    void* node = *(void**)((char*)obj + 8);
+    int i = 0;
+    while (i < idx && node != 0) {
+        node = *(void**)((char*)node + 4);
+        i++;
     }
-    return var0;
+    return node;
 }

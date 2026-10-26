@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov031_022134cc(int arg0);
+extern "C" void func_ov031_022134cc(int v);
 extern "C" int func_ov031_0220cf6c(void);
 
 // USA: func_ov031_0221508c
-extern "C" ARM int func_ov031_0221508c(char* arg0, int arg1) {
-	if (arg1 == 0x11) return arg1;
-	unsigned char var0 = 0;
-	unsigned char var1 = *(unsigned char*)(arg0 + 0xd12);
-	if (var0 < var1) {
+extern "C" ARM int func_ov031_0221508c(char* obj, int state) {
+	if (state == 0x11) return state;
+	unsigned char i = 0;
+	unsigned char count = *(unsigned char*)(obj + 0xd12);
+	if (i < count) {
 		do {
-			if (*(unsigned char*)(arg0 + var0 * 4 + 0x444) == 0) break;
-			var0++;
-		} while (var0 < var1);
+			if (*(unsigned char*)(obj + i * 4 + 0x444) == 0) break;
+			i++;
+		} while (i < count);
 	}
-	if (arg1 == 6) {
-		if (var1 == var0) {
-			if (var0 == 0) {
+	if (state == 6) {
+		if (count == i) {
+			if (i == 0) {
 				func_ov031_022134cc(5);
 			} else {
 				func_ov031_022134cc(6);
@@ -24,15 +24,15 @@ extern "C" ARM int func_ov031_0221508c(char* arg0, int arg1) {
 			return 0x11;
 		}
 	} else {
-		if (var1 == 0) return arg1;
-		if (var1 == var0) return arg1;
-		unsigned char var2 = *(unsigned char*)(arg0 + var0 * 4 + 0x446);
-		if (var2 < 0x14) return arg1;
+		if (count == 0) return state;
+		if (count == i) return state;
+		unsigned char v = *(unsigned char*)(obj + i * 4 + 0x446);
+		if (v < 0x14) return state;
 	}
-	*(unsigned char*)(arg0 + 0xd13) = (unsigned char)var0;
+	*(unsigned char*)(obj + 0xd13) = (unsigned char)i;
 	if (func_ov031_0220cf6c() != 1) {
-		*(unsigned char*)(arg0 + 0xd0e) = (unsigned char)arg1;
-		arg1 = 7;
+		*(unsigned char*)(obj + 0xd0e) = (unsigned char)state;
+		state = 7;
 	}
-	return arg1;
+	return state;
 }

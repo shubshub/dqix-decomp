@@ -9,27 +9,27 @@ extern "C" void func_ov031_0220bcbc(unsigned short*, unsigned short*, unsigned s
 extern "C" int func_ov031_0220bdcc(unsigned short*, unsigned short*, int);
 
 // USA: func_ov031_0220c59c
-extern "C" ARM void func_ov031_0220c59c(unsigned short* arg0, unsigned short* arg1,
-    unsigned short* arg2, int arg3, int arg4, unsigned short* arg5,
+extern "C" ARM void func_ov031_0220c59c(unsigned short* value, unsigned short* backup,
+    unsigned short* arg2, int count, int shift, unsigned short* arg5,
     unsigned short* arg6, unsigned short* arg7, unsigned short* arg8) {
-    int var0 = arg3 * 2;
-    VectorizedInvertedMemcpy(arg0, arg1, var0);
-    if (arg2 == (unsigned short*)1) func_ov031_0220bf5c(arg0, arg1, arg3);
-    else if (arg2) func_ov031_0220be38(arg0, arg1, arg2, arg3);
-    func_ov031_0220be38(arg7, arg0, arg6, arg4);
-    int var1 = (arg3 - arg4) * 2;
-    VectorizedMemset(arg7 + arg4, 0, var1);
-    func_ov031_0220be38(arg8, arg7, arg5, arg3);
-    func_ov031_0220bb7c(arg0, arg0, arg8, arg3);
-    memmove(arg0, arg0 + arg4, var1);
-    VectorizedMemset(arg0 + arg3 - arg4, 0, arg4 * 2);
-    int var2 = func_ov031_0220bdcc(arg0, arg5, arg3);
+    int bytes = count * 2;
+    VectorizedInvertedMemcpy(value, backup, bytes);
+    if (arg2 == (unsigned short*)1) func_ov031_0220bf5c(value, backup, count);
+    else if (arg2) func_ov031_0220be38(value, backup, arg2, count);
+    func_ov031_0220be38(arg7, value, arg6, shift);
+    int var1 = (count - shift) * 2;
+    VectorizedMemset(arg7 + shift, 0, var1);
+    func_ov031_0220be38(arg8, arg7, arg5, count);
+    func_ov031_0220bb7c(value, value, arg8, count);
+    memmove(value, value + shift, var1);
+    VectorizedMemset(value + count - shift, 0, shift * 2);
+    int var2 = func_ov031_0220bdcc(value, arg5, count);
     switch (var2) {
     case 0:
-        VectorizedMemset(arg0, 0, var0);
+        VectorizedMemset(value, 0, bytes);
         break;
     case 1:
-        func_ov031_0220bcbc(arg0, arg0, arg5, arg3);
+        func_ov031_0220bcbc(value, value, arg5, count);
         break;
     }
 }

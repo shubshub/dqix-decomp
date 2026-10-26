@@ -1,31 +1,32 @@
 #include "World/ZoneFeatures.h"
 #include <globaldefs.h>
 
-// USA: func_0201e710
-ARM Struct_020134e0::Struct_02018300 *Struct_020134e0::func_0201e710(const Struct_02018300 &arg0) {
-    if (unknown_28_ < unknown_2c_) {
-        Struct_02018300 &var0            = unknown_24_[unknown_28_];
-        unknown_24_[unknown_28_].unknown_0_ = arg0.unknown_0_;
-        var0.unknown_4_                 = arg0.unknown_4_;
-        var0.unknown_8_                     = arg0.unknown_8_;
-        var0.unknown_14_                    = arg0.unknown_14_;
-        var0.unknown_20_                    = arg0.unknown_20_;
-        var0.unknown_22_                    = arg0.unknown_22_;
-        var0.unknown_24_                    = arg0.unknown_24_;
-        var0.unknown_28_                    = arg0.unknown_28_;
-        var0.unknown_2c_                    = arg0.unknown_2c_;
-        var0.unknown_70_                     = arg0.unknown_70_;
+// USA: CreateOpcode6aEntry
+// Main, originally ZoneFeatures::CreateOpcode6aEntry_0201e710 (USA 0x0201e710, EUR 0x0201e720, JPN 0x0201e49c)
+ARM ZoneFeatures::Opcode6aEntry *ZoneFeatures::CreateOpcode6aEntry(const Opcode6aEntry &source) {
+    if (arraySize6a_ < arrayCapacity6a_) {
+        Opcode6aEntry &dest            = entries6a_[arraySize6a_];
+        entries6a_[arraySize6a_].unk_0 = source.unk_0;
+        dest.maybeType                 = source.maybeType;
+        dest.unk_8                     = source.unk_8;
+        dest.unk_14                    = source.unk_14;
+        dest.angle                    = source.angle;
+        dest.unk_22                    = source.unk_22;
+        dest.unk_24                    = source.unk_24;
+        dest.unk_28                    = source.unk_28;
+        dest.unk_2c                    = source.unk_2c;
+        dest.pNext                     = source.pNext;
 
-        int var1 = unknown_24_[unknown_28_].unknown_4_;
-        if (unknown_3c_[var1] == NULL)
-            unknown_3c_[var1] = &unknown_24_[unknown_28_];
+        int type = entries6a_[arraySize6a_].maybeType;
+        if (entries6aByType_[type] == NULL)
+            entries6aByType_[type] = &entries6a_[arraySize6a_];
         else {
-            unknown_24_[unknown_28_].unknown_70_ = unknown_3c_[var1];
-            unknown_3c_[var1]     = &unknown_24_[unknown_28_];
+            entries6a_[arraySize6a_].pNext = entries6aByType_[type];
+            entries6aByType_[type]         = &entries6a_[arraySize6a_];
         }
 
-        unknown_28_++;
-        return &var0;
+        arraySize6a_++;
+        return &dest;
     }
     return NULL;
 }

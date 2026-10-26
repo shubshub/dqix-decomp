@@ -3,17 +3,17 @@
 #include "GameState/GameState.h"
 #include "Combat/CombatantRecovery.h"
 
-struct Struct_ov017_021aa1ac {
-    char unknown_0_[0xf78];
-    signed char unknown_f78_[4];
-    unsigned char unknown_f7c_;
+struct Party021aa1ac {
+    char pad0[0xf78];
+    signed char memberIds[4];
+    unsigned char memberCount;
 };
 
-struct Struct_ov017_021aa1ac_2 {
+struct Controller021aa1ac {
 #if defined(jpn)
-    char unknown_0_[0x868];
+    char pad0[0x868];
 #else
-    char unknown1_0_[0x998];
+    char pad0[0x998];
 #endif
     int unknown_998_;
 #if defined(jpn)
@@ -24,23 +24,23 @@ struct Struct_ov017_021aa1ac_2 {
     unsigned char unknown_19b2_;
 };
 
-struct Struct_ov017_021aa1ac_3 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    char unknown_2_[6];
-    short unknown_8_[4];
-    unsigned char unknown_10_;
-    unsigned char unknown_11_;
-    unsigned short unknown_12_;
+struct Self021aa1ac {
+    unsigned char pad0;
+    unsigned char done;
+    char pad2[6];
+    short ids[4];
+    unsigned char count;
+    unsigned char shown;
+    unsigned short step;
 };
 
-Controller021aa1ac* MessageSystem_GetInstance(void);
+extern "C" Controller021aa1ac* MessageSystem_GetInstance(void);
 extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
 extern "C" void __clear(void* dst, unsigned int size);
 #if defined(jpn)
-extern "C" void func_0204500c(Struct_ov017_021aa1ac_2* arg0, const char* arg1, int arg2);
+extern "C" void func_0204500c(Controller021aa1ac* controller, const char* text, int a);
 #else
-extern "C" void func_0204500c(Struct_ov017_021aa1ac_2* arg0, const char* arg1, int arg2, int arg3);
+extern "C" void func_0204500c(Controller021aa1ac* controller, const char* text, int a, int b);
 #endif
 extern "C" int func_ov017_021aa080(void);
 
@@ -59,61 +59,61 @@ extern "C" ARM void FieldTask_SetPartyHpToOne(Self021aa1ac* self) {
         self->count = 0;
         for (int i = 0; i < memberCount; i++) {
             int id = party->memberIds[i];
-            GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(gs, id);
+            GameObject* combatant = func_0200ff1c(gs, id);
             if (combatant == NULL) {
                 continue;
             }
-            Struct_020200c0* var7 = var6->unknown_ac_.unknown_84_;
-            if (var7->unknown_0_ & 1) {
+            Struct_020200c0* status = combatant->combatFields_.savedState_130_;
+            if (status->flags & 1) {
                 continue;
             }
-            var7->unknown_4_ = 1;
-            func_ov017_021c9e00(var5, 1, 0, 1);
-            arg0->unknown_8_[arg0->unknown_10_++] = var5;
+            status->hp = 1;
+            func_ov017_021c9e00(id, 1, 0, 1);
+            self->ids[self->count++] = id;
         }
-        if (arg0->unknown_10_ != 0) {
-            char var8[0x100];
-            __clear(var8, sizeof(var8));
-            sprintf(var8, data_ov017_021d783c, func_0200ff1c(var0, arg0->unknown_8_[0])->baseStats_);
-            if (++arg0->unknown_11_ >= arg0->unknown_10_) {
-                arg0->unknown_12_++;
+        if (self->count != 0) {
+            char text[0x100];
+            __clear(text, sizeof(text));
+            sprintf(text, data_ov017_021d783c, func_0200ff1c(gs, self->ids[0])->baseStats_);
+            if (++self->shown >= self->count) {
+                self->step++;
             } else {
-                strcat(var8, data_ov017_021d7868);
+                strcat(text, data_ov017_021d7868);
             }
 #if defined(jpn)
-            func_0204500c(var2, var8, 0);
+            func_0204500c(controller, text, 0);
 #else
-            func_0204500c(var2, var8, 0, 0xe3);
+            func_0204500c(controller, text, 0, 0xe3);
 #endif
-            var2->unknown_19b2_ = 0;
-            var2->unknown_998_ = 1;
+            controller->unknown_19b2_ = 0;
+            controller->unknown_998_ = 1;
         }
-        arg0->unknown_12_++;
-    } else if (arg0->unknown_12_ == 1) {
+        self->step++;
+    } else if (self->step == 1) {
         if (func_ov017_021aa080() == 0) {
             return;
         }
-        if (arg0->unknown_11_ >= arg0->unknown_10_) {
+        if (self->shown >= self->count) {
             return;
         }
-        char var9[0x100];
-        __clear(var9, sizeof(var9));
-        sprintf(var9, data_ov017_021d783c, func_0200ff1c(var0, arg0->unknown_8_[arg0->unknown_11_])->baseStats_);
-        if (++arg0->unknown_11_ >= arg0->unknown_10_) {
-            arg0->unknown_12_++;
+        char text[0x100];
+        __clear(text, sizeof(text));
+        sprintf(text, data_ov017_021d783c, func_0200ff1c(gs, self->ids[self->shown])->baseStats_);
+        if (++self->shown >= self->count) {
+            self->step++;
         } else {
-            strcat(var9, data_ov017_021d7868);
+            strcat(text, data_ov017_021d7868);
         }
 #if defined(jpn)
-        func_0204500c(var2, var9, 0);
+        func_0204500c(controller, text, 0);
 #else
-        func_0204500c(var2, var9, 0, 0xe3);
+        func_0204500c(controller, text, 0, 0xe3);
 #endif
-        var2->unknown_19b2_ = 0;
-        var2->unknown_998_ = 1;
-    } else if (arg0->unknown_12_ == 2) {
+        controller->unknown_19b2_ = 0;
+        controller->unknown_998_ = 1;
+    } else if (self->step == 2) {
         if (func_ov017_021aa080() != 0) {
-            arg0->unknown_1_ = 1;
+            self->done = 1;
         }
     }
 }

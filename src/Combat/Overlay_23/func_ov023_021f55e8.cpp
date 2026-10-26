@@ -1,35 +1,35 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8;
+struct Variant02030b0c;
 
 struct Struct_ov023_021f55e8_2 {
-    unsigned int unknown_0_0_ : 12;
+    unsigned int low : 12;
     unsigned int unknown_1_4_ : 4;
-    unsigned int unknown_2_0_ : 5;
-    unsigned int unknown_2_5_ : 11;
+    unsigned int hi : 5;
+    unsigned int rest : 11;
 };
 
 struct Struct_ov023_021f55e8 {
-    char unknown_0_[0xf4];
-    struct Struct_ov023_021f55e8_2 unknown_f4_;
+    char pad[0xf4];
+    struct Struct_ov023_021f55e8_2 f4;
 };
 
 struct Struct_ov023_021fff08_2 {
-    char unknown_0_[2];
-    unsigned char unknown_2_;
-    char unknown_3_[9];
-    struct Struct_ov023_021f55e8* unknown_c_;
+    char pad2[2];
+    unsigned char flag2;
+    char pad3[9];
+    struct Struct_ov023_021f55e8* ptr;
 };
 
 extern struct Struct_ov023_021fff08_2 data_ov023_021fff08;
 
 // USA: func_ov023_021f55e8
-extern "C" ARM int func_ov023_021f55e8(void* arg0) {
-    struct Struct_0201c1c8* var0 = (struct Struct_0201c1c8*)arg0;
-    if (data_ov023_021fff08.unknown_2_ == 0) return 1;
-    data_ov023_021fff08.unknown_c_->unknown_f4_.unknown_0_0_ = ((Script::Parameter*)var0)->ToInt();
-    data_ov023_021fff08.unknown_c_->unknown_f4_.unknown_1_4_ = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)var0 + 8)))->ToInt();
-    data_ov023_021fff08.unknown_c_->unknown_f4_.unknown_2_0_ = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)var0 + 0x10)))->ToInt();
+extern "C" ARM int func_ov023_021f55e8(void* objRaw) {
+    struct Variant02030b0c* obj = (struct Variant02030b0c*)objRaw;
+    if (data_ov023_021fff08.flag2 == 0) return 1;
+    data_ov023_021fff08.ptr->f4.low = ((Script::Parameter*)obj)->ToInt();
+    data_ov023_021fff08.ptr->f4.unknown_1_4_ = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 8)))->ToInt();
+    data_ov023_021fff08.ptr->f4.hi = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 0x10)))->ToInt();
     return 1;
 }

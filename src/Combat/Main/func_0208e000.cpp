@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
 struct Struct_0208dc84_2 {
-    short unknown_0_;
-    unsigned short unknown_2_;
-    int unknown_4_;
-    int unknown_8_;
+    short field0;
+    unsigned short field2;
+    int field4;
+    int field8;
 #if defined(jpn)
-    int unknown_c_;
+    int fieldC;
 #endif
 };
 
 // USA: func_0208e000
-extern "C" ARM void func_0208e000(struct Struct_0208dc84_2* arg0, struct Struct_0208dc84_2* arg1) {
-    arg0->unknown_0_ = arg1->unknown_0_;
-    arg0->unknown_2_ = arg1->unknown_2_;
-    arg0->unknown_4_ = arg1->unknown_4_;
-    arg0->unknown_8_ = arg1->unknown_8_;
+extern "C" ARM void func_0208e000(struct Struct_0208dc84_2* dst, struct Struct_0208dc84_2* src) {
+    dst->field0 = src->field0;
+    dst->field2 = src->field2;
+    dst->field4 = src->field4;
+    dst->field8 = src->field8;
 #if defined(jpn)
-    arg0->unknown_c_ = arg1->unknown_c_;
+    dst->fieldC = src->fieldC;
 #endif
 }

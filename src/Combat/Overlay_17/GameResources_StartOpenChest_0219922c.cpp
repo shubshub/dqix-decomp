@@ -11,14 +11,14 @@ enum { targetRecordOffset = 0x6bc, targetBase = 0x3600, targetIndexOffset = 0xb6
 
 
 extern "C" void* Scenario_GetInstance(void);
-int Scenario_RunTrigger(void* a, int mode, void* c);
+extern "C" int Scenario_RunTrigger(void* a, int mode, void* c);
 extern "C" void EventQuery_RunQueuedCommands(void* p);
-void FieldTask_InitOpenChest(OpenChestTask* self);
-unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
+extern "C" void FieldTask_InitOpenChest(OpenChestTask* self);
+extern "C" unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
 int fix32ReduceAngle0To2Pi(int angle);
 struct TailList020469b4;
 struct TailNode020469b4;
-void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
+extern "C" void func_020469b4(struct TailList020469b4* list, struct TailNode020469b4* node);
 
 // The query Scenario_RunTrigger and EventQuery_RunQueuedCommands take.
 struct EventQuery {
@@ -63,5 +63,5 @@ extern "C" ARM void GameResources_StartOpenChest(unsigned char* self) {
     unsigned char* base3000 = self + 0x3000;
     struct TailList020469b4* taskQueue = *(struct TailList020469b4**)(base3000 + taskQueueOffset);
     struct TailNode020469b4* task = *(struct TailNode020469b4**)(base3000 + openChestTaskOffset);
-    AppendNodeToTail(taskQueue, task);
+    func_020469b4(taskQueue, task);
 }

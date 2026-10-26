@@ -49,43 +49,43 @@ typedef struct {
 
 typedef struct Struct_020026b4 {
     char unknown_0_;
-    char unknown_1_;
+    char unused;
     short unknown_2_;
     struct {
-        unsigned char unknown_0_;
-        unsigned char unknown_1_[32];
-        unsigned char unknown_21_;
-    } unknown_4_;
+        unsigned char length;
+        unsigned char text[32];
+        unsigned char unused;
+    } sig;
 } Struct_020026b4;
 
 typedef struct Struct_020026b4_2 {
-    char unknown_0_;
-    char unknown_1_;
-    short unknown_2_;
+    char style;
+    char unused;
+    short digits;
 } Struct_020026b4_2;
 
-extern "C" void func_0200a300(const Struct_020026b4_2* arg0, double arg1, Struct_020026b4* arg2);
-extern "C" double func_02008f3c(double arg0);
-extern "C" char* func_0200216c(long arg0, char* arg1, Struct_02001bdc arg2);
+extern "C" void func_0200a300(const Struct_020026b4_2* f, double x, Struct_020026b4* d);
+extern "C" double func_02008f3c(double x);
+extern "C" char* func_0200216c(long num, char* arg1, Struct_02001bdc format);
 
-static inline long double inline_020026b4(long double arg0) {
-    return (long double)func_02008f3c((double)arg0);
+static inline long double inline_020026b4(long double x) {
+    return (long double)func_02008f3c((double)x);
 }
 
 extern const unsigned short data_020e69ac[128];
 
-static inline int inline_02002cb4(int arg0) {
-    return ((arg0 < 0) || (arg0 >= 128)) ? 0 : (int)(data_020e69ac[arg0] & 0x200);
+static inline int inline_02002cb4(int c) {
+    return ((c < 0) || (c >= 128)) ? 0 : (int)(data_020e69ac[c] & 0x200);
 }
 
-static inline int inline_02001bdc(int arg0) {
-    return ((arg0 < 0) || (arg0 >= 128)) ? 0 : (int)(data_020e69ac[arg0] & 0x008);
+static inline int inline_02001bdc(int c) {
+    return ((c < 0) || (c >= 128)) ? 0 : (int)(data_020e69ac[c] & 0x008);
 }
 
 // USA: func_020026b4
-extern "C" ARM char* func_020026b4(long double arg0, char* arg1, Struct_02001bdc arg2) {
-    char*          var0;
-    unsigned char* var1;
+extern "C" ARM char* func_020026b4(long double num, char* arg1, Struct_02001bdc format) {
+    char*          p;
+    unsigned char* q;
     unsigned char  var2;
     long double    var3;
     int            var4, var5;
@@ -94,62 +94,62 @@ extern "C" ARM char* func_020026b4(long double arg0, char* arg1, Struct_02001bdc
     Struct_02001bdc   var8;
     int            var9;
     int            var10;
-    Struct_020026b4_2        var11;
+    Struct_020026b4_2        form;
     Struct_020026b4        var12;
     int            var13;
 
     var13 = '.';
-    var0            = arg1;
-    var3           = arg0;
+    p            = arg1;
+    var3           = num;
 
-    if (arg2.unknown_c_ > conversion_max) {
+    if (format.unknown_c_ > conversion_max) {
         return 0;
     }
 
-    var11.unknown_0_  = (char)0;
-    var11.unknown_2_ = 0x20;
-    func_0200a300(&var11, arg0, &var12);
+    form.style  = (char)0;
+    form.digits = 0x20;
+    func_0200a300(&form, num, &var12);
 
-    if (inline_020026b4(arg0) == 0.0) {
-        var0 = arg1 - 6;
-        strcpy(var0, "0x0p0");
-        return var0;
+    if (inline_020026b4(num) == 0.0) {
+        p = arg1 - 6;
+        strcpy(p, "0x0p0");
+        return p;
     }
 
-    if (*var12.unknown_4_.unknown_1_ == 'I') {
+    if (*var12.sig.text == 'I') {
         if (var12.unknown_0_) {
-            var0 = arg1 - 5;
-            if (arg2.unknown_5_ == 'A') {
-                strcpy(var0, "-INF");
+            p = arg1 - 5;
+            if (format.unknown_5_ == 'A') {
+                strcpy(p, "-INF");
             } else {
-                strcpy(var0, "-inf");
+                strcpy(p, "-inf");
             }
         } else {
-            var0 = arg1 - 4;
-            if (arg2.unknown_5_ == 'A') {
-                strcpy(var0, "INF");
+            p = arg1 - 4;
+            if (format.unknown_5_ == 'A') {
+                strcpy(p, "INF");
             } else {
-                strcpy(var0, "inf");
+                strcpy(p, "inf");
             }
         }
-        return var0;
-    } else if (*var12.unknown_4_.unknown_1_ == 'N') {
+        return p;
+    } else if (*var12.sig.text == 'N') {
         if (var12.unknown_0_) {
-            var0 = arg1 - 5;
-            if (arg2.unknown_5_ == 'A') {
-                strcpy(var0, "-NAN");
+            p = arg1 - 5;
+            if (format.unknown_5_ == 'A') {
+                strcpy(p, "-NAN");
             } else {
-                strcpy(var0, "-nan");
+                strcpy(p, "-nan");
             }
         } else {
-            var0 = arg1 - 4;
-            if (arg2.unknown_5_ == 'A') {
-                strcpy(var0, "NAN");
+            p = arg1 - 4;
+            if (format.unknown_5_ == 'A') {
+                strcpy(p, "NAN");
             } else {
-                strcpy(var0, "nan");
+                strcpy(p, "nan");
             }
         }
-        return var0;
+        return p;
     }
 
     var8.unknown_0_ = Enum_02001bdc_C_1_4;
@@ -161,66 +161,66 @@ extern "C" ARM char* func_020026b4(long double arg0, char* arg1, Struct_02001bdc
     var8.unknown_c_             = 1;
     var8.unknown_5_       = 'd';
 
-    int   var14;
-    char* var15 = (char*)&arg0;
-    for (var14 = 0; var14 < TARGET_FLOAT_BYTES / 2; var14++) {
-        char var16                           = var15[var14];
-        var15[var14]                          = var15[TARGET_FLOAT_BYTES - var14 - 1];
-        var15[TARGET_FLOAT_BYTES - var14 - 1] = var16;
+    int   i;
+    char* var15 = (char*)&num;
+    for (i = 0; i < TARGET_FLOAT_BYTES / 2; i++) {
+        char x                           = var15[i];
+        var15[i]                          = var15[TARGET_FLOAT_BYTES - i - 1];
+        var15[TARGET_FLOAT_BYTES - i - 1] = x;
     }
 
     var4 = TARGET_FLOAT_EXP_BITS;
     var5 = 0x7FF;
 
-    var6 = ((unsigned char*)&arg0)[0] << 25;
+    var6 = ((unsigned char*)&num)[0] << 25;
     if (TARGET_FLOAT_EXP_BITS > 7) {
-        var6 |= ((unsigned char*)&arg0)[1] << 17;
+        var6 |= ((unsigned char*)&num)[1] << 17;
     }
     if (TARGET_FLOAT_EXP_BITS > 15) {
-        var6 |= ((unsigned char*)&arg0)[2] << 9;
+        var6 |= ((unsigned char*)&num)[2] << 9;
     }
     if (TARGET_FLOAT_EXP_BITS > 23) {
-        var6 |= ((unsigned char*)&arg0)[3] << 1;
+        var6 |= ((unsigned char*)&num)[3] << 1;
     }
 
     var6 = (var6 >> (32 - var4)) & var5;
     var7  = var6 - 0x3FF;
 
-    var0 = func_0200216c(var7, arg1, var8);
-    if (arg2.unknown_5_ == 'a') {
-        *--var0 = 'p';
+    p = func_0200216c(var7, arg1, var8);
+    if (format.unknown_5_ == 'a') {
+        *--p = 'p';
     } else {
-        *--var0 = 'P';
+        *--p = 'P';
     }
-    var1 = (unsigned char*)&arg0;
+    q = (unsigned char*)&num;
 
     if (TARGET_FLOAT_IMPLICIT_J_BIT) {
-        var10 = (1 + var4 + arg2.unknown_c_ * 4) - 1;
+        var10 = (1 + var4 + format.unknown_c_ * 4) - 1;
     } else {
-        var10 = (1 + var4 + arg2.unknown_c_ * 4) - 4;
+        var10 = (1 + var4 + format.unknown_c_ * 4) - 4;
     }
 
-    for (var9 = arg2.unknown_c_; var9 >= 1; var9--) {
+    for (var9 = format.unknown_c_; var9 >= 1; var9--) {
         if (var10 < 64) {
             int var17;
 
             var17 = var10 >> 3;
-            var2  = (*(var1 + var17)) >> (7 - (var10 & 7));
+            var2  = (*(q + var17)) >> (7 - (var10 & 7));
 
             if ((var10 & ~7) != ((var10 - 4) & ~7)) {
-                var2 |= ((*(var1 + (var17 - 1))) << 8) >> (7 - ((var10) & 7));
+                var2 |= ((*(q + (var17 - 1))) << 8) >> (7 - ((var10) & 7));
             }
 
             if (!TARGET_FLOAT_IMPLICIT_J_BIT) {
                 if (var10 == 1 + var4) {
-                    *--var0 = var13;
+                    *--p = var13;
                     var2 &= 0x1;
                 }
             }
 
             if ((var2 &= 0xF) < 10) {
                 var2 += '0';
-            } else if (arg2.unknown_5_ == 'a') {
+            } else if (format.unknown_5_ == 'a') {
                 var2 += 'a' - 10;
             } else {
                 var2 += 'A' - 10;
@@ -229,193 +229,193 @@ extern "C" ARM char* func_020026b4(long double arg0, char* arg1, Struct_02001bdc
             var2 = '0';
         }
 
-        *--var0 = var2;
+        *--p = var2;
         var10 -= 4;
     }
 
     if (TARGET_FLOAT_IMPLICIT_J_BIT) {
-        if (arg2.unknown_c_ || arg2.unknown_3_) {
-            *--var0 = var13;
+        if (format.unknown_c_ || format.unknown_3_) {
+            *--p = var13;
         }
-        *--var0 = '1';
+        *--p = '1';
     }
 
-    if (arg2.unknown_5_ == 'a') {
-        *--var0 = 'x';
+    if (format.unknown_5_ == 'a') {
+        *--p = 'x';
     } else {
-        *--var0 = 'X';
+        *--p = 'X';
     }
 
-    *--var0 = '0';
+    *--p = '0';
 
     if (var12.unknown_0_) {
-        *--var0 = '-';
-    } else if (arg2.unknown_1_ == Enum_02001bdc_1_4) {
-        *--var0 = '+';
-    } else if (arg2.unknown_1_ == Enum_02001bdc_2_4) {
-        *--var0 = ' ';
+        *--p = '-';
+    } else if (format.unknown_1_ == Enum_02001bdc_1_4) {
+        *--p = '+';
+    } else if (format.unknown_1_ == Enum_02001bdc_2_4) {
+        *--p = ' ';
     }
 
-    return var0;
+    return p;
 }
 
 // USA: func_02002b90
 extern "C" ARM void func_02002b90(Struct_020026b4* arg0, int arg1) {
-    char  var0;
-    char* var1;
+    char  c;
+    char* p;
     int   var2;
 
     if (arg1 < 0) {
     return_zero:
         arg0->unknown_2_        = 0;
-        arg0->unknown_4_.unknown_0_ = 1;
-        *arg0->unknown_4_.unknown_1_  = '0';
+        arg0->sig.length = 1;
+        *arg0->sig.text  = '0';
         return;
     }
 
-    if (arg1 >= arg0->unknown_4_.unknown_0_) {
+    if (arg1 >= arg0->sig.length) {
         return;
     }
 
-    var1 = (char*)arg0->unknown_4_.unknown_1_ + arg1 + 1;
-    var0 = *--var1 - '0';
+    p = (char*)arg0->sig.text + arg1 + 1;
+    c = *--p - '0';
 
-    if (var0 == 5) {
-        char* var3 = &((char*)arg0->unknown_4_.unknown_1_)[arg0->unknown_4_.unknown_0_];
+    if (c == 5) {
+        char* q = &((char*)arg0->sig.text)[arg0->sig.length];
 
-        while (--var3 > var1 && *var3 == '0')
+        while (--q > p && *q == '0')
             ;
-        var2 = (var3 == var1) ? var1[-1] & 1 : 1;
+        var2 = (q == p) ? p[-1] & 1 : 1;
     } else {
-        var2 = (var0 > 5);
+        var2 = (c > 5);
     }
 
     while (arg1 != 0) {
-        var0 = *--var1 - '0' + var2;
+        c = *--p - '0' + var2;
 
-        if ((var2 = (var0 > 9)) != 0 || var0 == 0) {
+        if ((var2 = (c > 9)) != 0 || c == 0) {
             --arg1;
         } else {
-            *var1 = var0 + '0';
+            *p = c + '0';
             break;
         }
     }
 
     if (var2 != 0) {
         arg0->unknown_2_ += 1;
-        arg0->unknown_4_.unknown_0_ = 1;
-        *arg0->unknown_4_.unknown_1_  = '1';
+        arg0->sig.length = 1;
+        *arg0->sig.text  = '1';
         return;
     } else if (arg1 == 0) {
         goto return_zero;
     }
 
-    arg0->unknown_4_.unknown_0_ = arg1;
+    arg0->sig.length = arg1;
 }
 
 // USA: func_02002cb4
-extern "C" ARM char* func_02002cb4(long double arg0, char* arg1, Struct_02001bdc arg2) {
+extern "C" ARM char* func_02002cb4(long double num, char* arg1, Struct_02001bdc format) {
     Struct_020026b4 var0;
-    Struct_020026b4_2 var1;
-    char*   var2;
-    char* var3;
-    int   var4, var5, var6;
+    Struct_020026b4_2 form;
+    char*   p;
+    char* q;
+    int   n, digits, var6;
     int   var7, var8;
     int   var9;
 
     var9 = '.';
 
-    if (arg2.unknown_c_ > conversion_max) {
+    if (format.unknown_c_ > conversion_max) {
         return 0;
     }
 
-    var1.unknown_0_  = 0;
-    var1.unknown_2_ = 0x20;
-    func_0200a300(&var1, arg0, &var0);
-    var2 = (char*)var0.unknown_4_.unknown_1_ + var0.unknown_4_.unknown_0_;
+    form.style  = 0;
+    form.digits = 0x20;
+    func_0200a300(&form, num, &var0);
+    p = (char*)var0.sig.text + var0.sig.length;
 
-    while (var0.unknown_4_.unknown_0_ > 1 && *--var2 == '0') {
-        --var0.unknown_4_.unknown_0_;
+    while (var0.sig.length > 1 && *--p == '0') {
+        --var0.sig.length;
         ++var0.unknown_2_;
     }
 
-    switch (*var0.unknown_4_.unknown_1_) {
+    switch (*var0.sig.text) {
         case '0':
             var0.unknown_2_ = 0;
             break;
         case 'I':
-            if (arg0 < 0) {
-                var2 = arg1 - 5;
+            if (num < 0) {
+                p = arg1 - 5;
 
-                if (inline_02002cb4(arg2.unknown_5_)) {
-                    strcpy(var2, "-INF");
+                if (inline_02002cb4(format.unknown_5_)) {
+                    strcpy(p, "-INF");
                 } else {
-                    strcpy(var2, "-inf");
+                    strcpy(p, "-inf");
                 }
             } else {
-                var2 = arg1 - 4;
-                if (inline_02002cb4(arg2.unknown_5_)) {
-                    strcpy(var2, "INF");
+                p = arg1 - 4;
+                if (inline_02002cb4(format.unknown_5_)) {
+                    strcpy(p, "INF");
                 } else {
-                    strcpy(var2, "inf");
+                    strcpy(p, "inf");
                 }
             }
 
-            return var2;
+            return p;
 
         case 'N':
             if (var0.unknown_0_) {
-                var2 = arg1 - 5;
-                if (inline_02002cb4(arg2.unknown_5_)) {
-                    strcpy(var2, "-NAN");
+                p = arg1 - 5;
+                if (inline_02002cb4(format.unknown_5_)) {
+                    strcpy(p, "-NAN");
                 } else {
-                    strcpy(var2, "-nan");
+                    strcpy(p, "-nan");
                 }
             } else {
-                var2 = arg1 - 4;
-                if (inline_02002cb4(arg2.unknown_5_)) {
-                    strcpy(var2, "NAN");
+                p = arg1 - 4;
+                if (inline_02002cb4(format.unknown_5_)) {
+                    strcpy(p, "NAN");
                 } else {
-                    strcpy(var2, "nan");
+                    strcpy(p, "nan");
                 }
             }
 
-            return var2;
+            return p;
     }
 
-    var0.unknown_2_ += var0.unknown_4_.unknown_0_ - 1;
-    var2    = arg1;
-    *--var2 = 0;
+    var0.unknown_2_ += var0.sig.length - 1;
+    p    = arg1;
+    *--p = 0;
 
-    switch (arg2.unknown_5_) {
+    switch (format.unknown_5_) {
         case 'g':
         case 'G':
 
-            if (var0.unknown_4_.unknown_0_ > arg2.unknown_c_) {
-                func_02002b90(&var0, arg2.unknown_c_);
+            if (var0.sig.length > format.unknown_c_) {
+                func_02002b90(&var0, format.unknown_c_);
             }
 
-            if (var0.unknown_2_ < -4 || var0.unknown_2_ >= arg2.unknown_c_) {
-                if (arg2.unknown_3_) {
-                    --arg2.unknown_c_;
+            if (var0.unknown_2_ < -4 || var0.unknown_2_ >= format.unknown_c_) {
+                if (format.unknown_3_) {
+                    --format.unknown_c_;
                 } else {
-                    arg2.unknown_c_ = var0.unknown_4_.unknown_0_ - 1;
+                    format.unknown_c_ = var0.sig.length - 1;
                 }
 
-                if (arg2.unknown_5_ == 'g') {
-                    arg2.unknown_5_ = 'e';
+                if (format.unknown_5_ == 'g') {
+                    format.unknown_5_ = 'e';
                 } else {
-                    arg2.unknown_5_ = 'E';
+                    format.unknown_5_ = 'E';
                 }
 
                 goto e_format;
             }
 
-            if (arg2.unknown_3_) {
-                arg2.unknown_c_ -= var0.unknown_2_ + 1;
+            if (format.unknown_3_) {
+                format.unknown_c_ -= var0.unknown_2_ + 1;
             } else {
-                if ((arg2.unknown_c_ = var0.unknown_4_.unknown_0_ - (var0.unknown_2_ + 1)) < 0) {
-                    arg2.unknown_c_ = 0;
+                if ((format.unknown_c_ = var0.sig.length - (var0.unknown_2_ + 1)) < 0) {
+                    format.unknown_c_ = 0;
                 }
             }
 
@@ -425,52 +425,52 @@ extern "C" ARM char* func_02002cb4(long double arg0, char* arg1, Struct_02001bdc
         case 'E':
         e_format:
 
-            if (var0.unknown_4_.unknown_0_ > arg2.unknown_c_ + 1) {
-                func_02002b90(&var0, arg2.unknown_c_ + 1);
+            if (var0.sig.length > format.unknown_c_ + 1) {
+                func_02002b90(&var0, format.unknown_c_ + 1);
             }
 
-            var4    = var0.unknown_2_;
+            n    = var0.unknown_2_;
             var6 = '+';
 
-            if (var4 < 0) {
-                var4    = -var4;
+            if (n < 0) {
+                n    = -n;
                 var6 = '-';
             }
 
-            for (var5 = 0; var4 || var5 < 2; ++var5) {
-                *--var2 = var4 % 10 + '0';
-                var4 /= 10;
+            for (digits = 0; n || digits < 2; ++digits) {
+                *--p = n % 10 + '0';
+                n /= 10;
             }
 
-            *--var2 = var6;
-            *--var2 = arg2.unknown_5_;
+            *--p = var6;
+            *--p = format.unknown_5_;
 
-            if (arg1 - var2 + arg2.unknown_c_ > conversion_max) {
+            if (arg1 - p + format.unknown_c_ > conversion_max) {
                 return 0;
             }
 
-            if (var0.unknown_4_.unknown_0_ < arg2.unknown_c_ + 1) {
-                for (var4 = arg2.unknown_c_ + 1 - var0.unknown_4_.unknown_0_ + 1; --var4;) {
-                    *--var2 = '0';
+            if (var0.sig.length < format.unknown_c_ + 1) {
+                for (n = format.unknown_c_ + 1 - var0.sig.length + 1; --n;) {
+                    *--p = '0';
                 }
             }
 
-            for (var4 = var0.unknown_4_.unknown_0_, var3 = (char*)var0.unknown_4_.unknown_1_ + var0.unknown_4_.unknown_0_; --var4;) {
-                *--var2 = *--var3;
+            for (n = var0.sig.length, q = (char*)var0.sig.text + var0.sig.length; --n;) {
+                *--p = *--q;
             }
 
-            if (arg2.unknown_c_ || arg2.unknown_3_) {
-                *--var2 = var9;
+            if (format.unknown_c_ || format.unknown_3_) {
+                *--p = var9;
             }
 
-            *--var2 = *var0.unknown_4_.unknown_1_;
+            *--p = *var0.sig.text;
 
             if (var0.unknown_0_) {
-                *--var2 = '-';
-            } else if (arg2.unknown_1_ == Enum_02001bdc_1_4) {
-                *--var2 = '+';
-            } else if (arg2.unknown_1_ == Enum_02001bdc_2_4) {
-                *--var2 = ' ';
+                *--p = '-';
+            } else if (format.unknown_1_ == Enum_02001bdc_1_4) {
+                *--p = '+';
+            } else if (format.unknown_1_ == Enum_02001bdc_2_4) {
+                *--p = ' ';
             }
 
             break;
@@ -479,14 +479,14 @@ extern "C" ARM char* func_02002cb4(long double arg0, char* arg1, Struct_02001bdc
         case 'F':
         f_format:
 
-            if ((var8 = -var0.unknown_2_ + var0.unknown_4_.unknown_0_ - 1) < 0) {
+            if ((var8 = -var0.unknown_2_ + var0.sig.length - 1) < 0) {
                 var8 = 0;
             }
 
-            if (var8 > arg2.unknown_c_) {
-                func_02002b90(&var0, var0.unknown_4_.unknown_0_ - (var8 - arg2.unknown_c_));
+            if (var8 > format.unknown_c_) {
+                func_02002b90(&var0, var0.sig.length - (var8 - format.unknown_c_));
 
-                if ((var8 = -var0.unknown_2_ + var0.unknown_4_.unknown_0_ - 1) < 0) {
+                if ((var8 = -var0.unknown_2_ + var0.sig.length - 1) < 0) {
                     var8 = 0;
                 }
             }
@@ -499,46 +499,46 @@ extern "C" ARM char* func_02002cb4(long double arg0, char* arg1, Struct_02001bdc
                 return 0;
             }
 
-            var3 = (char*)var0.unknown_4_.unknown_1_ + var0.unknown_4_.unknown_0_;
+            q = (char*)var0.sig.text + var0.sig.length;
 
-            for (var5 = 0; var5 < (arg2.unknown_c_ - var8); ++var5) {
-                *--var2 = '0';
+            for (digits = 0; digits < (format.unknown_c_ - var8); ++digits) {
+                *--p = '0';
             }
 
-            for (var5 = 0; var5 < var8 && var5 < var0.unknown_4_.unknown_0_; ++var5) {
-                *--var2 = *--var3;
+            for (digits = 0; digits < var8 && digits < var0.sig.length; ++digits) {
+                *--p = *--q;
             }
 
-            for (; var5 < var8; ++var5) {
-                *--var2 = '0';
+            for (; digits < var8; ++digits) {
+                *--p = '0';
             }
 
-            if (arg2.unknown_c_ || arg2.unknown_3_) {
-                *--var2 = var9;
+            if (format.unknown_c_ || format.unknown_3_) {
+                *--p = var9;
             }
 
             if (var7) {
-                for (var5 = 0; var5 < var7 - var0.unknown_4_.unknown_0_; ++var5) {
-                    *--var2 = '0';
+                for (digits = 0; digits < var7 - var0.sig.length; ++digits) {
+                    *--p = '0';
                 }
 
-                for (; var5 < var7; ++var5) {
-                    *--var2 = *--var3;
+                for (; digits < var7; ++digits) {
+                    *--p = *--q;
                 }
             } else {
-                *--var2 = '0';
+                *--p = '0';
             }
 
             if (var0.unknown_0_) {
-                *--var2 = '-';
-            } else if (arg2.unknown_1_ == Enum_02001bdc_1_4) {
-                *--var2 = '+';
-            } else if (arg2.unknown_1_ == Enum_02001bdc_2_4) {
-                *--var2 = ' ';
+                *--p = '-';
+            } else if (format.unknown_1_ == Enum_02001bdc_1_4) {
+                *--p = '+';
+            } else if (format.unknown_1_ == Enum_02001bdc_2_4) {
+                *--p = ' ';
             }
 
             break;
     }
 
-    return var2;
+    return p;
 }

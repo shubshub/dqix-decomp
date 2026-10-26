@@ -12,9 +12,9 @@ extern "C" ARM void func_0204bc08(BackgroundGraphics* layer, int idx, unsigned c
         mode = 0xff;
         shift = 9;
     }
-    int var3 = (arg1 & 0xf) << var2;
-    var3 += (arg2 & 0xf) << 1;
-    arg4 &= ~1u;
-    CleanInvalidateCacheRange(arg3, arg4);
-    var1(arg3, var3, arg4);
+    int val = (idx & 0xf) << shift;
+    val += (mode & 0xf) << 1;
+    size &= ~1u;
+    CleanInvalidateCacheRange(addr, size);
+    fn(addr, val, size);
 }

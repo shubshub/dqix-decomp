@@ -11,60 +11,60 @@
 extern "C" void Overlay_Load(unsigned int id);
 extern "C" void func_ov008_021843f8(void* obj);
 extern "C" void func_ov008_021842a0(void* obj, void* arg);
-void SetByteB10AndClearB11_02184a3c(char* obj, unsigned char value);
-void OrGlobalFlag0x40_020dc2bc();
+extern "C" void func_ov008_02184a3c(char* obj, unsigned char value);
+extern "C" void func_020dc2bc();
 
 struct Struct_ov008_0218af80 {
-    char unknown_0_[0x228];
+    char pad0[0x228];
     char unknown_228_[0x288 - 0x228];
     char unknown_288_[0x2a8 - 0x288];
     char unknown_2a8_[0xdcc - 0x2a8];
     int unknown_dcc_;
-    char unknown_dd0_[R(0xdd4 - 0xdd0, 0xdd8 - 0xdd0)];
+    char pad1[R(0xdd4 - 0xdd0, 0xdd8 - 0xdd0)];
     char* unknown_dd8_;
     char* unknown_ddc_;
-    char unknown_de0_[0xde4 - 0xde0];
+    char pad2[0xde4 - 0xde0];
     char* unknown_de4_;
-    char unknown_de8_[0xdf6 - 0xde8];
+    char pad3[0xdf6 - 0xde8];
     char unknown_df6_[0xe04 - 0xdf6];
     char unknown_e04_[0xe9b - 0xe04];
     unsigned char unknown_e9b_;
     signed char unknown_e9c_;
-    char unknown_e9d_[R(0xeb4 - 0xe99, 0xebc - 0xe9d)];
-    char* unknown_ebc_;
-    unsigned char unknown_ec0_0_ : 1;
+    char pad4[R(0xeb4 - 0xe99, 0xebc - 0xe9d)];
+    char* ebc;
+    unsigned char bit0 : 1;
     unsigned char unknown_ec0_1_ : 1;
-    unsigned char unknown_ec0_2_ : 1;
-    unsigned char unknown_ec0_3_ : 5;
+    unsigned char bit2 : 1;
+    unsigned char rest : 5;
 };
 
 // USA: func_ov008_0218af80
-extern "C" ARM void func_ov008_0218af80(Manager0218af80* self) {
+extern "C" ARM void func_ov008_0218af80(Struct_ov008_0218af80* self) {
     GameResources* res = GetGameResources();
-    if (self->e9c == 0 && self->bit1 && !IsBrightnessTransitionActive(res)) {
+    if (self->unknown_e9c_ == 0 && self->unknown_ec0_1_ && !IsBrightnessTransitionActive(res)) {
         Overlay_Load(OVERLAY_ID(8));
-        func_ov008_021843f8(self->f2a8);
-        self->dcc = 1;
-        func_ov008_021842a0(self->f2a8, self->f228);
-        SetByteB10AndClearB11_02184a3c(self->f2a8, 1);
-        self->de4 = self->f288;
+        func_ov008_021843f8(self->unknown_2a8_);
+        self->unknown_dcc_ = 1;
+        func_ov008_021842a0(self->unknown_2a8_, self->unknown_228_);
+        func_ov008_02184a3c(self->unknown_2a8_, 1);
+        self->unknown_de4_ = self->unknown_288_;
         char* first = self->ebc;
         char* second;
         if (first == NULL) {
-            first = self->df6;
-            second = self->e04;
+            first = self->unknown_df6_;
+            second = self->unknown_e04_;
         } else {
-            var2 = var1 + 0x38;
+            second = first + 0x38;
         }
-        arg0->unknown_dd8_ = var1;
-        arg0->unknown_ddc_ = var2;
-        arg0->unknown_e9c_ = arg0->unknown_e9c_ + 1;
+        self->unknown_dd8_ = first;
+        self->unknown_ddc_ = second;
+        self->unknown_e9c_ = self->unknown_e9c_ + 1;
         return;
     }
-    if (arg0->unknown_e9c_ == 1 && arg0->unknown_ec0_1_ && arg0->unknown_ec0_2_) {
+    if (self->unknown_e9c_ == 1 && self->unknown_ec0_1_ && self->bit2) {
         func_020dc2bc();
-        SetSubBrightness(var0, -16, 15);
-        arg0->unknown_e9b_ = 1;
-        arg0->unknown_e9c_ = 0;
+        SetSubBrightness(res, -16, 15);
+        self->unknown_e9b_ = 1;
+        self->unknown_e9c_ = 0;
     }
 }

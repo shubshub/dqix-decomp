@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 
-extern "C" THUMB void func_ov031_02220190(int arg0, int arg1, int arg2);
+extern "C" THUMB void func_ov031_02220190(int a, int b, int c);
 
 // USA: func_ov031_022201cc
-extern "C" THUMB void func_ov031_022201cc(int arg0, int arg1, int arg2, int arg3) {
-    func_ov031_02220190(arg0, arg2, arg3);
+extern "C" THUMB void func_ov031_022201cc(int a, int unused, int b, int c) {
+    func_ov031_02220190(a, b, c);
 }

@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 struct Struct_020cef0c {
-    void (*unknown_0_)(void*);
-    void* unknown_4_;
-    struct Struct_020cef0c* unknown_8_;
+    void (*fn)(void*);
+    void* arg;
+    struct Struct_020cef0c* next;
 };
 
 // USA: func_020cef0c
-extern "C" ARM void func_020cef0c(struct Struct_020cef0c* arg0) {
-    if (arg0 == 0) return;
+extern "C" ARM void func_020cef0c(struct Struct_020cef0c* node) {
+    if (node == 0) return;
     do {
-        arg0->unknown_0_(arg0->unknown_4_);
-        arg0 = arg0->unknown_8_;
-    } while (arg0 != 0);
+        node->fn(node->arg);
+        node = node->next;
+    } while (node != 0);
 }

@@ -5,58 +5,58 @@
 #endif
 
 struct Struct_0205b008_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_;
+    unsigned short f0;
+    unsigned short f1;
+    unsigned short f2;
 };
 
 struct Struct_0205b008 {
-    unsigned short unknown_0_;
+    unsigned short count;
     unsigned short unknown_2_;
-    struct Struct_0205b008_2* unknown_4_;
+    struct Struct_0205b008_2* arr;
 };
 
 // USA: func_0205b008
-extern "C" ARM int func_0205b008(int arg0, struct Struct_0205b008* arg1, unsigned int arg2, int arg3,
-                                 unsigned short arg4, int arg5) {
-    unsigned short var0;
-    unsigned short var1;
-    struct Struct_0205b008_2* var2;
-    unsigned int var3;
+extern "C" ARM int func_0205b008(int a, struct Struct_0205b008* b, unsigned int c, int d,
+                                 unsigned short e, int f) {
+    unsigned short i;
+    unsigned short shift;
+    struct Struct_0205b008_2* p;
+    unsigned int v;
 
-    if (arg1 == 0) {
+    if (b == 0) {
         return 1;
     }
-    if (arg2 >= 3) {
+    if (c >= 3) {
         return 1;
     }
-    if (arg1 == 0) {
+    if (b == 0) {
         return 1;
     }
-    var1 = arg4;
-    for (var0 = 0; var0 < arg1->unknown_0_; var0++) {
-        var2 = arg1->unknown_4_ + var0;
-        switch (arg2) {
+    shift = e;
+    for (i = 0; i < b->count; i++) {
+        p = b->arr + i;
+        switch (c) {
         case 0:
-            var3 = var2->unknown_0_;
+            v = p->f0;
             break;
         case 1:
-            var3 = var2->unknown_2_;
+            v = p->f1;
             break;
         case 2:
-            var3 = var2->unknown_4_;
+            v = p->f2;
             break;
         }
-        var3 = (unsigned short)(var3 & (unsigned int)~arg3) | ((((unsigned int)(arg5 << var1)) << 16) >> 16);
-        switch (arg2) {
+        v = (unsigned short)(v & (unsigned int)~d) | ((((unsigned int)(f << shift)) << 16) >> 16);
+        switch (c) {
         case 0:
-            var2->unknown_0_ = var3;
+            p->f0 = v;
             break;
         case 1:
-            var2->unknown_2_ = var3;
+            p->f1 = v;
             break;
         case 2:
-            var2->unknown_4_ = var3;
+            p->f2 = v;
             break;
         }
     }

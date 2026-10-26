@@ -1,34 +1,34 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_ov017_021d60f4(void* arg0);
-extern "C" void* func_ov023_021e8f28(int arg0);
-extern "C" void func_ov017_021d6134(void* arg0, int arg1);
+extern "C" int func_ov017_021d60f4(void* obj);
+extern "C" void* func_ov023_021e8f28(int v);
+extern "C" void func_ov017_021d6134(void* obj, int v);
 
 // USA: func_ov023_021e9370
-extern "C" ARM int func_ov023_021e9370(void* arg0) {
+extern "C" ARM int func_ov023_021e9370(void* obj) {
 #if defined(jpn)
- enum {Enum_ov023_021e9370_336=0x144, Enum_ov023_021e9370_2384=0x8b8};
+ enum {regionalOffset0=0x144, regionalOffset1=0x8b8};
 #else
- enum {Enum_ov023_021e9370_336=0x150, Enum_ov023_021e9370_2384=0x950};
+ enum {regionalOffset0=0x150, regionalOffset1=0x950};
 #endif
     GameState::GetInstance();
-    void* var0 = func_ov023_021e8f28(func_ov017_021d60f4(arg0));
-    if (var0 == NULL) {
+    void* p = func_ov023_021e8f28(func_ov017_021d60f4(obj));
+    if (p == NULL) {
         return 0;
     }
-    char* var1 = *(char**)((char*)var0 + Enum_ov023_021e9370_336);
-    func_ov017_021d6134((char*)arg0 + 8, *(int*)(var1 + Enum_ov023_021e9370_2384));
+    char* s = *(char**)((char*)p + regionalOffset0);
+    func_ov017_021d6134((char*)obj + 8, *(int*)(s + regionalOffset1));
 
-    var1 = *(char**)((char*)var0 + Enum_ov023_021e9370_336);
-    int var2 = *(int*)(var1 + Enum_ov023_021e9370_2384);
-    unsigned short var3 = *(unsigned short*)(var1 + var2 * 2 + 0x100 + 0x6c);
-    func_ov017_021d6134((char*)arg0 + 0x10, var3);
+    s = *(char**)((char*)p + regionalOffset0);
+    int idx1 = *(int*)(s + regionalOffset1);
+    unsigned short v1 = *(unsigned short*)(s + idx1 * 2 + 0x100 + 0x6c);
+    func_ov017_021d6134((char*)obj + 0x10, v1);
 
-    var1 = *(char**)((char*)var0 + Enum_ov023_021e9370_336);
-    int var4 = *(int*)(var1 + Enum_ov023_021e9370_2384);
-    int var5 = *(int*)(var1 + var4 * 4 + 0x138);
-    func_ov017_021d6134((char*)arg0 + 0x18, var5);
+    s = *(char**)((char*)p + regionalOffset0);
+    int idx2 = *(int*)(s + regionalOffset1);
+    int v2 = *(int*)(s + idx2 * 4 + 0x138);
+    func_ov017_021d6134((char*)obj + 0x18, v2);
 
     return 1;
 }

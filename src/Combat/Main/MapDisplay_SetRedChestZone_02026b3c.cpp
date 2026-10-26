@@ -24,7 +24,7 @@ extern "C" ARM void MapDisplay_SetRedChestZone(Obj02026b3c* mapDisplay, unsigned
 #endif
 
 // Main, originally SetEntry02026b3c (USA 0x02026b3c, EUR 0x02026b4c, JPN 0x020264a0)
-ARM void MapDisplay_SetRedChestZone(Obj02026b3c* mapDisplay, unsigned int index, short zoneId, const char* zoneName) {
+extern "C" ARM void MapDisplay_SetRedChestZone(Obj02026b3c* mapDisplay, unsigned int index, short zoneId, const char* zoneName) {
     if (index >= mapDisplay->zoneCount) return;
     if (mapDisplay->zones == NULL) return;
     mapDisplay->zones[index].zoneId = zoneId;

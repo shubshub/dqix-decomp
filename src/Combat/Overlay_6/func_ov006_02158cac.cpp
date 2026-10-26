@@ -7,17 +7,17 @@
 #include <globaldefs.h>
 
 // USA: func_ov006_02158cac
-extern "C" ARM void func_ov006_02158cac(void *arg0) {
-	unsigned short var0 = 0;
-	void *var1 = *(void**)((char*)arg0 + R(0x24, 0x2c));
-	while (var1) {
-		var0++;
-		var1 = *(void**)((char*)var1 + 0x1c);
+extern "C" ARM void func_ov006_02158cac(void *obj) {
+	unsigned short count = 0;
+	void *node = *(void**)((char*)obj + R(0x24, 0x2c));
+	while (node) {
+		count++;
+		node = *(void**)((char*)node + 0x1c);
 	}
-	int var2 = (var0 + 15) / 16;
-	*(signed char*)((char*)arg0 + 0x389) = var2;
-	if ((var2 & 0xff) == 0) {
-		*(signed char*)((char*)arg0 + 0x389) = 1;
+	int val = (count + 15) / 16;
+	*(signed char*)((char*)obj + 0x389) = val;
+	if ((val & 0xff) == 0) {
+		*(signed char*)((char*)obj + 0x389) = 1;
 	}
-	*(unsigned char*)((char*)arg0 + 0x388) = 0;
+	*(unsigned char*)((char*)obj + 0x388) = 0;
 }

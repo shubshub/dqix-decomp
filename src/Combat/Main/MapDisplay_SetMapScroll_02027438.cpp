@@ -3,8 +3,8 @@
 
 class FlagWord02046708;
 
-FlagWord02046708* GlobalFlags_GetInstance();
-bool FlagWord_TestBits(FlagWord02046708* flags, unsigned int mask);
+extern "C" FlagWord02046708* GlobalFlags_GetInstance();
+extern "C" bool FlagWord_TestBits(FlagWord02046708* flags, unsigned int mask);
 
 // Sub engine BG0HOFS (low half) and BG0VOFS (high half) in one write
 #define BG0OFS_SUB (*(volatile unsigned int*)0x4001010)

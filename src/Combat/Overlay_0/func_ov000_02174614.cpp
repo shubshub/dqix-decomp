@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
+extern "C" void* memset(void* dst, int value, unsigned int size);
 
 struct Struct_ov000_02174614 {
-    char unknown_0_[0x38];
+    char pad0[0x38];
     int unknown_38_;
     char unknown_3c_[0x4c - 0x3c];
-    int unknown_4c_;
+    int id;
 #if defined(jpn)
     char unknown_50_[0xc7 - 0x50];
 #else
     char unknown1_50_[0x87 - 0x50];
 #endif
-    unsigned char unknown_87_;
+    unsigned char active;
 #if defined(jpn)
     char unknown_c8_[0x488 - 0xc8];
 #else
@@ -21,50 +21,50 @@ struct Struct_ov000_02174614 {
 };
 
 struct Struct_ov000_02174614_2 {
-    char unknown_0_[0x6c];
-    signed char unknown_6c_[4];
+    char pad0[0x6c];
+    signed char order[4];
     char unknown_70_[0x958 - 0x70];
-    Struct_ov000_02174614 unknown_958_[4];
+    Struct_ov000_02174614 entries[4];
 #if defined(jpn)
     char unknown_1b78_[0x1f98 - 0x1b78];
 #else
     char unknown_1a78_[0x1d60 - 0x1a78];
 #endif
-    unsigned char unknown_1d60_[8];
-    signed char unknown_1d68_;
+    unsigned char selected[8];
+    signed char cursor;
 };
 
-extern "C" int func_ov000_021719f8(int* arg0);
-extern "C" void func_ov000_0217f518(Struct_ov000_02174614* arg0);
-extern "C" void func_ov000_0217636c(Struct_ov000_02174614* arg0, int arg1);
+extern "C" int func_ov000_021719f8(int* obj);
+extern "C" void func_ov000_0217f518(Struct_ov000_02174614* entry);
+extern "C" void func_ov000_0217636c(Struct_ov000_02174614* entry, int mode);
 
 // USA: func_ov000_02174614
-extern "C" ARM void func_ov000_02174614(Struct_ov000_02174614_2* arg0, int arg1)
+extern "C" ARM void func_ov000_02174614(Struct_ov000_02174614_2* table, int id)
 {
-    Struct_ov000_02174614* var0;
-    if (arg1 < 0) {
-        int var1;
-        memset(arg0->unknown_1d60_, 0, sizeof(arg0->unknown_1d60_));
-        arg0->unknown_1d68_ = 0;
-        arg0->unknown_1d60_[arg0->unknown_1d68_] = 1;
-        for (var1 = 0; var1 < 4; var1++) {
-            var0 = &arg0->unknown_958_[arg0->unknown_6c_[var1]];
-            if (var0->unknown_4c_ >= 0 && var0->unknown_87_ != 0 && !func_ov000_021719f8((int*)var0)) {
-                func_ov000_0217f518(var0);
-                if (var0->unknown_38_ != 0) {
-                    func_ov000_0217636c(var0, 0);
+    Struct_ov000_02174614* entry;
+    if (id < 0) {
+        int i;
+        memset(table->selected, 0, sizeof(table->selected));
+        table->cursor = 0;
+        table->selected[table->cursor] = 1;
+        for (i = 0; i < 4; i++) {
+            entry = &table->entries[table->order[i]];
+            if (entry->id >= 0 && entry->active != 0 && !func_ov000_021719f8((int*)entry)) {
+                func_ov000_0217f518(entry);
+                if (entry->unknown_38_ != 0) {
+                    func_ov000_0217636c(entry, 0);
                 }
             }
         }
         return;
     }
-    int var2;
-    for (var2 = 0; var2 < 4; var2++) {
-        var0 = &arg0->unknown_958_[arg0->unknown_6c_[var2]];
-        if (arg1 == var0->unknown_4c_) {
-            func_ov000_0217f518(var0);
-            if (var0->unknown_38_ != 0) {
-                func_ov000_0217636c(var0, 0);
+    int i;
+    for (i = 0; i < 4; i++) {
+        entry = &table->entries[table->order[i]];
+        if (id == entry->id) {
+            func_ov000_0217f518(entry);
+            if (entry->unknown_38_ != 0) {
+                func_ov000_0217636c(entry, 0);
             }
             return;
         }

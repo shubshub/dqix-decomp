@@ -1,51 +1,51 @@
 #include <globaldefs.h>
 
-struct Struct_0201099c_3;
+struct Container020e0310;
 struct Struct_ov023_021db45c;
 struct Struct_ov023_021dbb34;
 struct Struct_ov023_021dbc58_2;
 struct Struct_ov023_021e257c;
 
 extern "C" void WindowPane_Init(void* buf);
-int InitBufferFromDataField4_021ddc34(void* obj, short a, short b, short c, short d);
-void UpdateEntryAndReset_021db45c(void* obj, struct StructAcAe021db45c* p1, int p2, short* p3, short* p4);
+extern "C" int func_ov023_021ddc34(void* obj, short a, short b, short c, short d);
+extern "C" void func_ov023_021db45c(void* obj, struct Struct_ov023_021db45c* p1, int p2, short* p3, short* p4);
 extern "C" void* func_ov023_021db4e4(void* obj, int key);
 extern "C" void __clear(void* buf, int len);
-void DecodePacked021dbb34(void* handle, struct Unpacked021dbb34* out);
-void ConvertModelDataToFloats_021dbc58(void*, FloatModelOut_021dbc58*, int);
-int KeyTable_Get(struct Container020e0310* c, int key);
-void SetEntryFields_021e23d0(void* obj, int val, int f0xc, unsigned char lowNib, unsigned char highNib);
-void ComputeShortPair_021e2bdc(void* a, int unused, short* out1, short* out2);
+extern "C" void func_ov023_021dbb34(void* handle, struct Struct_ov023_021dbb34* out);
+extern "C" void func_ov023_021dbc58(void*, Struct_ov023_021dbc58_2*, int);
+extern "C" int KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" void func_ov023_021e23d0(void* obj, int val, int f0xc, unsigned char arg3, unsigned char arg4);
+extern "C" void func_ov023_021e2bdc(void* a, int unused, short* out1, short* out2);
 extern "C" void func_0204f41c(void* buf, short x, short y, int text, int d, int e, short* f, short* g, int h);
 #if defined(jpn)
 extern "C" void func_02050678(void*,short,short,int,int,int,short*,short*);
 #endif
-extern "C" void func_ov023_021db3c0(void* arg0, int arg1, short arg2, float arg3, unsigned char arg4);
-extern "C" void func_ov023_021e24b0(void* arg0, int arg1, int arg2, unsigned char arg3, unsigned char arg4, unsigned char arg5, unsigned char arg6, unsigned char arg7, unsigned char arg8);
-extern "C" void func_ov023_021e257c(void* arg0);
-extern "C" void* func_ov023_021db544(void* arg0, void* arg1, int arg2, int arg3);
-extern "C" int func_020dd718(int arg0, int arg1);
-extern "C" int func_020dd4c4(int arg0, void* arg1);
-extern "C" int func_ov023_021ddc98(void* arg0, int arg1, unsigned short arg2, int arg3);
+extern "C" void func_ov023_021db3c0(void* buf, int x, short y, float v, unsigned char color);
+extern "C" void func_ov023_021e24b0(void* obj, int val, int f0xc, unsigned char arg3, unsigned char p5, unsigned char p6, unsigned char p7, unsigned char p8, unsigned char p9);
+extern "C" void func_ov023_021e257c(void* obj);
+extern "C" void* func_ov023_021db544(void* a, void* b, int c, int d);
+extern "C" int func_020dd718(int combatantId, int value);
+extern "C" int func_020dd4c4(int id, void* node);
+extern "C" int func_ov023_021ddc98(void* buf, int val, unsigned short len, int flag);
 extern "C" long labs(long);
 
 #if defined(jpn)
 struct Struct_ov023_021ff9e0_11 {
-    struct Struct_0201099c_3* unknown_14_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    int unknown1_4_;
+    struct Container020e0310* field14;
+    int field0;
+    int field8;
+    int fieldc;
+    int field10;
+    int field4;
 };
 #else
 struct Struct_ov023_021ff9e0_11 {
-    int unknown_0_;
-    int unknown1_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    struct Struct_0201099c_3* unknown_14_;
+    int field0;
+    int field4;
+    int field8;
+    int fieldc;
+    int field10;
+    struct Container020e0310* field14;
 };
 #endif
 
@@ -66,8 +66,8 @@ extern const short data_ov023_021fd616[];
 extern const short data_ov023_021fd61e[];
 
 struct Struct_ov023_021ddf5c {
-    int unknown_0_;
-    int unknown_4_;
+    int unk0;
+    int unk4;
     int unknown_8_0_ : 10;
     int unknown_9_2_ : 10;
     unsigned int unknown_a_4_ : 10;
@@ -83,110 +83,110 @@ struct Struct_ov023_021ddf5c {
 };
 
 struct Struct_ov023_021ddf5c_2 {
-    struct Struct_ov023_021ddf5c* unknown_0_;
-    int unknown_4_;
+    struct Struct_ov023_021ddf5c* packed;
+    int unk4;
     unsigned int unknown_8_0_ : 4;
     char unknown_9_[0x18 - 0xc];
-    short unknown_16_;
+    short field18;
 };
 
 struct Struct_ov023_021ddf5c_3 {
-    char unknown_0_[0x16];
-    unsigned char unknown_16_;
+    char pad[0x16];
+    unsigned char flags;
 };
 
 struct Struct_ov023_021ddf5c_4 {
-    char unknown_0_[0x4c];
-    struct Struct_ov023_021ddf5c_2* unknown_4c_;
+    char pad0[0x4c];
+    struct Struct_ov023_021ddf5c_2* node;
     char unknown_50_[0xcc - 0x50];
-    char unknown_cc_[4];
-    void* unknown_d0_;
+    char list[4];
+    void* buf;
     char unknown_d4_[0xde - 0xd4];
-    short unknown_de_;
+    short active;
 #if defined(jpn)
     char unknown_e0_[0x6d8 - 0xe0];
 #else
     char unknown1_e0_[0x75c - 0xe0];
 #endif
 
-    int unknown_75c_;
+    int pos;
     char unknown_760_[0x768 - 0x760];
     int unknown_768_;
     int unknown_76c_;
     char unknown_770_[0x77a - 0x770];
-    signed char unknown_77a_;
+    signed char id;
 };
 
-#define SetEntryOn(obj, key) do {     struct Struct_ov023_021ddf5c_3* e_ = (struct Struct_ov023_021ddf5c_3*)func_ov023_021db4e4((obj)->unknown_cc_, (key));     if (e_) e_->unknown_16_ |= 1; } while (0)
+#define SetEntryOn(obj, key) do {     struct Struct_ov023_021ddf5c_3* e_ = (struct Struct_ov023_021ddf5c_3*)func_ov023_021db4e4((obj)->list, (key));     if (e_) e_->flags |= 1; } while (0)
 
-#define SetEntryOff(obj, key) do {     struct Struct_ov023_021ddf5c_3* e_ = (struct Struct_ov023_021ddf5c_3*)func_ov023_021db4e4((obj)->unknown_cc_, (key));     if (e_) e_->unknown_16_ &= ~1; } while (0)
+#define SetEntryOff(obj, key) do {     struct Struct_ov023_021ddf5c_3* e_ = (struct Struct_ov023_021ddf5c_3*)func_ov023_021db4e4((obj)->list, (key));     if (e_) e_->flags &= ~1; } while (0)
 
-#define FlushList(obj, buf) do {     if (data_ov023_021ff9e0.unknown1_4_) {         (obj)->unknown_d0_ = (buf);         (obj)->unknown_de_ = 1;         func_ov023_021e257c((obj)->unknown_cc_);     } } while (0)
+#define FlushList(obj, buf) do {     if (data_ov023_021ff9e0.field4) {         (obj)->buf = (buf);         (obj)->active = 1;         func_ov023_021e257c((obj)->list);     } } while (0)
 
 // USA: func_ov023_021ddf5c
-extern "C" ARM void func_ov023_021ddf5c(struct Obj021ddf5c* obj) {
+extern "C" ARM void func_ov023_021ddf5c(struct Struct_ov023_021ddf5c_4* obj) {
     char buf[0xe0];
     unsigned char i;
     WindowPane_Init(buf);
-    if (!InitBufferFromDataField4_021ddc34(buf, 0, 0, 0x14, 9)) return;
+    if (!func_ov023_021ddc34(buf, 0, 0, 0x14, 9)) return;
 
-    if (arg0->unknown_77a_ < 0) {
-        short var2;
-        int var3;
-        float var4;
-        short var5;
-        short var6;
+    if (obj->id < 0) {
+        short k0;
+        int key;
+        float v;
+        short k;
+        short k3;
         int var7;
-        unsigned char var8;
-        struct Struct_ov023_021ddf5c_2* var9 = arg0->unknown_4c_;
-        short var10, var11;
-        short var12, var13;
-        short var14, var15;
-        func_ov023_021db45c(arg0->unknown_cc_, (struct Struct_ov023_021db45c*)var0, 0xb, &var15, &var14);
-        SetEntryOn(arg0, 0xb);
-        SetEntryOn(arg0, 0x2d);
-        SetEntryOff(arg0, 0x2e);
-        SetEntryOff(arg0, 0x2c);
+        unsigned char n;
+        struct Struct_ov023_021ddf5c_2* node = obj->node;
+        short p1, p0;
+        short o1, o0;
+        short a1, a0;
+        func_ov023_021db45c(obj->list, (struct Struct_ov023_021db45c*)buf, 0xb, &a0, &a1);
+        SetEntryOn(obj, 0xb);
+        SetEntryOn(obj, 0x2d);
+        SetEntryOff(obj, 0x2e);
+        SetEntryOff(obj, 0x2c);
         float var16[6];
         float var17[12];
-        unsigned char var18[6];
+        unsigned char idx[6];
         __clear(var17, 0x30);
-        __clear(var18, 6);
-        func_ov023_021dbb34(var9, (struct Struct_ov023_021dbb34*)var17);
-        var8 = 0;
+        __clear(idx, 6);
+        func_ov023_021dbb34(node, (struct Struct_ov023_021dbb34*)var17);
+        n = 0;
         __clear(var16, 0x18);
-        for (var1 = 0; var1 < 12; var1++) {
-            if (var17[var1] != 0.0f) {
-                var16[var8] = var17[var1];
-                var18[var8] = var1;
-                var8++;
-                if (var8 >= 4) break;
+        for (i = 0; i < 12; i++) {
+            if (var17[i] != 0.0f) {
+                var16[n] = var17[i];
+                idx[n] = i;
+                n++;
+                if (n >= 4) break;
             }
         }
-        for (var1 = 0; var1 < 4; var1++) {
-            var2 = data_ov023_021fd5be[var1];
-            if (var1 < var8) {
-                SetEntryOn(arg0, var2);
-                SetEntryOn(arg0, data_ov023_021fd5c6[var1]);
-                SetEntryOff(arg0, data_ov023_021fd5ce[var1]);
+        for (i = 0; i < 4; i++) {
+            k0 = data_ov023_021fd5be[i];
+            if (i < n) {
+                SetEntryOn(obj, k0);
+                SetEntryOn(obj, data_ov023_021fd5c6[i]);
+                SetEntryOff(obj, data_ov023_021fd5ce[i]);
             } else {
-                SetEntryOff(arg0, var2);
-                SetEntryOff(arg0, data_ov023_021fd5c6[var1]);
-                SetEntryOff(arg0, data_ov023_021fd5ce[var1]);
+                SetEntryOff(obj, k0);
+                SetEntryOff(obj, data_ov023_021fd5c6[i]);
+                SetEntryOff(obj, data_ov023_021fd5ce[i]);
             }
         }
         for (i = 0; i < n; i++) {
-            v = vals[i];
+            v = var16[i];
             key = (short)(idx[i] + 12);
-            SetEntryFields_021e23d0(obj->list, data_ov023_021fd5c6[i], KeyTable_Get(data_ov023_021ff9e0.field14, key), 10, 0xf);
+            func_ov023_021e23d0(obj->list, data_ov023_021fd5c6[i], KeyTable_Get(data_ov023_021ff9e0.field14, key), 10, 0xf);
             k = data_ov023_021fd5d6[i];
-            ComputeShortPair_021e2bdc(obj->list, k, &p0, &p1);
+            func_ov023_021e2bdc(obj->list, k, &p0, &p1);
             switch (key) {
             case 14:
             case 15:
             case 16:
             case 17:
-                if (data_ov023_021ff9e0.unknown1_4_) {
+                if (data_ov023_021ff9e0.field4) {
 #if defined(jpn)
                     func_02050678(buf, p0 + 16, p1, KeyTable_Get(data_ov023_021ff9e0.field14, 0x1a), 8, 0xf, &o0, &o1);
 #else
@@ -204,15 +204,15 @@ extern "C" ARM void func_ov023_021ddf5c(struct Obj021ddf5c* obj) {
 #endif
 
 #if defined(jpn)
-                    func_ov023_021db3c0(var0, (short)(var11 + 8), var10, var4, 0xf);
+                    func_ov023_021db3c0(buf, (short)(p0 + 8), p1, v, 0xf);
 #else
 #if defined(jpn)
-                    func_ov023_021db3c0(var0, (short)(p0 + 8), p1, v, 0xf);
+                    func_ov023_021db3c0(buf, (short)(p0 + 8), p1, v, 0xf);
 #else
 #if defined(jpn)
-                    func_ov023_021db3c0(var0, (short)(p0 + 8), p1, v, 0xf);
+                    func_ov023_021db3c0(buf, (short)(p0 + 8), p1, v, 0xf);
 #else
-                    func_ov023_021db3c0(var0, var11, var10, var4, 0xf);
+                    func_ov023_021db3c0(buf, p0, p1, v, 0xf);
 #endif
 
 #endif
@@ -220,88 +220,88 @@ extern "C" ARM void func_ov023_021ddf5c(struct Obj021ddf5c* obj) {
 #endif
 
                 }
-                SetEntryOff(arg0, var5);
+                SetEntryOff(obj, k);
                 break;
             default:
                 if (v < 0.0f) {
                     k3 = data_ov023_021fd5ce[i];
                     SetEntryOn(obj, k3);
-                    SetEntryFields_021e23d0(obj->list, k3, KeyTable_Get(data_ov023_021ff9e0.field14, 0x19), 8, 0xf);
+                    func_ov023_021e23d0(obj->list, k3, KeyTable_Get(data_ov023_021ff9e0.field14, 0x19), 8, 0xf);
                 }
-                var7 = labs((int)var4);
-                func_ov023_021e24b0(arg0->unknown_cc_, data_ov023_021fd5d6[var1], var7, 8, 0xf, 1, 3, 0, 0);
-                SetEntryOn(arg0, data_ov023_021fd5d6[var1]);
+                var7 = labs((int)v);
+                func_ov023_021e24b0(obj->list, data_ov023_021fd5d6[i], var7, 8, 0xf, 1, 3, 0, 0);
+                SetEntryOn(obj, data_ov023_021fd5d6[i]);
                 break;
             }
         }
-        FlushList(arg0, var0);
-        func_ov023_021db544(arg0->unknown_cc_, (void*)0xb, var15, var14);
-        SetEntryOff(arg0, 0xb);
-    } else if (func_020dd718(arg0->unknown_77a_, arg0->unknown_4c_->unknown_16_)) {
-        short var19;
-        int var20;
-        float var21;
-        short var22;
+        FlushList(obj, buf);
+        func_ov023_021db544(obj->list, (void*)0xb, a0, a1);
+        SetEntryOff(obj, 0xb);
+    } else if (func_020dd718(obj->id, obj->node->field18)) {
+        short k0;
+        int key;
+        float v;
+        short k;
         int var23;
-        short var24;
-        unsigned char var25;
-        int var26 = arg0->unknown_77a_;
-        struct Struct_ov023_021ddf5c_2* var27 = arg0->unknown_4c_;
-        short var28, var29;
-        short var30, var31;
-        short var32, var33;
-        func_ov023_021db45c(arg0->unknown_cc_, (struct Struct_ov023_021db45c*)var0, 0xb, &var33, &var32);
-        SetEntryOn(arg0, 0xb);
-        SetEntryOn(arg0, 0x2d);
-        SetEntryOff(arg0, 0x2e);
-        SetEntryOff(arg0, 0x2c);
+        short k3;
+        unsigned char n;
+        int id = obj->id;
+        struct Struct_ov023_021ddf5c_2* node = obj->node;
+        short p1, p0;
+        short o1, o0;
+        short b1, b0;
+        func_ov023_021db45c(obj->list, (struct Struct_ov023_021db45c*)buf, 0xb, &b0, &b1);
+        SetEntryOn(obj, 0xb);
+        SetEntryOn(obj, 0x2d);
+        SetEntryOff(obj, 0x2e);
+        SetEntryOff(obj, 0x2c);
         float var34[6];
         float var35[12];
-        float var36[12];
-        unsigned char var37[6];
-        __clear(var36, 0x30);
+        float model[12];
+        unsigned char idx[6];
+        __clear(model, 0x30);
         __clear(var35, 0x30);
-        __clear(var37, 6);
-        func_ov023_021dbc58((void*)var26, (Struct_ov023_021dbc58_2*)var36, (int)0);
-        func_ov023_021dbb34(var27, (struct Struct_ov023_021dbb34*)var35);
-        var25 = 0;
+        __clear(idx, 6);
+        func_ov023_021dbc58((void*)id, (Struct_ov023_021dbc58_2*)model, (int)0);
+        func_ov023_021dbb34(node, (struct Struct_ov023_021dbb34*)var35);
+        n = 0;
         __clear(var34, 0x18);
-        for (var1 = 0; var1 < 12; var1++) {
-            int var38 = 0;
-            if (var1 == 3 && var27->unknown_8_0_ == 1) {
-                if (var36[3]) var38 = 1;
+        for (i = 0; i < 12; i++) {
+            int force = 0;
+            if (i == 3 && node->unknown_8_0_ == 1) {
+                if (model[3]) force = 1;
             }
-            if (var38 || var35[var1] != 0.0f) {
-                var34[var25] = var36[var1];
-                var37[var25] = var1;
-                var25++;
-                if (var25 >= 4) break;
+            if (force || var35[i] != 0.0f) {
+                var34[n] = model[i];
+                idx[n] = i;
+                n++;
+                if (n >= 4) break;
             }
         }
-        for (var1 = 0; var1 < 4; var1++) {
-            var19 = data_ov023_021fd5de[var1];
-            if (var1 < var25) {
-                SetEntryOn(arg0, var19);
-                SetEntryOn(arg0, data_ov023_021fd5e6[var1]);
-                SetEntryOn(arg0, data_ov023_021fd5ee[var1]);
+        for (i = 0; i < 4; i++) {
+            k0 = data_ov023_021fd5de[i];
+            if (i < n) {
+                SetEntryOn(obj, k0);
+                SetEntryOn(obj, data_ov023_021fd5e6[i]);
+                SetEntryOn(obj, data_ov023_021fd5ee[i]);
             } else {
-                SetEntryOff(arg0, var19);
-                SetEntryOff(arg0, data_ov023_021fd5e6[var1]);
-                SetEntryOff(arg0, data_ov023_021fd5ee[var1]);
+                SetEntryOff(obj, k0);
+                SetEntryOff(obj, data_ov023_021fd5e6[i]);
+                SetEntryOff(obj, data_ov023_021fd5ee[i]);
             }
         }
         for (i = 0; i < n; i++) {
-            v = vals[i];
+            v = var34[i];
             key = (short)(idx[i] + 12);
-            SetEntryFields_021e23d0(obj->list, data_ov023_021fd5e6[i], KeyTable_Get(data_ov023_021ff9e0.field14, key), 10, 0xf);
+            func_ov023_021e23d0(obj->list, data_ov023_021fd5e6[i], KeyTable_Get(data_ov023_021ff9e0.field14, key), 10, 0xf);
             k = data_ov023_021fd5f6[i];
-            ComputeShortPair_021e2bdc(obj->list, k, &p0, &p1);
+            func_ov023_021e2bdc(obj->list, k, &p0, &p1);
             switch (key) {
             case 14:
             case 15:
             case 16:
             case 17:
-                if (data_ov023_021ff9e0.unknown1_4_) {
+                if (data_ov023_021ff9e0.field4) {
 #if defined(jpn)
                     func_02050678(buf, p0 + 16, p1, KeyTable_Get(data_ov023_021ff9e0.field14, 0x1a), 8, 0xf, &o0, &o1);
 #else
@@ -319,15 +319,15 @@ extern "C" ARM void func_ov023_021ddf5c(struct Obj021ddf5c* obj) {
 #endif
 
 #if defined(jpn)
-                    func_ov023_021db3c0(var0, (short)(var29 + 8), var28, var21, 0xf);
+                    func_ov023_021db3c0(buf, (short)(p0 + 8), p1, v, 0xf);
 #else
 #if defined(jpn)
-                    func_ov023_021db3c0(var0, (short)(p0 + 8), p1, v, 0xf);
+                    func_ov023_021db3c0(buf, (short)(p0 + 8), p1, v, 0xf);
 #else
 #if defined(jpn)
-                    func_ov023_021db3c0(var0, (short)(p0 + 8), p1, v, 0xf);
+                    func_ov023_021db3c0(buf, (short)(p0 + 8), p1, v, 0xf);
 #else
-                    func_ov023_021db3c0(var0, var29, var28, var21, 0xf);
+                    func_ov023_021db3c0(buf, p0, p1, v, 0xf);
 #endif
 
 #endif
@@ -335,101 +335,101 @@ extern "C" ARM void func_ov023_021ddf5c(struct Obj021ddf5c* obj) {
 #endif
 
                 }
-                SetEntryOff(arg0, var22);
+                SetEntryOff(obj, k);
                 break;
             default:
-                var23 = labs((int)var21);
-                func_ov023_021e24b0(arg0->unknown_cc_, data_ov023_021fd5f6[var1], var23, 8, 0xf, 1, 3, 0, 0);
-                SetEntryOn(arg0, data_ov023_021fd5f6[var1]);
+                var23 = labs((int)v);
+                func_ov023_021e24b0(obj->list, data_ov023_021fd5f6[i], var23, 8, 0xf, 1, 3, 0, 0);
+                SetEntryOn(obj, data_ov023_021fd5f6[i]);
                 break;
             }
             k3 = data_ov023_021fd5ee[i];
             SetEntryOn(obj, k3);
-            SetEntryFields_021e23d0(obj->list, k3, KeyTable_Get(data_ov023_021ff9e0.field14, 0x22), 8, 0xf);
+            func_ov023_021e23d0(obj->list, k3, KeyTable_Get(data_ov023_021ff9e0.field14, 0x22), 8, 0xf);
         }
-        FlushList(arg0, var0);
-        func_ov023_021db544(arg0->unknown_cc_, (void*)0xb, var33, var32);
-        SetEntryOff(arg0, 0xb);
-    } else if (!func_020dd4c4(arg0->unknown_77a_, arg0->unknown_4c_)) {
-        short var39;
-        unsigned char var40;
-        short var41;
-        short var42;
-        float var43;
-        float var44;
-        unsigned char var45;
+        FlushList(obj, buf);
+        func_ov023_021db544(obj->list, (void*)0xb, b0, b1);
+        SetEntryOff(obj, 0xb);
+    } else if (!func_020dd4c4(obj->id, obj->node)) {
+        short k0;
+        unsigned char j;
+        short key;
+        short k;
+        float v;
+        float w;
+        unsigned char color;
         short var46;
         int var47;
-        unsigned char var48;
-        struct Struct_ov023_021ddf5c_2* var49 = arg0->unknown_4c_;
-        int var50 = arg0->unknown_77a_;
-        short var51, var52;
-        short var53, var54;
-        short var55, var56;
-        func_ov023_021db45c(arg0->unknown_cc_, (struct Struct_ov023_021db45c*)var0, 0xb, &var56, &var55);
-        SetEntryOn(arg0, 0xb);
-        SetEntryOff(arg0, 0x2d);
-        SetEntryOn(arg0, 0x2e);
-        SetEntryOff(arg0, 0x2c);
-        unsigned char var57[12];
-        float var58[12];
-        float var59[12];
-        __clear(var59, 0x30);
-        func_ov023_021dbc58((void*)var50, (Struct_ov023_021dbc58_2*)var59, (int)0);
-        __clear(var58, 0x30);
-        func_ov023_021dbc58((void*)var50, (Struct_ov023_021dbc58_2*)var58, (int)var49);
-        struct Struct_ov023_021ddf5c* var60 = 0;
-        __clear(var57, 0xc);
-        if (var49 && var49->unknown_16_ > 0) var60 = var49->unknown_0_;
-        if (var60) {
-            if (var60->unknown_8_0_) var57[0] = 1;
-            if (var60->unknown_9_2_) var57[1] = 1;
-            if ((float)var60->unknown_a_4_ / 10.0f != 0.0f) var57[2] = 1;
-            if ((float)var60->unknown_c_0_ / 10.0f != 0.0f) var57[3] = 1;
-            if ((float)var60->unknown_d_2_ / 10.0f != 0.0f) var57[4] = 1;
-            if (var60->unknown_10_0_) var57[6] = 1;
-            if (var60->unknown_11_2_) var57[7] = 1;
-            if (var60->unknown_12_4_) var57[8] = 1;
-            if (var60->unknown_14_0_) var57[9] = 1;
-            if (var60->unknown_15_2_) var57[10] = 1;
-            if (var60->unknown_16_4_) var57[11] = 1;
-            if (var49->unknown_8_0_ == 1) {
-                if (var59[3] || var58[3]) var57[3] = 1;
+        unsigned char n;
+        struct Struct_ov023_021ddf5c_2* node = obj->node;
+        int id = obj->id;
+        short p1, p0;
+        short o1, o0;
+        short c1, c0;
+        func_ov023_021db45c(obj->list, (struct Struct_ov023_021db45c*)buf, 0xb, &c0, &c1);
+        SetEntryOn(obj, 0xb);
+        SetEntryOff(obj, 0x2d);
+        SetEntryOn(obj, 0x2e);
+        SetEntryOff(obj, 0x2c);
+        unsigned char changed[12];
+        float next[12];
+        float cur[12];
+        __clear(cur, 0x30);
+        func_ov023_021dbc58((void*)id, (Struct_ov023_021dbc58_2*)cur, (int)0);
+        __clear(next, 0x30);
+        func_ov023_021dbc58((void*)id, (Struct_ov023_021dbc58_2*)next, (int)node);
+        struct Struct_ov023_021ddf5c* pk = 0;
+        __clear(changed, 0xc);
+        if (node && node->field18 > 0) pk = node->packed;
+        if (pk) {
+            if (pk->unknown_8_0_) changed[0] = 1;
+            if (pk->unknown_9_2_) changed[1] = 1;
+            if ((float)pk->unknown_a_4_ / 10.0f != 0.0f) changed[2] = 1;
+            if ((float)pk->unknown_c_0_ / 10.0f != 0.0f) changed[3] = 1;
+            if ((float)pk->unknown_d_2_ / 10.0f != 0.0f) changed[4] = 1;
+            if (pk->unknown_10_0_) changed[6] = 1;
+            if (pk->unknown_11_2_) changed[7] = 1;
+            if (pk->unknown_12_4_) changed[8] = 1;
+            if (pk->unknown_14_0_) changed[9] = 1;
+            if (pk->unknown_15_2_) changed[10] = 1;
+            if (pk->unknown_16_4_) changed[11] = 1;
+            if (node->unknown_8_0_ == 1) {
+                if (cur[3] || next[3]) changed[3] = 1;
             }
         }
-        unsigned char var61[6];
-        __clear(var61, 6);
-        var48 = 0;
-        for (var1 = 0; var1 < 12; var1++) {
-            if (var57[var1] || var59[var1] - var58[var1] != 0.0f) {
-                var61[var48] = var1;
-                var48++;
-                if (var48 >= 4) break;
+        unsigned char idx[6];
+        __clear(idx, 6);
+        n = 0;
+        for (i = 0; i < 12; i++) {
+            if (changed[i] || cur[i] - next[i] != 0.0f) {
+                idx[n] = i;
+                n++;
+                if (n >= 4) break;
             }
         }
-        for (var40 = 0; var40 < 4; var40++) {
-            var39 = data_ov023_021fd5fe[var40];
-            if (var40 < var48) {
-                SetEntryOn(arg0, var39);
-                SetEntryOn(arg0, data_ov023_021fd606[var40]);
+        for (j = 0; j < 4; j++) {
+            k0 = data_ov023_021fd5fe[j];
+            if (j < n) {
+                SetEntryOn(obj, k0);
+                SetEntryOn(obj, data_ov023_021fd606[j]);
             } else {
-                SetEntryOff(arg0, var39);
-                SetEntryOff(arg0, data_ov023_021fd606[var40]);
+                SetEntryOff(obj, k0);
+                SetEntryOff(obj, data_ov023_021fd606[j]);
             }
         }
         for (i = 0; i < n; i++) {
             j = idx[i];
             key = j + 12;
-            SetEntryFields_021e23d0(obj->list, data_ov023_021fd606[i], KeyTable_Get(data_ov023_021ff9e0.field14, key), 10, 0xf);
+            func_ov023_021e23d0(obj->list, data_ov023_021fd606[i], KeyTable_Get(data_ov023_021ff9e0.field14, key), 10, 0xf);
             k = data_ov023_021fd60e[i];
-            ComputeShortPair_021e2bdc(obj->list, k, &p0, &p1);
+            func_ov023_021e2bdc(obj->list, k, &p0, &p1);
             v = cur[j];
             switch (key) {
             case 14:
             case 15:
             case 16:
             case 17:
-                if (data_ov023_021ff9e0.unknown1_4_) {
+                if (data_ov023_021ff9e0.field4) {
 #if defined(jpn)
                     func_02050678(buf, p0 + 16, p1, KeyTable_Get(data_ov023_021ff9e0.field14, 0x1a), 8, 0xf, &o0, &o1);
 #else
@@ -447,15 +447,15 @@ extern "C" ARM void func_ov023_021ddf5c(struct Obj021ddf5c* obj) {
 #endif
 
 #if defined(jpn)
-                    func_ov023_021db3c0(var0, (short)(var52 + 8), var51, var43, 0xf);
+                    func_ov023_021db3c0(buf, (short)(p0 + 8), p1, v, 0xf);
 #else
 #if defined(jpn)
-                    func_ov023_021db3c0(var0, (short)(p0 + 8), p1, v, 0xf);
+                    func_ov023_021db3c0(buf, (short)(p0 + 8), p1, v, 0xf);
 #else
 #if defined(jpn)
-                    func_ov023_021db3c0(var0, (short)(p0 + 8), p1, v, 0xf);
+                    func_ov023_021db3c0(buf, (short)(p0 + 8), p1, v, 0xf);
 #else
-                    func_ov023_021db3c0(var0, var52, var51, var43, 0xf);
+                    func_ov023_021db3c0(buf, p0, p1, v, 0xf);
 #endif
 
 #endif
@@ -463,27 +463,27 @@ extern "C" ARM void func_ov023_021ddf5c(struct Obj021ddf5c* obj) {
 #endif
 
                 }
-                SetEntryOff(arg0, var42);
+                SetEntryOff(obj, k);
                 break;
             default:
-                var47 = labs((int)var43);
-                func_ov023_021e24b0(arg0->unknown_cc_, data_ov023_021fd60e[var1], var47, 8, 0xf, 1, 3, 0, 0);
-                SetEntryOn(arg0, data_ov023_021fd60e[var1]);
+                var47 = labs((int)v);
+                func_ov023_021e24b0(obj->list, data_ov023_021fd60e[i], var47, 8, 0xf, 1, 3, 0, 0);
+                SetEntryOn(obj, data_ov023_021fd60e[i]);
                 break;
             }
-            SetEntryFields_021e23d0(obj->list, data_ov023_021fd616[i], KeyTable_Get(data_ov023_021ff9e0.field14, 0x20), 8, 0xf);
+            func_ov023_021e23d0(obj->list, data_ov023_021fd616[i], KeyTable_Get(data_ov023_021ff9e0.field14, 0x20), 8, 0xf);
             w = next[j];
             color = 9;
             if (v == w) color = 0xf;
             else if (v < w) color = 5;
-            k5 = data_ov023_021fd61e[i];
-            ComputeShortPair_021e2bdc(obj->list, k5, &p0, &p1);
+            var46 = data_ov023_021fd61e[i];
+            func_ov023_021e2bdc(obj->list, var46, &p0, &p1);
             switch (key) {
             case 14:
             case 15:
             case 16:
             case 17:
-                if (data_ov023_021ff9e0.unknown1_4_) {
+                if (data_ov023_021ff9e0.field4) {
 #if defined(jpn)
                     func_02050678(buf, p0 + 16, p1, KeyTable_Get(data_ov023_021ff9e0.field14, 0x1a), 8, color, &o0, &o1);
 #else
@@ -491,39 +491,39 @@ extern "C" ARM void func_ov023_021ddf5c(struct Obj021ddf5c* obj) {
 #endif
 
 #if defined(jpn)
-                    func_ov023_021db3c0(var0, (short)(var52 + 8), var51, var44, var45);
+                    func_ov023_021db3c0(buf, (short)(p0 + 8), p1, w, color);
 #else
-                    func_ov023_021db3c0(var0, var52, var51, var44, var45);
+                    func_ov023_021db3c0(buf, p0, p1, w, color);
 #endif
 
                 }
-                SetEntryOff(arg0, var46);
+                SetEntryOff(obj, var46);
                 break;
             default:
-                var47 = labs((int)var44);
-                func_ov023_021e24b0(arg0->unknown_cc_, data_ov023_021fd61e[var1], var47, 8, var45, 1, 3, 0, 0);
-                SetEntryOn(arg0, data_ov023_021fd61e[var1]);
+                var47 = labs((int)w);
+                func_ov023_021e24b0(obj->list, data_ov023_021fd61e[i], var47, 8, color, 1, 3, 0, 0);
+                SetEntryOn(obj, data_ov023_021fd61e[i]);
                 break;
             }
         }
-        FlushList(arg0, var0);
-        func_ov023_021db544(arg0->unknown_cc_, (void*)0xb, var56, var55);
-        SetEntryOff(arg0, 0xb);
+        FlushList(obj, buf);
+        func_ov023_021db544(obj->list, (void*)0xb, c0, c1);
+        SetEntryOff(obj, 0xb);
     } else {
         short var62, var63;
-        func_ov023_021db45c(arg0->unknown_cc_, (struct Struct_ov023_021db45c*)var0, 0xb, &var63, &var62);
-        SetEntryOn(arg0, 0xb);
-        SetEntryOn(arg0, 0x2c);
+        func_ov023_021db45c(obj->list, (struct Struct_ov023_021db45c*)buf, 0xb, &var63, &var62);
+        SetEntryOn(obj, 0xb);
+        SetEntryOn(obj, 0x2c);
 #if defined(jpn)
 
 #else
         {
-            struct Struct_ov023_021ddf5c_3* var64 = (struct Struct_ov023_021ddf5c_3*)func_ov023_021db4e4(arg0->unknown_cc_, 0x2c);
-            if (var64) var64->unknown_16_ |= 8;
+            struct Struct_ov023_021ddf5c_3* e = (struct Struct_ov023_021ddf5c_3*)func_ov023_021db4e4(obj->list, 0x2c);
+            if (e) e->flags |= 8;
         }
 
 #endif
-        SetEntryFields_021e23d0(obj->list, 0x2c, KeyTable_Get(data_ov023_021ff9e0.field14, 0x21), 10, 0xf);
+        func_ov023_021e23d0(obj->list, 0x2c, KeyTable_Get(data_ov023_021ff9e0.field14, 0x21), 10, 0xf);
         SetEntryOff(obj, 0xa);
         SetEntryOff(obj, 0xc);
         SetEntryOff(obj, 0xd);
@@ -531,16 +531,16 @@ extern "C" ARM void func_ov023_021ddf5c(struct Obj021ddf5c* obj) {
         SetEntryOff(obj, 0x2d);
         SetEntryOff(obj, 0x2e);
         FlushList(obj, buf);
-        CreateAndSetFields8A_021db544(obj->list, (void*)0xb, d0, d1);
+        func_ov023_021db544(obj->list, (void*)0xb, var63, var62);
         SetEntryOff(obj, 0xb);
     }
 
-    if (arg0->unknown_768_) {
-        func_ov023_021ddc98(var0, arg0->unknown_768_, (unsigned short)data_ov023_021ff9e0.unknown_c_, 0);
+    if (obj->unknown_768_) {
+        func_ov023_021ddc98(buf, obj->unknown_768_, (unsigned short)data_ov023_021ff9e0.fieldc, 0);
     } else {
-        int var65 = func_ov023_021ddc98(var0, arg0->unknown_75c_, (unsigned short)data_ov023_021ff9e0.unknown_c_, 0);
-        arg0->unknown_768_ = arg0->unknown_75c_;
-        arg0->unknown_76c_ = var65;
-        arg0->unknown_75c_ = arg0->unknown_75c_ + var65;
+        int len = func_ov023_021ddc98(buf, obj->pos, (unsigned short)data_ov023_021ff9e0.fieldc, 0);
+        obj->unknown_768_ = obj->pos;
+        obj->unknown_76c_ = len;
+        obj->pos = obj->pos + len;
     }
 }

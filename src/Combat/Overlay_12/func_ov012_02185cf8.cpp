@@ -12,22 +12,22 @@
 #include "std_library_functions.h"
 #include "Input/Input.h"
 
-struct Struct_0205d5d0;
+struct StructA0205d5d0;
 struct Struct_ov012_02185cf8
 {
-    char unknown_0_[LOW_REGION(0x90, 0xac)];
-    char unknown_ac_[LOW_REGION(0x1340, 0x1370) - LOW_REGION(0x90, 0xac)];
-    unsigned char unknown_1370_;
-    unsigned char unknown_1371_;
+    char unk_0[LOW_REGION(0x90, 0xac)];
+    char window_[LOW_REGION(0x1340, 0x1370) - LOW_REGION(0x90, 0xac)];
+    unsigned char step_;
+    unsigned char state_;
     char unknown_1372_[2];
-    char* unknown_1374_;
-    char unknown_1378_[LOW_REGION(0x1360, 0x1398) - LOW_REGION(0x1348, 0x1378)];
-    int unknown_1398_;
+    char* text_;
+    char unk_1378[LOW_REGION(0x1360, 0x1398) - LOW_REGION(0x1348, 0x1378)];
+    int unk_1398;
 };
 
 struct Struct_ov012_02185cf8_2
 {
-    char unknown_0_[0x30];
+    char unk_0[0x30];
     int unknown_30_;
 };
 
@@ -38,40 +38,40 @@ struct Struct_ov012_0218b108
     Type_ov012_02185cf8 unknown_0_[16];
 };
 
-extern "C" const TextTable02185cf8 data_ov012_0218b108;
-extern "C" TextFn02185cf8 __ptmf_null;
+extern "C" const Struct_ov012_0218b108 data_ov012_0218b108;
+extern "C" Type_ov012_02185cf8 __ptmf_null;
 
-static inline Struct_ov012_02185cf8_2* inline_ov012_02185cf8(char* arg0)
+static inline Struct_ov012_02185cf8_2* inline_ov012_02185cf8(char* window)
 {
-    return (Struct_ov012_02185cf8_2*)(arg0 + 4);
+    return (Struct_ov012_02185cf8_2*)(window + 4);
 }
 
-static inline char* inline_ov012_02185cf8_2(Struct_ov012_02185cf8* arg0)
+static inline char* inline_ov012_02185cf8_2(Struct_ov012_02185cf8* editor)
 {
-    return (char*)arg0 + LOW_REGION(0x90, 0xac);
+    return (char*)editor + LOW_REGION(0x90, 0xac);
 }
 
 // USA: func_ov012_02185cf8
-extern "C" ARM void func_ov012_02185cf8(Struct_ov012_02185cf8* arg0)
+extern "C" ARM void func_ov012_02185cf8(Struct_ov012_02185cf8* self)
 {
-    if (arg0->unknown_1398_ == 0)
+    if (self->unk_1398 == 0)
         return;
 
-    int var0 = 0;
-    if (arg0->unknown_1398_ == 2)
+    int hidden = 0;
+    if (self->unk_1398 == 2)
     {
         if (g_touchInput.isRepeatValid_ != 0 && g_touchInput.currentReading_.isHeld != 0 &&
-            inline_ov012_02185cf8(inline_ov012_02185cf8_2(arg0))->unknown_30_ < 0)
+            inline_ov012_02185cf8(inline_ov012_02185cf8_2(self))->unknown_30_ < 0)
             return;
-        var0 = 1;
+        hidden = 1;
     }
     memset(self->text_, 0, LOW_REGION(0x800, 0x960));
-    TextTable02185cf8 functions = data_ov012_0218b108;
-    TextFn02185cf8 none = __ptmf_null;
-    functions.functions[0] = none;
-    functions.functions[15] = none;
-    if (functions.functions[self->state_] != 0)
-        (self->*functions.functions[self->state_])(self->text_, hidden);
+    Struct_ov012_0218b108 var1 = data_ov012_0218b108;
+    Type_ov012_02185cf8 none = __ptmf_null;
+    var1.unknown_0_[0] = none;
+    var1.unknown_0_[15] = none;
+    if (var1.unknown_0_[self->state_] != 0)
+        (self->*var1.unknown_0_[self->state_])(self->text_, hidden);
 #if defined(jpn)
     Window_SetPaneText((StructA0205d5d0*)self->window_, self->state_, (int)self->text_, 0);
 #else

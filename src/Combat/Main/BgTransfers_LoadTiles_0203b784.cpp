@@ -13,7 +13,7 @@ extern "C" int LoadToSubBG3CharacterData(int source, int offset, unsigned int si
 // bgTransfers (data_02105254) starts with each screen's next free byte in BG character VRAM; the next free tile
 // index of each screen follows 0x20 bytes later.
 // Main, originally DispatchCharTransfer0203b784 (USA 0x0203b784, EUR 0x0203b794, JPN 0x0203b1dc)
-ARM int BgTransfers_LoadTiles(int* bgTransfers, int screen, int bg, int source, unsigned int size, unsigned int tileCount) {
+extern "C" ARM int BgTransfers_LoadTiles(int* bgTransfers, int screen, int bg, int source, unsigned int size, unsigned int tileCount) {
     int* tileCursors = (int*)((char*)bgTransfers + 0x20);
     int byteOffset = bgTransfers[screen];
     bgTransfers[screen] = byteOffset + size;

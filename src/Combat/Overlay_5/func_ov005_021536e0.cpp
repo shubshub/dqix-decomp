@@ -1,39 +1,39 @@
 #include <globaldefs.h>
 
 struct Struct_ov005_021536e0 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
-    int unknown_18_;
-    int unknown_1c_;
-    int unknown_20_;
-    int unknown_24_;
-    int unknown_28_;
+    int f0;
+    int f4;
+    int f8;
+    int fc;
+    int f10;
+    int f14;
+    int f18;
+    int f1c;
+    int f20;
+    int f24;
+    int f28;
     int unknown_2c_;
     int unknown_30_;
-    int unknown_34_;
+    int f34;
     int unknown_38_;
 };
 
 // USA: func_ov005_021536e0
-extern "C" ARM Struct_ov005_021536e0* func_ov005_021536e0(Struct_ov005_021536e0* arg0) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0x8000;
-    arg0->unknown_c_ = 0;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_14_ = 0;
-    arg0->unknown_10_ = 0;
-    arg0->unknown_1c_ = 0;
-    arg0->unknown_18_ = 0;
-    arg0->unknown_24_ = 0;
-    arg0->unknown_20_ = 0;
-    arg0->unknown_2c_ = 0;
-    arg0->unknown_28_ = 0;
-    arg0->unknown_34_ = 0;
-    arg0->unknown_30_ = 0;
-    arg0->unknown_38_ = 0;
-    return arg0;
+extern "C" ARM Struct_ov005_021536e0* func_ov005_021536e0(Struct_ov005_021536e0* t) {
+    t->f0 = 0;
+    t->f4 = 0x8000;
+    t->fc = 0;
+    t->f8 = 0;
+    t->f14 = 0;
+    t->f10 = 0;
+    t->f1c = 0;
+    t->f18 = 0;
+    t->f24 = 0;
+    t->f20 = 0;
+    t->unknown_2c_ = 0;
+    t->f28 = 0;
+    t->f34 = 0;
+    t->unknown_30_ = 0;
+    t->unknown_38_ = 0;
+    return t;
 }

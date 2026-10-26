@@ -2,12 +2,12 @@
 #include "Filesystem/FileIO.h"
 #include <globaldefs.h>
 
-void Zone3D_FormatElementFilePath(int id, char* ext, char* outBuf);
+extern "C" void Zone3D_FormatElementFilePath(int id, char* ext, char* outBuf);
 void* GetFileFromNARCInMemory(const char* path);
-void TerrainMesh_Clear(void* p);
+extern "C" void TerrainMesh_Clear(void* p);
 struct RenderParams0204bf44;
 struct RenderSource0204bf44;
-void TerrainMesh_Init(RenderParams0204bf44*, void*, RenderSource0204bf44*, unsigned int);
+extern "C" void TerrainMesh_Init(RenderParams0204bf44*, void*, RenderSource0204bf44*, unsigned int);
 
 extern char data_020ef1ee;  // "col2"
 

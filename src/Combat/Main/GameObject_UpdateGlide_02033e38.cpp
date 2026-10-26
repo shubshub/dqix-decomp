@@ -13,7 +13,7 @@ struct GlidingObject {
 };
 
 // Main, originally AdjustPositionTowardTarget02033e38 (USA 0x02033e38, EUR 0x02033e48, JPN 0x02033970)
-ARM void GameObject_UpdateGlide(void* obj) {
+extern "C" ARM void GameObject_UpdateGlide(void* obj) {
     GlidingObject* self = (GlidingObject*)obj;
     short* glideSpeed = &self->glideSpeed;
     short speed = *glideSpeed;

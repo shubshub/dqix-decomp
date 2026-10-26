@@ -4,33 +4,33 @@
 
 extern "C" float func_ov017_021d6110(void*);
 extern "C" int func_ov017_021d60f4(void*);
-extern "C" void func_ov001_02158f64(void* arg0, Struct_ov001_02158efc arg1, Struct_ov001_02158efc arg2, int arg3, int arg4, int arg5);
-extern "C" void func_ov001_02159168(void* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void func_ov001_02158f64(void* node, EventVec3 v1, EventVec3 v2, int d, int one, int arg5);
+extern "C" void func_ov001_02159168(void* node, int a, int b, int c, int d, int e, int f);
 
-struct Struct_ov001_02165880_34 { char unknown_0_[0x24]; void* unknown_24_; };
+struct Struct_ov001_02165880_34 { char pad[0x24]; void* field24; };
 extern Struct_ov001_02165880_34 data_ov001_02165880;
 
 // USA: func_ov001_0215dd58
-extern "C" ARM int func_ov001_0215dd58(void* arg0, int arg1) {
-    Struct_ov001_02158efc var0;
-    memset(&var0, 0, 0xc);
-    Struct_ov001_02158efc var1;
-    memset(&var1, 0, 0xc);
-    Struct_ov001_02158efc var2;
-    memset(&var2, 0, 0xc);
-    var1.unknown_0_ = (int)(4096.0f * func_ov017_021d6110(arg0));
-    var1.unknown_4_ = (int)(4096.0f * func_ov017_021d6110((char*)arg0 + 0x8));
-    var1.unknown_8_ = (int)(4096.0f * func_ov017_021d6110((char*)arg0 + 0x10));
-    int var3 = (int)(4096.0f * func_ov017_021d6110((char*)arg0 + 0x18));
-    int var4 = (int)(4096.0f * func_ov017_021d6110((char*)arg0 + 0x20));
-    int var5 = (int)(4096.0f * func_ov017_021d6110((char*)arg0 + 0x28));
-    int var6;
-    int var7 = func_ov017_021d60f4((char*)arg0 + 0x30);
-    var6 = -1;
-    if (arg1 >= 8) {
-        var6 = func_ov017_021d60f4((char*)arg0 + 0x38);
+extern "C" ARM int func_ov001_0215dd58(void* self, int mode) {
+    EventVec3 v1;
+    memset(&v1, 0, 0xc);
+    EventVec3 v2;
+    memset(&v2, 0, 0xc);
+    EventVec3 v3;
+    memset(&v3, 0, 0xc);
+    v2.a = (int)(4096.0f * func_ov017_021d6110(self));
+    v2.b = (int)(4096.0f * func_ov017_021d6110((char*)self + 0x8));
+    v2.c = (int)(4096.0f * func_ov017_021d6110((char*)self + 0x10));
+    int a = (int)(4096.0f * func_ov017_021d6110((char*)self + 0x18));
+    int b = (int)(4096.0f * func_ov017_021d6110((char*)self + 0x20));
+    int c = (int)(4096.0f * func_ov017_021d6110((char*)self + 0x28));
+    int e;
+    int d = func_ov017_021d60f4((char*)self + 0x30);
+    e = -1;
+    if (mode >= 8) {
+        e = func_ov017_021d60f4((char*)self + 0x38);
     }
-    func_ov001_02158f64(data_ov001_02165880.unknown_24_, var0, var1, var7, 1, 0);
-    func_ov001_02159168(data_ov001_02165880.unknown_24_, var3, var4, var5, var7, var6, 0);
+    func_ov001_02158f64(data_ov001_02165880.field24, v1, v2, d, 1, 0);
+    func_ov001_02159168(data_ov001_02165880.field24, a, b, c, d, e, 0);
     return 1;
 }

@@ -2,18 +2,18 @@
 
 // KEEP-NAME: the ROM symbol is the C library name, not a func_ tag.
 // USA: func_02004184
-extern "C" ARM int strncmp(const char* arg0, const char* arg1, unsigned int arg2) {
-    if (arg2 != 0) {
+extern "C" ARM int strncmp(const char* s1, const char* s2, unsigned int n) {
+    if (n != 0) {
         do {
-            unsigned char var0 = (unsigned char)*arg1++;
-            unsigned char var1 = (unsigned char)*arg0++;
-            if (var1 != var0) {
-                return (int)var1 - (int)var0;
+            unsigned char c2 = (unsigned char)*s2++;
+            unsigned char c1 = (unsigned char)*s1++;
+            if (c1 != c2) {
+                return (int)c1 - (int)c2;
             }
-            if (var1 == 0) {
+            if (c1 == 0) {
                 break;
             }
-        } while (--arg2);
+        } while (--n);
     }
     return 0;
 }

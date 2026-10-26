@@ -7,36 +7,35 @@
 #if defined(jpn)
 #define data_020ef1d6 data_020ef112
 #endif
-extern char data_020ef1d6[];
+extern char data_020ef1d6[];  // "%s.bats": the BATS file named after substruct_c_.buffer1
 
-// KEEP-NAME
-// USA: func_02014c04
-ARM int Zone3D::func_02014c04() {
+// Main, originally Zone3D::UnpackATS_AMBL_02014c04 (USA 0x02014c04, EUR 0x02014c14, JPN 0x020149d0)
+ARM int Zone3D::UnpackATS_AMBL() {
     if (atsAMBLLoadHandle_ < 0) return 1;
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    if (!var0->GetTaskStatus(atsAMBLLoadHandle_)) return 0;
-    if (var0->GetDetailedTaskStatus(atsAMBLLoadHandle_) != 2) {
-        var0->RemoveTask(atsAMBLLoadHandle_);
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (!loader->GetTaskStatus(atsAMBLLoadHandle_)) return 0;
+    if (loader->GetDetailedTaskStatus(atsAMBLLoadHandle_) != BackgroundLoader::TaskStatus_Complete) {
+        loader->RemoveTask(atsAMBLLoadHandle_);
         atsAMBLLoadHandle_ = -1;
-        func_020145a8();
+        QueueLoadMapAMDJ();
         return 1;
     }
-    void* var1;
-    unsigned int var2;
-    const void* var3;
-    unsigned int var4;
-    char var5[0x28];
-    var0->GetLoadedFileByID(atsAMBLLoadHandle_, &var1, &var2);
-    sprintf(var5, data_020ef1d6, substruct_c_.unknown_0_);
-    if (!GetFileInNarc(var1, var5, &var3, &var4, 0)) {
-        var0->RemoveTask(atsAMBLLoadHandle_);
+    void* archive;
+    unsigned int archiveSize;
+    const void* script;
+    unsigned int scriptSize;
+    char filename[0x28];
+    loader->GetLoadedFileByID(atsAMBLLoadHandle_, &archive, &archiveSize);
+    sprintf(filename, data_020ef1d6, substruct_c_.buffer1);
+    if (!GetFileInNarc(archive, filename, &script, &scriptSize, 0)) {
+        loader->RemoveTask(atsAMBLLoadHandle_);
         atsAMBLLoadHandle_ = -1;
-        func_020145a8();
+        QueueLoadMapAMDJ();
         return 1;
     }
-    func_02014414(var3, var4);
-    var0->RemoveTask(atsAMBLLoadHandle_);
+    ProcessBATSFile(script, scriptSize);
+    loader->RemoveTask(atsAMBLLoadHandle_);
     atsAMBLLoadHandle_ = -1;
-    func_020145a8();
+    QueueLoadMapAMDJ();
     return 1;
 }

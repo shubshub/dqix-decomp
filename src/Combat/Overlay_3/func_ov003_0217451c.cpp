@@ -7,11 +7,11 @@
 #endif
 
 struct Struct_0207fdcc_2;
-extern "C" void func_02081ea4(struct Struct_0207fdcc_2* arg0, int arg1, int arg2);
+extern "C" void func_02081ea4(struct Struct_0207fdcc_2* obj, int key, int enable);
 
-extern "C" ARM void func_ov003_0217451c(char* arg0) {
-    short var0 = *(short*)(arg0 + 0xf00 + R(0x78, 0xfc));
-    if (var0 < 0) return;
-    func_02081ea4(*(struct Struct_0207fdcc_2**)(arg0 + R(0x818, 0x89c)), var0, 1);
-    *(short*)(arg0 + 0xf00 + R(0x78, 0xfc)) = -1;
+extern "C" ARM void func_ov003_0217451c(char* obj) {
+    short val = *(short*)(obj + 0xf00 + R(0x78, 0xfc));
+    if (val < 0) return;
+    func_02081ea4(*(struct Struct_0207fdcc_2**)(obj + R(0x818, 0x89c)), val, 1);
+    *(short*)(obj + 0xf00 + R(0x78, 0xfc)) = -1;
 }

@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Struct_020e1eb0_2 {
-    char unknown_0_[0x38];
+    char pad[0x38];
     unsigned char unknown_38_;
     unsigned char unknown_39_;
 };
@@ -14,24 +14,24 @@ struct Struct_020e1eb0 {
 };
 
 struct Struct_020e1e4c {
-    char unknown_0_[4];
-    struct Struct_020e1eb0_2* unknown_4_;
-    signed char unknown_8_;
+    char pad0[4];
+    struct Struct_020e1eb0_2* origin;
+    signed char count;
     char unknown_9_;
-    struct Struct_020e1eb0 unknown_a_[1];
+    struct Struct_020e1eb0 rects[1];
 };
 
 // USA: func_020e1eb0
-extern "C" ARM int func_020e1eb0(struct Struct_020e1e4c* arg0, int arg1, int arg2) {
-    int var0;
-    for (var0 = 0; var0 < arg0->unknown_8_; var0++) {
-        struct Struct_020e1eb0_2* var1 = arg0->unknown_4_;
-        int var2 = var1->unknown_38_ + arg0->unknown_a_[var0].unknown_0_;
-        int var3 = var1->unknown_39_ + arg0->unknown_a_[var0].unknown_2_;
-        int var4 = var1->unknown_38_ + arg0->unknown_a_[var0].unknown_4_;
-        int var5 = var1->unknown_39_ + arg0->unknown_a_[var0].unknown_6_;
-        if (var2 <= arg1 && arg1 <= var4 && var3 <= arg2 && arg2 <= var5) {
-            return var0;
+extern "C" ARM int func_020e1eb0(struct Struct_020e1e4c* list, int x, int y) {
+    int i;
+    for (i = 0; i < list->count; i++) {
+        struct Struct_020e1eb0_2* o = list->origin;
+        int var2 = o->unknown_38_ + list->rects[i].unknown_0_;
+        int var3 = o->unknown_39_ + list->rects[i].unknown_2_;
+        int x1 = o->unknown_38_ + list->rects[i].unknown_4_;
+        int var5 = o->unknown_39_ + list->rects[i].unknown_6_;
+        if (var2 <= x && x <= x1 && var3 <= y && y <= var5) {
+            return i;
         }
     }
     return -1;

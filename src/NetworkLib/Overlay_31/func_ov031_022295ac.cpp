@@ -1,25 +1,25 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov031_0223c054(int arg0);
+extern "C" int func_ov031_0223c054(int flag);
 extern "C" int func_ov031_02222e54(void);
-extern "C" void func_ov031_0223da58(void* arg0);
+extern "C" void func_ov031_0223da58(void* p);
 extern "C" void func_ov031_022238cc(void);
 extern "C" void func_ov031_02223440(void);
-extern "C" void func_ov031_0223b710(void* arg0);
-extern "C" void func_ov031_0223cbbc(int arg0, int arg1);
-extern "C" void func_ov031_022274d0(int arg0, int arg1);
-extern "C" void func_ov031_022274c0(int arg0);
+extern "C" void func_ov031_0223b710(void* p);
+extern "C" void func_ov031_0223cbbc(int a, int b);
+extern "C" void func_ov031_022274d0(int a, int b);
+extern "C" void func_ov031_022274c0(int fn);
 extern "C" void func_ov031_02228024(void);
 extern "C" void func_ov031_02228bac(void);
 extern "C" void func_ov031_0222859c(void);
 extern "C" void func_ov031_02229e28(void);
 
 struct Struct_ov031_02290c5c_5 {
-	unsigned char unknown_0_;
-	unsigned char unknown_1_;
-	char unknown_2_[2];
-	void* unknown_4_;
-	void* unknown_8_;
+	unsigned char field0;
+	unsigned char field1;
+	char pad2[2];
+	void* field4;
+	void* field8;
 };
 extern Struct_ov031_02290c5c_5 data_ov031_02290c5c;
 
@@ -29,20 +29,20 @@ extern "C" ARM void func_ov031_022295ac(void) {
 	if (func_ov031_0223c054(0)) return;
 	if (!func_ov031_02222e54()) return;
 
-	func_ov031_0223da58(data_ov031_02290c5c.unknown_8_);
+	func_ov031_0223da58(data_ov031_02290c5c.field8);
 	func_ov031_022238cc();
 	func_ov031_02223440();
-	func_ov031_0223b710(data_ov031_02290c5c.unknown_4_);
+	func_ov031_0223b710(data_ov031_02290c5c.field4);
 	func_ov031_0223cbbc(1, 1);
 	func_ov031_0223cbbc(0, 0x14);
 
-	if (data_ov031_02290c5c.unknown_1_ == 0) {
+	if (data_ov031_02290c5c.field1 == 0) {
 		func_ov031_022274d0(0, 0);
 		func_ov031_022274c0((int)func_ov031_02228024);
 		return;
 	}
 
-	switch (data_ov031_02290c5c.unknown_0_) {
+	switch (data_ov031_02290c5c.field0) {
 	case 0:
 		func_ov031_022274d0(0, 1);
 		func_ov031_022274c0((int)func_ov031_02228bac);

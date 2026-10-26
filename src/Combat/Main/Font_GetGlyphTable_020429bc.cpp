@@ -1,34 +1,34 @@
 #include <globaldefs.h>
 #include "Resource/FontGlyphTable.h"
 
-struct FontTableGlobals {
+struct Struct_02107800_2 {
 #if defined(jpn)
     char unknown0[0x14];
-    FontGlyphTable* font6;
+    FontGlyphTable* unknown_14_;
     char unknown18[8];
-    FontGlyphTable* font8;
-    FontGlyphTable* font10;
-    FontGlyphTable* font12;
+    FontGlyphTable* unknown_20_;
+    FontGlyphTable* unknown_24_;
+    FontGlyphTable* unknown_28_;
 #else
     char unknown0[0x10];
-    FontGlyphTable* font8;
+    FontGlyphTable* unknown_10_;
 #endif
 };
 
-extern FontTableGlobals data_02107800;
+extern Struct_02107800_2 data_02107800;
 
 // Main, originally GetFontGlyphTable_020429bc (USA 0x020429bc, EUR 0x020429cc, JPN 0x02042e30)
-ARM FontGlyphTable* Font_GetGlyphTable(int pixelSize) {
+extern "C" ARM FontGlyphTable* Font_GetGlyphTable(int pixelSize) {
     FontGlyphTable* table = NULL;
 #if defined(jpn)
     switch (pixelSize) {
-    case 6: table = data_02107800.font6; break;
-    case 8: table = data_02107800.font8; break;
-    case 10: table = data_02107800.font10; break;
-    case 12: table = data_02107800.font12; break;
+    case 6: table = data_02107800.unknown_14_; break;
+    case 8: table = data_02107800.unknown_20_; break;
+    case 10: table = data_02107800.unknown_24_; break;
+    case 12: table = data_02107800.unknown_28_; break;
     }
 #else
-    if (pixelSize == 8) table = data_02107800.font8;
+    if (pixelSize == 8) table = data_02107800.unknown_10_;
 #endif
     return table;
 }

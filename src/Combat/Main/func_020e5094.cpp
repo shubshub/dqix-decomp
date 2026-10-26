@@ -1,32 +1,27 @@
 #include <globaldefs.h>
+#include "Resource/KeyTable.h"
 #include "Memory/SafeAllocator.h"
 
-struct Struct_0201099c_14 {
-    unsigned char unknown_0_[0xc];
-    short unknown_c_;
-    int unknown_10_;
-};
-extern "C" void func_020dfc6c(Struct_0201099c_14* arg0);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
+extern "C" void KeyTable_Destroy(Struct020dfc40* p);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
 struct Struct_02153694 {
-    Struct_0201099c_14 unknown_0_;
-    unsigned char unknown_14_[4];
+    Struct020dfc40 inner;
 };
 
 extern Struct_02153694 data_02153694[2];
 extern SafeAllocator data_02153680;
-extern int data_02114e20;
+extern int g_mainAllocator;
 
 // USA: func_020e5094
 extern "C" ARM void func_020e5094(void) {
-    int var0;
-    for (var0 = 0; var0 < 2; var0++) {
-        func_020dfc6c(&data_02153694[var0].unknown_0_);
+    int i;
+    for (i = 0; i < 2; i++) {
+        KeyTable_Destroy(&data_02153694[i].inner);
     }
-    void* var1 = data_02153680.GetSignedAllocator();
-    if (var1 != NULL) {
-        func_02012da4((AllocatorUnion*)&data_02114e20, var1);
+    void* p = data_02153680.GetSignedAllocator();
+    if (p != NULL) {
+        AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p);
         data_02153680.Destroy();
     }
 }

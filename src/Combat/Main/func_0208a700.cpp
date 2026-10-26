@@ -2,66 +2,66 @@
 #include "GameState/GameState.h"
 #include "Util/Random.h"
 
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" int func_0208a03c(void* arg0, int arg1, int arg2, int* arg3, int arg4);
-extern "C" int func_ov000_02154a04(int arg0, int arg1, int arg2, int arg3);
+extern "C" GameObject* func_0200fea4(GameState* battleStruct, int combatantId);
+extern "C" int func_0208a03c(void* p0, int arg1, int id, int* outPtr, int p3);
+extern "C" int func_ov000_02154a04(int field0, int id, int flag, int p3);
 
-struct Struct_0208a700 { char unknown_0_[0x18]; unsigned short unknown_18_[6]; };
-struct Struct_0208a700_2 { char unknown_0_[0x148]; Struct_0208a700* unknown_148_; };
+struct Struct_0208a700 { char pad[0x18]; unsigned short values[6]; };
+struct Struct_0208a700_2 { char pad[0x148]; Struct_0208a700* table; };
 
 enum Enum_0208a700 { Enum_0208a700_0 = 0, Enum_0208a700_1 = 1, Enum_0208a700_2 = 2, Enum_0208a700_5 = 5 };
 
 // USA: func_0208a700
-extern "C" ARM int func_0208a700(int* arg0, int arg1, int* arg2, int arg3) {
-    unsigned char var0;
-    GameState* var1;
-    GameObject* var2;
-    struct ModifiableCombatStats* var3;
+extern "C" ARM int func_0208a700(int* p0, int id, int* outPtr, int p3) {
+    unsigned char i;
+    GameState* bs;
+    GameObject* combatant;
+    struct ModifiableCombatStats* stats;
     unsigned char* var4;
-    Enum_0208a700 var5;
-    Enum_0208a700 var6;
-    Enum_0208a700 var7;
+    Enum_0208a700 none;
+    Enum_0208a700 first;
+    Enum_0208a700 last;
     Enum_0208a700 var8;
-    int var9;
-    int var10;
-    unsigned char var11;
-    unsigned char var12;
-    unsigned char var13;
-    unsigned char var14;
-    Struct_0208a700* var15;
+    int start;
+    int end;
+    unsigned char count;
+    unsigned char offset;
+    unsigned char j;
+    unsigned char slot;
+    Struct_0208a700* table;
 
-    var5 = Enum_0208a700_0;
-    var6 = Enum_0208a700_1;
-    var7 = Enum_0208a700_5;
+    none = Enum_0208a700_0;
+    first = Enum_0208a700_1;
+    last = Enum_0208a700_5;
     var8 = Enum_0208a700_2;
-    var1 = GameState::GetInstance();
-    var2 = func_0200fea4(var1, arg1);
-    var3 = var2->currentStats_;
-    var15 = ((Struct_0208a700_2*)var2)->unknown_148_;
-    var4 = (unsigned char*)((char*)var3 + 0x38);
+    bs = GameState::GetInstance();
+    combatant = func_0200fea4(bs, id);
+    stats = combatant->currentStats_;
+    table = ((Struct_0208a700_2*)combatant)->table;
+    var4 = (unsigned char*)((char*)stats + 0x38);
     *var4 = *var4 % 2u;
 
-    for (var0 = 0; var0 < 2; var0++) {
-        var9 = var5;
-        var10 = var5;
+    for (i = 0; i < 2; i++) {
+        start = none;
+        end = none;
         if (*var4 != 0) {
-            var9 = var6;
-            var10 = var7;
+            start = first;
+            end = last;
         }
-        var11 = var10 - var9 + 1;
-        var12 = NextRandomMax((struct Random*)*arg0, var11);
+        count = end - start + 1;
+        offset = NextRandomMax((struct Random*)*p0, count);
         *var4 = *var4 + 1;
         *var4 = *var4 % 2u;
-        for (var13 = 0; var13 < var11; var13++) {
-            var14 = var9 + var12;
-            if (func_0208a03c(arg0, var14, arg1, arg2, arg3) != 0) {
-                return var15->unknown_18_[var14];
+        for (j = 0; j < count; j++) {
+            slot = start + offset;
+            if (func_0208a03c(p0, slot, id, outPtr, p3) != 0) {
+                return table->values[slot];
             }
-            var12++;
-            var12 %= var11;
+            offset++;
+            offset %= count;
         }
     }
-    *arg2 = 0;
-    *arg2 = func_ov000_02154a04(*arg0, arg1, var8, arg3);
+    *outPtr = 0;
+    *outPtr = func_ov000_02154a04(*p0, id, var8, p3);
     return var8;
 }

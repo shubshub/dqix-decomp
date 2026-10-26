@@ -18,54 +18,6 @@ src/Combat/Overlay_9/CharacterCreationUI_HandleNewGameFinish_02187b34.cpp:
     complete
     .text start:0x021888f0 end:0x0218918c
 
-src/Combat/Overlay_9/CharacterCreationUI_bareBodyColors_0218a9b4.c:
-    complete
-    .rodata start:0x0218b988 end:0x0218b990
-
-src/Combat/Overlay_9/CharacterCreationUI_styleOrder_0218a9bc.c:
-    complete
-    .rodata start:0x0218b998 end:0x0218b9a4
-
-src/Combat/Overlay_9/CharacterCreationUI_faceTabCamera_0218a9c8.c:
-    complete
-    .rodata start:0x0218b9a4 end:0x0218b9bc
-
-src/Combat/Overlay_9/CharacterCreationUI_faceTabExitCamera_0218a9e0.c:
-    complete
-    .rodata start:0x0218b9bc end:0x0218b9d4
-
-src/Combat/Overlay_9/CharacterCreationUI_eyeTabCamera_0218a9f8.c:
-    complete
-    .rodata start:0x0218b9d4 end:0x0218b9ec
-
-src/Combat/Overlay_9/CharacterCreationUI_eyeTabExitCamera_0218aa10.c:
-    complete
-    .rodata start:0x0218b9ec end:0x0218ba04
-
-src/Combat/Overlay_9/CharacterCreationUI_finishCamera_0218aa28.c:
-    complete
-    .rodata start:0x0218ba04 end:0x0218ba1c
-
-src/Combat/Overlay_9/CharacterCreationUI_defaultAppearance_0218aa40.c:
-    complete
-    .rodata start:0x0218ba1c end:0x0218ba30
-
-src/Combat/Overlay_9/CharacterCreationUI_finishModelFiles_0218aa98.c:
-    complete
-    .rodata start:0x0218ba4c end:0x0218ba7c
-
-src/Combat/Overlay_9/CharacterCreationUI_equipmentFromAppearance_0218aac8.c:
-    complete
-    .rodata start:0x0218ba7c end:0x0218bab0
-
-src/Combat/Overlay_9/CharacterCreationUI_itemIds_0218ab48.c:
-    complete
-    .rodata start:0x0218bab0 end:0x0218bb04
-
-src/Combat/Overlay_9/CharacterCreationUI_tabHandlers_0218ab9c.c:
-    complete
-    .rodata start:0x0218bb04 end:0x0218bb6c
-
 src/Combat/Overlay_9/CharacterCreationUI_LoadSlotLayout_02188d9c.cpp:
     .text start:0x02189c60 end:0x02189d30
     .rodata start:0x0218bb6c end:0x0218bc00
@@ -215,50 +167,51 @@ src/Combat/Overlay_9/CharacterCreationUI_ApplyTabGraphics_02184e58.cpp:
     complete
     .text start:0x02186158 end:0x021867bc
 
-src/Combat/Overlay_9/data_ov009_0218a9b4.c:
+src/Combat/Overlay_9/CharacterCreationUI_bareBodyColors_0218a9b4.c:
     complete
     .rodata start:0x0218b988 end:0x0218b990
 
-src/Combat/Overlay_9/data_ov009_0218a9bc.c:
+src/Combat/Overlay_9/CharacterCreationUI_styleOrder_0218a9bc.c:
     complete
     .rodata start:0x0218b998 end:0x0218b9a4
 
-src/Combat/Overlay_9/data_ov009_0218aa40.c:
+src/Combat/Overlay_9/CharacterCreationUI_defaultAppearance_0218aa40.c:
     complete
     .rodata start:0x0218ba1c end:0x0218ba30
 
-src/Combat/Overlay_9/data_ov009_0218aac8.c:
+src/Combat/Overlay_9/CharacterCreationUI_equipmentFromAppearance_0218aac8.c:
     complete
     .rodata start:0x0218ba7c end:0x0218bab0
 
-src/Combat/Overlay_9/data_ov009_0218aa98.c:
+src/Combat/Overlay_9/CharacterCreationUI_finishModelFiles_0218aa98.c:
     complete
     .rodata start:0x0218ba4c end:0x0218ba7c
 
-src/Combat/Overlay_9/data_ov009_0218ab48.c:
+src/Combat/Overlay_9/CharacterCreationUI_itemIds_0218ab48.c:
     complete
     .rodata start:0x0218bab0 end:0x0218bb04
 
-src/Combat/Overlay_9/data_ov009_0218ab9c.c:
+src/Combat/Overlay_9/CharacterCreationUI_tabHandlers_0218ab9c.c:
     complete
     .rodata start:0x0218bb04 end:0x0218bb6c
 
-src/Combat/Overlay_9/data_ov009_0218a9c8.c:
+src/Combat/Overlay_9/CharacterCreationUI_faceTabCamera_0218a9c8.c:
     complete
     .rodata start:0x0218b9a4 end:0x0218b9bc
 
-src/Combat/Overlay_9/data_ov009_0218a9e0.c:
+src/Combat/Overlay_9/CharacterCreationUI_faceTabExitCamera_0218a9e0.c:
     complete
     .rodata start:0x0218b9bc end:0x0218b9d4
 
-src/Combat/Overlay_9/data_ov009_0218a9f8.c:
+src/Combat/Overlay_9/CharacterCreationUI_eyeTabCamera_0218a9f8.c:
     complete
     .rodata start:0x0218b9d4 end:0x0218b9ec
 
-src/Combat/Overlay_9/data_ov009_0218aa10.c:
+src/Combat/Overlay_9/CharacterCreationUI_eyeTabExitCamera_0218aa10.c:
     complete
     .rodata start:0x0218b9ec end:0x0218ba04
 
-src/Combat/Overlay_9/data_ov009_0218aa28.c:
+src/Combat/Overlay_9/CharacterCreationUI_finishCamera_0218aa28.c:
     complete
     .rodata start:0x0218ba04 end:0x0218ba1c
+

@@ -10,30 +10,30 @@
 
 #include "GameState/GameState.h"
 
-struct Struct_ov000_02182d88 { short unknown_0_; short unknown_2_; };
+struct Struct_ov000_02182d88 { short key; short pad; };
 extern struct Struct_ov000_02182d88 data_ov000_02182d88[];
 
-struct Struct_ov000_02182d8a { short unknown_0_; short unknown_2_; };
+struct Struct_ov000_02182d8a { short value; short pad; };
 extern struct Struct_ov000_02182d8a data_ov000_02182d8a[];
 
 // USA: func_ov000_02159d24
-extern "C" ARM int func_ov000_02159d24(int arg0, int arg1) {
-    GameObject* var0 = func_0200ff1c(GameState::GetInstance(), arg1);
-    if (var0 == 0) {
+extern "C" ARM int func_ov000_02159d24(int unused, int combatantId) {
+    GameObject* combatant = func_0200ff1c(GameState::GetInstance(), combatantId);
+    if (combatant == 0) {
         return 0;
     }
-    int var1 = 0;
+    int i = 0;
     goto test;
     do {
-        short var2 = data_ov000_02182d88[var1].unknown_0_;
-        int var3 = *(int*)((char*)var0 + REGION_OFFSET_0);
-        int var4 = *(int*)((char*)var3 + REGION_OFFSET_1);
-        if (var2 == var4) {
-            return data_ov000_02182d8a[var1].unknown_0_;
+        short key = data_ov000_02182d88[i].key;
+        int base = *(int*)((char*)combatant + REGION_OFFSET_0);
+        int field950 = *(int*)((char*)base + REGION_OFFSET_1);
+        if (key == field950) {
+            return data_ov000_02182d8a[i].value;
         }
-        var1++;
+        i++;
 test:
         ;
-    } while (data_ov000_02182d88[var1].unknown_0_ != -1);
+    } while (data_ov000_02182d88[i].key != -1);
     return 0;
 }

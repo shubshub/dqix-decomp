@@ -3,29 +3,29 @@
 #include "NitroSDK/Cache.h"
 
 extern "C" int func_020d4204(void);
-extern "C" void func_020d404c(int arg0, int arg1);
+extern "C" void func_020d404c(int index, int value);
 extern "C" int func_020d40bc(int, int, int, int, int);
 
 
 // USA: func_020d6950
-extern "C" ARM int func_020d6950(int arg0, int arg1, int arg2, int arg3) {
-    int var0 = func_020d4204();
-    if (var0 != 0) {
-        return var0;
+extern "C" ARM int func_020d6950(int a0, int a1, int a2, int a3) {
+    int r = func_020d4204();
+    if (r != 0) {
+        return r;
     }
-    if ((unsigned int)arg1 > 3) {
+    if ((unsigned int)a1 > 3) {
         return 6;
     }
-    if (arg1 != 0) {
-        if (arg3 == 0) {
+    if (a1 != 0) {
+        if (a3 == 0) {
             return 6;
         }
-        CleanCacheRange((const void*)arg3, 0x50);
+        CleanCacheRange((const void*)a3, 0x50);
     }
-    func_020d404c(0x27, arg0);
-    var0 = func_020d40bc(0x27, 3, arg1, arg3, arg2);
-    if (var0 == 0) {
-        var0 = 2;
+    func_020d404c(0x27, a0);
+    r = func_020d40bc(0x27, 3, a1, a3, a2);
+    if (r == 0) {
+        r = 2;
     }
-    return var0;
+    return r;
 }

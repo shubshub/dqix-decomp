@@ -17,17 +17,17 @@ struct Vec3copy0202ec84;
 struct Vec3Target0203a46c;
 struct StructAt020473c8;
 struct StructDE234_020de234 {
-    int fields[4]; unsigned int low:10, mid:10, kind:8, unused:4;
+    int fields[4]; unsigned int low:10, unknown_11_2_:10, kind:8, unused:4;
 };
-struct Struct_02015ef4_5 { unsigned int unknown_0_[28]; };
-struct Struct_ov017_021ae85c_4 { char unknown_0_[0x230]; Struct_02015ef4_5 unknown_230_; };
-struct Struct_ov017_021ae85c_5 {
+struct State0207dfc8 { unsigned int words[28]; };
+struct ResourceState021ae85c { char pad0[0x230]; State0207dfc8 spriteTables; };
+struct Zone021ae85c {
 #if defined(jpn)
-    char unknown_0_[0x620];
+    char pad0[0x620];
 #else
-    char unknown1_0_[0x600];
+    char pad0[0x600];
 #endif
-    Struct_02012fa4 unknown_600_[6];
+    Foo02048004 sprites[6];
 #if defined(jpn)
     char unknown_950_[0x2794 - 0x950];
 #else
@@ -35,49 +35,49 @@ struct Struct_ov017_021ae85c_5 {
 #endif
     ItemTable container;
 };
-struct Struct_ov017_021ae85c {
+struct Controller021ae85c {
 #if defined(jpn)
-    char unknown_0_[0x228];
+    char pad0[0x228];
 #else
-    char unknown1_0_[0x2d8];
+    char pad0[0x2d8];
 #endif
     int unknown_2d8_; char unknown_2dc_[0xa]; unsigned char unknown_2e6_;
 };
-struct Struct_ov017_021ae85c_2 {
-    unsigned char unknown_0_, unknown_1_; char unknown_2_[6]; unsigned char unknown_8_, unknown_9_;
-    unsigned short unknown_a_; short unknown_c_; char unknown_e_[2]; int unknown_10_;
-    Vector3fix unknown_14_; int unknown_20_, unknown_24_; Struct_02012fa4* unknown_28_; SafeAllocator unknown_2c_;
+struct Event021ae85c {
+    unsigned char pad0, done; char pad2[6]; unsigned char stage, mode;
+    unsigned short timer; short key; char unknown_e_[2]; int task;
+    Vector3fix position; int angle, fade; Foo02048004* sprite; SafeAllocator allocator;
 };
-struct TextContext021ae85c {
+struct Struct_ov017_021ae85c_3 {
     SafeAllocator allocator; char list[0x18]; ItemTable* container;
-    int field30, field34;
+    int unknown_30_, field34;
 };
 extern "C" Zone021ae85c* Zone3D_GetInstance();
 extern "C" void* LinkSession_GetInstance();
 extern "C" int LinkSession_IsGuest(void*);
 extern "C" void func_ov017_021aeea8(Event021ae85c*);
-void GameObject_ForceMotionState(Bytes02033b88*, int);
-void GameObject_DisableControl(Obj020397cc*, int);
-void GameObject_SetMotionState(Obj02033b68*, int);
-void SePlayer_Play(SePlayer*, int, int);
-StructDE234_020de234* ItemTable_Find(ItemTable*, int);
-int GameState_GetProtagonistIndex(GameState*);
-unsigned short ItemRecord_GetFileNumber(StructDE234_020de234*, int);
-void GameObject_EnableControl(void*);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
-void VramState_CopyCurrentTo(State0207dfc8*, State0207dfc8*);
-void VramState_Restore(char*);
-void SprSprite_LoadFile(void*, int, int, int);
-void VramState_Save(char*);
-Controller021ae85c* MessageSystem_GetInstance();
+extern "C" void GameObject_ForceMotionState(Bytes02033b88*, int);
+extern "C" void GameObject_DisableControl(Obj020397cc*, int);
+extern "C" void GameObject_SetMotionState(Obj02033b68*, int);
+extern "C" void SePlayer_Play(SePlayer*, int, int);
+extern "C" StructDE234_020de234* ItemTable_Find(ItemTable*, int);
+extern "C" int GameState_GetProtagonistIndex(GameState*);
+extern "C" unsigned short ItemRecord_GetFileNumber(StructDE234_020de234*, int);
+extern "C" void GameObject_EnableControl(void*);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
+extern "C" void VramState_CopyCurrentTo(State0207dfc8*, State0207dfc8*);
+extern "C" void VramState_Restore(char*);
+extern "C" void SprSprite_LoadFile(void*, int, int, int);
+extern "C" void VramState_Save(char*);
+extern "C" Controller021ae85c* MessageSystem_GetInstance();
 extern "C" void __clear(void*, int);
-void* ItemTable_Construct(void*);
-void InitStruct0207cbe8(char*);
+extern "C" void* ItemTable_Construct(void*);
+extern "C" void func_0207cbe8(char*);
 extern "C" int func_0207d538(void*, int, int, char*, int);
-void* TextQueue_GetInstance();
-void Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
-void SprSprite_SetPosition(Vec3Target0203a46c*, int, int, int);
-void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
+extern "C" void* TextQueue_GetInstance();
+extern "C" void Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
+extern "C" void SprSprite_SetPosition(Vec3Target0203a46c*, int, int, int);
+extern "C" void func_020473c8(StructAt020473c8*, int);
 extern SePlayer g_sePlayer;
 #if defined(jpn)
 #define data_ov017_021d79a8 data_ov017_021d80dc
@@ -96,12 +96,12 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
     void* search = LinkSession_GetInstance();
     GameResources* resources = GetGameResources();
     if (LinkSession_IsGuest(search)) {
-        if (resources->unknown_flag_42e2) {
+        if (resources->unknown_42e2_) {
             func_ov017_021aeea8(self); self->done = 1; return;
         }
-        if (arg0->unknown_9_ != 1) {
-            if (arg0->unknown_9_ == 0) return;
-            if (arg0->unknown_9_ == 2) { arg0->unknown_1_ = 1; return; }
+        if (self->mode != 1) {
+            if (self->mode == 0) return;
+            if (self->mode == 2) { self->done = 1; return; }
         }
     }
     if (self->stage == 0) {
@@ -156,18 +156,18 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
         }
         loader->RemoveTask(self->task);
         FontBankLoader* global = FontBankLoader_GetInstance();
-        BlankFunction02094b3c(global, 10);
-        BlankFunction02094b30(global, 0x1f9, 0);
+        func_02094b3c(global, 10);
+        func_02094b30(global, 0x1f9, 0);
         self->stage = 4;
     } else if (self->stage == 4) {
-        if (!AlwaysTrue02094b4c(FontBankLoader_GetInstance())) return;
+        if (!func_02094b4c(FontBankLoader_GetInstance())) return;
         MessageSystem_GetInstance();
         char text[0x80] = {};
         Zone021ae85c* zone = Zone3D_GetInstance();
-        TextContext021ae85c context;
+        Struct_ov017_021ae85c_3 context;
         context.allocator.ResetAllocatorPointer();
         ItemTable_Construct(context.list);
-        InitStruct0207cbe8((char*)&context); InitStruct0207cbe8((char*)&context);
+        func_0207cbe8((char*)&context); func_0207cbe8((char*)&context);
         context.container = &zone->container;
         if (func_0207d538(&context, 2, (unsigned short)self->key, text, 1))
 #if defined(jpn)
@@ -189,7 +189,7 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
             Camera_WorldToScreen(camera, (Vec3copy0202ec84*)&position, &x, &y);
         }
         SprSprite_SetPosition((Vec3Target0203a46c*)self->sprite, (x - 12) << 12, (y - 40) << 12, 0);
-        RenderFlaggedIndexedEntry((StructAt020473c8*)self->sprite, 1);
+        func_020473c8((StructAt020473c8*)self->sprite, 1);
         if (!self->timer) { self->stage = 6; self->timer = 7; }
     } else if (self->stage == 6) {
         self->timer--;
@@ -203,7 +203,7 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
                 Camera_WorldToScreen(camera, (Vec3copy0202ec84*)&position, &x, &y);
             }
             SprSprite_SetPosition((Vec3Target0203a46c*)self->sprite, (x - 12) << 12, (y - 40) << 12, 0);
-            RenderFlaggedIndexedEntry((StructAt020473c8*)self->sprite, 1);
+            func_020473c8((StructAt020473c8*)self->sprite, 1);
             self->fade -= tick;
             self->sprite->alpha = self->fade > 31 ? 31 : self->fade;
             if (self->fade < 0) self->fade = 0;
@@ -215,7 +215,7 @@ extern "C" ARM void FieldTask_PickUpLootPoint(Event021ae85c* self) {
         }
     } else if (self->stage == 7) {
         Controller021ae85c* controller = MessageSystem_GetInstance();
-        controller->field2d8 = 0; controller->field2e6 = 1;
+        controller->unknown_2d8_ = 0; controller->unknown_2e6_ = 1;
         FontBankLoader_CancelLoads(FontBankLoader_GetInstance());
         func_ov017_021aeea8(self); self->done = 1;
     }

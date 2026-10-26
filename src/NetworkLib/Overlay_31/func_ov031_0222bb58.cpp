@@ -14,20 +14,20 @@ extern "C" int func_ov031_02236878(int);
 extern "C" void func_ov031_0222c918(int);
 
 struct Struct_ov031_0222bb58 {
-    unsigned char unknown_0_[0x38];
-    void* unknown_38_;
-    unsigned char unknown_3c_[0x14];
+    unsigned char pad0[0x38];
+    void* field0x38;
+    unsigned char pad1[0x14];
     signed char unknown_50_;
     unsigned char unknown_51_;
-    unsigned char unknown_52_[5];
+    unsigned char pad2[5];
     unsigned char unknown_57_;
-    unsigned char unknown_58_;
+    unsigned char pad3;
     unsigned char unknown_59_;
 };
 struct Struct_ov031_02290c8c_5 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[3];
-    Struct_ov031_0222bb58* unknown_4_;
+    unsigned char field0;
+    unsigned char pad[3];
+    Struct_ov031_0222bb58* inner;
 };
 extern Struct_ov031_02290c8c_5 data_ov031_02290c8c;
 extern unsigned char data_ov031_022493b8;
@@ -35,50 +35,50 @@ extern unsigned char data_ov031_02248e5c;
 
 // USA: func_ov031_0222bb58
 extern "C" ARM void func_ov031_0222bb58(void) {
-    if (data_ov031_02290c8c.unknown_4_->unknown_38_ != 0 || data_ov031_02290c8c.unknown_4_->unknown_57_ != 0) {
+    if (data_ov031_02290c8c.inner->field0x38 != 0 || data_ov031_02290c8c.inner->unknown_57_ != 0) {
         return;
     }
 
     if (func_ov031_0223d49c(&data_ov031_022493b8)) {
-        data_ov031_02290c8c.unknown_4_->unknown_50_ = -1;
-        int var0 = 0;
-        unsigned char* var1 = &data_ov031_02248e5c;
+        data_ov031_02290c8c.inner->unknown_50_ = -1;
+        int i = 0;
+        unsigned char* p = &data_ov031_02248e5c;
         do {
-            if (func_ov031_0223d49c(var1)) {
-                if (var0 < 4) {
-                    data_ov031_02290c8c.unknown_4_->unknown_50_ = (signed char)var0;
+            if (func_ov031_0223d49c(p)) {
+                if (i < 4) {
+                    data_ov031_02290c8c.inner->unknown_50_ = (signed char)i;
                     break;
                 }
                 func_ov031_02222e20(1);
-                data_ov031_02290c8c.unknown_0_ = (unsigned char)var0;
+                data_ov031_02290c8c.field0 = (unsigned char)i;
                 func_ov031_0222c8cc();
                 return;
             }
-            var0++;
-            var1 += 8;
-        } while ((unsigned int)var0 < 5);
+            i++;
+            p += 8;
+        } while ((unsigned int)i < 5);
     }
 
     if (func_ov031_0223d5ac(&data_ov031_022493b8)) {
-        unsigned char* var2 = &data_ov031_02248e5c;
-        int var3 = 0;
+        unsigned char* p = &data_ov031_02248e5c;
+        int j = 0;
         do {
-            if (func_ov031_0223d5ac(var2)) {
-                signed char var4 = data_ov031_02290c8c.unknown_4_->unknown_50_;
-                if (var4 != var3) break;
-                unsigned char var5 = data_ov031_02290c8c.unknown_4_->unknown_51_;
-                if (var3 >= var5) {
+            if (func_ov031_0223d5ac(p)) {
+                signed char v50 = data_ov031_02290c8c.inner->unknown_50_;
+                if (v50 != j) break;
+                unsigned char var5 = data_ov031_02290c8c.inner->unknown_51_;
+                if (j >= var5) {
                     func_ov031_02236878(9);
                     break;
                 }
                 func_ov031_02222e20(1);
-                data_ov031_02290c8c.unknown_0_ = (unsigned char)var3;
+                data_ov031_02290c8c.field0 = (unsigned char)j;
                 func_ov031_0222c8cc();
                 return;
             }
-            var3++;
-            var2 += 8;
-        } while (var3 < 4);
+            j++;
+            p += 8;
+        } while (j < 4);
     }
 
     if (func_ov031_0223d354(1)) {
@@ -95,7 +95,7 @@ extern "C" ARM void func_ov031_0222bb58(void) {
         return;
     }
     if (func_ov031_0223d3d4(0x200)) {
-        data_ov031_02290c8c.unknown_4_->unknown_59_ = 0;
+        data_ov031_02290c8c.inner->unknown_59_ = 0;
         return;
     }
     if (func_ov031_0223d394(0x100)) {
@@ -103,7 +103,7 @@ extern "C" ARM void func_ov031_0222bb58(void) {
         return;
     }
     if (func_ov031_0223d3d4(0x100)) {
-        data_ov031_02290c8c.unknown_4_->unknown_59_ = 0;
+        data_ov031_02290c8c.inner->unknown_59_ = 0;
         return;
     }
     if (func_ov031_0223d394(0x40)) {
@@ -111,7 +111,7 @@ extern "C" ARM void func_ov031_0222bb58(void) {
         return;
     }
     if (func_ov031_0223d3d4(0x40)) {
-        data_ov031_02290c8c.unknown_4_->unknown_59_ = 0;
+        data_ov031_02290c8c.inner->unknown_59_ = 0;
         return;
     }
     if (func_ov031_0223d394(0x80)) {
@@ -119,6 +119,6 @@ extern "C" ARM void func_ov031_0222bb58(void) {
         return;
     }
     if (func_ov031_0223d3d4(0x80)) {
-        data_ov031_02290c8c.unknown_4_->unknown_59_ = 0;
+        data_ov031_02290c8c.inner->unknown_59_ = 0;
     }
 }

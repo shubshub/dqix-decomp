@@ -6,10 +6,10 @@
 extern "C" void SearchPotTask_Release(unsigned char* obj);
 extern "C" void SearchPotTask_DrawSprite(unsigned char* obj);
 extern "C" void FontBankLoader_CancelLoads(int a);
-int FontBankLoader_GetInstance(void);
-int MessageSystem_GetInstance(void);
-int GameResources_IsSpecialItemEffectPlaying(void* obj);
-void GameObject_EnableControl(void* obj);
+extern "C" int FontBankLoader_GetInstance(void);
+extern "C" int MessageSystem_GetInstance(void);
+extern "C" int GameResources_IsSpecialItemEffectPlaying(void* obj);
+extern "C" void GameObject_EnableControl(void* obj);
 
 // A FieldTaskKind_SearchPot task (its own copy of the layout, as in the other step files).
 struct SearchPotTask021b5fc0 : FieldTask {

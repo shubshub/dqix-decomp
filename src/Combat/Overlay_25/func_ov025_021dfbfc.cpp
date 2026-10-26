@@ -3,78 +3,78 @@
 
 struct Struct_ov025_021dfbfc_4 {
 #if defined(jpn)
-    char unknown_0_[0x8b4];
+    char pad0[0x8b4];
 #else
-    char unknown1_0_[0x94c];
+    char pad0[0x94c];
 #endif
-    int unknown_94c_;
+    int status;
 };
 
-extern "C" struct Struct_ov025_021dfbfc_4* func_02053c6c(unsigned char* arg0);
-extern "C" void func_02049458(unsigned char* arg0, unsigned char arg1);
+extern "C" struct Struct_ov025_021dfbfc_4* func_02053c6c(unsigned char* obj);
+extern "C" void func_02049458(unsigned char* obj, unsigned char value);
 
 struct Struct_ov025_021dfbfc {
-    char unknown_0_[0xe];
-    short unknown_e_;
+    char pad0[0xe];
+    short value;
 };
 
 struct Struct_ov025_021dfbfc_2 {
-    char unknown_0_[0x20];
-    unsigned short unknown_20_;
+    char pad0[0x20];
+    unsigned short id;
     char unknown_22_[0xe];
-    struct Struct_ov025_021dfbfc_2* unknown_30_;
+    struct Struct_ov025_021dfbfc_2* next;
 };
 
 struct Struct_ov025_021dfbfc_3 {
-    char unknown_0_[0x10];
-    struct Struct_ov025_021dfbfc_2* unknown_10_;
-    struct Struct_ov025_021dfbfc* unknown_14_;
-    char unknown_18_[0x10];
+    char pad0[0x10];
+    struct Struct_ov025_021dfbfc_2* head;
+    struct Struct_ov025_021dfbfc* action;
+    char pad18[0x10];
 };
 
 struct Struct_ov025_021dfbfc_5 {
-    char unknown_0_[0x821c];
-    struct Struct_ov025_021dfbfc_3 unknown_821c_[77];
+    char pad0[0x821c];
+    struct Struct_ov025_021dfbfc_3 slots[77];
     int unknown_8e24_;
 };
 
 struct Struct_ov025_021dfbfc_6 {
 #if defined(jpn)
-    char unknown_0_[0x218];
+    char pad0[0x218];
 #else
-    char unknown1_0_[0x29c];
+    char pad0[0x29c];
 #endif
-    struct Struct_ov025_021dfbfc_5* unknown_29c_;
+    struct Struct_ov025_021dfbfc_5* party;
 };
 
-static inline int inline_ov025_021dfbfc(int arg0) {
-    return arg0 >= 0xc0 && arg0 <= 0xc7;
+static inline int inline_ov025_021dfbfc(int id) {
+    return id >= 0xc0 && id <= 0xc7;
 }
 
 // USA: func_ov025_021dfbfc
-extern "C" ARM void func_ov025_021dfbfc(Struct_ov025_021dfbfc_6* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    struct Struct_ov025_021dfbfc_5* var1 = arg0->unknown_29c_;
-    for (int var2 = 0; var2 < var1->unknown_8e24_; var2++) {
-        struct Struct_ov025_021dfbfc_3* var3 = &var1->unknown_821c_[var2];
-        for (struct Struct_ov025_021dfbfc_2* var4 = var3->unknown_10_; var4 != 0; var4 = var4->unknown_30_) {
-            int var5 = var4->unknown_20_;
-            int var6 = 0;
-            if (inline_ov025_021dfbfc(var5)) {
-                var6 = 1;
+extern "C" ARM void func_ov025_021dfbfc(Struct_ov025_021dfbfc_6* obj) {
+    GameState* bs = GameState::GetInstance();
+    struct Struct_ov025_021dfbfc_5* party = obj->party;
+    for (int i = 0; i < party->unknown_8e24_; i++) {
+        struct Struct_ov025_021dfbfc_3* slot = &party->slots[i];
+        for (struct Struct_ov025_021dfbfc_2* node = slot->head; node != 0; node = node->next) {
+            int id = node->id;
+            int apply = 0;
+            if (inline_ov025_021dfbfc(id)) {
+                apply = 1;
             } else {
-                GameObject* var7 = func_0200ff1c(var0, var5);
-                if (var7 != 0) {
-                    struct Struct_ov025_021dfbfc_4* var8 = func_02053c6c((unsigned char*)var7);
-                    if (var8 != 0 && (signed char)var8->unknown_94c_ != 5) {
-                        var6 = 1;
+                GameObject* c = func_0200ff1c(bs, id);
+                if (c != 0) {
+                    struct Struct_ov025_021dfbfc_4* info = func_02053c6c((unsigned char*)c);
+                    if (info != 0 && (signed char)info->status != 5) {
+                        apply = 1;
                     }
                 }
             }
-            if (var6) {
-                GameObject* var9 = var0->GetCombatantByIndex(var5);
-                if (var9 != 0 && var3->unknown_14_ != 0) {
-                    func_02049458((unsigned char*)var9, var3->unknown_14_->unknown_e_);
+            if (apply) {
+                GameObject* target = bs->GetCombatantByIndex(id);
+                if (target != 0 && slot->action != 0) {
+                    func_02049458((unsigned char*)target, slot->action->value);
                 }
             }
         }

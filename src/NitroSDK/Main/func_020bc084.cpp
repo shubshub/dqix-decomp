@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 
 struct Struct_020bc084 {
-    int unknown_0_;
+    int field0;
 };
 
-static inline bool inline_020bc084(struct Struct_020bc084* const* arg0) {
-    return *arg0 != NULL;
+static inline bool inline_020bc084(struct Struct_020bc084* const* slot) {
+    return *slot != NULL;
 }
 
 // USA: func_020bc084
-extern "C" ARM void func_020bc084(struct Struct_020bc084** arg0) {
-    if (!inline_020bc084(arg0)) {
+extern "C" ARM void func_020bc084(struct Struct_020bc084** slot) {
+    if (!inline_020bc084(slot)) {
         return;
     }
-    (*arg0)->unknown_0_ = 0;
-    *arg0 = NULL;
+    (*slot)->field0 = 0;
+    *slot = NULL;
 }

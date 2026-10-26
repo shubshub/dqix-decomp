@@ -7,48 +7,48 @@
 #if defined(jpn)
 
 struct Struct_020439b0 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
+    unsigned char state;
+    unsigned char type;
+    unsigned char subtype;
 };
 struct Struct_0204500c {
-    Struct_020439b0 unknown_0_;
-    unsigned char unknown_3_[0x21];
+    Struct_020439b0 prefix;
+    unsigned char reserved[0x21];
 };
 struct Struct_020439b0_2 {
     unsigned char unknown_0_0_ : 1;
-    unsigned char unknown_0_1_ : 1;
-    unsigned char unknown_0_2_ : 1;
+    unsigned char flag1 : 1;
+    unsigned char flag2 : 1;
     unsigned char unknown_0_3_ : 1;
-    unsigned char unknown_0_4_ : 1;
-    unsigned char unknown_0_5_ : 1;
-    unsigned char unknown_0_6_ : 2;
+    unsigned char flag4 : 1;
+    unsigned char flag5 : 1;
+    unsigned char remaining : 2;
 };
-struct Struct_0203d028;
+struct Foo0207df50;
 struct Struct_0204394c;
-struct Struct_0204500c_5;
+struct MessageSystem0219050c;
 
-struct Struct_02021b84 {
-    unsigned char unknown_0_[4];
-    void* unknown_4_;
-    unsigned char unknown_8_[4];
+struct MessageSystem {
+    unsigned char pad0[4];
+    void* frame;
+    unsigned char pad8[4];
     int unknown_40_;
     int unknown_44_;
-    void* unknown_14_;
+    void* textBuffer;
     unsigned short* unknown_4c_;
     void* unknown_1c_;
     unsigned short* unknown_20_;
     unsigned short* unknown_24_;
-    unsigned char unknown_28_[4];
+    unsigned char pad28[4];
     char* unknown_2c_;
     char* unknown_30_;
-    unsigned int unknown_34_;
+    unsigned int tokenLength;
     unsigned int unknown_6c_;
     unsigned char unknown_3c_[4];
     int unknown1_40_;
     unsigned int unknown_78_;
     unsigned char unknown_48_[4];
-    unsigned char* unknown_8c_;
+    unsigned char* child;
     unsigned char unknown_50_[0x21c - 0x50];
     unsigned char unknown_2cc_[4];
     unsigned char unknown_220_[0x7e2 - 0x220];
@@ -60,16 +60,16 @@ struct Struct_02021b84 {
     unsigned char unknown_85c_[4];
     int unknown_860_;
     int unknown_994_;
-    int unknown_998_;
-    int unknown_99c_;
-    int unknown_9a0_;
+    int active;
+    int state;
+    int mode;
     int unknown_9a4_;
     unsigned char unknown_878_[8];
     int unknown_880_;
     int unknown_9b4_;
-    Struct_0204166c unknown_9b8_[0x80];
+    Struct_0204166c glyphs[0x80];
     unsigned char unknown_17b8_[0x80];
-    int unknown_1838_;
+    int selectedEntry;
     int unknown_183c_;
     int unknown_1710_;
     int unknown_1844_;
@@ -87,7 +87,7 @@ struct Struct_02021b84 {
     unsigned short unknown_1772_;
     short unknown_1774_;
     unsigned char unknown_1776_[2];
-    signed char unknown_1778_[4];
+    signed char levels[4];
     signed char unknown_177c_[4];
     unsigned char unknown_1952_[4];
     unsigned char unknown_1784_;
@@ -102,7 +102,7 @@ struct Struct_02021b84 {
     unsigned char unknown_1960_;
     unsigned char unknown_1961_;
     unsigned char unknown_1790_[4];
-    Struct_0204500c unknown_1964_[2];
+    Struct_0204500c entries[2];
     unsigned char unknown_19ac_;
     unsigned char unknown_17dd_;
     unsigned char unknown_19ae_;
@@ -123,7 +123,7 @@ struct Struct_02021b84 {
     unsigned char unknown_19be_;
     unsigned char unknown_19bf_;
     unsigned char unknown_19c0_;
-    unsigned char unknown_19c1_;
+    unsigned char b19c1;
     unsigned char unknown_17f2_;
     unsigned char unknown_17f3_;
     unsigned char unknown_19c3_;
@@ -133,16 +133,16 @@ struct Struct_02021b84 {
     unsigned char unknown_19c7_;
     unsigned char unknown_19c8_;
     unsigned char unknown_19c9_;
-    unsigned char unknown_19ca_;
+    unsigned char b19ca;
     unsigned char unknown_17fc_[1];
     unsigned char unknown_19cc_;
     unsigned char unknown_19cd_;
-    Struct_020439b0_2 unknown_17ff_;
+    Struct_020439b0_2 flags17ff;
     unsigned char unknown_1800_[0x1c4c - 0x1800];
-    Struct_0203d028* unknown_1e28_;
+    Foo0207df50* encoder;
     int func_020656e4(int arg0);
-    int func_02042a90(unsigned char* arg0, unsigned int arg1);
-    void func_020444d4(int arg0);
+    int func_02042a90(unsigned char* p, unsigned int count);
+    void func_020444d4(int ticks);
     unsigned short func_020656d0();
     void func_02045740();
     void func_020455f8();
@@ -154,49 +154,49 @@ struct Struct_02021b84 {
 #else
 
 struct Struct_0204500c_2 {
-    char* unknown_0_;
-    char* unknown_4_;
-    int unknown_8_;
+    char* first;
+    char* second;
+    int flags;
 };
 
 
 struct Struct_02042c68 {
-    unsigned char unknown_0_[0x1c];
+    unsigned char data[0x1c];
 };
 
 struct Struct_020439b0 {
-    unsigned char unknown_0_[0x24];
+    unsigned char data[0x24];
 };
 
-struct Struct_0203d028;
+struct Foo0207df50;
 struct Struct_0204394c;
 struct Struct_0204500c_3;
 struct Struct_0204500c_4;
 struct Struct_02042c68_2;
 
-struct Struct_02021b84 {
-    unsigned char unknown_0_[0x18];
-    Struct_0204500c_2* unknown_18_;
+struct MessageSystem {
+    unsigned char pad0[0x18];
+    Struct_0204500c_2* itemName;
     unsigned char unknown_1c_[0x14];
     signed char unknown_30_;
     signed char unknown_31_;
     unsigned char unknown_32_[0x6];
-    void* unknown_38_;
+    void* frame;
     unsigned char unknown_3c_[0x4];
     int unknown_40_;
     int unknown_44_;
-    void* unknown_48_;
+    void* textBuffer;
     unsigned short* unknown_4c_;
     void* unknown_50_;
     unsigned char unknown_54_[0xc];
     char* unknown_60_;
     char* unknown_64_;
-    unsigned char unknown_68_[4];
+    unsigned char pad68[4];
     unsigned int unknown_6c_;
     unsigned char unknown_70_[8];
     unsigned int unknown_78_;
     unsigned char unknown_7c_[0x10];
-    unsigned char* unknown_8c_;
+    unsigned char* child;
     unsigned char unknown_90_[0x23c];
     unsigned char unknown_2cc_[4];
     unsigned char unknown_2d0_[0x642];
@@ -209,16 +209,16 @@ struct Struct_02021b84 {
     unsigned char unknown_98c_[0x4];
     int unknown_990_;
     int unknown_994_;
-    int unknown_998_;
-    int unknown_99c_;
-    int unknown_9a0_;
+    int active;
+    int state;
+    int mode;
     int unknown_9a4_;
     unsigned char unknown_9a8_[0x8];
     int unknown_9b0_;
     int unknown_9b4_;
-    Struct_0204166c unknown_9b8_[0x80];
+    Struct_0204166c glyphs[0x80];
     unsigned char unknown_17b8_[0x80];
-    int unknown_1838_;
+    int selectedEntry;
     int unknown_183c_;
     int unknown_1840_;
     int unknown_1844_;
@@ -233,12 +233,12 @@ struct Struct_02021b84 {
     short unknown_187e_;
     unsigned char unknown_1880_[0x2];
     unsigned short unknown_1882_[0x40];
-    unsigned char unknown_1902_[0x40];
+    unsigned char slotData[0x40];
     unsigned short unknown_1942_;
     unsigned short unknown_1944_;
     unsigned short unknown_1946_;
     unsigned char unknown_1948_[0x2];
-    signed char unknown_194a_[4];
+    signed char levels[4];
     signed char unknown_194e_[4];
     unsigned char unknown_1952_[4];
     unsigned char unknown_1956_;
@@ -253,7 +253,7 @@ struct Struct_02021b84 {
     unsigned char unknown_1960_;
     unsigned char unknown_1961_;
     unsigned char unknown_1962_[2];
-    Struct_020439b0 unknown_1964_[2];
+    Struct_020439b0 entries[2];
     unsigned char unknown_19ac_;
     unsigned char unknown_19ad_;
     unsigned char unknown_19ae_;
@@ -274,7 +274,7 @@ struct Struct_02021b84 {
     unsigned char unknown_19be_;
     unsigned char unknown_19bf_;
     unsigned char unknown_19c0_;
-    unsigned char unknown_19c1_;
+    unsigned char b19c1;
     unsigned char unknown_19c2_;
     unsigned char unknown_19c3_;
     unsigned char unknown_19c4_;
@@ -283,7 +283,7 @@ struct Struct_02021b84 {
     unsigned char unknown_19c7_;
     unsigned char unknown_19c8_;
     unsigned char unknown_19c9_;
-    unsigned char unknown_19ca_;
+    unsigned char b19ca;
     unsigned char unknown_19cb_[0x1];
     unsigned char unknown_19cc_;
     unsigned char unknown_19cd_;
@@ -292,14 +292,14 @@ struct Struct_02021b84 {
     unsigned char unknown_19d0_;
     unsigned char unknown_19d1_;
     unsigned char unknown_19d2_;
-    unsigned char unknown_19d3_;
+    unsigned char b19d3;
     unsigned char unknown_19d4_[0x8];
     unsigned char unknown_19dc_;
     unsigned char unknown_19dd_[0x44b];
-    Struct_0203d028* unknown_1e28_;
+    Foo0207df50* encoder;
     int func_020656e4(int arg0);
-    int func_02042a90(unsigned char* arg0, unsigned int arg1);
-    void func_020444d4(int arg0);
+    int func_02042a90(unsigned char* p, unsigned int count);
+    void func_020444d4(int ticks);
     unsigned short func_020656d0();
     void func_02045740();
     void func_020455f8();
@@ -310,7 +310,7 @@ struct Struct_02021b84 {
 #endif
 
 #if defined(jpn)
-extern "C" void func_0204500c(Struct_02021b84* arg0, const char* arg1, int arg2);
+extern "C" void func_0204500c(MessageSystem* window, const char* text, int mode);
 #else
-extern "C" void func_0204500c(Struct_02021b84* arg0, const char* arg1, int arg2, int arg3);
+extern "C" void func_0204500c(MessageSystem* window, const char* text, int mode, int arg3);
 #endif

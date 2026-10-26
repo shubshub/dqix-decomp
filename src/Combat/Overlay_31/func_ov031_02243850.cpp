@@ -10,16 +10,16 @@
 #endif
 
 #define REG_IME (*(volatile unsigned short*)0x04000208)
-struct Struct_02018300_3;
+struct Obj020397cc;
 extern SafeAllocator data_ov031_02291e3c;
 extern char g_fileLoadBuffer;
 extern char data_ov031_0224c90c[];
 extern char data_ov031_0224c920[];
 extern "C" void* LinkSession_GetInstance();
-int LinkSession_IsActive(int*);
-void GameObject_DisableControl(Obj020397cc*, int);
-unsigned int* GlobalFlags_GetInstance();
-void FlagWord_SetBits(unsigned int*, unsigned int);
+extern "C" int LinkSession_IsActive(int*);
+extern "C" void GameObject_DisableControl(Obj020397cc*, int);
+extern "C" unsigned int* GlobalFlags_GetInstance();
+extern "C" void FlagWord_SetBits(unsigned int*, unsigned int);
 void MarkContextStackTopUnknownSubspace(ProcessorContext*, unsigned int);
 
 enum Enum_ov031_02243850 {
@@ -40,7 +40,7 @@ extern "C" ARM int func_ov031_02243850(void* state) {
     if (LinkSession_IsActive(field)) return -1;
     GameObject* object = game->GetLeader();
     if (object) GameObject_DisableControl((Obj020397cc*)object, 1);
-    AllocationLength02243850 length = ArenaLength02243850;
+    Enum_ov031_02243850 length = Enum_ov031_02243850_183616;
     SafeAllocator* external = *(SafeAllocator**)((char*)state + 0x28);
     if (!external) return -1;
     void* arena = external->Allocate(length);
@@ -48,7 +48,7 @@ extern "C" ARM int func_ov031_02243850(void* state) {
     SafeAllocator* allocator = (SafeAllocator*)state;
     allocator->CreateTypeB(arena, length, 4);
     allocator->Reset();
-    length = WorkLength02243850;
+    length = Enum_ov031_02243850_179200;
     void* buffer = allocator->Allocate(length);
     if (!buffer) return -1;
     data_ov031_02291e3c.CreateTypeB(buffer, length, 0x20);
@@ -73,5 +73,5 @@ extern "C" ARM int func_ov031_02243850(void* state) {
     (void)REG_IME;
     REG_IME = 1;
     EnableIRQInterrupts();
-    return var3;
+    return result;
 }

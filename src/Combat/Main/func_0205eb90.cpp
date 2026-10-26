@@ -1,0 +1,11 @@
+#include <globaldefs.h>
+
+extern "C" void SoundPlayer_PlayArchiveEntry(void*, int, int, int);
+
+// USA: func_0205eb90
+extern "C" ARM void func_0205eb90(void* obj, int a, int b) {
+    short s = *(short*)((char*)obj + 0xc4);
+    if (s >= 0) {
+        SoundPlayer_PlayArchiveEntry(obj, s, a, b);
+    }
+}

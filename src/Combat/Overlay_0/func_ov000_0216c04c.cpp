@@ -5,32 +5,32 @@
 extern "C" void func_ov000_02169b78(void*);
 
 struct Struct_ov000_02184264_2 {
-    unsigned char unknown_0_[8];
-    SafeAllocator* unknown_8_;
+    unsigned char pad[8];
+    SafeAllocator* alloc;
 };
 extern struct Struct_ov000_02184264_2 data_ov000_02184264;
 
-struct Struct_0201c1c8 { int unknown_0_; int unknown_4_; };
-struct Struct_0201d530 { int unknown_0_; union { int unknown_0_; float unknown1_0_; } unknown_4_; };
+struct Variant02030b0c { int tag; int u; };
+struct Struct_0201d530 { int type; union { int i; float f; } value; };
 struct Vector3i;
 
 struct Struct_ov000_0216c04c {
-    int unknown_0_;
-    int unknown_4_;
+    int tag;
+    int unused;
     int unknown_8_[3];
     int unknown_14_[3];
 };
 
 // USA: func_ov000_0216c04c
-extern "C" ARM int func_ov000_0216c04c(struct Struct_0201c1c8* arg0) {
-    struct Struct_ov000_0216c04c* var0 = (struct Struct_ov000_0216c04c*)data_ov000_02184264.unknown_8_->Allocate(sizeof(struct Struct_ov000_0216c04c));
-    var0->unknown_0_ = 0;
-    var0->unknown_4_ = 0;
-    var0->unknown_0_ = 0x59;
-    struct Struct_0201d530* var1 = (extern Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)arg0))->ToVec3fix((Vector3i*)var0->unknown_8_);
-    var0->unknown_14_[0] = (int)(4096.0f * ((Script::Parameter*)(var1 + 0))->ToFloat());
-    var0->unknown_14_[1] = (int)(4096.0f * ((Script::Parameter*)(var1 + 1))->ToFloat());
-    var0->unknown_14_[2] = (int)(4096.0f * ((Script::Parameter*)(var1 + 2))->ToFloat());
-    func_ov000_02169b78(var0);
+extern "C" ARM int func_ov000_0216c04c(struct Variant02030b0c* v) {
+    struct Struct_ov000_0216c04c* node = (struct Struct_ov000_0216c04c*)data_ov000_02184264.alloc->Allocate(sizeof(struct Struct_ov000_0216c04c));
+    node->tag = 0;
+    node->unused = 0;
+    node->tag = 0x59;
+    struct Struct_0201d530* tv = (extern Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)v))->ToVec3fix((Vector3i*)node->unknown_8_);
+    node->unknown_14_[0] = (int)(4096.0f * ((Script::Parameter*)(tv + 0))->ToFloat());
+    node->unknown_14_[1] = (int)(4096.0f * ((Script::Parameter*)(tv + 1))->ToFloat());
+    node->unknown_14_[2] = (int)(4096.0f * ((Script::Parameter*)(tv + 2))->ToFloat());
+    func_ov000_02169b78(node);
     return 1;
 }

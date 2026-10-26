@@ -3,40 +3,40 @@
 #include "Resource/GameResources.h"
 
 struct Struct_ov000_02161e30;
-struct Struct_020a36a8;
+struct Combatant020A36A8;
 struct Struct_0207da94;
-struct Struct_0207d7f4;
-struct Struct_ov000_0216377c;
+struct Entry0207d9bc;
+struct Struct0216377c;
 
-struct Struct_ov000_0217e870_2 {
-    char unknown_0_[0x8];
-    unsigned short unknown_8_;
+struct PartyState {
+    char pad0[0x8];
+    unsigned short netId;
     char unknown_a_[0x20];
-    signed char unknown_2a_;
+    signed char myIndex;
 };
 
-struct Struct_ov026_021d8ba0_4 {
-    char unknown_0_[0xb8];
+struct Container_021dae60 {
+    char pad0[0xb8];
 };
 
 struct Struct_ov000_02160da0 {
 #if defined(jpn)
-    char unknown_0_[0x218];
+    char pad0[0x218];
 #else
-    char unknown1_0_[0x29c];
+    char pad0[0x29c];
 #endif
 
-    Struct_ov000_02161e30* unknown_29c_;
-    Struct_ov000_0217e870_2* unknown_2a0_;
+    Struct_ov000_02161e30* battle;
+    PartyState* party;
     char unknown_2a4_[0xc08];
-    int unknown_eac_;
+    int state;
 #if defined(jpn)
     char unknown_e2c_[0x28f0];
 #else
     char unknown_eb0_[0x28b0];
 #endif
 
-    Struct_ov026_021d8ba0_4 unknown_3760_;
+    Container_021dae60 list;
 #if defined(jpn)
     char unknown_37d4_[0x4164];
 #else
@@ -46,18 +46,18 @@ struct Struct_ov000_02160da0 {
     unsigned char unknown_7748_;
 };
 
-char GameState_GetProtagonistIndex(GameState* gs);
-void* GetData02108ea8_0207d78c();
-int MatchesActiveIndex020a36a8(Combatant020A36A8* c);
-unsigned char AssignEntrySlot0207db58(Entry0207d9bc* arr, unsigned short key, char val);
-void Foo0216377c(Struct0216377c* obj, unsigned char val);
-void EnqueueEventTag130_021cc050(unsigned short tag);
+extern "C" char GameState_GetProtagonistIndex(GameState* gs);
+extern "C" void* func_0207d78c();
+extern "C" int func_020a36a8(Combatant020A36A8* c);
+extern "C" unsigned char func_0207db58(Entry0207d9bc* arr, unsigned short key, char val);
+extern "C" void func_ov000_0216377c(Struct0216377c* obj, unsigned char val);
+extern "C" void func_ov017_021cc050(unsigned short tag);
 
 extern "C" {
-int _Z22TestBitAt0x34_020a35e0Phh(PartyState* party, unsigned char bit);
-void _Z23ClearBitAt0x34_020a367cPhi(PartyState* party, unsigned char bit);
-void _Z22ProcessEntries0207da94P13Entry0207da94i(void* entries, unsigned char member);
-void _Z23ClearByteAtPtr_02191b40v(GameResources* res, int member);
+extern "C" int func_020a35e0(PartyState* party, unsigned char bit);
+extern "C" void func_020a367c(PartyState* party, unsigned char bit);
+extern "C" void func_0207da94(void* entries, unsigned char member);
+extern "C" void func_ov017_02191b40(GameResources* res, int member);
 int* LinkSession_GetInstance();
 int LinkSession_IsHostOrSolo(int*);
 void func_ov000_02174a50(Container_021dae60*, int);
@@ -67,36 +67,36 @@ void func_ov026_021dbf04(Struct_ov000_02160da0*);
 }
 
 // USA: func_ov026_021dbd1c
-extern "C" ARM void func_ov026_021dbd1c(BattleWork* self, int member, int notify) {
+extern "C" ARM void func_ov026_021dbd1c(Struct_ov000_02160da0* self, int member, int notify) {
     GameState* gs = GameState::GetInstance();
     PartyState* party = self->party;
     Container_021dae60* list = &self->list;
-    BattleState* battle = self->battle;
-    void* entries = GetData02108ea8_0207d78c();
+    Struct_ov000_02161e30* battle = self->battle;
+    void* entries = func_0207d78c();
     int* link = LinkSession_GetInstance();
     GameResources* res = GetGameResources();
-    int wasMember = 0;
+    int var7 = 0;
 
-    if (func_020a35e0(var1, arg1)) {
+    if (func_020a35e0(party, member)) {
         var7 = 1;
-        arg0->unknown_7748_ = 1;
+        self->unknown_7748_ = 1;
     }
-    func_ov000_02174a50(var2, arg1);
-    func_020a367c(var1, arg1);
-    func_0207da94(var4, arg1);
-    func_ov017_02191b40(var6, arg1);
+    func_ov000_02174a50(list, member);
+    func_020a367c(party, member);
+    func_0207da94(entries, member);
+    func_ov017_02191b40(res, member);
 
     if (member == party->myIndex) {
         if (LinkSession_IsHostOrSolo(link)) {
-            Foo0216377c((Struct0216377c*)self, AssignEntrySlot0207db58((Entry0207d9bc*)entries, party->netId, GameState_GetProtagonistIndex(gs)));
+            func_ov000_0216377c((Struct0216377c*)self, func_0207db58((Entry0207d9bc*)entries, party->netId, GameState_GetProtagonistIndex(gs)));
         } else {
-            func_ov017_021c9b90(var1->unknown_8_, arg1);
+            func_ov017_021c9b90(party->netId, member);
         }
     }
-    func_ov000_0215fb04(var3, arg1);
+    func_ov000_0215fb04(battle, member);
 
-    if (arg2 && arg0->unknown_eac_ != 0x11 && var7 && func_020a36a8((Struct_020a36a8*)var1)) {
-        func_ov026_021dbf04(arg0);
-        func_ov017_021cc050(var1->unknown_8_);
+    if (notify && self->state != 0x11 && var7 && func_020a36a8((Combatant020A36A8*)party)) {
+        func_ov026_021dbf04(self);
+        func_ov017_021cc050(party->netId);
     }
 }

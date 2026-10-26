@@ -1,50 +1,50 @@
 #include <globaldefs.h>
 
 struct Struct_ov023_021e3d3c_2 {
-    short unknown_0_;
-    char unknown_2_[0x16 - 0x2];
-    unsigned char unknown_16_;
-    char unknown_17_[0x18 - 0x17];
+    short key;
+    char pad[0x16 - 0x2];
+    unsigned char flags;
+    char pad2[0x18 - 0x17];
 };
 
 struct Struct_ov023_021e3d3c {
-    char unknown_0_[0x8];
-    struct Struct_ov023_021e3d3c_2* unknown_8_;
-    char unknown_c_[0x14 - 0xc];
-    unsigned short unknown_14_;
+    char pad0[0x8];
+    struct Struct_ov023_021e3d3c_2* arr;
+    char pad1[0x14 - 0xc];
+    unsigned short count;
 };
 
 // USA: func_ov023_021e3d3c
-extern "C" ARM void func_ov023_021e3d3c(struct Struct_ov023_021e3d3c* arg0, short arg1, int arg2) {
-    struct Struct_ov023_021e3d3c_2* var0;
-    unsigned short var1;
-    unsigned short var2;
-    struct Struct_ov023_021e3d3c_2* var3 = arg0->unknown_8_;
-    if (var3 == 0) {
-        var0 = 0;
+extern "C" ARM void func_ov023_021e3d3c(struct Struct_ov023_021e3d3c* obj, short key, int mask) {
+    struct Struct_ov023_021e3d3c_2* found;
+    unsigned short i;
+    unsigned short count;
+    struct Struct_ov023_021e3d3c_2* arr = obj->arr;
+    if (arr == 0) {
+        found = 0;
         goto DONE;
     }
-    var2 = arg0->unknown_14_;
-    if (var2 == 0) {
-        var0 = 0;
+    count = obj->count;
+    if (count == 0) {
+        found = 0;
         goto DONE;
     }
-    var1 = 0;
+    i = 0;
     goto CHECK;
 LOOP:
     {
-        short var4 = var3[var1].unknown_0_;
-        if (var4 == arg1) {
-            var0 = &var3[var1];
+        short var4 = arr[i].key;
+        if (var4 == key) {
+            found = &arr[i];
             goto DONE;
         }
     }
-    var1 = var1 + 1;
+    i = i + 1;
 CHECK:
-    if (var1 < var2) goto LOOP;
-    var0 = 0;
+    if (i < count) goto LOOP;
+    found = 0;
 DONE:
-    if (var0 != 0) {
-        var0->unknown_16_ = var0->unknown_16_ & ~arg2;
+    if (found != 0) {
+        found->flags = found->flags & ~mask;
     }
 }

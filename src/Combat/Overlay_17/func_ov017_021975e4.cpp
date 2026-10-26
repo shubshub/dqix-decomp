@@ -6,19 +6,19 @@
 #include "Input/Input.h"
 #include "Resource/GameResources.h"
 
-typedef Struct_020134e0::Struct_02018300 Struct_02018300;
+typedef ZoneFeatures::Opcode6aEntry PathNode_021975e4;
 
-struct Struct_0203402c;
-struct Struct_02038598_5;
+struct BitField0203402c;
+struct ListHead02046b60;
 
 extern "C" void* Zone3D_GetInstance(void);
-unsigned int* GlobalFlags_GetInstance();
-int GameObject_IsGesturing(signed char* obj);
-int GameObject_IsSinking(BitField0203402c* obj);
-int ListContainsId(ListHead02046b60* list, int id);
-void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
+extern "C" unsigned int* GlobalFlags_GetInstance();
+extern "C" int GameObject_IsGesturing(signed char* obj);
+extern "C" int GameObject_IsSinking(BitField0203402c* obj);
+extern "C" int func_02046b60(ListHead02046b60* list, int id);
+extern "C" void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
 extern "C" int func_02094b9c(PathNode_021975e4* node, Vector3i* point);
-void FlagWord_SetBits(unsigned int* field, unsigned int bits);
+extern "C" void FlagWord_SetBits(unsigned int* field, unsigned int bits);
 
 // USA: func_ov017_021975e4
 extern "C" ARM void func_ov017_021975e4(GameResources* state) {
@@ -34,10 +34,10 @@ extern "C" ARM void func_ov017_021975e4(GameResources* state) {
     if (g_keyManager.TestKeysHeld(0x402)) return;
     if (GameObject_IsGesturing((signed char*)player) || current->active) return;
     if (GameObject_IsSinking((BitField0203402c*)player)) return;
-    if (ListContainsId(list, 0xc)) return;
-    if (ListContainsId(list, 0x2d)) return;
-    if (ListContainsId(list, 0x26)) return;
-    if (ListContainsId(list, 0x35)) return;
+    if (func_02046b60(list, 0xc)) return;
+    if (func_02046b60(list, 0x2d)) return;
+    if (func_02046b60(list, 0x26)) return;
+    if (func_02046b60(list, 0x35)) return;
     int idle = ((unsigned char*)player)[0xbe] == 0 ? 1 : 0;
     if (idle == 1) return;
 
@@ -53,45 +53,45 @@ extern "C" ARM void func_ov017_021975e4(GameResources* state) {
             nodeDir.z = cosine;
             Vector3fix_Normalize(&nodeDir, &nodeDir);
 
-            short var13 = *(short*)((char*)var3 + 0xae);
+            short heading = *(short*)((char*)player + 0xae);
             Vector3i var14;
-            var12 = fix32cos(var13);
-            var14.x = fix32sin(var13);
+            cosine = fix32cos(heading);
+            var14.x = fix32sin(heading);
             var14.y = 0;
-            var14.z = var12;
+            var14.z = cosine;
             Vector3fix_Normalize(&var14, &var14);
 
-            Vector3i var15 = *(Vector3i*)(var6->unknown_4420_ + 0x18);
-            int var16 = Vector3fix_InnerProduct(&var11, &var14);
-            int var17 = Vector3fix_InnerProduct(&var11, &var15);
-            Vector3i var18;
-            Vector3fix_Subtract(&var4, &var9->unknown_8_.unknown1_0_, &var18);
+            Vector3i facing = *(Vector3i*)(res->unknown_4420_ + 0x18);
+            int alignment = Vector3fix_InnerProduct(&nodeDir, &var14);
+            int var17 = Vector3fix_InnerProduct(&nodeDir, &facing);
+            Vector3i offset;
+            Vector3fix_Subtract(&anchor, &node->unk_8.vec, &offset);
 
-            if (var9->unknown_2c_.unknown5_0_.unknown_5_ & 1) {
-                if (var16 >= 0) {
-                    var9 = var9->unknown_70_;
+            if (node->unk_2c.type9.unk_5 & 1) {
+                if (alignment >= 0) {
+                    node = node->pNext;
                     continue;
                 }
             } else {
-                if (var16 <= 0) {
-                    var9 = var9->unknown_70_;
+                if (alignment <= 0) {
+                    node = node->pNext;
                     continue;
                 }
             }
 
             int var19 = 0;
-            if ((*(short*)(arg0->unknown_42e3_ + 0xb)) <= 1) {
-                if (((unsigned char*)var3)[0xbe] == 1 && (var17 < -0xccc || var17 > 0xccc || var16 < -0xccc || var16 > 0xccc)) {
-                    (*(short*)(arg0->unknown_42e3_ + 0xb))++;
+            if ((*(short*)(state->unknown_42e3 + 0xb)) <= 1) {
+                if (((unsigned char*)player)[0xbe] == 1 && (var17 < -0xccc || var17 > 0xccc || alignment < -0xccc || alignment > 0xccc)) {
+                    (*(short*)(state->unknown_42e3 + 0xb))++;
                 } else {
-                    (*(short*)(arg0->unknown_42e3_ + 0xb)) = 0;
+                    (*(short*)(state->unknown_42e3 + 0xb)) = 0;
                 }
-            } else if ((*(short*)(arg0->unknown_42e3_ + 0xb)) > 1) {
-                (*(short*)(arg0->unknown_42e3_ + 0xb)) = 0;
+            } else if ((*(short*)(state->unknown_42e3 + 0xb)) > 1) {
+                (*(short*)(state->unknown_42e3 + 0xb)) = 0;
                 var19 = 1;
             }
             if (!var19) {
-                var9 = var9->unknown_70_;
+                node = node->pNext;
                 continue;
             }
 
@@ -138,6 +138,6 @@ extern "C" ARM void func_ov017_021975e4(GameResources* state) {
             GameObject_SetLadderClimb(player, &block);
             FlagWord_SetBits(flags, 0x400);
         }
-        var9 = var9->unknown_70_;
+        node = node->pNext;
     }
 }

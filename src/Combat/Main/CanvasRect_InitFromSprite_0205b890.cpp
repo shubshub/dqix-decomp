@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
-struct Struct_0205b1ac { int unknown_0_; short unknown_4_, unknown_6_, unknown_8_, unknown_a_; };
-struct Struct_0205b890_2 { unsigned short unknown_0_, unknown_2_, unknown_4_; };
-struct Struct_0205b890 {
-    unsigned short unknown_0_, unknown_2_;
-    Struct_0205b890_2* unknown_4_;
-    Struct_0205b890_2* unknown_8_;
+struct Rect0205b1ac { int offset; short x, y, width, height; };
+struct Struct_0205b890_2 { unsigned short y, x, attributes; };
+struct CellRecord0205b890 {
+    unsigned short count, flags;
+    Struct_0205b890_2* cells;
+    Struct_0205b890_2* copy;
 };
 
 // Main, originally func_0205b890 (USA 0x0205b890, EUR 0x0205b8a0; JPN not identified)
 extern "C" ARM void CanvasRect_InitFromSprite(Rect0205b1ac* rects, int capacity, CellRecord0205b890* record) {
     unsigned short count;
     int tile;
-    Cell0205b890* cell;
-    int baseTile;
-    int baseX;
-    int baseY;
+    Struct_0205b890_2* cell;
+    int var3;
+    int var4;
+    int var5;
     unsigned short i;
     short x;
     short y;
@@ -33,36 +33,36 @@ extern "C" ARM void CanvasRect_InitFromSprite(Rect0205b1ac* rects, int capacity,
         unsigned short size = (cell->x & 0xc000) >> 14;
         switch (shape) {
         case 0:
-            if (var12 == 0) { var9 = 8; var10 = 8; }
-            else if (var12 == 1) { var9 = 16; var10 = 16; }
-            else if (var12 == 2) { var9 = 32; var10 = 32; }
-            else if (var12 == 3) { var9 = 64; var10 = 64; }
+            if (size == 0) { width = 8; height = 8; }
+            else if (size == 1) { width = 16; height = 16; }
+            else if (size == 2) { width = 32; height = 32; }
+            else if (size == 3) { width = 64; height = 64; }
             break;
         case 1:
-            if (var12 == 0) { var9 = 16; var10 = 8; }
-            else if (var12 == 1) { var9 = 32; var10 = 8; }
-            else if (var12 == 2) { var9 = 32; var10 = 16; }
-            else if (var12 == 3) { var9 = 64; var10 = 32; }
+            if (size == 0) { width = 16; height = 8; }
+            else if (size == 1) { width = 32; height = 8; }
+            else if (size == 2) { width = 32; height = 16; }
+            else if (size == 3) { width = 64; height = 32; }
             break;
         case 2:
-            if (var12 == 0) { var9 = 8; var10 = 16; }
-            else if (var12 == 1) { var9 = 8; var10 = 32; }
-            else if (var12 == 2) { var9 = 16; var10 = 32; }
-            else if (var12 == 3) { var9 = 32; var10 = 64; }
+            if (size == 0) { width = 8; height = 16; }
+            else if (size == 1) { width = 8; height = 32; }
+            else if (size == 2) { width = 16; height = 32; }
+            else if (size == 3) { width = 32; height = 64; }
             break;
         }
-        var1 = var2->unknown_4_ & 0x3ff;
-        if (var6 == 0) {
-            var4 = var7;
-            var5 = var8;
-            var3 = var1;
+        tile = cell->attributes & 0x3ff;
+        if (i == 0) {
+            var4 = x;
+            var5 = y;
+            var3 = tile;
         }
-        arg0[var6].unknown_0_ = (var1 - var3) << 5;
-        var7 -= var4;
-        var8 -= var5;
-        arg0[var6].unknown_4_ = var7;
-        arg0[var6].unknown_6_ = var8;
-        arg0[var6].unknown_8_ = var9;
-        arg0[var6].unknown_a_ = var10;
+        rects[i].offset = (tile - var3) << 5;
+        x -= var4;
+        y -= var5;
+        rects[i].x = x;
+        rects[i].y = y;
+        rects[i].width = width;
+        rects[i].height = height;
     }
 }

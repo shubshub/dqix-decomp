@@ -2,15 +2,15 @@
 #include "World/ZoneLootableRecord.h"
 
 // USA: func_02048004
-extern "C" ARM void func_02048004(Struct_02012fa4* arg0, Struct_02012fa4* arg1)
+extern "C" ARM void func_02048004(Foo02048004* src, Foo02048004* dst)
 {
-    arg1->unknown_6_ = arg0->unknown_6_;
-    arg1->unknown_8_ = arg0->unknown_8_;
-    arg1->unknown_c_ = arg0->unknown_c_;
-    arg1->unknown_10_ = arg0->unknown_10_;
-    arg1->unknown_14_.unknown_0_ = arg0->unknown_14_.unknown_0_;
-    arg1->unknown_14_.unknown_4_ = arg0->unknown_14_.unknown_4_;
-    arg1->unknown_4_ = arg0->unknown_4_;
-    arg1->unknown_84_1_ = arg0->unknown_84_1_;
-    arg1->unknown_84_0_ = arg0->unknown_84_0_;
+    dst->unknown_6_ = src->unknown_6_;
+    dst->w8 = src->w8;
+    dst->unknown_c_ = src->unknown_c_;
+    dst->unknown_10_ = src->unknown_10_;
+    dst->nameTable.count = src->nameTable.count;
+    dst->nameTable.entries = src->nameTable.entries;
+    dst->f4 = src->f4;
+    dst->unknown_84_1_ = src->unknown_84_1_;
+    dst->bit0 = src->bit0;
 }

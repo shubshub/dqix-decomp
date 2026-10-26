@@ -4,7 +4,7 @@
 #include "GameState/PartyMember.h"
 
 extern "C" void CharacterModel_InvalidatePart(void* character, int part);
-void CharacterCreationUI_GetBodyDimensions(unsigned char* self, int bodyType, short* width, short* height);
+extern "C" void CharacterCreationUI_GetBodyDimensions(unsigned char* self, int bodyType, short* width, short* height);
 extern "C" void CharacterModel_SetScale(void* character, int width, int height);
 extern "C" int CharacterCreationUI_SlotToStyleIndex(void* self, int state, int choice);
 extern "C" void CharacterModel_ApplyColors(void* character);

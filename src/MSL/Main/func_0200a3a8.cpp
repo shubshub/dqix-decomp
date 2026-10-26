@@ -3,97 +3,97 @@
 union Struct_020026b4 {
     struct {
         char unknown1_0_;
-        char unknown_1_;
+        char unused;
         short unknown_2_;
-        unsigned char unknown_4_;
-        unsigned char unknown_5_[32];
+        unsigned char length;
+        unsigned char text[32];
     };
-    unsigned short unknown_0_[19];
+    unsigned short halfwords[19];
 };
 
-extern "C" double func_02008da4(double arg0, double arg1);
-extern "C" double func_020091d8(double arg0, int arg1);
-extern "C" double func_020095a4(double arg0, double arg1);
-extern "C" void func_020098fc(Struct_020026b4* arg0, const char* arg1, short arg2);
-extern "C" int func_02009d1c(const Struct_020026b4* arg0, const Struct_020026b4* arg1);
-extern "C" int func_02009dfc(const Struct_020026b4* arg0, const Struct_020026b4* arg1);
-extern "C" void func_02009edc(Struct_020026b4* arg0, const Struct_020026b4* arg1, const Struct_020026b4* arg2);
-extern "C" void func_0200a180(Struct_020026b4* arg0, double arg1);
-extern "C" int func_0200aa74(double arg0);
+extern "C" double func_02008da4(double x, double y);
+extern "C" double func_020091d8(double x, int n);
+extern "C" double func_020095a4(double x, double y);
+extern "C" void func_020098fc(Struct_020026b4* d, const char* str, short arg2);
+extern "C" int func_02009d1c(const Struct_020026b4* x, const Struct_020026b4* y);
+extern "C" int func_02009dfc(const Struct_020026b4* x, const Struct_020026b4* y);
+extern "C" void func_02009edc(Struct_020026b4* z, const Struct_020026b4* x, const Struct_020026b4* y);
+extern "C" void func_0200a180(Struct_020026b4* d, double x);
+extern "C" int func_0200aa74(double x);
 
 extern float data_020eecc4;
 extern double data_020eef34[];
 extern const char data_020ef048[];
 
 // USA: func_0200a3a8
-extern "C" ARM double func_0200a3a8(const Struct_020026b4* arg0) {
-    if (arg0->unknown_4_ <= 0) {
-        return func_02008da4(0.0, arg0->unknown1_0_ == 0 ? 1.0 : -1.0);
+extern "C" ARM double func_0200a3a8(const Struct_020026b4* d) {
+    if (d->length <= 0) {
+        return func_02008da4(0.0, d->unknown1_0_ == 0 ? 1.0 : -1.0);
     }
 
-    switch (arg0->unknown_5_[0]) {
+    switch (d->text[0]) {
         case '0':
-            return func_02008da4(0.0, arg0->unknown1_0_ == 0 ? 1.0 : -1.0);
+            return func_02008da4(0.0, d->unknown1_0_ == 0 ? 1.0 : -1.0);
         case 'I':
-            return func_02008da4(data_020eecc4, arg0->unknown1_0_ == 0 ? 1.0 : -1.0);
+            return func_02008da4(data_020eecc4, d->unknown1_0_ == 0 ? 1.0 : -1.0);
         case 'N': {
-            double var0;
-            unsigned long long* var1 = (unsigned long long*)&var0;
+            double result;
+            unsigned long long* var1 = (unsigned long long*)&result;
 
             *var1 = 0x7FF0000000000000ULL;
-            if (arg0->unknown1_0_) {
+            if (d->unknown1_0_) {
                 *var1 |= 0x8000000000000000ULL;
             }
             *var1 |= 0x0008000000000000ULL;
-            return var0;
+            return result;
         }
     }
 
     {
-        Struct_020026b4 var2 = *arg0;
-        unsigned char* var3 = var2.unknown_5_;
-        unsigned char* var4 = var3 + var2.unknown_4_;
+        Struct_020026b4 var2 = *d;
+        unsigned char* i = var2.text;
+        unsigned char* e = i + var2.length;
         double var5;
         int var6;
 
-        for (; var3 < var4; ++var3) {
-            *var3 -= '0';
+        for (; i < e; ++i) {
+            *i -= '0';
         }
 
-        var2.unknown_2_ += var2.unknown_4_ - 1;
+        var2.unknown_2_ += var2.length - 1;
         var6 = var2.unknown_2_;
 
         {
-            Struct_020026b4 var7;
-            func_020098fc(&var7, data_020ef048, 308);
-            if (func_02009dfc(&var7, &var2)) {
-                return func_02008da4(data_020eecc4, arg0->unknown1_0_ == 0 ? 1.0 : -1.0);
+            Struct_020026b4 max;
+            func_020098fc(&max, data_020ef048, 308);
+            if (func_02009dfc(&max, &var2)) {
+                return func_02008da4(data_020eecc4, d->unknown1_0_ == 0 ? 1.0 : -1.0);
             }
         }
 
-        var3 = var2.unknown_5_;
-        var5 = *var3++;
+        i = var2.text;
+        var5 = *i++;
 
-        while (var3 < var4) {
+        while (i < e) {
             unsigned long var8 = 0;
-            int var9;
-            double var10, var11;
-            int var12 = (var4 - var3) % 8;
+            int j;
+            double var10, temp2;
+            int var12 = (e - i) % 8;
 
             if (var12 == 0) {
                 var12 = 8;
             }
 
-            for (var9 = 0; var9 < var12; ++var9, ++var3) {
-                var8 = var8 * 10 + *var3;
+            for (j = 0; j < var12; ++j, ++i) {
+                var8 = var8 * 10 + *i;
             }
 
             var10 = var5 * data_020eef34[var12 - 1];
-            var11 = var10 + var8;
-            if (var8 != 0 && var10 == var11) {
+            temp2 = var10 + var8;
+            if (var8 != 0 && var10 == temp2) {
                 break;
             }
-            var5 = var11;
+            var5 = temp2;
             var6 -= var12;
         }
 

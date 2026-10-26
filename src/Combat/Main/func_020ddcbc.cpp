@@ -6,58 +6,58 @@ enum { Enum_020ddcbc_336 = 0x150 };
 #endif
 #include "GameState/GameState.h"
 
-struct Struct_0201099c_9 { unsigned int unknown_0_[8]; };
+struct Element020de650 { unsigned int v[8]; };
 struct Struct_020ddcbc {
-    unsigned int unknown_0_0_ : 4;
+    unsigned int kind : 4;
     unsigned int : 27;
     unsigned int unknown_3_7_ : 1;
 };
-struct Struct_0201099c_10;
-struct Struct_02061c04_22 { unsigned char unknown_0_[0x454]; short unknown_454_[8]; };
+struct ItemTable;
+struct Struct_02061c04_22 { unsigned char pad[0x454]; short slots[8]; };
 struct Struct_020a0504;
 
-extern "C" struct Struct_0201099c_9* func_020dedd0(struct Struct_0201099c_10* arg0, int arg1);
-extern "C" int func_020ddb20(unsigned int* arg0);
-extern "C" void func_0208386c(struct Struct_02061c04_22* arg0, int arg1);
-extern "C" int func_020ac4c0(void* arg0);
-extern "C" void func_020a0504(struct Struct_020a0504* arg0, unsigned int arg1);
-extern "C" int func_020ac494(void* arg0);
+extern "C" struct Element020de650* ItemTable_Find(struct ItemTable* c, int key);
+extern "C" int func_020ddb20(unsigned int* obj);
+extern "C" void func_0208386c(struct Struct_02061c04_22* s, int idx);
+extern "C" int func_020ac4c0(void* dst);
+extern "C" void func_020a0504(struct Struct_020a0504* p, unsigned int amount);
+extern "C" int func_020ac494(void* src);
 
 // USA: func_020ddcbc
-extern "C" ARM int func_020ddcbc(int arg0, int arg1, struct Struct_0201099c_10* arg2) {
-    GameObject* var0;
-    short* var1;
-    struct Struct_0201099c_9* var2;
-    int var3;
-    char var4[0xb0];
+extern "C" ARM int func_020ddcbc(int n, int idx, struct ItemTable* container) {
+    GameObject* combatant;
+    short* slotsArr;
+    struct Element020de650* elem;
+    int inRange;
+    char localBuf[0xb0];
 
-    var3 = (arg0 >= 0 && arg0 <= 3);
-    if (!var3) return 0;
-    if (arg2 == 0) return 0;
-    if (arg1 < 0 || arg1 >= 8) return 0;
+    inRange = (n >= 0 && n <= 3);
+    if (!inRange) return 0;
+    if (container == 0) return 0;
+    if (idx < 0 || idx >= 8) return 0;
 
-    var0 = func_0200ff1c(GameState::GetInstance(), arg0);
-    if (var0 == 0) return 0;
+    combatant = func_0200ff1c(GameState::GetInstance(), n);
+    if (combatant == 0) return 0;
 
-    var1 = (short*)((char*)(*(struct Struct_02061c04_22**)((char*)var0 + Enum_020ddcbc_336)) + 0x454);
-    if (var1 == 0) return 0;
+    slotsArr = (short*)((char*)(*(struct Struct_02061c04_22**)((char*)combatant + Enum_020ddcbc_336)) + 0x454);
+    if (slotsArr == 0) return 0;
 
-    var2 = func_020dedd0(arg2, var1[arg1]);
-    if (var2 == 0) return 0;
-    if (!func_020ddb20(var2->unknown_0_)) return 0;
+    elem = ItemTable_Find(container, slotsArr[idx]);
+    if (elem == 0) return 0;
+    if (!func_020ddb20(elem->v)) return 0;
 
-    switch (((struct Struct_020ddcbc*)&var2->unknown_0_[2])->unknown_0_0_) {
+    switch (((struct Struct_020ddcbc*)&elem->v[2])->kind) {
         case 8:
         case 9:
         case 0xa:
-            func_0208386c(*(struct Struct_02061c04_22**)((char*)var0 + Enum_020ddcbc_336), (signed char)arg1);
+            func_0208386c(*(struct Struct_02061c04_22**)((char*)combatant + Enum_020ddcbc_336), (signed char)idx);
             break;
     }
 
-    if (((struct Struct_020ddcbc*)&var2->unknown_0_[2])->unknown_3_7_) {
-        func_020ac4c0(var4);
-        func_020a0504((struct Struct_020a0504*)var4, 1);
-        func_020ac494(var4);
+    if (((struct Struct_020ddcbc*)&elem->v[2])->unknown_3_7_) {
+        func_020ac4c0(localBuf);
+        func_020a0504((struct Struct_020a0504*)localBuf, 1);
+        func_020ac494(localBuf);
     }
     return 1;
 }

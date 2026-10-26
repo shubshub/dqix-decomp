@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
 // USA: func_0203db34
-extern "C" ARM void func_0203db34(unsigned char* arg0, int arg1, int arg2, int arg3) {
-    *(int*)(arg0 + 0x50) = arg1;
-    *(int*)(arg0 + 0x54) = arg2;
-    *(int*)(arg0 + 0x58) = arg3;
+extern "C" ARM void func_0203db34(unsigned char* obj, int a, int b, int c) {
+    *(int*)(obj + 0x50) = a;
+    *(int*)(obj + 0x54) = b;
+    *(int*)(obj + 0x58) = c;
 }

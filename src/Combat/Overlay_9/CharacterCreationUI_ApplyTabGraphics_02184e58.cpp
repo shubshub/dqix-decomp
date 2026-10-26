@@ -99,29 +99,29 @@ struct BackgroundGraphics;
 struct PacRecord;
 struct Struct0200fb08;
 
-void Background_Init(BackgroundGraphics* layer);
-void Background_SetMapSize(unsigned char* layer, int mapSize);
+extern "C" void Background_Init(BackgroundGraphics* layer);
+extern "C" void Background_SetMapSize(unsigned char* layer, int mapSize);
 extern "C" void Background_SetPriority(BackgroundGraphics* layer, int priority);
-void Background_SetScroll(BackgroundGraphics* layer, int x, int y);
-void Background_AllocateMap(BackgroundGraphics* layer, SafeAllocator* allocator);
-void Background_AllocateScreens(BackgroundGraphics* layer, int screenCount, SafeAllocator* allocator);
-int Pac_CountFiles(PacRecord* archive);
-void* Pac_GetFile(PacRecord* archive, int index, void** record, int* size);
+extern "C" void Background_SetScroll(BackgroundGraphics* layer, int x, int y);
+extern "C" void Background_AllocateMap(BackgroundGraphics* layer, SafeAllocator* allocator);
+extern "C" void Background_AllocateScreens(BackgroundGraphics* layer, int screenCount, SafeAllocator* allocator);
+extern "C" int Pac_CountFiles(PacRecord* archive);
+extern "C" void* Pac_GetFile(PacRecord* archive, int index, void** record, int* size);
 extern "C" void Background_LoadFile(BackgroundGraphics* layer, void* file, SafeAllocator* allocator, unsigned int size);
-void Background_DrawScreen(BackgroundGraphics* layer, unsigned int screen, int sourceX, int sourceY, short destX, short destY,
+extern "C" void Background_DrawScreen(BackgroundGraphics* layer, unsigned int screen, int sourceX, int sourceY, short destX, short destY,
                            short width, short height, unsigned short palette);
-void Background_UploadMap(BackgroundGraphics* layer, void* map);
+extern "C" void Background_UploadMap(BackgroundGraphics* layer, void* map);
 extern "C" void Background_FillRect(BackgroundGraphics* layer, int tile, int x, int y, int width, int height, int palette);
 extern "C" int memcmp(const void* left, const void* right, unsigned int length);
-void Background_FlushFile(void* layer, char* file);
-void Background_UploadFile(BackgroundGraphics* layer, char* file);
-void* Background_GetScreen(BackgroundGraphics* layer, unsigned int index);
+extern "C" void Background_FlushFile(void* layer, char* file);
+extern "C" void Background_UploadFile(BackgroundGraphics* layer, char* file);
+extern "C" void* Background_GetScreen(BackgroundGraphics* layer, unsigned int index);
 extern "C" void Background_CopyScreenRect(BackgroundGraphics* unused, void* destination, void* source, int sourceX, int sourceY,
                               int destX, int destY, int width, int height, int palette);
-int GameState_GetLanguage(Struct0200fb08* state);
+extern "C" int GameState_GetLanguage(Struct0200fb08* state);
 extern "C" void CharacterCreationUI_DrawTabLayers(void* self);
-void RefreshFieldIfFlag4000_021d9d34(char* self);
-void CharacterCreationUI_RefreshNameText(char* self);
+extern "C" void func_ov023_021d9d34(char* self);
+extern "C" void CharacterCreationUI_RefreshNameText(char* self);
 
 extern const unsigned char CharacterCreationUI_paletteSkipModes[];
 extern const unsigned char CharacterCreationUI_tabBgNumbers[];
@@ -333,7 +333,7 @@ extern "C" ARM void CharacterCreationUI_ApplyTabGraphics(CharacterCreation* self
     Background_UploadMap((BackgroundGraphics*)&self->layers_[CreationLayer_Page], 0);
     Background_UploadMap((BackgroundGraphics*)&self->layers_[CreationLayer_Selection], 0);
     self->flags_ |= 0x4000;
-    RefreshFieldIfFlag4000_021d9d34((char*)self);
+    func_ov023_021d9d34((char*)self);
     self->flags_ &= ~0x4000;
     self->flags_ |= CreationFlag_RefreshName;
     CharacterCreationUI_RefreshNameText((char*)self);
@@ -562,7 +562,7 @@ extern "C" ARM void CharacterCreationUI_ApplyTabGraphics(CharacterCreation* self
     Background_UploadMap((BackgroundGraphics*)&self->layers_[CreationLayer_Page], 0);
     Background_UploadMap((BackgroundGraphics*)&self->layers_[CreationLayer_Selection], 0);
     self->flags_ |= 0x4000;
-    RefreshFieldIfFlag4000_021d9d34((char*)self);
+    func_ov023_021d9d34((char*)self);
     self->flags_ &= ~0x4000;
     self->flags_ |= CreationFlag_RefreshName;
     CharacterCreationUI_RefreshNameText((char*)self);

@@ -2,16 +2,16 @@
 #include "NitroSDK/ProcessorContext.h"
 
 extern "C" unsigned long long GetCurrentTimestamp(void);
-extern "C" void func_ov031_02200ccc(int arg0);
-extern "C" int func_ov031_02200160(int arg0);
+extern "C" void func_ov031_02200ccc(int a);
+extern "C" int func_ov031_02200160(int a);
 
 struct Struct_ov031_0224c980_11 {
-	unsigned char unknown_0_;
-	unsigned char unknown_1_;
-	char unknown_2_[0x18 - 2];
-	void (*unknown_18_)(void);
+	unsigned char field0;
+	unsigned char field1;
+	char pad18[0x18 - 2];
+	void (*field18)(void);
 	char unknown_1c_[0x48 - 0x1c];
-	int (*unknown_48_)(void);
+	int (*field48)(void);
 	char unknown_4c_[0x50 - 0x4c];
 	int unknown_50_;
 };
@@ -20,7 +20,7 @@ extern Struct_ov031_0224c980_11 data_ov031_0224c980;
 
 // USA: func_ov031_02203bcc
 extern "C" ARM int func_ov031_02203bcc(void) {
-	data_ov031_0224c980.unknown_18_();
+	data_ov031_0224c980.field18();
 	int var0 = data_ov031_0224c980.unknown_50_;
 	if (var0 == 0) {
 		return var0;
@@ -31,22 +31,22 @@ extern "C" ARM int func_ov031_02203bcc(void) {
 	unsigned int var1 = (unsigned int)(GetCurrentTimestamp() >> 16);
 	goto checkExit;
 retry:
-	if (data_ov031_0224c980.unknown_1_ != 0) {
+	if (data_ov031_0224c980.field1 != 0) {
 		return func_ov031_02200160(4);
 	}
 	SleepCurrentContext(0x64);
 checkExit:
 	{
-		int var2 = data_ov031_0224c980.unknown_48_();
-		if (var2 == 0) {
-			return var2;
+		int r = data_ov031_0224c980.field48();
+		if (r == 0) {
+			return r;
 		}
 	}
 	{
-		unsigned int var3 = (unsigned int)(GetCurrentTimestamp() >> 16) - var1;
-		if ((int)var3 < 0x17) {
+		unsigned int diff = (unsigned int)(GetCurrentTimestamp() >> 16) - var1;
+		if ((int)diff < 0x17) {
 			goto retry;
 		}
-		return var3;
+		return diff;
 	}
 }

@@ -9,16 +9,16 @@ extern short data_ov031_02248da2;
 extern short data_ov031_02248da4;
 
 // USA: func_ov031_022284ec
-extern "C" ARM void func_ov031_022284ec(int arg0) {
-    if (arg0 == 1 || arg0 == 3) {
+extern "C" ARM void func_ov031_022284ec(int type) {
+    if (type == 1 || type == 3) {
         return;
     }
     data_ov031_02290c50 ^= 1;
     func_ov031_02236878(8);
-    int var0 = data_ov031_02290c50 * 8;
-    unsigned short var1 = *(unsigned short*)((char*)&data_ov031_02248d9e + var0);
-    unsigned short var2 = *(unsigned short*)((char*)&data_ov031_02248da2 + var0);
-    unsigned short var3 = *(unsigned short*)((char*)&data_ov031_02248da0 + var0);
-    unsigned short var4 = *(unsigned short*)((char*)&data_ov031_02248da4 + var0);
-    func_ov031_022237dc(var1, var2, var3, var4);
+    int idx = data_ov031_02290c50 * 8;
+    unsigned short a = *(unsigned short*)((char*)&data_ov031_02248d9e + idx);
+    unsigned short b = *(unsigned short*)((char*)&data_ov031_02248da2 + idx);
+    unsigned short c = *(unsigned short*)((char*)&data_ov031_02248da0 + idx);
+    unsigned short d = *(unsigned short*)((char*)&data_ov031_02248da4 + idx);
+    func_ov031_022237dc(a, b, c, d);
 }

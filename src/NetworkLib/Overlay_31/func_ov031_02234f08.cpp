@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_02234f08 {
-    void* unknown_0_;
+    void* payload;
 };
 
 extern "C" Struct_ov031_02234f08* data_ov031_02290ce8;
@@ -13,6 +13,6 @@ extern "C" unsigned int func_ov031_0223cf70(void**);
 
 // USA: func_ov031_02234f08
 extern "C" ARM void func_ov031_02234f08(void) {
-    func_ov031_0223e2e0(1, data_ov031_02290ce8->unknown_0_);
+    func_ov031_0223e2e0(1, data_ov031_02290ce8->payload);
     func_ov031_0223cf70((void**)&DuplicatePool::data_ov031_02290ce8);
 }

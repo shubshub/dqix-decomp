@@ -7,11 +7,11 @@ struct Variant02030b0c {
     int type;
     union { int i; float f; } value;
 };
-void MapDisplay_SetMapKey(char* a, char* b);
+extern "C" void MapDisplay_SetMapKey(char* a, char* b);
 extern "C" void MapDisplay_AddImage(void* obj, int a, void* b, void* allocator);
 
 // Main, originally SetDecodedStringEntry0201f528 (USA 0x0201f528, EUR 0x0201f538, JPN 0x0201f2b4)
-ARM int BmmpScript_AddImage(struct Variant02030b0c* params) {
+extern "C" ARM int BmmpScript_AddImage(struct Variant02030b0c* params) {
     int id = ((Script::Parameter*)params)->ToInt();
     void* name = (void*)((Script::Parameter*)(params + 1))->ToString();
     if (name == 0) return 0;

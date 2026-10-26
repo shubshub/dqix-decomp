@@ -4,28 +4,28 @@ extern "C" int fix32_Divide(unsigned int arg0, unsigned int arg1);
 extern short data_020ed554[];
 
 // USA: func_020c3544
-extern "C" ARM int func_020c3544(int arg0, int arg1) {
-    int var0, var1, var2, var3;
+extern "C" ARM int func_020c3544(int dx, int dy) {
+    int num, var1, base, var3;
 
-    if (arg0 > 0) {
-        if (arg1 > 0) {
-            if (arg1 > arg0) {
-                var0 = arg0; var1 = arg1; var2 = 0; var3 = 1;
+    if (dx > 0) {
+        if (dy > 0) {
+            if (dy > dx) {
+                num = dx; var1 = dy; base = 0; var3 = 1;
             } else {
-                if (arg1 < arg0) {
-                    var0 = arg1; var1 = arg0; var2 = 0x4000; var3 = 0;
+                if (dy < dx) {
+                    num = dy; var1 = dx; base = 0x4000; var3 = 0;
                 } else {
                     return 0x2000;
                 }
             }
         } else {
-            if (arg1 < 0) {
-                int var4 = -arg1;
-                if (var4 < arg0) {
-                    var0 = var4; var1 = arg0; var2 = 0x4000; var3 = 1;
+            if (dy < 0) {
+                int var4 = -dy;
+                if (var4 < dx) {
+                    num = var4; var1 = dx; base = 0x4000; var3 = 1;
                 } else {
-                    if (var4 > arg0) {
-                        var0 = arg0; var1 = var4; var2 = 0x8000; var3 = 0;
+                    if (var4 > dx) {
+                        num = dx; var1 = var4; base = 0x8000; var3 = 0;
                     } else {
                         return 0x6000;
                     }
@@ -35,26 +35,26 @@ extern "C" ARM int func_020c3544(int arg0, int arg1) {
             }
         }
     } else {
-        if (arg0 < 0) {
-            int var5 = -arg0;
-            if (arg1 < 0) {
-                int var6 = -arg1;
+        if (dx < 0) {
+            int var5 = -dx;
+            if (dy < 0) {
+                int var6 = -dy;
                 if (var6 > var5) {
-                    var0 = var5; var1 = var6; var2 = -0x8000; var3 = 1;
+                    num = var5; var1 = var6; base = -0x8000; var3 = 1;
                 } else {
                     if (var6 < var5) {
-                        var0 = var6; var1 = var5; var2 = -0x4000; var3 = 0;
+                        num = var6; var1 = var5; base = -0x4000; var3 = 0;
                     } else {
                         return 0xa000;
                     }
                 }
             } else {
-                if (arg1 > 0) {
-                    if (arg1 < var5) {
-                        var0 = arg1; var1 = var5; var2 = -0x4000; var3 = 1;
+                if (dy > 0) {
+                    if (dy < var5) {
+                        num = dy; var1 = var5; base = -0x4000; var3 = 1;
                     } else {
-                        if (arg1 > var5) {
-                            var0 = var5; var1 = arg1; var2 = 0; var3 = 0;
+                        if (dy > var5) {
+                            num = var5; var1 = dy; base = 0; var3 = 0;
                         } else {
                             return 0xe000;
                         }
@@ -64,7 +64,7 @@ extern "C" ARM int func_020c3544(int arg0, int arg1) {
                 }
             }
         } else {
-            return (arg1 >= 0) ? 0 : 0x8000;
+            return (dy >= 0) ? 0 : 0x8000;
         }
     }
 
@@ -72,10 +72,10 @@ extern "C" ARM int func_020c3544(int arg0, int arg1) {
         return 0;
     }
     if (var3) {
-        int var7 = data_020ed554[fix32_Divide(var0, var1) >> 5];
-        return (unsigned short)(var2 + var7);
+        int val = data_020ed554[fix32_Divide(num, var1) >> 5];
+        return (unsigned short)(base + val);
     } else {
-        int var8 = data_020ed554[fix32_Divide(var0, var1) >> 5];
-        return (unsigned short)(var2 - var8);
+        int val = data_020ed554[fix32_Divide(num, var1) >> 5];
+        return (unsigned short)(base - val);
     }
 }

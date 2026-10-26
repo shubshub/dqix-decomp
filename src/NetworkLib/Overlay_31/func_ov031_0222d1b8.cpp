@@ -2,19 +2,19 @@
 
 extern "C" void func_ov031_02223440(void);
 
-struct Struct_ov031_0222d1b8 { unsigned int unknown_0_; };
+struct Struct_ov031_0222d1b8 { unsigned int flags; };
 extern "C" int func_ov031_0223da58(Struct_ov031_0222d1b8*);
 
-extern "C" ARM void* func_ov031_0223c7c4(int arg0);
+extern "C" ARM void* func_ov031_0223c7c4(int idx);
 
 typedef void (*Type_ov031_022234d8)(void*, int, int);
-extern "C" void func_ov031_022234d8(int arg0, Type_ov031_022234d8 arg1);
+extern "C" void func_ov031_022234d8(int a0, Type_ov031_022234d8 cb);
 extern "C" int LoadToMainObjStandardPalette(int, int, unsigned int);
 
 extern "C" void func_ov031_0223cbbc(int, int);
 
 extern "C" void func_ov031_02227520(int*, int*);
-extern "C" ARM void func_ov031_022274d0(int arg0, int arg1);
+extern "C" ARM void func_ov031_022274d0(int a, int b);
 extern "C" void func_ov031_0222750c(int, int);
 extern "C" ARM void func_ov031_022274c0(int);
 
@@ -35,11 +35,11 @@ extern "C" ARM void func_ov031_0222d1b8(void) {
     func_ov031_0223cbbc(1, 1);
     func_ov031_0223cbbc(0, 0x15);
 
-    int var0, var1;
-    func_ov031_02227520(&var0, &var1);
-    if (var1 == 0) {
+    int a, b;
+    func_ov031_02227520(&a, &b);
+    if (b == 0) {
         func_ov031_022274d0(2, 1);
-        func_ov031_0222750c(0, var0);
+        func_ov031_0222750c(0, a);
         func_ov031_022274c0((int)func_ov031_0222ea24);
     } else {
         if (*((unsigned char*)data_ov031_02290c94 + 0x2a) == 0) {

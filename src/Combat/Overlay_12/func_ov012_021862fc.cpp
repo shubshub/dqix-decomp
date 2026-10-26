@@ -4,21 +4,21 @@
 
 
 struct Struct0205a198;
-void Sprite_Init(struct Struct0205a198* p);
+extern "C" void Sprite_Init(struct Struct0205a198* p);
 
-void SpriteContext_Init(char* obj);
+extern "C" void SpriteContext_Init(char* obj);
 
 struct Struct_020534ac;
 
 struct PacRecord;
-int Pac_CountFiles(struct PacRecord* entry);
+extern "C" int Pac_CountFiles(struct PacRecord* entry);
 
-void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
+extern "C" void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 
 extern "C" void SpriteContext_LoadFile(void* a, void* ptr, int val, void* d);
 
 // USA: func_ov012_021862fc
-extern "C" ARM void func_ov012_021862fc(char* arg0) {
+extern "C" ARM void func_ov012_021862fc(char* self) {
     int var0 = (int)BackgroundLoader::GetInstance();
 
     for (int i = 0; i < 3; i++) {
@@ -27,17 +27,17 @@ extern "C" ARM void func_ov012_021862fc(char* arg0) {
 
     SpriteContext_Init(*(char**)(self + 0x1000 + 0x368));
 
-    *(unsigned char*)(*(char**)(arg0 + 0x1000 + 0x368) + 0x50) = 1;
+    *(unsigned char*)(*(char**)(self + 0x1000 + 0x368) + 0x50) = 1;
 
-    char* var2 = *(char**)(arg0 + 0x1000 + 0x368);
-    *(int*)(var2 + 0x40) = *(int*)(arg0 + 0x1000 + 0x36c);
-    *(short*)(var2 + 0x4c) = 3;
+    char* p1 = *(char**)(self + 0x1000 + 0x368);
+    *(int*)(p1 + 0x40) = *(int*)(self + 0x1000 + 0x36c);
+    *(short*)(p1 + 0x4c) = 3;
 
-    void* var3;
-    int var4;
-    int var5;
-    int var6;
-    ((BackgroundLoader*)((struct Struct_020534ac*)var0))->GetLoadedFileByID((int)(*(int*)(arg0 + 0x1000 + 0x394)), (void**)(&var4), (unsigned int*)(&var5));
+    void* recOut;
+    int out1;
+    int out2;
+    int fieldOut;
+    ((BackgroundLoader*)((struct Struct_020534ac*)var0))->GetLoadedFileByID((int)(*(int*)(self + 0x1000 + 0x394)), (void**)(&out1), (unsigned int*)(&out2));
 
     int count = Pac_CountFiles((struct PacRecord*)out1);
     ((SafeAllocator*)(self + 0x98))->Reset();
@@ -47,6 +47,6 @@ extern "C" ARM void func_ov012_021862fc(char* arg0) {
         SpriteContext_LoadFile(*(char**)(self + 0x1000 + 0x368), result, fieldOut, self + 0x98);
     }
 
-    ((BackgroundLoader*)(var0))->RemoveTask((int)(*(int*)(arg0 + 0x1000 + 0x394)));
-    *(int*)(arg0 + 0x1000 + 0x394) = -1;
+    ((BackgroundLoader*)(var0))->RemoveTask((int)(*(int*)(self + 0x1000 + 0x394)));
+    *(int*)(self + 0x1000 + 0x394) = -1;
 }

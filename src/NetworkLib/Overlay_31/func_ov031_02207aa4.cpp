@@ -4,36 +4,36 @@
 #include "NitroSDK/Timing.h"
 
 struct Struct_ov031_0224e3b8_2 {
-	char unknown_0_[0x20];
+	char pad[0x20];
 	char unknown_20_[0x30];
 	int unknown_50_;
-	int unknown_54_;
+	int field54;
 	unsigned short unknown_58_;
 	unsigned char unknown_5a_;
-	char unknown_5b_[0x5c - 0x5b];
+	char pad2[0x5c - 0x5b];
 };
 
 extern Struct_ov031_0224e3b8_2 data_ov031_0224e3b8[4];
 
 // USA: func_ov031_02207aa4
-extern "C" ARM void func_ov031_02207aa4(void* arg0, int arg1, int arg2) {
-	int var0;
+extern "C" ARM void func_ov031_02207aa4(void* obj, int a, int b) {
+	int i;
 	int var1;
-	Struct_ov031_0224e3b8_2* var2;
+	Struct_ov031_0224e3b8_2* entry;
 	var1 = DisableIRQInterrupts();
-	*(unsigned char*)((char*)arg0 + 0x30) = 0;
-	var2 = data_ov031_0224e3b8;
-	var0 = 0;
+	*(unsigned char*)((char*)obj + 0x30) = 0;
+	entry = data_ov031_0224e3b8;
+	i = 0;
 	do {
-		if (var2->unknown_5a_ != 0 && var2->unknown_54_ == arg1 && var2->unknown_58_ == arg2) {
-			VectorizedInvertedMemcpy(var2, (char*)arg0 + 0x74, 0x20);
-			VectorizedInvertedMemcpy(var2->unknown_20_, arg0, 0x30);
-			var2->unknown_50_ = (int)(GetCurrentTimestamp() >> 16);
-			*(unsigned char*)((char*)arg0 + 0x30) = 1;
+		if (entry->unknown_5a_ != 0 && entry->field54 == a && entry->unknown_58_ == b) {
+			VectorizedInvertedMemcpy(entry, (char*)obj + 0x74, 0x20);
+			VectorizedInvertedMemcpy(entry->unknown_20_, obj, 0x30);
+			entry->unknown_50_ = (int)(GetCurrentTimestamp() >> 16);
+			*(unsigned char*)((char*)obj + 0x30) = 1;
 			break;
 		}
-		var0++;
-		var2++;
-	} while (var0 < 4);
+		i++;
+		entry++;
+	} while (i < 4);
 	SetIRQInterruptState(var1);
 }

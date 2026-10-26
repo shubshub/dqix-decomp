@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 struct Struct_ov024_021f6bc0 {
-    char unknown_0_[0x14];
-    float unknown_14_;
-    float unknown_18_;
-    float unknown_1c_;
-    float unknown_20_;
+    char pad[0x14];
+    float f14;
+    float f18;
+    float f1c;
+    float f20;
 };
 
 // USA: func_ov024_021f6bc0
-extern "C" ARM int func_ov024_021f6bc0(Struct_ov024_021f6bc0* arg0) {
-    arg0->unknown_1c_ = 0.75f * arg0->unknown_14_;
-    arg0->unknown_20_ = 0.75f * arg0->unknown_18_;
+extern "C" ARM int func_ov024_021f6bc0(Struct_ov024_021f6bc0* obj) {
+    obj->f1c = 0.75f * obj->f14;
+    obj->f20 = 0.75f * obj->f18;
     return 1;
 }

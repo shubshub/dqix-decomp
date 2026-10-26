@@ -3,9 +3,9 @@
 extern "C" int func_ov000_02156068(int, int, int, int);
 
 // USA: func_ov024_021d8e6c
-extern "C" ARM int func_ov024_021d8e6c(void* arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-    if (!func_ov000_02156068(*(int*)arg0, (short)arg2, 8, 0)) {
-        return arg5;
+extern "C" ARM int func_ov024_021d8e6c(void* a, int b, int c, int d, int e, int val) {
+    if (!func_ov000_02156068(*(int*)a, (short)c, 8, 0)) {
+        return val;
     }
-    return (int)((float)arg5 * 1.5f);
+    return (int)((float)val * 1.5f);
 }

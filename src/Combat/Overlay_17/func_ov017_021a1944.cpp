@@ -2,16 +2,16 @@
 #include "GameState/GameState.h"
 
 extern "C" void* func_0207d78c(void);
-struct Struct_0207d7f4;
-extern "C" struct Struct_0207d7f4* func_0207d9bc(struct Struct_0207d7f4* arg0, unsigned short arg1);
+struct Entry0207d9bc;
+extern "C" struct Entry0207d9bc* func_0207d9bc(struct Entry0207d9bc* arr, unsigned short key);
 
 extern unsigned char data_ov017_021d7654[4];
 
 // USA: func_ov017_021a1944
 extern "C" ARM unsigned short func_ov017_021a1944(void) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_0207d78c();
-    int var2, var3;
+    GameState* bs = GameState::GetInstance();
+    void* table = func_0207d78c();
+    int i, j;
 retry:
     if (*(unsigned short*)(data_ov017_021d7654) > 0x7ff7) {
         *(unsigned short*)(data_ov017_021d7654) = 1;
@@ -28,11 +28,11 @@ retry:
             }
         }
     }
-    if (func_0207d9bc((struct Struct_0207d7f4*)var1, *(unsigned short*)(data_ov017_021d7654)) != NULL) {
+    if (func_0207d9bc((struct Entry0207d9bc*)table, *(unsigned short*)(data_ov017_021d7654)) != NULL) {
         *(unsigned short*)(data_ov017_021d7654) = *(unsigned short*)(data_ov017_021d7654) + 1;
         goto retry;
     }
-    unsigned short var6 = *(unsigned short*)(data_ov017_021d7654);
-    *(unsigned short*)(data_ov017_021d7654) = var6 + 1;
-    return var6;
+    unsigned short result = *(unsigned short*)(data_ov017_021d7654);
+    *(unsigned short*)(data_ov017_021d7654) = result + 1;
+    return result;
 }

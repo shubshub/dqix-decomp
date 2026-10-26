@@ -4,10 +4,10 @@
 // USA: func_ov001_0215fef4
 extern "C" ARM int func_ov001_0215fef4(void) {
 #if defined(jpn)
-    enum { Enum_ov001_0215fef4_1584 = 0x420 };
+    enum { fieldOffset = 0x420 };
 #else
-    enum { Enum_ov001_0215fef4_1584 = 0x630 };
+    enum { fieldOffset = 0x630 };
 #endif
-	*(int*)(((char*)GetGameResources() + 0x3000) + Enum_ov001_0215fef4_1584) = 0;
+	*(int*)(((char*)GetGameResources() + 0x3000) + fieldOffset) = 0;
 	return 1;
 }

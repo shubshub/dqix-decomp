@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
-struct Struct_020e3b8c_2;
-extern "C" void func_020e3c34(Struct_020e3b8c_2* arg0);
+struct CombatState020e3c34;
+extern "C" void func_020e3c34(CombatState020e3c34* p);
 
-struct Struct_020e3ec0 {
-    unsigned char unknown_0_;
+struct Struct020e3ec0 {
+    unsigned char byte0;
     unsigned char unknown_1_;
 };
 
 // USA: func_020e3ec0
-extern "C" ARM void func_020e3ec0(Struct_020e3ec0* arg0) {
-    func_020e3c34((Struct_020e3b8c_2*)arg0);
-    arg0->unknown_1_ = 1;
+extern "C" ARM void func_020e3ec0(Struct020e3ec0* p) {
+    func_020e3c34((CombatState020e3c34*)p);
+    p->unknown_1_ = 1;
 }

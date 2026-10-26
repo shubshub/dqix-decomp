@@ -4,11 +4,11 @@
 struct GameResources;
 int SetMainBrightnessWithDurationMs(GameResources*, int, unsigned int);
 
-struct Struct_ov025_021e58b4 { char unknown_0_[8]; unsigned short unknown_8_; signed char unknown_a_; };
+struct Struct_ov025_021e58b4 { char pad[8]; unsigned short field_8; signed char field_a; };
 
 // USA: func_ov025_021e58b4
-extern "C" ARM int func_ov025_021e58b4(struct Struct_ov025_021e58b4* arg0) {
-    GameResources* var0 = GetGameResources();
-    SetMainBrightnessWithDurationMs(var0, arg0->unknown_a_, arg0->unknown_8_);
+extern "C" ARM int func_ov025_021e58b4(struct Struct_ov025_021e58b4* p) {
+    GameResources* obj = GetGameResources();
+    SetMainBrightnessWithDurationMs(obj, p->field_a, p->field_8);
     return 1;
 }

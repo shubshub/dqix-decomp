@@ -2,42 +2,42 @@
 #include "Combat/Overlay_0/GetCombatantByID.h"
 #include "GameState/GameState.h"
 
-extern "C" int func_ov024_021edf00(int* arg0, int arg1, short* arg2);
-extern "C" int func_ov000_0215e9fc(int arg0, short* arg1, int arg2, int arg3);
-extern "C" void func_ov024_021ed8c0(void* arg0, int arg1, int arg2, int* arg3, short* arg4);
-extern "C" int func_ov024_021eda60(GameObject* arg0);
+extern "C" int func_ov024_021edf00(int* context, int id, short* ids);
+extern "C" int func_ov000_0215e9fc(int context, short* ids, int max, int start);
+extern "C" void func_ov024_021ed8c0(void* context, int id, int record, int* count, short* ids);
+extern "C" int func_ov024_021eda60(GameObject* combatant);
 
 extern unsigned short data_ov024_021feb94[4];
 
 // USA: func_ov024_021efdfc
-extern "C" ARM int func_ov024_021efdfc(int* arg0, int arg1, int arg2, int* arg3, short* arg4) {
-    short var0[4];
-    short* var1 = var0;
-    unsigned short* var2 = data_ov024_021feb94;
-    int var3 = 4;
+extern "C" ARM int func_ov024_021efdfc(int* context, int id, int record, int* outCount, short* arg4) {
+    short buf[4];
+    short* destination = buf;
+    unsigned short* source = data_ov024_021feb94;
+    int remaining = 4;
     do {
-        short* var4 = var1++;
-        *var4 = *var2++;
-    } while (--var3);
+        short* item = destination++;
+        *item = *source++;
+    } while (--remaining);
 
-    int var5 = func_ov024_021edf00(arg0, arg1, var0);
-    if (var5 <= 0) {
-        var5 = func_ov000_0215e9fc(*arg0, var0, 4, 1);
-        if (var5 <= 0) return 0;
+    int count = func_ov024_021edf00(context, id, buf);
+    if (count <= 0) {
+        count = func_ov000_0215e9fc(*context, buf, 4, 1);
+        if (count <= 0) return 0;
     }
-    *arg3 = 0;
-    for (int var6 = 0; var6 < var5; var6++) {
-        GameObject* var7 = GetCombatantByID(*arg0, var0[var6]);
-        if (var7 && var7->currentStats_->primaryStats.agility != 0 &&
-            var7->currentStats_->agilityBuff > -2 &&
-            !func_ov024_021eda60(var7) &&
-            (int)((unsigned char*)var7->currentStats_)[0x51] > 0) {
-            int var8 = *arg3;
-            *arg3 = var8 + 1;
-            arg4[var8] = var0[var6];
+    *outCount = 0;
+    for (int i = 0; i < count; i++) {
+        GameObject* combatant = GetCombatantByID(*context, buf[i]);
+        if (combatant && combatant->currentStats_->primaryStats.agility != 0 &&
+            combatant->currentStats_->agilityBuff > -2 &&
+            !func_ov024_021eda60(combatant) &&
+            (int)((unsigned char*)combatant->currentStats_)[0x51] > 0) {
+            int index = *outCount;
+            *outCount = index + 1;
+            arg4[index] = buf[i];
         }
     }
-    if (*arg3 <= 0) return 0;
-    func_ov024_021ed8c0(arg0, arg1, arg2, arg3, arg4);
+    if (*outCount <= 0) return 0;
+    func_ov024_021ed8c0(context, id, record, outCount, arg4);
     return 1;
 }

@@ -1,35 +1,35 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" void func_ov017_0218f5a4(void* arg0, int arg1, int arg2, int arg3, int arg4);
+extern "C" int func_02053c6c(unsigned char* obj);
+extern "C" void func_ov017_0218f5a4(void* a, int i, int b, int c, int d);
 
 struct Struct_ov017_021d0e64 {
-    unsigned char unknown_0_[4];
-    signed char unknown_4_;
-    unsigned char unknown_5_;
+    unsigned char pad0[4];
+    signed char field4;
+    unsigned char field5;
 };
 
 // USA: func_ov017_021d0e64
-extern "C" ARM void func_ov017_021d0e64(void* arg0, Struct_ov017_021d0e64* arg1, GameState* arg2, void* arg3) {
+extern "C" ARM void func_ov017_021d0e64(void* unused0, Struct_ov017_021d0e64* a1, GameState* bs, void* a3) {
 #if defined(jpn)
- enum {Enum_ov017_021d0e64_3276=0xa6c};
+ enum {regionalOffset0=0xa6c};
 #else
- enum {Enum_ov017_021d0e64_3276=0xccc};
+ enum {regionalOffset0=0xccc};
 #endif
-    GameObject* var0 = arg2->GetPartyMemberByIndex(arg1->unknown_4_);
-    if (!var0) return;
-    int var1 = func_02053c6c((unsigned char*)var0);
-    if (!var1) return;
+    GameObject* c = bs->GetPartyMemberByIndex(a1->field4);
+    if (!c) return;
+    int field150 = func_02053c6c((unsigned char*)c);
+    if (!field150) return;
 
-    unsigned char* var2 = (unsigned char*)var1;
-    if (var2[0x56a] != arg1->unknown_5_) {
-        short var3 = *(short*)(var2 + 0x488);
-        if (var3 < 0) {
-            var0->obj3D_.unknown_2_ = -1;
-            func_ov017_0218f5a4(arg3, arg1->unknown_4_, 0, 0, 0);
+    unsigned char* f = (unsigned char*)field150;
+    if (f[0x56a] != a1->field5) {
+        short v = *(short*)(f + 0x488);
+        if (v < 0) {
+            c->obj3D_.unknown_2_ = -1;
+            func_ov017_0218f5a4(a3, a1->field4, 0, 0, 0);
         }
     }
-    var2[0x56a] = arg1->unknown_5_;
-    *(int*)((char*)arg2 + 0x5000 + Enum_ov017_021d0e64_3276) |= 2;
+    f[0x56a] = a1->field5;
+    *(int*)((char*)bs + 0x5000 + regionalOffset0) |= 2;
 }

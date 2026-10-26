@@ -5,14 +5,14 @@
 extern "C" ARM int Plane_IntersectSegment(const Vector3fix* start, const Vector3fix* end,
                                  const Vector4fix* plane, fix32_t* parameter, Vector3fix* point)
 {
-    Vector3fix var0;
+    Vector3fix direction;
 
-    Vector3fix_Subtract(arg1, arg0, &var0);
-    *arg3 = fix32_Divide(arg2->w - Vector3fix_InnerProduct(&arg2->xyz, arg0),
-                              Vector3fix_InnerProduct(&arg2->xyz, &var0));
-    if (*arg3 >= 0 && *arg3 <= 0x1000) {
-        Vector3fixMultiplyScalar(&var0, *arg3, arg4);
-        Vector3fix_Add(arg0, arg4, arg4);
+    Vector3fix_Subtract(end, start, &direction);
+    *parameter = fix32_Divide(plane->w - Vector3fix_InnerProduct(&plane->xyz, start),
+                              Vector3fix_InnerProduct(&plane->xyz, &direction));
+    if (*parameter >= 0 && *parameter <= 0x1000) {
+        Vector3fixMultiplyScalar(&direction, *parameter, point);
+        Vector3fix_Add(start, point, point);
         return 1;
     }
     return 0;

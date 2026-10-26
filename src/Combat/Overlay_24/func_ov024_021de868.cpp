@@ -3,57 +3,57 @@
 #include "Combat/Main/BattleList.h"
 #include "GameState/GameState.h"
 
-struct Struct_02010088;
-extern "C" int func_02010088(struct Struct_02010088* arg0);
-extern "C" void func_0208902c(unsigned char* arg0, int arg1);
-extern "C" void func_ov000_02159eac(void* arg0, void* arg1, int arg2);
-extern "C" float func_ov024_021db358(GameObject* arg0);
-extern "C" short func_ov000_0215a16c(void* arg0, int arg1, int arg2, short* arg3);
-extern "C" void* func_ov000_0215e958(void* arg0);
-extern "C" void func_ov000_0215a88c(void* arg0, void* arg1, int arg2);
-extern "C" void func_ov000_0215cd44(void* arg0, void* arg1, void* arg2, int arg3, unsigned long long arg4, int arg5);
+struct S_10088;
+extern "C" int func_02010088(struct S_10088* obj);
+extern "C" void func_0208902c(unsigned char* obj, int val);
+extern "C" void func_ov000_02159eac(void* a0, void* buf, int a2);
+extern "C" float func_ov024_021db358(GameObject* obj);
+extern "C" short func_ov000_0215a16c(void* unused, int id, int delta, short* arg3);
+extern "C" void* func_ov000_0215e958(void* a0);
+extern "C" void func_ov000_0215a88c(void* objRaw, void* arg1, int c);
+extern "C" void func_ov000_0215cd44(void* a, void* b, void* c, int d, unsigned long long arg4, int g);
 
-struct Struct_ov024_021de868 { unsigned char unknown_0_0_ : 7; unsigned char unknown_0_7_ : 1; };
-struct Struct_ov024_021de868_2 { char unknown_0_[0xc]; void* unknown_c_; void* unknown_10_; };
+struct Struct_ov024_021de868 { unsigned char pad : 7; unsigned char flag : 1; };
+struct Struct_ov024_021de868_2 { char pad0[0xc]; void* unknown_c_; void* unknown_10_; };
 struct Struct_ov024_021de868_3 {
-	char unknown_0_[0x3a];
+	char pad0[0x3a];
 	unsigned char unknown_3a_;
-	unsigned char unknown_3b_0_ : 1;
-	unsigned char unknown_3b_1_ : 7;
+	unsigned char bit0 : 1;
+	unsigned char rest : 7;
 };
 
 // USA: func_ov024_021de868
-extern "C" ARM void* func_ov024_021de868(struct Struct_ov024_021de868_2* arg0, int arg1, int arg2) {
-	GameObject* var0 = GetCombatantByID((int)arg0->unknown_10_, arg2);
-	if (!var0) return 0;
+extern "C" ARM void* func_ov024_021de868(struct Struct_ov024_021de868_2* obj, int unused, int id) {
+	GameObject* c = GetCombatantByID((int)obj->unknown_10_, id);
+	if (!c) return 0;
 	short var1 = 0;
-	union { struct { int unknown_0_; int unknown_4_; }; unsigned long long unknown1_0_; } var2;
-	var2.unknown_0_ = 0;
-	var2.unknown_4_ = 0;
-	int var3;
-	if (func_02010088((struct Struct_02010088*)var0)) {
-		func_0208902c((unsigned char*)var0->currentStats_, var0->currentStats_->primaryStats.maxHP);
-		func_ov000_02159eac(arg0->unknown_10_, &var2, 3);
-		((struct Struct_ov024_021de868_3*)var0->currentStats_)->unknown_3b_0_ = 1;
-		var3 = 0x20;
-		int var4 = (arg2 >= 0 && arg2 <= 3);
-		if (var4) {
-			GameObject* var5 = func_0200ff1c(GameState::GetInstance(), arg2);
-			if (var5) {
-				((struct Struct_ov024_021de868_3*)var5->currentStats_)->unknown_3a_ = 1;
+	union { struct { int lo; int hi; }; unsigned long long v; } local;
+	local.lo = 0;
+	local.hi = 0;
+	int msg;
+	if (func_02010088((struct S_10088*)c)) {
+		func_0208902c((unsigned char*)c->currentStats_, c->currentStats_->primaryStats.maxHP);
+		func_ov000_02159eac(obj->unknown_10_, &local, 3);
+		((struct Struct_ov024_021de868_3*)c->currentStats_)->bit0 = 1;
+		msg = 0x20;
+		int inRange = (id >= 0 && id <= 3);
+		if (inRange) {
+			GameObject* member = func_0200ff1c(GameState::GetInstance(), id);
+			if (member) {
+				((struct Struct_ov024_021de868_3*)member->currentStats_)->unknown_3a_ = 1;
 			}
 		}
-	} else if (func_ov024_021db358(var0) < 1.0f) {
-		func_ov000_0215a16c(arg0->unknown_10_, arg2, var0->currentStats_->primaryStats.maxHP, &var1);
-		func_ov000_02159eac(arg0->unknown_10_, &var2, 0x25);
-		var3 = 0x16;
+	} else if (func_ov024_021db358(c) < 1.0f) {
+		func_ov000_0215a16c(obj->unknown_10_, id, c->currentStats_->primaryStats.maxHP, &var1);
+		func_ov000_02159eac(obj->unknown_10_, &local, 0x25);
+		msg = 0x16;
 	} else {
-		var3 = 0x1f;
+		msg = 0x1f;
 	}
-	void* var6 = func_ov000_0215e958(arg0->unknown_10_);
-	if (!var6) return 0;
-	func_ov000_0215a88c(arg0->unknown_10_, var6, var3);
-	struct Struct_ov024_021de868* var7 = (struct Struct_ov024_021de868*)((char*)arg0->unknown_c_ + 0x1c);
-	func_ov000_0215cd44(arg0->unknown_10_, var6, var0, (short)-var1, var2.unknown1_0_, var7->unknown_0_7_ != 0);
-	return var6;
+	void* entry = func_ov000_0215e958(obj->unknown_10_);
+	if (!entry) return 0;
+	func_ov000_0215a88c(obj->unknown_10_, entry, msg);
+	struct Struct_ov024_021de868* var7 = (struct Struct_ov024_021de868*)((char*)obj->unknown_c_ + 0x1c);
+	func_ov000_0215cd44(obj->unknown_10_, entry, c, (short)-var1, local.v, var7->flag != 0);
+	return entry;
 }

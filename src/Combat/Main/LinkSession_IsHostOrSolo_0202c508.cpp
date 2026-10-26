@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-unsigned short WH_GetCurrentAid(void);
+extern "C" unsigned short WH_GetCurrentAid(void);
 
 // The link session (data_020fefec), as far as this function reads it.
 struct SearchStruct { int state; };

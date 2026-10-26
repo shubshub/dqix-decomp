@@ -16,23 +16,23 @@ extern "C" void func_ov017_021aa4cc(void* overlay, int flag);
 extern "C" void* LinkSession_GetInstance(void);
 extern "C" void func_020ae53c(int arg);
 
-void* GameState_GetParty(GameState* battleStruct);
-int FieldTaskQueue_IsEmpty(void** obj);
+extern "C" void* GameState_GetParty(GameState* battleStruct);
+extern "C" int FieldTaskQueue_IsEmpty(void** obj);
 
-struct TailNode020469b4 { char unk0[2]; unsigned char inList; char unk3; TailNode020469b4* next; };
+struct TailNode020469b4 { char unk0[2]; unsigned char inList; char unknown_3_; TailNode020469b4* next; };
 struct TailList020469b4 { TailNode020469b4* head; TailNode020469b4* tail; };
-void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
+extern "C" void func_020469b4(TailList020469b4* list, TailNode020469b4* node);
 
 struct Struct020d9850 { unsigned char byte0; unsigned char pad1[7]; unsigned char byte8; };
-void Init020d9850(Struct020d9850* p);
+extern "C" void func_020d9850(Struct020d9850* p);
 
-int LinkSession_IsActive(int* obj);
+extern "C" int LinkSession_IsActive(int* obj);
 
 struct Obj02086b98;
-int AreListedCombatantsBit0Set(Obj02086b98* o);
+extern "C" int func_02086b98(Obj02086b98* o);
 
-// The field tasks a battle can leave pending in Zone3D +0x2744 (StoreBattleParams0201bf38 sets the treasure map with
-// its type, quality and seed at +0x2745, +0x2746 and +0x2748; SetOrClearBit1_0201bf70 the evac prompt); the wipeout
+// The field tasks a battle can leave pending in Zone3D +0x2744 (func_0201bf38 sets the treasure map with
+// its type, quality and seed at +0x2745, +0x2746 and +0x2748; func_0201bf70 the evac prompt); the wipeout
 // prompt starts only while linked. 4 runs func_020ae53c.
 enum {
     kPendingFieldTask_AcquireTreasureMap = 0x1,
@@ -41,14 +41,14 @@ enum {
 };
 
 // GameResources::fieldTasks_ slots: the AcquireTreasureMap task (FieldTask_InitAcquireTreasureMap) and the
-// ConfirmEvac one (Init020d9850 gives it kind FieldTaskKind_ConfirmEvac)
+// ConfirmEvac one (func_020d9850 gives it kind FieldTaskKind_ConfirmEvac)
 enum {
     kAcquireTreasureMapTaskSlot = 0x1b,
     kConfirmEvacTaskSlot = 0x2f,
 };
 
 // Main, originally DispatchField0x744FlagsAndNotify_0201bdac (USA 0x0201bdac, EUR 0x0201bdbc, JPN 0x0201bb24)
-ARM void Zone3D_StartPendingFieldTask(unsigned char* zone) {
+extern "C" ARM void Zone3D_StartPendingFieldTask(unsigned char* zone) {
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = GetGameResources();
     TailList020469b4* taskQueue = (TailList020469b4*)resources->fieldTaskQueue_;
@@ -70,14 +70,14 @@ ARM void Zone3D_StartPendingFieldTask(unsigned char* zone) {
         int quality = *(zone + 0x2000 + kTreasureMapQualityOffset);
         int seed = *(unsigned short*)(zone + 0x2700 + kTreasureMapSeedOffset);
         AcquireTreasureMapTask_CreateMap(task, type, quality, seed, extra);
-        AppendNodeToTail(taskQueue, task);
+        func_020469b4(taskQueue, task);
         *(zone + 0x2000 + kPendingFieldTasksOffset) &= ~kPendingFieldTask_AcquireTreasureMap;
         return;
     }
     if (pending & kPendingFieldTask_ConfirmEvac) {
         Struct020d9850* task = (Struct020d9850*)resources->fieldTasks_[kConfirmEvacTaskSlot];
-        Init020d9850(task);
-        AppendNodeToTail(taskQueue, (TailNode020469b4*)task);
+        func_020d9850(task);
+        func_020469b4(taskQueue, (TailNode020469b4*)task);
         *(zone + 0x2000 + kPendingFieldTasksOffset) &= ~kPendingFieldTask_ConfirmEvac;
         return;
     }
@@ -88,7 +88,7 @@ ARM void Zone3D_StartPendingFieldTask(unsigned char* zone) {
     }
 
     if (LinkSession_IsActive((int*)linkState)) {
-        if (AreListedCombatantsBit0Set((Obj02086b98*)party) != 0 || (*(zone + 0x2000 + kPendingFieldTasksOffset) & kPendingFieldTask_WipeoutPrompt)) {
+        if (func_02086b98((Obj02086b98*)party) != 0 || (*(zone + 0x2000 + kPendingFieldTasksOffset) & kPendingFieldTask_WipeoutPrompt)) {
             func_ov017_021aa4cc(resources, 1);
         }
     }

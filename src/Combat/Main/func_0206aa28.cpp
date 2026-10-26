@@ -18,7 +18,7 @@ enum { Enum_0206aa28_72 = 0x48, Enum_0206aa28_80 = 0x50, Enum_0206aa28_84 = 0x54
 #endif
 
 struct Object02043124;
-void MessageSystem_Reset(char*);
+extern "C" void MessageSystem_Reset(char*);
 extern "C" void MessageSystem_Stop(Object02043124*);
 
 #if defined(jpn)
@@ -27,58 +27,58 @@ extern "C" int func_02069408(void*, unsigned short);
 extern "C" unsigned short* func_0206c730(void*, unsigned short, unsigned short*);
 extern "C" void func_0206c794(void*);
 #else
-struct Struct_0204254c {
-    int unknown_0_;
-    signed char unknown_4_;
-    signed char unknown_5_0_ : 6;
-    signed char unknown_5_6_ : 2;
-    char unknown_6_[2];
+struct Entry0204254c {
+    int key;
+    signed char width;
+    signed char size : 6;
+    signed char flags : 2;
+    char unknown6[2];
 };
-int IsHighByteFF0206ac6c(void*, void*);
-int Func0206abf8(void*, void*);
-bool IsCommandInRange02067a9c(void*, void*);
-Entry0204254c* Font_FindCharacter(int, int);
+extern "C" int func_0206ac6c(void*, void*);
+extern "C" int func_0206abf8(void*, void*);
+extern "C" bool func_02067a9c(void*, void*);
+extern "C" Entry0204254c* Font_FindCharacter(int, int);
 extern "C" char* func_0206ac94(void*, unsigned short, char*);
 extern "C" void func_0206ad74(void*);
 #endif
 
 // USA: func_0206aa28
-extern "C" ARM void func_0206aa28(char* arg0) {
+extern "C" ARM void func_0206aa28(char* context) {
 #if !defined(jpn)
-    *(int*)(arg0 + 0x7c) = 0;
+    *(int*)(context + 0x7c) = 0;
 #endif
-    (*(int*)(arg0 + Enum_0206aa28_108)) = 0;
-    (*(int*)(arg0 + Enum_0206aa28_112)) = 0;
-    (*(int*)(arg0 + Enum_0206aa28_116)) = 0;
-    (*(int*)(arg0 + Enum_0206aa28_120)) = 0;
-    Type_0206aa28* var0 = *(Type_0206aa28**)(arg0 + Enum_0206aa28_84);
-    Type_0206aa28* var1 = *(Type_0206aa28**)(arg0 + Enum_0206aa28_80);
+    (*(int*)(context + Enum_0206aa28_108)) = 0;
+    (*(int*)(context + Enum_0206aa28_112)) = 0;
+    (*(int*)(context + Enum_0206aa28_116)) = 0;
+    (*(int*)(context + Enum_0206aa28_120)) = 0;
+    Type_0206aa28* cursor = *(Type_0206aa28**)(context + Enum_0206aa28_84);
+    Type_0206aa28* output = *(Type_0206aa28**)(context + Enum_0206aa28_80);
     bool var2 = false;
 #if defined(jpn)
-    while (var0 != 0) {
-        *var1 = *var0;
-        ++var1;
-        (*(int*)(arg0 + Enum_0206aa28_112))++;
-        if (*(unsigned int*)(arg0 + Enum_0206aa28_52) < (unsigned int)(var0 - *(Type_0206aa28**)(arg0 + Enum_0206aa28_20))) {
-            *(int*)(arg0 + 0x868) = 0;
+    while (cursor != 0) {
+        *output = *cursor;
+        ++output;
+        (*(int*)(context + Enum_0206aa28_112))++;
+        if (*(unsigned int*)(context + Enum_0206aa28_52) < (unsigned int)(cursor - *(Type_0206aa28**)(context + Enum_0206aa28_20))) {
+            *(int*)(context + 0x868) = 0;
             break;
         }
-        if (func_02069430(arg0, *var0)) {
-            if (*var0 == 0xff1a || *var0 == 0xff1b) var2 = 1;
-            if (func_02069408(arg0, *var0)) {
+        if (func_02069430(context, *cursor)) {
+            if (*cursor == 0xff1a || *cursor == 0xff1b) var2 = 1;
+            if (func_02069408(context, *cursor)) {
                 if (!var2) {
-                    (*(int*)(arg0 + Enum_0206aa28_112))--;
-                    *(Type_0206aa28**)(arg0 + Enum_0206aa28_84) = ++var0;
-                    --var1;
+                    (*(int*)(context + Enum_0206aa28_112))--;
+                    *(Type_0206aa28**)(context + Enum_0206aa28_84) = ++cursor;
+                    --output;
                     continue;
                 }
-                *(Type_0206aa28**)(arg0 + Enum_0206aa28_36) = var0;
+                *(Type_0206aa28**)(context + Enum_0206aa28_36) = cursor;
                 break;
             }
             unsigned short command = *cursor;
             if ((command & 0xffe0) == 0xffe0) {
                 command = (unsigned short)(command ^ 0xffe0) + 0xffd0;
-                cursor = func_0206c730(context, command, *(MessageCharacter**)(context + SourceField));
+                cursor = func_0206c730(context, command, *(Type_0206aa28**)(context + Enum_0206aa28_20));
                 if (!cursor) {
                     unsigned char saved = *(unsigned char*)(context + 0x17fd);
                     MessageSystem_Reset(context);
@@ -90,28 +90,28 @@ extern "C" ARM void func_0206aa28(char* arg0) {
         } else {
             var2 = 1;
         }
-        ++var0;
+        ++cursor;
     }
-    func_0206c794(arg0);
+    func_0206c794(context);
 #else
     for (;;) {
-        if (!*var0) break;
+        if (!*cursor) break;
         int var5 = 0;
-        if (func_0206ac6c(arg0, var0)) {
-            int var6 = func_0206abf8(arg0, var0) + 1;
-            var5 = var6 * 2;
-            memcpy(var1, var0, var5);
-            var1 += var6 * 2;
-            (*(int*)(arg0 + Enum_0206aa28_112)) += var6 * 2;
+        if (func_0206ac6c(context, cursor)) {
+            int words = func_0206abf8(context, cursor) + 1;
+            var5 = words * 2;
+            memcpy(output, cursor, var5);
+            output += words * 2;
+            (*(int*)(context + Enum_0206aa28_112)) += words * 2;
         }
-        if (*(unsigned int*)(arg0 + Enum_0206aa28_104) < (unsigned int)(var0 - *(Type_0206aa28**)(arg0 + Enum_0206aa28_72))) {
-            *(int*)(arg0 + 0x998) = 0;
+        if (*(unsigned int*)(context + Enum_0206aa28_104) < (unsigned int)(cursor - *(Type_0206aa28**)(context + Enum_0206aa28_72))) {
+            *(int*)(context + 0x998) = 0;
             break;
         }
-        if (func_0206ac6c(arg0, var0)) {
-            if (func_02067a9c(arg0, var0)) {
+        if (func_0206ac6c(context, cursor)) {
+            if (func_02067a9c(context, cursor)) {
                 if (var2) {
-                    *(Type_0206aa28**)(arg0 + Enum_0206aa28_88) = var0;
+                    *(Type_0206aa28**)(context + Enum_0206aa28_88) = cursor;
                     break;
                 }
                 unsigned char saved = *(unsigned char*)(context + 0x19cc);
@@ -122,10 +122,10 @@ extern "C" ARM void func_0206aa28(char* arg0) {
             }
             unsigned short command;
             memcpy(&command, cursor, 2);
-            cursor += commandBytes;
+            cursor += var5;
             if ((command & 0xffe0) == 0xffe0) {
                 command = (unsigned short)(command ^ 0xffe0) + 0xffd0;
-                cursor = func_0206ac94(context, command, *(MessageCharacter**)(context + SourceField));
+                cursor = func_0206ac94(context, command, *(Type_0206aa28**)(context + Enum_0206aa28_72));
                 if (!cursor) {
                     unsigned char saved = *(unsigned char*)(context + 0x19cc);
                     MessageSystem_Reset(context);
@@ -135,16 +135,16 @@ extern "C" ARM void func_0206aa28(char* arg0) {
                 }
             }
         } else {
-            seenGlyph = 1;
+            var2 = 1;
             int size = 1;
             Entry0204254c* entry = Font_FindCharacter((int)(cursor), (unsigned char)(context[0x19dc]));
             if (entry) size = entry->size;
             memcpy(output, cursor, size);
             output += size;
-            (*(int*)(context + LengthField))++;
+            (*(int*)(context + Enum_0206aa28_112))++;
             cursor += size;
         }
     }
-    func_0206ad74(arg0);
+    func_0206ad74(context);
 #endif
 }

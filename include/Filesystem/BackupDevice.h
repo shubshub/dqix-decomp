@@ -22,4 +22,4 @@ struct Struct_020d0078 {
     unsigned int unknown_44_;
 };
 
-extern "C" void func_020d0078(unsigned int arg0);
+extern "C" void func_020d0078(unsigned int type);

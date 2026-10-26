@@ -8,17 +8,17 @@ void NitroVM_Command_AcquireCardReadResources(unsigned short owner);
 unsigned int SetSpecificInterruptsEnabled(unsigned int which);
 unsigned int AcknowledgeSpecificInterrupts(unsigned int flagMask);
 void ResetDMAChannel(int channel);
-void RetrySendIpcCommand_020c98c4(int command);
+extern "C" void func_020c98c4(int command);
 
-static inline int IsMultiBootChild()
+static inline int inline_020c98f0()
 {
     return *(unsigned short*)0x027ffc40 == 2;
 }
 
 // Main, originally ResetSystemAndBoot020c98f0 (USA 0x020c98f0, EUR 0x020c9900, JPN 0x020cb3bc)
-ARM void OS_ResetSystem(int parameter)
+extern "C" ARM void OS_ResetSystem(int parameter)
 {
-    if (IsMultiBootChild())
+    if (inline_020c98f0())
     {
         HaltSystem();
     }
@@ -33,7 +33,7 @@ ARM void OS_ResetSystem(int parameter)
     ResetDMAChannel(3);
 
     *(volatile unsigned long*)0x027ffc20 = parameter;
-    RetrySendIpcCommand_020c98c4(0x10);
+    func_020c98c4(0x10);
 
     asm
     {

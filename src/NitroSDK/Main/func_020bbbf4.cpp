@@ -5,8 +5,8 @@ extern "C" void MemoryMapSubBGExtendedPalette(void);
 extern "C" void MemoryUnmapSubBGExtendedPalette(void);
 
 // USA: func_020bbbf4
-extern "C" ARM void func_020bbbf4(int arg0, int arg1, int arg2) {
+extern "C" ARM void func_020bbbf4(int a, int b, int c) {
     MemoryMapSubBGExtendedPalette();
-    LoadToSubBGExtendedPalette((int)(arg0), (unsigned int)(arg1), (int)(arg2));
+    LoadToSubBGExtendedPalette((int)(a), (unsigned int)(b), (int)(c));
     MemoryUnmapSubBGExtendedPalette();
 }

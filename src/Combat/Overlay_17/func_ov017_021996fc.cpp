@@ -1,0 +1,33 @@
+#include <globaldefs.h>
+#include "Combat/MapDisplay.h"
+
+struct InitTarget0205cfd4;
+extern "C" void Window_Init(struct InitTarget0205cfd4* s);
+
+extern "C" void Background_Init(struct BackgroundGraphics* obj);
+
+extern "C" void WindowPane_Init(void*);
+
+// USA: func_ov017_021996fc
+extern "C" ARM void func_ov017_021996fc(unsigned char* base) {
+#if defined(jpn)
+ enum {regionalOffset0=0xa90, regionalOffset1=0x294, regionalOffset2=0x2d4, regionalOffset3=0x3800, regionalOffset4=0x3000, regionalOffset5=0xe54, regionalOffset6=0xe58, Enum_ov017_021996fc_124=0xe5c, Enum_ov017_021996fc_128=0xe60, regionalOffset9=0xe64};
+#else
+ enum {regionalOffset0=0xcb0, regionalOffset1=0xb4, regionalOffset2=0xf4, regionalOffset3=0x3c00, regionalOffset4=0x4000, regionalOffset5=0x74, regionalOffset6=0x78, Enum_ov017_021996fc_124=0x7c, Enum_ov017_021996fc_128=0x80, regionalOffset9=0x84};
+#endif
+    Window_Init(*(struct InitTarget0205cfd4**)(base + 0x3000 + regionalOffset0));
+
+    for (int i = 0; i < 2; i++) {
+        Background_Init((struct BackgroundGraphics*)(base + regionalOffset1 + regionalOffset3 + i * 0x20));
+    }
+
+    for (int j = 0; j < 4; j++) {
+        WindowPane_Init(base + regionalOffset2 + regionalOffset3 + j * 0xe0);
+    }
+
+    *(int*)(base + regionalOffset4 + regionalOffset5) = 0;
+    *(int*)(base + regionalOffset4 + regionalOffset6) = 0;
+    *(int*)(base + regionalOffset4 + Enum_ov017_021996fc_124) = -1;
+    *(int*)(base + regionalOffset4 + Enum_ov017_021996fc_128) = 0;
+    *(int*)(base + regionalOffset4 + regionalOffset9) = 0;
+}

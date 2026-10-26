@@ -10,8 +10,8 @@ struct Struct_02075df4 {
 };
 
 struct Struct_02075df4_2 {
-    fix32_t unknown_0_;
-    fix32_t unknown_4_;
+    fix32_t x;
+    fix32_t y;
 };
 
 struct Struct_02075df4_3 {
@@ -19,114 +19,114 @@ struct Struct_02075df4_3 {
     int** unknown_4_;
     int** unknown_8_;
     int** unknown_c_;
-    short* unknown_10_;
-    Struct_02075df4* unknown_14_;
-    char unknown_18_[0x10];
-    Struct_02075df4_2 unknown_28_;
-    unsigned short unknown_30_;
-    char unknown_32_[0xa];
-    int unknown_3c_;
-    int unknown_40_;
-    int unknown_44_;
-    int unknown_48_;
-    int unknown_4c_;
-    int unknown_50_;
+    short* counts;
+    Struct_02075df4* oam;
+    char unknown18[0x10];
+    Struct_02075df4_2 scale;
+    unsigned short angle;
+    char unknown32[0xa];
+    int palette;
+    int priority;
+    int matrixIndex;
+    int mode;
+    int effect;
+    int colorMode;
 };
 
-static inline fix32_t inline_0205b0d8(int arg0) {
-    return data_020e9450[arg0 * 2];
+static inline fix32_t inline_0205b0d8(int sample) {
+    return data_020e9450[sample * 2];
 }
 
-static inline fix32_t inline_0205b0d8_2(int arg0) {
-    return data_020e9450[arg0 * 2 + 1];
+static inline fix32_t inline_0205b0d8_2(int sample) {
+    return data_020e9450[sample * 2 + 1];
 }
 
-static inline bool inline_02075df4(int arg0) {
-    return arg0 == 0x100 || arg0 == 0x300;
+static inline bool inline_02075df4(int effect) {
+    return effect == 0x100 || effect == 0x300;
 }
 
 // USA: func_02075df4
-extern "C" ARM int func_02075df4(Struct_02075df4_3* arg0, int arg1, int arg2, int arg3) {
-    int* var0 = arg0->unknown_8_[arg1];
-    int* var1 = arg0->unknown_c_[arg1];
-    int* var2 = arg0->unknown_0_[arg1];
-    int* var3 = arg0->unknown_4_[arg1];
+extern "C" ARM int func_02075df4(Struct_02075df4_3* cells, int index, int x, int y) {
+    int* var0 = cells->unknown_8_[index];
+    int* var1 = cells->unknown_c_[index];
+    int* var2 = cells->unknown_0_[index];
+    int* var3 = cells->unknown_4_[index];
     bool var4 = false;
-    if (inline_02075df4(arg0->unknown_4c_)) {
+    if (inline_02075df4(cells->effect)) {
         var4 = true;
     }
-    Struct_0205ac40_3* var5 = NULL;
+    Struct_0205ac40_3* matrix = NULL;
     Struct_0205ac40_3 var6;
-    Struct_0205ac40_3 var7;
-    Struct_0205ac40_3 var8;
-    short var9;
+    Struct_0205ac40_3 inverse;
+    Struct_0205ac40_3 rotation;
+    short i;
 
     if (var4) {
-        unsigned short var10 = arg0->unknown_30_;
-        Struct_02075df4_2 var11 = arg0->unknown_28_;
-        fix32_t var12 = inline_0205b0d8_2(var10 >> 4);
-        func_020c111c(&var8, inline_0205b0d8(var10 >> 4), var12);
-        func_020c1128(&var8, &var6, var11.unknown_0_, var11.unknown_4_);
-        func_020c1128(&var8, &var7, fix32_Divide(0x1000, var11.unknown_0_),
-                                        fix32_Divide(0x1000, var11.unknown_4_));
-        var5 = &var6;
+        unsigned short angle = cells->angle;
+        Struct_02075df4_2 scale = cells->scale;
+        fix32_t cosine = inline_0205b0d8_2(angle >> 4);
+        func_020c111c(&rotation, inline_0205b0d8(angle >> 4), cosine);
+        func_020c1128(&rotation, &var6, scale.x, scale.y);
+        func_020c1128(&rotation, &inverse, fix32_Divide(0x1000, scale.x),
+                                        fix32_Divide(0x1000, scale.y));
+        matrix = &var6;
     }
-    if (var5 != NULL) {
-        Struct_02075df4* var13 = arg0->unknown_14_;
-        var13[0].unknown_6_ = var7.unknown_0_[0] >> 4;
-        var13[1].unknown_6_ = var7.unknown_0_[1] >> 4;
-        var13[2].unknown_6_ = var7.unknown_0_[2] >> 4;
-        var13[3].unknown_6_ = var7.unknown_0_[3] >> 4;
+    if (matrix != NULL) {
+        Struct_02075df4* oam = cells->oam;
+        oam[0].unknown_6_ = inverse.values[0] >> 4;
+        oam[1].unknown_6_ = inverse.values[1] >> 4;
+        oam[2].unknown_6_ = inverse.values[2] >> 4;
+        oam[3].unknown_6_ = inverse.values[3] >> 4;
     }
-    for (var9 = 0; var9 < arg0->unknown_10_[arg1]; var9++) {
-        int var14 = var0[var9];
-        int var15 = var1[var9];
-        if (var5 != NULL) {
-            var14 = (arg0->unknown_28_.unknown_0_ * var14) >> 12;
-            var15 = (arg0->unknown_28_.unknown_4_ * var15) >> 12;
+    for (i = 0; i < cells->counts[index]; i++) {
+        int offsetX = var0[i];
+        int offsetY = var1[i];
+        if (matrix != NULL) {
+            offsetX = (cells->scale.x * offsetX) >> 12;
+            offsetY = (cells->scale.y * offsetY) >> 12;
         }
         {
-            int var16;
+            int px;
             int var17;
-            Struct_02075df4* var18;
-            int var19;
-            int var20;
-            int var21;
-            int var22;
-            int var23;
+            Struct_02075df4* oam;
+            int priority;
+            int mode;
+            int effect;
+            int shape;
+            int color;
             int var24;
             int var25;
             int var26;
-            var16 = var14 + arg2;
-            var17 = var15 + arg3;
-            var18 = &arg0->unknown_14_[var9];
-            var26 = arg0->unknown_44_;
-            var25 = arg0->unknown_3c_;
-            var24 = var2[var9];
-            var23 = arg0->unknown_50_;
-            var22 = var3[var9];
-            var21 = arg0->unknown_4c_;
-            var20 = arg0->unknown_48_;
-            var19 = arg0->unknown_40_;
-            if (inline_02075df4(var21)) {
-                if (var20 == 3) {
-                    var18->unknown_0_ = var21 | ((var22 | (((var17 & 0xff) | (var26 << 25)) | (var20 << 10))) |
-                                            ((var16 & 0x1ff) << 16));
+            px = offsetX + x;
+            var17 = offsetY + y;
+            oam = &cells->oam[i];
+            var26 = cells->matrixIndex;
+            var25 = cells->palette;
+            var24 = var2[i];
+            color = cells->colorMode;
+            shape = var3[i];
+            effect = cells->effect;
+            mode = cells->mode;
+            priority = cells->priority;
+            if (inline_02075df4(effect)) {
+                if (mode == 3) {
+                    oam->unknown_0_ = effect | ((shape | (((var17 & 0xff) | (var26 << 25)) | (mode << 10))) |
+                                            ((px & 0x1ff) << 16));
                 } else {
-                    var18->unknown_0_ = var21 | ((var22 | (((var17 & 0xff) | ((var26 << 25) | (var23 << 13))) |
-                                                      (var20 << 10))) |
-                                            ((var16 & 0x1ff) << 16));
+                    oam->unknown_0_ = effect | ((shape | (((var17 & 0xff) | ((var26 << 25) | (color << 13))) |
+                                                      (mode << 10))) |
+                                            ((px & 0x1ff) << 16));
                 }
             } else {
-                if (var20 == 3) {
-                    var18->unknown_0_ = var21 | ((var22 | ((var17 & 0xff) | (var20 << 10))) | ((var16 & 0x1ff) << 16));
+                if (mode == 3) {
+                    oam->unknown_0_ = effect | ((shape | ((var17 & 0xff) | (mode << 10))) | ((px & 0x1ff) << 16));
                 } else {
-                    var18->unknown_0_ = var21 | ((var22 | ((var17 & 0xff) | (var23 << 13) | (var20 << 10))) |
-                                            ((var16 & 0x1ff) << 16));
+                    oam->unknown_0_ = effect | ((shape | ((var17 & 0xff) | (color << 13) | (mode << 10))) |
+                                            ((px & 0x1ff) << 16));
                 }
             }
-            var18->unknown_4_ = (var24 | (var19 << 10)) | (var25 << 12);
+            oam->unknown_4_ = (var24 | (priority << 10)) | (var25 << 12);
         }
     }
-    return arg0->unknown_10_[arg1];
+    return cells->counts[index];
 }

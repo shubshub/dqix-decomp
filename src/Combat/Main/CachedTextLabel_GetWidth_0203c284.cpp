@@ -8,17 +8,17 @@ struct CachedTextEntry {
     unsigned char references;
     unsigned char unknownf;
 };
-struct TextOamEntry {
+struct Struct_0201099c_21 {
     unsigned int attributes01;
     unsigned short attribute2;
     unsigned short affineParameter;
 };
 
 struct CachedTextTable {
-    TextOamEntry* drawingBuffer;
+    Struct_0201099c_21* drawingBuffer;
     CachedTextEntry entries[96];
-    unsigned char unknown604[8];
-    unsigned int paletteControl;
+    unsigned char unknown_604_[8];
+    unsigned int unknown_60c_;
     unsigned short nextOamEntry;
 };
 struct Struct0203c1c8 {
@@ -44,10 +44,10 @@ struct Struct0203c1c8 {
 #endif
 };
 extern CachedTextTable* data_02105244;
-int STD_GetStringLength(const char* text);
+extern "C" int STD_GetStringLength(const char* text);
 
 // Main, originally GetEntryByteField0203c284 (USA 0x0203c284, EUR 0x0203c294, JPN 0x0203be6c)
-ARM int CachedTextLabel_GetWidth(const Struct0203c1c8* label) {
+extern "C" ARM int CachedTextLabel_GetWidth(const Struct0203c1c8* label) {
     CachedTextTable* cache = data_02105244;
     if (cache == NULL) return 0;
     CachedTextEntry* entries;
@@ -81,8 +81,8 @@ enum {
     kEntryIndex = 0x14  // the label's cached entry index
 };
 
-// USA: func_0203c284
-ARM unsigned char CachedTextLabel_GetWidth(char* label) {
+// USA: CachedTextLabel_GetWidth
+extern "C" ARM unsigned char CachedTextLabel_GetWidth(char* label) {
     char* table = (char*)data_02105244;
     if (table == NULL) return 0;
     {

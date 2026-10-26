@@ -8,30 +8,30 @@ enum { Enum_ov005_0215bed4_1276 = 0x4f8 };
 enum { Enum_ov005_0215bed4_1276 = 0x4fc };
 #endif
 
-struct Struct_ov005_02153ba4_2
+struct MemberScreen
 {
-    char unknown_0_[Enum_ov005_0215bed4_1276];
-    int unknown_4fc_;
+    char unk_0[Enum_ov005_0215bed4_1276];
+    int member_;
 };
 
-struct Struct_ov005_02153954;
+struct EquipmentMenu;
 
-extern "C" void func_ov005_021562b8(Struct_ov005_02153954* arg0);
-extern "C" void func_ov005_0215730c(Struct_ov005_02153954* arg0);
-extern "C" Struct_ov005_02153ba4_2* func_ov017_021a193c(int* arg0);
+extern "C" void func_ov005_021562b8(EquipmentMenu* self);
+extern "C" void func_ov005_0215730c(EquipmentMenu* self);
+extern "C" MemberScreen* func_ov017_021a193c(int* obj);
 extern "C" void func_ov005_021551fc(char*, int, int);
 
 // USA: func_ov005_0215bed4
-extern "C" ARM void func_ov005_0215bed4(Struct_ov005_02153954* arg0)
+extern "C" ARM void func_ov005_0215bed4(EquipmentMenu* self)
 {
     int var0 = 0;
     if (g_touchInput.pressed_ || (g_touchInput.isRepeatValid_ != 0 && g_touchInput.currentReading_.isHeld != 0) ||
         g_touchInput.released_ != 0)
     {
-        func_ov005_021562b8(arg0);
+        func_ov005_021562b8(self);
         var0 = 1;
     }
-    if (!touchHandled)
+    if (!var0)
         func_ov005_0215730c(self);
-    DispatchByIdxAndCond021551fc((char*)self, GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2])->member_, 0);
+    func_ov005_021551fc((char*)self, func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2])->member_, 0);
 }

@@ -10,16 +10,16 @@ extern "C" int func_ov009_02185c58(void*);
 struct Struct_0205d81c;
 struct Struct021885b8;
 
-void FollowCamera_Update(void* camera);
-WindowPane* Window_GetActivePane(Struct_0205d81c* window);
-int WindowPane_IsReady(unsigned char* canvas);
-void TouchGrid_SetTouchedCell(void* frame, int value);
+extern "C" void FollowCamera_Update(void* camera);
+extern "C" WindowPane* Window_GetActivePane(Struct_0205d81c* window);
+extern "C" int WindowPane_IsReady(unsigned char* canvas);
+extern "C" void TouchGrid_SetTouchedCell(void* frame, int value);
 extern "C" int Window_Update(CreationWindow* window, unsigned int ticks);
 extern "C" void CharacterModel_Update(void* character);
 extern "C" void CharacterCreationUI_UpdateRotation(void* self, unsigned int ticks);
 extern "C" void CharacterCreationUI_SwapCharacters(void* self);
-void CharacterCreationUI_LoadNextCharacter(Struct021885b8* self);
-void CharacterCreationUI_LoadTabGraphics(void* self);
+extern "C" void CharacterCreationUI_LoadNextCharacter(Struct021885b8* self);
+extern "C" void CharacterCreationUI_LoadTabGraphics(void* self);
 
 typedef void (CharacterCreationUI::*CreationTabHandler)();
 

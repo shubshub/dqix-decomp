@@ -1,55 +1,55 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8 { int unknown_0_; union { int unknown_0_; float unknown1_0_; } unknown_4_; };
+struct Variant02030b0c { int tag; union { int i; float f; } u; };
 
 struct Struct_021e12cc {
-    int unknown_0_;
-    int unknown_4_;
-    short unknown_8_;
-    unsigned short unknown_a_;
-    unsigned short unknown_c_;
-    unsigned char unknown_e_0_ : 1;
+    int a;
+    int b;
+    short c;
+    unsigned short d;
+    unsigned short e;
+    unsigned char bit0 : 1;
     unsigned char unknown_e_1_ : 1;
-    unsigned char unknown_e_2_ : 6;
-    unsigned char unknown_f_;
+    unsigned char rest : 6;
+    unsigned char f;
 };
-extern "C" void func_ov023_021e12cc(struct Struct_021e12cc* arg0);
-extern "C" void func_ov023_021e1410(void* arg0, struct Struct_021e12cc* arg1);
+extern "C" void func_ov023_021e12cc(struct Struct_021e12cc* s);
+extern "C" void func_ov023_021e1410(void* a, struct Struct_021e12cc* s);
 
 struct Struct_ov023_021ffa34_2 {
-    short unknown_0_;
-    short unknown_2_;
-    short* unknown_4_;
-    int unknown_8_;
+    short count;
+    short pad2;
+    short* arr;
+    int pad8;
     void* unknown_c_;
 };
 extern struct Struct_ov023_021ffa34_2 data_ov023_021ffa34;
 
 // USA: func_ov023_021e11ec
-extern "C" ARM int func_ov023_021e11ec(void* arg0) {
-    struct Struct_0201c1c8* var0 = (struct Struct_0201c1c8*)arg0;
-    short var1 = (short)((Script::Parameter*)var0)->ToInt();
+extern "C" ARM int func_ov023_021e11ec(void* objRaw) {
+    struct Variant02030b0c* obj = (struct Variant02030b0c*)objRaw;
+    short v0 = (short)((Script::Parameter*)obj)->ToInt();
 
-    if (data_ov023_021ffa34.unknown_4_ != 0 && data_ov023_021ffa34.unknown_0_ != 0) {
-        int var2 = 0;
-        short var3;
-        for (var3 = 0; var3 < data_ov023_021ffa34.unknown_0_; var3++) {
-            if (var1 == data_ov023_021ffa34.unknown_4_[var3]) {
-                var2 = 1;
+    if (data_ov023_021ffa34.arr != 0 && data_ov023_021ffa34.count != 0) {
+        int found = 0;
+        short i;
+        for (i = 0; i < data_ov023_021ffa34.count; i++) {
+            if (v0 == data_ov023_021ffa34.arr[i]) {
+                found = 1;
                 break;
             }
         }
-        if (var2 == 0) return 1;
+        if (found == 0) return 1;
     }
 
-    struct Struct_021e12cc var4;
-    func_ov023_021e12cc(&var4);
-    var4.unknown_8_ = var1;
-    var4.unknown_a_ = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)var0 + 8)))->ToInt();
-    var4.unknown_c_ = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)var0 + 0x10)))->ToInt();
-    var4.unknown_e_2_ = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)var0 + 0x18)))->ToInt();
-    var4.unknown_f_ = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)var0 + 0x20)))->ToInt();
-    func_ov023_021e1410(data_ov023_021ffa34.unknown_c_, &var4);
+    struct Struct_021e12cc local;
+    func_ov023_021e12cc(&local);
+    local.c = v0;
+    local.d = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 8)))->ToInt();
+    local.e = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 0x10)))->ToInt();
+    local.rest = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 0x18)))->ToInt();
+    local.f = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 0x20)))->ToInt();
+    func_ov023_021e1410(data_ov023_021ffa34.unknown_c_, &local);
     return 1;
 }

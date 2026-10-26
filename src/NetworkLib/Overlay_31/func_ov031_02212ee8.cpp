@@ -15,29 +15,29 @@ void SetIRQInterruptState(int);
 
 // USA: func_ov031_02212ee8
 extern "C" ARM int func_ov031_02212ee8(void) {
-	unsigned int var0 = func_ov031_022134b0();
-	if (var0 == 1) {
-		var0 = func_ov031_022151d4();
-	} else if (var0 < 7) {
+	unsigned int r5 = func_ov031_022134b0();
+	if (r5 == 1) {
+		r5 = func_ov031_022151d4();
+	} else if (r5 < 7) {
 		unsigned int var1 = DisableIRQInterrupts();
-		var0 = func_ov031_02214a04();
-		func_ov031_02213450(var0);
+		r5 = func_ov031_02214a04();
+		func_ov031_02213450(r5);
 		SetIRQInterruptState(var1);
-	} else if (var0 < 9) {
-		var0 = func_ov031_02213c9c();
-	} else if (var0 < 0xa) {
-		var0 = func_ov031_02214928();
-	} else if (var0 < 0x10) {
-		var0 = func_ov031_0221525c();
-	} else if (var0 == 0x11) {
-		var0 = func_ov031_02214334();
+	} else if (r5 < 9) {
+		r5 = func_ov031_02213c9c();
+	} else if (r5 < 0xa) {
+		r5 = func_ov031_02214928();
+	} else if (r5 < 0x10) {
+		r5 = func_ov031_0221525c();
+	} else if (r5 == 0x11) {
+		r5 = func_ov031_02214334();
 	}
-	func_ov031_02213450(var0);
-	if (var0 == 0x10) {
-		int var2 = func_ov031_022135f4();
+	func_ov031_02213450(r5);
+	if (r5 == 0x10) {
+		int t = func_ov031_022135f4();
 		func_ov031_022135bc();
-		return var2;
-	} else if (var0 != 0x12) {
+		return t;
+	} else if (r5 != 0x12) {
 		return 0;
 	} else {
 		func_ov031_022135bc();

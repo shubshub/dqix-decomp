@@ -11,13 +11,13 @@ extern "C" int func_020d41e8();
 
 struct Struct_020d424c
 {
-    unsigned short unknown_0_;
+    unsigned short state;
 };
 
 struct Struct_020d424c_2
 {
     void* unknown_0_;
-    Struct_020d424c* unknown_4_;
+    Struct_020d424c* status;
 };
 
 struct Struct_021142e0_3
@@ -31,22 +31,22 @@ extern Struct_021142e0_3 data_021142e0;
 // USA: func_020d424c
 extern "C" ARM int func_020d424c(int arg0, ...)
 {
-    int var0 = func_020d41e8();
-    unsigned short var1;
-    Type_02001bdc var2;
-    if (var0 != 0)
-        return var0;
-    InvalidateDataCacheRange(&data_021142e0.unknown_4_->unknown_4_->unknown_0_, sizeof(unsigned short));
-    var1 = data_021142e0.unknown_4_->unknown_4_->unknown_0_;
-    va_start(var2, arg0);
-    var0 = 3;
+    int result = func_020d41e8();
+    unsigned short state;
+    Type_02001bdc args;
+    if (result != 0)
+        return result;
+    InvalidateDataCacheRange(&data_021142e0.unknown_4_->status->state, sizeof(unsigned short));
+    state = data_021142e0.unknown_4_->status->state;
+    va_start(args, arg0);
+    result = 3;
     if (arg0 == 0)
-        return var0;
+        return result;
     do
     {
-        if (va_arg(var2, unsigned long) == var1)
-            var0 = 0;
+        if (va_arg(args, unsigned long) == state)
+            result = 0;
     } while (--arg0 != 0);
-    va_end(var2);
-    return var0;
+    va_end(args);
+    return result;
 }

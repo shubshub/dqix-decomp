@@ -4,38 +4,38 @@
 
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void func_ov017_021acd7c(void* obj);
-void InitCombatPairAndResetGlobal_021adb50(char* obj);
+extern "C" void func_ov017_021adb50(char* obj);
 struct TailList020469b4;
 struct TailNode020469b4;
-void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
+extern "C" void func_020469b4(struct TailList020469b4* list, struct TailNode020469b4* node);
 struct Field3f8Struct;
-Field3f8Struct* GameState_GetZoneTransition(GameState* bs);
+extern "C" Field3f8Struct* GameState_GetZoneTransition(GameState* bs);
 extern "C" void VectorizedMemset(void* dst, int value, unsigned int length);
 struct ListHead02046b60;
-int ListContainsId(struct ListHead02046b60* list, int id);
+extern "C" int func_02046b60(struct ListHead02046b60* list, int id);
 extern "C" void func_02046a8c(void* list, void* node);
-int GameState_UpdatePlayClocks(int commit);
+extern "C" int GameState_UpdatePlayClocks(int commit);
 extern "C" void func_ov017_021d1118(int a, int b, int c, int d);
 
-struct Struct_ov017_0219577c_2 {
-    unsigned short unknown_0_;
+struct Field3f8Struct0219577c {
+    unsigned short field_0;
     unsigned char unknown_2_;
-    unsigned char unknown_3_;
+    unsigned char pad3;
     unsigned char unknown_4_;
-    unsigned char unknown_5_[2];
-    unsigned char unknown_7_;
-    unsigned char unknown_8_;
+    unsigned char pad5[2];
+    unsigned char active;
+    unsigned char field_8;
     unsigned char unknown_9_;
     unsigned char unknown_a_;
     signed char unknown_b_;
     unsigned char unknown_c_;
     unsigned char unknown_d_[3];
-    Vector3i unknown_10_;
-    short unknown_1c_;
+    Vector3i pos;
+    short angle;
     short unknown_1e_;
-    int unknown_20_;
+    int field_20;
     int unknown_24_;
-    int unknown_28_;
+    int field_28;
     int unknown_2c_;
     unsigned char unknown_30_[0x35];
     unsigned char unknown_65_;
@@ -45,12 +45,12 @@ struct Struct_ov017_0219577c_2 {
 };
 
 struct Struct_ov017_0219577c {
-    unsigned char unknown_0_[2];
-    unsigned char unknown_2_;
+    unsigned char pad0[2];
+    unsigned char busy;
 #if defined(jpn)
-    unsigned char unknown_3_[0x20c];
+    unsigned char pad3[0x20c];
 #else
-    unsigned char unknown1_3_[0x27c];
+    unsigned char pad3[0x27c];
 #endif
     unsigned char unknown_27f_;
     unsigned char unknown_280_;
@@ -59,62 +59,62 @@ struct Struct_ov017_0219577c {
 };
 
 // USA: func_ov017_0219577c
-extern "C" ARM void func_ov017_0219577c(unsigned char arg0, int arg1, int arg2) {
+extern "C" ARM void func_ov017_0219577c(unsigned char mode, int arg1, int append) {
 #if defined(jpn)
- enum {Enum_ov017_0219577c_1788=0x4ec,Enum_ov017_0219577c_2848=0x900,Enum_ov017_0219577c_3236=0xa84,Enum_ov017_0219577c_1804=0x4fc,Enum_ov017_0219577c_2968=0x978};
+ enum {regionalList=0x4ec,regionalNode=0x900,Enum_ov017_0219577c_3236=0xa84,Enum_ov017_0219577c_1804=0x4fc,Enum_ov017_0219577c_2968=0x978};
 #else
- enum {Enum_ov017_0219577c_1788=0x6fc,Enum_ov017_0219577c_2848=0xb20,Enum_ov017_0219577c_3236=0xca4,Enum_ov017_0219577c_1804=0x70c,Enum_ov017_0219577c_2968=0xb98};
+ enum {regionalList=0x6fc,regionalNode=0xb20,Enum_ov017_0219577c_3236=0xca4,Enum_ov017_0219577c_1804=0x70c,Enum_ov017_0219577c_2968=0xb98};
 #endif
     GameState* gs = GameState::GetInstance();
     char* ctx = (char*)GetGameResources();
     void* list = *(void**)(ctx + 0x3000 + regionalList);
     Zone3D_GetInstance();
-    Node0219577c* node = *(Node0219577c**)(ctx + 0x3000 + regionalNode);
+    Struct_ov017_0219577c* node = *(Struct_ov017_0219577c**)(ctx + 0x3000 + regionalNode);
     if (node->busy) return;
 
-    func_ov017_021acd7c(var3);
-    var3->unknown_280_ = 1;
-    var3->unknown_27f_ = arg0;
-    var3->unknown_281_ = arg1 == 0;
-    var3->unknown_282_ = arg2 == 0;
-    if (arg0 == 0 && arg2 != 0) {
-        func_ov017_021adb50((char*)var3);
+    func_ov017_021acd7c(node);
+    node->unknown_280_ = 1;
+    node->unknown_27f_ = mode;
+    node->unknown_281_ = arg1 == 0;
+    node->unknown_282_ = append == 0;
+    if (mode == 0 && append != 0) {
+        func_ov017_021adb50((char*)node);
     }
-    func_020469b4((struct Struct_0201bdac_2*)var2, (struct Struct_0201bdac*)var3);
+    func_020469b4((struct TailList020469b4*)list, (struct TailNode020469b4*)node);
 
-    if (resetField) {
+    if (arg1) {
         Field3f8Struct0219577c* field = (Field3f8Struct0219577c*)GameState_GetZoneTransition(gs);
         VectorizedMemset(field, 0, 0x70);
-        field->field_4 = 1;
+        field->unknown_4_ = 1;
         field->field_8 = 1;
-        field->field_9 = 1;
-        field->field_b = -1;
+        field->unknown_9_ = 1;
+        field->unknown_b_ = -1;
         field->field_20 = -1;
-        field->field_24 = -1;
+        field->unknown_24_ = -1;
         field->field_28 = -1;
-        field->field_2c = -1;
-        field->field_1e = -1;
-        field->field_c = 0;
-        field->field_6c = -1;
-        field->field_2 = 1;
+        field->unknown_2c_ = -1;
+        field->unknown_1e_ = -1;
+        field->unknown_c_ = 0;
+        field->unknown_6c_ = -1;
+        field->unknown_2_ = 1;
         field->field_0 = 0xc3b5;
         field->active = 1;
         field->angle = 0;
         field->pos.x = 0x48cc;
         field->pos.y = 0x199;
         field->pos.z = -0x733;
-        field->field_66 = 1;
-        field->field_65 = 1;
+        field->unknown_66_ = 1;
+        field->unknown_65_ = 1;
 
-        if (func_02046b60((struct Struct_02038598_5*)var2, 0x4e)) {
-            func_02046a8c(var2, *(void**)(var1 + 0x3000 + Enum_ov017_0219577c_3236));
+        if (func_02046b60((struct ListHead02046b60*)list, 0x4e)) {
+            func_02046a8c(list, *(void**)(ctx + 0x3000 + Enum_ov017_0219577c_3236));
         }
-        if (func_02046b60((struct Struct_02038598_5*)var2, 3)) {
-            func_02046a8c(var2, *(void**)(var1 + 0x3000 + Enum_ov017_0219577c_1804));
+        if (func_02046b60((struct ListHead02046b60*)list, 3)) {
+            func_02046a8c(list, *(void**)(ctx + 0x3000 + Enum_ov017_0219577c_1804));
         }
     }
-    if (func_02046b60((struct Struct_02038598_5*)var2, 0x40)) {
-        func_02046a8c(var2, *(void**)(var1 + 0x3000 + Enum_ov017_0219577c_2968));
+    if (func_02046b60((struct ListHead02046b60*)list, 0x40)) {
+        func_02046a8c(list, *(void**)(ctx + 0x3000 + Enum_ov017_0219577c_2968));
     }
     GameState_UpdatePlayClocks(1);
     if (mode) {

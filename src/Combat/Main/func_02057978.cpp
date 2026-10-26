@@ -2,15 +2,15 @@
 #include "GameState/GameState.h"
 
 struct Struct_02057930;
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
-extern "C" void func_02057930(Struct_02057930* arg0);
+extern "C" void func_0200fd48(GameState* battleStruct, int id);
+extern "C" void func_02057930(Struct_02057930* p);
 
 // USA: func_02057978
-extern "C" ARM void func_02057978(Struct_02057930* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1;
-    for (var1 = 0; var1 < 16; var1++) {
-        func_0200fd48(var0, var1 + 0xd0);
+extern "C" ARM void func_02057978(Struct_02057930* p) {
+    GameState* bs = GameState::GetInstance();
+    int i;
+    for (i = 0; i < 16; i++) {
+        func_0200fd48(bs, i + 0xd0);
     }
-    func_02057930(arg0);
+    func_02057930(p);
 }

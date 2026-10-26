@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 
 // USA: func_ov024_021f6e04
-extern "C" ARM int func_ov024_021f6e04(void* arg0) {
-	void* var0 = *(void**)((char*)arg0 + 0x8);
-	if (var0 != NULL) {
-		unsigned int var1 = *(unsigned short*)((char*)var0 + 0xa);
-		unsigned int var2 = (var1 << 0x15) >> 0x1c;
-		if (var2 == 8) {
-			*(float*)((char*)arg0 + 0x1c) = *(float*)((char*)arg0 + 0x14) * 1.5f;
-			*(float*)((char*)arg0 + 0x20) = *(float*)((char*)arg0 + 0x18) * 1.5f;
+extern "C" ARM int func_ov024_021f6e04(void* self) {
+	void* p = *(void**)((char*)self + 0x8);
+	if (p != NULL) {
+		unsigned int h = *(unsigned short*)((char*)p + 0xa);
+		unsigned int bits = (h << 0x15) >> 0x1c;
+		if (bits == 8) {
+			*(float*)((char*)self + 0x1c) = *(float*)((char*)self + 0x14) * 1.5f;
+			*(float*)((char*)self + 0x20) = *(float*)((char*)self + 0x18) * 1.5f;
 		}
 	}
 	return 1;

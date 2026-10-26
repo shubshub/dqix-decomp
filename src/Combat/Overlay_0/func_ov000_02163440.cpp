@@ -7,8 +7,8 @@ enum { Enum_ov000_02163440_28228 = 0x6e44 };
 #endif
 
 // USA: func_ov000_02163440
-extern "C" ARM void func_ov000_02163440(void* arg0, short arg1, unsigned short arg2, unsigned short arg3) {
-    *(unsigned short*)((char*)arg0 + Enum_ov000_02163440_28228) = arg1;
-    *(unsigned short*)((char*)arg0 + Enum_ov000_02163440_28228 + 2) = arg2;
-    *(unsigned short*)((char*)arg0 + Enum_ov000_02163440_28228 + 4) = arg3;
+extern "C" ARM void func_ov000_02163440(void* obj, short a, unsigned short b, unsigned short c) {
+    *(unsigned short*)((char*)obj + Enum_ov000_02163440_28228) = a;
+    *(unsigned short*)((char*)obj + Enum_ov000_02163440_28228 + 2) = b;
+    *(unsigned short*)((char*)obj + Enum_ov000_02163440_28228 + 4) = c;
 }

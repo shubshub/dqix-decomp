@@ -10,9 +10,9 @@ struct Entry {
 #endif
     int unk30;
     unsigned short unk34;
-    unsigned short unk36;
-    unsigned short unk38;
-    unsigned short unk3a;
+    unsigned short unknown_36_;
+    unsigned short unknown_38_;
+    unsigned short unknown_3a_;
 };
 #if defined(jpn)
 #define RG(u, j) (j)
@@ -31,13 +31,13 @@ extern "C" ARM void func_ov002_0215b814(char *self) {
     for (i = 0; i < 4; i++) {
         e = (struct Entry *) (self + RG(0x1ab0, 0x1a08)) + i;
         memset(e, 0, 4);
-        GameObject *c = GetCombatantWithFlag0x100_0200ff1c(gs, i);
+        GameObject *c = func_0200ff1c(gs, i);
         if (c != 0 && c->baseStats_->name[0] != 0) {
             sprintf(e->name, c->baseStats_->name);
             e->unk34 = c->combatFields_.savedState_130_->hp;
-            e->unk36 = c->baseStats_->primaryStats.maxHP;
-            e->unk38 = c->combatFields_.savedState_130_->mp;
-            e->unk3a = c->baseStats_->primaryStats.maxMP;
+            e->unknown_36_ = c->baseStats_->primaryStats.maxHP;
+            e->unknown_38_ = c->combatFields_.savedState_130_->mp;
+            e->unknown_3a_ = c->baseStats_->primaryStats.maxMP;
             e->unk30 = c->combatFields_.savedState_130_->flags;
         }
     }

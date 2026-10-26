@@ -28,7 +28,7 @@ struct Obj0203bdb0 {
 };
 
 // Main, originally SyncMainSubOam0203bdb0 (USA 0x0203bdb0, EUR 0x0203bdc0, JPN 0x0203b808)
-ARM void OamManager_UploadBuffers(struct Obj0203bdb0* oamManager) {
+extern "C" ARM void OamManager_UploadBuffers(struct Obj0203bdb0* oamManager) {
     if (oamManager->uploadMainOam != 0) {
         LoadToMainOAM((int)&data_021052b4, 0, kOamSize);
         DMAMemsetSynchronous(3, (unsigned int)&data_021052b4, kOffscreenY, kOamSize);

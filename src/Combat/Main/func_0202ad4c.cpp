@@ -3,15 +3,15 @@
 extern char data_020fe9cc;
 
 // USA: func_0202ad4c
-extern "C" ARM void func_0202ad4c(int arg0, int arg1, int arg2, char* arg3) {
-    int var0 = arg0;
-    while (*arg3 != 0) {
-        *(unsigned short*)((&data_020fe9cc + (arg1 << 6)) + var0 * 2) =
-            (unsigned short)(signed char)*arg3 | (unsigned short)(arg2 << 12);
-        var0++;
-        if (var0 >= 0x100) {
+extern "C" ARM void func_0202ad4c(int a, int b, int c, char* buf) {
+    int i = a;
+    while (*buf != 0) {
+        *(unsigned short*)((&data_020fe9cc + (b << 6)) + i * 2) =
+            (unsigned short)(signed char)*buf | (unsigned short)(c << 12);
+        i++;
+        if (i >= 0x100) {
             return;
         }
-        arg3 = arg3 + 1;
+        buf = buf + 1;
     }
 }

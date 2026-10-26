@@ -2,24 +2,24 @@
 #include "Resource/GameResources.h"
 
 struct Struct_ov001_0215af34;
-extern "C" void func_ov017_021d6148(Struct_ov001_0215af34* arg0, unsigned int arg1);
-extern "C" void* func_ov017_021bbbe4(void* arg0);
+extern "C" void func_ov017_021d6148(Struct_ov001_0215af34* o, unsigned int v);
+extern "C" void* func_ov017_021bbbe4(void* obj);
 
-struct Struct_ov001_0216089c { int unknown_0_; int *unknown_4_; };
-extern "C" void func_ov017_021d6134(Struct_ov001_0216089c* arg0, int arg1);
+struct Struct_ov001_0216089c { int type; int *ptr; };
+extern "C" void func_ov017_021d6134(Struct_ov001_0216089c* a, int val);
 
 // USA: func_ov001_0216089c
-extern "C" ARM int func_ov001_0216089c(void* arg0) {
+extern "C" ARM int func_ov001_0216089c(void* self) {
 #if defined(jpn)
     enum { Enum_ov001_0216089c_1844 = 0x524 };
 #else
     enum { Enum_ov001_0216089c_1844 = 0x734 };
 #endif
-    char* var0 = (char*)func_ov017_021bbbe4(*(void**)((char*)GetGameResources() + 0x3000 + Enum_ov001_0216089c_1844));
-    if (*(signed char*)var0 < 0) {
+    char* node = (char*)func_ov017_021bbbe4(*(void**)((char*)GetGameResources() + 0x3000 + Enum_ov001_0216089c_1844));
+    if (*(signed char*)node < 0) {
         return 0;
     }
-    func_ov017_021d6134((Struct_ov001_0216089c*)arg0, *(unsigned char*)(var0 + 0x14));
-    func_ov017_021d6148((Struct_ov001_0215af34*)((char*)arg0 + 8), *(unsigned int*)(var0 + 0x18));
+    func_ov017_021d6134((Struct_ov001_0216089c*)self, *(unsigned char*)(node + 0x14));
+    func_ov017_021d6148((Struct_ov001_0215af34*)((char*)self + 8), *(unsigned int*)(node + 0x18));
     return 1;
 }

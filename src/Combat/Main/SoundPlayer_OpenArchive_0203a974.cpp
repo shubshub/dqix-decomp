@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
 struct Obj020bd984;
-void NNS_SndHeapDestroy(struct Obj020bd984*);
-void SoundPlayer_Init(void*);
-extern void* NNS_SndHeapCreate(void* start, unsigned int size);
+extern "C" void NNS_SndHeapDestroy(struct Obj020bd984*);
+extern "C" void SoundPlayer_Init(void*);
+extern "C" void* NNS_SndHeapCreate(void* start, unsigned int size);
 struct Holder020bd110;
-int NNS_SndArcInit(struct Holder020bd110* obj, const char* path, int arg2, int arg3);
+extern "C" int NNS_SndArcInit(struct Holder020bd110* obj, const char* path, int arg2, int arg3);
 extern "C" int NNS_SndArcPlayerSetup(void* obj);
-void NNS_SndArcStrmInit(void* arg0, void* arg1);
+extern "C" void NNS_SndArcStrmInit(void* arg0, void* arg1);
 struct Obj020bdac0;
-int NNS_SndHeapSaveState(struct Obj020bdac0*);
+extern "C" int NNS_SndHeapSaveState(struct Obj020bdac0*);
 
 // The sound player g_sePlayer and g_bgmPlayer both start with (0xb0 bytes): a NitroSystem sound heap, the sound
 // archive opened into it (SoundPlayer_OpenArchive), a sequence handle and a stream handle.
@@ -19,8 +19,8 @@ struct SoundPlayer {
     int seqHandle;
     int streamHandle;
     int baseHeapLevel;          // the heap level saved once the archive was open (SoundPlayer_OpenArchive)
-    short streamId;             // the stream SetKeyAndApplyRecord0203ad14 started, -1 for none
-    int streamResumeMs;         // where UpdateScaleOrApplyRecord0203ae4c paused it
+    short streamId;             // the stream func_0203ad14 started, -1 for none
+    int streamResumeMs;         // where func_0203ae4c paused it
     short pendingArchive;       // the entry SoundPlayer_PlayArchiveEntry deferred, -1 for none
     short pendingEntry;
 };

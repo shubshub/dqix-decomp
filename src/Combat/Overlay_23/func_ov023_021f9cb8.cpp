@@ -5,24 +5,24 @@ extern "C" void* func_ov011_021849c8(void*);
 extern "C" void* func_ov023_021f6880(void*, int);
 
 // USA: func_ov023_021f9cb8
-extern "C" ARM void* func_ov023_021f9cb8(void* arg0, void* arg1, void* arg2) {
-    void* var0;
-    void* var1;
+extern "C" ARM void* func_ov023_021f9cb8(void* unused, void* other, void* node) {
+    void* obj;
+    void* node2;
     unsigned short var2;
-    if (!arg2) {
+    if (!node) {
         return 0;
     }
-    if (func_ov023_021f6f10(arg2) != 8) {
+    if (func_ov023_021f6f10(node) != 8) {
         return 0;
     }
-    var2 = *(unsigned short*)((char*)arg2 + 0x34);
-    var0 = func_ov011_021849c8(arg1);
-    var1 = func_ov023_021f6880(var0, var2);
-    if (!var1) {
+    var2 = *(unsigned short*)((char*)node + 0x34);
+    obj = func_ov011_021849c8(other);
+    node2 = func_ov023_021f6880(obj, var2);
+    if (!node2) {
         return 0;
     }
-    if (func_ov023_021f6f10(var1) != 6) {
+    if (func_ov023_021f6f10(node2) != 6) {
         return 0;
     }
-    return var1;
+    return node2;
 }

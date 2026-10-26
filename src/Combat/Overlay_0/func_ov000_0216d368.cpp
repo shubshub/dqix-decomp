@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
-struct Struct_ov000_0216d368 { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Struct_ov000_0216d368 { int a; int b; int c; };
 
 // USA: func_ov000_0216d368
-extern "C" ARM void func_ov000_0216d368(struct Struct_ov000_0216d368* arg0, int arg1, int arg2, int arg3) {
-    arg0->unknown_0_ = arg1;
-    arg0->unknown_4_ = arg2;
-    arg0->unknown_8_ = arg3;
+extern "C" ARM void func_ov000_0216d368(struct Struct_ov000_0216d368* dst, int a, int b, int c) {
+    dst->a = a;
+    dst->b = b;
+    dst->c = c;
 }

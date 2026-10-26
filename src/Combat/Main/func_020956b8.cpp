@@ -10,10 +10,10 @@ extern const char data_020f1474[] __attribute__((aligned(4)));
 extern Script::OpcodeLookupEntry data_020f141c[];
 
 // USA: func_020956b8
-extern "C" ARM void func_020956b8(struct Struct_020956b8* arg0, SafeAllocator* arg1) {
-    unsigned int var0;
+extern "C" ARM void func_020956b8(struct Struct_020956b8* header, SafeAllocator* allocator) {
+    unsigned int fileSize;
 
-    if (arg1 == 0) {
+    if (allocator == 0) {
         return;
     }
 
@@ -30,13 +30,13 @@ extern "C" ARM void func_020956b8(struct Struct_020956b8* arg0, SafeAllocator* a
 #else
         *(short*)0x020f13d8 = -1;
 #endif
-        arg0->unknown_a0_ = 0;
-        data_02109404.unknown_0_ = 0;
-        Script var2;
-        var2.Initialize();
-        var2.SetOpcodeLookup(data_020f141c);
-        var2.Load(var1, var0);
-        var2.Execute();
+        header->listHead = 0;
+        data_02109404.f0 = 0;
+        Script runner;
+        runner.Initialize();
+        runner.SetOpcodeLookup(data_020f141c);
+        runner.Load(file, fileSize);
+        runner.Execute();
     }
     BackgroundLoader::RemoveLockGlobal();
 }

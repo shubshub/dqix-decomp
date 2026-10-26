@@ -2,49 +2,49 @@
 #include "Input/Input.h"
 
 struct Struct_0205df38 {
-    char unknown_0_[0xa8];
-    short unknown_a8_;
-    short unknown_aa_;
-    short unknown_ac_;
-    short unknown_ae_;
+    char pad0[0xa8];
+    short height;
+    short x;
+    short y;
+    short width;
 };
 
 struct Struct_0205d81c {
-    char unknown_0_[0x98];
+    char pad0[0x98];
     void* unknown_98_;
-    struct Struct_0205df38* unknown_9c_;
+    struct Struct_0205df38* f9c;
 };
 
-extern "C" struct Struct_0205df38* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
+extern "C" struct Struct_0205df38* func_0205d81c(struct Struct_0205d81c* s, int key);
 
 // USA: func_0205df38
-extern "C" ARM int func_0205df38(struct Struct_0205d81c* arg0, int arg1) {
-    int var0, var1;
-    struct Struct_0205df38* var2;
-    short var3, var4, var5, var6;
+extern "C" ARM int func_0205df38(struct Struct_0205d81c* s, int key) {
+    int touchY, touchX;
+    struct Struct_0205df38* e;
+    short y, h, w, x;
     int var7, var8;
 
-    if (arg0->unknown_98_ == 0) return 0;
-    if (arg0->unknown_9c_ == 0) return 0;
+    if (s->unknown_98_ == 0) return 0;
+    if (s->f9c == 0) return 0;
 
     if (!g_touchInput.pressed_) goto zero;
 
-    g_touchInput.GetTouchPoint(&var0, &var1);
+    g_touchInput.GetTouchPoint(&touchY, &touchX);
 
-    var2 = func_0205d81c(arg0, arg1);
-    if (var2 == 0) goto zero;
+    e = func_0205d81c(s, key);
+    if (e == 0) goto zero;
 
-    var3 = var2->unknown_ac_;
-    var4 = var2->unknown_a8_;
-    var5 = var2->unknown_ae_;
-    var6 = var2->unknown_aa_;
-    var7 = (short)(var3 + var4);
-    var8 = (short)(var5 + var6);
+    y = e->y;
+    h = e->height;
+    w = e->width;
+    x = e->x;
+    var7 = (short)(y + h);
+    var8 = (short)(w + x);
 
-    if (var0 > ((var3 << 0x13) >> 0x10)) {
-        if (var0 < ((var7 << 0x13) >> 0x10)) {
-            if (var1 > ((var5 << 0x13) >> 0x10)) {
-                if (var1 < ((var8 << 0x13) >> 0x10)) {
+    if (touchY > ((y << 0x13) >> 0x10)) {
+        if (touchY < ((var7 << 0x13) >> 0x10)) {
+            if (touchX > ((w << 0x13) >> 0x10)) {
+                if (touchX < ((var8 << 0x13) >> 0x10)) {
                     return 1;
                 }
             }

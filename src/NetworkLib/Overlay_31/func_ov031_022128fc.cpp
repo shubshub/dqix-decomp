@@ -15,13 +15,13 @@ typedef void (*Type_ov031_022128fc_2)(void*);
 extern "C" int func_ov031_0223e6c0(Type_ov031_022128fc, Type_ov031_022128fc_2, const char*, const char*, const void*, const void*, void*);
 
 struct Struct_ov031_022128fc {
-    void (*unknown_0_)(int, int, int);
-    char unknown_4_[4];
+    void (*notify)(int, int, int);
+    char pad4[4];
     char unknown_8_[32];
-    char unknown_28_[32];
-    int unknown_48_;
+    char token[32];
+    int active;
     char unknown_4c_[4];
-    char unknown_50_[65];
+    char identity[65];
     char unknown_91_[1];
 };
 
@@ -31,40 +31,40 @@ extern const char data_ov031_02249aa0[];
 
 // USA: func_ov031_022128fc
 extern "C" ARM void func_ov031_022128fc() {
-    char var0[256];
+    char identity[256];
     char var1[400];
     for (;;) {
-        int var2 = func_ov031_02212598();
-        if (var2 == 3) {
-            Struct_ov031_022128fc* var3 = data_ov031_0224e5c0;
-            unsigned int var4 = strlen(var3->unknown_50_);
-            if (var4 + strlen(data_ov031_02249a8c) > 255) {
+        int state = func_ov031_02212598();
+        if (state == 3) {
+            Struct_ov031_022128fc* context = data_ov031_0224e5c0;
+            unsigned int length = strlen(context->identity);
+            if (length + strlen(data_ov031_02249a8c) > 255) {
                 func_ov031_022127c0(0, 8, -1);
                 return;
             }
-            func_020c7170(var0, 256, data_ov031_02249aa0, var3->unknown_50_);
-            var3 = data_ov031_0224e5c0;
-            int var5 = strlen(var3->unknown_91_);
-            if (func_ov031_0221aae4((int)var3->unknown_91_, var5, var1, 400) < 0) {
+            func_020c7170(identity, 256, data_ov031_02249aa0, context->identity);
+            context = data_ov031_0224e5c0;
+            int var5 = strlen(context->unknown_91_);
+            if (func_ov031_0221aae4((int)context->unknown_91_, var5, var1, 400) < 0) {
                 func_ov031_022127c0(0, 8, -1);
                 return;
             }
-            if (!func_ov031_0223e6c0((Type_ov031_022128fc)func_ov031_02212790, (Type_ov031_022128fc_2)func_ov031_022127a8, var0, var1, data_ov031_0224e5c0->unknown_8_, data_ov031_0224e5c0->unknown_28_, (void*)func_ov031_022127c0)) {
+            if (!func_ov031_0223e6c0((Type_ov031_022128fc)func_ov031_02212790, (Type_ov031_022128fc_2)func_ov031_022127a8, identity, var1, data_ov031_0224e5c0->unknown_8_, data_ov031_0224e5c0->token, (void*)func_ov031_022127c0)) {
                 func_ov031_022127c0(0, 8, -1);
                 return;
             }
-            data_ov031_0224e5c0->unknown_48_ = 1;
+            data_ov031_0224e5c0->active = 1;
             func_ov031_022127c0(0, 0, -1);
             return;
         }
-        if (var2 == 4) {
-            int var6;
-            func_ov031_022119b0(&var6);
-            func_ov031_02211b08(14, var6);
-            data_ov031_0224e5c0->unknown_0_(0, 3, -1);
+        if (state == 4) {
+            int result;
+            func_ov031_022119b0(&result);
+            func_ov031_02211b08(14, result);
+            data_ov031_0224e5c0->notify(0, 3, -1);
             return;
         }
-        if (var2 == 5) func_ov031_022127c0(0, 6, -1);
+        if (state == 5) func_ov031_022127c0(0, 6, -1);
         SleepCurrentContext(100);
     }
 }

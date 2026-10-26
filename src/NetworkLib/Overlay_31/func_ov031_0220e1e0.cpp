@@ -4,11 +4,11 @@ extern "C" void func_ov031_0220da1c(int);
 extern "C" void func_ov031_0220db6c(void);
 extern "C" void func_ov031_0220d984(int, int, int, int);
 
-struct Struct_ov031_0220e1e0 { short unknown_0_; unsigned short unknown_2_; };
+struct Struct_ov031_0220e1e0 { short f0; unsigned short type; };
 
 // USA: func_ov031_0220e1e0
-extern "C" ARM void func_ov031_0220e1e0(struct Struct_ov031_0220e1e0 *arg0) {
-    switch (arg0->unknown_2_) {
+extern "C" ARM void func_ov031_0220e1e0(struct Struct_ov031_0220e1e0 *s) {
+    switch (s->type) {
         case 0:
             func_ov031_0220da1c(3);
             func_ov031_0220d984(0, 0, 0, 0x783);

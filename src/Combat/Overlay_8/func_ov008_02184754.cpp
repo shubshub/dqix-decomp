@@ -10,98 +10,98 @@ struct Struct_01ff8b48_26 {
     unsigned char unknown_3_;
 };
 
-struct Struct_01ff8b48_13 {
+struct TextTable {
     int unknown_0_[0x18 / 4];
 };
 
 
-struct Struct_02081870_2 {
+struct TextWindow {
     int unknown_0_[0xbc / 4];
 };
 
-struct Struct_ov006_02158478 {
+struct Canvas {
     int unknown_0_[0xe0 / 4];
 };
 
-struct Struct_ov009_02186e00_2 {
+struct WindowCursor {
     int unknown_0_[0x40 / 4];
 };
 
 struct Struct_ov008_021842a0_2 {
-    SafeAllocator unknown_0_;
+    SafeAllocator allocator_;
     SafeAllocator unknown_14_;
-    SafeAllocator unknown_28_;
-    SafeAllocator unknown_3c_;
-    SafeAllocator unknown_50_;
-    SafeAllocator unknown_64_;
-    SafeAllocator unknown_78_;
+    SafeAllocator textAllocator_;
+    SafeAllocator spriteAllocator_;
+    SafeAllocator iconAllocator_;
+    SafeAllocator modelAllocator_;
+    SafeAllocator titleAllocator_;
     SafeAllocator unknown_8c_;
-    Struct_01ff8b48_13 unknown_a0_;
-    char* unknown_b8_;
+    TextTable texts_;
+    char* text_;
     char unknown_bc_[0x14];
-    Struct_ov003_021594c4 unknown_d0_[3];
-    Struct_02081870_2 unknown_130_;
-    Struct_ov006_02158478 unknown_1ec_[6];
-    void* unknown_72c_;
-    void* unknown_730_;
-    void* unknown_734_;
-    void* unknown_738_;
-    void* unknown_73c_;
-    void* unknown_740_;
-    unsigned char unknown_744_[8];
+    BackgroundGraphics backgrounds_[3];
+    TextWindow window_;
+    Canvas canvases_[6];
+    void* pixels_;
+    void* renderer_;
+    void* sprites_;
+    void* animations_;
+    void* iconRenderer_;
+    void* iconSprite_;
+    unsigned char items_[8];
     unsigned char unknown_74c_;
-    Struct_ov009_02186e00_2 unknown_750_;
-    Object3D unknown_790_;
-    char unknown_83c_[0x2c8];
-    void* unknown_b04_;
+    WindowCursor cursor_;
+    Object3D model_;
+    char camera_[0x2c8];
+    void* titles_;
     void* unknown_b08_;
-    void* unknown_b0c_;
-    signed char unknown_b10_;
-    unsigned char unknown_b11_;
+    void* page_;
+    signed char state_;
+    unsigned char step_;
     unsigned char unknown_b12_;
     unsigned char unknown_b13_;
     short unknown_b14_;
     short unknown_b16_;
-    int unknown_b18_;
+    int flags_;
     int unknown_b1c_;
-    int unknown_b20_;
-    int unknown_b24_;
-    unsigned char unknown_b28_;
+    int task_;
+    int mode_;
+    unsigned char kind_;
     unsigned char unknown_b29_;
     unsigned char unknown_b2a_;
-    int unknown_b2c_;
+    int titleX_;
     const void* unknown_b30_;
     void* unknown_b34_;
     void* unknown_b38_;
-    void* unknown_b3c_;
+    void* guestTitles_;
     Struct_01ff8b48_26 unknown_b40_[2];
 };
 
 typedef void (Struct_ov008_021842a0_2::*Type_02000c9c_12)(unsigned int ticks);
 
 struct Struct_ov008_0218b340 {
-    Type_02000c9c_12 unknown_0_[15];
+    Type_02000c9c_12 states[15];
 };
 
-extern StateTable data_ov008_0218b340;
-extern StateFunction __ptmf_null;
+extern Struct_ov008_0218b340 data_ov008_0218b340;
+extern Type_02000c9c_12 __ptmf_null;
 
 struct Struct_ov008_02184754;
 struct Struct_0209ff6c;
 
-extern "C" void func_ov008_021870e4(Struct_ov008_02184754* arg0, unsigned int arg1);
+extern "C" void func_ov008_021870e4(Struct_ov008_02184754* obj, unsigned int ticks);
 extern "C" void func_0209ff6c(Struct_0209ff6c* arg0);
 
 extern "C" {
-void func_ov008_02188ef0(BattleRecords* self);
+void func_ov008_02188ef0(Struct_ov008_021842a0_2* self);
 unsigned char Window_Update(TextWindow* window, int ticks);
-void func_ov008_02186e4c(BattleRecords* self, unsigned int ticks);
-void func_ov008_0218747c(BattleRecords* self, int index);
-void func_ov023_021eb43c(void* guide);
+void func_ov008_02186e4c(Struct_ov008_021842a0_2* self, unsigned int ticks);
+void func_ov008_0218747c(Struct_ov008_021842a0_2* self, int index);
+void func_ov023_021eb43c(void* arg0);
 }
 
 // USA: func_ov008_02184754
-extern "C" ARM int func_ov008_02184754(Struct_ov008_021842a0_2* arg0)
+extern "C" ARM int func_ov008_02184754(Struct_ov008_021842a0_2* self)
 {
     func_ov008_02188ef0(self);
     unsigned int ticks = GameState::GetInstance()->GetTickCount();
@@ -110,19 +110,19 @@ extern "C" ARM int func_ov008_02184754(Struct_ov008_021842a0_2* arg0)
     Window_Update(&self->window_, ticks);
     func_ov008_02186e4c(self, ticks);
     self->model_.AdvanceEffects();
-    ClearFlagIfDone_021870e4_021870e4((Obj021870e4*)self, ticks);
+    func_ov008_021870e4((Struct_ov008_02184754*)self, ticks);
     func_ov008_0218747c(self, 0);
     func_ov008_0218747c(self, 1);
-    StateTable table = data_ov008_0218b340;
+    Struct_ov008_0218b340 table = data_ov008_0218b340;
     table.states[14] = __ptmf_null;
     if (table.states[self->state_] == NULL)
         return 0;
-    (arg0->*var1.unknown_0_[arg0->unknown_b10_])(var0);
-    if (arg0->unknown_b04_ != NULL)
-        func_0209ff6c((Struct_0209ff6c*)arg0->unknown_b04_);
-    if (arg0->unknown_b08_ != NULL)
-        func_ov023_021eb43c(arg0->unknown_b08_);
-    if (arg0->unknown_b10_ == 14)
+    (self->*table.states[self->state_])(ticks);
+    if (self->titles_ != NULL)
+        func_0209ff6c((Struct_0209ff6c*)self->titles_);
+    if (self->unknown_b08_ != NULL)
+        func_ov023_021eb43c(self->unknown_b08_);
+    if (self->state_ == 14)
         return 1;
     return 0;
 }

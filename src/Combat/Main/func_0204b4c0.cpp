@@ -5,7 +5,7 @@ extern "C" void __clear(void*, unsigned int);
 extern "C" int memcmp(const void*, const void*, unsigned int);
 extern "C" void func_0204a9c4(BackgroundGraphics*, unsigned int, unsigned int, const void*);
 extern "C" void func_0204ac60(void*, unsigned int, const void*);
-void ClearRecordFields(BackgroundScreen*);
+extern "C" void ClearRecordFields(BackgroundScreen*);
 extern "C" void func_0204ade8(BackgroundScreen*, unsigned int, unsigned int, const void*);
 
 // USA: func_0204b4c0

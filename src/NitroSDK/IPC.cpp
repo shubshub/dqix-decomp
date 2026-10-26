@@ -32,9 +32,9 @@ union IPCCommand
 {
     unsigned int word;
     struct {
-        unsigned int unknown_0_0_ : 5;
-        unsigned int unknown_0_5_ : 1;
-        unsigned int unknown_0_6_ : 26;
+        unsigned int channel : 5;
+        unsigned int flag : 1;
+        unsigned int argument : 26;
     } parts;
 };
 
@@ -133,9 +133,9 @@ bool IsIPCCommandHandlerRegistered(int command, IPCSide side)
 IPCResult SendCommandToArm7(int channel, int argument, bool flag)
 {
     IPCCommand command;
-    command.parts.unknown_0_0_ = channel;
-    command.parts.unknown_0_5_ = flag;
-    command.parts.unknown_0_6_ = argument;
+    command.parts.channel = channel;
+    command.parts.flag = flag;
+    command.parts.argument = argument;
 
     if (IPC_FIFO_CONTROL & FIFO_CONTROL_MASK_ERROR)
     {
@@ -191,16 +191,16 @@ void HandleCommandReceivedFromArm7()
         if (result == IPCResult_ReceiveQueueEmpty)
             break;
 
-        if (result == IPCResult_ReceiveError || command.parts.unknown_0_0_ == 0)
+        if (result == IPCResult_ReceiveError || command.parts.channel == 0)
             continue;
 
-        if (ipcArm9HandlerTable[command.parts.unknown_0_0_] != 0)
+        if (ipcArm9HandlerTable[command.parts.channel] != 0)
         {
-            ipcArm9HandlerTable[command.parts.unknown_0_0_](command.parts.unknown_0_0_, command.parts.unknown_0_6_, command.parts.unknown_0_5_);
+            ipcArm9HandlerTable[command.parts.channel](command.parts.channel, command.parts.argument, command.parts.flag);
         }
-        else if (!command.parts.unknown_0_5_)
+        else if (!command.parts.flag)
         {
-            command.parts.unknown_0_5_ = true;
+            command.parts.flag = true;
             if (IPC_FIFO_CONTROL & FIFO_CONTROL_MASK_ERROR)
             {   
                 IPC_FIFO_CONTROL |=

@@ -3,63 +3,63 @@
 #include "NitroSDK/Graphics.h"
 #include "NitroSDK/VRAM.h"
 
-struct Struct_ov001_021626e4 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
+struct Background021626e4 {
+    char unk_0[0x1c];
+    unsigned char screen : 4;
+    unsigned char layer : 4;
     char unknown_1d_[3];
 };
 
 extern "C" int func_ov017_021d612c(void* args);
 extern "C" int func_ov017_021d60f4(void* args);
-unsigned int LoadResourceIntoGlobalBuffer_0215a750(const char* path, void** outPtr);
+extern "C" unsigned int func_ov001_0215a750(const char* path, void** outPtr);
 struct PacRecord;
-int Pac_CountFiles(PacRecord*);
-void* Pac_GetFile(PacRecord*, int, void**, int*);
-void SetBg3ControlFields_02162678(int a, int b, int c, int d);
-void GXS_SetGraphicsMode(unsigned int mode);
-void SetSubBg3ControlFields_021628d4(int a, int b, int c, int d);
+extern "C" int Pac_CountFiles(PacRecord*);
+extern "C" void* Pac_GetFile(PacRecord*, int, void**, int*);
+extern "C" void func_ov001_02162678(int a, int b, int c, int d);
+extern "C" void GXS_SetGraphicsMode(unsigned int mode);
+extern "C" void func_ov001_021628d4(int a, int b, int c, int d);
 struct BackgroundGraphics;
-void Background_Init(BackgroundGraphics*);
+extern "C" void Background_Init(BackgroundGraphics*);
 extern "C" void Background_SetPriority(Background021626e4* background, int a);
-void Background_SetMapSize(unsigned char*, int);
-void Background_SetScroll(BackgroundGraphics*, int, int);
-void OS_WaitVBlankIntr();
-void Background_FlushFile(void*, char*);
-void Background_UploadFile(BackgroundGraphics*, char*);
-void Background_UploadMap(BackgroundGraphics*, void*);
-void Background_Destroy(BackgroundGraphics*);
+extern "C" void Background_SetMapSize(unsigned char*, int);
+extern "C" void Background_SetScroll(BackgroundGraphics*, int, int);
+extern "C" void OS_WaitVBlankIntr();
+extern "C" void Background_FlushFile(void*, char*);
+extern "C" void Background_UploadFile(BackgroundGraphics*, char*);
+extern "C" void Background_UploadMap(BackgroundGraphics*, void*);
+extern "C" void Background_Destroy(BackgroundGraphics*);
 
 extern char data_ov001_02165745[];
 
 // USA: func_ov001_021626e4
-extern "C" ARM int func_ov001_021626e4(void* arg0) {
-    char var0[0x50];
-    void* var1[3];
-    int var2[3];
-    Struct_ov001_021626e4 var3;
-    void* var4;
-    unsigned int var5;
-    void* var6;
-    BackgroundLoader* var7;
+extern "C" ARM int func_ov001_021626e4(void* args) {
+    char path[0x50];
+    void* records[3];
+    int recordSizes[3];
+    Background021626e4 background;
+    void* file;
+    unsigned int fileSize;
+    void* name;
+    BackgroundLoader* loader;
     int var8;
-    int var9;
-    int var10;
-    int var11;
+    int locked;
+    int count;
+    int subScreen;
 
-    var7 = BackgroundLoader::GetInstance();
-    var8 = func_ov017_021d612c(arg0);
-    var11 = func_ov017_021d60f4((char*)arg0 + 8);
-    sprintf(var0, data_ov001_02165745, var8);
+    loader = BackgroundLoader::GetInstance();
+    var8 = func_ov017_021d612c(args);
+    subScreen = func_ov017_021d60f4((char*)args + 8);
+    sprintf(path, data_ov001_02165745, var8);
 
-    var9 = 0;
-    var4 = NULL;
-    var5 = 0;
-    var7->GetLoadedFileByName(var0, &var4, &var5);
-    if (var4 == NULL) {
+    locked = 0;
+    file = NULL;
+    fileSize = 0;
+    loader->GetLoadedFileByName(path, &file, &fileSize);
+    if (file == NULL) {
         BackgroundLoader::AddLockGlobal();
-        var9 = 1;
-        if (func_ov001_0215a750(var0, &var4) == 0) {
+        locked = 1;
+        if (func_ov001_0215a750(path, &file) == 0) {
             BackgroundLoader::RemoveLockGlobal();
             return 0;
         }
@@ -71,7 +71,7 @@ extern "C" ARM int func_ov001_021626e4(void* arg0) {
     }
 
     DISPCNT = (DISPCNT & ~0x1f00) | 0x800;
-    if (var11 == 0) {
+    if (subScreen == 0) {
         func_ov001_02162678(0, 0, 1, 1);
     } else {
         DisableSubBGVRAMBanks();
@@ -94,7 +94,7 @@ extern "C" ARM int func_ov001_021626e4(void* arg0) {
     Background_UploadMap((BackgroundGraphics*)&background, NULL);
     Background_Destroy((BackgroundGraphics*)&background);
 
-    if (var9) {
+    if (locked) {
         BackgroundLoader::RemoveLockGlobal();
     }
     return 1;

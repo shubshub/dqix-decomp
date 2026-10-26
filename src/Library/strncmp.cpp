@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 #include <std_library_functions.h>
 
-ARM int strncmp(const char* arg0, const char* arg1, unsigned int arg2) {
-    if (arg2 != 0) {
+ARM int strncmp(const char* lhs, const char* rhs, unsigned int count) {
+    if (count != 0) {
         do {
-            unsigned char var0 = *arg1++;
-            unsigned char var1 = *arg0++;
-            if (var1 != var0) return var1 - var0;
-            if (var1 == 0) break;
-        } while (--arg2);
+            unsigned char b = *rhs++;
+            unsigned char a = *lhs++;
+            if (a != b) return a - b;
+            if (a == 0) break;
+        } while (--count);
     }
     return 0;
 }

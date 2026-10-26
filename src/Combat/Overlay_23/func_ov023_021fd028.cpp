@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
 struct Struct_ov023_021fd028 {
-	unsigned int unknown_0_;
-	unsigned int unknown_4_;
-	unsigned int unknown_8_;
+	unsigned int a;
+	unsigned int b;
+	unsigned int c;
 };
 
 // USA: func_ov023_021fd028
-extern "C" ARM struct Struct_ov023_021fd028 func_ov023_021fd028(void *arg0) {
-	return *(struct Struct_ov023_021fd028*)((char*)arg0 + 0x64);
+extern "C" ARM struct Struct_ov023_021fd028 func_ov023_021fd028(void *src) {
+	return *(struct Struct_ov023_021fd028*)((char*)src + 0x64);
 }

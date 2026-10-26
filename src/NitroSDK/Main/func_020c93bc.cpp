@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 struct Struct_020c93bc {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    int field0;
+    int field4;
+    int field8;
     char unknown_c_[0x14];
-    int unknown_20_;
+    int field20;
 };
 
 // USA: func_020c93bc
-extern "C" ARM void func_020c93bc(struct Struct_020c93bc* arg0) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_20_ = 0;
+extern "C" ARM void func_020c93bc(struct Struct_020c93bc* p) {
+    p->field0 = 0;
+    p->field8 = 0;
+    p->field20 = 0;
 }

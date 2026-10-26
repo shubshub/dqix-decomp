@@ -10,7 +10,7 @@ enum {
 };
 
 // Main, originally ConvertIndex_02012f68 (USA 0x02012f68, EUR 0x02012f78, JPN 0x02012d30)
-ARM int ZoneVisitedFlag_GetFieldZoneIndex(int zoneId) {
+extern "C" ARM int ZoneVisitedFlag_GetFieldZoneIndex(int zoneId) {
     int index = zoneId - kFirstVisitedZoneId;
     if (index < 0) return -1;
     if (index >= kVisitedZoneCount && index <= kAliasedZoneLast) {

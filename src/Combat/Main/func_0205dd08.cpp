@@ -2,53 +2,53 @@
 #include "Input/Input.h"
 
 struct Struct_0205d81c;
-struct Struct_0205d0e0;
+struct Elem_0205d81c;
 
-struct Elem_0205d81c* Window_GetActivePane(struct Struct_0205d81c* s);
-int WindowPane_IsReady(unsigned char* obj);
+extern "C" struct Elem_0205d81c* Window_GetActivePane(struct Struct_0205d81c* s);
+extern "C" int WindowPane_IsReady(unsigned char* obj);
 
 struct Struct_0205dd08 {
-    char unknown_0_[0x98];
+    char pad0[0x98];
     void* unknown_98_;
-    void* unknown_9c_;
+    void* f9c;
 };
 
-struct Struct_0205dd08_2 {
-    char unknown_0_[0xa8];
-    short unknown_a8_;
-    short unknown_aa_;
-    short unknown_ac_;
-    short unknown_ae_;
-    char unknown_b0_[0x15];
+struct Rect_0205dd08 {
+    char pad0[0xa8];
+    short height;
+    short x;
+    short y;
+    short width;
+    char pad1[0x15];
     unsigned char unknown_c5_;
 };
 
 // USA: func_0205dd08
-extern "C" ARM int func_0205dd08(struct Struct_0205dd08* arg0) {
-    struct Struct_0205dd08_2* var0;
-    int var1, var2;
-    short var3, var4, var5, var6, var7;
+extern "C" ARM int func_0205dd08(struct Struct_0205dd08* obj) {
+    struct Rect_0205dd08* e;
+    int touchY, touchX;
+    short top, right, bottom, tx, ty;
 
-    if (arg0->unknown_98_ == NULL) return 0;
-    if (arg0->unknown_9c_ == NULL) return 0;
+    if (obj->unknown_98_ == NULL) return 0;
+    if (obj->f9c == NULL) return 0;
     if (g_touchInput.pressed_ == 0) return 0;
 
     e = (struct Rect_0205dd08*)Window_GetActivePane((struct Struct_0205d81c*)obj);
     if (e == NULL) return 0;
     if (WindowPane_IsReady((unsigned char*)e) == 0) return 0;
-    if ((e->fc5 & 8) == 0) return 0;
+    if ((e->unknown_c5_ & 8) == 0) return 0;
 
-    g_touchInput.GetTouchPoint(&var1, &var2);
+    g_touchInput.GetTouchPoint(&touchY, &touchX);
 
-    var3 = var0->unknown_ac_ * 8;
-    var5 = var3 + (short)(var0->unknown_a8_ * 8);
-    var4 = (short)(var0->unknown_ae_ * 8) + (short)(var0->unknown_aa_ * 8);
-    var7 = (short)var1;
-    var6 = (short)var2;
+    top = e->y * 8;
+    bottom = top + (short)(e->height * 8);
+    right = (short)(e->width * 8) + (short)(e->x * 8);
+    ty = (short)touchY;
+    tx = (short)touchX;
 
-    if (var4 - 12 < var6 && var6 < var4) {
-        if (var3 < var7 && var7 < var3 + 12) return -1;
-        if (var5 - 12 < var7 && var7 < var5) return 1;
+    if (right - 12 < tx && tx < right) {
+        if (top < ty && ty < top + 12) return -1;
+        if (bottom - 12 < ty && ty < bottom) return 1;
     }
     return 0;
 }

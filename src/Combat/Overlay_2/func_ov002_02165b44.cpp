@@ -6,7 +6,7 @@
 #include "Input/Input.h"
 
 
-struct Struct_0205de24_2;
+struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
 struct SePlayer;
@@ -15,36 +15,36 @@ struct Struct_0205dee8;
 struct Struct_020a83b0;
 struct Struct_02048350_2;
 struct Struct_ov002_02165b44 {
-    char *unknown_0_;
-    int unknown_4_;
-    unsigned int unknown_8_0_ : 8;
-    unsigned int unknown_9_0_ : 2;
-    unsigned int unknown_9_2_ : 2;
-    unsigned int unknown_9_4_ : 20;
+    char *name;
+    int unk4;
+    unsigned int lo8 : 8;
+    unsigned int b8 : 2;
+    unsigned int b10 : 2;
+    unsigned int rest : 20;
 };
 struct TailList020469b4;
 struct TailNode020469b4;
-void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow, unsigned char keyHigh);
-int Window_GetSelectedIndex(struct Struct_0205c570 *s);
-int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
-void SePlayer_Play(struct SePlayer *o, int a, int b);
-int CheckFlagOrThreshold_02161b48(char *base, int a);
-void Window_SetPanePalette(struct Struct_0205d81c *s, int a, int b);
-void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
-void ClearMatchingEntry_02156ff0(unsigned char *self, int v);
-int GameState_GetLeaderIndex(GameState *gs);
-GameObject *GetCombatantChecked_0200ff94(GameState *gs, int id);
-int Scenario_TestFlag(int unused, unsigned char *arr, int index);
-char *FindEntryByByteId020a83b0(struct List020a83b0 *l, int id);
-char *SearchBothTables02079e2c(char *t, int id);
-void ConsumeCounter02048350(struct Obj02048350 *o, int n);
-int LinkSession_IsActive(int *p);
-void *GameState_GetZoneTransition(GameState *state);
+extern "C" void func_0205de24(struct Struct0205de24 *obj, unsigned char keyLow, unsigned char keyHigh);
+extern "C" int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+extern "C" int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
+extern "C" void SePlayer_Play(struct SePlayer *o, int a, int b);
+extern "C" int func_ov002_02161b48(char *base, int a);
+extern "C" void Window_SetPanePalette(struct Struct_0205d81c *s, int a, int b);
+extern "C" void func_0205dee8(struct Struct_0205dee8 *o, int v);
+extern "C" void func_ov002_02156ff0(unsigned char *self, int v);
+extern "C" int GameState_GetLeaderIndex(GameState *gs);
+extern "C" GameObject *func_0200ff94(GameState *gs, int id);
+extern "C" int Scenario_TestFlag(int unused, unsigned char *arr, int index);
+extern "C" char *func_020a83b0(struct Struct_020a83b0 *l, int id);
+extern "C" char *func_02079e2c(char *t, int id);
+extern "C" void func_02048350(struct Struct_02048350_2 *o, int n);
+extern "C" int LinkSession_IsActive(int *p);
+extern "C" void *GameState_GetZoneTransition(GameState *state);
 extern "C" void VectorizedMemset(void *dst, int value, unsigned int length);
-void *GameState_SetZoneTransition(void *obj, const void *src);
-void InitAndInsertNode_021acd30(char *g, unsigned char a, unsigned char b, unsigned char c);
-void FieldTask_InitEnterZone(unsigned char *p, int v);
-void AppendNodeToTail(struct TailList020469b4 *l, struct TailNode020469b4 *n);
+extern "C" void *GameState_SetZoneTransition(void *obj, const void *src);
+extern "C" void func_ov017_021acd30(char *g, unsigned char a, unsigned char b, unsigned char c);
+extern "C" void FieldTask_InitEnterZone(unsigned char *p, int v);
+extern "C" void func_020469b4(struct TailList020469b4 *l, struct TailNode020469b4 *n);
 extern "C" void func_ov002_02161cf0(char *base);
 extern "C" void func_ov002_0215f170(char *base);
 extern "C" void func_ov002_02161b98(char *base);
@@ -60,12 +60,12 @@ extern "C" void func_ov017_021d1a18(int a, int b, int c, int d);
 extern "C" char g_sePlayer[];
 
 // USA: func_ov002_02165b44
-extern "C" ARM void func_ov002_02165b44(char *arg0) {
+extern "C" ARM void func_ov002_02165b44(char *base) {
 #if defined(jpn)
     int state = *(int *) (base + 0x1a88);
     if (state == 0) {
         *(short *) (base + 0x1ac4) = 0;
-        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (base + 0xe20), 0, 2);
+        func_0205de24((struct Struct0205de24 *) (base + 0xe20), 0, 2);
         func_ov002_02161cf0(base);
         func_ov002_0215f170(base);
         *(int *) (base + 0x1a88) += 1;
@@ -73,13 +73,13 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
         *(unsigned int *) (base + 0x22ac) |= 4;
         func_ov002_02161b98(base);
         *(short *) (base + 0x1ac4) = Window_GetSelectedIndex((struct Struct_0205c570 *) (base + 0xe20));
-        int ta                            = g_keyManager.TestKeysPressed(0x601);
+        int var1                            = g_keyManager.TestKeysPressed(0x601);
         int tb = Window_IsSelectionTouched((struct Obj_0205da38*)(base + 0xe20), 0x14);
-        if ((ta | tb) ? 1 : 0) {
+        if ((var1 | tb) ? 1 : 0) {
             GameState *gs = GameState::GetInstance();
             int id        = *(signed char *) (base + 0x1ae8);
             if (id == 4) id = GameState_GetLeaderIndex(gs);
-            GameObject *m = GetCombatantChecked_0200ff94(gs, id);
+            GameObject *m = func_0200ff94(gs, id);
             if (m == NULL) return;
             *(unsigned char *) (base + 0xed8) = *(int *) (base + 0x1a80);
             *(unsigned int *) (base + 0x22ac) &= ~4;
@@ -100,7 +100,7 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
             }
             *(short *) (base + 0x1af0) = 0x232d;
             if (kind == 2) {
-                char *e = FindEntryByByteId020a83b0(*(struct List020a83b0 **) (base + 0x22a4),
+                char *e = func_020a83b0(*(struct Struct_020a83b0 **) (base + 0x22a4),
                                                     *(short *) (base + 0x1ac4));
                 if (e != NULL) {
                     int *rec                          = LinkSession_GetInstance();
@@ -117,10 +117,10 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                                             *(short *) (base + 0x1ab0), 0);
                     } else {
                         SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
-                        char *t = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), 0xca);
-                        ConsumeCounter02048350(
-                            (struct Obj02048350 *) GetCombatantChecked_0200ff94(gs, *(signed char *) (base + 0x1ae8)),
-                            ((struct TE5b44 *) t)->lo8);
+                        char *t = func_02079e2c((char*)func_020797dc(), 0xca);
+                        func_02048350(
+                            (struct Struct_02048350_2 *) func_0200ff94(gs, *(signed char *) (base + 0x1ae8)),
+                            ((struct Struct_ov002_02165b44 *) t)->lo8);
                         if (LinkSession_IsActive(rec)) func_ov017_021c9e00(*(signed char *) (base + 0x1ae8), 0, 0, 1);
                     }
                     unsigned char *q = (unsigned char *) GameState_GetZoneTransition(gs);
@@ -156,40 +156,40 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                         func_ov017_021d1a18(*(short *) (e + 0x1a), *(short *) (e + 0x1c), 0, 0);
                     }
                     char *g = (char *) GetGameResources();
-                    InitAndInsertNode_021acd30(g, 0, 0, 0);
-                    struct TailList020469b4 *tl;
+                    func_ov017_021acd30(g, 0, 0, 0);
+                    struct TailList020469b4 *var17;
                     unsigned char *node = *(unsigned char **) (g + 0x34fc);
-                    tl                  = *(struct TailList020469b4 **) (g + 0x34ec);
+                    var17                  = *(struct TailList020469b4 **) (g + 0x34ec);
                     FieldTask_InitEnterZone(node, 0);
-                    AppendNodeToTail(tl, (struct TailNode020469b4 *) node);
+                    func_020469b4(var17, (struct TailNode020469b4 *) node);
                     return;
                 }
-                var8 = 0;
-            } else if (var8 == 1) {
-                *(short *) (arg0 + 0x1af2) = -1;
-                *(int *) (arg0 + 0x1a80)  = 0x29;
-                *(int *) (arg0 + 0x1a84)  = 0x2e;
-                if (*(short *) (arg0 + 0x1aea) == 0x5603) {
-                    *(short *) (arg0 + 0x1af0)          = 0x7972;
-                    *(short *) (arg0 + 0x1af2)          = -1;
-                    *(short *) (arg0 + 0x22b8)          = -1;
-                    *(unsigned char *) (arg0 + 0x22ba) = 0;
-                    if (*(unsigned int *) (arg0 + 0x22ac) & 1) func_ov023_021dca88(arg0 + 0x38);
+                kind = 0;
+            } else if (kind == 1) {
+                *(short *) (base + 0x1af2) = -1;
+                *(int *) (base + 0x1a80)  = 0x29;
+                *(int *) (base + 0x1a84)  = 0x2e;
+                if (*(short *) (base + 0x1aea) == 0x5603) {
+                    *(short *) (base + 0x1af0)          = 0x7972;
+                    *(short *) (base + 0x1af2)          = -1;
+                    *(short *) (base + 0x22b8)          = -1;
+                    *(unsigned char *) (base + 0x22ba) = 0;
+                    if (*(unsigned int *) (base + 0x22ac) & 1) func_ov023_021dca88(base + 0x38);
                 } else {
                     SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                 }
                 func_ov017_021acd30((char *) GetGameResources(), 0, 0, 1);
                 return;
             }
-            if (var8 == 0) {
-                if (*(short *) (arg0 + 0x1aea) == 0x5603) {
-                    *(short *) (arg0 + 0x1ac4)          = -1;
-                    *(short *) (arg0 + 0x1af0)          = 0x7936;
-                    *(short *) (arg0 + 0x1af2)          = -1;
-                    *(short *) (arg0 + 0x22b8)          = 0x7919;
-                    *(unsigned char *) (arg0 + 0x22ba) = 1;
-                    *(int *) (arg0 + 0x1a80)           = 0x29;
-                    *(int *) (arg0 + 0x1a84)           = 5;
+            if (kind == 0) {
+                if (*(short *) (base + 0x1aea) == 0x5603) {
+                    *(short *) (base + 0x1ac4)          = -1;
+                    *(short *) (base + 0x1af0)          = 0x7936;
+                    *(short *) (base + 0x1af2)          = -1;
+                    *(short *) (base + 0x22b8)          = 0x7919;
+                    *(unsigned char *) (base + 0x22ba) = 1;
+                    *(int *) (base + 0x1a80)           = 0x29;
+                    *(int *) (base + 0x1a84)           = 5;
                 } else {
                     *(short *) (base + 0x22b8)          = 0x2338;
                     *(unsigned char *) (base + 0x22ba) = 1;
@@ -198,16 +198,16 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                     *(int *) (base + 0x1a84) = 0x12;
                 }
             }
-        } else if (func_ov002_02161b48(arg0, 1)) {
-            *(short *) (arg0 + 0x1ac4) = -1;
-            if (*(short *) (arg0 + 0x1aea) == 0x5603) {
-                *(short *) (arg0 + 0x1aea) = -1;
-                func_ov002_02156ff0((unsigned char *) arg0, 5);
+        } else if (func_ov002_02161b48(base, 1)) {
+            *(short *) (base + 0x1ac4) = -1;
+            if (*(short *) (base + 0x1aea) == 0x5603) {
+                *(short *) (base + 0x1aea) = -1;
+                func_ov002_02156ff0((unsigned char *) base, 5);
             } else {
                 *(short *) (base + 0x1aee) = -1;
-                ClearMatchingEntry_02156ff0((unsigned char *) base, 0x14);
+                func_ov002_02156ff0((unsigned char *) base, 0x14);
                 *(int *) (base + 0x1a80) = 0x12;
-                SetFieldB0AndUpdate0205dee8((struct Obj0205dee8 *) (base + 0xe20), 0x12);
+                func_0205dee8((struct Struct_0205dee8 *) (base + 0xe20), 0x12);
                 Window_SetPanePalette((struct Struct_0205d81c *) (base + 0xe20), 0x12, 0);
                 func_ov002_02161cf0(base);
                 func_ov002_0215b9a4(base, *(int *) (base + 0x1a80) & 0xff, 0);
@@ -219,7 +219,7 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
     int state = *(int *) (base + 0x1000 + 0xbc0);
     if (state == 0) {
         *(short *) (base + 0x1b00 + 0xfc) = 0;
-        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (base + 0x2c8 + 0xc00), 0, 2);
+        func_0205de24((struct Struct0205de24 *) (base + 0x2c8 + 0xc00), 0, 2);
         func_ov002_02161cf0(base);
         func_ov002_0215f170(base);
         *(int *) (base + 0x1000 + 0xbc0) += 1;
@@ -227,13 +227,13 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
         *(unsigned int *) (base + 0x2000 + 0x47c) |= 4;
         func_ov002_02161b98(base);
         *(short *) (base + 0x1b00 + 0xfc) = Window_GetSelectedIndex((struct Struct_0205c570 *) (base + 0x2c8 + 0xc00));
-        int ta                            = g_keyManager.TestKeysPressed(0x601);
+        int var20                            = g_keyManager.TestKeysPressed(0x601);
         int tb = Window_IsSelectionTouched((struct Obj_0205da38*)(base + 0x2c8 + 0xc00), 0x14);
-        if ((ta | tb) ? 1 : 0) {
+        if ((var20 | tb) ? 1 : 0) {
             GameState *gs = GameState::GetInstance();
             int id        = *(signed char *) (base + 0x1c00 + 0x20);
             if (id == 4) id = GameState_GetLeaderIndex(gs);
-            GameObject *m = GetCombatantChecked_0200ff94(gs, id);
+            GameObject *m = func_0200ff94(gs, id);
             if (m == NULL) return;
             *(unsigned char *) (base + 0xf80) = *(int *) (base + 0x1000 + 0xbb8);
             *(unsigned int *) (base + 0x2000 + 0x47c) &= ~4;
@@ -254,7 +254,7 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
             }
             *(short *) (base + 0x1c00 + 0x28) = 0x232d;
             if (kind == 2) {
-                char *e = FindEntryByByteId020a83b0(*(struct List020a83b0 **) (base + 0x2000 + 0x474),
+                char *e = func_020a83b0(*(struct Struct_020a83b0 **) (base + 0x2000 + 0x474),
                                                     *(short *) (base + 0x1b00 + 0xfc));
                 if (e != NULL) {
                     int *rec                          = LinkSession_GetInstance();
@@ -271,10 +271,10 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                                             *(short *) (base + 0x1b00 + 0xe8), 0);
                     } else {
                         SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
-                        char *t = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), 0xca);
-                        ConsumeCounter02048350(
-                            (struct Obj02048350 *) GetCombatantChecked_0200ff94(gs, *(signed char *) (base + 0x1c00 + 0x20)),
-                            ((struct TE5b44 *) t)->lo8);
+                        char *t = func_02079e2c((char*)func_020797dc(), 0xca);
+                        func_02048350(
+                            (struct Struct_02048350_2 *) func_0200ff94(gs, *(signed char *) (base + 0x1c00 + 0x20)),
+                            ((struct Struct_ov002_02165b44 *) t)->lo8);
                         if (LinkSession_IsActive(rec)) func_ov017_021c9e00(*(signed char *) (base + 0x1c00 + 0x20), 0, 0, 1);
                     }
                     unsigned char *q = (unsigned char *) GameState_GetZoneTransition(gs);
@@ -310,40 +310,40 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                         func_ov017_021d1a18(*(short *) (e + 0x1a), *(short *) (e + 0x1c), 0, 0);
                     }
                     char *g = (char *) GetGameResources();
-                    InitAndInsertNode_021acd30(g, 0, 0, 0);
-                    struct TailList020469b4 *tl;
+                    func_ov017_021acd30(g, 0, 0, 0);
+                    struct TailList020469b4 *var36;
                     unsigned char *node = *(unsigned char **) (g + 0x3000 + 0x70c);
-                    tl                  = *(struct TailList020469b4 **) (g + 0x3000 + 0x6fc);
+                    var36                  = *(struct TailList020469b4 **) (g + 0x3000 + 0x6fc);
                     FieldTask_InitEnterZone(node, 0);
-                    AppendNodeToTail(tl, (struct TailNode020469b4 *) node);
+                    func_020469b4(var36, (struct TailNode020469b4 *) node);
                     return;
                 }
-                var27 = 0;
-            } else if (var27 == 1) {
-                *(short *) (arg0 + 0x1c00 + 0x2a) = -1;
-                *(int *) (arg0 + 0x1000 + 0xbb8)  = 0x26;
-                *(int *) (arg0 + 0x1000 + 0xbbc)  = 0x2b;
-                if (*(short *) (arg0 + 0x1c00 + 0x22) == 0x5603) {
-                    *(short *) (arg0 + 0x1c00 + 0x28)          = 0x7972;
-                    *(short *) (arg0 + 0x1c00 + 0x2a)          = -1;
-                    *(short *) (arg0 + 0x2400 + 0x88)          = -1;
-                    *(unsigned char *) (arg0 + 0x2000 + 0x48a) = 0;
-                    if (*(unsigned int *) (arg0 + 0x2000 + 0x47c) & 1) func_ov023_021dca88(arg0 + 0x50);
+                kind = 0;
+            } else if (kind == 1) {
+                *(short *) (base + 0x1c00 + 0x2a) = -1;
+                *(int *) (base + 0x1000 + 0xbb8)  = 0x26;
+                *(int *) (base + 0x1000 + 0xbbc)  = 0x2b;
+                if (*(short *) (base + 0x1c00 + 0x22) == 0x5603) {
+                    *(short *) (base + 0x1c00 + 0x28)          = 0x7972;
+                    *(short *) (base + 0x1c00 + 0x2a)          = -1;
+                    *(short *) (base + 0x2400 + 0x88)          = -1;
+                    *(unsigned char *) (base + 0x2000 + 0x48a) = 0;
+                    if (*(unsigned int *) (base + 0x2000 + 0x47c) & 1) func_ov023_021dca88(base + 0x50);
                 } else {
                     SePlayer_Play((struct SePlayer *) g_sePlayer, 0x64, 0);
                 }
                 func_ov017_021acd30((char *) GetGameResources(), 0, 0, 1);
                 return;
             }
-            if (var27 == 0) {
-                if (*(short *) (arg0 + 0x1c00 + 0x22) == 0x5603) {
-                    *(short *) (arg0 + 0x1b00 + 0xfc)          = -1;
-                    *(short *) (arg0 + 0x1c00 + 0x28)          = 0x7936;
-                    *(short *) (arg0 + 0x1c00 + 0x2a)          = -1;
-                    *(short *) (arg0 + 0x2400 + 0x88)          = 0x7919;
-                    *(unsigned char *) (arg0 + 0x2000 + 0x48a) = 1;
-                    *(int *) (arg0 + 0x1000 + 0xbb8)           = 0x26;
-                    *(int *) (arg0 + 0x1000 + 0xbbc)           = 5;
+            if (kind == 0) {
+                if (*(short *) (base + 0x1c00 + 0x22) == 0x5603) {
+                    *(short *) (base + 0x1b00 + 0xfc)          = -1;
+                    *(short *) (base + 0x1c00 + 0x28)          = 0x7936;
+                    *(short *) (base + 0x1c00 + 0x2a)          = -1;
+                    *(short *) (base + 0x2400 + 0x88)          = 0x7919;
+                    *(unsigned char *) (base + 0x2000 + 0x48a) = 1;
+                    *(int *) (base + 0x1000 + 0xbb8)           = 0x26;
+                    *(int *) (base + 0x1000 + 0xbbc)           = 5;
                 } else {
                     *(short *) (base + 0x2400 + 0x88)          = 0x2338;
                     *(unsigned char *) (base + 0x2000 + 0x48a) = 1;
@@ -352,16 +352,16 @@ extern "C" ARM void func_ov002_02165b44(char *arg0) {
                     *(int *) (base + 0x1000 + 0xbbc) = 0x11;
                 }
             }
-        } else if (func_ov002_02161b48(arg0, 1)) {
-            *(short *) (arg0 + 0x1b00 + 0xfc) = -1;
-            if (*(short *) (arg0 + 0x1c00 + 0x22) == 0x5603) {
-                *(short *) (arg0 + 0x1c00 + 0x22) = -1;
-                func_ov002_02156ff0((unsigned char *) arg0, 5);
+        } else if (func_ov002_02161b48(base, 1)) {
+            *(short *) (base + 0x1b00 + 0xfc) = -1;
+            if (*(short *) (base + 0x1c00 + 0x22) == 0x5603) {
+                *(short *) (base + 0x1c00 + 0x22) = -1;
+                func_ov002_02156ff0((unsigned char *) base, 5);
             } else {
                 *(short *) (base + 0x1c00 + 0x26) = -1;
-                ClearMatchingEntry_02156ff0((unsigned char *) base, 0x13);
+                func_ov002_02156ff0((unsigned char *) base, 0x13);
                 *(int *) (base + 0x1000 + 0xbb8) = 0x11;
-                SetFieldB0AndUpdate0205dee8((struct Obj0205dee8 *) (base + 0x2c8 + 0xc00), 0x11);
+                func_0205dee8((struct Struct_0205dee8 *) (base + 0x2c8 + 0xc00), 0x11);
                 Window_SetPanePalette((struct Struct_0205d81c *) (base + 0x2c8 + 0xc00), 0x11, 0);
                 func_ov002_02161cf0(base);
                 func_ov002_0215b9a4(base, *(int *) (base + 0x1000 + 0xbb8) & 0xff, 0);

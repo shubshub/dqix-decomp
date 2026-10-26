@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
 struct Struct_020c20d4 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    int x;
+    int y;
+    int z;
 };
 
 // USA: func_020c2df8
-extern "C" ARM int Vector3fix_InnerProduct(struct Struct_020c20d4* arg0, struct Struct_020c20d4* arg1) {
-    long long var0 = (long long)arg0->unknown_0_ * arg1->unknown_0_ + (long long)arg0->unknown_4_ * arg1->unknown_4_ + (long long)arg0->unknown_8_ * arg1->unknown_8_;
+extern "C" ARM int Vector3fix_InnerProduct(struct Struct_020c20d4* a, struct Struct_020c20d4* b) {
+    long long var0 = (long long)a->x * b->x + (long long)a->y * b->y + (long long)a->z * b->z;
     return (int)((var0 + 0x800) >> 12);
 }

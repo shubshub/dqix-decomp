@@ -2,14 +2,14 @@
 
 struct Struct_02093b54 {
 #if defined(jpn)
-    char unknown1_0_[0xb];
+    char data[0xb];
 #else
-    char unknown_0_[0x30];
+    char data[0x30];
 #endif
 };
 
 struct Struct_02093ad8 {
-    struct Struct_02093b54 unknown_0_;
+    struct Struct_02093b54 payload;
 #if defined(jpn)
     unsigned char unknown_b_;
 #endif
@@ -19,12 +19,12 @@ struct Struct_02093ad8 {
 };
 
 // USA: func_02093b54
-extern "C" ARM void func_02093b54(struct Struct_02093ad8* arg0, struct Struct_02093ad8* arg1) {
-    arg0->unknown_0_ = arg1->unknown_0_;
+extern "C" ARM void func_02093b54(struct Struct_02093ad8* dst, struct Struct_02093ad8* src) {
+    dst->payload = src->payload;
 #if defined(jpn)
-    arg0->unknown_b_ = arg1->unknown_b_;
+    dst->unknown_b_ = src->unknown_b_;
 #endif
-    arg0->unknown_30_ = arg1->unknown_30_;
-    arg0->unknown_32_ = arg1->unknown_32_;
-    arg0->unknown_33_ = arg1->unknown_33_;
+    dst->unknown_30_ = src->unknown_30_;
+    dst->unknown_32_ = src->unknown_32_;
+    dst->unknown_33_ = src->unknown_33_;
 }

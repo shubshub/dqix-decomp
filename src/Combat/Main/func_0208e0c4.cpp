@@ -3,7 +3,7 @@
 #include "Resource/Script.h"
 #include "Resource/GameResources.h"
 
-struct Struct_0201c1c8;
+struct Variant02030b0c;
 struct Struct_0201d530;
 struct Vector3i;
 
@@ -13,65 +13,65 @@ extern "C" void func_0208e778(struct Struct_0208e0c4*, struct Struct_0208e0c4_2*
 
 extern int data_02108fe4;
 
-struct Struct_02108ff4 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
+struct Entry02108ff4 {
+    unsigned short a;
+    unsigned char b;
+    unsigned char c;
 };
-extern Struct_02108ff4 data_02108ff4[];
+extern Entry02108ff4 data_02108ff4[];
 
 struct Struct_0208e0c4_3 {
-    unsigned int unknown_0_0_ : 4;
+    unsigned int fieldA : 4;
     unsigned int unknown_0_4_ : 9;
     unsigned int unknown_1_5_ : 4;
-    unsigned int unknown_2_1_ : 4;
-    unsigned int unknown_2_5_ : 8;
-    unsigned int unknown_3_5_ : 3;
+    unsigned int fieldB : 4;
+    unsigned int fieldC : 8;
+    unsigned int pad1 : 3;
 };
 
 struct Struct_0208e0c4_4 {
     struct {
         unsigned int unknown_0_0_ : 16;
-        unsigned int unknown_2_0_ : 7;
-        unsigned int unknown_2_7_ : 2;
-        unsigned int unknown_3_1_ : 7;
+        unsigned int val1 : 7;
+        unsigned int val2 : 2;
+        unsigned int pad0 : 7;
     } unknown_0_;
     union {
-        unsigned int unknown_0_;
-        struct Struct_0208e0c4_3 unknown1_0_;
+        unsigned int raw;
+        struct Struct_0208e0c4_3 b;
     } unknown_4_;
     int unknown_8_;
-    int unknown_c_[8][3];
-    struct Struct_0208e0c4_2* unknown_6c_;
+    int vec[8][3];
+    struct Struct_0208e0c4_2* next;
 };
 
 // USA: func_0208e0c4
-extern "C" ARM int func_0208e0c4(char* arg0) {
-    SafeAllocator* var0 = (SafeAllocator*)((int)GetGameResources() + 0x1a0);
-    struct Struct_0208e0c4_4* var1 = (struct Struct_0208e0c4_4*)var0->Allocate(0x70);
-    var1->unknown_6c_ = 0;
-    var1->unknown_0_.unknown_2_0_ = (unsigned short)((Script::Parameter*)((Struct_0201c1c8*)arg0))->ToInt();
-    var1->unknown_0_.unknown_0_0_ = (unsigned short)((Script::Parameter*)((Struct_0201c1c8*)(arg0 + 8)))->ToInt();
-    var1->unknown_0_.unknown_2_7_ = (unsigned char)((Script::Parameter*)((Struct_0201c1c8*)(arg0 + 0x10)))->ToInt();
-    var1->unknown_4_.unknown1_0_.unknown_0_0_ = (unsigned char)((Script::Parameter*)((Struct_0201c1c8*)(arg0 + 0x20)))->ToInt();
-    if (var1->unknown_4_.unknown1_0_.unknown_0_0_ == 8) {
-        var1->unknown_4_.unknown1_0_.unknown_0_4_ = (unsigned short)((Script::Parameter*)((Struct_0201c1c8*)(arg0 + 0x28)))->ToInt();
-        var1->unknown_4_.unknown1_0_.unknown_1_5_ = (unsigned char)((Script::Parameter*)((Struct_0201c1c8*)(arg0 + 0x30)))->ToInt();
-        Struct_0201c1c8* var2 = (Struct_0201c1c8*)(arg0 + 0x38);
-        arg0 += 0x40;
-        var1->unknown_4_.unknown1_0_.unknown_2_1_ = (unsigned char)((Script::Parameter*)var2)->ToInt();
+extern "C" ARM int func_0208e0c4(char* v) {
+    SafeAllocator* alloc = (SafeAllocator*)((int)GetGameResources() + 0x1a0);
+    struct Struct_0208e0c4_4* node = (struct Struct_0208e0c4_4*)alloc->Allocate(0x70);
+    node->next = 0;
+    node->unknown_0_.val1 = (unsigned short)((Script::Parameter*)((Variant02030b0c*)v))->ToInt();
+    node->unknown_0_.unknown_0_0_ = (unsigned short)((Script::Parameter*)((Variant02030b0c*)(v + 8)))->ToInt();
+    node->unknown_0_.val2 = (unsigned char)((Script::Parameter*)((Variant02030b0c*)(v + 0x10)))->ToInt();
+    node->unknown_4_.b.fieldA = (unsigned char)((Script::Parameter*)((Variant02030b0c*)(v + 0x20)))->ToInt();
+    if (node->unknown_4_.b.fieldA == 8) {
+        node->unknown_4_.b.unknown_0_4_ = (unsigned short)((Script::Parameter*)((Variant02030b0c*)(v + 0x28)))->ToInt();
+        node->unknown_4_.b.unknown_1_5_ = (unsigned char)((Script::Parameter*)((Variant02030b0c*)(v + 0x30)))->ToInt();
+        Variant02030b0c* var2 = (Variant02030b0c*)(v + 0x38);
+        v += 0x40;
+        node->unknown_4_.b.fieldB = (unsigned char)((Script::Parameter*)var2)->ToInt();
     } else {
-        unsigned char* var3 = (unsigned char*)data_02108ff4;
-        var1->unknown_4_.unknown1_0_.unknown_0_4_ = *(unsigned short*)(var3 + var1->unknown_4_.unknown1_0_.unknown_0_0_ * 4);
-        var1->unknown_4_.unknown1_0_.unknown_1_5_ = ((Struct_02108ff4*)(var3 + var1->unknown_4_.unknown1_0_.unknown_0_0_ * 4))->unknown_2_;
-        arg0 += 0x40;
-        var1->unknown_4_.unknown1_0_.unknown_2_1_ = ((Struct_02108ff4*)(var3 + var1->unknown_4_.unknown1_0_.unknown_0_0_ * 4))->unknown_3_;
+        unsigned char* tbl = (unsigned char*)data_02108ff4;
+        node->unknown_4_.b.unknown_0_4_ = *(unsigned short*)(tbl + node->unknown_4_.b.fieldA * 4);
+        node->unknown_4_.b.unknown_1_5_ = ((Entry02108ff4*)(tbl + node->unknown_4_.b.fieldA * 4))->b;
+        v += 0x40;
+        node->unknown_4_.b.fieldB = ((Entry02108ff4*)(tbl + node->unknown_4_.b.fieldA * 4))->c;
     }
-    for (int var4 = 0; var4 < 8; var4++) {
-        arg0 = (char*)(Struct_0201d530*)((Script::Parameter*)((Struct_0201d530*)arg0))->ToVec3fix((Vector3i*)var1->unknown_c_[var4]);
+    for (int i = 0; i < 8; i++) {
+        v = (char*)(Struct_0201d530*)((Script::Parameter*)((Struct_0201d530*)v))->ToVec3fix((Vector3i*)node->vec[i]);
     }
-    var1->unknown_8_ = 0;
-    var1->unknown_4_.unknown_0_ &= 0xe01fffff;
-    func_0208e778((Struct_0208e0c4*)&data_02108fe4, (Struct_0208e0c4_2*)var1);
+    node->unknown_8_ = 0;
+    node->unknown_4_.raw &= 0xe01fffff;
+    func_0208e778((Struct_0208e0c4*)&data_02108fe4, (Struct_0208e0c4_2*)node);
     return 1;
 }

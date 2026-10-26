@@ -14,24 +14,24 @@
 #include <NitroSDK/Matrix.h>
 
 struct Struct_ov001_02159ef0 {
-    int unknown_0_;
+    int type;
 };
 
 struct Struct_ov001_0215a134 {
-    struct Struct_ov001_02159ef0* unknown_0_;
-    struct Struct_ov001_02159ef0* unknown_4_;
+    struct Struct_ov001_02159ef0* head;
+    struct Struct_ov001_02159ef0* tail;
 };
 
 struct Struct_ov001_0215a134_2 {
-    void* unknown_0_;
-    int unknown_4_;
-    struct Struct_ov001_0215a134 unknown_8_[8];
+    void* entries;
+    int count;
+    struct Struct_ov001_0215a134 lists[8];
     char unknown_48_[0x28];
-    int unknown_70_;
-    Vector3fix unknown_74_;
-    Vector3fix unknown_80_;
-    float unknown_8c_;
-    int unknown_90_;
+    int modelIndex;
+    Vector3fix position;
+    Vector3fix rotation;
+    float alpha;
+    int radius;
 };
 
 struct Struct_020130a8;
@@ -41,89 +41,89 @@ typedef int (*Type_020130a8)(struct Struct_ov001_02159ef0* node, struct Struct_o
 extern struct Struct_020130a8* data_ov001_02165884;
 extern Type_020130a8 data_ov001_02164ca4[];
 
-extern "C" int func_ov001_02164418(struct Struct_020130a8* arg0, int arg1, Vector3fix* arg2);
-extern "C" int func_ov001_021644c8(struct Struct_020130a8* arg0, int arg1, Vector3fix* arg2);
-extern "C" int func_ov001_0216427c(struct Struct_020130a8* arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" int func_ov001_02164320(struct Struct_020130a8* arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" int func_ov001_02164908(struct Struct_020130a8* arg0, int arg1, int arg2);
-extern "C" int func_ov001_021649d4(struct Struct_020130a8* arg0, int arg1, int arg2);
-extern "C" void func_ov001_02159d9c(struct Struct_ov001_0215a134_2* arg0);
-extern "C" struct Struct_ov001_02159ef0* func_ov001_02159ef0(void* arg0, struct Struct_ov001_02159ef0* arg1);
+extern "C" int func_ov001_02164418(struct Struct_020130a8* table, int index, Vector3fix* dst);
+extern "C" int func_ov001_021644c8(struct Struct_020130a8* table, int index, Vector3fix* dst);
+extern "C" int func_ov001_0216427c(struct Struct_020130a8* table, int index, int x, int y, int z);
+extern "C" int func_ov001_02164320(struct Struct_020130a8* table, int index, int x, int y, int z);
+extern "C" int func_ov001_02164908(struct Struct_020130a8* table, int index, int alpha);
+extern "C" int func_ov001_021649d4(struct Struct_020130a8* table, int index, int radius);
+extern "C" void func_ov001_02159d9c(struct Struct_ov001_0215a134_2* actor);
+extern "C" struct Struct_ov001_02159ef0* func_ov001_02159ef0(void* owner, struct Struct_ov001_02159ef0* node);
 
 // USA: func_ov001_0215a134
-extern "C" ARM void func_ov001_0215a134(struct Struct_ov001_0215a134_2* arg0) {
-    struct Struct_ov001_02159ef0* var0;
-    int var1;
-    struct Struct_ov001_02159ef0** var2;
-    struct Struct_ov001_02159ef0** var3;
+extern "C" ARM void func_ov001_0215a134(struct Struct_ov001_0215a134_2* actor) {
+    struct Struct_ov001_02159ef0* node;
+    int i;
+    struct Struct_ov001_02159ef0** head;
+    struct Struct_ov001_02159ef0** tail;
 
-    if (arg0->unknown_70_ <= -1) {
+    if (actor->modelIndex <= -1) {
         return;
     }
-    if (func_ov001_02164418(data_ov001_02165884, arg0->unknown_70_, &arg0->unknown_74_) == 0) {
-        func_ov001_02159d9c(arg0);
+    if (func_ov001_02164418(data_ov001_02165884, actor->modelIndex, &actor->position) == 0) {
+        func_ov001_02159d9c(actor);
         return;
     }
-    func_ov001_021644c8(data_ov001_02165884, arg0->unknown_70_, &arg0->unknown_80_);
+    func_ov001_021644c8(data_ov001_02165884, actor->modelIndex, &actor->rotation);
 
-    for (var1 = 0; var1 < 8; var1++) {
-        switch (var1) {
+    for (i = 0; i < 8; i++) {
+        switch (i) {
         case 0:
-            var2 = &arg0->unknown_8_[0].unknown_0_;
-            var3 = &arg0->unknown_8_[0].unknown_4_;
+            head = &actor->lists[0].head;
+            tail = &actor->lists[0].tail;
             break;
         case 1:
-            var2 = &arg0->unknown_8_[1].unknown_0_;
-            var3 = &arg0->unknown_8_[1].unknown_4_;
+            head = &actor->lists[1].head;
+            tail = &actor->lists[1].tail;
             break;
         case 2:
-            var2 = &arg0->unknown_8_[2].unknown_0_;
-            var3 = &arg0->unknown_8_[2].unknown_4_;
+            head = &actor->lists[2].head;
+            tail = &actor->lists[2].tail;
             break;
         case 3:
-            var2 = &arg0->unknown_8_[3].unknown_0_;
-            var3 = &arg0->unknown_8_[3].unknown_4_;
+            head = &actor->lists[3].head;
+            tail = &actor->lists[3].tail;
             break;
         case 4:
-            var2 = &arg0->unknown_8_[4].unknown_0_;
-            var3 = &arg0->unknown_8_[4].unknown_4_;
+            head = &actor->lists[4].head;
+            tail = &actor->lists[4].tail;
             break;
         case 5:
-            var2 = &arg0->unknown_8_[5].unknown_0_;
-            var3 = &arg0->unknown_8_[5].unknown_4_;
+            head = &actor->lists[5].head;
+            tail = &actor->lists[5].tail;
             break;
         case 6:
-            var2 = &arg0->unknown_8_[6].unknown_0_;
-            var3 = &arg0->unknown_8_[6].unknown_4_;
+            head = &actor->lists[6].head;
+            tail = &actor->lists[6].tail;
             break;
         case 7:
-            var2 = &arg0->unknown_8_[7].unknown_0_;
-            var3 = &arg0->unknown_8_[7].unknown_4_;
+            head = &actor->lists[7].head;
+            tail = &actor->lists[7].tail;
             break;
         }
 
-        var0 = *var2;
-        while (var0 != NULL) {
-            if (var0->unknown_0_ > 0 && var0->unknown_0_ < 0x1a) {
-                if (data_ov001_02164ca4[var0->unknown_0_](var0, arg0) != 0) {
+        node = *head;
+        while (node != NULL) {
+            if (node->type > 0 && node->type < 0x1a) {
+                if (data_ov001_02164ca4[node->type](node, actor) != 0) {
                     break;
                 }
             } else {
-                var0 = NULL;
+                node = NULL;
                 break;
             }
-            var0 = func_ov001_02159ef0(arg0, var0);
+            node = func_ov001_02159ef0(actor, node);
         }
-        *var2 = var0;
-        if (var0 == NULL) {
-            *var3 = NULL;
+        *head = node;
+        if (node == NULL) {
+            *tail = NULL;
         }
     }
 
-    Vector3fix var4 = arg0->unknown_74_;
-    func_ov001_0216427c(data_ov001_02165884, arg0->unknown_70_, var4.x, var4.y, var4.z);
-    Vector3fix var5 = arg0->unknown_80_;
-    func_ov001_02164320(data_ov001_02165884, arg0->unknown_70_, var5.x, var5.y, var5.z);
-    func_ov001_02164908(data_ov001_02165884, arg0->unknown_70_, arg0->unknown_8c_);
-    func_ov001_021649d4(data_ov001_02165884, arg0->unknown_70_, arg0->unknown_90_);
+    Vector3fix position = actor->position;
+    func_ov001_0216427c(data_ov001_02165884, actor->modelIndex, position.x, position.y, position.z);
+    Vector3fix rotation = actor->rotation;
+    func_ov001_02164320(data_ov001_02165884, actor->modelIndex, rotation.x, rotation.y, rotation.z);
+    func_ov001_02164908(data_ov001_02165884, actor->modelIndex, actor->alpha);
+    func_ov001_021649d4(data_ov001_02165884, actor->modelIndex, actor->radius);
 }

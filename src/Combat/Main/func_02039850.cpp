@@ -7,6 +7,6 @@ enum { Enum_02039850_596 = 0x254 };
 #endif
 
 // USA: func_02039850
-extern "C" ARM unsigned char func_02039850(void* arg0) {
-    return *((unsigned char*)arg0 + Enum_02039850_596);
+extern "C" ARM unsigned char func_02039850(void* obj) {
+    return *((unsigned char*)obj + Enum_02039850_596);
 }

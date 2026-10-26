@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201f040 {
+struct ResetStruct {
     int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    int w4;
+    int w8;
     int unknown_c_;
     int unknown_10_;
     int unknown_14_;
@@ -13,34 +13,34 @@ struct Struct_0201f040 {
     int unknown_20_;
     int unknown_24_;
     int unknown_28_;
-    char unknown_2c_[0x400];
+    char pad[0x400];
     unsigned char unknown_42c_;
 };
 
-struct Struct_0201f040_2;
-struct Struct_02013fb4;
+struct StreamState;
+struct StreamHeader;
 
 struct Struct_0201f040_3;
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 
 struct Struct_02108fc8_2 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    int field0;
+    int field4;
+    int field8;
 };
 extern struct Struct_02108fc8_2 data_02108fc8;
 extern int data_020f1248;
 
 // USA: func_0208dc00
-extern "C" ARM int func_0208dc00(struct Struct_02013fb4* arg0, int arg1, int arg2) {
-    data_02108fc8.unknown_8_ = arg2;
-    data_02108fc8.unknown_0_ = 0;
-    data_02108fc8.unknown_4_ = *(int*)((char*)func_02012fe4() + 8);
-    struct Struct_0201f040 var0;
-    ((Script*)&var0)->Initialize();
-    ((Script*)&var0)->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1248);
-    ((Script*)((struct Struct_0201f040_2*)&var0))->Load(arg0, arg1);
-    ((Script*)((struct Struct_0201f040_3*)&var0))->Execute();
-    return data_02108fc8.unknown_0_;
+extern "C" ARM int func_0208dc00(struct StreamHeader* param0, int param1, int param2) {
+    data_02108fc8.field8 = param2;
+    data_02108fc8.field0 = 0;
+    data_02108fc8.field4 = *(int*)((char*)Zone3D_GetInstance() + 8);
+    struct ResetStruct local;
+    ((Script*)&local)->Initialize();
+    ((Script*)&local)->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1248);
+    ((Script*)((struct StreamState*)&local))->Load(param0, param1);
+    ((Script*)((struct Struct_0201f040_3*)&local))->Execute();
+    return data_02108fc8.field0;
 }

@@ -8,9 +8,9 @@ class Zone3D;
 struct SelfObj792c;
 struct Struct020478bc;
 
-struct ZoneLootableRecord02017098* Zone3D_GetLootable(Zone3D* zone, int index);
+extern "C" struct ZoneLootableRecord02017098* Zone3D_GetLootable(Zone3D* zone, int index);
 extern "C" void func_0204792c(struct SelfObj792c* self, char* name);
-void RecomputeField0x7c(struct Struct020478bc* o, int newIndex);
+extern "C" void func_020478bc(struct Struct020478bc* o, int arg1);
 extern "C" float _fflt(int value);
 extern "C" float _fmul(float a, float b);
 extern "C" int _ffix(float value);
@@ -47,7 +47,7 @@ extern "C" ARM void Zone3D_BreakLootable(Zone3D* zone, int index) {
 
     lootable->state = ZoneLootableState_Breaking;
     func_0204792c((struct SelfObj792c*)&lootable->primary[0], data_020ef222);
-    RecomputeField0x7c((struct Struct020478bc*)&lootable->primary[1], 1);
+    func_020478bc((struct Struct020478bc*)&lootable->primary[1], 1);
 
     fix32_t angle = kFirstFragmentAngle;
     for (int i = 0; i < 4; i++) {

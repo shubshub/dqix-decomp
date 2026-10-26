@@ -14,8 +14,8 @@ extern char data_ov004_02170360[Enum_ov004_021560b0_14 * 4];
 extern "C" int func_ov011_02184a24(int, void*, int);
 
 // USA: func_ov004_021560b0
-extern "C" ARM int func_ov004_021560b0(SafeAllocator* arg0, int arg1) {
-    void* var0 = arg0->Allocate(Enum_ov004_021560b0_14 * 4);
-    memcpy(var0, data_ov004_02170360, Enum_ov004_021560b0_14 * 4);
-    return func_ov011_02184a24(arg1, var0, Enum_ov004_021560b0_14);
+extern "C" ARM int func_ov004_021560b0(SafeAllocator* alloc, int arg) {
+    void* buf = alloc->Allocate(Enum_ov004_021560b0_14 * 4);
+    memcpy(buf, data_ov004_02170360, Enum_ov004_021560b0_14 * 4);
+    return func_ov011_02184a24(arg, buf, Enum_ov004_021560b0_14);
 }

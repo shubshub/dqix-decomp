@@ -16,56 +16,56 @@
 struct Struct_ov014_02184f78 {
     Struct_ov014_02184f78* unknown_0_;
     const char* unknown_4_;
-    const char* unknown_8_;
+    const char* name_;
     short unknown_c_;
     char unknown_e_[4];
     signed char unknown_12_;
     unsigned char unknown_13_0_ : 1;
     unsigned char unknown_13_1_ : 1;
     unsigned char unknown_13_2_ : 6;
-    char unknown_14_[6];
+    char unk_14[6];
     short unknown_1a_;
-    char unknown_1c_[4];
+    char unk_1c[4];
 };
 
-struct Struct_ov006_02158478 {
-    Struct_ov006_02158478* unknown_0_;
-    void* unknown_4_;
-    char unknown_8_[0xa0];
-    short unknown_a8_;
-    short unknown_aa_;
-    short unknown_ac_;
-    short unknown_ae_;
-    char unknown_b0_[0x30];
+struct Canvas {
+    Canvas* unk_0;
+    void* background_;
+    char unk_8[0xa0];
+    short width_;
+    short height_;
+    short x_;
+    short y_;
+    char unk_b0[0x30];
 };
 
 struct Struct_020974b0 {
-    char unknown_0_[0x10];
+    char unk_0[0x10];
 };
 
 struct Struct_ov014_02186bc8 {
-    char unknown_0_[0xa4];
-    Struct_020974b0 unknown_a4_;
+    char unk_0[0xa4];
+    Struct_020974b0 list_;
     void* unknown_b4_;
-    Struct_ov014_02184f78* unknown_b8_;
+    Struct_ov014_02184f78* entries_;
     Struct_ov014_02184f78* unknown_bc_;
-    void* unknown_c0_;
-    void* unknown_c4_;
-    Struct_ov006_02158478* unknown_c8_;
-    void* unknown_cc_;
-    short* unknown_d0_;
+    void* menu_;
+    void* backgrounds_;
+    Canvas* canvases_;
+    void* canvasBuffer_;
+    short* cursor_;
     void* unknown_d4_;
-    void* unknown_d8_;
+    void* animations_;
     void* unknown_dc_;
-    char unknown_e0_[0x18];
-    char unknown_f8_[0x54];
+    char textTable_[0x18];
+    char spriteRenderer_[0x54];
     char unknown_14c_[0xc];
     unsigned short unknown_158_;
     unsigned char unknown_15a_;
     char unknown_15b_;
     int unknown_15c_;
     int unknown_160_;
-    int unknown_164_;
+    int ticks_;
     int unknown_168_;
     int unknown_16c_;
     short unknown_170_;
@@ -83,77 +83,77 @@ struct Struct_ov014_02186bc8 {
     short unknown_182_[8];
 };
 
-struct Obj2081;
+struct Struct_0207fdcc_2;
 struct SePlayer;
 
-Canvas* FindElementByByte0xc4_02081da8(Obj2081*, int);
-bool WindowPane_IsOpen(unsigned char*);
-void SePlayer_Play(SePlayer*, int, int);
-void ClearSublistEntriesFlag4_020804fc(void*, int);
+extern "C" Canvas* func_02081da8(Struct_0207fdcc_2*, int);
+extern "C" bool WindowPane_IsOpen(unsigned char*);
+extern "C" void SePlayer_Play(SePlayer*, int, int);
+extern "C" void func_020804fc(void*, int);
 
 extern "C" {
-Struct_ov014_02184f78* func_ov014_021873a0(Struct_ov014_02186bc8* arg0);
-Struct_ov014_02184f78* func_020974b0(Struct_020974b0* arg0, int arg1, int, bool arg3, int, short* arg5);
-void func_ov014_02187228(Struct_ov014_02186bc8* arg0, Struct_ov014_02184f78* arg1);
-void func_ov014_0218854c(Struct_ov014_02186bc8* arg0);
-void func_ov014_021885bc(Struct_ov014_02186bc8* arg0);
+Struct_ov014_02184f78* func_ov014_021873a0(Struct_ov014_02186bc8* self);
+Struct_ov014_02184f78* func_020974b0(Struct_020974b0* list, int arg1, int, bool arg3, int, short* outCount);
+void func_ov014_02187228(Struct_ov014_02186bc8* self, Struct_ov014_02184f78* entry);
+void func_ov014_0218854c(Struct_ov014_02186bc8* self);
+void func_ov014_021885bc(Struct_ov014_02186bc8* self);
 }
 
 extern char g_sePlayer[];
 
-inline short inline_ov014_02187074(short arg0)
+inline short inline_ov014_02187074(short tiles)
 {
-    return arg0 * 8;
+    return tiles * 8;
 }
 
 // USA: func_ov014_02187074
-extern "C" ARM bool func_ov014_02187074(Struct_ov014_02186bc8* arg0)
+extern "C" ARM bool func_ov014_02187074(Struct_ov014_02186bc8* self)
 {
     bool toggle = false;
-    Canvas* canvas = FindElementByByte0xc4_02081da8((Obj2081*)self->menu_, 4);
+    Canvas* canvas = func_02081da8((Struct_0207fdcc_2*)self->menu_, 4);
     if (canvas != NULL && WindowPane_IsOpen((unsigned char*)canvas))
     {
-        short var2 = var1->unknown_ae_;
-        short var3 = var1->unknown_aa_;
-        var2--;
-        var3++;
-        short var4 = inline_ov014_02187074(var1->unknown_ac_);
-        short var5 = inline_ov014_02187074(var2);
-        short var6 = var4 + inline_ov014_02187074(var1->unknown_a8_);
-        short var7 = var5 + inline_ov014_02187074(var3);
+        short y = canvas->y_;
+        short height = canvas->height_;
+        y--;
+        height++;
+        short left = inline_ov014_02187074(canvas->x_);
+        short top = inline_ov014_02187074(y);
+        short right = left + inline_ov014_02187074(canvas->width_);
+        short bottom = top + inline_ov014_02187074(height);
         if (g_touchInput.pressed_)
         {
-            int var8;
-            int var9;
-            g_touchInput.GetTouchPoint(&var8, &var9);
-            if (var4 <= var8 && var8 < var6 && var5 <= var9 && var9 < var7)
-                var0 = true;
+            int x;
+            int y;
+            g_touchInput.GetTouchPoint(&x, &y);
+            if (left <= x && x < right && top <= y && y < bottom)
+                toggle = true;
         }
     }
     if (g_keyManager.TestKeysPressed(4))
-        var0 = true;
-    if (var0)
+        toggle = true;
+    if (toggle)
     {
-        Struct_ov014_02184f78* var10 = func_ov014_021873a0(arg0);
-        if (var10 == NULL)
+        Struct_ov014_02184f78* entry = func_ov014_021873a0(self);
+        if (entry == NULL)
             return false;
-        if (!var10->unknown_13_1_)
+        if (!entry->unknown_13_1_)
         {
-            arg0->unknown_176_ = -1;
-            arg0->unknown_178_ = -1;
-            var10 = NULL;
+            self->unknown_176_ = -1;
+            self->unknown_178_ = -1;
+            entry = NULL;
         }
-        if (arg0->unknown_17e_ & 8)
-            arg0->unknown_17e_ &= ~8;
+        if (self->unknown_17e_ & 8)
+            self->unknown_17e_ &= ~8;
         else
-            self->listFlags_ |= 8;
+            self->unknown_17e_ |= 8;
         short count = 0;
-        self->entries_ = func_020974b0(&self->list_, self->family_, -1, (self->listFlags_ & 8) != 0, 0x10, &count);
+        self->entries_ = func_020974b0(&self->list_, self->unknown_17d_, -1, (self->unknown_17e_ & 8) != 0, 0x10, &count);
         func_ov014_02187228(self, entry);
         SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
-        ClearSublistEntriesFlag4_020804fc(self->menu_, 5);
+        func_020804fc(self->menu_, 5);
         func_ov014_0218854c(self);
         func_ov014_021885bc(self);
     }
-    return var0;
+    return toggle;
 }

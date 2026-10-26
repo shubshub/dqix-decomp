@@ -7,14 +7,14 @@
 struct Struct_02112180 {
     unsigned long unknown_0_;
     unsigned char unknown_4_[0x9c];
-    char unknown_a0_[12];
+    char title[12];
     unsigned long unknown_ac_;
     unsigned short unknown_b0_;
     unsigned char unknown_b2_;
     unsigned char unknown_b3_;
     unsigned char unknown_b4_;
     unsigned char unknown_b5_[3];
-    unsigned char unknown_b8_[4];
+    unsigned char reserved[4];
     unsigned char unknown_bc_;
     unsigned char unknown_bd_;
     unsigned short unknown_be_;
@@ -35,13 +35,13 @@ struct Struct_0211214c {
 };
 
 struct Struct_020d135c_3 {
-    int unknown_0_;
+    int locked;
     int unknown_4_;
 };
 
 struct Struct_020d16b0_2 {
     int unknown_0_;
-    int unknown_4_[7];
+    int pad[7];
 };
 inline Struct_020d16b0_2& inline_020d16b0() {
     static Struct_020d16b0_2 s;
@@ -57,19 +57,19 @@ extern "C" void func_020d14b0(int* arg0);
 extern "C" void InvalidateDataCacheRange(const void* addr, unsigned int size);
 void DMAMemcpySynchronous16Bit(int channel, unsigned int src, unsigned int dst, unsigned int size);
 void CleanInvalidateDataCache();
-extern "C" void func_020d1564(int arg0);
-extern "C" unsigned int func_020d1540(int arg0, Struct_020d135c_3* arg1);
+extern "C" void func_020d1564(int data);
+extern "C" unsigned int func_020d1540(int arg0, Struct_020d135c_3* lock);
 
 extern "C" {
-    void func_020d14e4(unsigned short arg0, Struct_020d135c_3* arg1);
+    void func_020d14e4(unsigned short arg0, Struct_020d135c_3* lock);
     int func_020d135c();
     void func_020ca408(const void* src, void* dst, unsigned int length);
-    void WaitByLoop(int arg0);
+    void WaitByLoop(int count);
 }
 
 // USA: func_020d16b0
 extern "C" ARM void func_020d16b0() {
-    Struct_020d135c_3 var0;
+    Struct_020d135c_3 lock;
     unsigned int var1;
     unsigned short var2;
 
@@ -86,9 +86,9 @@ extern "C" ARM void func_020d16b0() {
     var2 = *(volatile unsigned short*)0x04000208;
     *(volatile unsigned short*)0x04000208 = 1;
 
-    func_020d14e4(data_0211214c.unknown_2_, &var0);
+    func_020d14e4(data_0211214c.unknown_2_, &lock);
     {
-        int var3 = (*(volatile unsigned short*)0x04000204 & 0x8000) >> 15;
+        int priority = (*(volatile unsigned short*)0x04000204 & 0x8000) >> 15;
         int var4[2];
 
         func_020d1468(var4);
@@ -97,22 +97,22 @@ extern "C" ARM void func_020d16b0() {
         DMAMemcpySynchronous16Bit(1, 0x08000000 + 0x80, (unsigned int)&((unsigned char*)&data_02112180)[0x80],
             sizeof(data_02112180) - 0x80);
         *(volatile unsigned short*)0x04000204 =
-            (unsigned short)((*(volatile unsigned short*)0x04000204 & ~0x8000) | (var3 << 15));
+            (unsigned short)((*(volatile unsigned short*)0x04000204 & ~0x8000) | (priority << 15));
         func_020d14b0(var4);
     }
-    func_020d1540(data_0211214c.unknown_2_, &var0);
+    func_020d1540(data_0211214c.unknown_2_, &lock);
 
     if (*(unsigned char*)0x027fff9b || !*(unsigned char*)0x027fff9a) {
-        int var5;
-        Struct_02112180* var6 = &data_02112180;
-        Struct_020d16b0* var7 = (Struct_020d16b0*)0x027ffc30;
+        int i;
+        Struct_02112180* src = &data_02112180;
+        Struct_020d16b0* info = (Struct_020d16b0*)0x027ffc30;
 
-        var7->unknown_0_ = var6->unknown_be_;
-        for (var5 = 0; var5 < 3; var5++) {
-            var7->unknown_2_[var5] = var6->unknown_b5_[var5];
+        info->unknown_0_ = src->unknown_be_;
+        for (i = 0; i < 3; i++) {
+            info->unknown_2_[i] = src->unknown_b5_[i];
         }
-        var7->unknown_6_ = var6->unknown_b0_;
-        var7->unknown_8_ = var6->unknown_ac_;
+        info->unknown_6_ = src->unknown_b0_;
+        info->unknown_8_ = src->unknown_ac_;
         *(unsigned char*)0x027fff9b = (unsigned char)(func_020d135c() ? 1 : 0);
         *(unsigned char*)0x027fff9a = true;
     }

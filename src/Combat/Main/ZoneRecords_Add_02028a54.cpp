@@ -8,25 +8,25 @@ struct BigRecord020289c4 {
     unsigned short zoneId;
     unsigned short slotIndex : 2;
     unsigned short inUse : 1;
-    unsigned short otherFlags : 13;
-    char reserved4[0xc];
+    unsigned short unknown_2_3_ : 13;
+    char unknown_4_[0xc];
     SafeAllocator* allocator;
 #if !defined(jpn)
     SafeAllocator* secondAllocator;
 #endif
-    char reserved18[0x300];
+    char unknown_18_[0x300];
 };
 
 struct ZoneMonsterObject {
     GameObject object;
-    char reserved13c[0x5c];
+    char unknown_13c_[0x5c];
 };
 
 enum { kZoneRecordCount = 4, kFirstZoneMonsterSlot = 0x70, kMonstersPerZone = 12 };
 
-void ZoneRecord_Reset(BigRecord020289c4*);
-void ClearCombatantSlot_0200fd48(GameState*, int);
-void RegisterCombatantSlot_0200fd38(GameState*, int, GameObject*);
+extern "C" void ZoneRecord_Reset(BigRecord020289c4*);
+extern "C" void func_0200fd48(GameState*, int);
+extern "C" void func_0200fd38(GameState*, int, GameObject*);
 extern "C" void LinkSession_GetInstance();
 extern "C" void Zone3D_GetInstance();
 extern "C" void FieldMonsterState_Init(GameObject*);
@@ -62,7 +62,7 @@ extern "C" ARM int ZoneRecords_Add(BigRecord020289c4* records, int zoneId)
     int i = 0;
     if (!monsters) {
         int firstSlot = freeIndex * kMonstersPerZone + kFirstZoneMonsterSlot;
-        for (; i < kMonstersPerZone; ++i) ClearCombatantSlot_0200fd48(gameState, i + firstSlot);
+        for (; i < kMonstersPerZone; ++i) func_0200fd48(gameState, i + firstSlot);
         return 0;
     }
     int firstSlot = freeIndex * kMonstersPerZone;
@@ -70,7 +70,7 @@ extern "C" ARM int ZoneRecords_Add(BigRecord020289c4* records, int zoneId)
     for (; i < kMonstersPerZone; ++i) {
         FieldMonsterState_Init(&monsters[i].object);
         monsters[i].object.obj3D_.MakeHidden();
-        RegisterCombatantSlot_0200fd38(gameState, i + firstSlot, &monsters[i].object);
+        func_0200fd38(gameState, i + firstSlot, &monsters[i].object);
     }
     return 1;
 }

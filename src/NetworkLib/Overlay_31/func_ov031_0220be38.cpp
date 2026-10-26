@@ -1,24 +1,24 @@
 #include <globaldefs.h>
 #include "NitroSDK/Memory.h"
 
-extern "C" int func_ov031_0220bb24(unsigned short* arg0, int arg1);
-extern "C" void func_ov031_0220be04(unsigned short* arg0, int arg1, int arg2, int arg3);
+extern "C" int func_ov031_0220bb24(unsigned short* arr, int len);
+extern "C" void func_ov031_0220be04(unsigned short* arr, int arg1, int i, int count);
 
 // USA: func_ov031_0220be38
-extern "C" ARM void func_ov031_0220be38(unsigned short* arg0, unsigned short* arg1, unsigned short* arg2, int arg3) {
-	VectorizedMemset(arg0, 0, arg3 * 2);
+extern "C" ARM void func_ov031_0220be38(unsigned short* dst, unsigned short* b, unsigned short* c, int n) {
+	VectorizedMemset(dst, 0, n * 2);
 	int var0;
-	int var1 = func_ov031_0220bb24(arg1, arg3);
-	var0 = func_ov031_0220bb24(arg2, arg3);
-	int var2 = 0;
+	int var1 = func_ov031_0220bb24(b, n);
+	var0 = func_ov031_0220bb24(c, n);
+	int i = 0;
 	if (var0 <= 0) return;
 	do {
-		int var3;
-		int var4 = arg3 - var2;
-		for (var3 = 0; var3 < var1 && var3 < var4; var3++) {
-			int var5 = arg1[var3] * arg2[var2];
-			func_ov031_0220be04(arg0, var5, var2 + var3, arg3);
+		int j;
+		int limit = n - i;
+		for (j = 0; j < var1 && j < limit; j++) {
+			int var5 = b[j] * c[i];
+			func_ov031_0220be04(dst, var5, i + j, n);
 		}
-		var2++;
-	} while (var2 < var0);
+		i++;
+	} while (i < var0);
 }

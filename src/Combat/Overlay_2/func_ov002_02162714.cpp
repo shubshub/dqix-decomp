@@ -8,22 +8,22 @@
 #define RG(u, j) (u)
 #endif
 
-struct Struct_0205de24_2;
+struct Struct0205de24;
 struct Struct_0205c570;
 struct SePlayer;
 struct Obj020d7aa0;
 
-void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+extern "C" void func_0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int Window_GetSelectedIndex(struct Struct_0205c570 *s);
-int CheckFlagOrThreshold_02161b48(char *self, int flag);
+extern "C" int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+extern "C" int func_ov002_02161b48(char *self, int flag);
 struct Obj_0205da38;
-int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
-void *GetFieldAt0x150_02053c6c(unsigned char *p);
-void SePlayer_Play(SePlayer *obj, int a, int b);
-int GetCountByType02157108(void *self, int type);
-Obj020d7aa0 *TextQueue_GetInstance();
-void TextQueue_Reset(Obj020d7aa0 *obj);
+extern "C" int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
+extern "C" void *func_02053c6c(unsigned char *p);
+extern "C" void SePlayer_Play(SePlayer *obj, int a, int b);
+extern "C" int func_ov002_02157108(void *self, int type);
+extern "C" Obj020d7aa0 *TextQueue_GetInstance();
+extern "C" void TextQueue_Reset(Obj020d7aa0 *obj);
 extern "C" void func_020d7978(char *self);
 extern "C" void func_ov002_02161cf0(char *self);
 extern "C" void func_ov002_0215c474(char *self);
@@ -36,7 +36,7 @@ extern "C" ARM void func_ov002_02162714(char *self) {
     int phase = *(int *) (self + RG(0x1bc0, 0x1a88));
     if (phase == 0) {
         *(short *) (self + RG(0x1be4, 0x1aac)) = 0;
-        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (self + RG(0xec8, 0xe20)), 0, 2);
+        func_0205de24((struct Struct0205de24 *) (self + RG(0xec8, 0xe20)), 0, 2);
         func_ov002_02161cf0(self);
         func_ov002_0215c474(self);
         (*(int *) (self + RG(0x1bc0, 0x1a88)))++;
@@ -59,9 +59,9 @@ extern "C" ARM void func_ov002_02162714(char *self) {
             gs->GetResources();
             GameObject *prot = gs->GetProtagonist();
             if (prot != 0) {
-                *(short *) ((char *) GetFieldAt0x150_02053c6c((unsigned char *) prot) + RG(0x95a, 0x8c2)) = *(short *) (self + RG(0x1be4, 0x1aac));
+                *(short *) ((char *) func_02053c6c((unsigned char *) prot) + RG(0x95a, 0x8c2)) = *(short *) (self + RG(0x1be4, 0x1aac));
             }
-            switch (*(short *) (arg0 + RG(0x1be4, 0x1aac))) {
+            switch (*(short *) (self + RG(0x1be4, 0x1aac))) {
                 case 0:
                     SePlayer_Play(&g_sePlayer, 1, 0);
                     *(int *) (self + RG(0x1bb8, 0x1a80)) = 4;
@@ -74,7 +74,7 @@ extern "C" ARM void func_ov002_02162714(char *self) {
                     *(signed char *) (self + RG(0x1c20, 0x1ae8)) = 5;
                     *(int *) (self + RG(0x1bb8, 0x1a80))         = RG(10, 0xb);
                     *(int *) (self + RG(0x1bc0, 0x1a88))         = 0;
-                    if (GetCountByType02157108(self, *(signed char *) (self + RG(0x1c20, 0x1ae8))) != 0) {
+                    if (func_ov002_02157108(self, *(signed char *) (self + RG(0x1c20, 0x1ae8))) != 0) {
                         return;
                     }
                     TextQueue_Reset(TextQueue_GetInstance());
@@ -84,14 +84,14 @@ extern "C" ARM void func_ov002_02162714(char *self) {
                     *(int *) (self + RG(0x1bbc, 0x1a84))   = 3;
                     break;
                 case 2:
-                    func_020d7978(arg0);
-                    *(int *) (arg0 + RG(0x1bb8, 0x1a80)) = RG(0x2b, 0x2e);
-                    *(int *) (arg0 + RG(0x1bc0, 0x1a88)) = 0;
+                    func_020d7978(self);
+                    *(int *) (self + RG(0x1bb8, 0x1a80)) = RG(0x2b, 0x2e);
+                    *(int *) (self + RG(0x1bc0, 0x1a88)) = 0;
                     break;
             }
-        } else if (func_ov002_02161b48(arg0, 1)) {
-            *(short *) (arg0 + RG(0x1be4, 0x1aac)) = -1;
-            func_ov002_02156e90(arg0);
+        } else if (func_ov002_02161b48(self, 1)) {
+            *(short *) (self + RG(0x1be4, 0x1aac)) = -1;
+            func_ov002_02156e90(self);
         }
     }
 }

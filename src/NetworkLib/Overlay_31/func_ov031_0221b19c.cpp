@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 
 // USA: func_ov031_0221b19c
-extern "C" ARM void func_ov031_0221b19c(int arg0, unsigned char *arg1) {
+extern "C" ARM void func_ov031_0221b19c(int arg0, unsigned char *buf) {
 	unsigned int var0 = ~0u;
-	unsigned int var1 = var0 ^ (var0 >> arg0);
-	int var2 = 0;
+	unsigned int mask = var0 ^ (var0 >> arg0);
+	int i = 0;
 	int var3 = 0;
 	do {
-		arg1[var2] = var1 >> (0x18 - var3);
-		var2++;
+		buf[i] = mask >> (0x18 - var3);
+		i++;
 		var3 += 8;
-	} while (var2 < 4);
+	} while (i < 4);
 }

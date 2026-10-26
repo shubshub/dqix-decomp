@@ -2,33 +2,33 @@
 #include "std_library_functions.h"
 #include "Memory/SafeAllocator.h"
 
-extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
+extern "C" void* func_ov011_021845f8(void* a, int b);
 extern "C" void* func_ov011_021849c8(void*);
 struct Struct_ov004_0216afb0;
-extern "C" void func_ov023_021f89f4(struct Struct_ov004_0216afb0* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10);
+extern "C" void func_ov023_021f89f4(struct Struct_ov004_0216afb0* obj, void* a1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9, int flag);
 
 struct Struct_ov004_0215c30c;
 struct Struct_ov004_0215c30c_2;
-extern "C" void func_ov023_021f67ac(struct Struct_ov004_0215c30c* arg0, struct Struct_ov004_0215c30c_2* arg1);
+extern "C" void func_ov023_021f67ac(struct Struct_ov004_0215c30c* head, struct Struct_ov004_0215c30c_2* node);
 
 extern char data_ov023_021fe708;
 
-struct Struct_ov004_0216afb0_2 { void* unknown_0_; char unknown_4_[0x50 - 4]; };
+struct Struct_ov004_0216afb0_2 { void* magic; char pad[0x50 - 4]; };
 
 // USA: func_ov004_0216afb0
-extern "C" ARM void func_ov004_0216afb0(void* arg0, int arg1, int arg2, int arg3,
-    int arg4, int arg5, int arg6, int arg7, unsigned char arg8) {
-    void* var0 = func_ov011_021845f8(arg0, arg2);
-    void* var1 = ((SafeAllocator*)((char*)var0 + 4))->Allocate(0x50);
-    if (!var1) return;
+extern "C" ARM void func_ov004_0216afb0(void* a1, int p2, int p3, int p4,
+    int p5, int p6, int p7, int p8, unsigned char p9) {
+    void* buf = func_ov011_021845f8(a1, p3);
+    void* block = ((SafeAllocator*)((char*)buf + 4))->Allocate(0x50);
+    if (!block) return;
 
-    struct Struct_ov004_0216afb0_2 var2;
-    var2.unknown_0_ = &data_ov023_021fe708;
-    memcpy(var1, &var2, sizeof(Struct_ov004_0216afb0_2));
+    struct Struct_ov004_0216afb0_2 local;
+    local.magic = &data_ov023_021fe708;
+    memcpy(block, &local, sizeof(Struct_ov004_0216afb0_2));
 
-    int var3 = 0xf;
-    if (arg8 == 0) var3 = 3;
-    func_ov023_021f89f4((struct Struct_ov004_0216afb0*)var1, arg0, arg1, arg2, arg3, 0x192, arg4, arg5, arg6, arg7, var3);
+    int flag = 0xf;
+    if (p9 == 0) flag = 3;
+    func_ov023_021f89f4((struct Struct_ov004_0216afb0*)block, a1, p2, p3, p4, 0x192, p5, p6, p7, p8, flag);
 
-    func_ov023_021f67ac((struct Struct_ov004_0215c30c*)func_ov011_021849c8(arg0), (struct Struct_ov004_0215c30c_2*)var1);
+    func_ov023_021f67ac((struct Struct_ov004_0215c30c*)func_ov011_021849c8(a1), (struct Struct_ov004_0215c30c_2*)block);
 }

@@ -8,14 +8,14 @@ extern int data_021142e8;
 
 // USA: func_020d4064
 extern "C" ARM void* func_020d4064(void) {
-    void* var0;
-    if (func_020c7ea0(&data_021142e8, &var0, 0) == 0) {
+    void* local;
+    if (func_020c7ea0(&data_021142e8, &local, 0) == 0) {
         return NULL;
     }
-    InvalidateDataCacheRange((const void*)((int)var0), 2);
-    if (*(unsigned short*)var0 & 0x8000) {
-        return var0;
+    InvalidateDataCacheRange((const void*)((int)local), 2);
+    if (*(unsigned short*)local & 0x8000) {
+        return local;
     }
-    func_020c7f44(&data_021142e8, var0, 1);
+    func_020c7f44(&data_021142e8, local, 1);
     return NULL;
 }

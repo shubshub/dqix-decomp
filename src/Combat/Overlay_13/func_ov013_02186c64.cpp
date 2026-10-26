@@ -6,19 +6,19 @@
 #endif
 
 struct Struct_0205d81c;
-struct Struct_0205d0e0;
-extern "C" Struct_0205d0e0* func_0205d81c(Struct_0205d81c*, int);
+struct Elem_0205d81c;
+extern "C" Elem_0205d81c* func_0205d81c(Struct_0205d81c*, int);
 extern "C" void func_ov013_02186bd4(void*);
 
 // USA: func_ov013_02186c64
-extern "C" ARM void func_ov013_02186c64(void* arg0, int arg1, int arg2) {
-    Struct_0205d0e0* var0 = func_0205d81c((Struct_0205d81c*)((char*)arg0 + LIST_OFFSET), arg1);
-    if (var0 == 0) return;
+extern "C" ARM void func_ov013_02186c64(void* obj, int key, int flag) {
+    Elem_0205d81c* elem = func_0205d81c((Struct_0205d81c*)((char*)obj + LIST_OFFSET), key);
+    if (elem == 0) return;
 
-    unsigned char* var1 = (unsigned char*)var0 + 0xc5;
-    unsigned char var2 = *var1;
-    *var1 = arg2 ? (var2 | 0x40) : (var2 & ~0x40);
+    unsigned char* var1 = (unsigned char*)elem + 0xc5;
+    unsigned char v = *var1;
+    *var1 = flag ? (v | 0x40) : (v & ~0x40);
 
-    if (arg1 != 0) return;
-    func_ov013_02186bd4(arg0);
+    if (key != 0) return;
+    func_ov013_02186bd4(obj);
 }

@@ -1,30 +1,30 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_0207c5f8(unsigned char* arg0, unsigned int arg1);
-extern "C" signed short func_0207c620(unsigned char* arg0, unsigned int arg1);
+extern "C" void* func_0207c5f8(unsigned char* obj, unsigned int index);
+extern "C" signed short func_0207c620(unsigned char* obj, unsigned int index);
 extern short data_020f29dc[];
 
 // USA: func_020dd300
-extern "C" ARM int func_020dd300(int arg0) {
-    GameState* var0 = GameState::GetInstance();
-    unsigned char* var1 = (unsigned char*)func_02010828(var0);
-    signed short* var2 = (signed short*)func_0207c5f8(var1 + 0x1d4, 0);
-    short var3 = func_0207c620(var1 + 0x1d4, 0);
-    short var4 = 0;
-    for (short var5 = 0; var5 < var3; var5++) {
-        signed short var6 = var2[var5];
-        if (var6 > 0) {
-            var6 -= var6 % 100;
-            for (unsigned char var7 = 0; var7 < 12; var7++) {
-                if (arg0 & (1 << var7)) {
-                    if (var6 == data_020f29dc[var7]) {
-                        var4++;
+extern "C" ARM int func_020dd300(int mask) {
+    GameState* battleStruct = GameState::GetInstance();
+    unsigned char* obj = (unsigned char*)GameState_GetParty(battleStruct);
+    signed short* arr = (signed short*)func_0207c5f8(obj + 0x1d4, 0);
+    short count = func_0207c620(obj + 0x1d4, 0);
+    short result = 0;
+    for (short i = 0; i < count; i++) {
+        signed short v = arr[i];
+        if (v > 0) {
+            v -= v % 100;
+            for (unsigned char j = 0; j < 12; j++) {
+                if (mask & (1 << j)) {
+                    if (v == data_020f29dc[j]) {
+                        result++;
                         break;
                     }
                 }
             }
         }
     }
-    return var4;
+    return result;
 }

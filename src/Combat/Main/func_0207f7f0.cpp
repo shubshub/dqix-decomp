@@ -2,12 +2,12 @@
 #include "Combat/MenuNodeChain.h"
 
 // USA: func_0207f7f0
-extern "C" ARM void func_0207f7f0(Struct_0207f7f0* arg0, Struct_0207f7f0_2* arg1, int arg2) {
-    unsigned char var0;
-    arg0->unknown_30_ = arg1;
-    arg0->unknown_39_ = (unsigned char)arg2;
-    if (arg0->unknown_30_ != NULL && arg0->unknown_39_ != 0) {
-        for (var0 = 1; var0 < arg0->unknown_39_; var0++)
-            arg0->unknown_30_[var0].unknown_0_ = &arg0->unknown_30_[var0 - 1];
+extern "C" ARM void func_0207f7f0(Manager0207f7f0* mgr, Node0207f7f0* nodes, int count) {
+    unsigned char i;
+    mgr->nodes = nodes;
+    mgr->count = (unsigned char)count;
+    if (mgr->nodes != NULL && mgr->count != 0) {
+        for (i = 1; i < mgr->count; i++)
+            mgr->nodes[i].prev = &mgr->nodes[i - 1];
     }
 }

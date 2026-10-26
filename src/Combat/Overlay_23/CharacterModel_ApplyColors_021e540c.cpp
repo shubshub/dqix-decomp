@@ -20,10 +20,10 @@ struct CharacterColors {
     unsigned short eyes[16][2];
 };
 
-unsigned short (*CharacterColors_GetInstance())[2];
-void CharacterModel_GetPartModels(void* vocation, short* models, short* appearance);
-ItemRecord* ItemTable_Find(ItemTable* itemTable, int itemId);
-int ItemRecord_GetPaletteSize(Obj020de2a4* item, int which, int female);
+extern "C" unsigned short (*CharacterColors_GetInstance())[2];
+extern "C" void CharacterModel_GetPartModels(void* vocation, short* models, short* appearance);
+extern "C" ItemRecord* ItemTable_Find(ItemTable* itemTable, int itemId);
+extern "C" int ItemRecord_GetPaletteSize(Obj020de2a4* item, int which, int female);
 extern short CharacterModel_skinPaletteParts[];
 
 // Overlay 23, originally func_ov023_021e540c (USA/EUR 0x021e540c, JPN 0x021e55f0)

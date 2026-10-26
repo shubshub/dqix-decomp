@@ -3,11 +3,11 @@
 #include "Combat/ObjectStateInitialization.h"
 
 // Shared prefix of the field actors initialized by FieldMonsterState_Init and updated
-// by TickActorAndDispatchPhase02076b58. The type name is part of the existing
+// by func_02076b58. The type name is part of the existing
 // dispatcher and member-function-table ABI.
 struct Struct_02076a8c_2 {
-    Struct_02032e58 unknown_0_;
-    int unknown_130_;
+    ObjectStatePrefix base;
+    int phase;
     int unknown_134_;
     unsigned char unknown_138_;
     unsigned char unknown_139_;
@@ -24,32 +24,32 @@ struct Struct_02076a8c_2 {
 };
 
 
-extern "C" void func_02076b58(Struct_02076a8c_2* arg0);
+extern "C" void func_02076b58(Struct_02076a8c_2* actor);
 
 struct Struct_ov017_021a1d98;
 struct Struct_02078998;
 
 // Extent initialized by FieldMonsterState_Init. This does not assert the full actor size.
 struct FieldMonsterState {
-    Obj02076b58 actor;
+    Struct_02076a8c_2 actor;
     Vector3fix targetPosition;
-    unsigned short unknown164;
+    unsigned short unknown_164_;
     unsigned short combatantId;
-    unsigned short unknown168;
-    unsigned short unknown16a;
-    unsigned char unknown16c[4];
+    unsigned short unknown_168_;
+    unsigned short unknown_16a_;
+    unsigned char unknown_16c_[4];
     fix32_t height;
-    short rise;
-    unsigned short unknown176;
-    unsigned char unknown178[2];
-    unsigned char rising;
-    unsigned char unknown17b;
-    unsigned char unknown17c;
+    short unknown_174_;
+    unsigned short unknown_176_;
+    unsigned char unknown_178_[2];
+    unsigned char unknown_17a_;
+    unsigned char unknown_17b_;
+    unsigned char unknown_17c_;
     unsigned char flags;
-    unsigned char unknown17e;
-    unsigned char unknown17f;
-    ShadowInfo* shadowInfo;
-    Attributes02078998* attributes;
+    unsigned char unknown_17e_;
+    unsigned char unknown_17f_;
+    Struct_ov017_021a1d98* unknown_180_;
+    Struct_02078998* attributes;
 };
 
 

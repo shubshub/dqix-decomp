@@ -4,8 +4,8 @@
 #include "Graphics/CharacterModel.h"
 #include "NitroSDK/NSBXX/GeometryFifo.h"
 
-unsigned short (*CharacterColors_GetInstance(void))[2];
-int G3X_SetEdgeColorTable(int a);
+extern "C" unsigned short (*CharacterColors_GetInstance(void))[2];
+extern "C" int G3X_SetEdgeColorTable(int a);
 extern "C" void G3_RotateY(int angle);
 
 extern char CharacterModel_headBone;

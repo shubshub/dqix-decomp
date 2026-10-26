@@ -3,14 +3,14 @@
 extern "C" unsigned int func_020c7dcc();
 
 struct Struct_0211155c {
-    int unknown_0_;
+    int initialized;
     int unknown_4_;
 };
 extern Struct_0211155c data_0211155c;
 
 // USA: func_020c862c
-extern "C" ARM unsigned int func_020c862c(unsigned int arg0) {
-    switch (arg0) {
+extern "C" ARM unsigned int func_020c862c(unsigned int mode) {
+    switch (mode) {
     case 0:
 #if defined(jpn)
         return 0x022a39a0;

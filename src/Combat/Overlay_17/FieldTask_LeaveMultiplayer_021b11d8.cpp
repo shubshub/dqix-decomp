@@ -3,31 +3,31 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-struct Struct_0202b2f0;
-struct Struct_0202c1a4;
+struct SearchStruct;
+struct SearchStruct0202c1a4;
 
-struct Struct_0202b2f0 {
-    char unknown_0_[0xfc0];
-    int unknown_fc0_;
+struct SearchStruct {
+    char unk0[0xfc0];
+    int busy;
 };
 
 struct Struct_ov017_021b11d8 {
-    char unknown_0_[6];
-    signed char unknown_6_;
+    char data[6];
+    signed char owner;
     unsigned char unknown_7_;
-    unsigned char unknown_8_;
+    unsigned char f8;
     signed char unknown_9_;
 };
 
 struct Struct_ov017_021b11d8_2 {
-    unsigned char unknown_0_[1];
-    unsigned char unknown_1_;
-    unsigned char unknown_2_[6];
-    unsigned char unknown_8_;
-    unsigned char unknown_9_;
-    unsigned char unknown_a_;
+    unsigned char pad0[1];
+    unsigned char flag1;
+    unsigned char pad2[6];
+    unsigned char mode;
+    unsigned char count;
+    unsigned char flags;
     unsigned char unknown_b_;
-    unsigned short unknown_c_;
+    unsigned short timer;
 };
 
 extern "C" void* LinkSession_GetInstance(void);
@@ -35,18 +35,18 @@ extern "C" void func_ov017_021c37a4(void);
 extern "C" void func_ov017_021d1118(int a, int b, int c, int d);
 extern "C" void func_ov017_021d1014(int a, int b, int c);
 extern "C" void func_ov017_021d0b30(int a, int b, int c);
-void EnqueueEventTag173_021d1810(int, int, signed char);
-int SetSearchFlagBit0202c660(SearchStruct* obj, int value);
-int LinkSession_IsSlotMember(SearchStruct* obj, int index);
-int LinkSession_IsSlotConnected(SearchStruct* obj, int index);
-int IsFieldMinusOne_0202c648(int* obj);
-signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
-int GameState_GetProtagonistIndex(GameState* battleStruct);
+extern "C" void func_ov017_021d1810(int, int, signed char);
+extern "C" int func_0202c660(SearchStruct* obj, int value);
+extern "C" int LinkSession_IsSlotMember(SearchStruct* obj, int index);
+extern "C" int LinkSession_IsSlotConnected(SearchStruct* obj, int index);
+extern "C" int func_0202c648(int* obj);
+extern "C" signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
+extern "C" int GameState_GetProtagonistIndex(GameState* battleStruct);
 extern "C" int func_ov017_02195658(GameResources* res);
 
 // Overlay 17, originally func_ov017_021b11d8 (USA/EUR 0x021b11d8, JPN 0x021b1864)
 extern "C" ARM void FieldTask_LeaveMultiplayer(void* obj, void* node) {
-    Node021b11d8* self = (Node021b11d8*)obj;
+    Struct_ov017_021b11d8_2* self = (Struct_ov017_021b11d8_2*)obj;
     GameState* gs = GameState::GetInstance();
     GameResources* res = GetGameResources();
     SearchStruct* search = (SearchStruct*)LinkSession_GetInstance();
@@ -61,48 +61,48 @@ extern "C" ARM void FieldTask_LeaveMultiplayer(void* obj, void* node) {
                 }
             }
         }
-        EnqueueEventTag173_021d1810(2, -1, (signed char)GameState_GetProtagonistIndex(gs));
+        func_ov017_021d1810(2, -1, (signed char)GameState_GetProtagonistIndex(gs));
         func_ov017_021d1118(-1, 1, 1, 2);
         func_ov017_021d1014(-1, 1, 0);
-        var0->unknown_8_++;
+        self->mode++;
         return;
     }
-    if (var4 == 1) {
+    if (mode == 1) {
 #if defined(jpn)
-        Struct_ov017_021b11d8* var6 = (Struct_ov017_021b11d8*)((char*)GameState::GetInstance() + 0x7280);
+        Struct_ov017_021b11d8* slot = (Struct_ov017_021b11d8*)((char*)GameState::GetInstance() + 0x7280);
 #else
-        Struct_ov017_021b11d8* var6 = (Struct_ov017_021b11d8*)((char*)GameState::GetInstance() + 0x74c0);
+        Struct_ov017_021b11d8* slot = (Struct_ov017_021b11d8*)((char*)GameState::GetInstance() + 0x74c0);
 #endif
-        for (int var7 = 0; var7 < 3; var7++, var6++) {
-            if (var6->unknown_6_ < 4) {
+        for (int i = 0; i < 3; i++, slot++) {
+            if (slot->owner < 4) {
                 continue;
             }
-            if (var6->unknown_7_ != 0 || var6->unknown_8_ != 0) {
+            if (slot->unknown_7_ != 0 || slot->f8 != 0) {
                 return;
             }
-            if (var6->unknown_9_ >= 0) {
+            if (slot->unknown_9_ >= 0) {
                 return;
             }
         }
-        var0->unknown_8_++;
+        self->mode++;
         return;
     }
-    if (var4 == 2) {
+    if (mode == 2) {
         func_ov017_021d0b30(9, 0, 0);
-        func_0202c660(var3, 0);
-        var0->unknown_8_++;
+        func_0202c660(search, 0);
+        self->mode++;
         return;
     }
-    if (var4 != 3) {
+    if (mode != 3) {
         return;
     }
-    if (func_0202c648((int*)var3) != 0) {
+    if (func_0202c648((int*)search) != 0) {
         goto done;
     }
     {
-        int var8 = func_ov017_02195658(var2);
-        if (var8 > 0) {
-            var0->unknown_a_ &= ~(1 << var8);
+        int slot = func_ov017_02195658(res);
+        if (slot > 0) {
+            self->flags &= ~(1 << slot);
         }
     }
     if (search->busy == 0) {
@@ -120,22 +120,22 @@ extern "C" ARM void FieldTask_LeaveMultiplayer(void* obj, void* node) {
             if (e == 0) {
                 continue;
             }
-            int var12 = 1 << var0->unknown_9_;
-            unsigned short var13 = var11->unknown_2_1_;
-            if ((var13 & var12) != 0) {
+            int bit = 1 << self->count;
+            unsigned short m = e->members;
+            if ((m & bit) != 0) {
                 return;
             }
         }
     }
-    if (var0->unknown_c_ >= 0x3e8) {
+    if (self->timer >= 0x3e8) {
         goto done;
     }
-    if (var3->unknown_fc0_ != 0) {
+    if (search->busy != 0) {
         return;
     }
-    var0->unknown_c_ += var1->GetEffectiveDeltaTime();
+    self->timer += gs->GetEffectiveDeltaTime();
     return;
 done:
     func_ov017_021c37a4();
-    var0->unknown_1_ = 1;
+    self->flag1 = 1;
 }

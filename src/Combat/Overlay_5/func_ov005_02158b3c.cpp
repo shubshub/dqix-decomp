@@ -10,20 +10,20 @@
 #include <Resource/GameResources.h>
 #include <Resource/CharacterCreationUI.h>
 
-void* MessageSystem_GetInstance();
+extern "C" void* MessageSystem_GetInstance();
 extern "C" void func_02046380(void* global);
-int* GetField1c_021a193c(int* p);
-void NameText_InitFromPartyMember(void* obj, int combatantId);
+extern "C" int* func_ov017_021a193c(int* p);
+extern "C" void NameText_InitFromPartyMember(void* obj, int combatantId);
 extern "C" void* __clear(void* dst, int count);
-void NameText_Clear(void* p);
-short GetTableByte0215a930(void* obj, int index);
-void DispatchIfCountPositive020dcf7c(int count, void* buf);
-char* KeyTable_Get(Container020e0310* c, int key);
+extern "C" void NameText_Clear(void* p);
+extern "C" short func_ov005_0215a930(void* obj, int index);
+extern "C" void func_020dcf7c(int count, void* buf);
+extern "C" char* KeyTable_Get(Container020e0310* c, int key);
 extern "C" void MessageSystem_FormatText(void* a, unsigned char b, const char* c, char* d, int e, int f, unsigned char g);
 
-struct Struct_ov005_02158b3c_6 {
-    char unknown_0_[LOW_REGION(0x4f8, 0x4fc)];
-    int unknown_4fc_;
+struct CombatantTail {
+    char pad[LOW_REGION(0x4f8, 0x4fc)];
+    int index;
 };
 
 struct Struct_ov005_02158b3c_7 {
@@ -33,11 +33,11 @@ struct Struct_ov005_02158b3c_7 {
 
 struct Struct_ov005_02158b3c {
     char unknown_0_[0x18];
-    short unknown_18_;
+    short count_;
     char unknown_1a_[0x20 - 0x1a];
 };
 
-struct Struct_ov005_02158b3c_2 {
+struct Global_02158b3c {
     char unknown_0_[0x10];
     void* unknown_10_;
     void* unknown_14_;
@@ -56,34 +56,34 @@ struct Struct_ov005_02158b3c_4 {
 };
 
 struct Struct_ov005_02153ba4 {
-    short unknown_0_;
-    signed char unknown_2_;
-    unsigned char unknown_3_;
-    void* unknown_4_;
-    void* unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
+    short item;
+    signed char count;
+    unsigned char equipped;
+    void* vramState;
+    void* model;
+    int x;
+    int y;
+    int offset;
     short unknown_18_;
 };
 
 struct Struct_ov005_02158b3c_5 {
     char unknown_0_[0xdf8];
-    Struct_0201099c_3 unknown_df8_;
-    char unknown_e00_[LOW_REGION(0x2d08, 0x2d90) - 0xdf8 - sizeof(Struct_0201099c_3)];
-    Struct_ov005_02153ba4 unknown_2d90_[24];
+    Container020e0310 messages;
+    char unknown_e00_[LOW_REGION(0x2d08, 0x2d90) - 0xdf8 - sizeof(Container020e0310)];
+    Struct_ov005_02153ba4 slots[24];
     char unknown_3030_[0x3dbb - 0x3030];
-    signed char unknown_3dbb_;
-    unsigned char unknown_3dbc_;
+    signed char selectedSlot;
+    unsigned char kind_;
     char unknown_3dbd_[LOW_REGION(0x3d44, 0x3dcc) - LOW_REGION(0x3d35, 0x3dbd)];
-    unsigned int unknown_3dcc_;
+    unsigned int flags_;
     char unknown_3dd0_[LOW_REGION(0x3d49, 0x3dd1) - LOW_REGION(0x3d48, 0x3dd0)];
     unsigned char unknown_3dd1_;
 };
 
 #if defined(jpn)
 extern "C" void func_020de968(int value, char* text);
-extern "C" void _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(void*, int, char*);
+extern "C" void MessageSystem_SetStringArgument(void*, int, char*);
 #endif
 
 // USA: func_ov005_02158b3c
@@ -93,80 +93,80 @@ extern "C" ARM int func_ov005_02158b3c(void* object, void* buffer) {
     func_02046380(g);
     GameState* game = GameState::GetInstance();
 #if defined(jpn)
-    int id = ((CombatantTail*)GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]))->index;
+    int id = ((CombatantTail*)func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]))->index;
 #else
-    CombatantTail* tail = (CombatantTail*)GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+    CombatantTail* tail = (CombatantTail*)func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
     int id = tail->index;
 #endif
-    Struct_ov005_02158b3c_7* var4 = (Struct_ov005_02158b3c_7*)func_0200ff1c(var1, var3);
-    if (var4 == 0) return 0;
+    Struct_ov005_02158b3c_7* combatant = (Struct_ov005_02158b3c_7*)func_0200ff1c(game, id);
+    if (combatant == 0) return 0;
 
 #if defined(jpn)
-    _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(g, 1, *(char**)((char*)combatant + 0x134));
+    MessageSystem_SetStringArgument(g, 1, *(char**)((char*)combatant + 0x134));
 #else
-    Local12_02158b3c obj;
+    Struct_ov005_02158b3c_3 obj;
     NameText_InitFromPartyMember(&obj, id);
-    g->field10_ = &obj;
-    Buffers_02158b3c bufs;
-    __clear(bufs.bufB_, 0x80);
-    __clear(bufs.bufA_, 0x80);
-    Local12_02158b3c s;
+    g->unknown_10_ = &obj;
+    Struct_ov005_02158b3c_4 bufs;
+    __clear(bufs.unknown_80_, 0x80);
+    __clear(bufs.unknown_0_, 0x80);
+    Struct_ov005_02158b3c_3 s;
     NameText_Clear(&s);
-    s.a_ = bufs.bufB_;
-    s.b_ = bufs.bufA_;
+    s.unknown_0_ = bufs.unknown_80_;
+    s.unknown_4_ = bufs.unknown_0_;
 
 #endif
-    Struct_ov005_02158b3c_5* var8 = (Struct_ov005_02158b3c_5*)arg0;
-    if (var8->unknown_3dcc_ & 0x8000) {
-        unsigned char var9 = func_ov005_0215a930(arg0, var8->unknown_3dbc_);
-        Struct_ov005_02158b3c* var10 = (Struct_ov005_02158b3c*)((char*)var4->unknown_150_ + 0x194) + var9;
-        if (var10) {
-            func_02046380(var0);
+    Struct_ov005_02158b3c_5* menu = (Struct_ov005_02158b3c_5*)object;
+    if (menu->flags_ & 0x8000) {
+        unsigned char pick = func_ov005_0215a930(object, menu->kind_);
+        Struct_ov005_02158b3c* e = (Struct_ov005_02158b3c*)((char*)combatant->unknown_150_ + 0x194) + pick;
+        if (e) {
+            func_02046380(g);
 #if defined(jpn)
             char name[0x40];
             __clear(name, 0x40);
             func_020de968(e->count_, name);
-            _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(g, 0, name);
+            MessageSystem_SetStringArgument(g, 0, name);
 #else
-            func_020dcf7c(var10->unknown_18_, &var7);
-            var0->unknown_18_ = &var7;
+            func_020dcf7c(e->count_, &s);
+            g->unknown_18_ = &s;
 #endif
         }
-        var8->unknown_3dcc_ &= ~0x8000;
+        menu->flags_ &= ~0x8000;
     } else {
-        signed char var12 = var8->unknown_3dbb_;
-        short var13 = var8->unknown_2d90_[var12].unknown_0_;
+        signed char slot = menu->selectedSlot;
+        short value = menu->slots[slot].item;
 #if defined(jpn)
         char name[0x40];
         __clear(name, 0x40);
         func_020de968(value, name);
-        _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(g, 0, name);
+        MessageSystem_SetStringArgument(g, 0, name);
 #else
-        func_020dcf7c(var13, &var7);
-        var0->unknown_18_ = &var7;
+        func_020dcf7c(value, &s);
+        g->unknown_18_ = &s;
 #endif
     }
 
-    int var15 = 0xe3;
-    unsigned char var16 = var8->unknown_3dd1_;
-    int var17 = -1;
-    if (var16 <= 7) var15 = 0xb4;
-    switch (var16) {
+    int w = 0xe3;
+    unsigned char sel = menu->unknown_3dd1_;
+    int v = -1;
+    if (sel <= 7) w = 0xb4;
+    switch (sel) {
     case 0: break;
-    case 2: var17 = 0x2711; break;
-    case 3: var17 = 0x2712; break;
-    case 1: var17 = 0x2713; break;
-    case 4: var17 = 0x2714; break;
-    case 5: var17 = 0x2715; break;
-    case 6: var17 = 0x2716; break;
-    case 7: var17 = 0x2717; break;
-    case 8: var17 = 0x2af8; break;
-    case 9: var17 = 0x2af9; break;
-    case 10: var17 = 0x2afa; break;
-    case 11: var17 = 0x2afb; break;
-    case 12: var17 = 0x2afc; break;
-    case 13: var17 = 0x2afd; break;
-    case 14: var17 = 0x2afe; break;
+    case 2: v = 0x2711; break;
+    case 3: v = 0x2712; break;
+    case 1: v = 0x2713; break;
+    case 4: v = 0x2714; break;
+    case 5: v = 0x2715; break;
+    case 6: v = 0x2716; break;
+    case 7: v = 0x2717; break;
+    case 8: v = 0x2af8; break;
+    case 9: v = 0x2af9; break;
+    case 10: v = 0x2afa; break;
+    case 11: v = 0x2afb; break;
+    case 12: v = 0x2afc; break;
+    case 13: v = 0x2afd; break;
+    case 14: v = 0x2afe; break;
     }
 
     if (v >= 0) {
@@ -179,8 +179,8 @@ extern "C" ARM int func_ov005_02158b3c(void* object, void* buffer) {
     sprintf((char*)buffer, text);
 
 #endif
-    if (var17 >= 0x2af8) {
-        if (var17 <= 0x2afe) return 1;
+    if (v >= 0x2af8) {
+        if (v <= 0x2afe) return 1;
     }
     return 0;
 }

@@ -6,7 +6,7 @@
 #define COMBAT_FIELD(x) (x)
 #endif
 
-void InitCombatantExtendedFields02052a4c(void*);
+extern "C" void func_02052a4c(void*);
 
 // The party member fields (usa offsets), as the functions that use them show
 enum {
@@ -34,7 +34,7 @@ enum {
 // Main, originally func_02037d10 (USA 0x02037d10, EUR 0x02037d20, JPN 0x0203776c)
 extern "C" ARM void GameObject_InitPartyMember(void* object) {
     signed char* bytes = (signed char*)object;
-    InitCombatantExtendedFields02052a4c(object);
+    func_02052a4c(object);
     *(unsigned short*)(bytes + 0x0) |= ObjectKind_PartyMember;
     bytes[COMBAT_FIELD(PartyMember_trailWriteIndex)] = -1;
     bytes[COMBAT_FIELD(PartyMember_trailReadIndex)] = 0;

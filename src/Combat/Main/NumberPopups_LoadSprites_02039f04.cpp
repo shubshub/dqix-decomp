@@ -25,7 +25,7 @@ union SpriteFileTable {
 extern const union SpriteFileTable data_020e7844;
 
 // Main, originally LoadObjectResourceFiles02039f04 (USA 0x02039f04, EUR 0x02039f14, JPN 0x0203995c)
-ARM void NumberPopups_LoadSprites(char* popupsRaw, int allocator, const void* narc) {
+extern "C" ARM void NumberPopups_LoadSprites(char* popupsRaw, int allocator, const void* narc) {
     NumberPopups* numberPopups = (NumberPopups*)popupsRaw;
     union SpriteFileTable files;
     int i;

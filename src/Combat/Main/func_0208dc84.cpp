@@ -3,24 +3,24 @@
 #include "Resource/Script.h"
 
 struct Variant02030b0c;
-int STD_GetStringLength(char const*);
+extern "C" int STD_GetStringLength(char const*);
 extern "C" char* strcpy(char* dst, const char* src);
 
 struct Struct_0208dc84;
 struct Struct_0208dc84_2;
-extern "C" void func_0208df94(struct Struct_0208dc84* arg0, SafeAllocator* arg1, struct Struct_0208dc84_2* arg2);
+extern "C" void func_0208df94(struct Struct_0208dc84* list, SafeAllocator* alloc, struct Struct_0208dc84_2* src);
 
 struct Struct_02108fd4 {
-    unsigned short* unknown_0_;
-    unsigned short* unknown_4_;
-    void* unknown_8_;
-    void* unknown_c_;
+    unsigned short* field0;
+    unsigned short* field4;
+    void* field8;
+    void* fieldC;
 };
 extern struct Struct_02108fd4 data_02108fd4;
 
 struct Struct_0208dc84_3 {
-    unsigned short unknown_0_0_ : 2;
-    unsigned short unknown_0_2_ : 7;
+    unsigned short b0 : 2;
+    unsigned short b2 : 7;
 #if defined(jpn)
     unsigned short unknown_1_1_ : 7;
 #else
@@ -30,58 +30,58 @@ struct Struct_0208dc84_3 {
 };
 
 struct Struct_0208dc84_4 {
-    short unknown_0_;
-    struct Struct_0208dc84_3 unknown_2_;
-    int unknown_4_;
-    int unknown_8_;
+    short field0;
+    struct Struct_0208dc84_3 field2;
+    int field4;
+    int field8;
 #if defined(jpn)
-    int unknown_c_;
+    int fieldC;
 #endif
 };
 
 // USA: func_0208dc84
-extern "C" ARM int func_0208dc84(char* arg0
+extern "C" ARM int func_0208dc84(char* p
 #if defined(jpn)
     , int arg1
 #endif
 ) {
-    struct Struct_0208dc84_4 var0;
+    struct Struct_0208dc84_4 c;
 #if defined(jpn)
-    char* var1;
+    char* extra;
 #endif
-    char* var2;
-    void* var3;
+    char* s;
+    void* dst;
 
-    var0.unknown_0_ = -1;
-    var0.unknown_2_.unknown_0_0_ = 0;
-    var0.unknown_2_.unknown_0_2_ = 0;
-    var0.unknown_2_.unknown_1_1_ = 0;
+    c.field0 = -1;
+    c.field2.b0 = 0;
+    c.field2.b2 = 0;
+    c.field2.unknown_1_1_ = 0;
 #if !defined(jpn)
-    var0.unknown_2_.unknown_1_7_ = 0;
+    c.field2.unknown_1_7_ = 0;
 #endif
-    var0.unknown_4_ = 0;
-    var0.unknown_8_ = 0;
+    c.field4 = 0;
+    c.field8 = 0;
 #if defined(jpn)
-    var0.unknown_c_ = 0;
+    c.fieldC = 0;
 #endif
 
-    if (data_02108fd4.unknown_4_ != 0) {
-        unsigned short var4;
-        var0.unknown_0_ = (short)((Script::Parameter*)((struct Struct_0201c1c8*)arg0))->ToInt();
-        var2 = (char*)(void*)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 8)))->ToString();
-        var0.unknown_2_.unknown_0_0_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x10)))->ToInt();
-        var0.unknown_2_.unknown_1_1_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x18)))->ToInt();
-        var0.unknown_2_.unknown_0_2_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x20)))->ToInt();
+    if (data_02108fd4.field4 != 0) {
+        unsigned short i;
+        c.field0 = (short)((Script::Parameter*)((struct Variant02030b0c*)p))->ToInt();
+        s = (char*)(void*)((Script::Parameter*)((struct Variant02030b0c*)(p + 8)))->ToString();
+        c.field2.b0 = (unsigned short)((Script::Parameter*)((struct Variant02030b0c*)(p + 0x10)))->ToInt();
+        c.field2.unknown_1_1_ = (unsigned short)((Script::Parameter*)((struct Variant02030b0c*)(p + 0x18)))->ToInt();
+        c.field2.b2 = (unsigned short)((Script::Parameter*)((struct Variant02030b0c*)(p + 0x20)))->ToInt();
 #if defined(jpn)
-        var1 = 0;
+        extra = 0;
         if (arg1 - 5) {
-            var1 = (char*)(void*)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x28)))->ToString();
+            extra = (char*)(void*)((Script::Parameter*)((struct Variant02030b0c*)(p + 0x28)))->ToString();
         }
 #else
-        var0.unknown_2_.unknown_1_7_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x28)))->ToInt();
+        c.field2.unknown_1_7_ = (unsigned short)((Script::Parameter*)((struct Variant02030b0c*)(p + 0x28)))->ToInt();
 #endif
         for (i = 0; i < *data_02108fd4.field0; i++) {
-            if (data_02108fd4.field4[i] == c.field2.b9) {
+            if (data_02108fd4.field4[i] == c.field2.unknown_1_1_) {
                 if (s != 0) {
                     dst = ((SafeAllocator*)data_02108fd4.fieldC)->Allocate((unsigned int)(STD_GetStringLength(s) + 1));
                     c.field4 = (int)dst;
@@ -98,9 +98,9 @@ extern "C" ARM int func_0208dc84(char* arg0
                     }
                 }
 #endif
-                func_0208df94((struct Struct_0208dc84*)data_02108fd4.unknown_8_,
-                                                (SafeAllocator*)data_02108fd4.unknown_c_,
-                                                (struct Struct_0208dc84_2*)&var0);
+                func_0208df94((struct Struct_0208dc84*)data_02108fd4.field8,
+                                                (SafeAllocator*)data_02108fd4.fieldC,
+                                                (struct Struct_0208dc84_2*)&c);
                 break;
             }
         }
@@ -114,16 +114,16 @@ extern "C" ARM int func_0208dc84(char* arg0
                 strcpy((char*)dst, s);
             }
         }
-        var0.unknown_2_.unknown_0_0_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x10)))->ToInt();
-        var0.unknown_2_.unknown_1_1_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x18)))->ToInt();
-        var0.unknown_2_.unknown_0_2_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x20)))->ToInt();
+        c.field2.b0 = (unsigned short)((Script::Parameter*)((struct Variant02030b0c*)(p + 0x10)))->ToInt();
+        c.field2.unknown_1_1_ = (unsigned short)((Script::Parameter*)((struct Variant02030b0c*)(p + 0x18)))->ToInt();
+        c.field2.b2 = (unsigned short)((Script::Parameter*)((struct Variant02030b0c*)(p + 0x20)))->ToInt();
 #if defined(jpn)
-        var1 = 0;
+        extra = 0;
         if (arg1 - 5) {
-            var1 = (char*)(void*)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x28)))->ToString();
+            extra = (char*)(void*)((Script::Parameter*)((struct Variant02030b0c*)(p + 0x28)))->ToString();
         }
 #else
-        var0.unknown_2_.unknown_1_7_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 0x28)))->ToInt();
+        c.field2.unknown_1_7_ = (unsigned short)((Script::Parameter*)((struct Variant02030b0c*)(p + 0x28)))->ToInt();
 #endif
 #if defined(jpn)
         if (extra != 0) {
@@ -134,9 +134,9 @@ extern "C" ARM int func_0208dc84(char* arg0
             }
         }
 #endif
-        func_0208df94((struct Struct_0208dc84*)data_02108fd4.unknown_8_,
-                                        (SafeAllocator*)data_02108fd4.unknown_c_,
-                                        (struct Struct_0208dc84_2*)&var0);
+        func_0208df94((struct Struct_0208dc84*)data_02108fd4.field8,
+                                        (SafeAllocator*)data_02108fd4.fieldC,
+                                        (struct Struct_0208dc84_2*)&c);
     }
     return 1;
 }

@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
-struct Struct_ov023_021f8240_7 { char unknown_0_[0x2c]; unsigned short unknown_2c_; };
+struct Struct_ov023_021f8240_7 { char pad[0x2c]; unsigned short field2c; };
 
 // USA: func_ov023_021fc504
-extern "C" ARM unsigned short func_ov023_021fc504(struct Struct_ov023_021f8240_7 *arg0) {
-	return arg0->unknown_2c_;
+extern "C" ARM unsigned short func_ov023_021fc504(struct Struct_ov023_021f8240_7 *obj) {
+	return obj->field2c;
 }

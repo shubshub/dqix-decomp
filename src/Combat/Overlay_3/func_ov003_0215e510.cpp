@@ -3,72 +3,72 @@
 #include "Memory/SafeAllocator.h"
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8 {
-    int unknown_0_;
-    union { int unknown_0_; float unknown1_0_; } unknown_4_;
+struct Variant02030b0c {
+    int tag;
+    union { int i; float f; } u;
 };
 
-struct Struct_0201c3a4 {
-    int unknown_0_;
-    void* unknown_4_;
+struct Struct02030b7c {
+    int field0;
+    void* field4;
 };
 
-int STD_GetStringLength(const char* s);
+extern "C" int STD_GetStringLength(const char* s);
 
 struct Struct_ov003_0215e498 {
-    short unknown_0_;
-    short unknown_2_;
-    int unknown_4_;
-    int unknown_8_;
-    unsigned char unknown_c_;
+    short f0;
+    short f2;
+    int f4;
+    int f8;
+    unsigned char fc;
     unsigned char unknown_d_;
-    unsigned char unknown_e_;
-    unsigned char unknown_f_;
-    short unknown_10_;
+    unsigned char fe;
+    unsigned char ff;
+    short f10;
 };
-extern "C" void func_ov003_0215e498(struct Struct_ov003_0215e498* arg0);
+extern "C" void func_ov003_0215e498(struct Struct_ov003_0215e498* s);
 
 struct Struct_ov003_0215e510 {
-    short unknown_0_;
-    short unknown_2_;
-    int unknown_4_;
-    int unknown_8_;
-    unsigned char unknown_c_;
+    short f0;
+    short f2;
+    int f4;
+    int f8;
+    unsigned char fc;
     unsigned char unknown_d_;
-    unsigned char unknown_e_;
-    unsigned char unknown_f_;
-    short unknown_10_;
-    unsigned char unknown_12_;
+    unsigned char fe;
+    unsigned char ff;
+    short f10;
+    unsigned char f12;
     unsigned char unknown_13_;
 };
 struct Struct_ov003_0215e790;
-extern "C" void func_ov003_0215e790(struct Struct_ov003_0215e790* arg0, struct Struct_ov003_0215e510* arg1);
+extern "C" void func_ov003_0215e790(struct Struct_ov003_0215e790* self, struct Struct_ov003_0215e510* src);
 
 struct Struct_ov003_0215e510_2 {
-    struct Struct_0201c1c8 unknown_0_;
-    struct Struct_0201c1c8 unknown_8_;
-    struct Struct_0201c1c8 unknown_10_;
-    struct Struct_0201c3a4 unknown_18_;
-    struct Struct_0201c3a4 unknown_20_;
-    struct Struct_0201c1c8 unknown_28_;
-    struct Struct_0201c1c8 unknown_30_;
-    struct Struct_0201c1c8 unknown_38_;
+    struct Variant02030b0c v0;
+    struct Variant02030b0c v1;
+    struct Variant02030b0c v2;
+    struct Struct02030b7c v3;
+    struct Struct02030b7c v4;
+    struct Variant02030b0c v5;
+    struct Variant02030b0c v6;
+    struct Variant02030b0c v7;
 };
 
-struct Struct_ov003_02180cb8 {
-    void* unknown_0_;
-    struct Struct_ov003_0215e790* unknown_4_;
+struct Globals02180cb8 {
+    void* allocator;
+    struct Struct_ov003_0215e790* target;
 };
 extern struct Globals02180cb8 KeyboardLayout_scriptContext;
 
 // USA: func_ov003_0215e510
-extern "C" ARM int func_ov003_0215e510(struct Struct_ov003_0215e510_2* arg0) {
-    struct Struct_ov003_0215e510 var0;
-    func_ov003_0215e498((struct Struct_ov003_0215e498*)&var0);
+extern "C" ARM int func_ov003_0215e510(struct Struct_ov003_0215e510_2* obj) {
+    struct Struct_ov003_0215e510 local;
+    func_ov003_0215e498((struct Struct_ov003_0215e498*)&local);
 
-    var0.unknown_10_ = (short)((Script::Parameter*)&arg0->unknown_0_)->ToInt();
-    var0.unknown_0_ = (short)((Script::Parameter*)&arg0->unknown_8_)->ToInt();
-    var0.unknown_2_ = (short)((Script::Parameter*)&arg0->unknown_10_)->ToInt();
+    local.f10 = (short)((Script::Parameter*)&obj->v0)->ToInt();
+    local.f0 = (short)((Script::Parameter*)&obj->v1)->ToInt();
+    local.f2 = (short)((Script::Parameter*)&obj->v2)->ToInt();
 
     char* text1 = (char*)(void*)((Script::Parameter*)&obj->v3)->ToString();
     if (text1 != NULL) {
@@ -90,10 +90,10 @@ extern "C" ARM int func_ov003_0215e510(struct Struct_ov003_0215e510_2* arg0) {
         }
     }
 
-    var0.unknown_c_ = (unsigned char)((Script::Parameter*)&arg0->unknown_28_)->ToInt();
-    var0.unknown_d_ = (unsigned char)((Script::Parameter*)&arg0->unknown_30_)->ToInt();
-    var0.unknown_e_ = (unsigned char)((Script::Parameter*)&arg0->unknown_38_)->ToInt();
+    local.fc = (unsigned char)((Script::Parameter*)&obj->v5)->ToInt();
+    local.unknown_d_ = (unsigned char)((Script::Parameter*)&obj->v6)->ToInt();
+    local.fe = (unsigned char)((Script::Parameter*)&obj->v7)->ToInt();
 
-    AppendEntryToArray_0215e790(KeyboardLayout_scriptContext.target, &local);
+    func_ov003_0215e790(KeyboardLayout_scriptContext.target, &local);
     return 1;
 }

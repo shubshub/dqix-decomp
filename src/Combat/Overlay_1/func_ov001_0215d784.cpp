@@ -6,14 +6,14 @@
 #include <globaldefs.h>
 
 extern "C" int func_ov017_021d60f4(void*);
-extern "C" void* func_ov001_0215905c(int arg0, int arg1);
+extern "C" void* func_ov001_0215905c(int type, int val);
 
-struct Struct_ov001_02165880_28 { char unknown_0_[0x24]; int unknown_24_; };
+struct Struct_ov001_02165880_28 { char pad[0x24]; int field24; };
 extern Struct_ov001_02165880_28 data_ov001_02165880;
 
 // USA: func_ov001_0215d784
-extern "C" ARM int func_ov001_0215d784(void* arg0) {
-    int var0 = func_ov017_021d60f4(arg0);
-    func_ov001_0215905c(data_ov001_02165880.unknown_24_, var0);
+extern "C" ARM int func_ov001_0215d784(void* self) {
+    int val = func_ov017_021d60f4(self);
+    func_ov001_0215905c(data_ov001_02165880.field24, val);
     return 1;
 }

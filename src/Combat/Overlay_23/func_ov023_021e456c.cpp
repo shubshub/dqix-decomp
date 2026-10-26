@@ -1,0 +1,36 @@
+#if defined(jpn)
+enum {regionalOffset0=0x56c, regionalOffset1=0x4f8, regionalOffset2=0x124, regionalOffset3=0x128, regionalOffset4=0x130};
+#else
+enum {regionalOffset0=0x634, regionalOffset1=0x4fc, regionalOffset2=0x128, regionalOffset3=0x12c, regionalOffset4=0x134};
+#endif
+#include <globaldefs.h>
+#include "GameState/GameState.h"
+
+extern "C" int CharacterModel_GetBody(int arg);
+
+struct Struct_0208f410;
+
+extern "C" int func_02053c6c(unsigned char* obj);
+
+extern "C" int CharacterModel_Load(int a, int b, int c, int d, int e);
+
+// USA: func_ov023_021e456c
+extern "C" ARM void func_ov023_021e456c(void* objRaw) {
+    char* obj = (char*)objRaw;
+    if (!(*(unsigned short*)(obj + regionalOffset0) & 4)) return;
+    GameState* bs = GameState::GetInstance();
+    GameObject* combatant = func_0200ff1c(bs, *(int*)(obj + regionalOffset1));
+    if (!combatant) return;
+    int flag = 0;
+    if (*(unsigned short*)(obj + regionalOffset0) & 0x10) flag = 1;
+    char* six4 = (char*)CharacterModel_GetBody(*(int*)(obj + regionalOffset2));
+    char* five = (char*)CharacterModel_GetBody(*(int*)(obj + regionalOffset3));
+    ((Object3D*)five)->SetAnimationByName((char const*)(*(int*)(six4 + 0x14)), 0);
+    ((Object3D*)((struct Struct_0208f410*)five))->SetCurrentAnimationTime(*(unsigned int*)(six4 + 0x1c));
+    int fieldVal = func_02053c6c((unsigned char*)combatant);
+    CharacterModel_Load(*(int*)(obj + regionalOffset3), fieldVal, *(int*)(obj + regionalOffset1), flag, 1);
+    *(unsigned short*)(obj + regionalOffset0) &= ~4;
+    *(unsigned short*)(obj + regionalOffset0) &= ~0x10;
+    *(int*)(obj + regionalOffset4) = 0;
+    *(unsigned short*)(obj + regionalOffset0) |= 8;
+}

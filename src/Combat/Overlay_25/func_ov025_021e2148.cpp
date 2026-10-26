@@ -2,29 +2,29 @@
 #include "std_library_functions.h"
 
 struct Struct_ov025_021e2148_4 {
-    unsigned char unknown_0_;
+    unsigned char id;
     unsigned char unknown_1_;
     unsigned char unknown_2_;
     unsigned char unknown_3_;
-    unsigned char unknown_4_;
-    unsigned char unknown_5_;
-    char unknown_6_[2];
-    Struct_ov025_021e2148_4* unknown_8_;
+    unsigned char parent;
+    unsigned char blocked;
+    char pad6[2];
+    Struct_ov025_021e2148_4* next;
 };
 
 struct Struct_ov025_021e2148 {
-    Struct_ov025_021e2148_4* unknown_0_;
+    Struct_ov025_021e2148_4* head;
 };
 
 struct Struct_ov025_021e2148_2 {
-    Struct_ov025_021e2148_4* unknown_0_;
-    int unknown_4_;
+    Struct_ov025_021e2148_4* nodes;
+    int count;
     unsigned char unknown_8_[12];
     unsigned char unknown_14_;
 };
 
 struct Struct_ov025_021e2148_3 {
-    unsigned char unknown_0_[6];
+    unsigned char b[6];
 };
 
 struct Struct_ov000_02171720;
@@ -38,121 +38,121 @@ struct Struct_ov000_0217179c_2;
 #define func_ov025_021e23e8 func_ov000_02171738
 #define func_ov025_021e244c func_ov000_0217179c
 #define func_ov025_021e2494 func_ov000_021717e4
-extern "C" void func_ov000_02171720(Struct_ov000_02171720* arg0, Struct_ov000_02171720_2* arg1);
-extern "C" int func_ov000_021717e4(void* arg0);
-extern "C" Struct_ov025_021e2148_4* func_ov000_02171738(Struct_ov000_02171738* arg0);
-extern "C" void func_ov000_0217179c(Struct_ov000_0217179c* arg0, Struct_ov000_0217179c_2* arg1);
+extern "C" void func_ov000_02171720(Struct_ov000_02171720* list, Struct_ov000_02171720_2* node);
+extern "C" int func_ov000_021717e4(void* obj);
+extern "C" Struct_ov025_021e2148_4* func_ov000_02171738(Struct_ov000_02171738* list);
+extern "C" void func_ov000_0217179c(Struct_ov000_0217179c* list, Struct_ov000_0217179c_2* target);
 #endif
 
-extern "C" void func_ov025_021e23d0(Struct_ov000_02171720* arg0, Struct_ov000_02171720_2* arg1);
-extern "C" int func_ov025_021e2494(void* arg0);
-extern "C" Struct_ov025_021e2148_4* func_ov025_021e23e8(Struct_ov000_02171738* arg0);
-extern "C" void func_ov025_021e244c(Struct_ov000_0217179c* arg0, Struct_ov000_0217179c_2* arg1);
-extern "C" int func_ov025_021e24a8(Struct_ov025_021e2148* arg0, Struct_ov025_021e2148_4* arg1);
-extern "C" void func_ov000_0216f82c(Struct_ov025_021e2148_3* arg0, const int* arg1);
+extern "C" void func_ov025_021e23d0(Struct_ov000_02171720* list, Struct_ov000_02171720_2* node);
+extern "C" int func_ov025_021e2494(void* obj);
+extern "C" Struct_ov025_021e2148_4* func_ov025_021e23e8(Struct_ov000_02171738* list);
+extern "C" void func_ov025_021e244c(Struct_ov000_0217179c* list, Struct_ov000_0217179c_2* target);
+extern "C" int func_ov025_021e24a8(Struct_ov025_021e2148* list, Struct_ov025_021e2148_4* node);
+extern "C" void func_ov000_0216f82c(Struct_ov025_021e2148_3* out, const int* cell);
 
 // USA: func_ov025_021e2148
-extern "C" ARM int func_ov025_021e2148(Struct_ov025_021e2148_2* arg0, int arg1, int arg2, unsigned char* arg3, int arg4) {
-    if (arg0->unknown_0_ == NULL) {
+extern "C" ARM int func_ov025_021e2148(Struct_ov025_021e2148_2* graph, int start, int arg2, unsigned char* out, int maxLen) {
+    if (graph->nodes == NULL) {
         return 0;
     }
-    if (arg0->unknown_4_ <= arg1) {
+    if (graph->count <= start) {
         return 0;
     }
-    if (arg0->unknown_4_ <= arg2) {
+    if (graph->count <= arg2) {
         return 0;
     }
-    memset(arg0->unknown_0_, 0, arg0->unknown_4_ * sizeof(Struct_ov025_021e2148_4));
+    memset(graph->nodes, 0, graph->count * sizeof(Struct_ov025_021e2148_4));
 
-    Struct_ov025_021e2148 var0;
-    Struct_ov025_021e2148 var1;
-    var0.unknown_0_ = NULL;
-    var1.unknown_0_ = NULL;
+    Struct_ov025_021e2148 open;
+    Struct_ov025_021e2148 closed;
+    open.head = NULL;
+    closed.head = NULL;
 
-    unsigned char* var2 = arg0->unknown_8_;
-    for (int var3 = 0; var3 < arg0->unknown_14_; var3++) {
-        int var4 = var2[var3];
-        if (arg0->unknown_4_ <= var4) {
+    unsigned char* cells = graph->unknown_8_;
+    for (int i = 0; i < graph->unknown_14_; i++) {
+        int cell = cells[i];
+        if (graph->count <= cell) {
             return 0;
         }
-        arg0->unknown_0_[var4].unknown_5_ = 1;
+        graph->nodes[cell].blocked = 1;
     }
 
-    Struct_ov025_021e2148_4* var5 = &arg0->unknown_0_[arg1];
-    var5->unknown_0_ = arg1;
-    var5->unknown_1_ = 0;
-    var5->unknown_2_ = 0;
-    var5->unknown_3_ = 0;
-    var5->unknown_4_ = 0xff;
-    var5->unknown_8_ = NULL;
-    var5->unknown_5_ = 0;
-    func_ov025_021e23d0((Struct_ov000_02171720*)&var0, (Struct_ov000_02171720_2*)var5);
+    Struct_ov025_021e2148_4* node = &graph->nodes[start];
+    node->id = start;
+    node->unknown_1_ = 0;
+    node->unknown_2_ = 0;
+    node->unknown_3_ = 0;
+    node->parent = 0xff;
+    node->next = NULL;
+    node->blocked = 0;
+    func_ov025_021e23d0((Struct_ov000_02171720*)&open, (Struct_ov000_02171720_2*)node);
 
-    Struct_ov025_021e2148_4* var6;
+    Struct_ov025_021e2148_4* cur;
     while (true) {
-        if (func_ov025_021e2494(&var0)) {
+        if (func_ov025_021e2494(&open)) {
             return 0;
         }
-        var6 = func_ov025_021e23e8((Struct_ov000_02171738*)&var0);
-        if (var6->unknown_0_ == arg2) {
+        cur = func_ov025_021e23e8((Struct_ov000_02171738*)&open);
+        if (cur->id == arg2) {
             break;
         }
-        func_ov025_021e23d0((Struct_ov000_02171720*)&var1, (Struct_ov000_02171720_2*)var6);
+        func_ov025_021e23d0((Struct_ov000_02171720*)&closed, (Struct_ov000_02171720_2*)cur);
 
-        Struct_ov025_021e2148_3 var7;
-        Struct_ov025_021e2148_3 var8;
-        int var9 = var6->unknown_0_;
-        func_ov000_0216f82c(&var8, &var9);
-        var7 = var8;
+        Struct_ov025_021e2148_3 nb;
+        Struct_ov025_021e2148_3 tmp;
+        int cell = cur->id;
+        func_ov000_0216f82c(&tmp, &cell);
+        nb = tmp;
 
-        for (int var10 = 0; var10 < 6; var10++) {
-            int var11 = var7.unknown_0_[var10];
-            if (var11 == 0xff) {
+        for (int i = 0; i < 6; i++) {
+            int id = nb.b[i];
+            if (id == 0xff) {
                 continue;
             }
-            Struct_ov025_021e2148_4* var12 = &arg0->unknown_0_[var11];
-            var12->unknown_0_ = var11;
-            if (arg0->unknown_4_ <= var11) {
+            Struct_ov025_021e2148_4* next = &graph->nodes[id];
+            next->id = id;
+            if (graph->count <= id) {
                 return 0;
             }
-            if (var12->unknown_5_ != 0) {
+            if (next->blocked != 0) {
                 continue;
             }
-            var6->unknown_2_ = var6->unknown_1_ - var6->unknown_3_;
-            int var13 = var6->unknown_2_ + 1;
-            if (func_ov025_021e24a8(&var0, var12)) {
-                if (var13 < var12->unknown_1_) {
-                    var12->unknown_1_ = var13;
-                    var12->unknown_4_ = var6->unknown_0_;
+            cur->unknown_2_ = cur->unknown_1_ - cur->unknown_3_;
+            int var13 = cur->unknown_2_ + 1;
+            if (func_ov025_021e24a8(&open, next)) {
+                if (var13 < next->unknown_1_) {
+                    next->unknown_1_ = var13;
+                    next->parent = cur->id;
                 }
-            } else if (func_ov025_021e24a8(&var1, var12)) {
-                if (var13 < var12->unknown_1_) {
-                    var12->unknown_1_ = var13;
-                    var12->unknown_4_ = var6->unknown_0_;
-                    func_ov025_021e244c((Struct_ov000_0217179c*)&var1, (Struct_ov000_0217179c_2*)var12);
-                    func_ov025_021e23d0((Struct_ov000_02171720*)&var0, (Struct_ov000_02171720_2*)var12);
+            } else if (func_ov025_021e24a8(&closed, next)) {
+                if (var13 < next->unknown_1_) {
+                    next->unknown_1_ = var13;
+                    next->parent = cur->id;
+                    func_ov025_021e244c((Struct_ov000_0217179c*)&closed, (Struct_ov000_0217179c_2*)next);
+                    func_ov025_021e23d0((Struct_ov000_02171720*)&open, (Struct_ov000_02171720_2*)next);
                 }
             } else {
-                var12->unknown_1_ = var13;
-                var12->unknown_4_ = var6->unknown_0_;
-                func_ov025_021e23d0((Struct_ov000_02171720*)&var0, (Struct_ov000_02171720_2*)var12);
+                next->unknown_1_ = var13;
+                next->parent = cur->id;
+                func_ov025_021e23d0((Struct_ov000_02171720*)&open, (Struct_ov000_02171720_2*)next);
             }
         }
     }
 
-    Struct_ov025_021e2148_4* var14 = &arg0->unknown_0_[arg2];
-    int var15 = 0;
+    Struct_ov025_021e2148_4* p = &graph->nodes[arg2];
+    int n = 0;
     while (true) {
-        arg3[var15] = var14->unknown_0_;
-        var15++;
-        if (arg4 <= var15) {
+        out[n] = p->id;
+        n++;
+        if (maxLen <= n) {
             break;
         }
-        int var16 = var14->unknown_4_;
-        if (arg0->unknown_4_ <= var16) {
+        int parent = p->parent;
+        if (graph->count <= parent) {
             break;
         }
-        var14 = &arg0->unknown_0_[var16];
+        p = &graph->nodes[parent];
     }
-    return var15;
+    return n;
 }

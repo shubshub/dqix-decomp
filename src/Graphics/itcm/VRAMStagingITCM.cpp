@@ -26,7 +26,7 @@
 extern "C"
 {
     void* LinkSession_GetInstance();
-    void* _Z28LinkMessageQueue_GetInstancev();
+    void* LinkMessageQueue_GetInstance();
     void LinkSession_Update(void*);
     void func_0205e57c(void*);
 
@@ -649,7 +649,7 @@ void VRAMStagingManager::SendReadyDataToVRAM()
     }
 
     void* unknownPtr1 = LinkSession_GetInstance();
-    void* unknownPtr2 = _Z28LinkMessageQueue_GetInstancev();
+    void* unknownPtr2 = LinkMessageQueue_GetInstance();
     LinkSession_Update(unknownPtr1);
     func_0205e57c(unknownPtr2);
 
@@ -670,38 +670,38 @@ void SendStagedVRAMDataToVRAM(void* vramStagingManagerUserdata)
     ((VRAMStagingManager*)vramStagingManagerUserdata)->SendReadyDataToVRAM();
 }
 
-extern "C" VRAMStagingManager::Task* _ZN18VRAMStagingManager4TaskC1Ev(VRAMStagingManager::Task* arg0)
+extern "C" VRAMStagingManager::Task* _ZN18VRAMStagingManager4TaskC1Ev(VRAMStagingManager::Task* self)
 {
-    arg0->Reset();
-    return arg0;
+    self->Reset();
+    return self;
 }
 
 extern "C" VRAMStagingManager::StagingSpaceAllocation* _ZN18VRAMStagingManager22StagingSpaceAllocationC1Ev(
-    VRAMStagingManager::StagingSpaceAllocation* arg0)
+    VRAMStagingManager::StagingSpaceAllocation* self)
 {
-    arg0->flags_ = 0;
-    arg0->start_ = 0;
-    arg0->size_ = 0;
-    return arg0;
+    self->flags_ = 0;
+    self->start_ = 0;
+    self->size_ = 0;
+    return self;
 }
 
 extern "C" VRAMStagingManager::CommonVRAMRegionTaskSet* _ZN18VRAMStagingManager23CommonVRAMRegionTaskSetC1EPht(
-    VRAMStagingManager::CommonVRAMRegionTaskSet* arg0, unsigned char* arg1, unsigned short arg2)
+    VRAMStagingManager::CommonVRAMRegionTaskSet* self, unsigned char* arg1, unsigned short arg2)
 {
-    arg0->pendingTaskIndices_ = arg1;
-    arg0->maxNumTasks_ = arg2;
-    arg0->Reset();
-    return arg0;
+    self->pendingTaskIndices_ = arg1;
+    self->maxNumTasks_ = arg2;
+    self->Reset();
+    return self;
 }
 
-extern "C" VRAMStagingManager* _ZN18VRAMStagingManagerC1Ev(VRAMStagingManager* arg0)
+extern "C" VRAMStagingManager* _ZN18VRAMStagingManagerC1Ev(VRAMStagingManager* self)
 {
-    arg0->ZeroInitialize();
-    return arg0;
+    self->ZeroInitialize();
+    return self;
 }
 
-extern "C" VRAMStagingManager* _ZN18VRAMStagingManagerD1Ev(VRAMStagingManager* arg0)
+extern "C" VRAMStagingManager* _ZN18VRAMStagingManagerD1Ev(VRAMStagingManager* self)
 {
-    arg0->CancelAllTasks();
-    return arg0;
+    self->CancelAllTasks();
+    return self;
 }

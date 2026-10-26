@@ -1,34 +1,34 @@
 #include <globaldefs.h>
 
 struct Struct_0208e06c_2 {
-    short unknown_0_;
-    short unknown_2_;
-    int unknown_4_;
+    short id;
+    short field2;
+    int field4;
 #if defined(jpn)
-    int unknown_8_;
+    int field8;
 #endif
-    struct Struct_0208e06c_2* unknown1_8_;
+    struct Struct_0208e06c_2* next;
 };
 
 struct Struct_0208e06c {
-    struct Struct_0208e06c_2* unknown_0_;
+    struct Struct_0208e06c_2* head;
 };
 
 // USA: func_0208e06c
-extern "C" ARM struct Struct_0208e06c_2* func_0208e06c(struct Struct_0208e06c* arg0, int arg1) {
-    struct Struct_0208e06c_2* var0;
-    if (arg1 < 0) {
+extern "C" ARM struct Struct_0208e06c_2* func_0208e06c(struct Struct_0208e06c* list, int id) {
+    struct Struct_0208e06c_2* n;
+    if (id < 0) {
         return NULL;
     }
-    var0 = arg0->unknown_0_;
-    if (var0 == NULL) {
+    n = list->head;
+    if (n == NULL) {
         return NULL;
     }
-    while (var0 != NULL) {
-        if (var0->unknown_0_ == arg1) {
-            return var0;
+    while (n != NULL) {
+        if (n->id == id) {
+            return n;
         }
-        var0 = var0->unknown1_8_;
+        n = n->next;
     }
-    return var0;
+    return n;
 }

@@ -2,27 +2,27 @@
 #include "std_library_functions.h"
 
 struct Struct_020db3f4_3;
-extern "C" void func_020db844(struct Struct_020db3f4_3* arg0, int arg1, int arg2, int arg3);
+extern "C" void func_020db844(struct Struct_020db3f4_3* a, int b, int c, int d);
 
-void* GlobalFlags_GetInstance(void);
+extern "C" void* GlobalFlags_GetInstance(void);
 
-void FlagWord_SetBits(unsigned int* word, unsigned int mask);
+extern "C" void FlagWord_SetBits(unsigned int* word, unsigned int mask);
 
-extern "C" int func_020937f0(int arg0);
+extern "C" int func_020937f0(int a);
 
 struct Struct_020db3a8;
-extern "C" int func_020db3a8(struct Struct_020db3a8* arg0);
+extern "C" int func_020db3a8(struct Struct_020db3a8* s);
 
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 void CleanCacheRange(const void* addr, unsigned int size);
 
-extern "C" void func_020db304(int arg0, int arg1);
+extern "C" void func_020db304(int param0, int param1);
 
 struct Struct_020db3f4_2;
-extern "C" void func_020dde64(struct Struct_020db3f4_2* arg0);
+extern "C" void func_020dde64(struct Struct_020db3f4_2* obj);
 
 struct Struct_020de0ec;
-extern "C" void func_020de0ec(struct Struct_020de0ec* arg0);
+extern "C" void func_020de0ec(struct Struct_020de0ec* obj);
 
 typedef void* (*Type_01ff8b48_4)(void);
 extern Type_01ff8b48_4 data_020f28e4[];
@@ -36,12 +36,12 @@ extern Type_01ff8b48_5 data_020f28fc[];
 
 struct Struct_020db3f4 {
     unsigned char unknown_0_[0x3c];
-    unsigned char unknown_3c_;
+    unsigned char field3c;
     unsigned char unknown_3d_[0x40 - 0x3d];
-    void* unknown_40_;
-    unsigned int unknown_44_;
-    void* unknown_48_;
-    unsigned int unknown_4c_;
+    void* field40;
+    unsigned int field44;
+    void* field48;
+    unsigned int field4c;
     unsigned char unknown_50_[0x51 - 0x50];
     unsigned char unknown_51_;
     unsigned char unknown_52_[0x53 - 0x52];
@@ -52,70 +52,70 @@ struct Struct_020db3f4 {
     unsigned char unknown_64_;
     unsigned char unknown_65_[0x6a - 0x65];
     short unknown_6a_;
-    unsigned char unknown_6c_[0x6e - 0x6c];
+    unsigned char pad6c[0x6e - 0x6c];
     unsigned short unknown_6e_;
-    unsigned char unknown_70_[3][0x28];
+    unsigned char slots[3][0x28];
 };
 
 // USA: func_020db3f4
-extern "C" ARM void func_020db3f4(struct Struct_020db3f4* arg0) {
-    if (arg0->unknown_51_ != 0) {
+extern "C" ARM void func_020db3f4(struct Struct_020db3f4* obj) {
+    if (obj->unknown_51_ != 0) {
         return;
     }
 
-    func_020db844((struct Struct_020db3f4_3*)arg0, arg0->unknown_3c_, arg0->unknown_6a_, 0);
-    arg0->unknown_51_ = 1;
+    func_020db844((struct Struct_020db3f4_3*)obj, obj->field3c, obj->unknown_6a_, 0);
+    obj->unknown_51_ = 1;
 
     FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0x8000);
 
-    int var0 = func_020937f0(arg0->unknown_3c_);
-    int var1 = var0 - 0xb80;
-    int var2 = 0x1e0;
-    int var3 = var0 - 0x800;
+    int x = func_020937f0(obj->field3c);
+    int var1 = x - 0xb80;
+    int mode = 0x1e0;
+    int var3 = x - 0x800;
 
-    if (func_020db3a8((struct Struct_020db3a8*)arg0) != 0) {
-        var2 = 0x1c0;
+    if (func_020db3a8((struct Struct_020db3a8*)obj) != 0) {
+        mode = 0x1c0;
     }
 
-    void* var4 = data_020f28e4[arg0->unknown_3c_]();
+    void* base = data_020f28e4[obj->field3c]();
 
-    CleanInvalidateCacheRange(arg0->unknown_40_, arg0->unknown_44_);
-    data_020f28ec[arg0->unknown_3c_](arg0->unknown_40_, var1, arg0->unknown_44_);
-    CleanCacheRange(arg0->unknown_40_, arg0->unknown_44_);
+    CleanInvalidateCacheRange(obj->field40, obj->field44);
+    data_020f28ec[obj->field3c](obj->field40, var1, obj->field44);
+    CleanCacheRange(obj->field40, obj->field44);
 
-    char* var5 = (char*)var4 + var3;
-    if (arg0->unknown_53_ == 0 || arg0->unknown_6a_ == 0) {
-        memset(var5, 0, 0x800);
-    } else if (arg0->unknown_6a_ == -16) {
-        memset(var5, -16 + 15, 0x800);
-    } else if (arg0->unknown_6a_ == 0x10) {
-        memset(var5, 0xeeeeeeee, 0x800);
+    char* addr = (char*)base + var3;
+    if (obj->unknown_53_ == 0 || obj->unknown_6a_ == 0) {
+        memset(addr, 0, 0x800);
+    } else if (obj->unknown_6a_ == -16) {
+        memset(addr, -16 + 15, 0x800);
+    } else if (obj->unknown_6a_ == 0x10) {
+        memset(addr, 0xeeeeeeee, 0x800);
     }
 
-    CleanInvalidateCacheRange(var5, 0x800);
-    data_020f28ec[arg0->unknown_3c_](var5, var3, 0x800);
-    CleanCacheRange(var5, 0x800);
+    CleanInvalidateCacheRange(addr, 0x800);
+    data_020f28ec[obj->field3c](addr, var3, 0x800);
+    CleanCacheRange(addr, 0x800);
 
-    CleanInvalidateCacheRange(arg0->unknown_48_, arg0->unknown_4c_);
-    data_020f28dc[arg0->unknown_3c_](arg0->unknown_48_, var2, arg0->unknown_4c_);
-    CleanCacheRange(arg0->unknown_48_, arg0->unknown_4c_);
+    CleanInvalidateCacheRange(obj->field48, obj->field4c);
+    data_020f28dc[obj->field3c](obj->field48, mode, obj->field4c);
+    CleanCacheRange(obj->field48, obj->field4c);
 
-    func_020db304((int)arg0, arg0->unknown_3c_);
+    func_020db304((int)obj, obj->field3c);
 
-    arg0->unknown_6e_ = 0;
-    for (int var6 = 0; var6 < 3; var6++) {
-        unsigned char* var7 = arg0->unknown_70_[0];
-        unsigned char* var8 = var7 + var6 * 0x28;
-        func_020dde64((struct Struct_020db3f4_2*)var8);
-        func_020de0ec((struct Struct_020de0ec*)var8);
+    obj->unknown_6e_ = 0;
+    for (int i = 0; i < 3; i++) {
+        unsigned char* arr = obj->slots[0];
+        unsigned char* p = arr + i * 0x28;
+        func_020dde64((struct Struct_020db3f4_2*)p);
+        func_020de0ec((struct Struct_020de0ec*)p);
     }
 
-    if (arg0->unknown_53_ != 0) {
-        arg0->unknown_58_ = 0x10;
+    if (obj->unknown_53_ != 0) {
+        obj->unknown_58_ = 0x10;
         return;
     }
 
-    int var9 = data_020f28fc[arg0->unknown_3c_]();
-    arg0->unknown_64_ = var9 & 0x10;
-    arg0->unknown_58_ = var9 | 0x10;
+    int result = data_020f28fc[obj->field3c]();
+    obj->unknown_64_ = result & 0x10;
+    obj->unknown_58_ = result | 0x10;
 }

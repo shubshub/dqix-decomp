@@ -7,7 +7,7 @@ enum { Enum_02054234_396 = 0x18c };
 #endif
 
 // USA: func_02054234
-extern "C" ARM void func_02054234(void* arg0) {
-    unsigned int* var0 = (unsigned int*)((char*)arg0 + Enum_02054234_396);
-    *var0 = (*var0 & ~0x80) | 0x100;
+extern "C" ARM void func_02054234(void* obj) {
+    unsigned int* flags = (unsigned int*)((char*)obj + Enum_02054234_396);
+    *flags = (*flags & ~0x80) | 0x100;
 }

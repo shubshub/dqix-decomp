@@ -1,45 +1,45 @@
 #include <globaldefs.h>
 #include "Graphics/LightingManager.h"
 
-struct Struct_02017a94;
+struct Obj0201b600;
 struct Struct_0201b600;
-extern "C" struct Struct_0201b600* func_0201b600(Struct_02017a94*, int, unsigned short);
-struct Struct_02013380;
-extern "C" void func_02013380(struct Struct_02013380* arg0, int arg1, int arg2);
+extern "C" struct Struct_0201b600* func_0201b600(Obj0201b600*, int, unsigned short);
+struct Struct02013380;
+extern "C" void BmdjSceneElement_SetShown(struct Struct02013380* obj, int unused, int clear4);
 
-struct Struct_020e6e53 { unsigned char unknown_0_; unsigned char unknown_1_[3]; };
+struct Struct_020e6e53 { unsigned char v; unsigned char pad[3]; };
 extern struct Struct_020e6e53 data_020e6e53[];
 extern struct Struct_020e6e53 data_020e6e54[];
 extern struct Struct_020e6e53 data_020e6e55[];
 extern struct Struct_020e6e53 data_020e6e56[];
 
 // USA: func_0201b8c8
-extern "C" ARM void func_0201b8c8(struct Struct_02017a94* arg0, int arg1, int arg2, int arg3) {
-    struct Struct_0201b600* var0;
-    int var1;
-    int var2;
-    void* var3;
-    if (*(unsigned short*)arg0 != 0x170c) return;
-    var3 = LightingManager::GetInstance();
-    var0 = func_0201b600(arg0, 0, 0xa);
-    if (var0 != NULL) func_02013380((struct Struct_02013380*)var0, 0, arg1);
-    var0 = func_0201b600(arg0, 0, 0xb);
-    if (var0 != NULL) func_02013380((struct Struct_02013380*)var0, 0, arg2);
-    var2 = *(int*)((char*)var3 + 0x98);
-    if (arg3 != 0) {
-        if (var2 == 3) var1 = 0;
-        else var1 = 1;
+extern "C" ARM void func_0201b8c8(struct Obj0201b600* obj, int a1, int a2, int a3) {
+    struct Struct_0201b600* e;
+    int idx;
+    int v;
+    void* d;
+    if (*(unsigned short*)obj != 0x170c) return;
+    d = LightingManager::GetInstance();
+    e = func_0201b600(obj, 0, 0xa);
+    if (e != NULL) BmdjSceneElement_SetShown((struct Struct02013380*)e, 0, a1);
+    e = func_0201b600(obj, 0, 0xb);
+    if (e != NULL) BmdjSceneElement_SetShown((struct Struct02013380*)e, 0, a2);
+    v = *(int*)((char*)d + 0x98);
+    if (a3 != 0) {
+        if (v == 3) idx = 0;
+        else idx = 1;
     } else {
-        if (var2 == 3) var1 = 2;
-        else var1 = 3;
+        if (v == 3) idx = 2;
+        else idx = 3;
     }
-    var0 = func_0201b600(arg0, 0, 2);
-    if (var0 != NULL) func_02013380((struct Struct_02013380*)var0, 0, data_020e6e53[var1].unknown_0_);
-    var0 = func_0201b600(arg0, 0, 0xc);
-    if (var0 != NULL) func_02013380((struct Struct_02013380*)var0, 0, data_020e6e54[var1].unknown_0_);
-    var0 = func_0201b600(arg0, 0, 3);
-    if (var0 != NULL) func_02013380((struct Struct_02013380*)var0, 0, data_020e6e55[var1].unknown_0_);
-    var0 = func_0201b600(arg0, 0, 9);
-    if (var0 == NULL) return;
-    func_02013380((struct Struct_02013380*)var0, 0, data_020e6e56[var1].unknown_0_);
+    e = func_0201b600(obj, 0, 2);
+    if (e != NULL) BmdjSceneElement_SetShown((struct Struct02013380*)e, 0, data_020e6e53[idx].v);
+    e = func_0201b600(obj, 0, 0xc);
+    if (e != NULL) BmdjSceneElement_SetShown((struct Struct02013380*)e, 0, data_020e6e54[idx].v);
+    e = func_0201b600(obj, 0, 3);
+    if (e != NULL) BmdjSceneElement_SetShown((struct Struct02013380*)e, 0, data_020e6e55[idx].v);
+    e = func_0201b600(obj, 0, 9);
+    if (e == NULL) return;
+    BmdjSceneElement_SetShown((struct Struct02013380*)e, 0, data_020e6e56[idx].v);
 }

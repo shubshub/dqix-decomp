@@ -3,23 +3,23 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-struct Struct_0205de24_2;
+struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
 struct SePlayer;
 struct Struct_0205d81c;
-struct Obj0205dee8;
-void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+struct Struct_0205dee8;
+extern "C" void func_0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int Window_GetSelectedIndex(struct Struct_0205c570 *s);
-int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
-void SePlayer_Play(struct SePlayer *o, int a, int b);
-int CheckFlagOrThreshold_02161b48(char *base, int a);
-void Window_SetPanePalette(struct Struct_0205d81c *s, int a, int b);
-void SetFieldB0AndUpdate0205dee8(struct Obj0205dee8 *o, int v);
-void *GlobalFlags_GetInstance();
-void FlagWord_SetBits(unsigned int *p, unsigned int mask);
-unsigned char *GetFieldAt0x150_02053c6c(unsigned char *p);
+extern "C" int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+extern "C" int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
+extern "C" void SePlayer_Play(struct SePlayer *o, int a, int b);
+extern "C" int func_ov002_02161b48(char *base, int a);
+extern "C" void Window_SetPanePalette(struct Struct_0205d81c *s, int a, int b);
+extern "C" void func_0205dee8(struct Struct_0205dee8 *o, int v);
+extern "C" void *GlobalFlags_GetInstance();
+extern "C" void FlagWord_SetBits(unsigned int *p, unsigned int mask);
+extern "C" unsigned char *func_02053c6c(unsigned char *p);
 extern "C" int GetInventoryItemByID(char *self, int idx, int member);
 extern "C" void func_ov002_02161cf0(void *base);
 extern "C" void func_ov002_02161b98(char *self);
@@ -33,42 +33,42 @@ extern "C" void func_ov023_021dcae0(char *obj, int item);
 extern "C" void func_ov023_021dca88(char *obj);
 extern "C" char g_sePlayer[];
 
-static inline int inline_02000c9c_6(int arg0) {
-    return (arg0 >= 0 && arg0 <= 3) ? 1 : 0;
+static inline int inline_02000c9c_6(int v) {
+    return (v >= 0 && v <= 3) ? 1 : 0;
 }
 
 // USA: func_ov002_02162e50
 #if defined(jpn)
-extern "C" void func_ov002_0215c618(char *arg0, int arg1);
+extern "C" void func_ov002_0215c618(char *self, int v);
 #define func_ov002_0215b458 func_ov002_0215c618
 extern "C" ARM void func_ov002_02162e50(char *base) {
     int state = *(int *) (base + 0x1a88);
     char *sub = base + 0x38;
     if (state == 0) {
         *(short *) (base + 0x1ac2) = -1;
-        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (base + 0xe20), 0, 2);
+        func_0205de24((struct Struct0205de24 *) (base + 0xe20), 0, 2);
         func_ov002_02161cf0(base);
         func_ov002_0215b9a4(base, 5, 0);
         *(int *) (base + 0x1a88) += 1;
         Window_SetPanePalette((struct Struct_0205d81c *) (base + 0xe20), 4, 1);
         Window_SetPanePalette((struct Struct_0205d81c *) (base + 0xe20), 5, 0);
-        SetFieldB0AndUpdate0205dee8((struct Obj0205dee8 *) (base + 0xe20), 5);
+        func_0205dee8((struct Struct_0205dee8 *) (base + 0xe20), 5);
         int item = GetInventoryItemByID(base, *(short *) (base + 0x1ab0), *(signed char *) (base + 0x1ae8));
         FlagWord_SetBits((unsigned int *) GlobalFlags_GetInstance(), 1);
         if (*(unsigned int *) (base + 0x22ac) & 1) {
             ((SafeAllocator *) (base + 0x7c8))->Reset();
             func_ov023_021dc9e8(sub, (SafeAllocator *) (base + 0x7c8), item, base + 0x750, 0x50);
         } else {
-            ((SafeAllocator *) (arg0 + 0x7c8))->Reset();
-            func_ov023_021dc134(var1, var2, 0);
+            ((SafeAllocator *) (base + 0x7c8))->Reset();
+            func_ov023_021dc134(sub, item, 0);
             struct Struct_ov002_02162e50 {
-                char unknown_0_[0x6f0];
-                unsigned short unknown_6f0_;
+                char pad[0x6f0];
+                unsigned short flags;
             };
-            ((Struct_ov002_02162e50 *) (var1))->unknown_6f0_ |= 0x50;
-            func_ov023_021dbfd0(var1, (SafeAllocator *) (arg0 + 0x7c8));
-            *(char **) (var1 + 0x48) = arg0 + 0x750;
-            *(unsigned int *) (arg0 + 0x22ac) |= 1;
+            ((Struct_ov002_02162e50 *) (sub))->flags |= 0x50;
+            func_ov023_021dbfd0(sub, (SafeAllocator *) (base + 0x7c8));
+            *(char **) (sub + 0x48) = base + 0x750;
+            *(unsigned int *) (base + 0x22ac) |= 1;
         }
     } else if (state == 1) {
         *(unsigned int *) (base + 0x22ac) |= 4;
@@ -106,13 +106,13 @@ extern "C" ARM void func_ov002_02162e50(char *base) {
             if (ok) return;
             GameObject *p = GameState::GetInstance()->GetProtagonist();
             if (p == NULL) return;
-            *(short *) (GetFieldAt0x150_02053c6c((unsigned char *) p) + 0x800 + 0xc0) = *(short *) (base + 0x1aea);
-        } else if (CheckFlagOrThreshold_02161b48(base, 1)) {
+            *(short *) (func_02053c6c((unsigned char *) p) + 0x800 + 0xc0) = *(short *) (base + 0x1aea);
+        } else if (func_ov002_02161b48(base, 1)) {
             *(short *) (base + 0x1aea) = -1;
             *(short *) (base + 0x1ab0) = -1;
             *(int *) (base + 0x1a80)  = 4;
             *(int *) (base + 0x1a88)  = 1;
-            SetFieldB0AndUpdate0205dee8((struct Obj0205dee8 *) (base + 0xe20), 4);
+            func_0205dee8((struct Struct_0205dee8 *) (base + 0xe20), 4);
             Window_SetPanePalette((struct Struct_0205d81c *) (base + 0xe20), 4, 0);
             func_ov002_02161cf0(base);
             func_ov023_021dca88(sub);
@@ -124,29 +124,29 @@ extern "C" ARM void func_ov002_02162e50(char *base) {
     int state = *(int *) (base + 0x1000 + 0xbc0);
     if (state == 0) {
         *(short *) (base + 0x1b00 + 0xfa) = -1;
-        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (base + 0x2c8 + 0xc00), 0, 2);
+        func_0205de24((struct Struct0205de24 *) (base + 0x2c8 + 0xc00), 0, 2);
         func_ov002_02161cf0(base);
         func_ov002_0215b9a4(base, 5, 0);
         *(int *) (base + 0x1000 + 0xbc0) += 1;
         Window_SetPanePalette((struct Struct_0205d81c *) (base + 0x2c8 + 0xc00), 4, 1);
         Window_SetPanePalette((struct Struct_0205d81c *) (base + 0x2c8 + 0xc00), 5, 0);
-        SetFieldB0AndUpdate0205dee8((struct Obj0205dee8 *) (base + 0x2c8 + 0xc00), 5);
+        func_0205dee8((struct Struct_0205dee8 *) (base + 0x2c8 + 0xc00), 5);
         int item = GetInventoryItemByID(base, *(short *) (base + 0x1b00 + 0xe8), *(signed char *) (base + 0x1c00 + 0x20));
         FlagWord_SetBits((unsigned int *) GlobalFlags_GetInstance(), 1);
         if (*(unsigned int *) (base + 0x2000 + 0x47c) & 1) {
             ((SafeAllocator *) (base + 0x64 + 0x800))->Reset();
             func_ov023_021dc9e8(base + 0x50, (SafeAllocator *) (base + 0x64 + 0x800), item, base + 0x3ec + 0x400, 0x50);
         } else {
-            ((SafeAllocator *) (arg0 + 0x64 + 0x800))->Reset();
-            func_ov023_021dc134(arg0 + 0x50, var10, 0);
+            ((SafeAllocator *) (base + 0x64 + 0x800))->Reset();
+            func_ov023_021dc134(base + 0x50, item, 0);
             struct Struct_ov002_02162e50 {
-                char unknown_0_[0x774];
-                unsigned short unknown_774_;
+                char pad[0x774];
+                unsigned short flags;
             };
-            ((Struct_ov002_02162e50 *) (arg0 + 0x50))->unknown_774_ |= 0x50;
-            func_ov023_021dbfd0(arg0 + 0x50, (SafeAllocator *) (arg0 + 0x64 + 0x800));
-            *(char **) (arg0 + 0x98) = arg0 + 0x3ec + 0x400;
-            *(unsigned int *) (arg0 + 0x2000 + 0x47c) |= 1;
+            ((Struct_ov002_02162e50 *) (base + 0x50))->flags |= 0x50;
+            func_ov023_021dbfd0(base + 0x50, (SafeAllocator *) (base + 0x64 + 0x800));
+            *(char **) (base + 0x98) = base + 0x3ec + 0x400;
+            *(unsigned int *) (base + 0x2000 + 0x47c) |= 1;
         }
     } else if (state == 1) {
         *(unsigned int *) (base + 0x2000 + 0x47c) |= 4;
@@ -184,13 +184,13 @@ extern "C" ARM void func_ov002_02162e50(char *base) {
             if (ok) return;
             GameObject *p = GameState::GetInstance()->GetProtagonist();
             if (p == NULL) return;
-            *(short *) (GetFieldAt0x150_02053c6c((unsigned char *) p) + 0x900 + 0x58) = *(short *) (base + 0x1c00 + 0x22);
-        } else if (CheckFlagOrThreshold_02161b48(base, 1)) {
+            *(short *) (func_02053c6c((unsigned char *) p) + 0x900 + 0x58) = *(short *) (base + 0x1c00 + 0x22);
+        } else if (func_ov002_02161b48(base, 1)) {
             *(short *) (base + 0x1c00 + 0x22) = -1;
             *(short *) (base + 0x1b00 + 0xe8) = -1;
             *(int *) (base + 0x1000 + 0xbb8)  = 4;
             *(int *) (base + 0x1000 + 0xbc0)  = 1;
-            SetFieldB0AndUpdate0205dee8((struct Obj0205dee8 *) (base + 0x2c8 + 0xc00), 4);
+            func_0205dee8((struct Struct_0205dee8 *) (base + 0x2c8 + 0xc00), 4);
             Window_SetPanePalette((struct Struct_0205d81c *) (base + 0x2c8 + 0xc00), 4, 0);
             func_ov002_02161cf0(base);
             func_ov023_021dca88(base + 0x50);

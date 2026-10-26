@@ -15,7 +15,7 @@ struct WindowPane {
     short pixelX_, pixelY_;
     short unk_c0;
     unsigned short palette_;        // WindowPane_Draw's palette argument (Background_CopyScreenRect)
-    unsigned char id_;              // what Window_SetPaneText, Window_SetPanePalette and FindElementByC40205d81c look panes up by
+    unsigned char id_;              // what Window_SetPaneText, Window_SetPanePalette and func_0205d81c look panes up by
     unsigned char flags_;
     unsigned char unk_c6[0xd4 - 0xc6];
     void* buffer_;                  // the pane's own buffer (WindowPane_AllocateBuffer)

@@ -7,10 +7,10 @@
 #include "Resource/GameResources.h"
 
 extern "C" void *Zone3D_GetInstance(void);
-struct S02053f4c;
-void SetFields1a8And1ac(CombatantRecovery*, int, int);
-void SetField0x1b0_02053f6c(void *, unsigned char);
-int ZoneId_IsGrottoBossFloor(int);
+struct Struct_02053f4c;
+extern "C" void func_02053f4c(CombatantRecovery*, int, int);
+extern "C" void func_02053f6c(void *, unsigned char);
+extern "C" int ZoneId_IsGrottoBossFloor(int);
 
 // One entry of the map's zone list (the map script builds it): its zones, and for a type other than 0 the point
 // where members in those zones are drawn and the group id their icons share
@@ -26,7 +26,7 @@ struct Node02021f88 {
 };
 
 // The MapDisplay fields this uses (header field754 and the byte at 0xa96)
-struct CombatResourceStatePrefix {
+struct Struct_02026bdc {
 #if defined(jpn)
     char pad0[0x6a8];
 #else
@@ -34,9 +34,9 @@ struct CombatResourceStatePrefix {
 #endif
     Node02021f88 *zoneList;
 #if defined(jpn)
-    char pad758[0x9ca - 0x6ac];
+    char unknown_6ac_[0x9ca - 0x6ac];
 #else
-    char pad758[0xa96 - 0x758];
+    char unknown_758_[0xa96 - 0x758];
 #endif
     unsigned char recheckMembers; // MapDisplay_RecheckMember, MapDisplay_RecheckAllMembers
 };
@@ -56,7 +56,7 @@ enum {
 // flags (clearRecheck clears the bit)
 // Main, originally func_02026bdc (USA 0x02026bdc, EUR 0x02026bec, JPN 0x02026540)
 extern "C" ARM void MapDisplay_PlaceMembers(void *object, int clearRecheck) {
-    CombatResourceStatePrefix *state = static_cast<CombatResourceStatePrefix *>(object);
+    Struct_02026bdc *state = static_cast<Struct_02026bdc *>(object);
     GameState *gameState             = GameState::GetInstance();
     for (int i = 0; i < 4; i++) {
         if (gameState->GetGameObjectByIndex(i) == 0) {
@@ -66,7 +66,7 @@ extern "C" ARM void MapDisplay_PlaceMembers(void *object, int clearRecheck) {
             continue;
         }
         GetGameResources();
-        CombatantRecovery *member = static_cast<CombatantRecovery *>(GetCombatantWithFlag0x100_0200ff1c(gameState, i));
+        CombatantRecovery *member = static_cast<CombatantRecovery *>(func_0200ff1c(gameState, i));
         if (member == 0) {
             continue;
         }
@@ -103,8 +103,8 @@ extern "C" ARM void MapDisplay_PlaceMembers(void *object, int clearRecheck) {
                             member->recoveryFlags &= ~kRecoveryAtListPoint;
                         } else {
                             member->recoveryFlags |= kRecoveryAtListPoint;
-                            SetFields1a8And1ac(member, node->x, node->y);
-                            SetField0x1b0_02053f6c(member, node->id);
+                            func_02053f4c(member, node->x, node->y);
+                            func_02053f6c(member, node->id);
                         }
                         found = 1;
                     }
@@ -130,8 +130,8 @@ extern "C" ARM void MapDisplay_PlaceMembers(void *object, int clearRecheck) {
                             member->recoveryFlags &= ~kRecoveryAtListPoint;
                         } else {
                             member->recoveryFlags |= kRecoveryAtListPoint;
-                            SetFields1a8And1ac(member, node->x, node->y);
-                            SetField0x1b0_02053f6c(member, node->id);
+                            func_02053f4c(member, node->x, node->y);
+                            func_02053f6c(member, node->id);
                         }
                         found = 1;
                     }

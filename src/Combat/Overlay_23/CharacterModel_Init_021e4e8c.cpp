@@ -5,7 +5,7 @@
 #include "Graphics/CharacterModel.h"
 
 // Overlay 23, originally InitTenAllocatorsAndClearFields_021e4e8c (USA/EUR 0x021e4e8c, JPN 0x021e5080)
-ARM void CharacterModel_Init(void* obj) {
+extern "C" ARM void CharacterModel_Init(void* obj) {
 	CharacterModel* model = (CharacterModel*)obj;
 	model->forceStandAnimation_ = 0;
 	for (int i = 0; i < 10; i++) {

@@ -6,15 +6,15 @@
 
 struct Struct_ov031_02244050_2 {
     unsigned char unknown_0_[0x88];
-    char unknown_88_[0x24];
-    int unknown_ac_;
+    char name[0x24];
+    int length;
 };
 union Struct_ov031_02244050_4 {
-    Struct_ov031_02244050_2 unknown_0_[12];
-    unsigned char unknown1_0_[0x840];
+    Struct_ov031_02244050_2 entries[12];
+    unsigned char bytes[0x840];
 };
 struct Struct_ov031_02244050_5 {
-    unsigned int unknown_0_0_ : 12;
+    unsigned int field_0 : 12;
     unsigned int unknown_1_4_ : 4;
     unsigned int unknown_2_0_ : 5;
     unsigned int unknown_2_5_ : 5;
@@ -22,20 +22,20 @@ struct Struct_ov031_02244050_5 {
 };
 struct Struct_02245528 {
     unsigned char unknown_0_[0x34];
-    unsigned char unknown_34_;
-    unsigned char unknown_35_;
+    unsigned char category;
+    unsigned char phase;
     unsigned char unknown_36_;
-    unsigned char unknown_37_;
-    int unknown_38_;
-    int unknown_3c_;
-    unsigned int unknown_40_;
-    unsigned char unknown_44_;
+    unsigned char step;
+    int count;
+    int selected;
+    unsigned int present;
+    unsigned char flags;
     unsigned char unknown_45_[3];
-    int unknown_48_;
+    int offset;
     unsigned char unknown_4c_[4];
-    Struct_ov031_02244050_2 unknown_50_[4];
+    Struct_ov031_02244050_2 records[4];
     unsigned char unknown_310_[0x378 - 0x310];
-    Struct_ov031_02244050_5 unknown_378_;
+    Struct_ov031_02244050_5 settings;
     unsigned char unknown_37c_[0xb4];
     unsigned long long unknown_430_;
 };
@@ -44,26 +44,26 @@ struct Struct_ov031_02291e04_3 {
     int unknown_c_;
 #if defined(jpn)
     int unknown_10_;
-    Struct_ov031_02244050_4* unknown1_20_;
-    int unknown_18_;
-    int unknown_24_;
-    int unknown_20_;
+    Struct_ov031_02244050_4* records;
+    int field_18;
+    int error;
+    int field_20;
     int unknown_1c_;
-    int unknown_14_;
+    int connected;
     unsigned char unknown_2c_[0xc];
 #else
     int unknown1_10_;
-    int unknown_14_;
-    int unknown1_18_;
+    int connected;
+    int field_18;
     int unknown_1c_;
-    Struct_ov031_02244050_4* unknown1_20_;
-    int unknown_24_;
+    Struct_ov031_02244050_4* records;
+    int error;
     unsigned char unknown_28_[0x10];
 #endif
 };
 struct Struct_ov031_02244050 {
     unsigned char unknown_0_[0x104];
-    Struct_ov031_02244050_5 unknown_104_;
+    Struct_ov031_02244050_5 settings;
 };
 struct Struct_ov031_02244050_3 {
 #if defined(jpn)
@@ -71,16 +71,16 @@ struct Struct_ov031_02244050_3 {
 #else
     unsigned char unknown1_0_[0x5e6c];
 #endif
-    Struct_ov031_02244050 unknown_5e6c_;
-    Struct_ov031_02244050* inline_ov031_02244050() { return &unknown_5e6c_; }
+    Struct_ov031_02244050 save;
+    Struct_ov031_02244050* inline_ov031_02244050() { return &save; }
 };
-struct Struct_02000c9c_8;
+struct Struct0200fb08;
 extern Struct_ov031_02291e04_3 data_ov031_02291e04;
 extern char data_ov031_0224c938[];
 extern char data_ov031_0224c93d[];
 #if defined(jpn)
 struct Struct_ov031_0224a198 {
-    char unknown_0_[4][8];
+    char names[4][8];
 };
 extern Struct_ov031_0224a198 data_ov031_0224a198;
 #else
@@ -90,10 +90,10 @@ extern char data_ov031_02249582[][3];
 extern "C" void func_ov031_022433d0();
 extern "C" void func_ov031_02243404();
 extern "C" int func_ov031_02212ab4(void*, const char*, const char*);
-int RunIfGlobalUnset_02212c18(int);
-void SetCallbackAndRegister_02212bcc(void*);
-int InitAndProcessArray_02212c3c(void*, void*, int);
-int GameState_GetLanguage(Struct0200fb08*);
+extern "C" int func_ov031_02212c18(int);
+extern "C" void func_ov031_02212bcc(void*);
+extern "C" int func_ov031_02212c3c(void*, void*, int);
+extern "C" int GameState_GetLanguage(Struct0200fb08*);
 extern "C" int func_ov031_022123d4();
 extern "C" int func_ov031_02212c84(void*, int, int);
 extern "C" void func_ov031_022120f8();
@@ -103,70 +103,70 @@ extern "C" int func_ov031_02212184();
 extern "C" void func_ov031_02245478(Struct_02245528*);
 
 // USA: func_ov031_02244050
-extern "C" ARM void func_ov031_02244050(Struct_02245528* arg0) {
-    switch (arg0->unknown_35_) {
+extern "C" ARM void func_ov031_02244050(Struct_02245528* session) {
+    switch (session->phase) {
     case 0:
-        switch (arg0->unknown_37_) {
+        switch (session->step) {
         case 0:
-            data_ov031_02291e04.unknown_24_ = 0;
+            data_ov031_02291e04.error = 0;
             data_ov031_02291e04.unknown_c_ = 0;
-            if (!func_ov031_02212ab4((void*)func_ov031_022433d0, data_ov031_0224c938, data_ov031_0224c93d)) arg0->unknown_35_ = 8;
-            else arg0->unknown_37_++;
+            if (!func_ov031_02212ab4((void*)func_ov031_022433d0, data_ov031_0224c938, data_ov031_0224c93d)) session->phase = 8;
+            else session->step++;
             break;
         case 1:
-            if (data_ov031_02291e04.unknown_c_) arg0->unknown_37_++;
+            if (data_ov031_02291e04.unknown_c_) session->step++;
             break;
         case 2:
-            if (data_ov031_02291e04.unknown_24_) arg0->unknown_35_ = 8;
-            else arg0->unknown_37_++;
+            if (data_ov031_02291e04.error) session->phase = 8;
+            else session->step++;
             break;
         case 3:
-            data_ov031_02291e04.unknown_24_ = 0;
+            data_ov031_02291e04.error = 0;
             data_ov031_02291e04.unknown_c_ = 0;
-            if (!func_ov031_02212c18((int)&arg0->unknown_38_)) arg0->unknown_35_ = 8;
-            else arg0->unknown_37_++;
+            if (!func_ov031_02212c18((int)&session->count)) session->phase = 8;
+            else session->step++;
             break;
         case 4:
-            if (data_ov031_02291e04.unknown_c_) arg0->unknown_37_++;
+            if (data_ov031_02291e04.unknown_c_) session->step++;
             break;
         case 5:
-            if (data_ov031_02291e04.unknown_24_ == 1) { arg0->unknown_35_ = 8; break; }
-            if (arg0->unknown_38_ == 0) {
-                arg0->unknown_35_ = 5;
+            if (data_ov031_02291e04.error == 1) { session->phase = 8; break; }
+            if (session->count == 0) {
+                session->phase = 5;
                 data_ov031_02291e04.unknown_1c_ = 0;
                 func_ov031_02212bcc((void*)func_ov031_02243404);
                 break;
             }
-            data_ov031_02291e04.unknown1_20_ = (Struct_ov031_02244050_4*)((SafeAllocator*)arg0)->Allocate(0x840);
-            if (!data_ov031_02291e04.unknown1_20_) { arg0->unknown_35_ = 7; break; }
-            data_ov031_02291e04.unknown_24_ = 0;
+            data_ov031_02291e04.records = (Struct_ov031_02244050_4*)((SafeAllocator*)session)->Allocate(0x840);
+            if (!data_ov031_02291e04.records) { session->phase = 7; break; }
+            data_ov031_02291e04.error = 0;
             data_ov031_02291e04.unknown_c_ = 0;
-            if (!func_ov031_02212c3c(data_ov031_02291e04.unknown1_20_, 0, arg0->unknown_38_)) arg0->unknown_35_ = 8;
-            else arg0->unknown_37_++;
+            if (!func_ov031_02212c3c(data_ov031_02291e04.records, 0, session->count)) session->phase = 8;
+            else session->step++;
             break;
         case 6:
-            if (data_ov031_02291e04.unknown_c_) arg0->unknown_37_++;
+            if (data_ov031_02291e04.unknown_c_) session->step++;
             break;
         case 7: {
-            if (data_ov031_02291e04.unknown_24_) { arg0->unknown_35_ = 8; break; }
+            if (data_ov031_02291e04.error) { session->phase = 8; break; }
 #if defined(jpn)
-            Struct_ov031_0224a198 var0 = data_ov031_0224a198;
-            for (int var1 = 0; var1 < arg0->unknown_38_; var1++) {
-                int var2;
-                int var3 = var1 * sizeof(Struct_ov031_02244050_2);
-                for (var2 = 0; var2 < 4; var2++) {
-                    if (!strstr((char*)&data_ov031_02291e04.unknown1_20_->unknown1_0_[var3] + 0x88, var0.unknown_0_[var2])) continue;
-                    if (arg0->unknown_40_ & (1 << var2)) continue;
-                    arg0->unknown_40_ |= 1 << var2;
-                    memcpy(&arg0->unknown_50_[var2], &data_ov031_02291e04.unknown1_20_->unknown1_0_[var3], 0xb0);
+            Struct_ov031_0224a198 kinds = data_ov031_0224a198;
+            for (int record = 0; record < session->count; record++) {
+                int kind;
+                int var3 = record * sizeof(Struct_ov031_02244050_2);
+                for (kind = 0; kind < 4; kind++) {
+                    if (!strstr((char*)&data_ov031_02291e04.records->bytes[var3] + 0x88, kinds.names[kind])) continue;
+                    if (session->present & (1 << kind)) continue;
+                    session->present |= 1 << kind;
+                    memcpy(&session->records[kind], &data_ov031_02291e04.records->bytes[var3], 0xb0);
                 }
             }
 #else
             int language = GameState_GetLanguage((Struct0200fb08*)GameState::GetInstance());
             for (int record = 0; record < session->count; record++) {
-                int record_offset = record * sizeof(SessionRecord02244050);
+                int var6 = record * sizeof(Struct_ov031_02244050_2);
                 for (int kind = 0; kind < 4; kind++) {
-                    SessionRecord02244050* entry = (SessionRecord02244050*)&data_ov031_02291e04.records->bytes[record_offset];
+                    Struct_ov031_02244050_2* entry = (Struct_ov031_02244050_2*)&data_ov031_02291e04.records->bytes[var6];
                     if (!strstr(entry->name, data_ov031_022495b4[kind])) continue;
                     if (kind == 0 && !strstr(entry->name + 11, data_ov031_02249582[language])) continue;
                     if (session->present & (1 << kind)) continue;
@@ -175,78 +175,78 @@ extern "C" ARM void func_ov031_02244050(Struct_02245528* arg0) {
                 }
             }
 #endif
-            arg0->unknown_35_ = 3;
-            arg0->unknown_37_++;
+            session->phase = 3;
+            session->step++;
             break;
         }
         }
-        if (func_ov031_022123d4()) arg0->unknown_35_ = 8;
+        if (func_ov031_022123d4()) session->phase = 8;
         return;
     case 3:
-        if (arg0->unknown_3c_ >= 3 && arg0->unknown_3c_ % 3 == 0) {
-            unsigned long long var9 = (GetCurrentTimestamp() << 6) / 0x82ea;
-            if (arg0->unknown_430_ + 1000 > var9) return;
+        if (session->selected >= 3 && session->selected % 3 == 0) {
+            unsigned long long now = (GetCurrentTimestamp() << 6) / 0x82ea;
+            if (session->unknown_430_ + 1000 > now) return;
         }
-        while (!(arg0->unknown_40_ & (1 << arg0->unknown_3c_)) && arg0->unknown_3c_ < 4) arg0->unknown_3c_++;
-        if (arg0->unknown_3c_ < 4) {
-            data_ov031_02291e04.unknown_24_ = 0;
+        while (!(session->present & (1 << session->selected)) && session->selected < 4) session->selected++;
+        if (session->selected < 4) {
+            data_ov031_02291e04.error = 0;
             data_ov031_02291e04.unknown_c_ = 0;
-            if (!func_ov031_02212c84(&arg0->unknown_50_[arg0->unknown_3c_], arg0->unknown_48_, arg0->unknown_50_[arg0->unknown_3c_].unknown_ac_)) {
-                arg0->unknown_35_ = 8;
+            if (!func_ov031_02212c84(&session->records[session->selected], session->offset, session->records[session->selected].length)) {
+                session->phase = 8;
                 return;
             }
-            data_ov031_02291e04.unknown_14_ = 0;
+            data_ov031_02291e04.connected = 0;
         } else {
-            data_ov031_02291e04.unknown_14_ = 1;
+            data_ov031_02291e04.connected = 1;
             data_ov031_02291e04.unknown_c_ = 1;
         }
-        arg0->unknown_35_ = 4;
+        session->phase = 4;
         return;
     case 4:
-        if (data_ov031_02291e04.unknown_14_ && data_ov031_02291e04.unknown_c_) {
-            if (arg0->unknown_3c_ < 3) {
-                arg0->unknown_48_ += arg0->unknown_50_[arg0->unknown_3c_].unknown_ac_;
-                arg0->unknown_3c_++;
-                arg0->unknown_35_ = 3;
-                if (arg0->unknown_3c_ % 3 == 0) arg0->unknown_430_ = (GetCurrentTimestamp() << 6) / 0x82ea;
+        if (data_ov031_02291e04.connected && data_ov031_02291e04.unknown_c_) {
+            if (session->selected < 3) {
+                session->offset += session->records[session->selected].length;
+                session->selected++;
+                session->phase = 3;
+                if (session->selected % 3 == 0) session->unknown_430_ = (GetCurrentTimestamp() << 6) / 0x82ea;
             } else {
-                arg0->unknown_35_ = 5;
+                session->phase = 5;
                 data_ov031_02291e04.unknown_1c_ = 0;
                 func_ov031_02212bcc((void*)func_ov031_02243404);
             }
-        } else if (data_ov031_02291e04.unknown_24_ == 1) arg0->unknown_35_ = 8;
+        } else if (data_ov031_02291e04.error == 1) session->phase = 8;
         return;
     case 5:
         if (data_ov031_02291e04.unknown_1c_ != 1) return;
-        arg0->unknown_37_ = 0;
+        session->step = 0;
         func_ov031_022120f8();
-        arg0->unknown_35_ = 6;
+        session->phase = 6;
         return;
     case 6: {
-        func_ov031_02245528(arg0, 0);
-        Struct_ov031_02244050* var10 = ((Struct_ov031_02244050_3*)GameState::GetInstance())->inline_ov031_02244050();
-        var10->unknown_104_.unknown_0_0_ = arg0->unknown_378_.unknown_0_0_;
-        var10->unknown_104_.unknown_1_4_ = arg0->unknown_378_.unknown_1_4_;
-        var10->unknown_104_.unknown_2_0_ = arg0->unknown_378_.unknown_2_0_;
-        var10->unknown_104_.unknown_2_5_ = arg0->unknown_378_.unknown_2_5_;
-        var10->unknown_104_.unknown_3_2_ = arg0->unknown_378_.unknown_3_2_;
-        func_ov023_021f6158(&var10->unknown_104_);
-        arg0->unknown_44_ |= 1;
+        func_ov031_02245528(session, 0);
+        Struct_ov031_02244050* saved = ((Struct_ov031_02244050_3*)GameState::GetInstance())->inline_ov031_02244050();
+        saved->settings.field_0 = session->settings.field_0;
+        saved->settings.unknown_1_4_ = session->settings.unknown_1_4_;
+        saved->settings.unknown_2_0_ = session->settings.unknown_2_0_;
+        saved->settings.unknown_2_5_ = session->settings.unknown_2_5_;
+        saved->settings.unknown_3_2_ = session->settings.unknown_3_2_;
+        func_ov023_021f6158(&saved->settings);
+        session->flags |= 1;
         return;
     }
     case 7:
         if (!data_ov031_02291e04.unknown_c_) return;
-        data_ov031_02291e04.unknown_24_ = 0;
+        data_ov031_02291e04.error = 0;
         data_ov031_02291e04.unknown_1c_ = 0;
         func_ov031_02212bcc((void*)func_ov031_02243404);
-        arg0->unknown_35_ = 9;
-        if (data_ov031_02291e04.unknown_24_ == 1) arg0->unknown_35_ = 8;
+        session->phase = 9;
+        if (data_ov031_02291e04.error == 1) session->phase = 8;
         return;
     case 9:
-        if (data_ov031_02291e04.unknown_1c_ && func_ov031_02212184()) func_ov031_02245478(arg0);
+        if (data_ov031_02291e04.unknown_1c_ && func_ov031_02212184()) func_ov031_02245478(session);
         return;
     case 8:
-        arg0->unknown_35_ = 7;
+        session->phase = 7;
         return;
     }
 }

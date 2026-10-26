@@ -12,7 +12,7 @@ struct State0xbb1c {
 };
 
 // Main, originally ClearFields0x8_0203bb1c (USA 0x0203bb1c, EUR 0x0203bb2c, JPN 0x0203b574)
-ARM void BgImage_Clear(struct State0xbb1c* image) {
+extern "C" ARM void BgImage_Clear(struct State0xbb1c* image) {
     image->map = 0;
     image->unknownC = 0;
     image->unknown10 = 0;

@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_0221df48 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_;
+    unsigned char id;
+    unsigned char type;
+    unsigned short length;
+    unsigned short offset;
 };
 extern unsigned char data_ov031_0224e700[];
 extern unsigned char data_ov031_0224e6e0[];
@@ -13,23 +13,23 @@ extern "C" unsigned short func_ov031_0221e5f8(unsigned short);
 extern "C" unsigned int func_ov031_0221e5d0(unsigned int);
 
 // USA: func_ov031_0221df48
-extern "C" THUMB short func_ov031_0221df48(Struct_ov031_0221df48* arg0) {
-    short var0 = 0;
-    arg0->unknown_0_ = *(signed char*)(data_ov031_0224e700 + 0x1d);
-    arg0->unknown_1_ = 1;
-    short var1 = *(int*)(data_ov031_0224e6e0 + 0x28);
-    func_ov031_0221e51c(arg0 + 1, *(void**)(data_ov031_0224e6e0 + 0x24), var1);
-    arg0->unknown_2_ = func_ov031_0221e5f8(var1);
-    short var2 = (((short)(var1 + 6) + 1) / 2) * 2;
-    arg0->unknown_4_ = func_ov031_0221e5f8(var2);
-    var0 += var2;
-    Struct_ov031_0221df48* var3 = (Struct_ov031_0221df48*)((unsigned char*)arg0 + var2);
-    var3->unknown_0_ = 0x60;
-    var3->unknown_1_ = 0;
-    var3->unknown_4_ = func_ov031_0221e5f8(0);
-    unsigned int var4 = func_ov031_0221e5d0(14);
-    func_ov031_0221e51c(var3 + 1, &var4, 4);
-    var3->unknown_2_ = func_ov031_0221e5f8(4);
-    var0 += 10;
-    return var0;
+extern "C" THUMB short func_ov031_0221df48(Struct_ov031_0221df48* packet) {
+    short total = 0;
+    packet->id = *(signed char*)(data_ov031_0224e700 + 0x1d);
+    packet->type = 1;
+    short length = *(int*)(data_ov031_0224e6e0 + 0x28);
+    func_ov031_0221e51c(packet + 1, *(void**)(data_ov031_0224e6e0 + 0x24), length);
+    packet->length = func_ov031_0221e5f8(length);
+    short offset = (((short)(length + 6) + 1) / 2) * 2;
+    packet->offset = func_ov031_0221e5f8(offset);
+    total += offset;
+    Struct_ov031_0221df48* extra = (Struct_ov031_0221df48*)((unsigned char*)packet + offset);
+    extra->id = 0x60;
+    extra->type = 0;
+    extra->offset = func_ov031_0221e5f8(0);
+    unsigned int value = func_ov031_0221e5d0(14);
+    func_ov031_0221e51c(extra + 1, &value, 4);
+    extra->length = func_ov031_0221e5f8(4);
+    total += 10;
+    return total;
 }

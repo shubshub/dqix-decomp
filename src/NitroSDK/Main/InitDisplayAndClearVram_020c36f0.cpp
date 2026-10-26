@@ -2,9 +2,6 @@
 #include "NitroSDK/DMA.h"
 #include "NitroSDK/GamecardBusOwnership.h"
 
-#if defined(jpn)
-#define func_020ca3ec func_020cbeb8
-#endif
 
 
 extern "C" void HaltSystem(void);
@@ -17,7 +14,7 @@ extern int data_020f226c;
 #define data_02111222_field (*(unsigned short*)((char*)&data_02111220 + 2))
 
 // Main, originally InitDisplayAndClearVram020c36f0 (USA 0x020c36f0, EUR 0x020c3700, JPN 0x020c51bc)
-ARM void InitDisplayAndClearVram(void) {
+extern "C" ARM void InitDisplayAndClearVram(void) {
     *(volatile unsigned short*)0x4000304 |= 0x8000;
     *(volatile unsigned short*)0x4000304 = (*(volatile unsigned short*)0x4000304 & 0xfffffdf1) | 0xe | 0x200;
     *(volatile unsigned short*)0x4000304 |= 1;

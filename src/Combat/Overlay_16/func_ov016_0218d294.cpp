@@ -3,9 +3,9 @@
 struct Struct_ov016_0219d144_6 {
 	int unknown_0_;      // 0x0
 	#if defined(jpn)
- char unknown1_4_[0x10 - 0x4];
+ char pad0[0x10 - 0x4];
 #else
- char unknown_4_[0x14 - 0x4];
+ char pad0[0x14 - 0x4];
 #endif
 	int unknown_14_;     // 0x14
 	int unknown_18_;  // 0x18

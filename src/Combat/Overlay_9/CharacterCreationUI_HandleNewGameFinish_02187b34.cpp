@@ -84,35 +84,35 @@ enum
     FinishStartAnimationTime = 0xccc, // 0.8 (fx32) of the body's animation
 };
 
-struct Struct_02109bf4_4;
-struct Struct_0201099c_3;
-struct Struct_0203d028;
-struct Struct_02038598_4;
+struct Actor0209c678;
+struct Container020e0310;
+struct Foo0207df50;
+struct FlagWord020466f4;
 
 extern "C" Object3D* CharacterModel_GetBody(void* character);
-unsigned int* GlobalFlags_GetInstance();
+extern "C" unsigned int* GlobalFlags_GetInstance();
 extern "C" void CharacterCreationUI_UpdateDim(void* self, unsigned int ticks);
 extern "C" int CharacterCreationUI_UpdateWaitTimer(void* self, unsigned int ticks);
-void Camera_EasePositionTo(struct Camera* camera, int position, int duration);
-void Camera_EaseTargetTo(struct Camera* camera, int target, int duration);
-void BgmPlayer_FadeOut(Actor0209c678* actor, int state);
-int Camera_IsEasing(struct Camera* camera);
-void SePlayer_LoadExtraArchiveB(void* sound, int a, int b);
-const char* KeyTable_Get(Container020e0310* texts, int id);
-void VramState_Rewind(Foo0207df50* a);
-void VramState_Restore(char* a);
-void VramState_Save(char* a);
-void SePlayer_PlayExtra(void* sound, int a, int b);
-void FlagWord_SetBits(unsigned int* field, unsigned int bits);
-void FlagWord_ClearBits(FlagWord020466f4* field, unsigned int bits);
+extern "C" void Camera_EasePositionTo(struct Camera* camera, int position, int duration);
+extern "C" void Camera_EaseTargetTo(struct Camera* camera, int target, int duration);
+extern "C" void BgmPlayer_FadeOut(Actor0209c678* actor, int state);
+extern "C" int Camera_IsEasing(struct Camera* camera);
+extern "C" void SePlayer_LoadExtraArchiveB(void* sound, int a, int b);
+extern "C" const char* KeyTable_Get(Container020e0310* texts, int id);
+extern "C" void VramState_Rewind(Foo0207df50* a);
+extern "C" void VramState_Restore(char* a);
+extern "C" void VramState_Save(char* a);
+extern "C" void SePlayer_PlayExtra(void* sound, int a, int b);
+extern "C" void FlagWord_SetBits(unsigned int* field, unsigned int bits);
+extern "C" void FlagWord_ClearBits(FlagWord020466f4* field, unsigned int bits);
 extern "C" void GXx_SetMasterBrightness_(volatile unsigned short* reg, int brightness);
-void SePlayer_UnloadExtraArchiveB(void* sound);
-void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
+extern "C" void SePlayer_UnloadExtraArchiveB(void* sound);
+extern "C" void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 
-struct Struct_ov009_0218aa28 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+struct Vec3 {
+    int x;
+    int y;
+    int z;
 };
 
 extern const Vec3 CharacterCreationUI_finishCameraPosition;
@@ -200,7 +200,7 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
     if (CharacterCreationUI_UpdateWaitTimer(self, ticks) > 0)
         return;
 
-    switch (arg0->unknown_c59_)
+    switch (self->step_)
     {
     case FinishStep_Start:
     {
@@ -278,9 +278,9 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
         int* task = self->modelTasks_;
         for (unsigned char i = 0; i < FinishFile_Count; i++, task++)
         {
-            if (*var21 == -1)
+            if (*task == -1)
                 continue;
-            if (var4->GetTaskStatus(*var21) == 1)
+            if (loader->GetTaskStatus(*task) == 1)
             {
                 unsigned int size = 0;
                 void* file = NULL;
@@ -314,8 +314,8 @@ extern "C" ARM void CharacterCreationUI_HandleNewGameFinish(CharacterCreation* s
                     break;
                 }
             }
-            var4->RemoveTask(*var21);
-            *var21 = -1;
+            loader->RemoveTask(*task);
+            *task = -1;
         }
         self->step_ = FinishStep_ModelsLoaded;
         body->StopCurrentAnimation();

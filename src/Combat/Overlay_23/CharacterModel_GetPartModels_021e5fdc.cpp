@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 // Overlay 23, originally CopyAndClampShorts_021e5fdc (USA/EUR 0x021e5fdc, JPN 0x021e61c0)
-ARM void CharacterModel_GetPartModels(void *unused, short *dst, short *src) {
+extern "C" ARM void CharacterModel_GetPartModels(void *unused, short *dst, short *src) {
 	dst[0] = src[0];
 	dst[1] = src[1];
 	dst[2] = src[2];

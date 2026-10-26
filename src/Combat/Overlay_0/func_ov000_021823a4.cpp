@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 #include "World/ZoneLootableRecord.h"
 
-extern "C" void func_02047230(struct Struct_02012fa4* arg0);
+extern "C" void SprSprite_Unload(struct Foo02048004* obj);
 
-struct Struct_ov000_021820fc { unsigned char unknown_0_; unsigned char unknown_1_; short unknown_2_; short unknown_4_; };
-extern "C" void func_ov000_021820fc(struct Struct_ov000_021820fc* arg0);
+struct Struct_ov000_021820fc { unsigned char a; unsigned char b; short c; short d; };
+extern "C" void func_ov000_021820fc(struct Struct_ov000_021820fc* obj);
 
 // USA: func_ov000_021823a4
-extern "C" ARM void func_ov000_021823a4(char* arg0) {
-    int var0;
-    for (var0 = 0; var0 < 13; var0++) {
-        func_02047230((struct Struct_02012fa4*)(arg0 + var0 * 0x88));
+extern "C" ARM void func_ov000_021823a4(char* p) {
+    int i;
+    for (i = 0; i < 13; i++) {
+        SprSprite_Unload((struct Foo02048004*)(p + i * 0x88));
     }
-    func_ov000_021820fc((struct Struct_ov000_021820fc*)(arg0 + 0x6e8));
+    func_ov000_021820fc((struct Struct_ov000_021820fc*)(p + 0x6e8));
 }

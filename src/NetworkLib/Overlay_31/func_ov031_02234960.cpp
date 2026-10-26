@@ -15,9 +15,9 @@ extern "C" int func_ov031_02223518(void* obj);
 extern "C" void OS_GetOwnerInfo(void* out);
 extern "C" void func_020ca390(int a, void* buf, unsigned int size);
 extern "C" int func_020ca3b8(int dst, int src, int size);
-extern "C" void func_ov031_02223614(void* arg0, int arg1);
+extern "C" void func_ov031_02223614(void* buf, int n);
 extern "C" void func_ov031_02222b0c(int);
-extern "C" void func_ov031_02237448(void* arg0);
+extern "C" void func_ov031_02237448(void* fn);
 extern "C" void func_ov031_02236878(int);
 extern "C" void func_ov031_022274c0(int);
 extern "C" ARM void func_ov031_02234cac(void);
@@ -25,7 +25,7 @@ extern "C" ARM void func_ov031_02234a08(void);
 
 // USA: func_ov031_022348cc
 extern "C" ARM void func_ov031_022348cc(void) {
-	unsigned char var0[0x6c];
+	unsigned char buf[0x6c];
 	data_ov031_02290ce4 = 0;
 	func_ov031_02234960();
 	func_ov031_02223998(8);

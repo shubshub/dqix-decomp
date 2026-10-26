@@ -22,13 +22,13 @@ extern "C" ARM void func_ov031_0220f5b4(void) {
     if (data_ov031_0224e580 == NULL) return;
     for (;;) {
         func_ov031_0220f68c();
-        void* var0 = *(void**)((char*)data_ov031_0224e580 + 0x24);
-        if (var0 == NULL) {
+        void* entry = *(void**)((char*)data_ov031_0224e580 + 0x24);
+        if (entry == NULL) {
             func_ov031_0220f6e0();
             break;
         }
-        int var1 = *(int*)var0;
-        switch (var1) {
+        int state = *(int*)entry;
+        switch (state) {
         case 1: func_ov031_0220f728(); break;
         case 2: func_ov031_0220f814(); break;
         case 3: func_ov031_0220f8a8(); break;

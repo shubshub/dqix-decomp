@@ -2,47 +2,47 @@
 #include "Combat/Overlay_0/GetCombatantByID.h"
 #include "GameState/GameState.h"
 
-extern "C" int func_ov024_021edf00(int* arg0, int arg1, short* arg2);
-extern "C" int func_ov000_0215e9fc(int arg0, short* arg1, int arg2, int arg3);
-extern "C" void func_ov024_021ed8c0(void* arg0, int arg1, int arg2, int* arg3, short* arg4);
+extern "C" int func_ov024_021edf00(int* a0, int a1, short* a2);
+extern "C" int func_ov000_0215e9fc(int a, short* buf, int max, int start);
+extern "C" void func_ov024_021ed8c0(void* context, int id, int arg2, int* count, short* ids);
 
-struct Struct_ov024_021e05e4 { char unknown_0_[0x18]; int unknown_18_; };
-struct Struct_ov024_021e04e0 { char unknown_0_[0x138]; struct Struct_ov024_021e05e4* unknown_138_; };
-extern "C" int func_ov024_021e05e4(struct Struct_ov024_021e04e0* arg0);
+struct Struct_ov024_021e05e4 { char unk[0x18]; int flags; };
+struct Struct_ov024_021e04e0 { char unk[0x138]; struct Struct_ov024_021e05e4* inner; };
+extern "C" int func_ov024_021e05e4(struct Struct_ov024_021e04e0* obj);
 
-struct Struct_ov024_021f2998 { char unknown_0_[0x2e]; short unknown_2e_; };
+struct Struct_ov024_021f2998 { char unk[0x2e]; short unknown_2e_; };
 
 extern unsigned short data_ov024_021fea4c;
 
 // USA: func_ov024_021f2998
-extern "C" ARM int func_ov024_021f2998(int* arg0, int arg1, int arg2, int* arg3, short* arg4) {
-	short var0[4];
-	short* var1 = var0;
-	unsigned short* var2 = &data_ov024_021fea4c;
-	int var3 = 4;
+extern "C" ARM int func_ov024_021f2998(int* a0, int a1, int a2, int* a3, short* a4) {
+	short buf[4];
+	short* d = buf;
+	unsigned short* s = &data_ov024_021fea4c;
+	int n = 4;
 	do {
-		short* var4 = var1++;
-		*var4 = *var2++;
-	} while (--var3);
+		short* var4 = d++;
+		*var4 = *s++;
+	} while (--n);
 
-	int var5 = func_ov024_021edf00(arg0, arg1, var0);
-	if (var5 <= 0) {
-		var5 = func_ov000_0215e9fc(*arg0, var0, 4, 1);
-		if (var5 <= 0) return 0;
+	int count = func_ov024_021edf00(a0, a1, buf);
+	if (count <= 0) {
+		count = func_ov000_0215e9fc(*a0, buf, 4, 1);
+		if (count <= 0) return 0;
 	}
 
-	*arg3 = 0;
-	for (int var6 = 0; var6 < var5; var6++) {
-		GameObject* var7 = GetCombatantByID(*arg0, var0[var6]);
-		if (var7 && func_ov024_021e05e4((struct Struct_ov024_021e04e0*)var7)
-			&& arg1 != ((struct Struct_ov024_021f2998*)var7->currentStats_)->unknown_2e_) {
-			int var8 = *arg3;
-			*arg3 = var8 + 1;
-			arg4[var8] = var0[var6];
+	*a3 = 0;
+	for (int i = 0; i < count; i++) {
+		GameObject* c = GetCombatantByID(*a0, buf[i]);
+		if (c && func_ov024_021e05e4((struct Struct_ov024_021e04e0*)c)
+			&& a1 != ((struct Struct_ov024_021f2998*)c->currentStats_)->unknown_2e_) {
+			int idx = *a3;
+			*a3 = idx + 1;
+			a4[idx] = buf[i];
 		}
 	}
-	if (*arg3 <= 0) return 0;
+	if (*a3 <= 0) return 0;
 
-	func_ov024_021ed8c0(arg0, arg1, arg2, arg3, arg4);
+	func_ov024_021ed8c0(a0, a1, a2, a3, a4);
 	return 1;
 }

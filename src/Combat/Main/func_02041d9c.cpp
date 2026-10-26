@@ -6,11 +6,11 @@ extern "C" int func_02042428(char*, int);
 #endif
 
 extern char data_020eff43;
-extern "C" int func_020d2ff0(const char* arg0);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
+extern "C" int STD_GetStringLength(const char* s);
+extern "C" int sprintf(char* dst, const char* fmt, ...);
 
 // USA: func_02041d9c
-extern "C" ARM int func_02041d9c(char* arg0, int arg1) {
-    char* var0 = arg0 + func_020d2ff0(arg0);
-    return (var0 + sprintf(var0, &data_020eff43, arg1)) - arg0;
+extern "C" ARM int func_02041d9c(char* dst, int size) {
+    char* end = dst + STD_GetStringLength(dst);
+    return (end + sprintf(end, &data_020eff43, size)) - dst;
 }

@@ -8,83 +8,83 @@
 #include "GameState/GameState.h"
 
 struct Container020e0310;
-char* KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" char* KeyTable_Get(struct Container020e0310* c, int key);
 
-struct Struct_0203c108_3 {
-    char unknown_0_[0x14];
-    short unknown_14_;
-    short unknown_16_;
+struct Obj0203c108 {
+    char pad[0x14];
+    short idx;
+    short pad16;
 };
-void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
+extern "C" void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
 
-extern "C" void* func_02079e2c(char* arg0, int arg1);
-extern "C" int func_ov000_02171210(void* arg0, void* arg1);
+extern "C" void* func_02079e2c(char* table, int key);
+extern "C" int func_ov000_02171210(void* rec, void* self);
 
-struct Struct_ov000_02171e60_2 {
-    char unknown_0_[0xf7c];
-    unsigned char unknown_f7c_;
+struct BattleInfo2a04 {
+    char pad[0xf7c];
+    unsigned char mode;
 };
 
 extern "C" void __clear(void* buf, int n);
 extern "C" void func_020e4864(const char* src, char* dst, int a, int b, int c, int d);
-void CopyTextAndUppercaseIfFlagged0206819c(const char* src, char* dst, int flag);
+extern "C" void func_0206819c(const char* src, char* dst, int flag);
 struct MessageSystem;
-struct MessageSystem* MessageSystem_GetInstance();
+extern "C" struct MessageSystem* MessageSystem_GetInstance();
 extern "C" void MessageSystem_FormatText(struct MessageSystem* messages, int a, const char* format, char* output, int size, int b, int c);
 
-struct Struct_ov000_0215767c_8 {
-    int unknown_0_;
-    const char* unknown_4_;
-    char unknown_8_[0xe];
+struct ActionEntry {
+    int field_0x0;
+    const char* name;
+    char pad8[0xe];
     short unknown_16_;
-    short unknown_18_;
+    short count;
 };
 
 struct Struct_ov000_02171e60 {
-    char unknown_0_[4];
-    struct Struct_0201099c_3* unknown_4_;
-    char unknown_8_[8];
+    char pad0[4];
+    struct Container020e0310* texts;
+    char pad8[8];
     signed char unknown_10_[8];
     signed char unknown_18_;
     char unknown_19_[4];
-    signed char unknown_1d_;
-    char unknown_1e_[3];
+    signed char result;
+    char pad1e[3];
     signed char unknown_21_;
     signed char unknown_22_;
     char unknown_23_[0xb];
     signed char unknown_2e_;
     char unknown_2f_[0x1d];
     int unknown_4c_;
-    struct Struct_0203c108_3 unknown_50_;
-    char unknown_68_[LOW_REGION(0x3c8, 0x388)];
-    struct Struct_ov000_0215767c_8* unknown_3f0_[16];
+    struct Obj0203c108 message;
+    char pad68[LOW_REGION(0x3c8, 0x388)];
+    struct ActionEntry* entries[16];
 };
 
 // USA: func_ov000_02171e60
-extern "C" ARM void func_ov000_02171e60(struct CommandMenu* self) {
-    struct ActionEntry* entry = self->entries[self->curIndex];
+extern "C" ARM void func_ov000_02171e60(struct Struct_ov000_02171e60* self) {
+    struct ActionEntry* entry = self->entries[self->unknown_22_];
     if (entry->count <= 0) {
-        self->stackTop++;
-        self->stack[self->stackTop] = 0xe;
+        self->unknown_18_++;
+        self->unknown_10_[self->unknown_18_] = 0xe;
         self->result = 0;
         CachedTextLabel_SetText(&self->message, KeyTable_Get(self->texts, 5));
         return;
     }
-    void* rec = SearchBothTables02079e2c((char*)GetData02108e10_020797dc(), entry->recordId);
+    void* rec = func_02079e2c((char*)func_020797dc(), entry->unknown_16_);
     if (rec == NULL) {
-        self->stackTop++;
-        self->stack[self->stackTop] = 0xe;
+        self->unknown_18_++;
+        self->unknown_10_[self->unknown_18_] = 0xe;
         self->result = 0;
         CachedTextLabel_SetText(&self->message, KeyTable_Get(self->texts, 5));
         return;
     }
-    self->stackTop++;
-    self->stack[self->stackTop] = func_ov000_02171210(rec, self);
-    if (self->stack[self->stackTop] == 0x13) {
-        self->field_0x21 = 0;
-        self->field_0x2e = self->field_0x4c;
+    self->unknown_18_++;
+    self->unknown_10_[self->unknown_18_] = func_ov000_02171210(rec, self);
+    if (self->unknown_10_[self->unknown_18_] == 0x13) {
+        self->unknown_21_ = 0;
+        self->unknown_2e_ = self->unknown_4c_;
         if (((struct BattleInfo2a04*)GameState_GetParty(GameState::GetInstance()))->mode == 1) {
-            self->stack[self->stackTop] = 100;
+            self->unknown_10_[self->unknown_18_] = 100;
         }
     }
 #if defined(jpn)
@@ -95,7 +95,7 @@ extern "C" ARM void func_ov000_02171e60(struct CommandMenu* self) {
     char format[0x80];
     __clear(format, 0x80);
     func_020e4864(entry->name, text, 1, 0, 0, 0);
-    CopyTextAndUppercaseIfFlagged0206819c(text, format, 0);
+    func_0206819c(text, format, 0);
     MessageSystem_FormatText(MessageSystem_GetInstance(), 10, format, text, 0x100, 0, 0);
     CachedTextLabel_SetText(&self->message, text);
 #endif

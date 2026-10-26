@@ -2,11 +2,11 @@
 
 unsigned int DisableIRQInterrupts();
 unsigned int SetIRQInterruptState(int mask);
-extern "C" void func_020d29b0(int arg0);
+extern "C" void func_020d29b0(int packed);
 
 // USA: func_020d27fc
-extern "C" ARM void func_020d27fc(int arg0, int arg1) {
-    unsigned int var0 = DisableIRQInterrupts();
-    func_020d29b0(arg1);
-    SetIRQInterruptState(var0);
+extern "C" ARM void func_020d27fc(int channel, int packed) {
+    unsigned int mask = DisableIRQInterrupts();
+    func_020d29b0(packed);
+    SetIRQInterruptState(mask);
 }

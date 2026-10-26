@@ -17,14 +17,14 @@
 extern int data_ov000_02184220;
 
 // USA: func_ov000_02160de4
-extern "C" ARM void func_ov000_02160de4(void* arg0) {
+extern "C" ARM void func_ov000_02160de4(void* obj) {
     int var0 = (int)BackgroundLoader::GetInstance();
-    if (((BackgroundLoader*)(var0))->GetTaskStatus((int)(*(short*)((char*)arg0 + REGION_OFFSET_0 + REGION_OFFSET_1))) >= 0) {
+    if (((BackgroundLoader*)(var0))->GetTaskStatus((int)(*(short*)((char*)obj + REGION_OFFSET_0 + REGION_OFFSET_1))) >= 0) {
         return;
     }
-    ((BackgroundLoader*)(var0))->RemoveTask((int)(*(short*)((char*)arg0 + REGION_OFFSET_0 + REGION_OFFSET_1)));
-    *(short*)((char*)arg0 + REGION_OFFSET_0 + REGION_OFFSET_1) = -1;
-    *(int*)((char*)arg0 + REGION_OFFSET_2) = 0x11;
-    *(int*)((char*)arg0 + REGION_OFFSET_3) = 0;
+    ((BackgroundLoader*)(var0))->RemoveTask((int)(*(short*)((char*)obj + REGION_OFFSET_0 + REGION_OFFSET_1)));
+    *(short*)((char*)obj + REGION_OFFSET_0 + REGION_OFFSET_1) = -1;
+    *(int*)((char*)obj + REGION_OFFSET_2) = 0x11;
+    *(int*)((char*)obj + REGION_OFFSET_3) = 0;
     data_ov000_02184220 = 1;
 }

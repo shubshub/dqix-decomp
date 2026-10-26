@@ -8,7 +8,7 @@ enum { kPartyMemberDataOffset = 0x474, kObjectIndexOffset = 0x568 };
 
 
 // Main, originally FindRecordByShortField020108f0 (USA 0x020108f0, EUR 0x02010900, JPN 0x0201074c)
-ARM void* GameState_FindPartyMemberData(void* gameState, int objectIndex) {
+extern "C" ARM void* GameState_FindPartyMemberData(void* gameState, int objectIndex) {
     if (objectIndex < 0 || objectIndex >= 4) {
         return NULL;
     }

@@ -2,13 +2,13 @@
 #include "Memory/SafeAllocator.h"
 
 struct Struct_020d6f0c {
-    char unknown_0_[0xa28];
-    SafeAllocator unknown_a28_;
+    char pad[0xa28];
+    SafeAllocator allocator;
 };
 
 // USA: func_020d6f0c
-extern "C" ARM void func_020d6f0c(struct Struct_020d6f0c* arg0) {
-    if (arg0->unknown_a28_.GetSignedAllocator() == NULL) return;
-    arg0->unknown_a28_.Destroy();
-    arg0->unknown_a28_.ResetAllocatorPointer();
+extern "C" ARM void func_020d6f0c(struct Struct_020d6f0c* self) {
+    if (self->allocator.GetSignedAllocator() == NULL) return;
+    self->allocator.Destroy();
+    self->allocator.ResetAllocatorPointer();
 }

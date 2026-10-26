@@ -1,44 +1,44 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsActive(int* obj);
 
 struct Struct_0208ab34_2 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
+    unsigned char f0;
+    unsigned char f1;
+    unsigned char f2;
+    unsigned char f3;
 };
-extern "C" Struct_0208ab34_2* func_020e3054(Struct_0208ab34_2* arg0, int arg1);
+extern "C" Struct_0208ab34_2* func_020e3054(Struct_0208ab34_2* list, int key);
 
 struct Struct_020e3004_2 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
+    unsigned char f0;
+    unsigned char f1;
+    unsigned char f2;
+    unsigned char f3;
 };
-extern "C" void func_020e303c(Struct_020e3004_2* arg0);
+extern "C" void func_020e303c(Struct_020e3004_2* s);
 
-struct Struct_0202c540 { int unknown_0_; };
-extern "C" ARM int func_0202c540(Struct_0202c540* arg0);
+struct CheckField0AndGlobalHalfStruct { int field0; };
+extern "C" ARM int LinkSession_IsGuest(CheckField0AndGlobalHalfStruct* obj);
 
-struct Struct_0202c1a4 {
-    char unknown_0_[0x1038];
-    signed char unknown_1038_[16];
+struct SearchStruct0202c1a4 {
+    char pad[0x1038];
+    signed char arr[16];
 };
-extern "C" signed char func_0202c1a4(Struct_0202c1a4* arg0);
+extern "C" signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
 
-extern "C" void func_ov017_021ceae4(unsigned char arg0, unsigned char arg1, unsigned char arg2);
+extern "C" void func_ov017_021ceae4(unsigned char a, unsigned char b, unsigned char c);
 
 // USA: func_020e33b4
-extern "C" ARM void func_020e33b4(Struct_0208ab34_2* arg0, int arg1, int arg2) {
-    void* var0 = func_0202ae18();
-    if (!func_0202b7d8((int*)var0)) return;
-    Struct_0208ab34_2* var1 = func_020e3054(arg0, arg1);
-    if (var1 == NULL) return;
-    if (var1->unknown_0_ != arg2) return;
-    func_020e303c((Struct_020e3004_2*)var1);
-    if (!func_0202c540((Struct_0202c540*)var0)) return;
-    signed char var2 = func_0202c1a4((Struct_0202c1a4*)var0);
-    func_ov017_021ceae4(0, (unsigned char)arg1, (unsigned char)var2);
+extern "C" ARM void func_020e33b4(Struct_0208ab34_2* list, int key, int arg2) {
+    void* searchObj = LinkSession_GetInstance();
+    if (!LinkSession_IsActive((int*)searchObj)) return;
+    Struct_0208ab34_2* entry = func_020e3054(list, key);
+    if (entry == NULL) return;
+    if (entry->f0 != arg2) return;
+    func_020e303c((Struct_020e3004_2*)entry);
+    if (!LinkSession_IsGuest((CheckField0AndGlobalHalfStruct*)searchObj)) return;
+    signed char cur = LinkSession_GetOwnSlot((SearchStruct0202c1a4*)searchObj);
+    func_ov017_021ceae4(0, (unsigned char)key, (unsigned char)cur);
 }

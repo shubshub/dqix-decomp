@@ -2,7 +2,7 @@
 #include "Resource/GridCursor.h"
 
 // Main, originally InitStruct_0205ba2c (USA 0x0205ba2c, EUR 0x0205ba3c, JPN 0x0205cd8c)
-ARM void GridCursor_InitGrid(struct GridCursor* cursor) {
+extern "C" ARM void GridCursor_InitGrid(struct GridCursor* cursor) {
     cursor->count = 0;
     cursor->pageCount = 1;
     cursor->columns = 1;

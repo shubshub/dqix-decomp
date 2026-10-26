@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 struct Struct_02097720 {
-    unsigned char unknown_0_[0xe];
-    short unknown_e_;
-    unsigned char unknown_10_[0x13 - 0x10];
-    unsigned char unknown_13_0_ : 1;
+    unsigned char pad0[0xe];
+    short value;
+    unsigned char pad10[0x13 - 0x10];
+    unsigned char bit0 : 1;
     unsigned char unknown_13_1_ : 1;
     unsigned char unknown_13_2_ : 1;
     unsigned char unknown_13_3_ : 5;
@@ -13,26 +13,26 @@ struct Struct_02097720 {
 
 struct Struct_020976e0_2 {
     unsigned int unknown_0_;
-    unsigned int unknown_4_0_ : 12;
+    unsigned int count : 12;
     unsigned int unknown_5_4_ : 20;
-    struct Struct_02097720* unknown_8_;
+    struct Struct_02097720* arr;
 };
 
 // USA: func_02097720
-extern "C" ARM struct Struct_02097720* func_02097720(struct Struct_020976e0_2* arg0, int arg1) {
-    unsigned short var0 = arg0->unknown_4_0_;
-    struct Struct_02097720* var1 = arg0->unknown_8_;
-    short var2 = 0x7fff;
-    struct Struct_02097720* var3 = 0;
-    unsigned short var4;
-    for (var4 = 0; var4 < var0; var4++) {
-        struct Struct_02097720* var5 = &var1[var4];
-        if (!var5->unknown_13_2_ && var5->unknown_13_0_) {
-            if (var5->unknown_e_ > arg1 && var2 > var5->unknown_e_) {
-                var2 = var5->unknown_e_;
-                var3 = var5;
+extern "C" ARM struct Struct_02097720* func_02097720(struct Struct_020976e0_2* obj, int threshold) {
+    unsigned short count = obj->count;
+    struct Struct_02097720* arr = obj->arr;
+    short best = 0x7fff;
+    struct Struct_02097720* result = 0;
+    unsigned short i;
+    for (i = 0; i < count; i++) {
+        struct Struct_02097720* e = &arr[i];
+        if (!e->unknown_13_2_ && e->bit0) {
+            if (e->value > threshold && best > e->value) {
+                best = e->value;
+                result = e;
             }
         }
     }
-    return var3;
+    return result;
 }

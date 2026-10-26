@@ -14,9 +14,9 @@
 
 
 // USA: func_ov000_0216341c
-extern "C" ARM void func_ov000_0216341c(void* arg0, unsigned char arg1, unsigned char arg2, short arg3) {
-    *(int*)((char*)arg0 + REGION_OFFSET_0) = 1;
-    *((unsigned char*)arg0 + REGION_OFFSET_1) = arg1;
-    *((unsigned char*)arg0 + REGION_OFFSET_2) = arg2;
-    *(short*)((char*)arg0 + REGION_OFFSET_3) = arg3;
+extern "C" ARM void func_ov000_0216341c(void* work, unsigned char b1, unsigned char b2, short h) {
+    *(int*)((char*)work + REGION_OFFSET_0) = 1;
+    *((unsigned char*)work + REGION_OFFSET_1) = b1;
+    *((unsigned char*)work + REGION_OFFSET_2) = b2;
+    *(short*)((char*)work + REGION_OFFSET_3) = h;
 }

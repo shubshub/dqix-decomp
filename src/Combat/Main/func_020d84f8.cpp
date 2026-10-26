@@ -7,8 +7,8 @@
 #endif
 
 // USA: func_020d84f8
-extern "C" ARM unsigned int func_020d84f8(void* arg0, unsigned int arg1) {
-    VectorizedMemset(arg0, 0, arg1);
-    CleanInvalidateCacheRange(arg0, arg1);
-    return arg1;
+extern "C" ARM unsigned int func_020d84f8(void* obj, unsigned int len) {
+    VectorizedMemset(obj, 0, len);
+    CleanInvalidateCacheRange(obj, len);
+    return len;
 }

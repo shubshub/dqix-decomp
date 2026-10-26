@@ -3,23 +3,23 @@
 #include "std_library_functions.h"
 #include "Resource/Script.h"
 
-struct Struct_0201c3a4 {
-    int unknown_0_;
-    void* unknown_4_;
+struct Struct02030b7c {
+    int field0;
+    void* field4;
 };
-int STD_GetStringLength(const char* s);
+extern "C" int STD_GetStringLength(const char* s);
 
 struct Struct_02089ac0 {
-    char unknown_0_[0x14];
-    char** unknown_14_;
-    short unknown_18_;
+    char pad[0x14];
+    char** strings;
+    short count;
 };
 
 struct Struct_02108efc_2 {
-    struct Struct_02089ac0* unknown_0_;
-    int unknown_4_;
+    struct Struct_02089ac0* pool;
+    int unk4;
     int unknown_8_;
-    SafeAllocator* unknown_c_;
+    SafeAllocator* alloc;
 };
 extern struct Struct_02108efc_2 data_02108efc;
 
@@ -36,6 +36,6 @@ extern "C" ARM int func_02089ac0(struct Struct02030b7c* items) {
         memset(strings[i], 0, len + 1);
         memcpy(strings[i], text, len);
     }
-    data_02108efc.unknown_0_->unknown_14_ = var0;
+    data_02108efc.pool->strings = strings;
     return 1;
 }

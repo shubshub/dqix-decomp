@@ -2,7 +2,7 @@
 
 struct LookupTable0215e930 {
     char pad0;
-    signed char divisor;
+    signed char unknown_1_;
     char pad2;
     signed char count;
     short* entries;
@@ -15,8 +15,8 @@ extern "C" ARM int KeyboardPageGrid_FindKeyCell(struct LookupTable0215e930* obj,
     short i;
     for (i = 0; i < count; i++, p++) {
         if (*p == target) {
-            *outMod = i % obj->divisor;
-            *outDiv = i / obj->divisor;
+            *outMod = i % obj->unknown_1_;
+            *outDiv = i / obj->unknown_1_;
             return 0;
         }
     }

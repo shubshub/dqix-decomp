@@ -1,40 +1,40 @@
 #include <globaldefs.h>
 
-extern "C" int func_02080b40(void* arg0, int arg1);
-extern "C" int func_02080b2c(void* arg0, int arg1);
-extern "C" void func_0208103c(void* arg0, int arg1, int arg2);
-extern "C" void func_02080798(void* arg0, int arg1, int arg2);
+extern "C" int func_02080b40(void* obj, int id);
+extern "C" int func_02080b2c(void* obj, int id);
+extern "C" void func_0208103c(void* obj, int id, int value);
+extern "C" void func_02080798(void* obj, int id, int value);
 struct Struct_02080cc0;
-extern "C" void func_02080cc0(struct Struct_02080cc0* arg0, int arg1, int arg2);
+extern "C" void func_02080cc0(struct Struct_02080cc0* obj, int id, int value);
 struct Struct_02080fa8;
-extern "C" void func_02080fa8(struct Struct_02080fa8* arg0, int arg1, int arg2);
-extern "C" ARM int func_020dd11c(unsigned int arg0, unsigned int arg1);
+extern "C" void func_02080fa8(struct Struct_02080fa8* obj, int id, int value);
+extern "C" ARM int func_020dd11c(unsigned int a, unsigned int b);
 
 // USA: func_ov003_02167fa4
-extern "C" ARM void func_ov003_02167fa4(void* arg0, int arg1, unsigned char* arg2) {
-    void* var0 = *(void**)((char*)arg0 + 0x10);
-    int var1 = 0x1f;
+extern "C" ARM void func_ov003_02167fa4(void* arg0, int flag, unsigned char* table) {
+    void* obj = *(void**)((char*)arg0 + 0x10);
+    int idA = 0x1f;
     int var2 = 0x24;
-    for (unsigned char var3 = 0; var3 < 5; var3++) {
-        if (arg1 == 0) {
-            func_02080b2c(var0, var1);
-            func_02080b2c(var0, var2);
+    for (unsigned char k = 0; k < 5; k++) {
+        if (flag == 0) {
+            func_02080b2c(obj, idA);
+            func_02080b2c(obj, var2);
         } else {
-            func_02080b40(var0, var1);
-            func_02080b40(var0, var2);
-            int var4 = func_020dd11c(arg1, var3);
-            short var5 = (short)(var4 + 0x26);
-            unsigned char var6 = arg2[var4];
-            int var7 = 0xf;
-            if (var6 == 0x64) var7 = 0xd;
-            func_02080cc0((struct Struct_02080cc0*)var0, var2, var7);
-            func_0208103c(var0, var1, var5);
+            func_02080b40(obj, idA);
+            func_02080b40(obj, var2);
+            int t = func_020dd11c(flag, k);
+            short adj = (short)(t + 0x26);
+            unsigned char byteVal = table[t];
+            int nibble = 0xf;
+            if (byteVal == 0x64) nibble = 0xd;
+            func_02080cc0((struct Struct_02080cc0*)obj, var2, nibble);
+            func_0208103c(obj, idA, adj);
 #if !defined(jpn)
-            func_02080798(var0, var1, 1);
+            func_02080798(obj, idA, 1);
 #endif
-            func_02080fa8((struct Struct_02080fa8*)var0, var2, var6);
+            func_02080fa8((struct Struct_02080fa8*)obj, var2, byteVal);
         }
-        var1 = (short)(var1 + 1);
+        idA = (short)(idA + 1);
         var2 = (short)(var2 + 1);
     }
 }

@@ -70,13 +70,13 @@ struct ZoneChestRenderRecord
     Foo02048004* icon;              // the contents' icon sprite while it shows (ZoneChest_UpdateOpening)
 };
 
-struct Struct_020236dc_3
+struct ZoneSavedActorState
 {
-    Vector3i unknown_0_;
-    int unknown_c_;
-    short unknown_10_;
-    unsigned short unknown_12_;
-    unsigned char unknown_14_;
+    Vector3i position;
+    int rotationY;
+    short nodeId;
+    unsigned short zoneId;
+    unsigned char active;
 };
 
 // sizeof == 0x2824, as seen in the dynamic allocation of one
@@ -102,18 +102,18 @@ public:
     Zone3D_StructPtr_8* pUnknownStruct_8_;
     struct
     {
-        char unknown_0_[10];
-        char unknown_a_[16];
-        char unknown_1a_[16];
+        char buffer1[10];
+        char buffer2[16];
+        char buffer3[16];
 #if defined(jpn)
-        char unknown1_2a_[0x20];
+        char jpbuffer[0x20];
 #endif
         short unknown_2a_;
         short unknown_2c_;
-        char unknown_2e_[2];
+        char pad_2e[2];
         int unknown_30_;
         short unknown_34_;
-        char unknown_36_[2];
+        char pad_36[2];
         int unknown_38_;
         int unknown_3c_;
     } substruct_c_;
@@ -125,15 +125,15 @@ public:
 
     // Populated from BMBL and BPOS scripts, among other things holds data
     // about warps and placement of stairs/chests in grottos
-    Struct_020134e0 substruct_6c_;
+    ZoneFeatures substruct_6c_;
     AtmosphericEffectSet atmosphericEffects_;
     // populated by BATS files.
     // If you remove it, lighting goes weird outdoors, but I don't see any 
     // change in towns / battlefields
     LightingInfo lighting_;
     Model3DListNode* firstModel_418_;
-    Struct_02013454* firstBMDJStruct_41c_;
-    Struct_02013490* grottoTileMapData_420_;
+    BmdjScriptNode* firstBMDJStruct_41c_;
+    GrottoTileMapRecord* grottoTileMapData_420_;
     int unknown_424_;
     char unk_428[4];
     unsigned char unknown_42c_;
@@ -153,7 +153,7 @@ public:
     ZoneLootableRecord* lootables_;
     ZoneChestRenderRecord* chests_;
 
-    Struct_02012fa4* unknown_480_[6];
+    Foo02048004* lootableTemplates_[6];
     Model3D models_498_[2];
     int chestPaletteOffsets_5f0_[4];
     Foo02048004 lootIcons_[4];      // the icon of what a player found, by the player's index: a chest's contents
@@ -192,17 +192,17 @@ public:
     char grottoChestList_[0xc];     // a grotto floor's chest contents (func_0201afd0), read by GrottoChestList_Get
     char unk_2730[0x274c - 0x2730];
     int chestRenderingEnabled_274c_;
-    char unk_2750[0x2754 - 0x2750];
+    char unknown_2750_[0x2754 - 0x2750];
     char containerItems_[0x18];     // item data for every item the zone's containers can give (Zone3D_SetUpContainers
                                     // loads it on entry; the pot search reads an item's name from it)
     union {
         char unk_276c[0x2820 - 0x276c];
         struct {
             char unknown_276c_[8];
-            Struct_020236dc_3 unknown_2774_;
+            ZoneSavedActorState savedActor_;
             char unknown_278c_[0x27d8 - 0x278c];
-            unsigned short unknown_27d8_;
-            unsigned short unknown_27da_;
+            unsigned short pendingType2Mask_;
+            unsigned short pendingLootableMask_;
             char unknown_27dc_[0x281e - 0x27dc];
             unsigned char unknown_281e_;
             char unknown_281f_;
@@ -214,9 +214,9 @@ public:
     // usa: _ZN6Zone3D10SwitchZoneEti
     void SwitchZone(unsigned short newID, int);
 
-    inline ActiveGrottoClass* inline_02024518_2() { return &grotto_; }
+    inline ActiveGrottoClass* GetActiveGrotto() { return &grotto_; }
 
-    inline Struct_020236dc_3* inline_020a6728() { return &unknown_2774_; }
+    inline ZoneSavedActorState* inline_020a6728() { return &savedActor_; }
 
     // usa: _ZN6Zone3D13UnpackMapAMDJEv
     int UnpackMapAMDJ();

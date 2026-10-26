@@ -11,17 +11,17 @@
 #include "std_library_functions.h"
 #include "Memory/SafeAllocator.h"
 
-struct Struct_ov011_02184c30;
-extern "C" int func_ov011_02184c30(struct Struct_ov011_02184c30* arg0);
+struct TaggedNumber02184c30;
+extern "C" int func_ov011_02184c30(struct TaggedNumber02184c30* v);
 
 extern "C" void* func_ov017_021b2164(void);
-extern "C" void* func_ov011_021845f8(void* arg0, int arg1);
+extern "C" void* func_ov011_021845f8(void* ctx, int v);
 extern "C" void* func_ov011_021849c8(void*);
-extern "C" int func_ov023_021f8cf4(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
+extern "C" int func_ov023_021f8cf4(void* obj, void* ctx, int arg2, int arg3, int arg4, int arg5);
 
 struct Struct_ov011_0218577c {
     void* unknown_0_;
-    char unknown_4_[0x64 - 4];
+    char pad[0x64 - 4];
 };
 extern char data_ov024_021fe80c;
 
@@ -30,27 +30,27 @@ struct Struct_ov004_0215c30c_2;
 extern "C" void func_ov023_021f67ac(struct Struct_ov004_0215c30c*, struct Struct_ov004_0215c30c_2*);
 
 // USA: func_ov011_0218577c
-extern "C" ARM int func_ov011_0218577c(struct Struct_ov011_02184c30* arg0) {
-    int var0 = func_ov011_02184c30(arg0);
-    int var1 = func_ov011_02184c30((struct Struct_ov011_02184c30*)((char*)arg0 + 8));
-    int var2 = func_ov011_02184c30((struct Struct_ov011_02184c30*)((char*)arg0 + 0x10));
-    int var3 = func_ov011_02184c30((struct Struct_ov011_02184c30*)((char*)arg0 + 0x18));
+extern "C" ARM int func_ov011_0218577c(struct TaggedNumber02184c30* arg0) {
+    int v0 = func_ov011_02184c30(arg0);
+    int v1 = func_ov011_02184c30((struct TaggedNumber02184c30*)((char*)arg0 + 8));
+    int v2 = func_ov011_02184c30((struct TaggedNumber02184c30*)((char*)arg0 + 0x10));
+    int v3 = func_ov011_02184c30((struct TaggedNumber02184c30*)((char*)arg0 + 0x18));
 
-    void* var4 = func_ov017_021b2164();
-    void* var5 = func_ov011_021845f8(var4, var1);
-    if (!var5) return 0;
+    void* ctx = func_ov017_021b2164();
+    void* node = func_ov011_021845f8(ctx, v1);
+    if (!node) return 0;
 
-    ((SafeAllocator*)((char*)var5 + 4))->GetSizeWithLargestBlockRemoved();
-    void* var6 = ((SafeAllocator*)((char*)var5 + 4))->Allocate(0x64);
-    if (!var6) return 0;
+    ((SafeAllocator*)((char*)node + 4))->GetSizeWithLargestBlockRemoved();
+    void* block = ((SafeAllocator*)((char*)node + 4))->Allocate(0x64);
+    if (!block) return 0;
 
-    Struct_ov011_0218577c var7;
-    var7.unknown_0_ = &data_ov024_021fe80c;
-    memcpy(var6, &var7, 0x64);
+    Struct_ov011_0218577c tmp;
+    tmp.unknown_0_ = &data_ov024_021fe80c;
+    memcpy(block, &tmp, 0x64);
 
-    if (!func_ov023_021f8cf4(var6, var4, var0, var1, var3, var2)) return 0;
+    if (!func_ov023_021f8cf4(block, ctx, v0, v1, v3, v2)) return 0;
 
-    void* var8 = func_ov011_021849c8(var4);
-    func_ov023_021f67ac((struct Struct_ov004_0215c30c*)var8, (struct Struct_ov004_0215c30c_2*)var6);
+    void* obj = func_ov011_021849c8(ctx);
+    func_ov023_021f67ac((struct Struct_ov004_0215c30c*)obj, (struct Struct_ov004_0215c30c_2*)block);
     return 1;
 }

@@ -3,69 +3,69 @@
 #include "Combat/EntryGetterTypes.h"
 
 struct Struct_0203dce4_2 {
-    char unknown_0_[0xc];
-    struct Struct_0203dce4* unknown_c_[0x20];
+    char pad[0xc];
+    struct Struct_0203dce4* entries[0x20];
 };
 
-extern "C" struct Struct_0203dce4* func_0203dce4(struct Struct_0203dce4_2* arg0, int arg1);
+extern "C" struct Struct_0203dce4* func_0203dce4(struct Struct_0203dce4_2* list, int id);
 
-extern "C" void* func_02040538(struct Struct_0203e0a0* arg0);
+extern "C" void* func_02040538(struct Struct_0203e0a0* p);
 
-struct Struct_02028460_3 { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Struct_02028460_3 { int x; int y; int z; };
 
-extern "C" extern int Vector3fix_Distance(struct Struct_02028460_3* arg0, struct Struct_02028460_3* arg1);
+extern "C" extern int Vector3fix_Distance(struct Struct_02028460_3* a, struct Struct_02028460_3* b);
 
 struct Struct_0203de84 {
-    unsigned int unknown_0_[3];
+    unsigned int v[3];
 };
 
 struct Struct_020406f8 {
-    char unknown_0_[4];
-    struct Struct_0203de84 unknown_4_;
+    char pad4[4];
+    struct Struct_0203de84 vec;
 };
 
 struct Struct_020406f8_2 {
     char unknown_0_[0x44];
-    struct Struct_0203de84 unknown_44_;
+    struct Struct_0203de84 vec;
 };
 
-struct Struct_0203de84_2 {
-    char unknown_0_[0x14];
-    struct Struct_020406f8* unknown_14_;
-    struct Struct_020406f8_2* unknown_18_;
-    struct Struct_020406f8_2* unknown_1c_;
+struct Node020406f8 {
+    char pad[0x14];
+    struct Struct_020406f8* f14;
+    struct Struct_020406f8_2* f18;
+    struct Struct_020406f8_2* f1c;
 };
 
-extern "C" void func_020406f8(struct Struct_0203de84* arg0, struct Struct_0203de84_2* arg1);
+extern "C" void func_020406f8(struct Struct_0203de84* dst, struct Node020406f8* n);
 
 struct Struct_0203e524 {
-    short unknown_0_;
-    short unknown_2_;
-    short unknown_4_;
+    short x;
+    short y;
+    short z;
 };
 
 // USA: func_0203e524
-extern "C" ARM int func_0203e524(struct Struct_0203dce4_2* arg0, struct Struct_02028460_3* arg1, struct Struct_0203e524* arg2) {
+extern "C" ARM int func_0203e524(struct Struct_0203dce4_2* list, struct Struct_02028460_3* pos, struct Struct_0203e524* out) {
     int var0 = 0x400000;
-    int var1 = -1;
-    int var2;
-    for (var2 = 0; var2 < 0x20; var2++) {
-        struct Struct_0203dce4* var3 = func_0203dce4(arg0, var2);
-        if (var3 == 0) continue;
-        if (var3->unknown_0_ & 0x8000) continue;
-        void* var4 = func_02040538((struct Struct_0203e0a0*)var3);
-        if (var4 == 0) continue;
-        int var5 = Vector3fix_Distance(arg1, (struct Struct_02028460_3*)((char*)var4 + 0x10));
-        if (var5 >= var0) continue;
-        var0 = var5;
+    int result = -1;
+    int id;
+    for (id = 0; id < 0x20; id++) {
+        struct Struct_0203dce4* entry = func_0203dce4(list, id);
+        if (entry == 0) continue;
+        if (entry->flags & 0x8000) continue;
+        void* field = func_02040538((struct Struct_0203e0a0*)entry);
+        if (field == 0) continue;
+        int dist = Vector3fix_Distance(pos, (struct Struct_02028460_3*)((char*)field + 0x10));
+        if (dist >= var0) continue;
+        var0 = dist;
         {
-            struct Struct_0203de84 var6;
-            var1 = *(unsigned char*)var4;
-            func_020406f8(&var6, (struct Struct_0203de84_2*)var3);
-            arg2->unknown_0_ = (short)((int)var6.unknown_0_[0] >> 4);
-            arg2->unknown_2_ = (short)((int)var6.unknown_0_[1] >> 4);
-            arg2->unknown_4_ = (short)((int)var6.unknown_0_[2] >> 4);
+            struct Struct_0203de84 tmp;
+            result = *(unsigned char*)field;
+            func_020406f8(&tmp, (struct Node020406f8*)entry);
+            out->x = (short)((int)tmp.v[0] >> 4);
+            out->y = (short)((int)tmp.v[1] >> 4);
+            out->z = (short)((int)tmp.v[2] >> 4);
         }
     }
-    return var1;
+    return result;
 }

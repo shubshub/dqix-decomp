@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-struct Struct_020287b4_4 {
-    unsigned int unknown_0_;
-    unsigned char unknown_4_;
+struct ZeroWordAndByte0206ee60Struct {
+    unsigned int a;
+    unsigned char b;
 };
 
 // USA: func_0206ee60
-extern "C" ARM void func_0206ee60(struct Struct_020287b4_4* arg0) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0;
+extern "C" ARM void func_0206ee60(struct ZeroWordAndByte0206ee60Struct* s) {
+    s->a = 0;
+    s->b = 0;
 }

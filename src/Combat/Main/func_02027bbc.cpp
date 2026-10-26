@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 // USA: func_02027bbc
-extern "C" ARM void func_02027bbc(unsigned char* arg0, int arg1) {
+extern "C" ARM void func_02027bbc(unsigned char* base, int mask) {
 #if defined(jpn)
-    arg0[0x9cb] &= ~arg1;
+    base[0x9cb] &= ~mask;
 #else
-    arg0[0xa97] &= ~arg1;
+    base[0xa97] &= ~mask;
 #endif
 }

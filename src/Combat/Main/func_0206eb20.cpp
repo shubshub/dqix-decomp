@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
-extern "C" void func_0206ea8c(void* arg0, void* arg1, int arg2, int arg3);
+extern "C" void func_0206ea8c(void* a, void* b, int c, int d);
 
 // USA: func_0206eb20
-extern "C" ARM void func_0206eb20(void* arg0, void* arg1, int arg2, int arg3) {
-    for (; arg2 < arg3; arg2++) {
-        func_0206ea8c(arg0, arg1, (short)arg2, 0);
+extern "C" ARM void func_0206eb20(void* a, void* b, int c, int limit) {
+    for (; c < limit; c++) {
+        func_0206ea8c(a, b, (short)c, 0);
     }
 }

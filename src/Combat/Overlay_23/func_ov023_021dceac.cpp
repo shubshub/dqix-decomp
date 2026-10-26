@@ -2,21 +2,21 @@
 
 struct Struct_ov023_021dceac {
 #if defined(jpn)
-    char unknown1_0_[0x700];
+    char padding[0x700];
 #else
-    char unknown_0_[0x784];
+    char padding[0x784];
 #endif
-    const char* unknown_784_[3];
+    const char* names[3];
     unsigned char unknown_790_[3];
     unsigned char unknown_793_[3];
     unsigned char unknown_796_[3];
 };
 
 // USA: func_ov023_021dceac
-extern "C" ARM void func_ov023_021dceac(char* arg0, int arg1, int arg2, unsigned char arg3, unsigned char arg4, unsigned char arg5) {
-    Struct_ov023_021dceac* var0 = (Struct_ov023_021dceac*)arg0;
-    var0->unknown_784_[arg1] = (const char*)arg2;
-    var0->unknown_790_[arg1] = arg3;
-    var0->unknown_793_[arg1] = arg4;
-    var0->unknown_796_[arg1] = arg5;
+extern "C" ARM void func_ov023_021dceac(char* obj, int idx, int val, unsigned char b1, unsigned char b2, unsigned char b3) {
+    Struct_ov023_021dceac* rows = (Struct_ov023_021dceac*)obj;
+    rows->names[idx] = (const char*)val;
+    rows->unknown_790_[idx] = b1;
+    rows->unknown_793_[idx] = b2;
+    rows->unknown_796_[idx] = b3;
 }

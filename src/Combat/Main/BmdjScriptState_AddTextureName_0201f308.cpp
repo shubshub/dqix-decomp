@@ -16,7 +16,7 @@ struct StrTable0201f308 {
 };
 
 // Main, originally AddString0201f308 (USA 0x0201f308, EUR 0x0201f318, JPN 0x0201f094)
-ARM void BmdjScriptState_AddTextureName(struct StrTable0201f308* state, char* name, SafeAllocator* allocator) {
+extern "C" ARM void BmdjScriptState_AddTextureName(struct StrTable0201f308* state, char* name, SafeAllocator* allocator) {
     state->textureNames[state->textureNameCount] = (char*)allocator->Allocate(strlen(name) + 1);
     if (state->textureNames[state->textureNameCount] != NULL) {
         strcpy(state->textureNames[state->textureNameCount], name);

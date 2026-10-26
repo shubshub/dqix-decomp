@@ -6,19 +6,19 @@
 #endif
 #include <globaldefs.h>
 
-struct Struct_ov006_02158cfc { char unknown_0_[0x1c]; Struct_ov006_02158cfc *unknown_1c_; };
-struct Struct_ov006_02158cfc_2 { char unknown_0_[R(0x24, 0x2c)]; Struct_ov006_02158cfc *unknown_2c_; Struct_ov006_02158cfc *unknown_30_; };
+struct Struct_ov006_02158cfc { char pad[0x1c]; Struct_ov006_02158cfc *next; };
+struct Struct_ov006_02158cfc_2 { char pad[R(0x24, 0x2c)]; Struct_ov006_02158cfc *head; Struct_ov006_02158cfc *unknown_30_; };
 
 // USA: func_ov006_02158cfc
-extern "C" ARM void func_ov006_02158cfc(Struct_ov006_02158cfc_2 *arg0, Struct_ov006_02158cfc *arg1) {
-	Struct_ov006_02158cfc *var0 = arg0->unknown_2c_;
-	Struct_ov006_02158cfc *var1 = var0;
-	signed char var2 = 0;
-	while (var0) {
-		if (var2 % 16 == 0) { var1 = var0; var2 = 0; }
-		if (var0 == arg1) break;
-		var2++;
-		var0 = var0->unknown_1c_;
+extern "C" ARM void func_ov006_02158cfc(Struct_ov006_02158cfc_2 *obj, Struct_ov006_02158cfc *target) {
+	Struct_ov006_02158cfc *node = obj->head;
+	Struct_ov006_02158cfc *var1 = node;
+	signed char idx = 0;
+	while (node) {
+		if (idx % 16 == 0) { var1 = node; idx = 0; }
+		if (node == target) break;
+		idx++;
+		node = node->next;
 	}
-	arg0->unknown_30_ = var1;
+	obj->unknown_30_ = var1;
 }

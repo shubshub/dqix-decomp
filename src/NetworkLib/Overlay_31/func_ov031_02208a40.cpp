@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov031_022089f4(int arg0, int arg1, int arg2, unsigned short arg3);
+extern "C" int func_ov031_022089f4(int a, int b, int c, unsigned short d);
 
 extern unsigned short data_ov031_022496fc[2];
 
 // USA: func_ov031_02208a40
-extern "C" ARM int func_ov031_02208a40(int arg0, int arg1, int arg2) {
-    unsigned int var0 = 0;
+extern "C" ARM int func_ov031_02208a40(int a, int b, int c) {
+    unsigned int i = 0;
     do {
-        if (func_ov031_022089f4(arg0, arg1, arg2, data_ov031_022496fc[var0]) != 0) {
-            return data_ov031_022496fc[var0];
+        if (func_ov031_022089f4(a, b, c, data_ov031_022496fc[i]) != 0) {
+            return data_ov031_022496fc[i];
         }
-        var0++;
-    } while (var0 < 2);
+        i++;
+    } while (i < 2);
     return 0;
 }

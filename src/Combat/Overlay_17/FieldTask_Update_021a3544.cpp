@@ -67,17 +67,17 @@ extern "C" {
 }
 
 struct Obj021b4710;
-void FieldTask_LoadZoneMonsters(Obj021b4710* p, void* context);
-void RunBattleTeardownSequence_021acce4(void*, void*);
+extern "C" void FieldTask_LoadZoneMonsters(Obj021b4710* p, void* context);
+extern "C" void func_ov017_021acce4(void*, void*);
 struct Obj020dbcc4;
-void FlushOv017Section020dbcc4(struct Obj020dbcc4* obj, void* context);
-void UpdateEncounterState020dac94(void* objIn, void*);
+extern "C" void func_020dbcc4(struct Obj020dbcc4* obj, void* context);
+extern "C" void func_020dac94(void* objIn, void*);
 struct Ctx021a7b38;
-void RegisterEntryInList_021a7b38(Ctx021a7b38* self, void* context);
+extern "C" void func_ov017_021a7b38(Ctx021a7b38* self, void* context);
 struct Obj021aef0c;
-void DispatchStateAndMaybeInit_021aef0c(Obj021aef0c* self, void* context);
+extern "C" void func_ov017_021aef0c(Obj021aef0c* self, void* context);
 struct Entry021b8c84;
-void FieldTask_ReloadZoneTriggers(Entry021b8c84* obj, void* context);
+extern "C" void FieldTask_ReloadZoneTriggers(Entry021b8c84* obj, void* context);
 
 // Overlay 17, originally func_ov017_021a3544 (USA/EUR 0x021a3544, JPN 0x021a3fb8)
 extern "C" ARM void FieldTask_Update(void* queue, void* task) {
@@ -157,7 +157,7 @@ extern "C" ARM void FieldTask_Update(void* queue, void* task) {
         FieldTask_ReadBookshelf(task, queue);
         break;
     case 31:
-        RunBattleTeardownSequence_021acce4(task, queue);
+        func_ov017_021acce4(task, queue);
         break;
     case FieldTaskKind_CallToArms:
         FieldTask_CallToArms(task, queue);
@@ -169,7 +169,7 @@ extern "C" ARM void FieldTask_Update(void* queue, void* task) {
         FieldTask_PickUpLootPoint(task, queue);
         break;
     case 37:
-        DispatchStateAndMaybeInit_021aef0c((Obj021aef0c*)task, queue);
+        func_ov017_021aef0c((Obj021aef0c*)task, queue);
         break;
     case 38:
         func_ov017_021af66c(task, queue);
@@ -247,7 +247,7 @@ extern "C" ARM void FieldTask_Update(void* queue, void* task) {
         FieldTask_StarflightPrompt(task, queue);
         break;
     case 64:
-        RegisterEntryInList_021a7b38((Ctx021a7b38*)task, queue);
+        func_ov017_021a7b38((Ctx021a7b38*)task, queue);
         break;
     case FieldTaskKind_ReceiveItem:
         FieldTask_ReceiveItem(task, queue);
@@ -280,10 +280,10 @@ extern "C" ARM void FieldTask_Update(void* queue, void* task) {
         FieldTask_ShowQuestTutorial(task, queue);
         break;
     case 75:
-        UpdateEncounterState020dac94(task, queue);
+        func_020dac94(task, queue);
         break;
     case 76:
-        FlushOv017Section020dbcc4((Obj020dbcc4*)task, queue);
+        func_020dbcc4((Obj020dbcc4*)task, queue);
         break;
     case FieldTaskKind_SetVocationLevel:
         FieldTask_SetVocationLevel(task, queue);

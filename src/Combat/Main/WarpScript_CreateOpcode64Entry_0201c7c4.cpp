@@ -8,7 +8,7 @@ enum {
 };
 
 // Main, originally WarpScript_Opcode_65_0201c7c4 (USA 0x0201c7c4, EUR 0x0201c7d4, JPN 0x0201c550)
-ARM int WarpScript_CreateOpcode64Entry(Script::Parameter *params, int numParams) {
+extern "C" ARM int WarpScript_CreateOpcode64Entry(Script::Parameter *params, int numParams) {
     const char* string20;
     const char* string30;
     int nodeId;

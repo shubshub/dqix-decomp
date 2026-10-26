@@ -15,48 +15,48 @@ enum { Enum_ov023_021dd4cc_1908 = 0x774, Enum_ov023_021dd4cc_1917 = 0x77d, Enum_
 #endif
 
 struct Struct_ov023_021dd4cc {
-    char unknown_0_[Enum_ov023_021dd4cc_1908];
-    unsigned short unknown_774_;
+    char unknown0[Enum_ov023_021dd4cc_1908];
+    unsigned short flags;
     char unknown_776_[Enum_ov023_021dd4cc_1917 - Enum_ov023_021dd4cc_1908 - sizeof(unsigned short)];
-    signed char unknown_77d_;
+    signed char currentMode;
     signed char unknown_77e_;
     char unknown_77f_;
-    int unknown_780_;
+    int taskId;
 };
 
 // USA: func_ov023_021dd4cc
-extern "C" ARM void func_ov023_021dd4cc(Struct_ov023_021dd4cc* arg0, int arg1) {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    signed char var1 = arg0->unknown_77d_;
-    if (arg1 == var1) {
-        if (arg0->unknown_780_ < 0) return;
-        var0->RemoveTask(arg0->unknown_780_);
-        arg0->unknown_780_ = -1;
-        arg0->unknown_77e_ = arg0->unknown_77d_;
+extern "C" ARM void func_ov023_021dd4cc(Struct_ov023_021dd4cc* request, int mode) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    signed char currentMode = request->currentMode;
+    if (mode == currentMode) {
+        if (request->taskId < 0) return;
+        loader->RemoveTask(request->taskId);
+        request->taskId = -1;
+        request->unknown_77e_ = request->currentMode;
         return;
     }
-    signed char var2 = arg0->unknown_77e_;
-    if (arg1 == var2) return;
-    if (arg0->unknown_780_ >= 0) {
-        var0->RemoveTask(arg0->unknown_780_);
-        arg0->unknown_780_ = -1;
-        arg0->unknown_77e_ = -1;
+    signed char other = request->unknown_77e_;
+    if (mode == other) return;
+    if (request->taskId >= 0) {
+        loader->RemoveTask(request->taskId);
+        request->taskId = -1;
+        request->unknown_77e_ = -1;
     }
-    int var3;
-    if (arg1 == 2) {
+    int result;
+    if (mode == 2) {
 #if defined(jpn)
-        var3 = var0->QueueLoadFile(data_ov023_021fce18, NULL);
+        result = loader->QueueLoadFile(data_ov023_021fce18, NULL);
 #else
-        var3 = var0->QueueLoadFileInGP2(data_ov023_021fdb40, data_ov023_021fdb52, NULL);
+        result = loader->QueueLoadFileInGP2(data_ov023_021fdb40, data_ov023_021fdb52, NULL);
 #endif
     } else {
 #if defined(jpn)
-        var3 = var0->QueueLoadFile(data_ov023_021fce2d, NULL);
+        result = loader->QueueLoadFile(data_ov023_021fce2d, NULL);
 #else
-        var3 = var0->QueueLoadFileInGP2(data_ov023_021fdb60, data_ov023_021fdb72, NULL);
+        result = loader->QueueLoadFileInGP2(data_ov023_021fdb60, data_ov023_021fdb72, NULL);
 #endif
     }
-    arg0->unknown_780_ = var3;
-    arg0->unknown_774_ |= 8;
-    arg0->unknown_77e_ = (char)arg1;
+    request->taskId = result;
+    request->flags |= 8;
+    request->unknown_77e_ = (char)mode;
 }

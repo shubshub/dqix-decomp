@@ -3,6 +3,6 @@
 #include "GameState/GameState.h"
 
 // USA: func_0200fd58
-extern "C" ARM void* func_0200fd58(GameState* arg0) {
-    return memset(arg0->objects_, 0, 0x3a4);
+extern "C" ARM void* func_0200fd58(GameState* gameState) {
+    return memset(gameState->objects_, 0, sizeof(gameState->objects_));
 }

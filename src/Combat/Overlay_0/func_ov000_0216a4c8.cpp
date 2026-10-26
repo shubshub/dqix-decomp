@@ -6,35 +6,35 @@
 extern "C" void func_ov000_02169b78(void*);
 
 struct Struct_ov000_02184264_2 {
-    unsigned char unknown_0_[8];
-    SafeAllocator* unknown_8_;
+    unsigned char pad[8];
+    SafeAllocator* alloc;
 };
 extern struct Struct_ov000_02184264_2 data_ov000_02184264;
 
-struct Struct_0201c3a4;
+struct Struct02030b7c;
 
 extern char data_ov000_02183fbc[];
 extern char data_ov000_02183fc1[];
 
 struct Struct_ov000_0216a4c8 {
-    int unknown_0_;
-    void* unknown_4_;
+    int tag;
+    void* field4;
     char* unknown_8_;
 };
 
 // USA: func_ov000_0216a4c8
-extern "C" ARM int func_ov000_0216a4c8(struct Struct_0201c3a4* arg0) {
-    struct Struct_ov000_0216a4c8* var0 = (struct Struct_ov000_0216a4c8*)data_ov000_02184264.unknown_8_->Allocate(sizeof(struct Struct_ov000_0216a4c8));
-    var0->unknown_0_ = 0;
-    var0->unknown_4_ = 0;
-    var0->unknown_0_ = 0x12;
-    char* var1 = (char*)(extern void*)((Script::Parameter*)arg0)->ToString();
-    var0->unknown_8_ = (char*)data_ov000_02184264.unknown_8_->Allocate(strlen(var1) + 1);
-    strcpy(var0->unknown_8_, var1);
-    char* var2 = strstr(var0->unknown_8_, data_ov000_02183fbc);
-    if (var2 != NULL) {
-        strcpy(var2, data_ov000_02183fc1);
+extern "C" ARM int func_ov000_0216a4c8(struct Struct02030b7c* p) {
+    struct Struct_ov000_0216a4c8* node = (struct Struct_ov000_0216a4c8*)data_ov000_02184264.alloc->Allocate(sizeof(struct Struct_ov000_0216a4c8));
+    node->tag = 0;
+    node->field4 = 0;
+    node->tag = 0x12;
+    char* name = (char*)(extern void*)((Script::Parameter*)p)->ToString();
+    node->unknown_8_ = (char*)data_ov000_02184264.alloc->Allocate(strlen(name) + 1);
+    strcpy(node->unknown_8_, name);
+    char* found = strstr(node->unknown_8_, data_ov000_02183fbc);
+    if (found != NULL) {
+        strcpy(found, data_ov000_02183fc1);
     }
-    func_ov000_02169b78(var0);
+    func_ov000_02169b78(node);
     return 1;
 }

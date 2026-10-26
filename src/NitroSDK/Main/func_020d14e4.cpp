@@ -6,19 +6,19 @@ extern "C" void WaitByLoop(int);
 unsigned short GetLockOwner(GamecardBusLock* lock);
 
 struct Struct_020d14e4 {
-    int unknown_0_;
+    int field0;
     unsigned int unknown_4_;
 };
 
 // USA: func_020d14e4
-extern "C" ARM void func_020d14e4(unsigned short arg0, Struct_020d14e4* arg1) {
+extern "C" ARM void func_020d14e4(unsigned short owner, Struct_020d14e4* s) {
     for (;;) {
-        arg1->unknown_4_ = DisableIRQInterrupts();
+        s->unknown_4_ = DisableIRQInterrupts();
         int var0 = GetLockOwner((GamecardBusLock*)0x027fffe8) & 0x40;
-        arg1->unknown_0_ = var0;
+        s->field0 = var0;
         if (var0) return;
-        if (!TryAcquireGBABus(arg0)) return;
-        SetIRQInterruptState(arg1->unknown_4_);
+        if (!TryAcquireGBABus(owner)) return;
+        SetIRQInterruptState(s->unknown_4_);
         WaitByLoop(1);
     }
 }

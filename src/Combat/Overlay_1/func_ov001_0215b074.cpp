@@ -6,17 +6,17 @@
 extern "C" int func_ov017_021d60f4(void* arg);
 
 // USA: func_ov001_0215b074
-extern "C" ARM int func_ov001_0215b074(int arg0, char* arg1, int arg2) {
-    int var0;
+extern "C" ARM int func_ov001_0215b074(int mode, char* args, int count) {
+    int brightness;
     int var1;
-    int var2 = func_ov017_021d60f4(arg1);
-    var0 = -16;
-    if (arg2 >= 2) {
-        var0 = func_ov017_021d60f4(arg1 + 8);
+    int duration = func_ov017_021d60f4(args);
+    brightness = -16;
+    if (count >= 2) {
+        brightness = func_ov017_021d60f4(args + 8);
     }
     GameResources* res = GameState::GetInstance()->GetResources();
     if (res == NULL) return 0;
-    setFlag = 0;
+    var1 = 0;
     if (mode == 0) {
         SetBrightness(res, 0, duration);
     } else if (mode == 1) {
@@ -54,17 +54,17 @@ extern "C" ARM int func_ov001_0215b074(int arg0, char* arg1, int arg2) {
     } else if (mode == 17) {
         UnlockAndSetMainBrightness(res, brightness, duration);
     }
-    int var4 = (arg0 % 2 == 1);
-    if (arg0 % 6 < 4 && var4) {
+    int var4 = (mode % 2 == 1);
+    if (mode % 6 < 4 && var4) {
         var1 = 1;
     }
-    char* var5 = (char*)GetGameResources()->unknown_ptr_array_371c[6];
+    char* work = (char*)GetGameResources()->unknown_ptr_array_371c[6];
     if (var1) {
-        if (*(unsigned short*)(var5 + 0xa) <= 3) {
+        if (*(unsigned short*)(work + 0xa) <= 3) {
             #if defined(jpn)
-            var5[0xfe] = 1;
+            work[0xfe] = 1;
 #else
-            var5[0x102] = 1;
+            work[0x102] = 1;
 #endif
         }
     }

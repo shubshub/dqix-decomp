@@ -6,51 +6,51 @@ extern "C" void Font_DecodeText(char* name, void* buf, int flag);
 extern "C" void func_ov017_0219558c(unsigned char* obj, int value);
 
 struct SearchStruct0202c1a4;
-signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
-void SetSearchBitAndClearFlag_021954c4(void* obj, int bitIdx);
-void SetNameSlotAndClear_0219541c(void* obj, int idx, char* namePtr);
-void SetBitField_021afae8_021afae8(unsigned char* obj, int value);
-void SetBitField_021afafc_021afafc(unsigned char* obj, int value);
-void SetIntField28_021afb10(void* obj);
-void SetIntField30_021afb1c(void* obj);
-void SetIntField34_021afb28(void* obj);
-void SetStatusBitWithPeerCheck_021afb34(void* obj, int value);
-void SetByteField2c_021afb84(void* obj, int v);
+extern "C" signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
+extern "C" void func_ov017_021954c4(void* obj, int arg1);
+extern "C" void func_ov017_0219541c(void* obj, int idx, char* arg2);
+extern "C" void func_ov017_021afae8(unsigned char* obj, int value);
+extern "C" void func_ov017_021afafc(unsigned char* obj, int value);
+extern "C" void func_ov017_021afb10(void* obj);
+extern "C" void func_ov017_021afb1c(void* obj);
+extern "C" void func_ov017_021afb28(void* obj);
+extern "C" void func_ov017_021afb34(void* obj, int value);
+extern "C" void func_ov017_021afb84(void* obj, int v);
 
 struct Struct_ov017_021d0bd4_2 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[3];
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
-    char unknown_8_[12];
+    unsigned char tag;
+    unsigned char pad1[3];
+    unsigned short mode;
+    unsigned short slot;
+    char name[12];
 };
 
 struct Struct_ov017_021d0bd4 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    char unknown_2_[14];
+    unsigned char slot;
+    unsigned char flag;
+    char name[14];
 };
 
 // USA: func_ov017_021d0bd4
-extern "C" ARM void func_ov017_021d0bd4(int arg0, Struct_ov017_021d0bd4_2* arg1, int arg2, unsigned char* arg3, struct Struct_0202c1a4* arg4) {
+extern "C" ARM void func_ov017_021d0bd4(int value, Struct_ov017_021d0bd4_2* evt, int unused, unsigned char* obj, struct SearchStruct0202c1a4* search) {
 #if defined(jpn)
- enum {Enum_ov017_021d0bd4_2864=0x910, Enum_ov017_021d0bd4_860=0x13c, Enum_ov017_021d0bd4_48=0xc};
+ enum {regionalOffset0=0x910, regionalOffset1=0x13c, regionalOffset2=0xc};
 #else
- enum {Enum_ov017_021d0bd4_2864=0xb30, Enum_ov017_021d0bd4_860=0x35c, Enum_ov017_021d0bd4_48=0x30};
+ enum {regionalOffset0=0xb30, regionalOffset1=0x35c, regionalOffset2=0x30};
 #endif
-    unsigned char* var0 = *(unsigned char**)(arg3 + 0x3000 + Enum_ov017_021d0bd4_2864);
-    switch (arg1->unknown_4_) {
+    unsigned char* status = *(unsigned char**)(obj + 0x3000 + regionalOffset0);
+    switch (evt->mode) {
     case 0: {
-        func_ov017_021954c4(arg3, arg1->unknown_6_);
+        func_ov017_021954c4(obj, evt->slot);
         Struct_ov017_021d0bd4 var1;
-        var1.unknown_0_ = arg1->unknown_6_;
-        var1.unknown_1_ = 1;
-        strcpy(var1.unknown_2_, arg1->unknown_8_);
-        func_ov017_0219541c(arg3, arg1->unknown_6_, (char*)&var1);
-        unsigned char* var2 = arg3 + Enum_ov017_021d0bd4_860 + 0x4000 + arg1->unknown_6_ * Enum_ov017_021d0bd4_48;
-        if (var2 == 0) break;
+        var1.slot = evt->slot;
+        var1.flag = 1;
+        strcpy(var1.name, evt->name);
+        func_ov017_0219541c(obj, evt->slot, (char*)&var1);
+        unsigned char* entry = obj + regionalOffset1 + 0x4000 + evt->slot * regionalOffset2;
+        if (entry == 0) break;
 #if defined(jpn)
-        strcpy((char*)var2, arg1->unknown_8_);
+        strcpy((char*)entry, evt->name);
 #else
         char nameBuf[regionalOffset2];
         __clear(nameBuf, regionalOffset2);
@@ -62,36 +62,36 @@ extern "C" ARM void func_ov017_021d0bd4(int arg0, Struct_ov017_021d0bd4_2* arg1,
     }
     case 1:
         if (LinkSession_GetOwnSlot(search) == 0) {
-            SetBitField_021afae8_021afae8(status, (unsigned char)value);
+            func_ov017_021afae8(status, (unsigned char)value);
         }
         break;
     case 2:
         if (LinkSession_GetOwnSlot(search) == 0) {
-            SetBitField_021afafc_021afafc(status, (unsigned char)value);
+            func_ov017_021afafc(status, (unsigned char)value);
         }
         break;
     case 3:
-        if (var0[9] == 2) {
-            func_ov017_021afb10(var0);
+        if (status[9] == 2) {
+            func_ov017_021afb10(status);
         }
         break;
     case 4:
-        func_ov017_021afb1c(var0);
+        func_ov017_021afb1c(status);
         break;
     case 5:
-        func_ov017_021afb28(var0);
+        func_ov017_021afb28(status);
         break;
     case 6:
-        func_ov017_021afb34(var0, (unsigned char)arg0);
+        func_ov017_021afb34(status, (unsigned char)value);
         break;
     case 7:
-        func_ov017_021afb84(var0, 2);
+        func_ov017_021afb84(status, 2);
         break;
     case 8:
-        func_ov017_021afb84(var0, 1);
+        func_ov017_021afb84(status, 1);
         break;
     case 9:
-        func_ov017_0219558c(arg3, arg0);
+        func_ov017_0219558c(obj, value);
         break;
     }
 }

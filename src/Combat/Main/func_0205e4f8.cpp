@@ -1,43 +1,43 @@
 #include <globaldefs.h>
 
-extern "C" void func_020d8654(void);
-extern "C" void* func_0202ae18(void);
-extern "C" void* func_0202c19c(void* arg0);
-extern "C" void func_020d8694(void);
+extern "C" void VCountIrq_PushDisable(void);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" void* LinkSession_GetOwnRecord(void* base);
+extern "C" void VCountIrq_PopDisable(void);
 
 struct Struct_0205e4f8 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[0x18 - 1];
-    struct Struct_0205e4f8* unknown_18_;
+    unsigned char id;
+    unsigned char pad[0x18 - 1];
+    struct Struct_0205e4f8* next;
 };
 
-struct Struct_0205e4f8_2 {
-    unsigned char unknown_0_[0x10];
-    unsigned char unknown_10_;
-    unsigned char unknown_11_[0x14 - 0x11];
+struct Elem0205e4f8 {
+    unsigned char pad[0x10];
+    unsigned char id;
+    unsigned char pad2[0x14 - 0x11];
 };
 
 // USA: func_0205e4f8
-extern "C" ARM int func_0205e4f8(void* arg0, int arg1) {
-    int var0 = 0;
-    func_020d8654();
-    struct Struct_0205e4f8* var1 = *(struct Struct_0205e4f8**)((char*)arg0 + 0x150c);
-    while (var1 != NULL) {
-        if (var1->unknown_0_ == arg1) {
-            var0 = 1;
+extern "C" ARM int func_0205e4f8(void* obj, int id) {
+    int result = 0;
+    VCountIrq_PushDisable();
+    struct Struct_0205e4f8* node = *(struct Struct_0205e4f8**)((char*)obj + 0x150c);
+    while (node != NULL) {
+        if (node->id == id) {
+            result = 1;
             break;
         }
-        var1 = var1->unknown_18_;
+        node = node->next;
     }
-    if (!var0) {
-        struct Struct_0205e4f8_2* var2 = (struct Struct_0205e4f8_2*)func_0202c19c(func_0202ae18());
-        for (int var3 = 0; var3 < 5; var3++) {
-            if (var2[var3].unknown_10_ == arg1) {
-                var0 = 1;
+    if (!result) {
+        struct Elem0205e4f8* arr = (struct Elem0205e4f8*)LinkSession_GetOwnRecord(LinkSession_GetInstance());
+        for (int i = 0; i < 5; i++) {
+            if (arr[i].id == id) {
+                result = 1;
                 break;
             }
         }
     }
-    func_020d8694();
-    return var0;
+    VCountIrq_PopDisable();
+    return result;
 }

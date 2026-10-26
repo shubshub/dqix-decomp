@@ -5,11 +5,11 @@ struct Struct_020c129c {
     int unknown_4_;
     int unknown_8_;
     int unknown_c_;
-    int unknown_10_;
+    int x1;
     int unknown_14_;
     int unknown_18_;
     int unknown_1c_;
-    int unknown_20_;
+    int one;
 };
 
 // KEEP-NAME: the ROM symbol here is the mangled C++ name, not a func_ tag.
@@ -19,9 +19,9 @@ extern "C" THUMB void Mat3x3_WriteRotationZ(Struct_020c129c* out, int y, int x) 
     out->unknown_4_ = y;
     out->unknown_8_ = 0;
     out->unknown_c_ = -y;
-    out->unknown_10_ = x;
+    out->x1 = x;
     out->unknown_14_ = 0;
     out->unknown_18_ = 0;
     out->unknown_1c_ = 0;
-    out->unknown_20_ = 0x1000;
+    out->one = 0x1000;
 }

@@ -5,7 +5,7 @@
 enum { kDoorFeatureType = 2 };
 
 // Main, originally FindNthType2Entry02018c20 (USA 0x02018c20, EUR 0x02018c30, JPN 0x020189c0)
-ARM ZoneFeatures::Opcode6aEntry* Zone3D_GetDoor(Zone3D* zone, int doorIndex) {
+extern "C" ARM ZoneFeatures::Opcode6aEntry* Zone3D_GetDoor(Zone3D* zone, int doorIndex) {
     ZoneFeatures::Opcode6aEntry* feature = ZoneFeatures_GetEntry(&zone->substruct_6c_, 0);
     int count = zone->substruct_6c_.arraySize6a_;
     int i;

@@ -2,15 +2,15 @@
 #include "std_library_functions.h"
 
 // USA: func_020d3c08
-extern "C" ARM void func_020d3c08(char* arg0) {
+extern "C" ARM void func_020d3c08(char* obj) {
 #if defined(jpn)
-    memset(arg0, 0, 0xa0);
+    memset(obj, 0, 0xa0);
 #else
-    memset(arg0, 0, 0xb4);
+    memset(obj, 0, 0xb4);
 #endif
 #if defined(jpn)
-    *(int*)(arg0 + 0xa0) = 0;
+    *(int*)(obj + 0xa0) = 0;
 #else
-    *(int*)(arg0 + 0xb4) = 0;
+    *(int*)(obj + 0xb4) = 0;
 #endif
 }

@@ -3,7 +3,7 @@
 extern char data_021015a0;
 
 // USA: func_0202c848
-extern "C" ARM void func_0202c848(int arg0) {
+extern "C" ARM void func_0202c848(int arg) {
     if ((unsigned)(*(int*)(&data_021015a0 + 0x10) - 9) > 1)
-        *(int*)(&data_021015a0 + 0x48) = arg0;
+        *(int*)(&data_021015a0 + 0x48) = arg;
 }

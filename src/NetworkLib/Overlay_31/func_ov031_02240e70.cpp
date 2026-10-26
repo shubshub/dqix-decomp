@@ -5,30 +5,30 @@ extern "C" void (* volatile data_ov031_02290fc8)(void*);
 extern "C" void func_ov031_02240e1c(void*);
 
 struct Struct_ov031_02240e70 {
-	char unknown_0_[0x800];
+	char pad[0x800];
 	void* unknown_800_;
 };
 
 struct Struct_ov031_02240e70_2 {
-	char unknown_0_[0x20];
-	Struct_ov031_02240e70* unknown_20_;
-	void* unknown_24_;
+	char pad20[0x20];
+	Struct_ov031_02240e70* field20;
+	void* field24;
 	char unknown_28_[0x34 - 0x28];
-	void* unknown_34_;
-	void* unknown_38_;
+	void* field34;
+	void* field38;
 };
 
 // USA: func_ov031_02240e70
-extern "C" ARM int func_ov031_02240e70(Struct_ov031_02240e70_2* arg0) {
-	func_ov031_02240e1c(arg0->unknown_34_);
-	func_ov031_02240e1c(arg0->unknown_38_);
+extern "C" ARM int func_ov031_02240e70(Struct_ov031_02240e70_2* obj) {
+	func_ov031_02240e1c(obj->field34);
+	func_ov031_02240e1c(obj->field38);
 
-	if (arg0->unknown_20_) {
-		if (arg0->unknown_20_->unknown_800_)
-			data_ov031_02290fc8(arg0->unknown_20_->unknown_800_);
-		data_ov031_02290fc8(arg0->unknown_20_);
+	if (obj->field20) {
+		if (obj->field20->unknown_800_)
+			data_ov031_02290fc8(obj->field20->unknown_800_);
+		data_ov031_02290fc8(obj->field20);
 	}
-	data_ov031_02290fc8(arg0->unknown_24_);
-	data_ov031_02290fc8(arg0);
+	data_ov031_02290fc8(obj->field24);
+	data_ov031_02290fc8(obj);
 	return 1;
 }

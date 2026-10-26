@@ -4,30 +4,30 @@
 #include <Filesystem/BackgroundLoader.h>
 #include <Combat/MapDisplay.h>
 
-struct Struct_ov017_021a5cbc { unsigned char unknown_0_[2]; };
-struct Struct_ov017_021a5ad0 {
+struct Struct_ov017_021a5cbc { unsigned char values[2]; };
+struct Node0x20_021a5ad0 {
     char unknown_0_[0x18];
-    int unknown_18_;
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
+    int field_18;
+    unsigned char low : 4;
+    unsigned char high : 4;
     char unknown_1d_[3];
 };
-struct Struct_ov017_021a5cbc_2 { short unknown_0_[5]; };
-struct Struct_ov017_021a5cbc_3 {
+struct Struct_ov017_021a5cbc_2 { short values[5]; };
+struct Config021a5cbc {
     char unknown_0_[0x98];
-    Struct_ov017_021a5ad0* unknown_98_;
+    Node0x20_021a5ad0* nodes;
     char unknown_9c_[4];
-    short unknown_a0_;
-    short unknown_a2_;
-    short unknown_a4_;
-    short unknown_a6_;
+    short left;
+    short top;
+    short width;
+    short height;
     short unknown_a8_;
     short unknown_aa_;
-    short unknown_ac_;
+    short field_ac;
     short unknown_ae_;
     char unknown_b0_;
     unsigned char unknown_b1_;
-    unsigned char unknown_b2_;
+    unsigned char count;
     char unknown_b3_[2];
     unsigned char unknown_b5_;
 };
@@ -43,23 +43,23 @@ extern const char data_ov017_021d7b3b[];
 #else
 enum { Enum_ov017_021a5cbc_1280 = 0x500 };
 #endif
-void Background_SetMapSize(unsigned char*, int);
+extern "C" void Background_SetMapSize(unsigned char*, int);
 extern "C" void Background_SetPriority(Node0x20_021a5ad0*, unsigned char);
-void Background_SetScroll(BackgroundGraphics*, int, int);
+extern "C" void Background_SetScroll(BackgroundGraphics*, int, int);
 extern "C" void ColorEffect_ConfigureAlphaBlend(void*, int, int, int, int);
-int Pac_CountFiles(PacRecord*);
-void* Pac_GetFile(PacRecord*, int, void**, int*);
+extern "C" int Pac_CountFiles(PacRecord*);
+extern "C" void* Pac_GetFile(PacRecord*, int, void**, int*);
 extern "C" void Background_LoadFile(Node0x20_021a5ad0*, void*, SafeAllocator*, int);
-void Sprite_Init(Struct0205a198*);
-void SpriteContext_Init(char*);
+extern "C" void Sprite_Init(Struct0205a198*);
+extern "C" void SpriteContext_Init(char*);
 extern "C" int SpriteContext_LoadFile(MapEntryList*, void*, int, SafeAllocator*);
-void FillFieldWithEncoded_021a5ad0(Node0x20_021a5ad0*, int, int);
+extern "C" void func_ov017_021a5ad0(Node0x20_021a5ad0*, int, int);
 extern "C" void Background_FillRect(Node0x20_021a5ad0*, int, int, int, int, int, int);
-void Background_UploadMap(BackgroundGraphics*, void*);
-void ClearAndEncodeField14_021a5b08(Node0x20_021a5ad0*, int);
-void WindowPane_AllocateBuffer(WindowPane*, SafeAllocator*, int, unsigned int);
-void Window_SetPanes(Struct_0205cf78*, WindowPane*, unsigned char);
-int GameState_GetLanguage(Struct0200fb08*);
+extern "C" void Background_UploadMap(BackgroundGraphics*, void*);
+extern "C" void func_ov017_021a5b08(Node0x20_021a5ad0*, int);
+extern "C" void WindowPane_AllocateBuffer(WindowPane*, SafeAllocator*, int, unsigned int);
+extern "C" void Window_SetPanes(Struct_0205cf78*, WindowPane*, unsigned char);
+extern "C" int GameState_GetLanguage(Struct0200fb08*);
 extern "C" void Window_OpenPane(Config021a5cbc*, const char*, int, unsigned char, unsigned char, unsigned char, void*
 #if !defined(jpn)
     , unsigned char
@@ -83,8 +83,8 @@ extern "C" ARM void func_ov017_021a5cbc(GameResources* self) {
     if ((*reinterpret_cast<void**>(self->unknown_4094 + 0x120)) || !(*reinterpret_cast<int*>(self->unknown_4094 + 0x12c))) return;
     if ((*reinterpret_cast<int*>(self->unknown_4094 + 0x124)) == 0) {
         self->allocator_array_38[16].Reset();
-        Pair021a5cbc priorities = *(const Pair021a5cbc*)(data_ov017_021d6a8c + 2);
-        Pair021a5cbc styles = *(const Pair021a5cbc*)data_ov017_021d6a8c;
+        Struct_ov017_021a5cbc priorities = *(const Struct_ov017_021a5cbc*)(data_ov017_021d6a8c + 2);
+        Struct_ov017_021a5cbc styles = *(const Struct_ov017_021a5cbc*)data_ov017_021d6a8c;
         for (int i = 0; i < 2; ++i) {
             Node0x20_021a5ad0* node = &reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094)[i];
             Background_SetMapSize((unsigned char*)node, 0);
@@ -122,9 +122,9 @@ extern "C" ARM void func_ov017_021a5cbc(GameResources* self) {
         script->records = reinterpret_cast<Struct0205a198*>(self->unknown_41c8);
         script->count = 7;
         #if defined(jpn)
-        (*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)) = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov017_021d7b3b, 0);
+        (*reinterpret_cast<int*>(self->unknown_4094 + 0x128)) = BackgroundLoader::GetInstance()->QueueLoadFile(data_ov017_021d7b3b, 0);
 #else
-        (*reinterpret_cast<int*>(arg0->unknown_4094 + 0x128)) = BackgroundLoader::GetInstance()->QueueLoadFileInGP2(data_ov017_021d76fb, data_ov017_021d770c, 0);
+        (*reinterpret_cast<int*>(self->unknown_4094 + 0x128)) = BackgroundLoader::GetInstance()->QueueLoadFileInGP2(data_ov017_021d76fb, data_ov017_021d770c, 0);
 #endif
         ++(*reinterpret_cast<int*>(self->unknown_4094 + 0x124));
     } else if ((*reinterpret_cast<int*>(self->unknown_4094 + 0x124)) == 2) {
@@ -142,30 +142,30 @@ extern "C" ARM void func_ov017_021a5cbc(GameResources* self) {
         }
         loader->RemoveTask((*reinterpret_cast<int*>(self->unknown_4094 + 0x128)));
         (*reinterpret_cast<int*>(self->unknown_4094 + 0x128)) = -1;
-        FillFieldWithEncoded_021a5ad0(reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094), 2, 0x800);
+        func_ov017_021a5ad0(reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094), 2, 0x800);
         for (int i = 0; i < 2; ++i) {
             Node0x20_021a5ad0* node = &reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094)[i];
             Background_FillRect(node, 0, 0, 0, 0x20, 0x19, 0);
             Background_UploadMap((BackgroundGraphics*)node, 0);
         }
-        ClearAndEncodeField14_021a5b08(reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094), 2);
-        (*reinterpret_cast<void**>(self->unknown_4094 + 0x120)) = self->allocator_array_38[16].Allocate(WindowAllocationSize);
+        func_ov017_021a5b08(reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094), 2);
+        (*reinterpret_cast<void**>(self->unknown_4094 + 0x120)) = self->allocator_array_38[16].Allocate(Enum_ov017_021a5cbc_1280);
         WindowPane_AllocateBuffer(&(*reinterpret_cast<WindowPane*>(self->unknown_4094 + 0x40)), &self->allocator_array_38[16], (int)(*reinterpret_cast<void**>(self->unknown_4094 + 0x120)), 0x40);
         (*reinterpret_cast<WindowPane*>(self->unknown_4094 + 0x40)).layer_ = reinterpret_cast<BackgroundGraphics*>(self->unknown_4094 + sizeof(Node0x20_021a5ad0));
-        Config021a5cbc* nodeConfig = static_cast<Config021a5cbc*>(self->unknown_ptr_array_4088[2]);
-        nodeConfig->nodes = reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094);
-        nodeConfig->count = 2;
+        Config021a5cbc* var25 = static_cast<Config021a5cbc*>(self->unknown_ptr_array_4088[2]);
+        var25->nodes = reinterpret_cast<Node0x20_021a5ad0*>(self->unknown_4094);
+        var25->count = 2;
         Window_SetPanes((Struct_0205cf78*)static_cast<Config021a5cbc*>(self->unknown_ptr_array_4088[2]), (WindowPane*)&(*reinterpret_cast<WindowPane*>(self->unknown_4094 + 0x40)), 1);
         REG_BACKGROUND_0 = (REG_BACKGROUND_0 & ~3) | 2;
         REG_BACKGROUND_1 = (REG_BACKGROUND_1 & ~3) | 1;
         REG_BACKGROUND_2 = REG_BACKGROUND_2 & ~3;
         REG_BACKGROUND_3 = (REG_BACKGROUND_3 & ~3) | 3;
         REG_DISPLAY_CONTROL = (REG_DISPLAY_CONTROL & ~0x1f00) | 0x1700;
-        Struct_ov017_021a5cbc_3* var26 = static_cast<Struct_ov017_021a5cbc_3*>(arg0->unknown_ptr_array_4088[2]);
+        Config021a5cbc* config = static_cast<Config021a5cbc*>(self->unknown_ptr_array_4088[2]);
         #if defined(jpn)
-        int var29 = 9;
+        int left = 9;
 #else
-        Widths021a5cbc widths = *(const Widths021a5cbc*)data_ov017_021d6a94;
+        Struct_ov017_021a5cbc_2 widths = *(const Struct_ov017_021a5cbc_2*)data_ov017_021d6a94;
         int index = GameState_GetLanguage((Struct0200fb08*)GameState::GetInstance());
         int left = widths.values[index - 1];
 #endif
@@ -173,12 +173,12 @@ extern "C" ARM void func_ov017_021a5cbc(GameResources* self) {
         config->top = 2;
         config->width = 0x20 - (left + 1);
         config->height = 0x15;
-        config->field_a8 = 3;
-        config->field_aa = 3;
+        config->unknown_a8_ = 3;
+        config->unknown_aa_ = 3;
         config->field_ac = 10;
-        config->field_ae = 11;
-        config->flag_b1 = 0;
-        config->flag_b5 = 1;
+        config->unknown_ae_ = 11;
+        config->unknown_b1_ = 0;
+        config->unknown_b5_ = 1;
         Window_OpenPane(config, data_ov017_021d7719, 0, 0, 0, 1, 0
 #if !defined(jpn)
             , 0

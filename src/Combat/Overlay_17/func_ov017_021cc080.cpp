@@ -1,32 +1,32 @@
 #include <globaldefs.h>
 
-extern "C" void* func_ov017_021b8478(void* arg0);
-extern "C" void* func_ov017_021b8468(void* arg0);
-extern "C" int func_ov000_02163d94(void* arg0);
+extern "C" void* func_ov017_021b8478(void* obj);
+extern "C" void* func_ov017_021b8468(void* obj);
+extern "C" int func_ov000_02163d94(void* p);
 
-struct Struct_ov017_021cc080 { unsigned char unknown_0_[4]; unsigned short unknown_4_; };
-struct Struct_ov017_021cc080_2 { unsigned char unknown_0_[8]; unsigned short unknown_8_; };
+struct Struct_ov017_021cc080 { unsigned char pad[4]; unsigned short field4; };
+struct Struct_ov017_021cc080_2 { unsigned char pad[8]; unsigned short field8; };
 
 // USA: func_ov017_021cc080
-extern "C" ARM void func_ov017_021cc080(int arg0, Struct_ov017_021cc080* arg1, int arg2, unsigned char* arg3) {
-	arg3 += 0x3000;
-	void* var0 = *(void**)(arg3 +
+extern "C" ARM void func_ov017_021cc080(int unused0, Struct_ov017_021cc080* src, int arg2, unsigned char* obj) {
+	obj += 0x3000;
+	void* work = *(void**)(obj +
 #if defined(jpn)
         0x508
 #else
         0x718
 #endif
 );
-	Struct_ov017_021cc080_2* var1 = (Struct_ov017_021cc080_2*)func_ov017_021b8478(var0);
-	void* var2 = func_ov017_021b8468(var0);
-	if (!var1) {
+	Struct_ov017_021cc080_2* r = (Struct_ov017_021cc080_2*)func_ov017_021b8478(work);
+	void* r2 = func_ov017_021b8468(work);
+	if (!r) {
 		return;
 	}
-	if (var1->unknown_8_ != arg1->unknown_4_) {
+	if (r->field8 != src->field4) {
 		return;
 	}
-	if (!var2) {
+	if (!r2) {
 		return;
 	}
-	func_ov000_02163d94(var2);
+	func_ov000_02163d94(r2);
 }

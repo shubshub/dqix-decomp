@@ -6,14 +6,14 @@ struct Struct_020b0a1c {
     unsigned short unknown_6_;
 };
 struct Struct_ov031_022489c0 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
+    unsigned short x;
+    unsigned short y;
 };
 struct Struct_ov031_022489cc {
-    unsigned char unknown_0_[5];
+    unsigned char n[5];
 };
 struct Struct_ov031_02224ca4 {
-    void* unknown_0_[3][4];
+    void* field0[3][4];
     Struct_020b0a1c* unknown_30_[47];
     Struct_020b0a1c* unknown_ec_[4];
     void* unknown_fc_[2];
@@ -31,70 +31,70 @@ extern const Struct_ov031_022489c0 data_ov031_02248a0c[47];
 extern const Struct_ov031_022489c0 data_ov031_022489e4[4];
 extern const Struct_ov031_022489c0 data_ov031_022489dc[2];
 
-extern "C" void func_ov031_0223ca54(void* arg0, int arg1, int arg2, void* arg3, int arg4);
+extern "C" void func_ov031_0223ca54(void* a, int b, int c, void* d, int e);
 extern "C" int FastIntModulus(int arg0, int arg1);
-extern "C" void func_ov031_0223bab4(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov031_0223bbd8(void* arg0, int arg1, int arg2, int arg3);
+extern "C" void func_ov031_0223bab4(void* obj, int index, int val, int zero);
+extern "C" void func_ov031_0223bbd8(void* obj, int idx, int a, int b);
 
-static inline void inline_020b0a1c(Struct_020b0a1c* arg0) {
-    arg0->unknown_0_ &= 0xc1fffcff;
+static inline void inline_020b0a1c(Struct_020b0a1c* oam) {
+    oam->unknown_0_ &= 0xc1fffcff;
 }
 
-static inline void inline_ov031_02224ca4(Struct_020b0a1c* arg0, unsigned int arg1, unsigned int arg2) {
-    arg0->unknown_0_ = (arg0->unknown_0_ & 0xfe00ff00) | arg2 | arg1;
+static inline void inline_ov031_02224ca4(Struct_020b0a1c* oam, unsigned int arg1, unsigned int arg2) {
+    oam->unknown_0_ = (oam->unknown_0_ & 0xfe00ff00) | arg2 | arg1;
 }
 
 // USA: func_ov031_02224ca4
-extern "C" ARM void func_ov031_02224ca4(int arg0, int arg1, int arg2) {
-    Struct_ov031_022489cc var0 = data_ov031_022489d1;
-    Struct_ov031_022489cc var1 = data_ov031_022489d6;
-    Struct_ov031_022489cc var2 = data_ov031_022489cc;
-    int var3 = arg1 * 12;
-    int var4;
-    int var5;
-    int var6;
-    int var7;
+extern "C" ARM void func_ov031_02224ca4(int mode, int index, int y) {
+    Struct_ov031_022489cc first = data_ov031_022489d1;
+    Struct_ov031_022489cc second = data_ov031_022489d6;
+    Struct_ov031_022489cc last = data_ov031_022489cc;
+    int base = index * 12;
+    int m;
+    int k;
+    int i;
+    int j;
 
     {
-        const unsigned char* var8 = &var0.unknown_0_[arg1];
-        var5 = var3;
-        var6 = 0;
-        if (var6 < *var8) {
-            unsigned char var9 = arg2;
+        const unsigned char* cnt = &first.n[index];
+        k = base;
+        i = 0;
+        if (i < *cnt) {
+            unsigned char var9 = y;
             do {
-                inline_020b0a1c(data_ov031_02250bfc->unknown_30_[var5]);
-                inline_ov031_02224ca4(data_ov031_02250bfc->unknown_30_[var5], (unsigned int)data_ov031_02248a0c[var5].unknown_0_ << 23 >> 7, var9);
-                var6++;
-                var5++;
-            } while (var6 < *var8);
+                inline_020b0a1c(data_ov031_02250bfc->unknown_30_[k]);
+                inline_ov031_02224ca4(data_ov031_02250bfc->unknown_30_[k], (unsigned int)data_ov031_02248a0c[k].x << 23 >> 7, var9);
+                i++;
+                k++;
+            } while (i < *cnt);
         }
     }
-    if (arg1 < 4) {
-        Struct_ov031_02224ca4* var10 = data_ov031_02250bfc;
-        func_ov031_0223ca54(var10->unknown_0_[arg0][arg1], data_ov031_02248a0c[var3].unknown_0_, arg2, var10->unknown_104_[arg1], 2);
+    if (index < 4) {
+        Struct_ov031_02224ca4* obj = data_ov031_02250bfc;
+        func_ov031_0223ca54(obj->field0[mode][index], data_ov031_02248a0c[base].x, y, obj->unknown_104_[index], 2);
     }
-    var4 = FastIntModulus(arg1 + 3, 4);
+    m = FastIntModulus(index + 3, 4);
     {
-        const unsigned char* var11 = &var1.unknown_0_[arg1];
-        var6 = 0;
-        if (var6 < *var11) {
-            unsigned char var12 = arg2;
+        const unsigned char* cnt = &second.n[index];
+        i = 0;
+        if (i < *cnt) {
+            unsigned char var12 = y;
             do {
-                inline_020b0a1c(data_ov031_02250bfc->unknown_ec_[var4]);
-                inline_ov031_02224ca4(data_ov031_02250bfc->unknown_ec_[var4], (unsigned int)data_ov031_022489e4[var4].unknown_0_ << 23 >> 7, var12);
-                var6++;
-            } while (var6 < *var11);
+                inline_020b0a1c(data_ov031_02250bfc->unknown_ec_[m]);
+                inline_ov031_02224ca4(data_ov031_02250bfc->unknown_ec_[m], (unsigned int)data_ov031_022489e4[m].x << 23 >> 7, var12);
+                i++;
+            } while (i < *cnt);
         }
     }
     {
-        const unsigned char* var13 = &var2.unknown_0_[arg1];
-        var7 = 0;
-        if (var7 < *var13) {
+        const unsigned char* cnt = &last.n[index];
+        j = 0;
+        if (j < *cnt) {
             do {
-                func_ov031_0223bab4(data_ov031_02250bfc->unknown_fc_[var7], -1, 0, 0);
-                func_ov031_0223bbd8(data_ov031_02250bfc->unknown_fc_[var7], -1, data_ov031_022489dc[var7].unknown_0_, arg2);
-                var7++;
-            } while (var7 < *var13);
+                func_ov031_0223bab4(data_ov031_02250bfc->unknown_fc_[j], -1, 0, 0);
+                func_ov031_0223bbd8(data_ov031_02250bfc->unknown_fc_[j], -1, data_ov031_022489dc[j].x, y);
+                j++;
+            } while (j < *cnt);
         }
     }
 }

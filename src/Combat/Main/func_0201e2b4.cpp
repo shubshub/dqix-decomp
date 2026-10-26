@@ -1,7 +1,8 @@
 #include <globaldefs.h>
 #include "World/ZoneWarpScript.h"
 
-// USA: func_0201e2b4
-ARM void Struct_020134e0::func_0201e2b4(SafeAllocator* arg0, const void* arg1, unsigned int arg2) {
-    func_0201e1d0(arg1, arg2, this, arg0);
+// USA: LoadFromScript
+// Main, originally ZoneFeatures::LoadFromScript_0201e2b4 (USA 0x0201e2b4, EUR 0x0201e2c4, JPN 0x0201e040)
+ARM void ZoneFeatures::LoadFromScript(SafeAllocator* allocator, const void* script, unsigned int length) {
+    ZoneFeaturesScript_Run(script, length, this, allocator);
 }

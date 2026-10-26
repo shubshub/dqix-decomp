@@ -10,13 +10,13 @@ extern "C" unsigned int func_0205d81c(Struct_0205d81c*, int);
 #endif
 
 // USA: func_ov002_02157030
-extern "C" ARM void func_ov002_02157030(unsigned int arg0, unsigned int arg1, short* arg2, short* arg3, short* arg4, short* arg5) {
-    char* var0 = (char*)func_0205d81c((Struct_0205d81c*)(arg0 + LIST_02157030), arg1);
-    if (var0 == 0) {
+extern "C" ARM void func_ov002_02157030(unsigned int self, unsigned int id, short* x, short* y, short* w, short* h) {
+    char* e = (char*)func_0205d81c((Struct_0205d81c*)(self + LIST_02157030), id);
+    if (e == 0) {
         return;
     }
-    *arg2 = *(short*)(var0 + 0xac);
-    *arg3 = *(short*)(var0 + 0xae);
-    *arg4 = *(short*)(var0 + 0xa8);
-    *arg5 = *(short*)(var0 + 0xaa);
+    *x = *(short*)(e + 0xac);
+    *y = *(short*)(e + 0xae);
+    *w = *(short*)(e + 0xa8);
+    *h = *(short*)(e + 0xaa);
 }

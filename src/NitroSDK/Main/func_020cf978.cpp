@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
 // USA: func_020cf978
-extern "C" ARM void* func_020cf978(unsigned char* arg0) {
-    int var0 = *(int*)arg0;
-    int var1 = *(int*)(arg0 + 4);
-    return *(unsigned char**)(arg0 + 8) + (var0 * 0x3c + var1) * 0x3c;
+extern "C" ARM void* func_020cf978(unsigned char* obj) {
+    int row = *(int*)obj;
+    int col = *(int*)(obj + 4);
+    return *(unsigned char**)(obj + 8) + (row * 0x3c + col) * 0x3c;
 }

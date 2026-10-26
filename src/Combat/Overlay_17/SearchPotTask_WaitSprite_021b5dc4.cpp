@@ -14,21 +14,21 @@ enum { spriteSlotsOffset = 0x600, vramStatesOffset = 0x2cc };   // Zone3D's spri
 #include "Resource/GameResources.h"
 
 struct Struct0218d618;
-int GameResources_IsSpecialItemEffectLoaded(struct Struct0218d618* p);
+extern "C" int GameResources_IsSpecialItemEffectLoaded(struct Struct0218d618* p);
 
 extern "C" void* Zone3D_GetInstance(void);
-int GameState_GetProtagonistIndex(GameState* gs);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" int GameState_GetProtagonistIndex(GameState* gs);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 extern AllocatorUnion g_mainAllocator;
 
 struct Foo02048004;
-void SprSprite_Unload(struct Foo02048004* obj);
+extern "C" void SprSprite_Unload(struct Foo02048004* obj);
 
 struct State0207dfc8;
-void VramState_CopyCurrentTo(struct State0207dfc8* src, struct State0207dfc8* dst);
-void VramState_Restore(char* obj);
-void VramState_Save(char* obj);
-void SprSprite_LoadFile(void* a, int b, int c, int d);
+extern "C" void VramState_CopyCurrentTo(struct State0207dfc8* src, struct State0207dfc8* dst);
+extern "C" void VramState_Restore(char* obj);
+extern "C" void VramState_Save(char* obj);
+extern "C" void SprSprite_LoadFile(void* a, int b, int c, int d);
 
 // A FieldTaskKind_SearchPot task (its own copy of the layout, as in the other step files).
 struct SearchPotTask021b5dc4 : FieldTask {

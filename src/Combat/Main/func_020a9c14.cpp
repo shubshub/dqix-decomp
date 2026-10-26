@@ -5,11 +5,11 @@
 #include "std_library_functions.h"
 
 struct Struct_0201165c {
-    int unknown_0_;
+    int entranceX;
     int unknown_4_;
     int unknown_8_;
-    unsigned char unknown_c_;
-    char unknown_d_[3];
+    unsigned char environment;
+    char pad1[3];
     unsigned char unknown_10_;
 };
 extern "C" void func_0201165c(char*, const void*, int, Struct_0201165c);
@@ -17,58 +17,58 @@ extern "C" void func_020a3720();
 extern "C" void func_020a395c();
 struct Struct_020a9c14 {
     unsigned char unknown_0_;
-    unsigned char unknown_1_;
+    unsigned char flags;
     TreasureMapMetadata unknown_2_[99];
 };
 struct Struct_020a9c14_2 {
 #if defined(jpn)
-    unsigned char unknown_0_[0x6000];
+    unsigned char prefix[0x6000];
 #else
-    unsigned char unknown1_0_[0x6400];
+    unsigned char prefix[0x6400];
 #endif
-    Struct_020a9c14 unknown_6400_;
+    Struct_020a9c14 mapList;
 };
 struct Struct_020a9c14_3 {
 #if defined(jpn)
-    unsigned char unknown_0_[0x2b4];
+    unsigned char prefix[0x2b4];
 #else
-    unsigned char unknown1_0_[0xf4];
+    unsigned char prefix[0xf4];
 #endif
-    Struct_020a9c14_2 unknown_f4_;
+    Struct_020a9c14_2 bank;
 };
-struct Struct_020a9c14_4 { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Struct_020a9c14_4 { int x; int y; int z; };
 typedef void (*Type_020a9c14)(char*, const void*, int, Struct_020a9c14_4, unsigned int, unsigned int);
 
 // USA: func_020a9c14
-extern "C" ARM int func_020a9c14(const void* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_020a9c14* var1 = &((Struct_020a9c14_3*)var0)->unknown_f4_.unknown_6400_;
-    memcpy(var1, arg0, 0xad6);
-    TreasureMapMetadata* var2 = var1->unknown_2_;
-    int var3 = 0;
-    while (var3 < 99) {
-        if (var2->GetInitialByteUnknownBit()) break;
-        if (var3 == 98) return 1;
-        var3++;
-        var2++;
+extern "C" ARM int func_020a9c14(const void* saved) {
+    GameState* state = GameState::GetInstance();
+    Struct_020a9c14* list = &((Struct_020a9c14_3*)state)->bank.mapList;
+    memcpy(list, saved, 0xad6);
+    TreasureMapMetadata* map = list->unknown_2_;
+    int index = 0;
+    while (index < 99) {
+        if (map->GetInitialByteUnknownBit()) break;
+        if (index == 98) return 1;
+        index++;
+        map++;
     }
     func_020a3720();
-    DetailedTreasureMapData var4;
-    ExportDetailedTreasureMapData(var2, &var4, false, 0);
+    DetailedTreasureMapData detail;
+    ExportDetailedTreasureMapData(map, &detail, false, 0);
     func_020a395c();
-    if (var4.mapType_ == 1) {
-        reinterpret_cast<Type_020a9c14>(func_0201165c)((char*)var0, var2, var4.entranceZoneID_, *reinterpret_cast<Struct_020a9c14_4*>(&var4.entranceX_), var4.regular_.environ_, var4.regular_.startingMonsterRank_);
-    } else if (var4.mapType_ == 2) {
-        reinterpret_cast<Type_020a9c14>(func_0201165c)((char*)var0, var2, var4.entranceZoneID_, *reinterpret_cast<Struct_020a9c14_4*>(&var4.entranceX_), 0, 0);
+    if (detail.mapType_ == 1) {
+        reinterpret_cast<Type_020a9c14>(func_0201165c)((char*)state, map, detail.entranceZoneID_, *reinterpret_cast<Struct_020a9c14_4*>(&detail.entranceX_), detail.regular_.environ_, detail.regular_.startingMonsterRank_);
+    } else if (detail.mapType_ == 2) {
+        reinterpret_cast<Type_020a9c14>(func_0201165c)((char*)state, map, detail.entranceZoneID_, *reinterpret_cast<Struct_020a9c14_4*>(&detail.entranceX_), 0, 0);
     }
-    GrottoStruct* var5 = var0->GetGrottoStruct();
-    strcpy(var5->activeMapImageName, var4.mapImageName_);
-    if (var4.mapType_ == 1) {
-        sprintf(var5->activeMapNameNoLevel, var4.regular_.nameNoLevel_);
-        var5->activeMapLevel = var4.regular_.level_;
-    } else if (var4.mapType_ == 2) {
-        sprintf(var5->activeMapNameNoLevel, var4.legacy_.mapNameNoLevel_);
-        var5->activeMapLevel = var4.legacy_.level_;
+    GrottoStruct* grotto = state->GetGrottoStruct();
+    strcpy(grotto->activeMapImageName, detail.mapImageName_);
+    if (detail.mapType_ == 1) {
+        sprintf(grotto->activeMapNameNoLevel, detail.regular_.nameNoLevel_);
+        grotto->activeMapLevel = detail.regular_.level_;
+    } else if (detail.mapType_ == 2) {
+        sprintf(grotto->activeMapNameNoLevel, detail.legacy_.mapNameNoLevel_);
+        grotto->activeMapLevel = detail.legacy_.level_;
     }
     return 1;
 }

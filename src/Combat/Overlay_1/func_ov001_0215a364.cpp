@@ -5,15 +5,15 @@
 extern "C" void* func_ov001_02159f14(void*);
 
 // USA: func_ov001_0215a364
-extern "C" ARM void func_ov001_0215a364(void* arg0, Struct_ov001_02158efc arg1, int arg2, int arg3, const char* arg4) {
-    void* var0 = func_ov001_02159f14(arg0);
-    if (var0 != NULL) {
-        *(int*)var0 = 2;
-        memcpy((char*)var0 + 4, &arg1, 0xc);
-        *(int*)((char*)var0 + 0x10) = arg2;
-        *(int*)((char*)var0 + 0x14) = arg3;
-        if (arg4 != NULL) {
-            strcpy((char*)var0 + 0x1c, arg4);
+extern "C" ARM void func_ov001_0215a364(void* ctx, EventVec3 v, int e, int f, const char* g) {
+    void* node = func_ov001_02159f14(ctx);
+    if (node != NULL) {
+        *(int*)node = 2;
+        memcpy((char*)node + 4, &v, 0xc);
+        *(int*)((char*)node + 0x10) = e;
+        *(int*)((char*)node + 0x14) = f;
+        if (g != NULL) {
+            strcpy((char*)node + 0x1c, g);
         }
     }
 }

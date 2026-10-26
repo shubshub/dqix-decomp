@@ -5,17 +5,17 @@ extern "C" int* func_020bd4b8(int);
 extern "C" int func_020bd8ac(unsigned int);
 
 // USA: func_020bde70
-extern "C" ARM int func_020bde70(int arg0, int arg1, int arg2, int arg3, int* arg4) {
-    int* var0 = func_020bd4b8((int)(arg0));
-    if (var0 == NULL) return 3;
-    int var1 = *var0;
-    int var2;
-    if (arg1 & 8) {
-        var2 = func_020be1a8((unsigned int)(var1), (int)(arg2), (int)(arg3));
-        if (var2 == 0) return 7;
+extern "C" ARM int func_020bde70(int id, int flags, int b, int c, int* out) {
+    int* entry = func_020bd4b8((int)(id));
+    if (entry == NULL) return 3;
+    int val = *entry;
+    int result;
+    if (flags & 8) {
+        result = func_020be1a8((unsigned int)(val), (int)(b), (int)(c));
+        if (result == 0) return 7;
     } else {
-        var2 = func_020bd8ac(var1);
+        result = func_020bd8ac(val);
     }
-    if (arg4 != NULL) *arg4 = var2;
+    if (out != NULL) *out = result;
     return 0;
 }

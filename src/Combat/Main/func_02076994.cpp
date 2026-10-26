@@ -4,7 +4,7 @@ extern "C" int LoadToMainObjVRAM(int, int, unsigned int);
 extern "C" int LoadToSubObjVRAM(int, int, unsigned int);
 
 struct Struct_02076994 {
-    char unknown_0_[0x50];
+    char pad0[0x50];
     int unknown_50_;
     char unknown_54_[0xa];
     unsigned char unknown_5e_;
@@ -12,39 +12,39 @@ struct Struct_02076994 {
 };
 
 // USA: func_02076994
-extern "C" ARM void func_02076994(struct Struct_02076994* arg0, char* arg1, char* arg2, unsigned int arg3, unsigned int arg4) {
-    unsigned int var0 = arg4;
-    unsigned int var1 = arg3 >> 3;
-    unsigned int var2 = 4;
-    unsigned int var3 = 0x20;
-    if (arg0->unknown_50_ == 1) {
-        var2 = 8;
-        var3 = 0x40;
+extern "C" ARM void func_02076994(struct Struct_02076994* s, char* src, char* dest, unsigned int width, unsigned int rows) {
+    unsigned int var0 = rows;
+    unsigned int n = width >> 3;
+    unsigned int tile = 4;
+    unsigned int row = 0x20;
+    if (s->unknown_50_ == 1) {
+        tile = 8;
+        row = 0x40;
     }
-    unsigned int var4 = var1 * var2;
-    unsigned int var5 = var1 * var3;
-    unsigned int var6 = 0;
-    unsigned int var7;
-    unsigned int var8;
-    unsigned int var9;
-    unsigned int var10, var11;
-    char* var12 = arg2;
+    unsigned int step = n * tile;
+    unsigned int var5 = n * row;
+    unsigned int base = 0;
+    unsigned int m;
+    unsigned int i;
+    unsigned int c;
+    unsigned int j, o;
+    char* d = dest;
 
-    for (var11 = 0; var11 < (var0 >> 3); var11++) {
-        var7 = var6;
-        for (var8 = 0; var8 < var1; var8++) {
-            var9 = var7;
-            for (var10 = 0; var10 < 8; var10++) {
-                if (arg0->unknown_5e_ == 0) {
-                    LoadToMainObjVRAM((int)(arg1 + var9), (int)var12, var2);
+    for (o = 0; o < (var0 >> 3); o++) {
+        m = base;
+        for (i = 0; i < n; i++) {
+            c = m;
+            for (j = 0; j < 8; j++) {
+                if (s->unknown_5e_ == 0) {
+                    LoadToMainObjVRAM((int)(src + c), (int)d, tile);
                 } else {
-                    LoadToSubObjVRAM((int)(arg1 + var9), (int)var12, var2);
+                    LoadToSubObjVRAM((int)(src + c), (int)d, tile);
                 }
-                var12 += var2;
-                var9 += var4;
+                d += tile;
+                c += step;
             }
-            var7 += var2;
+            m += tile;
         }
-        var6 += var5;
+        base += var5;
     }
 }

@@ -3,13 +3,13 @@
 #include "std_library_functions.h"
 #include "NitroSDK/Cache.h"
 
-int MessageSystem_GetInstance(void);
-void OS_WaitVBlankIntr(void);
+extern "C" int MessageSystem_GetInstance(void);
+extern "C" void OS_WaitVBlankIntr(void);
 extern "C" void func_02023218(void* arg0, void* buf, int flag);
 extern "C" int LoadToSubObjVRAM(void* buf, int a1, int a2);
 
 // Main, originally InitAndCopyBuffer020233b8 (USA 0x020233b8, EUR 0x020233c8; JPN not identified)
-ARM int MapDisplay_UploadTreasureMapName(void* arg0, int flag1)
+extern "C" ARM int MapDisplay_UploadTreasureMapName(void* arg0, int flag1)
 {
     void* base = (void*)MessageSystem_GetInstance();
     int offset = 0;

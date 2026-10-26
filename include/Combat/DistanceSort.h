@@ -1,13 +1,13 @@
 #pragma once
 
 struct Struct_02056c3c {
-    void *unknown_0_;
+    void *node;
     union {
-        int unknown1_4_;
-        float unknown_4_;
+        int key;
+        float distance;
     };
 };
 
-extern "C" void func_02056c3c(void *arg0, Struct_02056c3c *arg1, const int arg2, const int arg3);
-extern "C" void func_0205765c(int arg0);
-extern "C" void func_0205578c(int *arg0);
+extern "C" void func_02056c3c(void *base, Struct_02056c3c *entries, const int low, const int high);
+extern "C" void func_0205765c(int value);
+extern "C" void func_0205578c(int *obj);

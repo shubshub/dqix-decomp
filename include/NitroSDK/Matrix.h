@@ -38,7 +38,7 @@ typedef struct Vector3i
     int32_t y;
     int32_t z;
 #ifdef __cplusplus
-    Vector3i& operator=(const Vector3i& arg0);
+    Vector3i& operator=(const Vector3i& other);
 #endif
 } Vector3i;
 
@@ -290,7 +290,7 @@ extern "C"
     // usa: func_020c3554
     // works like Atan2 but the range is rescaled so that pi = 0x8000,
     // so for example (x = 0, y > 0) gives 0x4000 = 4.0
-    fix32_t func_020c3544(fix32_t arg0, fix32_t arg1);
+    fix32_t func_020c3544(fix32_t y, fix32_t x);
 
 #ifdef __cplusplus
 }

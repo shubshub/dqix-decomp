@@ -6,6 +6,6 @@ struct ShortField0x22e_020968c4 {
 };
 
 // Main, originally GetShortAt0x22e (USA 0x020968c4, EUR 0x020968d4, JPN 0x02098514)
-ARM int TouchWalk_GetHeading(struct ShortField0x22e_020968c4* obj) {
+extern "C" ARM int TouchWalk_GetHeading(struct ShortField0x22e_020968c4* obj) {
     return obj->field;
 }

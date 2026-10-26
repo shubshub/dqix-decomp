@@ -6,18 +6,17 @@
 #define data_ov006_0215ffca data_ov006_02161336
 #define data_ov006_0215ffe2 data_ov006_0216132e
 #define data_ov006_0215fff4 data_ov006_02161346
-#define func_ov006_021547c8 func_ov006_02155f30
 #else
 #define R(j,u) (u)
 #endif
 #include <globaldefs.h>
 
-struct Struct_ov006_021580b8 {
-    char unknown_0_[0x14];
-    int unknown_14_;
-    int unknown_18_;
-    char unknown_1c_[6];
-    unsigned char unknown_22_;
+struct Sprite {
+    char unk_0[0x14];
+    int x_;
+    int y_;
+    char unk_1c[6];
+    unsigned char unk_22;
     char unknown_23_[2];
     unsigned char unknown_25_;
     unsigned char unknown_26_;
@@ -25,7 +24,7 @@ struct Struct_ov006_021580b8 {
 };
 
 struct Struct_ov006_02156e54_2 {
-    int unknown_0_[0x70 / 4];
+    int unk_0[0x70 / 4];
 };
 
 struct Struct_ov006_02154614;
@@ -37,49 +36,49 @@ extern const short data_ov006_0215ffe2[];
 extern const unsigned char data_ov006_0215ffc0[];
 }
 
-void ComputeShortPair_021e2bdc(void*, int, short*, short*);
+extern "C" void func_ov023_021e2bdc(void*, int, short*, short*);
 extern "C" void SpriteContext_DrawSprite(void*, Sprite*);
 
 struct Struct_ov006_02157a60 {
 #if !defined(jpn)
     int unknown_0_;
-    char** unknown_4_;
+    char** texts_;
 #endif
-    void* unknown_8_;
-    void* unknown_c_;
-    Struct_ov006_02154614* unknown_10_;
-    void* unknown_14_;
-    void* unknown_18_;
-    void* unknown_1c_;
-    void* unknown_20_;
-    Struct_ov006_021580b8* unknown_24_;
-    void* unknown_28_;
+    void* canvasBuffer_;
+    void* allocators_;
+    Struct_ov006_02154614* pot_;
+    void* menu_;
+    void* choice_;
+    void* backgrounds_;
+    void* canvases_;
+    Sprite* sprites_;
+    void* animations_;
     void* unknown_2c_;
     void* unknown_30_;
     void* unknown_34_;
     void* unknown_38_;
     char unknown_3c_[8];
-    short* unknown_44_;
-    short** unknown_48_;
+    short* cursor_;
+    short** items_;
     unsigned char** unknown_4c_;
-    unsigned short* unknown_50_;
-    int unknown_54_[0x20 / 4];
-    int unknown_74_[0x28 / 4];
+    unsigned short* sizes_;
+    int subBackground_[0x20 / 4];
+    int ingredients_[0x28 / 4];
     int unknown_9c_[0xc / 4];
     unsigned short unknown_a8_;
     unsigned char unknown_aa_;
-    int unknown_ac_[0x54 / 4];
-    int unknown_100_[0x4c / 4];
-    int unknown_14c_[0xc / 4];
-    int unknown_158_[0x18 / 4];
-    char unknown_170_[0xc];
-    int unknown_17c_[4][0x74 / 4];
+    int renderer_[0x54 / 4];
+    int layout_[0x4c / 4];
+    int table_[0xc / 4];
+    int menuTexts_[0x18 / 4];
+    char itemNames_[0xc];
+    int results_[4][0x74 / 4];
 #if defined(jpn)
     char unknown_344_[8];
 #endif
-    int unknown_34c_;
-    int unknown_350_;
-    int unknown_354_;
+    int ticks_;
+    int menuResult_;
+    int task_;
     int unknown_358_;
     short unknown_35c_;
     short unknown_35e_;
@@ -91,29 +90,29 @@ struct Struct_ov006_02157a60 {
     short unknown_36a_;
     short unknown_36c_;
     short unknown_36e_;
-    short unknown_370_;
+    short item_;
     unsigned short unknown_372_[3];
     short unknown_378_[3];
-    short unknown_37e_;
+    short message_;
     unsigned short unknown_380_;
     short unknown_382_;
     signed char unknown_384_;
     signed char unknown_385_;
     unsigned char unknown_386_;
     unsigned char unknown_387_;
-    unsigned char unknown_388_;
-    unsigned char unknown_389_;
-    unsigned char unknown_38a_;
-    unsigned char unknown_38b_;
+    unsigned char page_;
+    unsigned char pages_;
+    unsigned char category_;
+    unsigned char count_;
     unsigned char unknown_38c_[3];
-    unsigned char unknown_38f_;
-    unsigned char unknown_390_;
+    unsigned char state_;
+    unsigned char step_;
     unsigned char unknown_391_;
     unsigned char unknown_392_;
     unsigned char unknown_393_;
-    unsigned short unknown_394_;
-    unsigned char unknown_396_;
-    unsigned char unknown_397_;
+    unsigned short flags_;
+    unsigned char female_;
+    unsigned char background_;
     unsigned char unknown_398_[3];
     int unknown_39c_;
     int unknown_3a0_;
@@ -136,35 +135,35 @@ struct Struct_ov006_02157a60 {
 };
 
 // USA: func_ov006_021587d0
-extern "C" ARM void func_ov006_021587d0(Struct_ov006_02157a60* arg0)
+extern "C" ARM void func_ov006_021587d0(Struct_ov006_02157a60* self)
 {
-    if (!(arg0->unknown_394_ & 8))
+    if (!(self->flags_ & 8))
         return;
-    short var0[5];
-    memcpy(var0, data_ov006_0215fff4, sizeof(var0));
-    if (arg0->unknown_38f_ == 10)
+    short ids[5];
+    memcpy(ids, data_ov006_0215fff4, sizeof(ids));
+    if (self->state_ == 10)
     {
-        var0[0] = 0x1f;
-        var0[1] = 0x20;
-        var0[2] = 0x21;
-        var0[3] = 0x22;
+        ids[0] = 0x1f;
+        ids[1] = 0x20;
+        ids[2] = 0x21;
+        ids[3] = 0x22;
     }
-    for (unsigned char var1 = 0; var0[var1] >= 0; var1++)
+    for (unsigned char i = 0; ids[i] >= 0; i++)
     {
-        short var2;
-        short var3;
-        func_ov023_021e2bdc(arg0->unknown_100_, var0[var1], &var2, &var3);
-        short var4 = data_ov006_0215ffe2[var1];
-        Struct_ov006_021580b8* var5 = &arg0->unknown_24_[var4];
-        if (var4 == 0xb && arg0->unknown_430_ != 0)
+        short x;
+        short y;
+        func_ov023_021e2bdc(self->layout_, ids[i], &x, &y);
+        short index = data_ov006_0215ffe2[i];
+        Sprite* sprite = &self->sprites_[index];
+        if (index == 0xb && self->unknown_430_ != 0)
         {
-            var2++;
-            var3++;
+            x++;
+            y++;
         }
-        if (var4 == 0xc && arg0->unknown_431_ != 0)
+        if (index == 0xc && self->unknown_431_ != 0)
         {
-            var2++;
-            var3++;
+            x++;
+            y++;
         }
         sprite->x_ = x << 12;
         sprite->y_ = y << 12;

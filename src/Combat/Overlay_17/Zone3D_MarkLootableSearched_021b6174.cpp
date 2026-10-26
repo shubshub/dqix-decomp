@@ -6,10 +6,10 @@ extern "C" void* Zone3D_GetInstance(void);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void Zone3D_BreakLootable(void* obj, int index);
 struct Entry_02028bd0;
-struct Entry_02028bd0* ZoneRecords_GetInstance(void);
-struct Entry_02028bd0* ZoneRecords_Find(struct Entry_02028bd0* base, int key);
+extern "C" struct Entry_02028bd0* ZoneRecords_GetInstance(void);
+extern "C" struct Entry_02028bd0* ZoneRecords_Find(struct Entry_02028bd0* base, int key);
 struct Obj02028c14;
-void ZoneRecord_SetLootableSearched(struct Obj02028c14* obj, int index);
+extern "C" void ZoneRecord_SetLootableSearched(struct Obj02028c14* obj, int index);
 extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
 
 // Overlay 17, originally func_ov017_021b6174 (USA/EUR 0x021b6174, JPN 0x021b6728)

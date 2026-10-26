@@ -2,36 +2,36 @@
 #include "GameState/GameState.h"
 
 
-extern "C" void func_0207051c(void* arg0, unsigned short arg1, int arg2);
+extern "C" void func_0207051c(void* p, unsigned short field2, int val);
 
 struct Struct_020707c8 {
-    unsigned char unknown_0_;
-    char unknown_1_;
-    unsigned short unknown_2_;
-    unsigned char unknown_4_;
-    char unknown_5_[3];
-    int unknown_8_;
-    float unknown_c_;
-    int unknown_10_;
+    unsigned char field0;
+    char pad1;
+    unsigned short field2;
+    unsigned char field4;
+    char pad5[3];
+    int field8;
+    float fieldC;
+    int field10;
 };
 
 // USA: func_020707c8
-extern "C" ARM void func_020707c8(struct Struct_020707c8* arg0) {
-    int var0 = GameState::GetInstance()->GetEffectiveDeltaTime();
-    int var1 = arg0->unknown_8_;
-    if (var1 > 0) {
-        arg0->unknown_c_ += (float)var0 * (((float)arg0->unknown_4_ - arg0->unknown_c_) / (float)var1);
+extern "C" ARM void func_020707c8(struct Struct_020707c8* p) {
+    int delta = GameState::GetInstance()->GetEffectiveDeltaTime();
+    int field8 = p->field8;
+    if (field8 > 0) {
+        p->fieldC += (float)delta * (((float)p->field4 - p->fieldC) / (float)field8);
     }
-    arg0->unknown_8_ -= var0;
-    if (arg0->unknown_8_ <= 0) {
-        arg0->unknown_c_ = (float)arg0->unknown_4_;
-        arg0->unknown_8_ = 0;
-        if (arg0->unknown_4_ == 1) arg0->unknown_0_ = 0;
+    p->field8 -= delta;
+    if (p->field8 <= 0) {
+        p->fieldC = (float)p->field4;
+        p->field8 = 0;
+        if (p->field4 == 1) p->field0 = 0;
     }
-    func_0207051c(arg0, arg0->unknown_2_, (int)arg0->unknown_c_);
-    if (arg0->unknown_8_ > 0) return;
-    if (arg0->unknown_10_ <= 0) return;
-    arg0->unknown_8_ = (int)((float)arg0->unknown_10_ * 16.66699981689453f);
-    arg0->unknown_4_ = 1;
-    arg0->unknown_10_ = 0;
+    func_0207051c(p, p->field2, (int)p->fieldC);
+    if (p->field8 > 0) return;
+    if (p->field10 <= 0) return;
+    p->field8 = (int)((float)p->field10 * 16.66699981689453f);
+    p->field4 = 1;
+    p->field10 = 0;
 }

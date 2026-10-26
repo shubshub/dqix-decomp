@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
-void* GlobalFlags_GetInstance(void);
+extern "C" void* GlobalFlags_GetInstance(void);
 
 struct FlagWord02046708;
-int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
+extern "C" int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 
 // One loader per display mode; each runs one load step a frame and clears modeLoading when it is done
 extern "C" {
@@ -26,7 +26,7 @@ struct Obj020214f0 {
 };
 
 // Main, originally HandleStateDispatch020214f0 (USA 0x020214f0, EUR 0x02021500, JPN 0x020210e4)
-ARM void MapDisplay_RunModeLoader(struct Obj020214f0* obj) {
+extern "C" ARM void MapDisplay_RunModeLoader(struct Obj020214f0* obj) {
     if (obj->modeLoading == 0) {
         return;
     }

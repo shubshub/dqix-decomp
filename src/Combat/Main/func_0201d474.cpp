@@ -1,9 +1,10 @@
 #include <globaldefs.h>
 #include "World/ZoneFeatures.h"
 
-// USA: func_0201d474
-ARM Struct_0201d044& Struct_0201d044::func_0201d474(const Struct_0201d044& arg0) {
-    unknown_0_ = arg0.unknown_0_;
-    unknown_c_ = arg0.unknown_c_;
+// USA: CopyFrom
+// Main, originally MaybeVector4fix::CopyFrom_0201d474 (USA 0x0201d474, EUR 0x0201d484, JPN 0x0201d200)
+ARM MaybeVector4fix& MaybeVector4fix::CopyFrom(const MaybeVector4fix& other) {
+    vec3 = other.vec3;
+    w = other.w;
     return *this;
 }

@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 extern "C" signed char func_ov031_02237e9c(void);
-extern "C" void func_ov031_022274c0(int arg0);
+extern "C" void func_ov031_022274c0(int v);
 extern "C" void func_ov031_0222a890(void);
 
 // USA: func_ov031_0222a86c

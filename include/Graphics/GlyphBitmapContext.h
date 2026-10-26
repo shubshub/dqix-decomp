@@ -5,9 +5,9 @@
 struct Struct_020fe6fc {
 #if defined(jpn)
     int unknown_4_;
-    void* unknown_0_;
+    void* buffer;
 #else
-    void* unknown_0_;
+    void* buffer;
     int unknown_4_;
 #endif
 };

@@ -2,9 +2,9 @@
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void NNS_GfdGetFrmTexVramState(int* out);
-void NNS_GfdGetFrmPlttVramState(int* dst);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void NNS_GfdGetFrmTexVramState(int* out);
+extern "C" void NNS_GfdGetFrmPlttVramState(int* dst);
 extern "C" int NNS_GfdAllocFrmTexVram(unsigned int size, int a, int b);
 extern "C" void VramState_Reserve(void* pObj, int a, int b);
 extern "C" void func_020542b4(void* a, void* b, void* c);
@@ -12,54 +12,54 @@ extern "C" void func_020542b4(void* a, void* b, void* c);
 extern AllocatorUnion g_mainAllocator;
 
 struct Struct_ov017_021d6984 {
-    int unknown_0_;
-    unsigned int unknown_4_;
+    int index;
+    unsigned int size;
 };
 extern Struct_ov017_021d6984 data_ov017_021d6984[];
 
 struct Struct_ov017_021d6924 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    int index;
+    int a;
+    int b;
 };
 extern Struct_ov017_021d6924 data_ov017_021d6924[];
 
 struct Struct_02000c9c_57 {
-    char unknown_0_[0x70];
+    char data[0x70];
 };
 
 struct Struct_ov017_021a02f0 {
-    short unknown_0_;
-    short unknown_2_;
-    char unknown_4_[0x5ec - 0x4];
+    short field_0x0;
+    short id;
+    char data[0x5ec - 0x4];
 };
 
 struct Struct_ov017_021a02f0_2 {
-    int unknown_0_[10];
-    int unknown_28_[2];
+    int table[10];
+    int pair[2];
 };
 
 struct Struct_ov017_021a02f0_3 {
-    char unknown_0_[0x38];
+    char pad0[0x38];
 #if defined(jpn)
-    SafeAllocator unknown_38_[29];
+    SafeAllocator allocators[29];
 #else
-    SafeAllocator unknown_38_[33];
+    SafeAllocator allocators[33];
 #endif
 #if defined(jpn)
-    Struct_02000c9c_57 unknown_2cc_[32];
+    Struct_02000c9c_57 slots[32];
 #else
-    Struct_02000c9c_57 unknown_2cc_[36];
+    Struct_02000c9c_57 slots[36];
 #endif
     char unknown_128c_[0x12c8 - 0x128c];
-    Struct_ov017_021a02f0 unknown_12c8_[4];
-    Struct_ov017_021a02f0_2 unknown_2a78_[3];
+    Struct_ov017_021a02f0 groups[4];
+    Struct_ov017_021a02f0_2 backups[3];
 };
 
 // USA: func_ov017_021a02f0
-extern "C" ARM void func_ov017_021a02f0(Struct_ov017_021a02f0_3* arg0) {
-    int var0;
-    unsigned int var1;
+extern "C" ARM void func_ov017_021a02f0(Struct_ov017_021a02f0_3* self) {
+    int i;
+    unsigned int size;
 
     for (i = 0; (size = data_ov017_021d6984[i].size) != 0; i++) {
         void* buf = AllocatorUnion_AllocateRounded(&g_mainAllocator, size);
@@ -83,8 +83,8 @@ extern "C" ARM void func_ov017_021a02f0(Struct_ov017_021a02f0_3* arg0) {
     NNS_GfdGetFrmTexVramState(self->backups[1].table);
     NNS_GfdGetFrmPlttVramState(self->backups[1].pair);
 
-    for (int var3 = 0; var3 < 4; var3++) {
-        func_020542b4(&arg0->unknown_12c8_[var3], &arg0->unknown_38_[var3 + 1], &arg0->unknown_2cc_[var3 + 1]);
-        arg0->unknown_12c8_[var3].unknown_2_ = var3;
+    for (int j = 0; j < 4; j++) {
+        func_020542b4(&self->groups[j], &self->allocators[j + 1], &self->slots[j + 1]);
+        self->groups[j].id = j;
     }
 }

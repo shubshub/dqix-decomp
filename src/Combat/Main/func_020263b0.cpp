@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
 // USA: func_020263b0
-extern "C" ARM void func_020263b0(unsigned char* arg0, unsigned int arg1) {
-    if (arg1 < 4) {
+extern "C" ARM void func_020263b0(unsigned char* obj, unsigned int index) {
+    if (index < 4) {
 #if defined(jpn)
-        arg0[0x6B1] |= 1 << arg1;
+        obj[0x6B1] |= 1 << index;
 #else
-        arg0[0x75D] |= 1 << arg1;
+        obj[0x75D] |= 1 << index;
 #endif
     }
 }

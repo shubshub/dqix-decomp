@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_02212184 {
-	int unknown_0_;
-	unsigned short unknown_4_;
-	char unknown_6_[0x10 - 0x6];
-	int unknown_10_;
+	int field0;
+	unsigned short field4;
+	char pad[0x10 - 0x6];
+	int field10;
 };
 
 struct Struct_ov031_0224e5b4_8 {
-	char unknown_0_[4];
-	Struct_ov031_02212184* unknown_4_;
+	char pad0[4];
+	Struct_ov031_02212184* field4;
 };
 
 extern Struct_ov031_0224e5b4_8 data_ov031_0224e5b4;
@@ -20,30 +20,30 @@ extern "C" int func_ov031_022130ac(void);
 
 // USA: func_ov031_02212184
 extern "C" ARM int func_ov031_02212184(void) {
-	Struct_ov031_02212184* var0 = data_ov031_0224e5b4.unknown_4_;
-	if (var0 == NULL) return 1;
-	unsigned short var1 = var0->unknown_4_;
-	if (var1 == 8) return 1;
-	if (var1 == 1) {
-		int var2 = var0->unknown_10_;
-		if (var2 == 1) {
+	Struct_ov031_02212184* q = data_ov031_0224e5b4.field4;
+	if (q == NULL) return 1;
+	unsigned short state = q->field4;
+	if (state == 8) return 1;
+	if (state == 1) {
+		int sub = q->field10;
+		if (sub == 1) {
 			func_ov031_02216698();
-			data_ov031_0224e5b4.unknown_4_->unknown_10_ = 5;
+			data_ov031_0224e5b4.field4->field10 = 5;
 			return 0;
 		}
-		if (var2 == 5) {
-			int var3 = func_ov031_02216360();
-			if (var3 == 1) return 0;
-			var3 -= 2;
-			if ((unsigned int)var3 <= 2) {
+		if (sub == 5) {
+			int x = func_ov031_02216360();
+			if (x == 1) return 0;
+			x -= 2;
+			if ((unsigned int)x <= 2) {
 				func_ov031_022166b4();
 			}
 		}
-		data_ov031_0224e5b4.unknown_4_ = 0;
+		data_ov031_0224e5b4.field4 = 0;
 		return 1;
 	}
-	var0->unknown_4_ = 5;
+	q->field4 = 5;
 	if (func_ov031_022130ac() == 0) return 0;
-	data_ov031_0224e5b4.unknown_4_ = 0;
+	data_ov031_0224e5b4.field4 = 0;
 	return 1;
 }

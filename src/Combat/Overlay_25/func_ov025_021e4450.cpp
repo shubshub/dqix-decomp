@@ -1,41 +1,41 @@
 #include <globaldefs.h>
 
 extern "C" void* func_ov000_02160130(void);
-extern "C" void func_ov000_021626a0(void* arg0, int arg1, int arg2);
+extern "C" void func_ov000_021626a0(void* self, int a, int b);
 struct Struct_ov025_021e4450;
-extern "C" void func_ov025_021eb00c(struct Struct_ov025_021e4450* arg0);
+extern "C" void func_ov025_021eb00c(struct Struct_ov025_021e4450* obj);
 extern int data_ov025_021ef988;
 
 struct Struct_ov025_021e4450_2 {
-    char unknown_0_[8];
-    unsigned char unknown_8_;
-    unsigned char unknown_9_;
+    char pad[8];
+    unsigned char field8;
+    unsigned char field9;
 };
 
 // USA: func_ov025_021e4450
-extern "C" ARM int func_ov025_021e4450(struct Struct_ov025_021e4450_2* arg0) {
+extern "C" ARM int func_ov025_021e4450(struct Struct_ov025_021e4450_2* self) {
 #if defined(jpn)
- enum {Enum_ov025_021e4450_12=4};
+ enum {regionalOffset0=4};
 #else
- enum {Enum_ov025_021e4450_12=0xc};
+ enum {regionalOffset0=0xc};
 #endif
-    void* var0 = func_ov000_02160130();
-    unsigned char var1 = arg0->unknown_8_;
-    if (var1 == 5) {
-        int var2 = (arg0->unknown_9_ == 0) ? 1 : 0;
-        func_ov000_021626a0(var0, 4, var2);
-        var1 = 0;
-    } else if (var1 == 6) {
-        int var3 = (arg0->unknown_9_ == 0) ? 1 : 0;
-        func_ov000_021626a0(var0, 4, var3);
-        var1 = 1;
+    void* work = func_ov000_02160130();
+    unsigned char state = self->field8;
+    if (state == 5) {
+        int flag = (self->field9 == 0) ? 1 : 0;
+        func_ov000_021626a0(work, 4, flag);
+        state = 0;
+    } else if (state == 6) {
+        int flag = (self->field9 == 0) ? 1 : 0;
+        func_ov000_021626a0(work, 4, flag);
+        state = 1;
     }
-    void* var4 = *(void**)((char*)&data_ov025_021ef988 + Enum_ov025_021e4450_12);
-    if (var4 != 0) {
-        func_ov025_021eb00c((struct Struct_ov025_021e4450*)var4);
-        var4 = *(void**)((char*)&data_ov025_021ef988 + Enum_ov025_021e4450_12);
-        *(int*)((char*)var4 + 0x1c4) &= ~0x40;
+    void* ptr = *(void**)((char*)&data_ov025_021ef988 + regionalOffset0);
+    if (ptr != 0) {
+        func_ov025_021eb00c((struct Struct_ov025_021e4450*)ptr);
+        ptr = *(void**)((char*)&data_ov025_021ef988 + regionalOffset0);
+        *(int*)((char*)ptr + 0x1c4) &= ~0x40;
     }
-    func_ov000_021626a0(var0, var1, arg0->unknown_9_);
+    func_ov000_021626a0(work, state, self->field9);
     return 1;
 }

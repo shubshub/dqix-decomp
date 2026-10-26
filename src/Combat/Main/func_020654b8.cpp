@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-unsigned char* MessageSystem_GetInstance();
+extern "C" unsigned char* MessageSystem_GetInstance();
 extern "C" void func_0204f41c(void* obj, int x, int y, void* str, int d, int e, short* outA, short* outB, int zero);
 
 extern const short data_020e7e44[];
@@ -24,11 +24,11 @@ extern "C" ARM void func_020654b8(unsigned char* self, void* obj, void* p2, int 
             func_0204f41c(obj, (short)(x + data_020e7e4c[i]), (short)(y + data_020e7e44[i]), str, 10, 1, &v0, &v1,
                           (self + 0x1000)[0x9dc]);
         }
-        func_0204f41c(arg1, (short)(arg3 + 1), (short)(var4 + 1), var3, 10, arg5, &var0, &var1, (arg0 + 0x1000)[0x9dc]);
-    } else if (var5 & 2) {
-        func_0204f41c(arg1, (short)(arg3 + 1), (short)(var4 + 1), var3, 10, 1, &var0, &var1, (arg0 + 0x1000)[0x9dc]);
-        func_0204f41c(arg1, (short)arg3, (short)var4, var3, 10, arg5, &var0, &var1, (arg0 + 0x1000)[0x9dc]);
+        func_0204f41c(obj, (short)(x + 1), (short)(y + 1), str, 10, a5, &v0, &v1, (self + 0x1000)[0x9dc]);
+    } else if (g & 2) {
+        func_0204f41c(obj, (short)(x + 1), (short)(y + 1), str, 10, 1, &v0, &v1, (self + 0x1000)[0x9dc]);
+        func_0204f41c(obj, (short)x, (short)y, str, 10, a5, &v0, &v1, (self + 0x1000)[0x9dc]);
     } else {
-        func_0204f41c(arg1, arg3, var4, var3, 10, arg5, &var0, &var1, (arg0 + 0x1000)[0x9dc]);
+        func_0204f41c(obj, x, y, str, 10, a5, &v0, &v1, (self + 0x1000)[0x9dc]);
     }
 }

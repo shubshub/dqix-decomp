@@ -1,54 +1,54 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_02240210 {
-	struct Struct_ov031_02240210* unknown_0_;
-	struct Struct_ov031_02240210* unknown_4_;
-	int unknown_8_;
-	void* unknown_c_;
-	int unknown_10_;
+	struct Struct_ov031_02240210* next;
+	struct Struct_ov031_02240210* prev;
+	int id;
+	void* data;
+	int field10;
 };
 
 extern struct Struct_ov031_02240210* volatile data_ov031_02290fdc;
 extern "C" void (* volatile data_ov031_02290fc8)(void*);
-extern "C" void* func_ov031_022401b8(void* arg0);
+extern "C" void* func_ov031_022401b8(void* target);
 
 struct Struct_ov031_02240210_2 {
-	char unknown_0_[0x2c];
-	void* unknown_2c_;
+	char pad2c[0x2c];
+	void* field2c;
 	void* unknown_30_;
 	char unknown_34_[0x3c - 0x34];
-	void* unknown_3c_;
+	void* field3c;
 };
 
-extern "C" int func_ov031_02240e70(void* arg0);
+extern "C" int func_ov031_02240e70(void* obj);
 
 // USA: func_ov031_02240210
-extern "C" ARM int func_ov031_02240210(void* arg0) {
-	int var0 = 0;
-	struct Struct_ov031_02240210* var1 = (struct Struct_ov031_02240210*)func_ov031_022401b8(arg0);
-	if (var1 == NULL) {
+extern "C" ARM int func_ov031_02240210(void* target) {
+	int result = 0;
+	struct Struct_ov031_02240210* node = (struct Struct_ov031_02240210*)func_ov031_022401b8(target);
+	if (node == NULL) {
 		goto done;
 	}
-	struct Struct_ov031_02240210* var2 = data_ov031_02290fdc;
-	if (var2 != var2->unknown_0_) {
-		var1->unknown_0_->unknown_4_ = var1->unknown_4_;
-		var1->unknown_4_->unknown_0_ = var1->unknown_0_;
-		if (data_ov031_02290fdc == var1) {
-			data_ov031_02290fdc = var1->unknown_4_;
+	struct Struct_ov031_02240210* head = data_ov031_02290fdc;
+	if (head != head->next) {
+		node->next->prev = node->prev;
+		node->prev->next = node->next;
+		if (data_ov031_02290fdc == node) {
+			data_ov031_02290fdc = node->prev;
 		}
 	} else {
 		data_ov031_02290fdc = NULL;
 	}
 	{
-		struct Struct_ov031_02240210_2* var3 = (struct Struct_ov031_02240210_2*)var1->unknown_c_;
-		void (*var4)(int, void*, void*) = (void (*)(int, void*, void*))var3->unknown_3c_;
-		void* var5 = var3->unknown_30_;
-		void* var6 = var3->unknown_2c_;
-		func_ov031_02240e70(var3);
-		data_ov031_02290fc8(var1);
-		var4(8, var5, var6);
+		struct Struct_ov031_02240210_2* obj = (struct Struct_ov031_02240210_2*)node->data;
+		void (*fn)(int, void*, void*) = (void (*)(int, void*, void*))obj->field3c;
+		void* a = obj->unknown_30_;
+		void* b = obj->field2c;
+		func_ov031_02240e70(obj);
+		data_ov031_02290fc8(node);
+		fn(8, a, b);
 	}
-	var0 = 1;
+	result = 1;
 done:
-	return var0;
+	return result;
 }

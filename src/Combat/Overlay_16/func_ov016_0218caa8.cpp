@@ -12,26 +12,26 @@
 #define SUB_BG0_SCROLL (*(volatile unsigned int*)0x04001010)
 
 struct Struct_ov016_0218caa8_2 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_[2];
-    int unknown_4_;
+    unsigned short id;
+    unsigned char padding2[2];
+    int value;
     const char* unknown_8_;
     const char* unknown_c_;
-    unsigned char unknown_10_;
-    unsigned char unknown_11_;
-    short unknown_12_;
+    unsigned char flags;
+    unsigned char fade;
+    short scene;
 };
 
 struct Struct_ov016_0219d0c0_9 {
-    int unknown_0_;
-    unsigned char unknown_4_[4];
-    void* unknown_8_;
+    int mode;
+    unsigned char padding4[4];
+    void* owner;
     unsigned char unknown_c_[4];
     int unknown_10_;
     unsigned char unknown_14_[0x20];
-    Struct_ov016_0218caa8_2* unknown_34_;
-    unsigned char unknown_38_[8];
-    int unknown_40_[2];
+    Struct_ov016_0218caa8_2* node;
+    unsigned char padding38[8];
+    int displayState[2];
 };
 
 
@@ -40,26 +40,26 @@ struct PacRecord;
 struct Struct0200fb08;
 
 extern "C" void GXx_SetMasterBrightness_(short*, int);
-void NNS_SndHandleInit(int*);
-void SoundPlayer_UnloadAll(void*);
-int SoundPlayer_LoadSeq(void*, void*, int*);
-void EnsureInitAndSetFlag_0218be1c();
-void Main_HandleVBlank();
-int SetVBlankIrqEnable(int);
-int GetWord0x7f6c_0201201c(void*);
-void GXS_SetGraphicsMode(unsigned int);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
-void AllocatorUnion_Free(AllocatorUnion*, void*);
-void Background_Init(BackgroundGraphics*);
-void Background_SetMapSize(unsigned char*, int);
-void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
-void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
-int Pac_CountFiles(PacRecord*);
-void* Pac_GetFile(PacRecord*, int, void**, int*);
-int GameState_GetLanguage(Struct0200fb08*);
-void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
-void Background_UploadMap(BackgroundGraphics*, void*);
-void OS_WaitVBlankIntr();
+extern "C" void NNS_SndHandleInit(int*);
+extern "C" void SoundPlayer_UnloadAll(void*);
+extern "C" int SoundPlayer_LoadSeq(void*, void*, int*);
+extern "C" void func_ov016_0218be1c();
+extern "C" void Main_HandleVBlank();
+extern "C" int SetVBlankIrqEnable(int);
+extern "C" int func_0201201c(void*);
+extern "C" void GXS_SetGraphicsMode(unsigned int);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
+extern "C" void AllocatorUnion_Free(AllocatorUnion*, void*);
+extern "C" void Background_Init(BackgroundGraphics*);
+extern "C" void Background_SetMapSize(unsigned char*, int);
+extern "C" void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
+extern "C" void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
+extern "C" int Pac_CountFiles(PacRecord*);
+extern "C" void* Pac_GetFile(PacRecord*, int, void**, int*);
+extern "C" int GameState_GetLanguage(Struct0200fb08*);
+extern "C" void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
+extern "C" void Background_UploadMap(BackgroundGraphics*, void*);
+extern "C" void OS_WaitVBlankIntr();
 extern "C" void MIi_CpuClearFast(unsigned int, void*, unsigned int);
 extern "C" void Background_SetPriority(BackgroundGraphics*, int);
 extern "C" void Background_LoadFile(BackgroundGraphics*, void*, SafeAllocator*, unsigned int);
@@ -75,47 +75,47 @@ extern const char data_ov016_0219d030[];
 
 #if defined(jpn)
 struct Struct_ov016_0218caa8 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_[2];
-    int unknown_4_;
+    unsigned short id;
+    unsigned char padding2[2];
+    int value;
     const char* unknown_8_;
     const char* unknown_c_;
-    short unknown_10_;
+    short scene;
 };
 
 struct Struct_ov016_0219d0c0_8 {
-    void* unknown_0_;
-    unsigned char unknown_4_[0xc];
-    Struct_ov016_0218caa8* unknown_10_;
-    int unknown_14_;
+    void* owner;
+    unsigned char padding4[0xc];
+    Struct_ov016_0218caa8* node;
+    int mode;
     int unknown_18_;
-    unsigned char unknown_1c_[0x4c - 0x1c];
-    int unknown_4c_[2];
+    unsigned char padding1c[0x4c - 0x1c];
+    int displayState[2];
 };
 
-void Background_FlushFile(void*, char*);
-void Background_UploadFile(BackgroundGraphics*, char*);
+extern "C" void Background_FlushFile(void*, char*);
+extern "C" void Background_UploadFile(BackgroundGraphics*, char*);
 extern "C" void func_ov016_0218ca98(char*);
 extern const char data_ov016_0219cf00[];
 extern Struct_ov016_0219d0c0_8 data_ov016_0219d0c0;
 
 // USA: func_ov016_0218caa8
-extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_0218caa8* arg2, int arg3)
+extern "C" ARM void func_ov016_0218caa8(char* name, void* owner, Struct_ov016_0218caa8* node, int mode)
 {
     data_ov016_0219d0c0.node = node;
     data_ov016_0219d0c0.displayState[0] = 0;
     data_ov016_0219d0c0.displayState[1] = 0;
-    data_ov016_0219d0c0.negativeScene = node->scene < 0;
+    data_ov016_0219d0c0.unknown_18_ = node->scene < 0;
     data_ov016_0219d0c0.mode = mode;
     GXx_SetMasterBrightness_((short*)0x0400006c, -16);
     GXx_SetMasterBrightness_((short*)0x0400106c, -16);
-    SetInterruptHandler(1, (const void*)EnsureInitAndSetFlag_0218be1c);
+    SetInterruptHandler(1, (const void*)func_ov016_0218be1c);
     EnableSpecificInterrupts(0x60078);
     unsigned short var0 = IRQ_MASTER_ENABLE;
     IRQ_MASTER_ENABLE = 1;
     SetVBlankIrqEnable(1);
     GameState* gameState = GameState::GetInstance();
-    if (GetWord0x7f6c_0201201c(gameState) == 5)
+    if (func_0201201c(gameState) == 5)
     {
         MapVRAMBanksToLCDC(0x1ff);
         MIi_CpuClearFast(0, (void*)0x06800000, 0xa4000);
@@ -143,7 +143,7 @@ extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_021
         unsigned int archiveLength;
         for (;;)
         {
-            if (var4->GetTaskStatus(var3) != 0)
+            if (loader->GetTaskStatus(task) != 0)
             {
                 loader->GetLoadedFileByID(task, &archive, &archiveLength);
                 int count = Pac_CountFiles((PacRecord*)archive);
@@ -163,10 +163,10 @@ extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_021
                         Background_UploadFile((BackgroundGraphics*)&background, record);
                     }
                 }
-                var4->RemoveTask(var3);
+                loader->RemoveTask(task);
                 break;
             }
-            var4->RemoveAllLocks();
+            loader->RemoveAllLocks();
         }
     }
     else
@@ -189,14 +189,14 @@ extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_021
 }
 #else
 // USA: func_ov016_0218caa8
-extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_0218caa8_2* arg2, int arg3, void* arg4)
+extern "C" ARM void func_ov016_0218caa8(char* name, void* owner, Struct_ov016_0218caa8_2* node, int mode, void* script)
 {
     GXx_SetMasterBrightness_((short*)0x0400006c, -16);
     GXx_SetMasterBrightness_((short*)0x0400106c, -16);
     data_ov016_0219d0c0.node = node;
     data_ov016_0219d0c0.displayState[0] = 0;
     data_ov016_0219d0c0.displayState[1] = 0;
-    data_ov016_0219d0c0.negativeScene = node->scene < 0;
+    data_ov016_0219d0c0.unknown_10_ = node->scene < 0;
     data_ov016_0219d0c0.mode = mode;
     NNS_SndHandleInit(&data_ov016_0219d0cc);
     if (data_ov016_0219d0c0.node->flags == 0)
@@ -210,7 +210,7 @@ extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_021
     IRQ_MASTER_ENABLE = 1;
     SetVBlankIrqEnable(1);
     GameState* gameState = GameState::GetInstance();
-    if (GetWord0x7f6c_0201201c(gameState) == 5)
+    if (func_0201201c(gameState) == 5)
     {
         MapVRAMBanksToLCDC(0x1ff);
         MIi_CpuClearFast(0, (void*)0x06800000, 0xa4000);
@@ -251,7 +251,7 @@ extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_021
         unsigned int archiveLength;
         for (;;)
         {
-            if (var20->GetTaskStatus(var19) != 0)
+            if (loader->GetTaskStatus(task) != 0)
             {
                 loader->GetLoadedFileByID(task, &archive, &archiveLength);
                 int count = Pac_CountFiles((PacRecord*)archive);
@@ -269,16 +269,16 @@ extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_021
                 switch (GameState_GetLanguage((Struct0200fb08*)gameState))
                 {
                 case 2:
-                    var28 = 1;
+                    selection = 1;
                     break;
                 case 3:
-                    var28 = 3;
+                    selection = 3;
                     break;
                 case 4:
-                    var28 = 2;
+                    selection = 2;
                     break;
                 case 5:
-                    var28 = 4;
+                    selection = 4;
                     break;
                 }
                 Background_DrawScreen((BackgroundGraphics*)&background, 0, 0, 0, 0, 0, 32, 25, 0xffff);
@@ -289,13 +289,13 @@ extern "C" ARM void func_ov016_0218caa8(char* arg0, void* arg1, Struct_ov016_021
                 Background_UploadMap((BackgroundGraphics*)&background, NULL);
                 break;
             }
-            var20->RemoveAllLocks();
+            loader->RemoveAllLocks();
         }
-        if (var17.GetSignedAllocator() != NULL)
+        if (allocator.GetSignedAllocator() != NULL)
         {
-            var17.Destroy();
+            allocator.Destroy();
         }
-        if (var16 != NULL)
+        if (buffer != NULL)
         {
             AllocatorUnion_Free(&g_mainAllocator, buffer);
         }

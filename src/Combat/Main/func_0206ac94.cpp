@@ -5,58 +5,58 @@
 extern "C" int func_02069430(void*, unsigned short);
 
 // JPN: func_0206c730
-extern "C" ARM unsigned short* func_0206c730(void* arg0, unsigned short arg1, unsigned short* arg2) {
-    Struct_02021b84* var0 = static_cast<Struct_02021b84*>(arg0);
-    if (!arg2) return NULL;
-    if (!func_02069430(arg0, arg1)) return NULL;
-    unsigned int var1 = 0;
-    while (arg2) {
-        if (*arg2 == arg1) return arg2;
-        var1++;
-        arg2++;
-        if (var0->unknown_34_ < var1) break;
+extern "C" ARM unsigned short* func_0206c730(void* obj, unsigned short token, unsigned short* cursor) {
+    MessageSystem* self = static_cast<MessageSystem*>(obj);
+    if (!cursor) return NULL;
+    if (!func_02069430(obj, token)) return NULL;
+    unsigned int count = 0;
+    while (cursor) {
+        if (*cursor == token) return cursor;
+        count++;
+        cursor++;
+        if (self->tokenLength < count) break;
     }
     return NULL;
 }
 #else
 
-struct Struct_0204254c {
-    int unknown_0_;
-    char unknown_4_;
-    signed char unknown_5_0_ : 6;
+struct Entry0204254c {
+    int val;
+    char pad4;
+    signed char field5 : 6;
     signed char unknown_5_6_ : 2;
-    char unknown_6_[2];
+    char pad6[2];
 };
 
-extern bool IsHighByteFF02044494(void* obj, void* src);
-extern bool IsHighByteFF0206ac6c(void* base, void* src);
+extern "C" bool func_02044494(void* obj, void* src);
+extern "C" bool func_0206ac6c(void* base, void* src);
 extern "C" int memcmp(unsigned char* a, unsigned char* b, int n);
-extern int Func0206abf8(void* obj, void* src);
-struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
+extern "C" int func_0206abf8(void* obj, void* src);
+extern "C" struct Entry0204254c* Font_FindCharacter(int key, int tableIdx);
 
 // USA: func_0206ac94
-extern "C" ARM int func_0206ac94(void* arg0, unsigned short arg1, unsigned char* arg2) {
-    unsigned int var0;
-    unsigned char* var1 = arg2;
-    if (!var1) {
+extern "C" ARM int func_0206ac94(void* obj, unsigned short buf, unsigned char* p) {
+    unsigned int total;
+    unsigned char* q = p;
+    if (!q) {
         return 0;
     }
-    if (!func_02044494(arg0, &arg1)) {
+    if (!func_02044494(obj, &buf)) {
         return 0;
     }
-    var0 = 0;
+    total = 0;
     for (;;) {
-        if (!*var1) {
+        if (!*q) {
             break;
         }
-        if (IsHighByteFF0206ac6c(obj, q)) {
+        if (func_0206ac6c(obj, q)) {
             int step;
             if (!memcmp((unsigned char*)&buf, q, 2)) {
                 return (int)q;
             }
-            var2 = func_0206abf8(arg0, var1) * 2 + 2;
-            var1 += var2;
-            var0 += var2;
+            step = func_0206abf8(obj, q) * 2 + 2;
+            q += step;
+            total += step;
         } else {
             struct Entry0204254c* e;
             int val = 1;
@@ -64,9 +64,9 @@ extern "C" ARM int func_0206ac94(void* arg0, unsigned short arg1, unsigned char*
             if (e) {
                 val = e->field5;
             }
-            var1 += var4;
-            var0 += var4;
-            if (*(unsigned int*)((char*)arg0 + 0x68) >= var0) {
+            q += val;
+            total += val;
+            if (*(unsigned int*)((char*)obj + 0x68) >= total) {
                 continue;
             }
             break;

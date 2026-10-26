@@ -1,67 +1,67 @@
 #include <globaldefs.h>
 
 struct Struct_02046b8c_2 {
-    signed char unknown_0_;
-    char unknown_1_[3];
-    struct Struct_02046b8c_2* unknown_4_;
+    signed char id;
+    char pad[3];
+    struct Struct_02046b8c_2* next;
 };
 
 struct Struct_02046b8c {
-    struct Struct_02046b8c_2* unknown_0_;
-    struct Struct_02046b8c_2* unknown_4_;
+    struct Struct_02046b8c_2* head;
+    struct Struct_02046b8c_2* tail;
 };
 
 // USA: func_02046b8c
-extern "C" ARM void func_02046b8c(struct Struct_02046b8c* arg0, int arg1) {
-    struct Struct_02046b8c_2* var0;
+extern "C" ARM void func_02046b8c(struct Struct_02046b8c* list, int id) {
+    struct Struct_02046b8c_2* prev;
     struct Struct_02046b8c_2* var1;
-    struct Struct_02046b8c_2* var2 = arg0->unknown_0_;
-    struct Struct_02046b8c_2* var3 = var2;
-    while (var3 != 0) {
-        var3 = var3->unknown_4_;
+    struct Struct_02046b8c_2* p = list->head;
+    struct Struct_02046b8c_2* t = p;
+    while (t != 0) {
+        t = t->next;
     }
-    var0 = 0;
+    prev = 0;
     var1 = 0;
-    while (var2 != 0) {
-        struct Struct_02046b8c_2* var4 = var2->unknown_4_;
-        if (var2->unknown_0_ == arg1) {
-            if (var0 != 0) {
-                var0->unknown_4_ = var4;
+    while (p != 0) {
+        struct Struct_02046b8c_2* next = p->next;
+        if (p->id == id) {
+            if (prev != 0) {
+                prev->next = next;
             } else {
-                arg0->unknown_0_ = var4;
+                list->head = next;
             }
-            var2->unknown_4_ = 0;
+            p->next = 0;
             if (var1 != 0) {
-                struct Struct_02046b8c_2* var5 = var1;
-                struct Struct_02046b8c_2* var6;
-                while ((var6 = var5->unknown_4_) != 0) {
-                    var5 = var6;
+                struct Struct_02046b8c_2* q = var1;
+                struct Struct_02046b8c_2* n;
+                while ((n = q->next) != 0) {
+                    q = n;
                 }
-                var5->unknown_4_ = var2;
+                q->next = p;
             } else {
-                var1 = var2;
+                var1 = p;
             }
         } else {
-            var0 = var2;
+            prev = p;
         }
-        var2 = var4;
+        p = next;
     }
     if (var1 != 0) {
-        var3 = var1;
-        while (var3->unknown_4_ != 0) {
-            var3 = var3->unknown_4_;
+        t = var1;
+        while (t->next != 0) {
+            t = t->next;
         }
-        struct Struct_02046b8c_2* var7 = arg0->unknown_0_;
-        var3->unknown_4_ = var7;
-        arg0->unknown_0_ = var1;
-        var3 = var1;
-        while (var3->unknown_4_ != 0) {
-            var3 = var3->unknown_4_;
+        struct Struct_02046b8c_2* h = list->head;
+        t->next = h;
+        list->head = var1;
+        t = var1;
+        while (t->next != 0) {
+            t = t->next;
         }
-        arg0->unknown_4_ = var3;
-        var3 = arg0->unknown_0_;
-        while (var3 != 0) {
-            var3 = var3->unknown_4_;
+        list->tail = t;
+        t = list->head;
+        while (t != 0) {
+            t = t->next;
         }
     }
 }

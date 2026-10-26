@@ -9,11 +9,11 @@ extern "C" void Zone3D_GetInstance();
 extern "C" void* LinkSession_GetInstance();
 extern "C" int LinkSession_IsGuest(void* p);
 // 1 while red chest i still holds its item and its opened flag (scenario, ID + 0x212) is not set
-int MapDisplay_IsRedChestUnopened(char* base, int index);
-void MapDisplay_DrawSprite(void *receiver, int x, int y, int spriteIndex, unsigned char oamSlot, unsigned char priority,
+extern "C" int MapDisplay_IsRedChestUnopened(char* base, int index);
+extern "C" void MapDisplay_DrawSprite(void *receiver, int x, int y, int spriteIndex, unsigned char oamSlot, unsigned char priority,
                               unsigned short palette, unsigned char matrixIndex, int scaleX, int scaleY);
 
-// One red chest of this map (func_02026780 builds them from treasure.nsarc, AppendRecord020269e4 adds them)
+// One red chest of this map (func_02026780 builds them from treasure.nsarc, func_020269e4 adds them)
 struct MarkerEntry02023b5c {
     unsigned char unknown0[0x10];
     Vector3i position;
@@ -25,16 +25,16 @@ enum { regionalOffset = -0xac };
 enum { regionalOffset = 0 };
 #endif
 
-struct MarkerReceiver02023b5c {
+struct Struct_02023b5c_2 {
     unsigned char unknown0[0x38];
     fix32_t scale;
-    unsigned char unknown3c[0x77c - 0x3c + regionalOffset];
+    unsigned char unknown_3c_[0x77c - 0x3c + regionalOffset];
     int zoneNames;    // the zones whose red chests are loaded (MapDisplay_AllocateRedChestZones)
     unsigned char redChestCount;
-    unsigned char unknown781[3];
+    unsigned char unknown_781_[3];
     MarkerEntry02023b5c redChests[(0x9b4 - 0x784) / 0x1c];
     int blinkTimer;
-    unsigned char unknown9b8[2];
+    unsigned char unknown_9b8_[2];
     unsigned char shown; // MapDisplay_LoadRedChests sets it once the red chests have loaded
 };
 
@@ -46,7 +46,7 @@ enum {
 
 // Main, originally func_02023b5c (USA 0x02023b5c, EUR 0x02023b6c, JPN 0x02023524)
 extern "C" ARM void MapDisplay_DrawRedChestMarkers(void *receiver, int originX, int originY, int xOffset, int yOffset, unsigned char useHeight) {
-    MarkerReceiver02023b5c *self = static_cast<MarkerReceiver02023b5c *>(receiver);
+    Struct_02023b5c_2 *self = static_cast<Struct_02023b5c_2 *>(receiver);
     Zone3D_GetInstance();
     if (!self->zoneNames) return;
     if (LinkSession_IsGuest(LinkSession_GetInstance())) return;

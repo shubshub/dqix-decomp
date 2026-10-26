@@ -29,7 +29,7 @@ struct State0xc0cc {
 };
 
 // Main, originally InitFields0x0_0203c0cc (USA 0x0203c0cc, EUR 0x0203c0dc, JPN 0x0203bbe4)
-ARM void CachedTextLabel_Init(struct State0xc0cc* label) {
+extern "C" ARM void CachedTextLabel_Init(struct State0xc0cc* label) {
 #if defined(jpn)
     memset(label->textSlots, -1, sizeof(label->textSlots));
     label->y = 0;

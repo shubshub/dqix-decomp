@@ -8,23 +8,23 @@ enum { Enum_0201165c_1104 = 0x450, Enum_0201165c_1008 = 0x3f0, Enum_0201165c_101
 #include "NitroSDK/Memory.h"
 
 struct Struct_0201165c {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    unsigned char unknown_c_;
-    char unknown_d_[3];
-    unsigned char unknown_10_;
+    int d;
+    int e;
+    int f;
+    unsigned char g;
+    char pad1[3];
+    unsigned char h;
 };
 
 // USA: func_0201165c
-extern "C" ARM void func_0201165c(char* arg0, const void* arg1, int arg2, struct Struct_0201165c arg3) {
-    VectorizedInvertedMemcpy(arg1, arg0 + Enum_0201165c_1104 + 0x6000, 0x1c);
-    *(int*)(arg0 + 0x6000 + Enum_0201165c_1008) = arg2;
-    *(int*)(arg0 + 0x6000 + Enum_0201165c_1012) = arg3.unknown_0_;
-    *(int*)(arg0 + 0x6000 + Enum_0201165c_1016) = arg3.unknown_4_;
-    *(int*)(arg0 + 0x6000 + Enum_0201165c_1020) = arg3.unknown_8_;
-    *(unsigned char*)(arg0 + 0x6000 + Enum_0201165c_1001) = arg3.unknown_c_;
-    *(unsigned char*)(arg0 + 0x6000 + Enum_0201165c_1002) = arg3.unknown_10_;
-    *(unsigned char*)(arg0 + 0x6000 + Enum_0201165c_996) = 1;
-    *(unsigned char*)(arg0 + 0x6000 + Enum_0201165c_997) = 1;
+extern "C" ARM void func_0201165c(char* obj, const void* src, int c, struct Struct_0201165c p) {
+    VectorizedInvertedMemcpy(src, obj + Enum_0201165c_1104 + 0x6000, 0x1c);
+    *(int*)(obj + 0x6000 + Enum_0201165c_1008) = c;
+    *(int*)(obj + 0x6000 + Enum_0201165c_1012) = p.d;
+    *(int*)(obj + 0x6000 + Enum_0201165c_1016) = p.e;
+    *(int*)(obj + 0x6000 + Enum_0201165c_1020) = p.f;
+    *(unsigned char*)(obj + 0x6000 + Enum_0201165c_1001) = p.g;
+    *(unsigned char*)(obj + 0x6000 + Enum_0201165c_1002) = p.h;
+    *(unsigned char*)(obj + 0x6000 + Enum_0201165c_996) = 1;
+    *(unsigned char*)(obj + 0x6000 + Enum_0201165c_997) = 1;
 }

@@ -5,55 +5,55 @@ enum { Enum_ov000_02174d08_7538 = 0x1faa };
 enum { Enum_ov000_02174d08_7538 = 0x1d72 };
 #endif
 
-struct Struct_ov000_021735d0_2 {
-    char unknown_0_[0x4c];
+struct TableEntry0217f8c0 {
+    char pad0[0x4c];
     int unknown_4c_;
-    char unknown_50_[0x448 - 0x50];
+    char pad1[0x448 - 0x50];
 };
 
-struct Struct_ov000_021735d0_3 {
-    char unknown_0_[0x6c];
-    signed char unknown_6c_[4];
-    char unknown_70_[0x17c - 0x70];
+struct Struct0217f8c0 {
+    char pad[0x6c];
+    signed char idx[4];
+    char pad2[0x17c - 0x70];
     int unknown_17c_;
 };
 
-extern "C" struct Struct_ov000_021735d0_2* func_ov000_0217f8c0(struct Struct_ov000_021735d0_3* arg0);
+extern "C" struct TableEntry0217f8c0* func_ov000_0217f8c0(struct Struct0217f8c0* s);
 
-struct Struct_ov000_02184288 { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Struct_ov000_02184288 { int field0; int field4; int field8; };
 extern int data_ov000_02183ff0;
 extern struct Struct_ov000_02184288 data_ov000_02184288;
 
-extern "C" void func_ov000_02177184(void* arg0, void* arg1, int arg2, int arg3);
-extern "C" void func_ov000_0217f518(void* arg0);
-extern "C" void func_ov000_0217636c(void* arg0, int arg1);
+extern "C" void func_ov000_02177184(void* obj, void* entry, int a, int b);
+extern "C" void func_ov000_0217f518(void* obj);
+extern "C" void func_ov000_0217636c(void* obj, int mode);
 
 struct Struct_ov000_02174d08 {
-    char unknown_0_[0x118];
+    char pad[0x118];
     int unknown_118_;
 };
 
 // USA: func_ov000_02174d08
-extern "C" ARM void func_ov000_02174d08(void* arg0) {
-    unsigned short var0 = *(unsigned short*)((char*)arg0 + Enum_ov000_02174d08_7538);
-    if (var0 & 2) {
-        struct Struct_ov000_021735d0_2* var1 = func_ov000_0217f8c0((struct Struct_ov000_021735d0_3*)arg0);
-        func_ov000_02177184(arg0, var1, data_ov000_02183ff0, data_ov000_02184288.unknown_4_);
+extern "C" ARM void func_ov000_02174d08(void* obj) {
+    unsigned short flags = *(unsigned short*)((char*)obj + Enum_ov000_02174d08_7538);
+    if (flags & 2) {
+        struct TableEntry0217f8c0* e = func_ov000_0217f8c0((struct Struct0217f8c0*)obj);
+        func_ov000_02177184(obj, e, data_ov000_02183ff0, data_ov000_02184288.field4);
         return;
     }
-    if (!(var0 & 4)) {
+    if (!(flags & 4)) {
         return;
     }
-    struct Struct_ov000_021735d0_2* var2 = func_ov000_0217f8c0((struct Struct_ov000_021735d0_3*)arg0);
-    if (var2 == 0) {
+    struct TableEntry0217f8c0* e = func_ov000_0217f8c0((struct Struct0217f8c0*)obj);
+    if (e == 0) {
         return;
     }
-    int var3 = (((struct Struct_ov000_02174d08*)arg0)->unknown_118_ == 2) ? 1 : 0;
-    func_ov000_0217f518(var2);
-    if (*(int*)((char*)var2 + 0x38) != 0) {
-        func_ov000_0217636c(var2, var3);
+    int mode = (((struct Struct_ov000_02174d08*)obj)->unknown_118_ == 2) ? 1 : 0;
+    func_ov000_0217f518(e);
+    if (*(int*)((char*)e + 0x38) != 0) {
+        func_ov000_0217636c(e, mode);
     }
-    unsigned short var4 = *(unsigned short*)((char*)arg0 + Enum_ov000_02174d08_7538);
+    unsigned short var4 = *(unsigned short*)((char*)obj + Enum_ov000_02174d08_7538);
     var4 &= ~4;
-    *(unsigned short*)((char*)arg0 + Enum_ov000_02174d08_7538) = var4;
+    *(unsigned short*)((char*)obj + Enum_ov000_02174d08_7538) = var4;
 }

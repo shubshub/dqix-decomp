@@ -36,22 +36,22 @@ struct Struct0203c1c8 {
 };
 
 #if defined(jpn)
-int CachedTextLabel_GetWidth(const Struct0203c1c8* text);
+extern "C" int CachedTextLabel_GetWidth(const Struct0203c1c8* text);
 extern "C" void CachedTextTable_DrawText(CachedTextTable* cache, int count, const short* slots, int affineMode,
                             int priority, int affineIndex, int x, int y,
                             int paletteOffset, int characterAdvance, int lineHeight);
 #else
-ARM unsigned char CachedTextLabel_GetWidth(char* label);
+extern "C" ARM unsigned char CachedTextLabel_GetWidth(char* label);
 extern "C" void CachedTextTable_DrawText(void* table, short entryIndex, int priority, int x, int y, int palette);
 #endif
 
-// USA: func_0203c1c8
+// USA: CachedTextLabel_Draw
 // JPN: func_0203bd44
 // Main, originally AdjustAndDispatchEntry0203c1c8 (USA 0x0203c1c8, EUR 0x0203c1d8, JPN 0x0203bd44)
 #if defined(jpn)
-ARM void CachedTextLabel_Draw(Struct0203c1c8* label, int count) {
+extern "C" ARM void CachedTextLabel_Draw(Struct0203c1c8* label, int count) {
 #else
-ARM void CachedTextLabel_Draw(Struct0203c1c8* label) {
+extern "C" ARM void CachedTextLabel_Draw(Struct0203c1c8* label) {
 #endif
     if (data_02105244 == NULL) return;
 

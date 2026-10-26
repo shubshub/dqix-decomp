@@ -2,7 +2,7 @@
 #include "World/ZoneLootableRecord.h"
 
 struct ResetStruct_39ee8;
-void NumberPopup_Clear(struct ResetStruct_39ee8* s);
+extern "C" void NumberPopup_Clear(struct ResetStruct_39ee8* s);
 
 // One number popup: value drawn digit by digit over its anchor (a world position), offset on screen, for timer frames;
 // its frame sprite's scale springs from frameScale towards 1.0 (0x1000).
@@ -29,7 +29,7 @@ struct NumberPopups {
 };
 
 // Main, originally ResetBattleArrays02039e7c (USA 0x02039e7c, EUR 0x02039e8c, JPN 0x020398d4)
-ARM void NumberPopups_Init(void* popupsRaw) {
+extern "C" ARM void NumberPopups_Init(void* popupsRaw) {
     NumberPopups* numberPopups = (NumberPopups*)popupsRaw;
     int i;
     for (i = 0; i < 0x10; i++) {

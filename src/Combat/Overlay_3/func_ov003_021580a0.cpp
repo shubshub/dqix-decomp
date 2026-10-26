@@ -7,20 +7,20 @@ enum { Enum_ov003_021580a0_512 = 0x200 };
 #include "std_library_functions.h"
 
 struct Struct_020a1180;
-extern "C" void func_020a1380(struct Struct_020a1180* arg0);
+extern "C" void func_020a1380(struct Struct_020a1180* rec);
 
 struct Struct_ov003_021575dc {
-	char unknown_0_[4];
-	void* unknown_4_;      // 0x4
-	char unknown_8_[4];
-	char unknown_c_[0x38]; // 0xc
-	char unknown_44_[Enum_ov003_021580a0_512];
+	char pad0[4];
+	void* field4;      // 0x4
+	char pad1[4];
+	char blockA[0x38]; // 0xc
+	char blockB[Enum_ov003_021580a0_512];
 };
 
 // USA: func_ov003_021580a0
-extern "C" ARM void func_ov003_021580a0(struct Struct_ov003_021575dc* arg0) {
-	func_020a1380((struct Struct_020a1180*)arg0);
-	memset(arg0->unknown_c_, 0, sizeof(arg0->unknown_c_));
-	memset(arg0->unknown_44_, 0, sizeof(arg0->unknown_44_));
-	arg0->unknown_4_ = arg0->unknown_44_;
+extern "C" ARM void func_ov003_021580a0(struct Struct_ov003_021575dc* p) {
+	func_020a1380((struct Struct_020a1180*)p);
+	memset(p->blockA, 0, sizeof(p->blockA));
+	memset(p->blockB, 0, sizeof(p->blockB));
+	p->field4 = p->blockB;
 }

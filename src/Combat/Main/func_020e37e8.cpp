@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-extern "C" int* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
+extern "C" int* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsActive(int* obj);
 
 // USA: func_020e37e8
-extern "C" ARM int func_020e37e8(unsigned char* arg0) {
-    if (func_0202b7d8(func_0202ae18())) {
-        return arg0[2];
+extern "C" ARM int func_020e37e8(unsigned char* p) {
+    if (LinkSession_IsActive(LinkSession_GetInstance())) {
+        return p[2];
     }
     return 1;
 }

@@ -7,6 +7,6 @@ enum { Enum_ov000_02160f9c_1496 = 0x5d8 };
 #endif
 
 // USA: func_ov000_02160f9c
-extern "C" ARM int func_ov000_02160f9c(void* arg0) {
-    return *(int*)((char*)arg0 + 0x5000 + Enum_ov000_02160f9c_1496);
+extern "C" ARM int func_ov000_02160f9c(void* obj) {
+    return *(int*)((char*)obj + 0x5000 + Enum_ov000_02160f9c_1496);
 }

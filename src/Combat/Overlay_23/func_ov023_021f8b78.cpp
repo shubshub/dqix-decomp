@@ -1,39 +1,39 @@
 #include <globaldefs.h>
 
-struct Struct_ov023_021f8b78_2 { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Struct_ov023_021f8b78_2 { int x; int y; int z; };
 
 class Struct_ov023_021f8b78_3 {
 public:
-    virtual void inline_ov023_021f8b78(); virtual void inline_ov023_021f8b78_2(); virtual void inline_ov023_021f8b78_3(); virtual void inline_ov023_021f8b78_4();
-    virtual void inline_ov023_021f8b78_5(); virtual void inline_ov023_021f8b78_6(); virtual void inline_ov023_021f8b78_7(); virtual void inline_ov023_021f8b78_8();
+    virtual void v00(); virtual void inline_ov023_021f8b78_2(); virtual void inline_ov023_021f8b78_3(); virtual void inline_ov023_021f8b78_4();
+    virtual void v04(); virtual void inline_ov023_021f8b78_6(); virtual void inline_ov023_021f8b78_7(); virtual void inline_ov023_021f8b78_8();
     virtual Struct_ov023_021f8b78_2 inline_ov023_021f8b78_9();
 };
 
 struct Struct_ov023_021f8b78 {
-    char unknown_0_[0x34];
-    unsigned short unknown_34_;
+    char pad0[0x34];
+    unsigned short f34;
     char unknown_36_[0x3a - 0x36];
     unsigned short unknown_3a_;
-    unsigned short unknown_3c_;
+    unsigned short f3c;
 };
 
-extern "C" void __clear(void* arg0, int arg1);
-extern "C" void* func_ov011_021849c8(void* arg0);
-extern "C" Struct_ov023_021f8b78_3* func_ov023_021f6880(void* arg0, int arg1);
+extern "C" void __clear(void* buf, int n);
+extern "C" void* func_ov011_021849c8(void* p);
+extern "C" Struct_ov023_021f8b78_3* func_ov023_021f6880(void* base, int key);
 
 // USA: func_ov023_021f8b78
-extern "C" ARM Struct_ov023_021f8b78_2 func_ov023_021f8b78(struct Struct_ov023_021f8b78* arg0, void* arg1) {
-    Struct_ov023_021f8b78_2 var0;
-    __clear(&var0, 0xc);
-    var0.unknown_0_ = arg0->unknown_3a_ << 12;
-    var0.unknown_4_ = arg0->unknown_3c_ << 12;
+extern "C" ARM Struct_ov023_021f8b78_2 func_ov023_021f8b78(struct Struct_ov023_021f8b78* src, void* arg1) {
+    Struct_ov023_021f8b78_2 local;
+    __clear(&local, 0xc);
+    local.x = src->unknown_3a_ << 12;
+    local.y = src->f3c << 12;
 
-    void* var1 = func_ov011_021849c8(arg1);
-    Struct_ov023_021f8b78_3* var2 = func_ov023_021f6880(var1, arg0->unknown_34_);
-    if (var2 != NULL) {
-        Struct_ov023_021f8b78_2 var3 = var2->inline_ov023_021f8b78_9();
-        var0.unknown_0_ = var0.unknown_0_ + var3.unknown_0_;
-        var0.unknown_4_ = var0.unknown_4_ + var3.unknown_4_;
+    void* base = func_ov011_021849c8(arg1);
+    Struct_ov023_021f8b78_3* node = func_ov023_021f6880(base, src->f34);
+    if (node != NULL) {
+        Struct_ov023_021f8b78_2 v = node->inline_ov023_021f8b78_9();
+        local.x = local.x + v.x;
+        local.y = local.y + v.y;
     }
-    return var0;
+    return local;
 }

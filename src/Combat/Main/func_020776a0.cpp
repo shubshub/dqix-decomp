@@ -1,28 +1,28 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_ov009_0218aa28 { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Vec3 { int x; int y; int z; };
 
-extern "C" struct Struct_ov009_0218aa28 func_020341e0(void* arg0);
-extern "C" struct Struct_ov009_0218aa28 func_02034104(void* arg0);
+extern "C" struct Vec3 func_020341e0(void* obj);
+extern "C" struct Vec3 func_02034104(void* obj);
 
 struct Obj02033834;
-void GameObject_SetFacing(struct Obj02033834* obj, int arg);
+extern "C" void GameObject_SetFacing(struct Obj02033834* obj, int arg);
 
 struct Obj02033b68;
-void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
+extern "C" void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
 
-struct Struct_02039df4;
+struct U16Field0x6_020375f8;
 
 struct Struct_020776a0 {
-    char unknown_0_[0x44];
-    struct Struct_ov009_0218aa28 unknown_44_;
+    char pad0[0x44];
+    struct Vec3 unknown_44_;
     char unknown_50_[0xb0 - 0x50];
     unsigned short unknown_b0_;
     unsigned short unknown_b2_;
     unsigned short unknown_b4_;
     char unknown_b6_[0x166 - 0xb6];
-    unsigned short unknown_166_;
+    unsigned short f166;
     char unknown_168_[0x17a - 0x168];
     unsigned char unknown_17a_;
     char unknown_17b_[0x17d - 0x17b];
@@ -30,36 +30,36 @@ struct Struct_020776a0 {
 };
 
 // USA: func_020776a0
-extern "C" ARM int func_020776a0(struct Struct_020776a0* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GameObject* var1 = var0->GetPartyMemberByIndex(arg0->unknown_166_);
-    if (var1 == 0) {
+extern "C" ARM int func_020776a0(struct Struct_020776a0* self) {
+    GameState* battleStruct = GameState::GetInstance();
+    GameObject* combatant = battleStruct->GetPartyMemberByIndex(self->f166);
+    if (combatant == 0) {
         return 0;
     }
 
-    arg0->unknown_17d_ |= 0x40;
+    self->unknown_17d_ |= 0x40;
 #if defined(jpn)
-    struct Struct_ov009_0218aa28 var2 = func_02034104(var1);
+    struct Vec3 var2 = func_02034104(combatant);
 #else
-    struct Struct_ov009_0218aa28 var2 = func_020341e0(var1);
+    struct Vec3 var2 = func_020341e0(combatant);
 #endif
     struct Vec3 delta;
-    Vector3fix_Subtract((const Vector3fix*)&posCopy, (const Vector3fix*)&self->f44, (Vector3fix*)&delta);
+    Vector3fix_Subtract((const Vector3fix*)&var2, (const Vector3fix*)&self->unknown_44_, (Vector3fix*)&delta);
     Vector3fix_Normalize((const Vector3fix*)&delta, (Vector3fix*)&delta);
     int angle = fix32_Atan2(delta.x, delta.z);
     GameObject_SetFacing((struct Obj02033834*)self, angle);
 
-    self->fb0 = 0x97;
-    self->fb4 = 0x1c2;
-    self->fb2 = 0x1c2;
+    self->unknown_b0_ = 0x97;
+    self->unknown_b4_ = 0x1c2;
+    self->unknown_b2_ = 0x1c2;
     GameObject_SetMotionState((struct Obj02033b68*)self, 1);
 
-    GameObject* var5 = var0->GetProtagonist();
-    unsigned short var6 = ((Object3D*)((struct Struct_02039df4*)var5))->GetField06();
-    unsigned short var7 = ((Object3D*)((struct Struct_02039df4*)arg0))->GetField06();
-    if (var6 == var7) {
-        ((Object3D*)((unsigned char*)arg0))->DisableFlag(0x80);
+    GameObject* protagonist = battleStruct->GetProtagonist();
+    unsigned short a = ((Object3D*)((struct U16Field0x6_020375f8*)protagonist))->GetField06();
+    unsigned short b = ((Object3D*)((struct U16Field0x6_020375f8*)self))->GetField06();
+    if (a == b) {
+        ((Object3D*)((unsigned char*)self))->DisableFlag(0x80);
     }
-    arg0->unknown_17a_ = 0;
+    self->unknown_17a_ = 0;
     return 1;
 }

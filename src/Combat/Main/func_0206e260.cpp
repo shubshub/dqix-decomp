@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
-struct Struct_0205faf4_4 {
-    unsigned char unknown_0_[0x2CC];
-    unsigned char unknown_2cc_[1];
+struct PackedNibbleArray0206e260 {
+    unsigned char pad[0x2CC];
+    unsigned char bits[1];
 };
 
 // USA: func_0206e260
-extern "C" ARM int func_0206e260(struct Struct_0205faf4_4* arg0, int arg1) {
-    int var0;
-    if (arg1 >= 0xCC || arg1 < 0) {
+extern "C" ARM int func_0206e260(struct PackedNibbleArray0206e260* obj, int index) {
+    int mask;
+    if (index >= 0xCC || index < 0) {
         return 0;
     }
-    var0 = (arg1 % 2) ? 0x40 : 0x4;
-    return var0 & arg0->unknown_2cc_[arg1 / 2];
+    mask = (index % 2) ? 0x40 : 0x4;
+    return mask & obj->bits[index / 2];
 }

@@ -8,22 +8,22 @@ struct Struct_020d19f4;
 typedef unsigned long (*Type_020d19f4)(Struct_020d19f4* task);
 
 struct Struct_020d19f4 {
-    Type_020d19f4 unknown_0_;
-    Type_020d19f4 unknown_4_;
-    unsigned long unknown_8_;
-    unsigned char* unknown_c_;
-    unsigned char* unknown_10_;
-    unsigned long unknown_14_;
-    unsigned long unknown_18_;
-    unsigned char* unknown_1c_;
+    Type_020d19f4 task;
+    Type_020d19f4 callback;
+    unsigned long result;
+    unsigned char* data;
+    unsigned char* address;
+    unsigned long offset;
+    unsigned long size;
+    unsigned char* dst;
     unsigned short unknown_20_;
-    unsigned char unknown_22_;
-    unsigned char unknown_23_[1];
+    unsigned char busy;
+    unsigned char param[1];
 };
 
 struct Struct_020d19f4_2 {
     unsigned char unknown_0_[0xc0];
-    Struct_020d19f4* volatile unknown_c0_;
+    Struct_020d19f4* volatile list;
     Struct_020d19f4 unknown_c4_;
 };
 
@@ -33,44 +33,44 @@ struct Struct_02112328 {
 };
 
 struct Struct_020d19f4_3 {
-    unsigned long unknown_0_[sizeof(Struct_020d19f4) / 4];
+    unsigned long words[sizeof(Struct_020d19f4) / 4];
 };
 
 extern Struct_02112328 data_02112328;
 
 // USA: func_020d19f4
-extern "C" ARM void func_020d19f4(void* arg0) {
-    Struct_020d19f4_2* const var0 = (Struct_020d19f4_2*)arg0;
+extern "C" ARM void func_020d19f4(void* arg) {
+    Struct_020d19f4_2* const p = (Struct_020d19f4_2*)arg;
 
     for (;;) {
-        Struct_020d19f4 var1;
+        Struct_020d19f4 task;
 
-        VectorizedMemset(&var1, 0, sizeof(Struct_020d19f4));
+        VectorizedMemset(&task, 0, sizeof(Struct_020d19f4));
         {
             int var2 = DisableIRQInterrupts();
-            while (!var0->unknown_c0_) {
+            while (!p->list) {
                 BlockCurrentContext(NULL);
             }
-            *(Struct_020d19f4_3*)&var1 = *(Struct_020d19f4_3*)var0->unknown_c0_;
+            *(Struct_020d19f4_3*)&task = *(Struct_020d19f4_3*)p->list;
             SetIRQInterruptState(var2);
         }
 
-        if (var1.unknown_0_) {
-            var1.unknown_8_ = var1.unknown_0_(&var1);
+        if (task.task) {
+            task.result = task.task(&task);
         }
 
         {
             int var3 = DisableIRQInterrupts();
-            Type_020d19f4 var4 = var1.unknown_4_;
+            Type_020d19f4 callback = task.callback;
 
-            data_02112328.unknown_4_.unknown_22_ = false;
-            if (var4) {
-                var4(&var1);
+            data_02112328.unknown_4_.busy = false;
+            if (callback) {
+                callback(&task);
             }
             if (data_02112328.unknown_0_ == NULL) {
                 break;
             }
-            var0->unknown_c0_ = NULL;
+            p->list = NULL;
             SetIRQInterruptState(var3);
         }
     }

@@ -2,23 +2,23 @@
 
 struct Struct_ov015_0218f3c4 {
 	char unknown_0_[0x1c];
-	int unknown_1c_;
+	int val;
 };
 
 struct Struct_ov015_0218f3c4_2 {
 	char unknown_0_[0x1c];
-	unsigned char unknown_1c_;
-	char unknown_1d_[0x24 - 0x1d];
-	struct Struct_ov015_0218f3c4* unknown_24_;
+	unsigned char state;
+	char pad24[0x24 - 0x1d];
+	struct Struct_ov015_0218f3c4* sub;
 };
 
 // USA: func_ov015_0218f3c4
-extern "C" ARM float func_ov015_0218f3c4(struct Struct_ov015_0218f3c4_2* arg0) {
-	switch (arg0->unknown_1c_) {
+extern "C" ARM float func_ov015_0218f3c4(struct Struct_ov015_0218f3c4_2* obj) {
+	switch (obj->state) {
 	case 0:
 	case 1:
-		return (float)arg0->unknown_24_->unknown_1c_ / 4096.0f;
+		return (float)obj->sub->val / 4096.0f;
 	default:
-		return (float)arg0->unknown_24_->unknown_1c_ / 4096.0f;
+		return (float)obj->sub->val / 4096.0f;
 	}
 }

@@ -3,39 +3,39 @@
 
 #include "Memory/SafeAllocator.h"
 
-struct Struct_0201099c_9 {
-    void* unknown_0_;
-    void* unknown_4_;
-    unsigned char unknown_8_[0x18];
+struct Element020de650 {
+    void* name;
+    void* desc;
+    unsigned char data[0x18];
 };
 
-struct Struct_0208358c_2 {
-    int unknown_0_;
+struct Record020836e4 {
+    int field_0;
     int unknown_4_;
-    int unknown_8_;
+    int field_8;
     int unknown_c_;
     int unknown_10_;
     unsigned short unknown_14_;
     unsigned short unknown_16_;
-    short unknown_18_;
-    unsigned short unknown_1a_;
-    unsigned short unknown_1c_;
+    short field_18;
+    unsigned short field_1a;
+    unsigned short field_1c;
 };
 
-struct EntryDf618;
-struct EntryDf6cc;
+struct Struct_020def98;
+struct Struct_020def98_2;
 struct StructDE1D4;
 
-typedef int (*Type_020de5fc)(Struct_0201099c_9*);
+typedef int (*KeyFunc020de650)(Element020de650*);
 
-int GetField0x18Short_020de56c(void*);
-Element020de650* BinarySearchByComparator020de650(ItemTable* c, int key, KeyFunc020de650 fn);
-int CopyEntryAndAllocateStrings020df618(SafeAllocator*, void*, EntryDf618*, void**, int, EntryDf618*);
-int CopyEntryAndIncrementCounter020df6cc(void*, EntryDf6cc*, int, EntryDf6cc*);
-void ItemRecord_Copy(Record020836e4* dst, Record020836e4* src);
-void ItemRecord_Clear(StructDE1D4*);
+extern "C" int func_020de56c(void*);
+extern "C" Element020de650* BinarySearchByComparator020de650(ItemTable* c, int key, KeyFunc020de650 fn);
+extern "C" int func_020df618(SafeAllocator*, void*, Struct_020def98*, void**, int, Struct_020def98*);
+extern "C" int func_020df6cc(void*, Struct_020def98_2*, int, Struct_020def98_2*);
+extern "C" void ItemRecord_Copy(Record020836e4* dst, Record020836e4* src);
+extern "C" void ItemRecord_Clear(StructDE1D4*);
 
-static inline void SwapRecords(Record020836e4* a, Record020836e4* b) {
+static inline void inline_020def98(Record020836e4* a, Record020836e4* b) {
     Record020836e4 tmp = *a;
     ItemRecord_Copy(a, b);
     ItemRecord_Copy(b, &tmp);
@@ -55,54 +55,54 @@ extern "C" ARM int ItemTable_CopyIds(SafeAllocator* allocator, ItemTable* dest,
         for (int i = 0; i < n; i++, key++) {
             int value = *key;
             if (value < 0) continue;
-            Element020de650* found = BinarySearchByComparator020de650(source, value, (KeyFunc020de650)GetField0x18Short_020de56c);
+            Element020de650* found = BinarySearchByComparator020de650(source, value, (KeyFunc020de650)func_020de56c);
             if (!found) continue;
-            int dup = 0;
+            int var8 = 0;
             short* prev = keys;
             for (int j = 0; j < i; j++, prev++) {
-                if (*prev == value) { dup = 1; break; }
+                if (*prev == value) { var8 = 1; break; }
             }
             if (var8) continue;
-            var2++;
-            if (var7->unknown_0_) var3++;
+            count++;
+            if (found->name) nameCount++;
         }
         output = (Record020836e4*)allocator->Allocate((count + n) * 32);
         dest->count = count;
         dest->copiedNames = (unsigned short)nameCount;
         dest->entries = (Element020de650*)output;
     }
-    if (!var0) return 0;
-    int var11;
-    int var12;
-    int var13 = arg4;
-    arg1->unknown_4_ = var13;
-    arg1->unknown_6_ = arg1->unknown_2_0_;
-    void* var14 = arg0 ? var0 + var13 : NULL;
-    arg1->unknown_2_0_ = 0;
-    var11 = 0;
-    short* var15 = arg3;
-    for (var12 = 0; var12 < var13; var12++, var15++) {
-        short var16 = *var15;
-        Struct_0201099c_9* var17 = NULL;
-        if (var16 >= 0) var17 = func_020de650(arg2, var16, (Type_020de5fc)func_020de56c);
-        if (!var17) {
-            if (!arg0) { var0++; var11++; }
+    if (!output) return 0;
+    int copied;
+    int i;
+    int capacity = keyCount;
+    dest->capacity = capacity;
+    dest->nameCapacity = dest->copiedNames;
+    void* names = allocator ? output + capacity : NULL;
+    dest->copiedNames = 0;
+    copied = 0;
+    short* key = keys;
+    for (i = 0; i < capacity; i++, key++) {
+        short value = *key;
+        Element020de650* found = NULL;
+        if (value >= 0) found = BinarySearchByComparator020de650(source, value, (KeyFunc020de650)func_020de56c);
+        if (!found) {
+            if (!allocator) { output++; copied++; }
             continue;
         }
-        if (arg0) {
+        if (allocator) {
             int var18 = 0;
-            short* var19 = arg3;
-            for (int var20 = 0; var20 < var12; var20++, var19++) {
-                if (*var19 == var16) { var18 = 1; break; }
+            short* prev = keys;
+            for (int j = 0; j < i; j++, prev++) {
+                if (*prev == value) { var18 = 1; break; }
             }
             if (var18) continue;
-            func_020df618(arg0, arg1, (Struct_020def98*)var0, &var14, (int)arg2, (Struct_020def98*)var17);
+            func_020df618(allocator, dest, (Struct_020def98*)output, &names, (int)source, (Struct_020def98*)found);
         } else {
-            func_020df6cc(arg1, (Struct_020def98_2*)var0, (int)arg2, (Struct_020def98_2*)var17);
+            func_020df6cc(dest, (Struct_020def98_2*)output, (int)source, (Struct_020def98_2*)found);
         }
-        if (var11 >= var13) break;
-        var0++;
-        var11++;
+        if (copied >= capacity) break;
+        output++;
+        copied++;
     }
     dest->count = copied;
     dest->owned = 0;
@@ -128,9 +128,9 @@ extern "C" ARM int ItemTable_CopyIds(SafeAllocator* allocator, ItemTable* dest,
                     for (j = lo; j < hi; j++) {
                         if (p[0].field_18 > p[1].field_18) {
                             last = j;
-                            SwapRecords(p, p + 1);
+                            inline_020def98(p, p + 1);
                         }
-                        var27++;
+                        p++;
                     }
                     if (last == -1) break;
                     hi = last;
@@ -144,10 +144,10 @@ extern "C" ARM int ItemTable_CopyIds(SafeAllocator* allocator, ItemTable* dest,
                             ItemRecord_Copy(q, prev);
                             ItemRecord_Copy(prev, &tmp);
                         }
-                        var25 = var24;
+                        q = prev;
                     }
-                    if (var26 == -1) break;
-                    var31 = var26;
+                    if (first == -1) break;
+                    lo = first;
                 }
             }
         }

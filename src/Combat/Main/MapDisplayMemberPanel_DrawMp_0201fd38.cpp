@@ -24,7 +24,7 @@ struct MapDisplayMemberStatus {
 extern struct MapDisplayMemberStatus data_020fdcb0[];
 
 // Main, originally SubmitFlag0x800CombatantDataB0201fd38 (USA 0x0201fd38, EUR 0x0201fd48, JPN 0x0201fa5c)
-ARM void MapDisplayMemberPanel_DrawMp(Display0201fdd0* panel, int row, int memberId) {
+extern "C" ARM void MapDisplayMemberPanel_DrawMp(Display0201fdd0* panel, int row, int memberId) {
     if (GameState::GetInstance()->GetPartyMemberByIndex(memberId) != NULL) {
         struct MapDisplayMemberStatus* status = &data_020fdcb0[memberId];
         int mp = status->mp;

@@ -4,20 +4,20 @@
 extern "C" int func_ov017_021d60f4(void*);
 
 // USA: func_ov001_0215bd5c
-extern "C" ARM int func_ov001_0215bd5c(void* arg0, int arg1) {
-    void* var0 = GameState::GetInstance();
-    if (var0 == NULL) return 0;
-    int var1 = 1;
-    int var2 = func_ov017_021d60f4(arg0);
-    if (arg1 >= 2) {
-        var1 = func_ov017_021d60f4((char*)arg0 + 0x8);
+extern "C" ARM int func_ov001_0215bd5c(void* self, int mode) {
+    void* battle = GameState::GetInstance();
+    if (battle == NULL) return 0;
+    int flag = 1;
+    int id = func_ov017_021d60f4(self);
+    if (mode >= 2) {
+        flag = func_ov017_021d60f4((char*)self + 0x8);
     }
-    void* var3 = ((GameState*)var0)->GetGameObjectByIndex(var2);
-    if (var3 == NULL) return 0;
-    if (var1 != 0) {
-        ((Object3D*)var3)->MakeVisible();
+    void* combatant = ((GameState*)battle)->GetGameObjectByIndex(id);
+    if (combatant == NULL) return 0;
+    if (flag != 0) {
+        ((Object3D*)combatant)->MakeVisible();
     } else {
-        ((Object3D*)var3)->MakeHidden();
+        ((Object3D*)combatant)->MakeHidden();
     }
     return 1;
 }

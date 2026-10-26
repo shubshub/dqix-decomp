@@ -6,7 +6,6 @@
 #define data_ov006_0215ffca data_ov006_02161336
 #define data_ov006_0215ffe2 data_ov006_0216132e
 #define data_ov006_0215fff4 data_ov006_02161346
-#define func_ov006_021547c8 func_ov006_02155f30
 #else
 #define R(j,u) (u)
 #endif
@@ -18,64 +17,64 @@ struct Struct_020e263c_2;
 struct Struct_020e28f0;
 struct Struct_ov006_02154614;
 
-struct Struct_ov006_021580b8 {
-    char unknown_0_[0x28];
+struct Sprite {
+    char unk_0[0x28];
 };
 
 struct Struct_ov006_02156e54_2 {
-    int unknown_0_[0x70 / 4];
+    int unk_0[0x70 / 4];
 };
 
-struct Struct_ov006_02158478;
+struct Canvas;
 
-Canvas* FindElementByByte0xc4_02081da8(Obj2081*, int);
-int WindowPane_IsOpen(unsigned char*);
-int GetInnerFlagBit0020e28dc(Outer020e28dc*);
-void GetLookAndTurnOffsets020809c4(void*, int, int, short*, short*);
-void UpdateEntryStateAndPosition(Ctx020e263c*, int);
-void SetEntryPositionFromObject(WinObj020e28f0*, short, short);
+extern "C" Canvas* func_02081da8(Struct_0207fdcc_2*, int);
+extern "C" int WindowPane_IsOpen(unsigned char*);
+extern "C" int func_020e28dc(Struct_020e28dc*);
+extern "C" void func_020809c4(void*, int, int, short*, short*);
+extern "C" void func_020e263c(Struct_020e263c_2*, int);
+extern "C" void func_020e28f0(Struct_020e28f0*, short, short);
 extern "C" void SpriteContext_DrawEntries(void*);
 
 struct Struct_ov006_02157a60 {
 #if !defined(jpn)
     int unknown_0_;
-    char** unknown_4_;
+    char** texts_;
 #endif
-    void* unknown_8_;
-    void* unknown_c_;
-    Struct_ov006_02154614* unknown_10_;
-    void* unknown_14_;
-    void* unknown_18_;
-    void* unknown_1c_;
-    void* unknown_20_;
-    Struct_ov006_021580b8* unknown_24_;
-    void* unknown_28_;
+    void* canvasBuffer_;
+    void* allocators_;
+    Struct_ov006_02154614* pot_;
+    void* menu_;
+    void* choice_;
+    void* backgrounds_;
+    void* canvases_;
+    Sprite* sprites_;
+    void* animations_;
     void* unknown_2c_;
     void* unknown_30_;
     void* unknown_34_;
     void* unknown_38_;
     char unknown_3c_[8];
-    short* unknown_44_;
-    short** unknown_48_;
+    short* cursor_;
+    short** items_;
     unsigned char** unknown_4c_;
-    unsigned short* unknown_50_;
-    int unknown_54_[0x20 / 4];
-    int unknown_74_[0x28 / 4];
+    unsigned short* sizes_;
+    int subBackground_[0x20 / 4];
+    int ingredients_[0x28 / 4];
     int unknown_9c_[0xc / 4];
     unsigned short unknown_a8_;
     unsigned char unknown_aa_;
-    int unknown_ac_[0x54 / 4];
-    int unknown_100_[0x4c / 4];
-    int unknown_14c_[0xc / 4];
-    int unknown_158_[0x18 / 4];
-    char unknown_170_[0xc];
-    int unknown_17c_[4][0x74 / 4];
+    int renderer_[0x54 / 4];
+    int layout_[0x4c / 4];
+    int table_[0xc / 4];
+    int menuTexts_[0x18 / 4];
+    char itemNames_[0xc];
+    int results_[4][0x74 / 4];
 #if defined(jpn)
     char unknown_344_[8];
 #endif
-    int unknown_34c_;
-    int unknown_350_;
-    int unknown_354_;
+    int ticks_;
+    int menuResult_;
+    int task_;
     int unknown_358_;
     short unknown_35c_;
     short unknown_35e_;
@@ -87,29 +86,29 @@ struct Struct_ov006_02157a60 {
     short unknown_36a_;
     short unknown_36c_;
     short unknown_36e_;
-    short unknown_370_;
+    short item_;
     unsigned short unknown_372_[3];
     short unknown_378_[3];
-    short unknown_37e_;
+    short message_;
     unsigned short unknown_380_;
     short unknown_382_;
     signed char unknown_384_;
     signed char unknown_385_;
     unsigned char unknown_386_;
     unsigned char unknown_387_;
-    unsigned char unknown_388_;
-    unsigned char unknown_389_;
-    unsigned char unknown_38a_;
-    unsigned char unknown_38b_;
+    unsigned char page_;
+    unsigned char pages_;
+    unsigned char category_;
+    unsigned char count_;
     unsigned char unknown_38c_[3];
-    unsigned char unknown_38f_;
-    unsigned char unknown_390_;
+    unsigned char state_;
+    unsigned char step_;
     unsigned char unknown_391_;
     unsigned char unknown_392_;
     unsigned char unknown_393_;
-    unsigned short unknown_394_;
-    unsigned char unknown_396_;
-    unsigned char unknown_397_;
+    unsigned short flags_;
+    unsigned char female_;
+    unsigned char background_;
     unsigned char unknown_398_[3];
     int unknown_39c_;
     int unknown_3a0_;
@@ -132,25 +131,25 @@ struct Struct_ov006_02157a60 {
 };
 
 // USA: func_ov006_021585c4
-extern "C" ARM void func_ov006_021585c4(Struct_ov006_02157a60* arg0)
+extern "C" ARM void func_ov006_021585c4(Struct_ov006_02157a60* self)
 {
-    if (arg0->unknown_38f_ == 0 || arg0->unknown_44_ == 0)
+    if (self->state_ == 0 || self->cursor_ == 0)
         return;
-    if (arg0->unknown_36e_ < 0)
+    if (self->unknown_36e_ < 0)
         return;
-    Struct_ov006_02158478* var0 = func_02081da8((Struct_0207fdcc_2*)arg0->unknown_14_, arg0->unknown_36e_);
-    if (var0 == 0)
+    Canvas* canvas = func_02081da8((Struct_0207fdcc_2*)self->menu_, self->unknown_36e_);
+    if (canvas == 0)
         return;
     if (!WindowPane_IsOpen((unsigned char*)canvas) || self->choice_ == 0)
         return;
-    if (func_020e28dc((Struct_020e28dc*)arg0->unknown_18_))
+    if (func_020e28dc((Struct_020e28dc*)self->choice_))
         return;
     short x;
     short y;
-    GetLookAndTurnOffsets020809c4(self->menu_, self->group_, *self->cursor_, &x, &y);
-    UpdateEntryStateAndPosition((Ctx020e263c*)self->choice_, self->ticks_);
+    func_020809c4(self->menu_, self->unknown_36e_, *self->cursor_, &x, &y);
+    func_020e263c((Struct_020e263c_2*)self->choice_, self->ticks_);
     x -= 0x10;
     y -= 3;
-    SetEntryPositionFromObject((WinObj020e28f0*)self->choice_, x, y);
+    func_020e28f0((Struct_020e28f0*)self->choice_, x, y);
     SpriteContext_DrawEntries(self->renderer_);
 }

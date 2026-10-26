@@ -3,64 +3,64 @@
 #include "NitroSDK/Cache.h"
 
 struct Struct_0204c980_2 {
-    char unknown_0_[0x1c];
+    char padding[0x1c];
     unsigned char unknown_1c_0_ : 4;
     unsigned char unknown_1c_4_ : 4;
 };
 
 struct Struct_0204c980 {
-    int unknown_0_;
-    Struct_0204c980_2* unknown_4_;
-    void* unknown_8_;
+    int field_0;
+    Struct_0204c980_2* style;
+    void* pixels;
     short unknown_c_[4][18];
-    int unknown_9c_;
-    unsigned int unknown_a0_;
+    int dirty;
+    unsigned int destination;
     unsigned int unknown_a4_;
-    short unknown_a8_;
-    short unknown_aa_;
-    short unknown_ac_;
+    short width;
+    short height;
+    short field_ac;
     short unknown_ae_;
-    short unknown_b0_;
+    short textX;
     char unknown_b2_[0xe];
-    short unknown_c0_;
-    short unknown_c2_;
-    unsigned char unknown_c4_;
-    unsigned char unknown_c5_;
+    short cursorX;
+    short cursorY;
+    unsigned char field_c4;
+    unsigned char flags;
     unsigned char unknown_c6_;
-    unsigned char unknown_c7_;
-    short unknown_c8_;
-    short unknown_ca_;
-    int unknown_cc_;
+    unsigned char fontHeight;
+    short mapWidth;
+    short mapHeight;
+    int field_cc;
     int unknown_d0_;
     void* unknown_d4_;
 };
 
-void ClearFourRegions0204f0ec(char*);
-void* MessageSystem_GetInstance();
-int GetTableEntry0204a5e4(int, int);
+extern "C" void func_0204f0ec(char*);
+extern "C" void* MessageSystem_GetInstance();
+extern "C" int func_0204a5e4(int, int);
 #if defined(jpn)
 extern "C" void func_020474a8(void*, unsigned char, const char*, char*);
 extern "C" short func_0204f6a0(Struct_0204c980*, char*, int, unsigned char, unsigned char);
 extern "C" void func_0204daf8(Struct_0204c980*, char*, short);
 #else
 extern "C" void MessageSystem_FormatText(void*, unsigned char, const char*, char*, int, int, unsigned char);
-extern "C" short func_0204e3e0(Window0204c980*, char*, int, unsigned char, unsigned char, unsigned char);
-extern "C" void func_0204cd60(Window0204c980*, char*, short, short);
+extern "C" short func_0204e3e0(Struct_0204c980*, char*, int, unsigned char, unsigned char, unsigned char);
+extern "C" void func_0204cd60(Struct_0204c980*, char*, short, short);
 #endif
 typedef void (*Type_0204c980)(const void*, unsigned int, unsigned int);
 
-inline int inline_0204c980(int arg0, int arg1) { return func_0204a5e4(arg1, arg0); }
+inline int inline_0204c980(int bank, int index) { return func_0204a5e4(index, bank); }
 
-inline int inline_0204c980_2(Struct_0204c980_2* arg0) { return arg0->unknown_1c_4_; }
+inline int inline_0204c980_2(Struct_0204c980_2* style) { return style->unknown_1c_4_; }
 
 // USA: func_0204c980
 #if defined(jpn)
-extern "C" ARM void func_0204d790(Struct_0204c980* arg0, const char* arg1, unsigned int arg2, int arg3, unsigned char arg4, unsigned char arg5) {
+extern "C" ARM void func_0204d790(Struct_0204c980* window, const char* text, unsigned int destination, int mode, unsigned char border, unsigned char fullWidth) {
 #else
-extern "C" ARM void func_0204c980(Struct_0204c980* arg0, const char* arg1, unsigned int arg2, int arg3, unsigned char arg4, unsigned char arg5, unsigned char arg6) {
+extern "C" ARM void func_0204c980(Struct_0204c980* window, const char* text, unsigned int destination, int mode, unsigned char border, unsigned char fullWidth, unsigned char font) {
 #endif
-    if (arg0->unknown_4_ && arg0->unknown_8_ && arg1) {
-        func_0204f0ec((char*)arg0);
+    if (window->style && window->pixels && text) {
+        func_0204f0ec((char*)window);
 #if defined(jpn)
         char buffer[0x800] = {};
         func_020474a8(MessageSystem_GetInstance(), window->fontHeight, text, buffer);
@@ -75,32 +75,32 @@ extern "C" ARM void func_0204c980(Struct_0204c980* arg0, const char* arg1, unsig
         short padding = func_0204e3e0(window, buffer, mode, border, fullWidth, font);
         func_0204cd60(window, buffer, padding, font);
 #endif
-        arg0->unknown_a0_ = arg2;
-        Type_0204c980 var5 = (Type_0204c980)inline_0204c980(inline_0204c980_2(arg0->unknown_4_), arg0->unknown_4_->unknown_1c_0_);
-        CleanInvalidateCacheRange(arg0->unknown_8_, arg0->unknown_a4_);
-        var5(arg0->unknown_8_, arg0->unknown_a0_, arg0->unknown_a4_);
-        if (arg0->unknown_c5_ & 1) {
-            arg0->unknown_c0_ = 0;
-            short var6 = arg0->unknown_aa_;
-            short var7 = arg0->unknown_a8_;
-            int var8 = var7 * var6 * 2;
-            arg0->unknown_c8_ = var7;
-            arg0->unknown_ca_ = var6;
-            arg0->unknown_d0_ = var8;
-            arg0->unknown_c2_ = 0;
-            arg0->unknown_9c_ = 1;
+        window->destination = destination;
+        Type_0204c980 var5 = (Type_0204c980)inline_0204c980(inline_0204c980_2(window->style), window->style->unknown_1c_0_);
+        CleanInvalidateCacheRange(window->pixels, window->unknown_a4_);
+        var5(window->pixels, window->destination, window->unknown_a4_);
+        if (window->flags & 1) {
+            window->cursorX = 0;
+            short height = window->height;
+            short width = window->width;
+            int length = width * height * 2;
+            window->mapWidth = width;
+            window->mapHeight = height;
+            window->unknown_d0_ = length;
+            window->cursorY = 0;
+            window->dirty = 1;
         } else {
-            arg0->unknown_c5_ |= 1;
-            arg0->unknown_c0_ = 0;
-            int var9 = arg0->unknown_a8_ * arg0->unknown_aa_ * 2;
-            memset(arg0->unknown_d4_, 0, var9);
-            short var10 = arg0->unknown_aa_;
-            short var11 = arg0->unknown_a8_;
-            arg0->unknown_c8_ = var11;
-            arg0->unknown_ca_ = var10;
-            arg0->unknown_d0_ = var9;
-            arg0->unknown_c2_ = 0;
-            arg0->unknown_9c_ = 1;
+            window->flags |= 1;
+            window->cursorX = 0;
+            int length = window->width * window->height * 2;
+            memset(window->unknown_d4_, 0, length);
+            short height = window->height;
+            short width = window->width;
+            window->mapWidth = width;
+            window->mapHeight = height;
+            window->unknown_d0_ = length;
+            window->cursorY = 0;
+            window->dirty = 1;
         }
     }
 }

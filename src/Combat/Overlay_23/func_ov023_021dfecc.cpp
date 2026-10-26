@@ -6,33 +6,33 @@
 #include "Combat/MapDisplay.h"
 
 struct Struct_ov023_021dcb70;
-extern "C" unsigned char func_ov023_021dcb70(struct Struct_ov023_021dcb70* arg0);
+extern "C" unsigned char func_ov023_021dcb70(struct Struct_ov023_021dcb70* p);
 
 struct Struct_020534ac;
 
-void Background_Init(struct BackgroundGraphics* obj);
+extern "C" void Background_Init(struct BackgroundGraphics* obj);
 
 extern "C" void Background_SetPriority(void*, int);
-void Background_SetMapSize(unsigned char* obj, int value);
+extern "C" void Background_SetMapSize(unsigned char* obj, int value);
 
 struct BackgroundGraphics;
-int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
+extern "C" int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
 
 struct PacRecord;
-int Pac_CountFiles(struct PacRecord* entry);
+extern "C" int Pac_CountFiles(struct PacRecord* entry);
 
-void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
+extern "C" void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 
-void Background_FlushFile(void* obj, char* str);
+extern "C" void Background_FlushFile(void* obj, char* str);
 
-void Background_UploadFile(struct BackgroundGraphics* self, char* str);
+extern "C" void Background_UploadFile(struct BackgroundGraphics* self, char* str);
 
 extern "C" int func_ov023_021e20f0(void*, void*, void*, void*);
 
-extern "C" void func_ov023_021e20c0(void* arg0);
+extern "C" void func_ov023_021e20c0(void* p);
 
-extern "C" void func_ov023_021dde00(void* arg0);
-extern "C" void func_ov023_021dbd10(void* arg0, void* arg1);
+extern "C" void func_ov023_021dde00(void* obj);
+extern "C" void func_ov023_021dbd10(void* obj, void* p);
 
 extern "C" unsigned int GetSubBG0ScreenBase(void);
 extern "C" unsigned int GetMainBG2ScreenBase(void);
@@ -40,31 +40,31 @@ extern "C" unsigned int GetMainBG2ScreenBase(void);
 extern const char* data_ov023_021fda78[];
 
 // USA: func_ov023_021dfecc
-extern "C" ARM int func_ov023_021dfecc(void* arg0) {
+extern "C" ARM int func_ov023_021dfecc(void* objRaw) {
 #if defined(jpn)
- enum {Enum_ov023_021dfecc_1844=0x6b0, Enum_ov023_021dfecc_1792=0x600, Enum_ov023_021dfecc_124=0xf8, Enum_ov023_021dfecc_1912=0x6f4, Enum_ov023_021dfecc_1884=0x6d8, Enum_ov023_021dfecc_123=0xf7, Enum_ov023_021dfecc_1888=0x6dc, Enum_ov023_021dfecc_1896=0x6e4, Enum_ov023_021dfecc_1913=0x6f5, Enum_ov023_021dfecc_116=0xf0, Enum_ov023_021dfecc_1848=0x6b4};
+ enum {regionalOffset0=0x6b0, regionalOffset1=0x600, regionalOffset2=0xf8, regionalOffset3=0x6f4, regionalOffset4=0x6d8, regionalOffset5=0xf7, regionalOffset6=0x6dc, Enum_ov023_021dfecc_1896=0x6e4, Enum_ov023_021dfecc_1913=0x6f5, regionalOffset9=0xf0, Enum_ov023_021dfecc_1848=0x6b4};
 #else
- enum {Enum_ov023_021dfecc_1844=0x734, Enum_ov023_021dfecc_1792=0x700, Enum_ov023_021dfecc_124=0x7c, Enum_ov023_021dfecc_1912=0x778, Enum_ov023_021dfecc_1884=0x75c, Enum_ov023_021dfecc_123=0x7b, Enum_ov023_021dfecc_1888=0x760, Enum_ov023_021dfecc_1896=0x768, Enum_ov023_021dfecc_1913=0x779, Enum_ov023_021dfecc_116=0x74, Enum_ov023_021dfecc_1848=0x738};
+ enum {regionalOffset0=0x734, regionalOffset1=0x700, regionalOffset2=0x7c, regionalOffset3=0x778, regionalOffset4=0x75c, regionalOffset5=0x7b, regionalOffset6=0x760, Enum_ov023_021dfecc_1896=0x768, Enum_ov023_021dfecc_1913=0x779, regionalOffset9=0x74, Enum_ov023_021dfecc_1848=0x738};
 #endif
     unsigned char* obj = (unsigned char*)objRaw;
     struct BackgroundGraphics listObj;
     int listVal1;
     void* recPtr;
-    int listVal2;
+    int var4;
     int sizeOut;
     void* dummyOut;
     int result;
 
     int var8 = (int)BackgroundLoader::GetInstance();
-    int var9 = *(int*)(var0 + Enum_ov023_021dfecc_1844);
-    if (((BackgroundLoader*)(var8))->GetTaskStatus((int)(var9)) != 0) {
-        unsigned char var10 = func_ov023_021dcb70((struct Struct_ov023_021dcb70*)*(void**)(var0 + 0x50));
-        ((BackgroundLoader*)((struct Struct_020534ac*)var8))->GetLoadedFileByID((int)(*(int*)(var0 + Enum_ov023_021dfecc_1844)), (void**)(&var2), (unsigned int*)(&var4));
+    int handle = *(int*)(obj + regionalOffset0);
+    if (((BackgroundLoader*)(var8))->GetTaskStatus((int)(handle)) != 0) {
+        unsigned char var10 = func_ov023_021dcb70((struct Struct_ov023_021dcb70*)*(void**)(obj + 0x50));
+        ((BackgroundLoader*)((struct Struct_020534ac*)var8))->GetLoadedFileByID((int)(*(int*)(obj + regionalOffset0)), (void**)(&listVal1), (unsigned int*)(&var4));
 
 #if defined(jpn)
-        if (var2 != 0) {
+        if (listVal1 != 0) {
 #else
-        if (var2 != 0 && var4 != 0) {
+        if (listVal1 != 0 && var4 != 0) {
 #endif
 
             Background_Init(&listObj);
@@ -82,14 +82,14 @@ extern "C" ARM int func_ov023_021dfecc(void* arg0) {
             Background_SetMapSize((unsigned char*)&listObj, 0);
             Background_SetScroll((struct BackgroundGraphics*)&listObj, 0, 0);
 
-            if (*(signed char*)(var0 + Enum_ov023_021dfecc_1792 + Enum_ov023_021dfecc_124) == 1) {
-                volatile unsigned int* var12 = (volatile unsigned int*)0x4001000;
-                unsigned int var13 = 0x12;
-                if (var10 != 0) var13 |= 1;
-                *var12 = (*var12 & ~0x1f00) | (var13 << 8);
+            if (*(signed char*)(obj + regionalOffset1 + regionalOffset2) == 1) {
+                volatile unsigned int* reg = (volatile unsigned int*)0x4001000;
+                unsigned int bits = 0x12;
+                if (var10 != 0) bits |= 1;
+                *reg = (*reg & ~0x1f00) | (bits << 8);
             }
 
-            if (lookupResult == 0 && *(unsigned char*)(obj + regionalOffset3) != 0) {
+            if (var10 == 0 && *(unsigned char*)(obj + regionalOffset3) != 0) {
                 int count = Pac_CountFiles((struct PacRecord*)listVal1);
                 for (unsigned char i = 0; i < count; i++) {
                     recPtr = Pac_GetFile((struct PacRecord*)listVal1, i, &dummyOut, &sizeOut);
@@ -100,7 +100,7 @@ extern "C" ARM int func_ov023_021dfecc(void* arg0) {
                     }
                 }
             } else {
-                ClearFields_021e20c0(obj + 0xcc);
+                func_ov023_021e20c0(obj + 0xcc);
                 ((SafeAllocator*)obj)->Reset();
                 for (unsigned char i = 0; i < 4; i++) {
                     if (FindFilesInNarcBySubstring((const void*)listVal1, data_ov023_021fda78[i],
@@ -109,61 +109,61 @@ extern "C" ARM int func_ov023_021dfecc(void* arg0) {
                             Background_FlushFile(&listObj, (char*)recPtr);
                             Background_UploadFile((struct BackgroundGraphics*)&listObj, (char*)recPtr);
                         } else {
-                            func_ov023_021e20f0(var0 + 0xcc, var0, var3, (void*)var5);
+                            func_ov023_021e20f0(obj + 0xcc, obj, recPtr, (void*)sizeOut);
                         }
                     }
                 }
             }
 
-            *(int*)(var0 + Enum_ov023_021dfecc_1884) = 0x3800;
-            if (*(signed char*)(var0 + Enum_ov023_021dfecc_1792 + Enum_ov023_021dfecc_123) == 1) {
-                *(int*)(var0 + Enum_ov023_021dfecc_1884) = 0x2800;
+            *(int*)(obj + regionalOffset4) = 0x3800;
+            if (*(signed char*)(obj + regionalOffset1 + regionalOffset5) == 1) {
+                *(int*)(obj + regionalOffset4) = 0x2800;
             }
-            *(int*)(var0 + Enum_ov023_021dfecc_1888) = 0;
-            *(int*)(var0 + Enum_ov023_021dfecc_1896) = 0;
+            *(int*)(obj + regionalOffset6) = 0;
+            *(int*)(obj + Enum_ov023_021dfecc_1896) = 0;
 
-            if (*(signed char*)(var0 + Enum_ov023_021dfecc_1792 + Enum_ov023_021dfecc_124) == 1) {
+            if (*(signed char*)(obj + regionalOffset1 + regionalOffset2) == 1) {
                 memset((void*)GetSubBG0ScreenBase(), 0, 0x800);
-                if (*(void**)(var0 + 0x50) != 0) {
-                    func_ov023_021dde00(var0);
-                    volatile unsigned int* var17 = (volatile unsigned int*)0x4001000;
-                    *var17 = (*var17 & ~0x1f00) | 0x1300;
+                if (*(void**)(obj + 0x50) != 0) {
+                    func_ov023_021dde00(obj);
+                    volatile unsigned int* reg = (volatile unsigned int*)0x4001000;
+                    *reg = (*reg & ~0x1f00) | 0x1300;
                 }
             } else {
                 memset((void*)GetMainBG2ScreenBase(), 0, 0x800);
-                if (*(void**)(var0 + 0x50) != 0) {
-                    func_ov023_021dde00(var0);
+                if (*(void**)(obj + 0x50) != 0) {
+                    func_ov023_021dde00(obj);
                 }
             }
-            func_ov023_021dbd10(var0 + 0xcc, *(void**)(var0 + 0x50));
+            func_ov023_021dbd10(obj + 0xcc, *(void**)(obj + 0x50));
         }
 
-        *(unsigned char*)(var0 + Enum_ov023_021dfecc_1913) = var10;
-        ((BackgroundLoader*)(var8))->RemoveTask((int)(*(int*)(var0 + Enum_ov023_021dfecc_1844)));
-        *(int*)(var0 + Enum_ov023_021dfecc_1844) = -1;
-        *(void**)(var0 + 0x4c) = *(void**)(var0 + 0x50);
-        *(void**)(var0 + 0x50) = 0;
+        *(unsigned char*)(obj + Enum_ov023_021dfecc_1913) = var10;
+        ((BackgroundLoader*)(var8))->RemoveTask((int)(*(int*)(obj + regionalOffset0)));
+        *(int*)(obj + regionalOffset0) = -1;
+        *(void**)(obj + 0x4c) = *(void**)(obj + 0x50);
+        *(void**)(obj + 0x50) = 0;
 
-        unsigned short var18 = *(unsigned short*)(var0 + Enum_ov023_021dfecc_1792 + Enum_ov023_021dfecc_116);
+        unsigned short var18 = *(unsigned short*)(obj + regionalOffset1 + regionalOffset9);
         if (var18 & 0x40) {
             if (!(var18 & 4)) {
                 var18 |= 0x20;
-                *(unsigned short*)(var0 + Enum_ov023_021dfecc_1792 + Enum_ov023_021dfecc_116) = var18;
+                *(unsigned short*)(obj + regionalOffset1 + regionalOffset9) = var18;
             }
         }
 
-        for (int var19 = 0; var19 < 7; var19++) {
-            *(int*)(var0 + Enum_ov023_021dfecc_1848 + var19 * 4) = -1;
+        for (int i = 0; i < 7; i++) {
+            *(int*)(obj + Enum_ov023_021dfecc_1848 + i * 4) = -1;
         }
 
-        var18 = *(unsigned short*)(var0 + Enum_ov023_021dfecc_1792 + Enum_ov023_021dfecc_116);
+        var18 = *(unsigned short*)(obj + regionalOffset1 + regionalOffset9);
         var18 |= 0x4;
         var18 |= 0x2000;
-        *(unsigned short*)(var0 + Enum_ov023_021dfecc_1792 + Enum_ov023_021dfecc_116) = var18;
+        *(unsigned short*)(obj + regionalOffset1 + regionalOffset9) = var18;
 
-        var7 = (*(void**)(var0 + 0x4c) == 0) ? -1 : 2;
+        result = (*(void**)(obj + 0x4c) == 0) ? -1 : 2;
     } else {
-        var7 = 1;
+        result = 1;
     }
-    return var7;
+    return result;
 }

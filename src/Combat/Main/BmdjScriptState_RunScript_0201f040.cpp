@@ -19,7 +19,7 @@ struct BmdjScriptContext {
 extern struct BmdjScriptContext data_020fdc40;
 
 // Main, originally RegisterAndRunBufferedScript0201f040 (USA 0x0201f040, EUR 0x0201f050, JPN 0x0201edcc)
-ARM void BmdjScriptState_RunScript(void* state, void* allocator, struct StreamHeader* scriptIn, unsigned int lengthIn) {
+extern "C" ARM void BmdjScriptState_RunScript(void* state, void* allocator, struct StreamHeader* scriptIn, unsigned int lengthIn) {
     unsigned int length = lengthIn;
     int locked = 0;
     struct StreamHeader* script = scriptIn;

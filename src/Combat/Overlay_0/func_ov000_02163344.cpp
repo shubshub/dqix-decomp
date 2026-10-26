@@ -18,12 +18,12 @@
 
 
 // USA: func_ov000_02163344
-extern "C" ARM void func_ov000_02163344(void* arg0, int arg1, short arg2, unsigned char arg3, unsigned short arg4, unsigned short arg5) {
-    unsigned char* var0 = (unsigned char*)arg0;
-    *(int*)(var0 + REGION_OFFSET_0) = arg1;
-    *(short*)(var0 + REGION_OFFSET_1) = arg2;
-    var0[REGION_OFFSET_2] = arg3;
-    var0[REGION_OFFSET_3] = (unsigned char)arg4;
-    *(unsigned short*)(var0 + REGION_OFFSET_4) = arg5;
-    *(unsigned int*)(var0 + REGION_OFFSET_5) |= 0x2000;
+extern "C" ARM void func_ov000_02163344(void* obj, int a1, short a2, unsigned char a3, unsigned short a4, unsigned short a5) {
+    unsigned char* p = (unsigned char*)obj;
+    *(int*)(p + REGION_OFFSET_0) = a1;
+    *(short*)(p + REGION_OFFSET_1) = a2;
+    p[REGION_OFFSET_2] = a3;
+    p[REGION_OFFSET_3] = (unsigned char)a4;
+    *(unsigned short*)(p + REGION_OFFSET_4) = a5;
+    *(unsigned int*)(p + REGION_OFFSET_5) |= 0x2000;
 }

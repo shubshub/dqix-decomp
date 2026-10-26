@@ -12,16 +12,16 @@ extern "C" __declspec(initcode) ARM void __sinit_ov025_021ef288(void) {
 #else
     enum { Enum_ov025_021ef288_2 = 2, Enum_ov025_021ef288_3 = 3, Enum_ov025_021ef288_0 = 0, Enum_ov025_021ef288_5 = 5, Enum_ov025_021ef288_6 = 6, Enum_ov025_021ef288_1 = 1, Enum_ov025_021ef288_4 = 4 };
 #endif
-    float var0;
-    float var1;
-    float var2;
+    float t;
+    float a;
+    float b;
     data_ov025_021ef988[Enum_ov025_021ef288_0] = data_ov025_021ef464[1] + (data_ov025_021ef464[Enum_ov025_021ef288_3] + (data_ov025_021ef464[Enum_ov025_021ef288_2] + data_ov025_021ef464[4]));
-    var0 = data_ov025_021ef988[Enum_ov025_021ef288_5] + data_ov025_021ef464[Enum_ov025_021ef288_2];
-    var1 = data_ov025_021ef464[4];
-    data_ov025_021ef988[Enum_ov025_021ef288_6] = var0;
-    var0 = var0 + var1;
-    var2 = data_ov025_021ef464[Enum_ov025_021ef288_3];
-    data_ov025_021ef988[Enum_ov025_021ef288_1] = var0;
-    var0 = var0 + var2;
-    data_ov025_021ef988[Enum_ov025_021ef288_4] = var0;
+    t = data_ov025_021ef988[Enum_ov025_021ef288_5] + data_ov025_021ef464[Enum_ov025_021ef288_2];
+    a = data_ov025_021ef464[4];
+    data_ov025_021ef988[Enum_ov025_021ef288_6] = t;
+    t = t + a;
+    b = data_ov025_021ef464[Enum_ov025_021ef288_3];
+    data_ov025_021ef988[Enum_ov025_021ef288_1] = t;
+    t = t + b;
+    data_ov025_021ef988[Enum_ov025_021ef288_4] = t;
 }

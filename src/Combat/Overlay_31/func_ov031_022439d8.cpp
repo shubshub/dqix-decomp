@@ -4,32 +4,32 @@
 #include "Memory/SafeAllocator.h"
 #include "Resource/GameResources.h"
 
-struct Struct_02038598_4;
+struct FlagWord020466f4;
 
 struct Struct_ov031_022439d8 {
-	unsigned char unknown_0_[0x28];
-	SafeAllocator* unknown_28_;
-	unsigned char unknown_2c_[0x30 - 0x2c];
+	unsigned char pad0[0x28];
+	SafeAllocator* f28;
+	unsigned char pad1[0x30 - 0x2c];
 	int unknown_30_;
-	unsigned char unknown_34_[0x44 - 0x34];
+	unsigned char pad2[0x44 - 0x34];
 	unsigned char unknown_44_;
-	unsigned char unknown_45_[0x374 - 0x45];
+	unsigned char pad3[0x374 - 0x45];
 	unsigned char unknown_374_;
-	unsigned char unknown_375_[0x37c - 0x375];
+	unsigned char pad4[0x37c - 0x375];
 	void* unknown_37c_;
-	unsigned char unknown_380_[0x39c - 0x380];
+	unsigned char pad5[0x39c - 0x380];
 	int unknown_39c_;
 	int unknown_3a0_;
 };
 
 extern SafeAllocator data_ov031_02291e3c;
 extern "C" void func_ov023_021f5b9c(void* a, void* b, int c, void* d);
-void GameObject_EnableControl(void* p);
-FlagWord020466f4* GlobalFlags_GetInstance(void);
-void FlagWord_ClearBits(FlagWord020466f4* p, unsigned int flags);
+extern "C" void GameObject_EnableControl(void* p);
+extern "C" FlagWord020466f4* GlobalFlags_GetInstance(void);
+extern "C" void FlagWord_ClearBits(FlagWord020466f4* p, unsigned int flags);
 
 // USA: func_ov031_022439d8
-extern "C" ARM int func_ov031_022439d8(Struct022439d8* ctx) {
+extern "C" ARM int func_ov031_022439d8(Struct_ov031_022439d8* ctx) {
 	void* base = GetGameResources();
 	BackgroundLoader* loader = BackgroundLoader::GetInstance();
 	GameObject* obj = GameState::GetInstance()->GetLeader();
@@ -37,46 +37,46 @@ extern "C" ARM int func_ov031_022439d8(Struct022439d8* ctx) {
 		GameObject_EnableControl(obj);
 	}
 #if defined(jpn)
-	*(int*)((char*)var0 + 0x41e4) = 0;
+	*(int*)((char*)base + 0x41e4) = 0;
 #else
-	*(int*)((char*)var0 + 0x4494) = 0;
+	*(int*)((char*)base + 0x4494) = 0;
 #endif
-	if (arg0->unknown_39c_ >= 0) {
-		var1->RemoveTask(arg0->unknown_39c_);
-		arg0->unknown_39c_ = -1;
+	if (ctx->unknown_39c_ >= 0) {
+		loader->RemoveTask(ctx->unknown_39c_);
+		ctx->unknown_39c_ = -1;
 	}
-	if (arg0->unknown_3a0_ >= 0) {
-		var1 = BackgroundLoader::GetInstance();
-		var1->RemoveTask(arg0->unknown_3a0_);
-		arg0->unknown_3a0_ = -1;
+	if (ctx->unknown_3a0_ >= 0) {
+		loader = BackgroundLoader::GetInstance();
+		loader->RemoveTask(ctx->unknown_3a0_);
+		ctx->unknown_3a0_ = -1;
 	}
-	SignedAllocatorHeader* var3 = data_ov031_02291e3c.GetSignedAllocator();
-	if (var3 != 0) {
+	SignedAllocatorHeader* p = data_ov031_02291e3c.GetSignedAllocator();
+	if (p != 0) {
 		data_ov031_02291e3c.Destroy();
-		((SafeAllocator*)arg0)->Free(var3);
+		((SafeAllocator*)ctx)->Free(p);
 	}
-	var3 = ((SafeAllocator*)arg0)->GetSignedAllocator();
-	if (var3 != 0) {
-		((SafeAllocator*)arg0)->Destroy();
-		arg0->unknown_28_->Free(var3);
+	p = ((SafeAllocator*)ctx)->GetSignedAllocator();
+	if (p != 0) {
+		((SafeAllocator*)ctx)->Destroy();
+		ctx->f28->Free(p);
 	}
-	if (arg0->unknown_44_ & 1) {
-		((SafeAllocator*)arg0)->ResetAllocatorPointer();
-		void* var4 = arg0->unknown_28_->Allocate(0xf000);
-		if (var4 != 0) {
-			((SafeAllocator*)arg0)->CreateTypeA(var4, 0xf000);
-			((SafeAllocator*)arg0)->Reset();
-			func_ov023_021f5b9c(arg0->unknown_37c_, (char*)arg0 + 0x50, 4, arg0);
+	if (ctx->unknown_44_ & 1) {
+		((SafeAllocator*)ctx)->ResetAllocatorPointer();
+		void* buf = ctx->f28->Allocate(0xf000);
+		if (buf != 0) {
+			((SafeAllocator*)ctx)->CreateTypeA(buf, 0xf000);
+			((SafeAllocator*)ctx)->Reset();
+			func_ov023_021f5b9c(ctx->unknown_37c_, (char*)ctx + 0x50, 4, ctx);
 		}
-		var3 = ((SafeAllocator*)arg0)->GetSignedAllocator();
-		if (var3 != 0) {
-			((SafeAllocator*)arg0)->Destroy();
-			arg0->unknown_28_->Free(var3);
+		p = ((SafeAllocator*)ctx)->GetSignedAllocator();
+		if (p != 0) {
+			((SafeAllocator*)ctx)->Destroy();
+			ctx->f28->Free(p);
 		}
 	}
-	if ((ctx->f374 & 0x20) == 0) {
+	if ((ctx->unknown_374_ & 0x20) == 0) {
 		FlagWord_ClearBits(GlobalFlags_GetInstance(), 0x80);
 	}
-	arg0->unknown_30_ = 1;
+	ctx->unknown_30_ = 1;
 	return 2;
 }

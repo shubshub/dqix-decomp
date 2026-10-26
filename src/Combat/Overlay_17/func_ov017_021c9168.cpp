@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 
-void* LinkMessageQueue_GetInstance(void);
+extern "C" void* LinkMessageQueue_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
 union Struct_ov017_021c9168 {
-    struct { unsigned char unknown_0_0_ : 4; unsigned char unknown_0_4_ : 4; } unknown_0_;
-    struct { char unknown_0_0_ : 4; char unknown_0_4_ : 4; } unknown1_0_;
+    struct { unsigned char unknown_0_0_ : 4; unsigned char unknown_0_4_ : 4; } lo;
+    struct { char unknown_0_0_ : 4; char unknown_0_4_ : 4; } hi;
 };
 
 struct Struct_ov017_021c9168_2 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[3];
-    unsigned short unknown_4_;
-    unsigned char unknown_6_[1];
-    union Struct_ov017_021c9168 unknown_7_;
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
-    unsigned int unknown_c_;
-    unsigned int unknown_10_;
+    unsigned char tag;
+    unsigned char pad1[3];
+    unsigned short field4;
+    unsigned char pad2[1];
+    union Struct_ov017_021c9168 payload;
+    unsigned short field8;
+    unsigned short fieldA;
+    unsigned int fieldC;
+    unsigned int field10;
 };
 
 // USA: func_ov017_021c9168
@@ -25,15 +25,15 @@ extern "C" ARM void func_ov017_021c9168(int p0, int p1, int p2, int p3,
         int p4, int p5, int p6, int p7, int p8, int p9, int p10) {
     void* d = LinkMessageQueue_GetInstance();
 
-    struct Struct_ov017_021c9168_2 var1;
-    var1.unknown_0_ = 0x84;
-    var1.unknown_4_ = (unsigned short)arg0;
-    var1.unknown_7_.unknown_0_.unknown_0_0_ = (unsigned char)arg1;
-    var1.unknown_7_.unknown1_0_.unknown_0_4_ = (char)arg10;
-    var1.unknown_c_ = arg4;
-    var1.unknown_10_ = arg6;
-    var1.unknown_a_ = (unsigned short)arg8;
-    var1.unknown_8_ = (unsigned short)arg3;
+    struct Struct_ov017_021c9168_2 evt;
+    evt.tag = 0x84;
+    evt.field4 = (unsigned short)p0;
+    evt.payload.lo.unknown_0_0_ = (unsigned char)p1;
+    evt.payload.hi.unknown_0_4_ = (char)p10;
+    evt.fieldC = p4;
+    evt.field10 = p6;
+    evt.fieldA = (unsigned short)p8;
+    evt.field8 = (unsigned short)p3;
 
-    func_0205e330(var0, &var1, 0);
+    func_0205e330(d, &evt, 0);
 }

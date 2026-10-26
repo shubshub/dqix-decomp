@@ -4,58 +4,58 @@
 
 
 
-struct Struct_0201c1c8 {
-    int unknown_0_;
-    union { int unknown_0_; float unknown1_0_; } unknown_4_;
+struct Variant02030b0c {
+    int tag;
+    union { int i; float f; } u;
 };
 
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void func_0206dfe8(void* p, int a, int b);
 
-void ClearRegions0206e080(char* obj, int slot);
-void ClearIndexedEntryFields0206e0d0(char* obj, int slot);
+extern "C" void func_0206e080(char* obj, int slot);
+extern "C" void func_0206e0d0(char* obj, int slot);
 extern "C" void Scenario_SetFlag(void* obj, unsigned char* arr, int idx, int flag);
 
-void GameState_SetStoryChapter(char* obj, int v);
-void GameState_SetStoryPart(char* obj, int v);
-void GameState_SetStoryStep(char* base, int val);
+extern "C" void GameState_SetStoryChapter(char* obj, int v);
+extern "C" void GameState_SetStoryPart(char* obj, int v);
+extern "C" void GameState_SetStoryStep(char* base, int val);
 
 struct Struct_02108d70_5 {
     unsigned char unknown_0_;
-    char unknown_1_[7];
-    void* unknown_8_;
-    char unknown_c_[4];
-    int unknown_10_;
-    int unknown_14_;
-    char unknown_18_[8];
+    char pad1[7];
+    void* entries;
+    char pad2[4];
+    int limit;
+    int field14;
+    char pad18[8];
     int unknown_20_;
-    char unknown_24_[4];
-    int unknown_28_;
+    char pad20[4];
+    int count;
 };
 extern struct Struct_02108d70_5 data_02108d70;
 
 // USA: func_020716a4
-extern "C" ARM int func_020716a4(struct Struct_0201c1c8* arg0, int arg1) {
-    int var0;
-    int var1;
-    int var2;
-    int var3;
-    int var4;
-    void* var5;
-    int var6;
-    GameState* var7;
+extern "C" ARM int func_020716a4(struct Variant02030b0c* args, int count) {
+    int v0;
+    int a;
+    int b;
+    int c;
+    int v;
+    void* entry;
+    int i;
+    GameState* bs;
 
-    var0 = ((Script::Parameter*)arg0)->ToInt();
-    if (data_02108d70.unknown_14_ != var0) {
+    v0 = ((Script::Parameter*)args)->ToInt();
+    if (data_02108d70.field14 != v0) {
         return 1;
     }
 
-    var1 = ((Script::Parameter*)(arg0 + 1))->ToInt();
-    var2 = ((Script::Parameter*)(arg0 + 2))->ToInt();
+    a = ((Script::Parameter*)(args + 1))->ToInt();
+    b = ((Script::Parameter*)(args + 2))->ToInt();
     {
-        struct Struct_0201c1c8* var8 = arg0 + 3;
-        arg0 = arg0 + 4;
-        var3 = ((Script::Parameter*)var8)->ToInt();
+        struct Variant02030b0c* last = args + 3;
+        args = args + 4;
+        c = ((Script::Parameter*)last)->ToInt();
     }
 
     bs = GameState::GetInstance();
@@ -64,15 +64,15 @@ extern "C" ARM int func_020716a4(struct Struct_0201c1c8* arg0, int arg1) {
     GameState_SetStoryStep((char*)bs, c);
 
     entry = Scenario_GetInstance();
-    ClearRegions0206e080((char*)entry, *(unsigned char*)((char*)entry + 0x332));
-    ClearIndexedEntryFields0206e0d0((char*)entry, *(unsigned char*)((char*)entry + 0x332));
+    func_0206e080((char*)entry, *(unsigned char*)((char*)entry + 0x332));
+    func_0206e0d0((char*)entry, *(unsigned char*)((char*)entry + 0x332));
     func_0206dfe8(entry, 0, 0x200);
     func_0206dfe8(entry, 0x38e, 0x3e8);
 
-    for (var6 = 0; var6 < arg1 - 4; var6++) {
-        var4 = ((Script::Parameter*)arg0)->ToInt();
-        arg0 = arg0 + 1;
-        switch (var4 >> 16) {
+    for (i = 0; i < count - 4; i++) {
+        v = ((Script::Parameter*)args)->ToInt();
+        args = args + 1;
+        switch (v >> 16) {
         case 2:
             Scenario_SetFlag(entry, (unsigned char*)entry + *(unsigned char*)((char*)entry + 0x332) * 0x1c + 3, (unsigned short)v, 1);
             break;

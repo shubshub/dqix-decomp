@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 // USA: func_ov011_02186210
-extern "C" ARM void func_ov011_02186210(int arg0, int arg1, int arg2, int arg3) {
-    unsigned short* var0 = (unsigned short*)0x400000c;
-    *var0 = (*var0 & 0x43) | (arg0 << 0xe) | (arg1 << 0x7) | (arg2 << 0x8) | (arg3 << 0x2);
+extern "C" ARM void func_ov011_02186210(int screenSize, int colorMode, int screenBase, int charBase) {
+    unsigned short* reg = (unsigned short*)0x400000c;
+    *reg = (*reg & 0x43) | (screenSize << 0xe) | (colorMode << 0x7) | (screenBase << 0x8) | (charBase << 0x2);
 }

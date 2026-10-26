@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-void* LinkMessageQueue_GetInstance(void);
+extern "C" void* LinkMessageQueue_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021d22d4 {
@@ -13,17 +13,17 @@ struct Struct_ov017_021d22d4 {
 extern "C" ARM void func_ov017_021d22d4(unsigned short a0, unsigned short a1, void* a2) {
     void* p = LinkMessageQueue_GetInstance();
     unsigned char buf[0x14];
-    Bits021d22d4* bits = (Bits021d22d4*)(buf + 4);
+    Struct_ov017_021d22d4* bits = (Struct_ov017_021d22d4*)(buf + 4);
     buf[0] = 0x9d;
-    bits->lo2 = a0;
-    bits->hi14 = a1;
+    bits->unknown_0_0_ = a0;
+    bits->unknown_0_2_ = a1;
 
-    int var3 = 0xe;
-    if ((unsigned int)(arg1 + 0xe) > 0x2e0) {
-        var3 = 0x2e0 - arg1;
+    int len = 0xe;
+    if ((unsigned int)(a1 + 0xe) > 0x2e0) {
+        len = 0x2e0 - a1;
     }
-    if (var3 >= 0) {
-        memcpy((unsigned char*)var2 + 2, (unsigned char*)arg2 + arg1, var3);
-        func_0205e330(var0, var1, 0);
+    if (len >= 0) {
+        memcpy((unsigned char*)bits + 2, (unsigned char*)a2 + a1, len);
+        func_0205e330(p, buf, 0);
     }
 }

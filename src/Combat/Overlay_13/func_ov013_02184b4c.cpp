@@ -14,62 +14,62 @@
 
 #pragma opt_arithtransformation off
 
-extern "C" int func_02053c6c(unsigned char* arg0);
-extern "C" int func_020dd11c(unsigned int arg0, unsigned int arg1);
+extern "C" int func_02053c6c(unsigned char* obj);
+extern "C" int func_020dd11c(unsigned int a, unsigned int b);
 
 // USA: func_ov013_02184b4c
-extern "C" ARM void func_ov013_02184b4c(void* arg0, void* arg1) {
-    unsigned char* var0 = (unsigned char*)arg0;
-    unsigned char* var1 = (unsigned char*)arg1;
-    unsigned char* var2;
+extern "C" ARM void func_ov013_02184b4c(void* obj, void* arg) {
+    unsigned char* o = (unsigned char*)obj;
+    unsigned char* p = (unsigned char*)arg;
+    unsigned char* ctx;
     unsigned short var3;
-    int var4;
-    int var5;
+    int field950;
+    int i;
 
-    if (arg1 == 0) return;
+    if (arg == 0) return;
 
-    var2 = (unsigned char*)func_02053c6c(var1);
-    *(void**)(var0 + R(0x62c,0x6a4)) = *(void**)(var1 + 0x134);
+    ctx = (unsigned char*)func_02053c6c(p);
+    *(void**)(o + R(0x62c,0x6a4)) = *(void**)(p + 0x134);
 
-    var3 = *(unsigned short*)(var2 + 0x564);
-    *(int*)(var0 + R(0x5f4,0x66c)) = var3;
-    *(int*)(var0 + R(0x5f0,0x668)) = var3;
+    var3 = *(unsigned short*)(ctx + 0x564);
+    *(int*)(o + R(0x5f4,0x66c)) = var3;
+    *(int*)(o + R(0x5f0,0x668)) = var3;
 
-    var4 = *(int*)(var2 + R(0x8b8,0x950));
+    field950 = *(int*)(ctx + R(0x8b8,0x950));
     {
-        unsigned int var6 = var4 & 0xff;
-        var0[R(0x630,0x6a8)] = (unsigned char)var4;
-        *(int*)(var0 + R(0x638,0x6b0)) = *(unsigned short*)(var2 + 0x16c + var6 * 2);
+        unsigned int idx = field950 & 0xff;
+        o[R(0x630,0x6a8)] = (unsigned char)field950;
+        *(int*)(o + R(0x638,0x6b0)) = *(unsigned short*)(ctx + 0x16c + idx * 2);
     }
     {
-        unsigned char* var7 = var2 + var0[R(0x630,0x6a8)];
-        *(int*)(var0 + R(0x640,0x6b8)) = var7[0x186];
+        unsigned char* q = ctx + o[R(0x630,0x6a8)];
+        *(int*)(o + R(0x640,0x6b8)) = q[0x186];
     }
 
-    *(unsigned short*)(var0 + R(0x648,0x6c0)) = *(unsigned short*)(*(unsigned char**)(var1 + 0x134) + 0x30);
-    *(unsigned short*)(var0 + R(0x64c,0x6c4)) = *(unsigned short*)(*(unsigned char**)(var1 + 0x134) + 0x32);
-    *(unsigned short*)(var0 + R(0x64e,0x6c6)) = *(unsigned short*)(*(unsigned char**)(var1 + 0x134) + 0x34);
-    *(unsigned short*)(var0 + R(0x650,0x6c8)) = *(unsigned short*)(*(unsigned char**)(var1 + 0x134) + 0x36);
-    *(unsigned short*)(var0 + R(0x652,0x6ca)) = *(unsigned short*)(*(unsigned char**)(var1 + 0x134) + 0x38);
+    *(unsigned short*)(o + R(0x648,0x6c0)) = *(unsigned short*)(*(unsigned char**)(p + 0x134) + 0x30);
+    *(unsigned short*)(o + R(0x64c,0x6c4)) = *(unsigned short*)(*(unsigned char**)(p + 0x134) + 0x32);
+    *(unsigned short*)(o + R(0x64e,0x6c6)) = *(unsigned short*)(*(unsigned char**)(p + 0x134) + 0x34);
+    *(unsigned short*)(o + R(0x650,0x6c8)) = *(unsigned short*)(*(unsigned char**)(p + 0x134) + 0x36);
+    *(unsigned short*)(o + R(0x652,0x6ca)) = *(unsigned short*)(*(unsigned char**)(p + 0x134) + 0x38);
 
-    if (var0[R(0x5cc,0x640)] != 0) {
-        *(unsigned short*)(var0 + R(0x646,0x6be)) = *(unsigned short*)(*(unsigned char**)(var1 + 0x138));
-        *(unsigned short*)(var0 + R(0x64a,0x6c2)) = *(unsigned short*)(*(unsigned char**)(var1 + 0x138) + 2);
+    if (o[R(0x5cc,0x640)] != 0) {
+        *(unsigned short*)(o + R(0x646,0x6be)) = *(unsigned short*)(*(unsigned char**)(p + 0x138));
+        *(unsigned short*)(o + R(0x64a,0x6c2)) = *(unsigned short*)(*(unsigned char**)(p + 0x138) + 2);
     } else {
-        *(unsigned short*)(var0 + R(0x646,0x6be)) = *(unsigned short*)(*(unsigned char**)(var1 + 0x130) + 4);
-        *(unsigned short*)(var0 + R(0x64a,0x6c2)) = *(unsigned short*)(*(unsigned char**)(var1 + 0x130) + 6);
+        *(unsigned short*)(o + R(0x646,0x6be)) = *(unsigned short*)(*(unsigned char**)(p + 0x130) + 4);
+        *(unsigned short*)(o + R(0x64a,0x6c2)) = *(unsigned short*)(*(unsigned char**)(p + 0x130) + 6);
     }
 
-    if (*(int*)(var0 + R(0x640,0x6b8)) != 0) var0[R(0x63c,0x6b4)] = 1;
-    *(int*)(var0 + R(0x5f8,0x670)) = 0x64;
+    if (*(int*)(o + R(0x640,0x6b8)) != 0) o[R(0x63c,0x6b4)] = 1;
+    *(int*)(o + R(0x5f8,0x670)) = 0x64;
 
-    for (var5 = 0; var5 < 5; var5++) {
-        (var0 + var5)[R(0x631,0x6a9)] = (unsigned char)func_020dd11c(var0[R(0x630,0x6a8)], (unsigned char)var5);
-        (var0 + var5)[R(0x624,0x69c)] = 0;
+    for (i = 0; i < 5; i++) {
+        (o + i)[R(0x631,0x6a9)] = (unsigned char)func_020dd11c(o[R(0x630,0x6a8)], (unsigned char)i);
+        (o + i)[R(0x624,0x69c)] = 0;
         {
-            unsigned char var8 = (var0 + var5)[R(0x631,0x6a9)];
-            unsigned char* var9 = var2 + var8;
-            *(int*)(var0 + R(0x5fc,0x674) + var5 * 4) = var9[0x464];
+            unsigned char idx = (o + i)[R(0x631,0x6a9)];
+            unsigned char* var9 = ctx + idx;
+            *(int*)(o + R(0x5fc,0x674) + i * 4) = var9[0x464];
         }
     }
 }

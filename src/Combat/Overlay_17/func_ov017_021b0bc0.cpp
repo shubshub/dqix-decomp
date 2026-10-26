@@ -8,57 +8,57 @@
 #include "Resource/Brightness.h"
 
 
-struct Struct_0202c1a4;
-struct Struct_02033834;
+struct SearchStruct0202c1a4;
+struct Obj02033874;
 struct Struct_02053f7c_3;
-struct Struct_02083508_2 { char unknown_0_[0x20]; };
+struct StructDE1D4 { char data[0x20]; };
 
 extern "C" void* LinkSession_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void LinkSession_UpdateMemberCount(void*);
-void GameObject_SetLineLeader(unsigned char*, int);
-int LinkSession_IsSlotMember(SearchStruct* obj, int value);
-signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
+extern "C" void GameObject_SetLineLeader(unsigned char*, int);
+extern "C" int LinkSession_IsSlotMember(SearchStruct* obj, int value);
+extern "C" signed char LinkSession_GetOwnSlot(SearchStruct0202c1a4* obj);
 extern "C" void Party_ReformLine(GameResources*, int, int, int, int);
-void CallHelperWithBuf_021907dc(int, int, int, int, int);
-signed char GameObject_GetLineLeader(void*);
-void GameObject_SnapFacing(Obj02033874*, int);
-void SetByte0x5cdaAndClearField0xa_020120d4(unsigned char*, unsigned char);
-void* GameState_GetPlayerLocation(char* p, unsigned int index);
-void SetWord0x71f8_0201206c(void*, int);
-void SetField0x1b2IfMatchOrFlag02053f7c(Obj02053f7c*, unsigned short, int);
+extern "C" void func_ov017_021907dc(int, int, int, int, int);
+extern "C" signed char GameObject_GetLineLeader(void*);
+extern "C" void GameObject_SnapFacing(Obj02033874*, int);
+extern "C" void func_020120d4(unsigned char*, unsigned char);
+extern "C" void* GameState_GetPlayerLocation(char* p, unsigned int index);
+extern "C" void func_0201206c(void*, int);
+extern "C" void func_02053f7c(Struct_02053f7c_3*, unsigned short, int);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void func_0206dfe8(void*, int, int);
-void CopyRegionsAndClearField0206e70c(char*);
-void ApplySlotBytesToBattleStruct_0206df14(unsigned char*);
-float GetActiveBitIndex_020103e8(GameState*);
-void InitFieldsFromCombatant_0219bcac(unsigned char);
-unsigned char* GameState_GetZoneTransition(GameState*);
-void* GetGlobal02109418_02094d6c();
-void* CallFunc0205ec34_020965f8();
-void* ItemTable_Construct(void*);
-void ItemTable_Init(void*);
-void ItemRecord_Clear(StructDE1D4*);
-extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
+extern "C" void func_0206e70c(char*);
+extern "C" void func_0206df14(unsigned char*);
+extern "C" float func_020103e8(GameState*);
+extern "C" void func_ov017_0219bcac(unsigned char);
+extern "C" unsigned char* GameState_GetZoneTransition(GameState*);
+extern "C" void* func_02094d6c();
+extern "C" void* func_020965f8();
+extern "C" void* ItemTable_Construct(void*);
+extern "C" void ItemTable_Init(void*);
+extern "C" void ItemRecord_Clear(StructDE1D4*);
+extern "C" void* ExtractFileFromGP2(const char* arg0, const char* innerFilePath, unsigned int* outSize);
 #if defined(jpn)
-extern "C" void* func_020e08f0(int arg0, unsigned int* arg1);
+extern "C" void* func_020e08f0(int index, unsigned int* outLength);
 #endif
 extern "C" int func_020def44(int, int, int, short);
 extern "C" void func_0207cbe8(char*);
 extern "C" void func_0207cc18(void*, void*);
-void* GameState_GetParty(GameState*);
+extern "C" void* GameState_GetParty(GameState*);
 struct KeyMap020a095c;
-void AddKeyValueClamped020a095c(KeyMap020a095c*, int, int);
-void InitAndAppendEntry020dbc5c(char*, int);
-int GameState_GetLeaderIndex(GameState*);
-void EnqueueEventTag20_021cee78(int, unsigned char);
+extern "C" void func_020a095c(KeyMap020a095c*, int, int);
+extern "C" void func_020dbc5c(char*, int);
+extern "C" int GameState_GetLeaderIndex(GameState*);
+extern "C" void func_ov017_021cee78(int, unsigned char);
 extern "C" void func_ov017_02191234(GameResources*);
 
 extern const char* data_020f2a18;
 extern const char* data_020f2a0c;
 
 struct Struct_ov017_021b0bc0 {
-    char unknown_0_[0x1b34];
+    char pad0[0x1b34];
     int unknown_1b34_;
     int unknown_1b38_;
     int unknown_1b3c_;
@@ -75,31 +75,31 @@ struct Struct_ov017_021b0bc0 {
     unsigned short unknown_1f76_;
 };
 
-struct Struct_ov017_021b0bc0_2 {
+struct Zone021b0bc0 {
 #if defined(jpn)
-    char unknown_0_[0x860];
+    char pad0[0x860];
 #else
-    char unknown1_0_[0x840];
+    char pad0[0x840];
 #endif
-    Struct_ov017_021b0bc0 unknown_840_;
+    Struct_ov017_021b0bc0 state;
 };
 
-static inline Struct_ov017_021b0bc0* inline_ov017_021b0bc0(Struct_ov017_021b0bc0_2* arg0) {
-    return &arg0->unknown_840_;
+static inline Struct_ov017_021b0bc0* inline_ov017_021b0bc0(Zone021b0bc0* zone) {
+    return &zone->state;
 }
 
-static inline void inline_ov017_021b0bc0_2(Struct_ov017_021b0bc0* arg0, int arg1) { arg0->unknown_1b34_ = arg1; }
-static inline void inline_ov017_021b0bc0_3(Struct_ov017_021b0bc0* arg0, int arg1) { arg0->unknown_1b38_ = arg1; }
-static inline void inline_ov017_021b0bc0_4(Struct_ov017_021b0bc0* arg0, int arg1) { arg0->unknown_1b3c_ = arg1; }
-static inline void inline_ov017_021b0bc0_5(Struct_ov017_021b0bc0* arg0, int arg1) { arg0->unknown_1b48_ = arg1; }
-static inline void inline_ov017_021b0bc0_6(Struct_ov017_021b0bc0* arg0, unsigned char arg1) { arg0->unknown_1b61_ = arg1; }
+static inline void inline_ov017_021b0bc0_2(Struct_ov017_021b0bc0* state, int v) { state->unknown_1b34_ = v; }
+static inline void inline_ov017_021b0bc0_3(Struct_ov017_021b0bc0* state, int v) { state->unknown_1b38_ = v; }
+static inline void inline_ov017_021b0bc0_4(Struct_ov017_021b0bc0* state, int v) { state->unknown_1b3c_ = v; }
+static inline void inline_ov017_021b0bc0_5(Struct_ov017_021b0bc0* state, int v) { state->unknown_1b48_ = v; }
+static inline void inline_ov017_021b0bc0_6(Struct_ov017_021b0bc0* state, unsigned char v) { state->unknown_1b61_ = v; }
 
 struct Struct_ov017_021b0bc0_3 {
-    unsigned char unknown_0_;
-    char unknown_1_[3];
+    unsigned char f0;
+    char pad1[3];
     char unknown_4_[0x190];
     char unknown_194_[0x110];
-    char unknown_2a4_[0x20];
+    char block2a4[0x20];
     int unknown_2c4_;
     int unknown_2c8_;
     int unknown_2cc_;
@@ -107,22 +107,22 @@ struct Struct_ov017_021b0bc0_3 {
     unsigned short unknown_2d2_;
     unsigned char unknown_2d4_;
     unsigned char unknown_2d5_;
-    unsigned short unknown_2d6_[4];
+    unsigned short ids[4];
 };
 
 struct Struct_ov017_021b0bc0_4 {
-    char unknown_0_;
-    unsigned char unknown_1_;
-    char unknown_2_[2];
-    signed char* unknown_4_;
-    char unknown_8_;
-    unsigned char unknown_9_;
-    char unknown_a_[2];
-    unsigned char unknown_c_;
+    char pad0;
+    unsigned char done;
+    char pad2[2];
+    signed char* kind;
+    char pad8;
+    unsigned char mode;
+    char padA[2];
+    unsigned char leader;
 #if defined(jpn)
-    char unknown_d_[0x214 - 0xd];
+    char padD[0x214 - 0xd];
 #else
-    char unknown1_d_[0x284 - 0xd];
+    char padD[0x284 - 0xd];
 #endif
     unsigned char unknown_284_;
     char unknown_285_[3];
@@ -130,44 +130,44 @@ struct Struct_ov017_021b0bc0_4 {
 };
 
 struct Struct_ov017_021b0bc0_5 {
-    SafeAllocator unknown_0_;
-    char unknown_14_[0x18];
-    void* unknown_2c_;
+    SafeAllocator allocator;
+    char list[0x18];
+    void* containerData;
     int unknown_30_;
-    int unknown_34_;
+    int field34;
 };
 
 // USA: func_ov017_021b0bc0
 // JPN: func_ov017_021b1258
-extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
-    char var0[0x18];
-    Struct_02083508_2 var1;
-    Struct_ov017_021b0bc0_5 var2;
-    short var3[4];
-    unsigned int var4;
+extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* self) {
+    char list[0x18];
+    StructDE1D4 entry;
+    Struct_ov017_021b0bc0_5 context;
+    short ys[4];
+    unsigned int size;
 
     GameState* gs = GameState::GetInstance();
     GameResources* res = GetGameResources();
     SearchStruct* search = (SearchStruct*)LinkSession_GetInstance();
     Zone021b0bc0* zone = (Zone021b0bc0*)Zone3D_GetInstance();
 #if defined(jpn)
-    Struct_ov017_021b0bc0* var9 = inline_ov017_021b0bc0(var8);
+    Struct_ov017_021b0bc0* state = inline_ov017_021b0bc0(zone);
 #endif
     LinkSession_UpdateMemberCount(search);
 
-    int var10 = 1;
-    if (arg0->unknown_4_ != NULL && *arg0->unknown_4_ == 10) {
-        var10 = 0;
+    int show = 1;
+    if (self->kind != NULL && *self->kind == 10) {
+        show = 0;
     }
     GameObject* leader = gs->GetPartyMemberByIndex(self->leader);
     if (leader != NULL) {
         GameObject_SetLineLeader((unsigned char*)leader, leader->obj3D_.actorIndex_);
     }
-    short* var12 = var3;
-    for (int var13 = 0; var13 < 4; var13++, var12++) {
-        GameObject* var14 = var5->GetPartyMemberByIndex(var13);
-        if (var14 != NULL) {
-            *var12 = *(short*)((char*)var14 + 0xae);
+    short* y = ys;
+    for (int i = 0; i < 4; i++, y++) {
+        GameObject* member = gs->GetPartyMemberByIndex(i);
+        if (member != NULL) {
+            *y = *(short*)((char*)member + 0xae);
         }
     }
 
@@ -176,109 +176,109 @@ extern "C" ARM void func_ov017_021b0bc0(Struct_ov017_021b0bc0_4* arg0) {
             continue;
         }
         if (i == LinkSession_GetOwnSlot((SearchStruct0202c1a4*)search)) {
-            if (self->f284 == 0) {
+            if (self->unknown_284_ == 0) {
                 show = 0;
             }
             Party_ReformLine(res, 1, show, 1, 1);
         } else {
-            func_ov017_021907dc((int)var6, var15, 1, var10, 1);
+            func_ov017_021907dc((int)res, i, 1, show, 1);
         }
     }
 
-    if (arg0->unknown_9_ == 2) {
-        var12 = var3;
-        for (int var16 = 0; var16 < 4; var16++, var12++) {
-            GameObject* var17 = var5->GetPartyMemberByIndex(var16);
-            if (var17 == NULL) {
+    if (self->mode == 2) {
+        y = ys;
+        for (int i = 0; i < 4; i++, y++) {
+            GameObject* member = gs->GetPartyMemberByIndex(i);
+            if (member == NULL) {
                 continue;
             }
             if (i == GameObject_GetLineLeader(member)) {
                 continue;
             }
-            if (var16 != 0 && !(var17->obj3D_.unknown_0_ & 0x1000)) {
+            if (i != 0 && !(member->obj3D_.unknown_0_ & 0x1000)) {
                 continue;
             }
             GameObject_SnapFacing((Obj02033874*)member, *y);
         }
-        ClearFlags00(var6, 0x40);
+        ClearFlags00(res, 0x40);
 
-        Struct_ov017_021b0bc0_3* var18 = arg0->unknown_288_;
-        func_020120d4((unsigned char*)var5, var18->unknown_0_);
+        Struct_ov017_021b0bc0_3* snap = self->unknown_288_;
+        func_020120d4((unsigned char*)gs, snap->f0);
 #if defined(jpn)
-        memcpy((char*)var5 + 0x5a7c, var18->unknown_4_, sizeof(var18->unknown_4_));
-        memcpy((char*)var5 + 0x5c0c, var18->unknown_194_, sizeof(var18->unknown_194_));
+        memcpy((char*)gs + 0x5a7c, snap->unknown_4_, sizeof(snap->unknown_4_));
+        memcpy((char*)gs + 0x5c0c, snap->unknown_194_, sizeof(snap->unknown_194_));
 #else
-        memcpy((char*)var5 + 0x5cdc, var18->unknown_4_, sizeof(var18->unknown_4_));
-        memcpy((char*)var5 + 0x5e6c, var18->unknown_194_, sizeof(var18->unknown_194_));
+        memcpy((char*)gs + 0x5cdc, snap->unknown_4_, sizeof(snap->unknown_4_));
+        memcpy((char*)gs + 0x5e6c, snap->unknown_194_, sizeof(snap->unknown_194_));
 #endif
         memcpy(GameState_GetPlayerLocation((char*)gs, 0), snap->block2a4, sizeof(snap->block2a4));
-        SetWord0x71f8_0201206c(gs, snap->f2c4);
+        func_0201206c(gs, snap->unknown_2c4_);
 #if defined(jpn)
-        inline_ov017_021b0bc0_2(var9, var18->unknown_2c8_);
-        inline_ov017_021b0bc0_5(var9, var18->unknown_2cc_);
-        inline_ov017_021b0bc0_3(var9, var18->unknown_2d0_);
-        inline_ov017_021b0bc0_4(var9, (unsigned char)var18->unknown_2d2_);
-        inline_ov017_021b0bc0_6(var9, 0);
+        inline_ov017_021b0bc0_2(state, snap->unknown_2c8_);
+        inline_ov017_021b0bc0_5(state, snap->unknown_2cc_);
+        inline_ov017_021b0bc0_3(state, snap->unknown_2d0_);
+        inline_ov017_021b0bc0_4(state, (unsigned char)snap->unknown_2d2_);
+        inline_ov017_021b0bc0_6(state, 0);
 #else
-        inline_ov017_021b0bc0_2(inline_ov017_021b0bc0(var8), var18->unknown_2c8_);
-        inline_ov017_021b0bc0_5(inline_ov017_021b0bc0(var8), var18->unknown_2cc_);
-        inline_ov017_021b0bc0_3(inline_ov017_021b0bc0(var8), var18->unknown_2d0_);
-        inline_ov017_021b0bc0_4(inline_ov017_021b0bc0(var8), (unsigned char)var18->unknown_2d2_);
-        inline_ov017_021b0bc0_6(inline_ov017_021b0bc0(var8), 0);
+        inline_ov017_021b0bc0_2(inline_ov017_021b0bc0(zone), snap->unknown_2c8_);
+        inline_ov017_021b0bc0_5(inline_ov017_021b0bc0(zone), snap->unknown_2cc_);
+        inline_ov017_021b0bc0_3(inline_ov017_021b0bc0(zone), snap->unknown_2d0_);
+        inline_ov017_021b0bc0_4(inline_ov017_021b0bc0(zone), (unsigned char)snap->unknown_2d2_);
+        inline_ov017_021b0bc0_6(inline_ov017_021b0bc0(zone), 0);
 #endif
-        var8->unknown_840_.unknown_1f74_ = var18->unknown_2d4_;
-        var8->unknown_840_.unknown_1f76_ = var18->unknown_2d5_;
-        for (int var19 = 0; var19 < 4; var19++) {
-            GameObject* var20 = var5->GetPartyMemberByIndex(var19);
-            if (var20 != NULL) {
-                func_02053f7c((Struct_02053f7c_3*)var20, var18->unknown_2d6_[var19], 1);
+        zone->state.unknown_1f74_ = snap->unknown_2d4_;
+        zone->state.unknown_1f76_ = snap->unknown_2d5_;
+        for (int i = 0; i < 4; i++) {
+            GameObject* member = gs->GetPartyMemberByIndex(i);
+            if (member != NULL) {
+                func_02053f7c((Struct_02053f7c_3*)member, snap->ids[i], 1);
             }
         }
 
         void* save = Scenario_GetInstance();
         func_0206dfe8(save, 0x38e, 0x3e8);
         func_0206dfe8(save, 0x79e, 0x2bc);
-        CopyRegionsAndClearField0206e70c((char*)save);
-        ApplySlotBytesToBattleStruct_0206df14((unsigned char*)save);
-        gs->SetDayTimer(GetActiveBitIndex_020103e8(gs));
+        func_0206e70c((char*)save);
+        func_0206df14((unsigned char*)save);
+        gs->SetDayTimer(func_020103e8(gs));
         LightingManager* lighting = LightingManager::GetInstance();
         lighting->dayNightTimer_ = gs->GetDayTimer();
         lighting->timeOfDayIndex_ = gs->GetTimeOfDay();
-        InitFieldsFromCombatant_0219bcac(1);
+        func_ov017_0219bcac(1);
         GameState_GetZoneTransition(gs)[0xa] = 0;
-        GetGlobal02109418_02094d6c();
-        CallFunc0205ec34_020965f8();
+        func_02094d6c();
+        func_020965f8();
 
         ItemTable_Construct(list);
         ItemTable_Init(list);
         ItemRecord_Clear(&entry);
         BackgroundLoader::AddLockGlobal();
 #if defined(jpn)
-        void* var23 = func_020e08f0(8, &var4);
+        void* data = func_020e08f0(8, &size);
 #else
-        void* var23 = ExtractFileFromGP2(data_020f2a18, data_020f2a0c, &var4);
+        void* data = ExtractFileFromGP2(data_020f2a18, data_020f2a0c, &size);
 #endif
-        if (var23 != NULL) {
-            func_020def44((int)&var1, (int)var23, var4, 0x5612);
+        if (data != NULL) {
+            func_020def44((int)&entry, (int)data, size, 0x5612);
         }
         BackgroundLoader::RemoveLockGlobal();
         context.allocator.ResetAllocatorPointer();
         ItemTable_Construct(context.list);
-        InitStruct0207cbe8((char*)&context);
-        InitStruct0207cbe8((char*)&context);
+        func_0207cbe8((char*)&context);
+        func_0207cbe8((char*)&context);
         func_0207cc18(&context, &entry);
-        AddKeyValueClamped020a095c((KeyMap020a095c*)GameState_GetParty(gs), 0x5612, 1);
+        func_020a095c((KeyMap020a095c*)GameState_GetParty(gs), 0x5612, 1);
     } else if (self->mode == 0) {
-        InitAndAppendEntry020dbc5c((char*)res, self->leader);
+        func_020dbc5c((char*)res, self->leader);
         unsigned char* slots = (unsigned char*)GameState_GetParty(gs) + 0xf78;
         for (int i = 0; i < 4; i++, slots++) {
             unsigned char id = *slots;
             if (id != GameState_GetLeaderIndex(gs)) {
-                EnqueueEventTag20_021cee78(id, 0);
+                func_ov017_021cee78(id, 0);
             }
         }
     }
 
-    func_ov017_02191234(var6);
-    arg0->unknown_1_ = 1;
+    func_ov017_02191234(res);
+    self->done = 1;
 }

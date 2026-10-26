@@ -1,50 +1,50 @@
 #include <globaldefs.h>
-struct Struct_0203e624 { unsigned short* unknown_0_; unsigned short unknown_4_, unknown_6_, unknown_8_, unknown_a_; };
-struct Struct_0203e6c8 { unsigned short* unknown_0_; unsigned short unknown_4_, unknown_6_, unknown_8_, unknown_a_; };
-struct Struct_0203e63c { unsigned short* unknown_0_; unsigned short unknown_4_, unknown_6_, unknown_8_, unknown_a_; };
+struct Struct_0203e624 { unsigned short* arr; unsigned short capacity, count, size, mask; };
+struct Struct_0203e6c8 { unsigned short* arr; unsigned short capacity, count, size, mask; };
+struct Struct_0203e63c { unsigned short* arr; unsigned short capacity, count, size, mask; };
 extern "C" void func_0203e624(Struct_0203e624*);
 extern "C" int func_0203e6c8(Struct_0203e6c8*, unsigned int);
 extern "C" unsigned char func_0203e63c(Struct_0203e63c*, unsigned int);
 void CleanInvalidateCacheRange(const void*, unsigned int);
 // USA: func_0203e7b4
-extern "C" ARM int func_0203e7b4(Struct_0203e624* arg0, unsigned short* arg1, unsigned char* arg2, unsigned short* arg3, int arg4, int arg5, int arg6, int arg7) {
-    func_0203e624(arg0);
-    if (!arg1 || !arg2 || !arg3) return 0;
-    arg0->unknown_0_ = arg1;
-    arg0->unknown_4_ = arg4;
-    arg0->unknown_a_ = 0xfbde;
-    arg0->unknown_0_[0] = 0x3e0;
-    arg0->unknown_6_++;
-    arg0->unknown_8_ = 1;
-    unsigned short* var0;
-    int var1;
-    int var2;
-    int var3;
-    var3 = arg6;
-    var0 = arg3;
-    for (var1 = var3; var1 != 0; ) {
-        unsigned short* var4 = var0;
-        for (var2 = arg5; var2 != 0; --var2) {
-            func_0203e6c8((Struct_0203e6c8*)arg0, *var4);
-            var4++;
+extern "C" ARM int func_0203e7b4(Struct_0203e624* header, unsigned short* list, unsigned char* output, unsigned short* input, int capacity, int width, int height, int stride) {
+    func_0203e624(header);
+    if (!list || !output || !input) return 0;
+    header->arr = list;
+    header->capacity = capacity;
+    header->mask = 0xfbde;
+    header->arr[0] = 0x3e0;
+    header->count++;
+    header->size = 1;
+    unsigned short* row;
+    int y;
+    int x;
+    int remaining;
+    remaining = height;
+    row = input;
+    for (y = remaining; y != 0; ) {
+        unsigned short* p = row;
+        for (x = width; x != 0; --x) {
+            func_0203e6c8((Struct_0203e6c8*)header, *p);
+            p++;
         }
-        --var1;
-        var0 += arg7;
+        --y;
+        row += stride;
     }
-    CleanInvalidateCacheRange(arg0->unknown_0_, arg0->unknown_6_ * 2);
-    unsigned char* var5 = arg2;
-    for (; var3 != 0; ) {
-        unsigned char* var6 = var5;
-        unsigned short* var7 = arg3;
-        for (var2 = arg5; var2 != 0; --var2) {
-            *var6 = func_0203e63c((Struct_0203e63c*)arg0, *var7++);
-            var6++;
+    CleanInvalidateCacheRange(header->arr, header->count * 2);
+    unsigned char* var5 = output;
+    for (; remaining != 0; ) {
+        unsigned char* dest = var5;
+        unsigned short* p = input;
+        for (x = width; x != 0; --x) {
+            *dest = func_0203e63c((Struct_0203e63c*)header, *p++);
+            dest++;
         }
-        --var3;
-        var5 += arg5;
-        arg3 += arg7;
+        --remaining;
+        var5 += width;
+        input += stride;
     }
-    CleanInvalidateCacheRange(arg2, arg5 * arg6);
-    func_0203e624(arg0);
+    CleanInvalidateCacheRange(output, width * height);
+    func_0203e624(header);
     return 1;
 }

@@ -11,19 +11,19 @@
 #include "Memory/SafeAllocator.h"
 
 // USA: func_ov013_02184cf0
-extern "C" ARM void func_ov013_02184cf0(void* arg0, SafeAllocator* arg1) {
-    if (arg1 == 0) return;
+extern "C" ARM void func_ov013_02184cf0(void* self, SafeAllocator* other) {
+    if (other == 0) return;
 
-    if (*(unsigned char*)((char*)arg0 + R(0x5cc,0x640)) != 0) {
-        void* var0 = arg1->Allocate(0xc00);
-        ((SafeAllocator*)((char*)arg0 + R(0x598,0x60c)))->CreateTypeA(var0, 0xc00);
+    if (*(unsigned char*)((char*)self + R(0x5cc,0x640)) != 0) {
+        void* buf = other->Allocate(0xc00);
+        ((SafeAllocator*)((char*)self + R(0x598,0x60c)))->CreateTypeA(buf, 0xc00);
         return;
     }
 
-    unsigned int var1 = arg1->GetMaxPossibleAllocation();
-    void* var2 = arg1->Allocate(var1);
-    ((SafeAllocator*)arg0)->CreateTypeA(var2, var1);
-    ((SafeAllocator*)arg0)->Reset();
-    void* var3 = ((SafeAllocator*)arg0)->Allocate(0xc00);
-    ((SafeAllocator*)((char*)arg0 + R(0x598,0x60c)))->CreateTypeA(var3, 0xc00);
+    unsigned int maxAlloc = other->GetMaxPossibleAllocation();
+    void* buf = other->Allocate(maxAlloc);
+    ((SafeAllocator*)self)->CreateTypeA(buf, maxAlloc);
+    ((SafeAllocator*)self)->Reset();
+    void* buf2 = ((SafeAllocator*)self)->Allocate(0xc00);
+    ((SafeAllocator*)((char*)self + R(0x598,0x60c)))->CreateTypeA(buf2, 0xc00);
 }

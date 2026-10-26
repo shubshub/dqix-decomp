@@ -1,38 +1,38 @@
 #include <globaldefs.h>
 
 struct Struct_020ee798 {
-    short unknown_0_;
-    short unknown_2_;
+    short key;
+    short val;
 };
 
 extern struct Struct_020ee798 data_020ee798[];
 extern struct Struct_020ee798 data_020ee7c8[];
 
-struct Struct_020dee58 {
-    unsigned char unknown_0_[8];
+struct Obj020dee58 {
+    unsigned char pad[8];
     unsigned int unknown_8_0_ : 4;
     unsigned int unknown_8_4_ : 5;
-    unsigned int unknown_9_1_ : 23;
+    unsigned int rest : 23;
 };
 
 // USA: func_020dee58
-extern "C" ARM short func_020dee58(struct Struct_020dee58* arg0) {
-    struct Struct_020ee798* var0;
-    short var1;
-    if (arg0 == NULL) {
+extern "C" ARM short func_020dee58(struct Obj020dee58* obj) {
+    struct Struct_020ee798* entry;
+    short key;
+    if (obj == NULL) {
         return 0x13;
     }
-    var1 = arg0->unknown_8_4_;
-    var0 = data_020ee7c8;
-    if (arg0->unknown_8_0_ != 0) {
-        var1 = arg0->unknown_8_0_;
-        var0 = data_020ee798;
+    key = obj->unknown_8_4_;
+    entry = data_020ee7c8;
+    if (obj->unknown_8_0_ != 0) {
+        key = obj->unknown_8_0_;
+        entry = data_020ee798;
     }
-    while (var0->unknown_0_ >= 0) {
-        if (var0->unknown_0_ == var1) {
-            return var0->unknown_2_;
+    while (entry->key >= 0) {
+        if (entry->key == key) {
+            return entry->val;
         }
-        var0++;
+        entry++;
     }
     return 0x13;
 }

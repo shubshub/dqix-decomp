@@ -2,7 +2,7 @@
 #include "World/ZoneChest.h"
 
 // Main, originally InitStruct020133fc (USA 0x020133fc, EUR 0x0201340c, JPN 0x020131c4)
-ARM void ZoneChest_Init(ZoneChestRenderRecord* record) {
+extern "C" ARM void ZoneChest_Init(ZoneChestRenderRecord* record) {
     Vector3i_Set(&record->position, 0, 0, 0);
     record->angleY = 0;
     record->lidAngle = 0;

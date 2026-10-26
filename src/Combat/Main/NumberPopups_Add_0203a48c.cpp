@@ -38,7 +38,7 @@ enum {
 };
 
 // Main, originally QueuePopupEntry0203a48c (USA 0x0203a48c, EUR 0x0203a49c, JPN 0x02039ee4)
-ARM void NumberPopups_Add(Obj0203a48c* numberPopups, int value, Vec3Int0203a48c* anchor, int style, int offsetX, int offsetY) {
+extern "C" ARM void NumberPopups_Add(Obj0203a48c* numberPopups, int value, Vec3Int0203a48c* anchor, int style, int offsetX, int offsetY) {
     int remaining;
     int digitCount;
     struct NumberPopup* popup;

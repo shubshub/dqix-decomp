@@ -2,23 +2,23 @@
 #include "NitroSDK/Memory/AllocatorUnion.h"
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8;
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
+struct Variant02030b0c;
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 
 struct Struct_020995c0 {
-    void* unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    void* mem;
+    int pad4;
+    int count;
 };
 extern struct Struct_020995c0* data_02109924;
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 
 // USA: func_020995c0
-extern "C" ARM int func_020995c0(struct Struct_0201c1c8* arg0) {
-    int var0 = ((Script::Parameter*)arg0)->ToInt();
-    struct Struct_020995c0* var1 = data_02109924;
-    void* var2 = func_02012d88(&data_02114e20, var0 << 4);
-    var1->unknown_0_ = var2;
-    var1->unknown_8_ = var0;
+extern "C" ARM int func_020995c0(struct Variant02030b0c* p) {
+    int v = ((Script::Parameter*)p)->ToInt();
+    struct Struct_020995c0* obj = data_02109924;
+    void* mem = AllocatorUnion_AllocateRounded(&g_mainAllocator, v << 4);
+    obj->mem = mem;
+    obj->count = v;
     return 1;
 }

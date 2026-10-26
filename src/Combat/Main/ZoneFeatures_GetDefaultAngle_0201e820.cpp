@@ -7,6 +7,6 @@ struct S_e820 {
 };
 
 // Main, originally GetSignedFieldAt0x7c_0201e820 (USA 0x0201e820, EUR 0x0201e830, JPN 0x0201e5ac)
-ARM int ZoneFeatures_GetDefaultAngle(struct S_e820* features) {
+extern "C" ARM int ZoneFeatures_GetDefaultAngle(struct S_e820* features) {
     return features->defaultAngle;
 }

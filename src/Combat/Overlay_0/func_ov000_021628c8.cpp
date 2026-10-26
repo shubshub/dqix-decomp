@@ -7,19 +7,19 @@
 #endif
 
 
-static inline void* inline_ov000_021628c8(void* arg0, int arg1) {
-    void* var0 = *(void**)((char*)arg0 + REGION_OFFSET_0);
-    return (char*)var0 + 0x21c + 0x8000 + arg1 * 0x28;
+static inline void* inline_ov000_021628c8(void* obj, int idx) {
+    void* base = *(void**)((char*)obj + REGION_OFFSET_0);
+    return (char*)base + 0x21c + 0x8000 + idx * 0x28;
 }
 
 // USA: func_ov000_021628c8
-extern "C" ARM int func_ov000_021628c8(void* arg0, int arg1, int* arg2) {
-    void* var0 = inline_ov000_021628c8(arg0, arg1);
-    void* var1 = *(void**)((char*)var0 + 0x10);
-    int var2 = 0;
-    while (var1) {
-        arg2[var2++] = *(unsigned short*)((char*)var1 + 0x20);
-        var1 = *(void**)((char*)var1 + 0x30);
+extern "C" ARM int func_ov000_021628c8(void* obj, int idx, int* arg2) {
+    void* entry = inline_ov000_021628c8(obj, idx);
+    void* node = *(void**)((char*)entry + 0x10);
+    int count = 0;
+    while (node) {
+        arg2[count++] = *(unsigned short*)((char*)node + 0x20);
+        node = *(void**)((char*)node + 0x30);
     }
-    return var2;
+    return count;
 }

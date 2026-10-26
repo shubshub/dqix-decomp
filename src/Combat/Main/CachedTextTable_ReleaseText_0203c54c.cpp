@@ -14,15 +14,15 @@ struct CachedTextTableRelease {
     CachedTextEntryRelease entries[96];
     int engine;
     char* bitmapStorage;
-    unsigned int paletteControl;
+    unsigned int unknown_60c_;
     unsigned short nextOamEntry;
     unsigned short allocatedEntries;
     unsigned char workBuffer[256];
 };
 
-void CachedTextEntry_Clear(char* entry);
+extern "C" void CachedTextEntry_Clear(char* entry);
 #else
-void CachedTextEntry_Clear(char* entry);
+extern "C" void CachedTextEntry_Clear(char* entry);
 
 // CachedTextTable layout
 enum {
@@ -34,7 +34,7 @@ enum {
 #endif
 
 // Main, originally ReleaseEntry0203c54c (USA 0x0203c54c, EUR 0x0203c55c, JPN 0x0203c758)
-ARM void CachedTextTable_ReleaseText(char* table, short* indexPtr) {
+extern "C" ARM void CachedTextTable_ReleaseText(char* table, short* indexPtr) {
 #if defined(jpn)
     if (indexPtr == NULL) return;
     CachedTextTableRelease* cache = reinterpret_cast<CachedTextTableRelease*>(table);

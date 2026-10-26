@@ -30,11 +30,11 @@ struct Keyboard {
 };
 
 extern "C" void __clear(void* buf, int size);
-int Font_FindCharacterIndex(int key, int tableIdx);
+extern "C" int Font_FindCharacterIndex(int key, int tableIdx);
 extern "C" int Font_EncodeText(void* src, void* dst, int flag);
 extern "C" void Font_DecodeText(void* src, void* dst, int flag);
 extern "C" int Font_GetTextWidth(void* str, int flag);
-struct FontCharacter* Font_FindCharacter(int key, int tableIdx);
+extern "C" struct FontCharacter* Font_FindCharacter(int key, int tableIdx);
 
 // By shift: the page on which a key types its shiftedText ({KeyboardPage_Uppercase, KeyboardPage_Lowercase} in the ROM).
 extern unsigned char Keyboard_shiftedTextPages[];
@@ -96,7 +96,7 @@ extern "C" ARM int Keyboard_TypeCharacter(struct Keyboard* keyboard) {
                     if (character != 0) {
                         width += character->width_ + 1;
                     }
-                    if (var10 < var6) {
+                    if (widthLimit < width) {
                         break;
                     }
                 }

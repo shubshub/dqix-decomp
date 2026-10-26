@@ -1,34 +1,34 @@
 #include <globaldefs.h>
 
 struct Struct_ov017_021d4a38_2 {
-	int unknown_0_;
-	union { int unknown_4_; float unknown1_4_; };
+	int type;
+	union { int i; float f; };
 };
 
 struct Struct_ov017_021d4e38 {
 	int unknown_0_;
-	int unknown_4_;
+	int arg;
 	union { int unknown_8_; float unknown1_8_; };
 };
 
 struct Struct_ov017_021d4e38_2 {
 	unsigned char unknown_0_[0x14];
 	Struct_ov017_021d4a38_2* unknown_14_;
-	unsigned char unknown_18_[4];
-	int unknown_1c_;
-	unsigned char unknown_20_[4];
+	unsigned char pad18[4];
+	int globals;
+	unsigned char pad20[4];
 	int unknown_24_;
 	int unknown_28_;
-	unsigned char unknown_2c_[4];
-	int unknown_30_;
+	unsigned char pad2c[4];
+	int frame;
 	void* unknown_34_;
-	Struct_ov017_021d4e38* unknown_38_;
+	Struct_ov017_021d4e38* pc;
 	int unknown_3c_;
 	int unknown_40_;
 	unsigned char unknown_44_[4];
-	int unknown_48_;
-	int unknown_4c_;
-	int unknown_50_;
+	int code;
+	int result;
+	int steps;
 };
 
 struct Struct_ov017_021d4a38;
@@ -41,24 +41,24 @@ struct Struct_ov017_021d4bc8;
 struct Struct_ov017_021d4af8_2;
 struct Struct_ov017_021d4af8;
 
-extern "C" void func_ov017_021d4a38(Struct_ov017_021d4a38* arg0, Struct_ov017_021d4a38_2 arg1);
-extern "C" void func_ov017_021d4a64(Struct_ov017_021d4a38_2* arg0, Struct_ov017_021d4a38_2* arg1);
-extern "C" void func_ov017_021d4a78(Struct_ov017_021d4a78_2* arg0, int arg1);
-extern "C" void func_ov017_021d4a98(Struct_ov017_021d4a98_2* arg0, int arg1);
+extern "C" void func_ov017_021d4a38(Struct_ov017_021d4a38* obj, Struct_ov017_021d4a38_2 v);
+extern "C" void func_ov017_021d4a64(Struct_ov017_021d4a38_2* dst, Struct_ov017_021d4a38_2* src);
+extern "C" void func_ov017_021d4a78(Struct_ov017_021d4a78_2* obj, int v);
+extern "C" void func_ov017_021d4a98(Struct_ov017_021d4a98_2* obj, int v);
 extern "C" void func_ov017_021d4ab8(Struct_ov017_021d4ab8_2* arg0, int arg1);
-extern "C" int func_ov017_021d4b9c(Struct_ov017_021d4b9c_2* arg0);
-extern "C" void func_ov017_021d4bc8(Struct_ov017_021d4bc8_2* arg0, Struct_ov017_021d4bc8* arg1, int arg2);
-extern "C" int func_ov017_021d4af8(Struct_ov017_021d4af8_2* arg0, Struct_ov017_021d4af8* arg1, int arg2);
+extern "C" int func_ov017_021d4b9c(Struct_ov017_021d4b9c_2* obj);
+extern "C" void func_ov017_021d4bc8(Struct_ov017_021d4bc8_2* a, Struct_ov017_021d4bc8* b, int c);
+extern "C" int func_ov017_021d4af8(Struct_ov017_021d4af8_2* self, Struct_ov017_021d4af8* arg, int arg2);
 
-extern "C" int func_ov017_021d49ac(Struct_ov017_021d4a38_2 arg0);
-extern "C" int func_ov017_021d4980(Struct_ov017_021d4a38_2 arg0, void* arg1);
-extern "C" void func_ov017_021d4ad8(Struct_ov017_021d4e38_2* arg0, float arg1);
+extern "C" int func_ov017_021d49ac(Struct_ov017_021d4a38_2 v);
+extern "C" int func_ov017_021d4980(Struct_ov017_021d4a38_2 v, void* arg1);
+extern "C" void func_ov017_021d4ad8(Struct_ov017_021d4e38_2* self, float v);
 
-extern "C" void func_0200159c(int arg0) __attribute__((noreturn));
-extern "C" void func_02001878(void* arg0);
+extern "C" void func_0200159c(int code) __attribute__((noreturn));
+extern "C" void func_02001878(void* text);
 extern "C" float _d2f(double v);
-extern "C" double func_02009424(double arg0);
-extern "C" double func_02008dcc(double arg0);
+extern "C" double func_02009424(double v);
+extern "C" double func_02008dcc(double v);
 extern int data_020eec2c;
 
 #define IsTruthy func_ov017_021d49ac
@@ -72,398 +72,398 @@ extern int data_020eec2c;
 #define SlotPtr(base, idx) (((Struct_ov017_021d4a38_2*)(base)) + (idx))
 #define Slot(base, idx) (*SlotPtr((base), (idx)))
 
-inline Struct_ov017_021d4a38_2 inline_ov017_021d4e38(Struct_ov017_021d4e38_2* arg0) {
-	arg0->unknown_14_--;
-	return *arg0->unknown_14_;
+inline Struct_ov017_021d4a38_2 inline_ov017_021d4e38(Struct_ov017_021d4e38_2* self) {
+	self->unknown_14_--;
+	return *self->unknown_14_;
 }
 
 #pragma opt_dead_assignments off
 
 // USA: func_ov017_021d4e38
-extern "C" ARM void func_ov017_021d4e38(Struct_ov017_021d4e38_2* arg0, Struct_ov017_021d4e38* arg1) {
-	Struct_ov017_021d4a38_2 var0, var1, var2;
+extern "C" ARM void func_ov017_021d4e38(Struct_ov017_021d4e38_2* self, Struct_ov017_021d4e38* start) {
+	Struct_ov017_021d4a38_2 var0, rhs, lhs;
 
-	arg0->unknown_38_ = arg1;
+	self->pc = start;
 	for (;;) {
-		switch (arg0->unknown_38_->unknown_0_) {
+		switch (self->pc->unknown_0_) {
 		case 1:
-			switch (arg0->unknown_38_->unknown_8_) {
+			switch (self->pc->unknown_8_) {
 			case 1:
-				Push(arg0, Slot(arg0->unknown_30_, arg0->unknown_38_->unknown_4_));
+				Push(self, Slot(self->frame, self->pc->arg));
 				break;
 			case 0x40:
-				Push(arg0, Slot(arg0->unknown_1c_, arg0->unknown_38_->unknown_4_));
+				Push(self, Slot(self->globals, self->pc->arg));
 				break;
 			case 2: {
-				int var3 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-				Push(arg0, SlotPtr(arg0->unknown_30_, arg0->unknown_38_->unknown_4_)[var3]);
+				int idx = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+				Push(self, SlotPtr(self->frame, self->pc->arg)[idx]);
 				break;
 			}
 			case 4: {
-				int var4 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-				Push(arg0, Slot(Slot(arg0->unknown_30_, arg0->unknown_38_->unknown_4_).unknown_4_, var4));
+				int idx = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+				Push(self, Slot(Slot(self->frame, self->pc->arg).i, idx));
 				break;
 			}
 			case 8:
-				Slot(arg0->unknown_30_, arg0->unknown_38_->unknown_4_).unknown_0_ = 1;
-				Push(arg0, Slot(arg0->unknown_30_, arg0->unknown_38_->unknown_4_));
+				Slot(self->frame, self->pc->arg).type = 1;
+				Push(self, Slot(self->frame, self->pc->arg));
 				break;
 			case 0x200:
-				Slot(arg0->unknown_1c_, arg0->unknown_38_->unknown_4_).unknown_0_ = 1;
-				Push(arg0, Slot(arg0->unknown_1c_, arg0->unknown_38_->unknown_4_));
+				Slot(self->globals, self->pc->arg).type = 1;
+				Push(self, Slot(self->globals, self->pc->arg));
 				break;
 			case 0x10: {
-				int var5 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-				SlotPtr(arg0->unknown_30_, arg0->unknown_38_->unknown_4_)[var5].unknown_0_ = 1;
-				Push(arg0, SlotPtr(arg0->unknown_30_, arg0->unknown_38_->unknown_4_)[var5]);
+				int idx = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+				SlotPtr(self->frame, self->pc->arg)[idx].type = 1;
+				Push(self, SlotPtr(self->frame, self->pc->arg)[idx]);
 				break;
 			}
 			case 0x20: {
-				int var6 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-				Slot(Slot(arg0->unknown_30_, arg0->unknown_38_->unknown_4_).unknown_4_, var6).unknown_0_ = 1;
-				Push(arg0, Slot(Slot(arg0->unknown_30_, arg0->unknown_38_->unknown_4_).unknown_4_, var6));
+				int idx = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+				Slot(Slot(self->frame, self->pc->arg).i, idx).type = 1;
+				Push(self, Slot(Slot(self->frame, self->pc->arg).i, idx));
 				break;
 			}
 			}
 			break;
 
 		case 2:
-			switch (arg0->unknown_38_->unknown_8_) {
+			switch (self->pc->unknown_8_) {
 			case 1:
-				PushRef(arg0, (int)SlotPtr(arg0->unknown_30_, arg0->unknown_38_->unknown_4_));
+				PushRef(self, (int)SlotPtr(self->frame, self->pc->arg));
 				break;
 			case 0x40:
-				PushRef(arg0, (int)SlotPtr(arg0->unknown_1c_, arg0->unknown_38_->unknown_4_));
+				PushRef(self, (int)SlotPtr(self->globals, self->pc->arg));
 				break;
 			case 2: {
-				int var7 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-				PushRef(arg0, (int)(SlotPtr(arg0->unknown_30_, arg0->unknown_38_->unknown_4_) + var7));
+				int idx = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+				PushRef(self, (int)(SlotPtr(self->frame, self->pc->arg) + idx));
 				break;
 			}
 			case 4: {
-				int var8 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-				PushRef(arg0, (int)SlotPtr(Slot(arg0->unknown_30_, arg0->unknown_38_->unknown_4_).unknown_4_, var8));
+				int idx = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+				PushRef(self, (int)SlotPtr(Slot(self->frame, self->pc->arg).i, idx));
 				break;
 			}
 			case 8:
-				PushRef(arg0, (int)SlotPtr(arg0->unknown_30_, arg0->unknown_38_->unknown_4_));
+				PushRef(self, (int)SlotPtr(self->frame, self->pc->arg));
 				break;
 			case 0x200:
-				PushRef(arg0, (int)SlotPtr(arg0->unknown_1c_, arg0->unknown_38_->unknown_4_));
+				PushRef(self, (int)SlotPtr(self->globals, self->pc->arg));
 				break;
 			case 0x10: {
-				int var9 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-				PushRef(arg0, (int)(SlotPtr(arg0->unknown_30_, arg0->unknown_38_->unknown_4_) + var9));
+				int idx = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+				PushRef(self, (int)(SlotPtr(self->frame, self->pc->arg) + idx));
 				break;
 			}
 			case 0x20: {
-				int var10 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-				PushRef(arg0, (int)SlotPtr(Slot(arg0->unknown_30_, arg0->unknown_38_->unknown_4_).unknown_4_, var10));
+				int idx = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+				PushRef(self, (int)SlotPtr(Slot(self->frame, self->pc->arg).i, idx));
 				break;
 			}
 			}
 			break;
 
 		case 5:
-			var0 = inline_ov017_021d4e38(arg0);
-			func_ov017_021d4a64((Struct_ov017_021d4a38_2*)inline_ov017_021d4e38(arg0).unknown_4_, &var0);
-			Push(arg0, var0);
+			var0 = inline_ov017_021d4e38(self);
+			func_ov017_021d4a64((Struct_ov017_021d4a38_2*)inline_ov017_021d4e38(self).i, &var0);
+			Push(self, var0);
 			break;
 
 		case 3:
-			if (arg0->unknown_38_->unknown_4_ == 1) {
-				PushInt(arg0, arg0->unknown_38_->unknown_8_);
-			} else if (arg0->unknown_38_->unknown_4_ == 3) {
-				PushCode(arg0, arg0->unknown_48_ + arg0->unknown_38_->unknown_8_);
-			} else if (arg0->unknown_38_->unknown_4_ == 2) {
-				PushFloat(arg0, arg0->unknown_38_->unknown1_8_);
+			if (self->pc->arg == 1) {
+				PushInt(self, self->pc->unknown_8_);
+			} else if (self->pc->arg == 3) {
+				PushCode(self, self->code + self->pc->unknown_8_);
+			} else if (self->pc->arg == 2) {
+				PushFloat(self, self->pc->unknown1_8_);
 			}
 			break;
 
 		case 4:
-			arg0->unknown_14_--;
+			self->unknown_14_--;
 			break;
 
 		case 16:
-			if (arg0->unknown_40_ == 0) {
-				arg0->unknown_38_ = (Struct_ov017_021d4e38*)(arg0->unknown_48_ + arg0->unknown_38_->unknown_4_);
+			if (self->unknown_40_ == 0) {
+				self->pc = (Struct_ov017_021d4e38*)(self->code + self->pc->arg);
 				continue;
 			}
 			break;
 
 		case 18:
-			if (arg0->unknown_40_ != 0) {
+			if (self->unknown_40_ != 0) {
 				break;
 			}
-			if (IsTruthy(inline_ov017_021d4e38(arg0))) {
-				if (arg0->unknown_38_->unknown_8_ != 0) {
-					PushInt(arg0, 1);
+			if (IsTruthy(inline_ov017_021d4e38(self))) {
+				if (self->pc->unknown_8_ != 0) {
+					PushInt(self, 1);
 				}
-				arg0->unknown_38_ = (Struct_ov017_021d4e38*)(arg0->unknown_48_ + arg0->unknown_38_->unknown_4_);
+				self->pc = (Struct_ov017_021d4e38*)(self->code + self->pc->arg);
 				continue;
 			}
 			break;
 
 		case 17:
-			if (arg0->unknown_40_ != 0) {
+			if (self->unknown_40_ != 0) {
 				break;
 			}
-			if (!IsTruthy(inline_ov017_021d4e38(arg0))) {
-				if (arg0->unknown_38_->unknown_8_ != 0) {
-					PushInt(arg0, 0);
+			if (!IsTruthy(inline_ov017_021d4e38(self))) {
+				if (self->pc->unknown_8_ != 0) {
+					PushInt(self, 0);
 				}
-				arg0->unknown_38_ = (Struct_ov017_021d4e38*)(arg0->unknown_48_ + arg0->unknown_38_->unknown_4_);
+				self->pc = (Struct_ov017_021d4e38*)(self->code + self->pc->arg);
 				continue;
 			}
 			break;
 
 		case 14:
-			var1 = inline_ov017_021d4e38(arg0);
-			var2 = inline_ov017_021d4e38(arg0);
-			if (var2.unknown_0_ == 0 && var1.unknown_0_ == 0) {
-				switch (arg0->unknown_38_->unknown_4_) {
-				case 0x28: PushInt(arg0, var1.unknown_4_ == var2.unknown_4_); break;
-				case 0x29: PushInt(arg0, var1.unknown_4_ != var2.unknown_4_); break;
-				case 0x2a: PushInt(arg0, var2.unknown_4_ < var1.unknown_4_); break;
-				case 0x2b: PushInt(arg0, var2.unknown_4_ <= var1.unknown_4_); break;
-				case 0x2c: PushInt(arg0, var2.unknown_4_ > var1.unknown_4_); break;
-				case 0x2d: PushInt(arg0, var2.unknown_4_ >= var1.unknown_4_); break;
+			rhs = inline_ov017_021d4e38(self);
+			lhs = inline_ov017_021d4e38(self);
+			if (lhs.type == 0 && rhs.type == 0) {
+				switch (self->pc->arg) {
+				case 0x28: PushInt(self, rhs.i == lhs.i); break;
+				case 0x29: PushInt(self, rhs.i != lhs.i); break;
+				case 0x2a: PushInt(self, lhs.i < rhs.i); break;
+				case 0x2b: PushInt(self, lhs.i <= rhs.i); break;
+				case 0x2c: PushInt(self, lhs.i > rhs.i); break;
+				case 0x2d: PushInt(self, lhs.i >= rhs.i); break;
 				}
 			} else {
 				float var11, var12;
-				if (var2.unknown_0_ == 1 && var1.unknown_0_ == 1) {
-					var11 = var1.unknown1_4_;
-					var12 = var2.unknown1_4_;
-				} else if (var2.unknown_0_ == 0 && var1.unknown_0_ == 1) {
-					var11 = var1.unknown1_4_;
-					var12 = (float)var2.unknown_4_;
-				} else if (var2.unknown_0_ == 1 && var1.unknown_0_ == 0) {
-					var11 = (float)var1.unknown_4_;
-					var12 = var2.unknown1_4_;
+				if (lhs.type == 1 && rhs.type == 1) {
+					var11 = rhs.f;
+					var12 = lhs.f;
+				} else if (lhs.type == 0 && rhs.type == 1) {
+					var11 = rhs.f;
+					var12 = (float)lhs.i;
+				} else if (lhs.type == 1 && rhs.type == 0) {
+					var11 = (float)rhs.i;
+					var12 = lhs.f;
 				} else {
 					func_0200159c(-1);
 				}
-				switch (arg0->unknown_38_->unknown_4_) {
-				case 0x28: PushInt(arg0, var11 == var12); break;
-				case 0x29: PushInt(arg0, var11 != var12); break;
-				case 0x2a: PushInt(arg0, var12 < var11); break;
-				case 0x2b: PushInt(arg0, var12 <= var11); break;
-				case 0x2c: PushInt(arg0, var12 > var11); break;
-				case 0x2d: PushInt(arg0, var12 >= var11); break;
+				switch (self->pc->arg) {
+				case 0x28: PushInt(self, var11 == var12); break;
+				case 0x29: PushInt(self, var11 != var12); break;
+				case 0x2a: PushInt(self, var12 < var11); break;
+				case 0x2b: PushInt(self, var12 <= var11); break;
+				case 0x2c: PushInt(self, var12 > var11); break;
+				case 0x2d: PushInt(self, var12 >= var11); break;
 				}
 			}
 			break;
 
 		case 6:
-			var1 = inline_ov017_021d4e38(arg0);
-			var2 = inline_ov017_021d4e38(arg0);
-			if (var2.unknown_0_ == 0 && var1.unknown_0_ == 0) {
-				PushInt(arg0, var2.unknown_4_ + var1.unknown_4_);
-			} else if (var2.unknown_0_ == 1 && var1.unknown_0_ == 1) {
-				PushFloat(arg0, var2.unknown1_4_ + var1.unknown1_4_);
-			} else if (var2.unknown_0_ == 0 && var1.unknown_0_ == 1) {
-				PushFloat(arg0, (float)var2.unknown_4_ + var1.unknown1_4_);
-			} else if (var2.unknown_0_ == 1 && var1.unknown_0_ == 0) {
-				PushFloat(arg0, var2.unknown1_4_ + (float)var1.unknown_4_);
+			rhs = inline_ov017_021d4e38(self);
+			lhs = inline_ov017_021d4e38(self);
+			if (lhs.type == 0 && rhs.type == 0) {
+				PushInt(self, lhs.i + rhs.i);
+			} else if (lhs.type == 1 && rhs.type == 1) {
+				PushFloat(self, lhs.f + rhs.f);
+			} else if (lhs.type == 0 && rhs.type == 1) {
+				PushFloat(self, (float)lhs.i + rhs.f);
+			} else if (lhs.type == 1 && rhs.type == 0) {
+				PushFloat(self, lhs.f + (float)rhs.i);
 			} else {
 				func_0200159c(-1);
 			}
 			break;
 
 		case 7:
-			var1 = inline_ov017_021d4e38(arg0);
-			var2 = inline_ov017_021d4e38(arg0);
-			if (var2.unknown_0_ == 0 && var1.unknown_0_ == 0) {
-				PushInt(arg0, var2.unknown_4_ - var1.unknown_4_);
-			} else if (var2.unknown_0_ == 1 && var1.unknown_0_ == 1) {
-				PushFloat(arg0, var2.unknown1_4_ - var1.unknown1_4_);
-			} else if (var2.unknown_0_ == 0 && var1.unknown_0_ == 1) {
-				PushFloat(arg0, (float)var2.unknown_4_ - var1.unknown1_4_);
-			} else if (var2.unknown_0_ == 1 && var1.unknown_0_ == 0) {
-				PushFloat(arg0, var2.unknown1_4_ - (float)var1.unknown_4_);
+			rhs = inline_ov017_021d4e38(self);
+			lhs = inline_ov017_021d4e38(self);
+			if (lhs.type == 0 && rhs.type == 0) {
+				PushInt(self, lhs.i - rhs.i);
+			} else if (lhs.type == 1 && rhs.type == 1) {
+				PushFloat(self, lhs.f - rhs.f);
+			} else if (lhs.type == 0 && rhs.type == 1) {
+				PushFloat(self, (float)lhs.i - rhs.f);
+			} else if (lhs.type == 1 && rhs.type == 0) {
+				PushFloat(self, lhs.f - (float)rhs.i);
 			} else {
 				func_0200159c(-1);
 			}
 			break;
 
 		case 8:
-			var1 = inline_ov017_021d4e38(arg0);
-			var2 = inline_ov017_021d4e38(arg0);
-			if (var2.unknown_0_ == 0 && var1.unknown_0_ == 0) {
-				PushInt(arg0, var2.unknown_4_ * var1.unknown_4_);
-			} else if (var2.unknown_0_ == 1 && var1.unknown_0_ == 1) {
-				PushFloat(arg0, var2.unknown1_4_ * var1.unknown1_4_);
-			} else if (var2.unknown_0_ == 0 && var1.unknown_0_ == 1) {
-				PushFloat(arg0, (float)var2.unknown_4_ * var1.unknown1_4_);
-			} else if (var2.unknown_0_ == 1 && var1.unknown_0_ == 0) {
-				PushFloat(arg0, var2.unknown1_4_ * (float)var1.unknown_4_);
+			rhs = inline_ov017_021d4e38(self);
+			lhs = inline_ov017_021d4e38(self);
+			if (lhs.type == 0 && rhs.type == 0) {
+				PushInt(self, lhs.i * rhs.i);
+			} else if (lhs.type == 1 && rhs.type == 1) {
+				PushFloat(self, lhs.f * rhs.f);
+			} else if (lhs.type == 0 && rhs.type == 1) {
+				PushFloat(self, (float)lhs.i * rhs.f);
+			} else if (lhs.type == 1 && rhs.type == 0) {
+				PushFloat(self, lhs.f * (float)rhs.i);
 			} else {
 				func_0200159c(-1);
 			}
 			break;
 
 		case 9:
-			var1 = inline_ov017_021d4e38(arg0);
-			var2 = inline_ov017_021d4e38(arg0);
-			if (var2.unknown_0_ == 0 && var1.unknown_0_ == 0) {
-				PushInt(arg0, var2.unknown_4_ / var1.unknown_4_);
-			} else if (var2.unknown_0_ == 1 && var1.unknown_0_ == 1) {
-				PushFloat(arg0, var2.unknown1_4_ / var1.unknown1_4_);
-			} else if (var2.unknown_0_ == 0 && var1.unknown_0_ == 1) {
-				PushFloat(arg0, (float)var2.unknown_4_ / var1.unknown1_4_);
-			} else if (var2.unknown_0_ == 1 && var1.unknown_0_ == 0) {
-				PushFloat(arg0, var2.unknown1_4_ / (float)var1.unknown_4_);
+			rhs = inline_ov017_021d4e38(self);
+			lhs = inline_ov017_021d4e38(self);
+			if (lhs.type == 0 && rhs.type == 0) {
+				PushInt(self, lhs.i / rhs.i);
+			} else if (lhs.type == 1 && rhs.type == 1) {
+				PushFloat(self, lhs.f / rhs.f);
+			} else if (lhs.type == 0 && rhs.type == 1) {
+				PushFloat(self, (float)lhs.i / rhs.f);
+			} else if (lhs.type == 1 && rhs.type == 0) {
+				PushFloat(self, lhs.f / (float)rhs.i);
 			} else {
 				func_0200159c(-1);
 			}
 			break;
 
 		case 10: {
-			int var13 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-			int var14 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-			PushInt(arg0, var14 % var13);
+			int r = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+			int l = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+			PushInt(self, l % r);
 			break;
 		}
 
 		case 24: {
-			int var15 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-			int var16 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-			PushInt(arg0, var15 & var16);
+			int r = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+			int l = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+			PushInt(self, r & l);
 			break;
 		}
 
 		case 25: {
-			int var17 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-			int var18 = Resolve(inline_ov017_021d4e38(arg0), arg0->unknown_34_);
-			PushInt(arg0, var17 | var18);
+			int r = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+			int l = Resolve(inline_ov017_021d4e38(self), self->unknown_34_);
+			PushInt(self, r | l);
 			break;
 		}
 
 		case 11:
-			var1 = inline_ov017_021d4e38(arg0);
-			if (var1.unknown_0_ == 0) {
-				PushInt(arg0, -var1.unknown_4_);
-			} else if (var1.unknown_0_ == 1) {
-				PushFloat(arg0, -var1.unknown1_4_);
+			rhs = inline_ov017_021d4e38(self);
+			if (rhs.type == 0) {
+				PushInt(self, -rhs.i);
+			} else if (rhs.type == 1) {
+				PushFloat(self, -rhs.f);
 			} else {
 				func_0200159c(-1);
 			}
 			break;
 
 		case 29:
-			var1 = inline_ov017_021d4e38(arg0);
-			if (var1.unknown_0_ == 0) {
-				PushFloat(arg0, _d2f(func_02009424((double)((float)var1.unknown_4_))));
-			} else if (var1.unknown_0_ == 1) {
-				PushFloat(arg0, _d2f(func_02009424((double)(var1.unknown1_4_))));
+			rhs = inline_ov017_021d4e38(self);
+			if (rhs.type == 0) {
+				PushFloat(self, _d2f(func_02009424((double)((float)rhs.i))));
+			} else if (rhs.type == 1) {
+				PushFloat(self, _d2f(func_02009424((double)(rhs.f))));
 			} else {
 				func_0200159c(-1);
 			}
 			break;
 
 		case 30:
-			var1 = inline_ov017_021d4e38(arg0);
-			if (var1.unknown_0_ == 0) {
-				PushFloat(arg0, _d2f(func_02008dcc((double)((float)var1.unknown_4_))));
-			} else if (var1.unknown_0_ == 1) {
-				PushFloat(arg0, _d2f(func_02008dcc((double)(var1.unknown1_4_))));
+			rhs = inline_ov017_021d4e38(self);
+			if (rhs.type == 0) {
+				PushFloat(self, _d2f(func_02008dcc((double)((float)rhs.i))));
+			} else if (rhs.type == 1) {
+				PushFloat(self, _d2f(func_02008dcc((double)(rhs.f))));
 			} else {
 				func_0200159c(-1);
 			}
 			break;
 
 		case 26:
-			var1 = inline_ov017_021d4e38(arg0);
-			if (var1.unknown_0_ == 0) {
-				PushInt(arg0, var1.unknown_4_ == 0);
+			rhs = inline_ov017_021d4e38(self);
+			if (rhs.type == 0) {
+				PushInt(self, rhs.i == 0);
 			} else {
 				func_0200159c(-1);
 			}
 			break;
 
 		case 12:
-			var1 = inline_ov017_021d4e38(arg0);
-			if (var1.unknown_0_ == 0) {
-				PushFloat(arg0, (float)var1.unknown_4_);
-			} else if (var1.unknown_0_ == 1) {
-				PushFloat(arg0, var1.unknown1_4_);
+			rhs = inline_ov017_021d4e38(self);
+			if (rhs.type == 0) {
+				PushFloat(self, (float)rhs.i);
+			} else if (rhs.type == 1) {
+				PushFloat(self, rhs.f);
 			} else {
 				func_0200159c(-1);
 			}
 			break;
 
 		case 13:
-			var1 = inline_ov017_021d4e38(arg0);
-			if (var1.unknown_0_ == 0) {
-				PushInt(arg0, var1.unknown_4_);
-			} else if (var1.unknown_0_ == 1) {
-				PushInt(arg0, (int)var1.unknown1_4_);
+			rhs = inline_ov017_021d4e38(self);
+			if (rhs.type == 0) {
+				PushInt(self, rhs.i);
+			} else if (rhs.type == 1) {
+				PushInt(self, (int)rhs.f);
 			} else {
 				func_0200159c(-1);
 			}
 			break;
 
 		case 20: {
-			arg0->unknown_14_ -= arg0->unknown_38_->unknown_4_;
-			Struct_ov017_021d4a38_2* var19 = arg0->unknown_14_;
-			int var20 = arg0->unknown_38_->unknown_4_;
-			for (int var21 = 0; var21 < var20; var21++, var19++) {
+			self->unknown_14_ -= self->pc->arg;
+			Struct_ov017_021d4a38_2* p = self->unknown_14_;
+			int n = self->pc->arg;
+			for (int i = 0; i < n; i++, p++) {
 				func_02001878(&data_020eec2c);
 			}
 			break;
 		}
 
 		case 21:
-			arg0->unknown_14_ -= arg0->unknown_38_->unknown_4_;
-			if (arg0->unknown_40_ == 0) {
-				func_ov017_021d4bc8((Struct_ov017_021d4bc8_2*)arg0, (Struct_ov017_021d4bc8*)arg0->unknown_14_,
-				                                arg0->unknown_38_->unknown_4_);
+			self->unknown_14_ -= self->pc->arg;
+			if (self->unknown_40_ == 0) {
+				func_ov017_021d4bc8((Struct_ov017_021d4bc8_2*)self, (Struct_ov017_021d4bc8*)self->unknown_14_,
+				                                self->pc->arg);
 			}
 			break;
 
 		case 27:
-			arg0->unknown_3c_ = 1;
-			arg0->unknown_38_ = NULL;
+			self->unknown_3c_ = 1;
+			self->pc = NULL;
 			return;
 
 		case 19:
-			arg0->unknown_38_ = (Struct_ov017_021d4e38*)(func_ov017_021d4af8((Struct_ov017_021d4af8_2*)arg0,
-			                                               (Struct_ov017_021d4af8*)(arg0->unknown_48_ + arg0->unknown_38_->unknown_8_),
-			                                               (int)arg0->unknown_38_) - 0xc);
+			self->pc = (Struct_ov017_021d4e38*)(func_ov017_021d4af8((Struct_ov017_021d4af8_2*)self,
+			                                               (Struct_ov017_021d4af8*)(self->code + self->pc->unknown_8_),
+			                                               (int)self->pc) - 0xc);
 			break;
 
 		case 15:
-			var0 = inline_ov017_021d4e38(arg0);
-			if (arg0->unknown_28_ != arg0->unknown_24_) {
-				arg0->unknown_14_ = (Struct_ov017_021d4a38_2*)arg0->unknown_30_;
-				arg0->unknown_38_ = (Struct_ov017_021d4e38*)func_ov017_021d4b9c((Struct_ov017_021d4b9c_2*)arg0);
+			var0 = inline_ov017_021d4e38(self);
+			if (self->unknown_28_ != self->unknown_24_) {
+				self->unknown_14_ = (Struct_ov017_021d4a38_2*)self->frame;
+				self->pc = (Struct_ov017_021d4e38*)func_ov017_021d4b9c((Struct_ov017_021d4b9c_2*)self);
 			} else {
-				arg0->unknown_4c_ = var0.unknown_4_;
-				Push(arg0, var0);
-				arg0->unknown_38_ = NULL;
-				arg0->unknown_3c_ = 1;
+				self->result = var0.i;
+				Push(self, var0);
+				self->pc = NULL;
+				self->unknown_3c_ = 1;
 				return;
 			}
-			Push(arg0, var0);
+			Push(self, var0);
 			break;
 
 		case 23:
-			if (arg0->unknown_40_ != 0) {
+			if (self->unknown_40_ != 0) {
 				break;
 			}
-			arg0->unknown_38_ = arg0->unknown_38_ + 1;
+			self->pc = self->pc + 1;
 			return;
 
 		case 28:
-			arg0->unknown_50_++;
-			if (arg0->unknown_40_ != 0) {
-				arg0->unknown_40_ = 0;
-				arg0->unknown_38_ = arg0->unknown_38_ + 1;
+			self->steps++;
+			if (self->unknown_40_ != 0) {
+				self->unknown_40_ = 0;
+				self->pc = self->pc + 1;
 				return;
 			}
 			break;
 		}
-		arg0->unknown_38_++;
+		self->pc++;
 	}
 }
 

@@ -20,7 +20,7 @@ struct MapNameScriptContext {
 extern struct MapNameScriptContext data_020fdc4c;
 
 // Main, originally CacheField4IfIdMatches_0201f950 (USA 0x0201f950, EUR 0x0201f960; JPN not identified)
-ARM int MapNameScript_MatchZoneName(struct Variant02030b0c* params) {
+extern "C" ARM int MapNameScript_MatchZoneName(struct Variant02030b0c* params) {
     int zoneId;
     if (data_020fdc4c.nameOverride != 0) return 1;
     zoneId = ((Script::Parameter*)params)->ToInt();

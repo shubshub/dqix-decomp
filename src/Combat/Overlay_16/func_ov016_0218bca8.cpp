@@ -10,7 +10,7 @@ static const int allocatorOffset = 8;
 #endif
 
 // USA: func_ov016_0218bca8
-extern "C" ARM void func_ov016_0218bca8(void* arg0) {
-    SafeAllocator* var0 = *(SafeAllocator**)(data_ov016_0219d0c0 + allocatorOffset);
-    var0->Free(arg0);
+extern "C" ARM void func_ov016_0218bca8(void* allocation) {
+    SafeAllocator* allocator = *(SafeAllocator**)(data_ov016_0219d0c0 + allocatorOffset);
+    allocator->Free(allocation);
 }

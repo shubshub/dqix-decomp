@@ -8,33 +8,33 @@ enum { Enum_ov003_021668fc_1152 = 0x2a8 };
 enum { Enum_ov003_021668fc_1152 = 0x480 };
 #endif
 
-extern "C" void* func_ov003_02160bf8(void* arg0, int arg1);
+extern "C" void* func_ov003_02160bf8(void* obj, int key);
 
 struct Struct_020732cc;
-extern "C" int func_0207c378(struct Struct_020732cc* arg0, int arg1, int arg2, int arg3);
+extern "C" int func_0207c378(struct Struct_020732cc* obj, int value, int amount, int key);
 
 struct Struct_02086a04;
-extern "C" int func_02086a04(struct Struct_02086a04* arg0, int arg1);
+extern "C" int func_02086a04(struct Struct_02086a04* c, int id);
 
 extern unsigned short data_ov003_0217f494[9];
 extern unsigned short data_ov003_0217f4a6[9];
 
 // USA: func_ov003_021668fc
-extern "C" ARM void func_ov003_021668fc(char* arg0) {
-    if (*(short*)(arg0 + Enum_ov003_021668fc_1152) < 0) return;
+extern "C" ARM void func_ov003_021668fc(char* self) {
+    if (*(short*)(self + Enum_ov003_021668fc_1152) < 0) return;
 
     GameState* bs = GameState::GetInstance();
     void* p2a04 = GameState_GetParty(bs);
-    void* found = func_ov003_02160bf8(self, *(short*)(self + kRegionValue480_2A8));
+    void* found = func_ov003_02160bf8(self, *(short*)(self + Enum_ov003_021668fc_1152));
     if (found == 0) return;
 
-    char* var3 = (char*)var2 + 0x160;
+    char* base = (char*)found + 0x160;
 
-    short var4[9];
-    short var5[9];
+    short arrB[9];
+    short arrA[9];
 
     unsigned int var6 = 9;
-    char* var7 = (char*)var4;
+    char* var7 = (char*)arrB;
     char* var8 = (char*)data_ov003_0217f494;
     do {
         *(unsigned short*)var7 = *(unsigned short*)var8;
@@ -43,7 +43,7 @@ extern "C" ARM void func_ov003_021668fc(char* arg0) {
     } while (--var6);
 
     unsigned int var9 = 9;
-    char* var10 = (char*)var5;
+    char* var10 = (char*)arrA;
     char* var11 = (char*)data_ov003_0217f4a6;
     do {
         *(unsigned short*)var10 = *(unsigned short*)var11;
@@ -51,15 +51,15 @@ extern "C" ARM void func_ov003_021668fc(char* arg0) {
         var11 += 2;
     } while (--var9);
 
-    unsigned char var12 = 0;
-    short var13;
-    while ((var13 = var4[var12]) >= 0) {
-        short var14 = *(short*)(var3 + var13 * 2);
-        if (var14 >= 0) {
-            func_0207c378((struct Struct_020732cc*)((char*)var1 + 0x1d4), var14, 1, var5[var12]);
+    unsigned char idx = 0;
+    short key;
+    while ((key = arrB[idx]) >= 0) {
+        short v = *(short*)(base + key * 2);
+        if (v >= 0) {
+            func_0207c378((struct Struct_020732cc*)((char*)p2a04 + 0x1d4), v, 1, arrA[idx]);
         }
-        var12 = (unsigned char)(var12 + 1);
+        idx = (unsigned char)(idx + 1);
     }
 
-    func_02086a04((struct Struct_02086a04*)var1, (signed char)*(short*)(arg0 + Enum_ov003_021668fc_1152));
+    func_02086a04((struct Struct_02086a04*)p2a04, (signed char)*(short*)(self + Enum_ov003_021668fc_1152));
 }

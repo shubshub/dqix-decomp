@@ -17,10 +17,10 @@ enum Enum_ov031_0221f6dc {
 
 struct Struct_ov031_0224f670_3 {
     unsigned char unknown_0_[0x2c];
-    Enum_ov031_0221f6dc unknown_2c_;
+    Enum_ov031_0221f6dc stage;
     unsigned char unknown_30_[0x14];
-    unsigned char* unknown_44_;
-    unsigned char* unknown_48_;
+    unsigned char* address;
+    unsigned char* payload;
     unsigned char unknown_4c_[0x14];
     unsigned long unknown_60_;
 };
@@ -34,42 +34,42 @@ extern "C" int func_ov031_0220cdd4(int, int, int);
 extern "C" int func_ov031_0221f630();
 
 // USA: func_ov031_0221f6dc
-extern "C" THUMB int func_ov031_0221f6dc(unsigned char* arg0, unsigned char* arg1, int arg2, unsigned long arg3) {
-    int var0;
+extern "C" THUMB int func_ov031_0221f6dc(unsigned char* address, unsigned char* payload, int length, unsigned long arg3) {
+    int i;
     unsigned long var1;
     var1 = DisableIRQInterrupts();
     data_ov031_0224f670.unknown_60_ = arg3;
-    data_ov031_0224f670.unknown_44_ = data_ov031_0224fb28;
-    if (arg0 != 0) {
-        for (var0 = 0; var0 < 6; var0++) {
-            data_ov031_0224fb28[var0] = *arg0++;
+    data_ov031_0224f670.address = data_ov031_0224fb28;
+    if (address != 0) {
+        for (i = 0; i < 6; i++) {
+            data_ov031_0224fb28[i] = *address++;
         }
     } else {
         VectorizedMemset(data_ov031_0224fb28, 255, 6);
-        data_ov031_0224f670.unknown_44_ = data_ov031_02245fb0;
+        data_ov031_0224f670.address = data_ov031_02245fb0;
     }
-    data_ov031_0224f670.unknown_48_ = data_ov031_0224fb60;
-    if (arg1 != 0 && arg2 > 0 && arg2 < 32) {
-        for (var0 = 0; var0 < arg2; var0++) {
-            data_ov031_0224fb60[var0] = *arg1++;
+    data_ov031_0224f670.payload = data_ov031_0224fb60;
+    if (payload != 0 && length > 0 && length < 32) {
+        for (i = 0; i < length; i++) {
+            data_ov031_0224fb60[i] = *payload++;
         }
-        for (; var0 < 32; var0++) {
-            data_ov031_0224fb60[var0] = 0;
+        for (; i < 32; i++) {
+            data_ov031_0224fb60[i] = 0;
         }
     } else {
         VectorizedMemset(data_ov031_0224fb60, 255, 32);
-        data_ov031_0224f670.unknown_48_ = data_ov031_02245fb8;
+        data_ov031_0224f670.payload = data_ov031_02245fb8;
     }
-    if (data_ov031_0224f670.unknown_2c_ == Enum_ov031_0221f6dc_3) {
+    if (data_ov031_0224f670.stage == Enum_ov031_0221f6dc_3) {
         if (func_ov031_0220cdd4(
-                (int)data_ov031_0224fb28, (int)data_ov031_0224f670.unknown_48_,
+                (int)data_ov031_0224fb28, (int)data_ov031_0224f670.payload,
                 data_ov031_0224f670.unknown_60_) == 3) {
-            data_ov031_0224f670.unknown_2c_ = Enum_ov031_0221f6dc_6;
+            data_ov031_0224f670.stage = Enum_ov031_0221f6dc_6;
             SetIRQInterruptState(var1);
             return 1;
         }
     } else if (func_ov031_0221f630() == 1) {
-        data_ov031_0224f670.unknown_2c_ = Enum_ov031_0221f6dc_6;
+        data_ov031_0224f670.stage = Enum_ov031_0221f6dc_6;
         SetIRQInterruptState(var1);
         return 1;
     }

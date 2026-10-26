@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 
 struct Struct_02098e70 {
-    char unknown_0_[0xc];
-    unsigned int unknown_c_0_ : 4;
-    unsigned int unknown_c_4_ : 4;
-    char unknown_d_[0xe8 - 0x10];
+    char pad[0xc];
+    unsigned int field0 : 4;
+    unsigned int nibble : 4;
+    char pad2[0xe8 - 0x10];
 };
 
 // USA: func_02098e70
-extern "C" ARM int func_02098e70(struct Struct_02098e70* arg0) {
-    int var0 = 0;
-    int var1;
-    for (var1 = 0; var1 < 30; var1++) {
-        if (arg0[var1].unknown_c_4_ == 9) {
-            var0++;
+extern "C" ARM int func_02098e70(struct Struct_02098e70* arr) {
+    int count = 0;
+    int i;
+    for (i = 0; i < 30; i++) {
+        if (arr[i].nibble == 9) {
+            count++;
         }
     }
-    return var0;
+    return count;
 }

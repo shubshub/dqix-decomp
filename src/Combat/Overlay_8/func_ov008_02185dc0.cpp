@@ -2,8 +2,8 @@
 #include "Graphics/Background.h"
 #if defined(jpn)
 #define REGION_LAYOUT(j,u) j
-#define REGION_FLAG(obj,flag) ((obj)->unknown_b18_ & (flag))
-#define REGION_MESSAGE(obj,shown) (!((obj)->unknown_b18_ & 0x200))
+#define REGION_FLAG(obj,flag) ((obj)->flags_ & (flag))
+#define REGION_MESSAGE(obj,shown) (!((obj)->flags_ & 0x200))
 #define data_ov008_0218b400 data_ov008_0218c080
 #else
 #define REGION_LAYOUT(j,u) u
@@ -28,7 +28,7 @@ struct Struct_ov008_021843f8_3 {
     int unknown_0_[0xb0 / 4];
 };
 
-struct Struct_01ff8b48_13 {
+struct TextTable {
     int unknown_0_[0x18 / 4];
 };
 
@@ -37,89 +37,89 @@ struct Struct_ov008_02185dc0 {
 };
 
 
-struct Struct_02081870_2 {
+struct TextWindow {
     int unknown_0_[0xbc / 4];
 };
 
-struct Struct_ov006_02158478 {
+struct Canvas {
     int unknown_0_[0xe0 / 4];
 };
 
-struct Struct_ov009_02186e00_2 {
+struct WindowCursor {
     int unknown_0_[0x40 / 4];
 };
 
 struct Struct_ov008_021842a0_2 {
-    SafeAllocator unknown_0_;
+    SafeAllocator allocator_;
     SafeAllocator unknown_14_;
-    SafeAllocator unknown_28_;
-    SafeAllocator unknown_3c_;
-    SafeAllocator unknown_50_;
-    SafeAllocator unknown_64_;
-    SafeAllocator unknown_78_;
+    SafeAllocator textAllocator_;
+    SafeAllocator spriteAllocator_;
+    SafeAllocator iconAllocator_;
+    SafeAllocator modelAllocator_;
+    SafeAllocator titleAllocator_;
     SafeAllocator unknown_8c_;
-    Struct_01ff8b48_13 unknown_a0_;
-    char* unknown_b8_;
+    TextTable texts_;
+    char* text_;
     char unknown_bc_[0x14];
-    Struct_ov003_021594c4 unknown_d0_[3];
-    Struct_02081870_2 unknown_130_;
-    Struct_ov006_02158478 unknown_1ec_[6];
-    void* unknown_72c_;
-    void* unknown_730_;
-    void* unknown_734_;
-    void* unknown_738_;
-    void* unknown_73c_;
-    void* unknown_740_;
-    unsigned char unknown_744_[8];
+    BackgroundGraphics backgrounds_[3];
+    TextWindow window_;
+    Canvas canvases_[6];
+    void* pixels_;
+    void* renderer_;
+    void* sprites_;
+    void* animations_;
+    void* iconRenderer_;
+    void* iconSprite_;
+    unsigned char items_[8];
     unsigned char unknown_74c_;
-    Struct_ov009_02186e00_2 unknown_750_;
-    Object3D unknown_790_;
-    char unknown_83c_[0x2c8];
-    void* unknown_b04_;
+    WindowCursor cursor_;
+    Object3D model_;
+    char camera_[0x2c8];
+    void* titles_;
     void* unknown_b08_;
-    void* unknown_b0c_;
-    signed char unknown_b10_;
-    unsigned char unknown_b11_;
+    void* page_;
+    signed char state_;
+    unsigned char step_;
     unsigned char unknown_b12_;
     unsigned char unknown_b13_;
     short unknown_b14_;
     short unknown_b16_;
-    int unknown_b18_;
+    int flags_;
     int unknown_b1c_;
-    int unknown_b20_;
-    int unknown_b24_;
-    unsigned char unknown_b28_;
+    int task_;
+    int mode_;
+    unsigned char kind_;
     unsigned char unknown_b29_;
     unsigned char unknown_b2a_;
-    int unknown_b2c_;
+    int titleX_;
     const void* unknown_b30_;
     void* unknown_b34_;
     void* unknown_b38_;
-    void* unknown_b3c_;
+    void* guestTitles_;
     Struct_01ff8b48_26 unknown_b40_[2];
 
-    int inline_ov008_02185a70(int arg0)
+    int inline_ov008_02185a70(int flag)
     {
 #if defined(jpn)
-        return unknown_b18_ & arg0 ? 1 : 0;
+        return flags_ & flag ? 1 : 0;
 #else
-        return *(int*)&unknown_b18_ & arg0 ? 1 : 0;
+        return *(int*)&flags_ & flag ? 1 : 0;
 #endif
     }
 };
 
 struct Struct_ov000_02171ffc_2 {
     char unknown_0_[0x49c];
-    unsigned char unknown_49c_0_ : 1;
+    unsigned char female_ : 1;
 };
 
-struct Struct_ov000_02179cdc_4 : GameObject {
+struct PartyMember : GameObject {
     char unknown_13c_[REGION_LAYOUT(0x144, 0x150) - 0x13c];
     Struct_ov000_02171ffc_2* unknown_150_;
 };
 
-struct S_a05d8;
-struct List020727d8;
+struct Struct_020a05d8;
+struct Struct_020727d8;
 struct StreamHeader;
 struct Container020e0310;
 struct GridCursor;
@@ -129,25 +129,25 @@ extern char data_ov008_0218b400[] __attribute__((aligned(4)));
 extern unsigned char g_fileLoadBuffer[];
 extern SePlayer g_sePlayer;
 
-MessageSystem* MessageSystem_GetInstance();
+extern "C" MessageSystem* MessageSystem_GetInstance();
 void SetBrightness(GameResources* resources, int screen, int brightness);
 int IsBrightnessTransitionActive(GameResources* resources);
-extern "C" void func_020ac4c0(void* arg0);
-extern "C" void func_020a05d8(Struct_020a05d8* arg0, unsigned int arg1);
-extern "C" void func_020ac494(void* arg0);
+extern "C" void func_020ac4c0(void* records);
+extern "C" void func_020a05d8(Struct_020a05d8* records, unsigned int value);
+extern "C" void func_020ac494(void* records);
 void* LoadFileIntoMemory(const char* path, void* archive, unsigned int* size);
-void ResetListHeader020727d8(List020727d8* list);
-extern "C" void _Z26SubmitAndRunScript02072928PvP12StreamHeaderiiS_h(void* list, StreamHeader* file, int size, int id, void* output, int female);
-int GameState_GetProtagonistIndex(GameState* gameState);
-const char* KeyTable_Get(Container020e0310* texts, int id);
-void Text_Append(char* text, const char* append);
-int GridCursor_GetSelectedIndex(GridCursor* cursor);
-void SePlayer_Play(SePlayer* sound, int effect, int value);
+extern "C" void func_020727d8(Struct_020727d8* list);
+extern "C" void func_02072928(void* list, StreamHeader* file, int size, int id, void* output, int female);
+extern "C" int GameState_GetProtagonistIndex(GameState* gameState);
+extern "C" const char* KeyTable_Get(Container020e0310* texts, int id);
+extern "C" void Text_Append(char* text, const char* append);
+extern "C" int GridCursor_GetSelectedIndex(GridCursor* cursor);
+extern "C" void SePlayer_Play(SePlayer* sound, int effect, int value);
 
 extern "C" {
 void* ExtractFileFromGP2(char* path, char* inner, unsigned int* size);
-void func_ov008_02186964(BattleRecords* self);
-int func_ov008_02186a30(BattleRecords* self, int ticks);
+void func_ov008_02186964(Struct_ov008_021842a0_2* self);
+int func_ov008_02186a30(Struct_ov008_021842a0_2* self, int ticks);
 void* LinkSession_GetInstance();
 int LinkSession_IsGuest(void* value);
 }
@@ -157,108 +157,108 @@ extern "C" void func_020727f8(void*, const char*, int, void*, int);
 #endif
 
 // USA: func_ov008_02185dc0
-extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned int arg1)
+extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* self, unsigned int ticks)
 {
     GameState* gameState = GameState::GetInstance();
     GameResources* resources = gameState->GetResources();
     MessageSystem* messages = MessageSystem_GetInstance();
     if (messages->active != NULL)
-        messages->b19ae = 0;
+        messages->unknown_19ae_ = 0;
     signed char step = self->step_;
     if (step == 0)
     {
-        func_ov008_02186964(arg0);
-        arg0->unknown_b11_++;
+        func_ov008_02186964(self);
+        self->step_++;
     }
-    if (var3 == 1)
+    if (step == 1)
     {
-        if (REGION_FLAG(arg0, 0x20000) && REGION_FLAG(arg0, 0x200))
+        if (REGION_FLAG(self, 0x20000) && REGION_FLAG(self, 0x200))
         {
-            if (var2->unknown_9a0_ != 3)
+            if (messages->mode != 3)
                 return;
-            arg0->unknown_b18_ &= ~0x20000;
+            self->flags_ &= ~0x20000;
         }
-        if (REGION_FLAG(arg0, 0x20000))
-            var3++;
+        if (REGION_FLAG(self, 0x20000))
+            step++;
         else
-            SetBrightness(var1, 0, 0xf);
-        arg0->unknown_b11_++;
+            SetBrightness(resources, 0, 0xf);
+        self->step_++;
     }
-    if (var3 == 2)
+    if (step == 2)
     {
-        if (IsBrightnessTransitionActive(var1))
+        if (IsBrightnessTransitionActive(resources))
             return;
-        if (!REGION_FLAG(arg0, 0x80))
+        if (!REGION_FLAG(self, 0x80))
         {
 #if !defined(jpn)
-            int var4 = 1;
+            int shown = 1;
 #endif
-            var2->unknown_998_ = 1;
-            if (arg0->unknown_b14_ > 0)
+            messages->active = 1;
+            if (self->unknown_b14_ > 0)
             {
 #if !defined(jpn)
-                if (!(arg0->unknown_b18_ & 0x200))
-                    var4 = 0;
+                if (!(self->flags_ & 0x200))
+                    shown = 0;
 #endif
-                if (REGION_MESSAGE(arg0, var4))
+                if (REGION_MESSAGE(self, shown))
                 {
-                    if (REGION_FLAG(arg0, 1) && !REGION_FLAG(arg0, 0x8000))
+                    if (REGION_FLAG(self, 1) && !REGION_FLAG(self, 0x8000))
                     {
-                        Struct_ov008_021843f8_3 var5;
-                        func_020ac4c0(&var5);
-                        func_020a05d8((Struct_020a05d8*)&var5, 1);
-                        func_020ac494(&var5);
+                        Struct_ov008_021843f8_3 records;
+                        func_020ac4c0(&records);
+                        func_020a05d8((Struct_020a05d8*)&records, 1);
+                        func_020ac494(&records);
                     }
-                    memset(arg0->unknown_b8_, 0, REGION_LAYOUT(0x800, 0x960));
+                    memset(self->text_, 0, REGION_LAYOUT(0x800, 0x960));
 #if defined(jpn)
                     char* path = self->text_;
                     char* comment = path + 0x80;
-                    TextList list;
-                    ResetListHeader020727d8((List020727d8*)&list);
-                    _Z28SubmitScriptFromFile020727f8PvPKciS_h(&list, data_ov008_0218b400, self->comment_, path, 0);
-                    PartyMember* member = (PartyMember*)GetCombatantWithFlag0x100_0200ff1c(gameState, GameState_GetProtagonistIndex(gameState));
-                    ResetListHeader020727d8((List020727d8*)&list);
-                    int female = member->data_->female_;
-                    _Z28SubmitScriptFromFile020727f8PvPKciS_h(&list, path, self->title_, comment, female);
+                    Struct_ov008_02185dc0 list;
+                    func_020727d8((Struct_020727d8*)&list);
+                    func_020727f8(&list, data_ov008_0218b400, self->unknown_b16_, path, 0);
+                    PartyMember* member = (PartyMember*)func_0200ff1c(gameState, GameState_GetProtagonistIndex(gameState));
+                    func_020727d8((Struct_020727d8*)&list);
+                    int female = member->unknown_150_->female_;
+                    func_020727f8(&list, path, self->unknown_b14_, comment, female);
 #else
-                    char* var10 = arg0->unknown_b8_;
-                    char* var11 = var10 + 0x80;
-                    char* var12 = var10 + 0x100;
+                    char* path = self->text_;
+                    char* inner = path + 0x80;
+                    char* comment = path + 0x100;
                     BackgroundLoader::AddLockGlobal();
-                    TextList list;
+                    Struct_ov008_02185dc0 list;
                     unsigned int size;
                     void* file = LoadFileIntoMemory(data_ov008_0218b400, g_fileLoadBuffer, &size);
                     if (file != NULL)
                     {
-                        func_020727d8((Struct_020727d8*)&var13);
-                        func_02072928(&var13, (Struct_02013fb4*)var15, var14, arg0->unknown_b16_, var10, 0);
-                        func_020727d8((Struct_020727d8*)&var13);
-                        func_02072928(&var13, (Struct_02013fb4*)var15, var14, arg0->unknown_b16_, var11, 1);
+                        func_020727d8((Struct_020727d8*)&list);
+                        func_02072928(&list, (StreamHeader*)file, size, self->unknown_b16_, path, 0);
+                        func_020727d8((Struct_020727d8*)&list);
+                        func_02072928(&list, (StreamHeader*)file, size, self->unknown_b16_, inner, 1);
                     }
-                    var15 = ExtractFileFromGP2(var10, var11, &var14);
-                    if (var15 != NULL)
+                    file = ExtractFileFromGP2(path, inner, &size);
+                    if (file != NULL)
                     {
-                        PartyMember* member = (PartyMember*)GetCombatantWithFlag0x100_0200ff1c(gameState, GameState_GetProtagonistIndex(gameState));
-                        ResetListHeader020727d8((List020727d8*)&list);
-                        int female = member->data_->female_;
-                        _Z26SubmitAndRunScript02072928PvP12StreamHeaderiiS_h(&list, (StreamHeader*)file, size, self->title_, comment, female);
+                        PartyMember* member = (PartyMember*)func_0200ff1c(gameState, GameState_GetProtagonistIndex(gameState));
+                        func_020727d8((Struct_020727d8*)&list);
+                        int female = member->unknown_150_->female_;
+                        func_02072928(&list, (StreamHeader*)file, size, self->unknown_b14_, comment, female);
                     }
                     BackgroundLoader::RemoveLockGlobal();
 #endif
                     Text_Append(comment, KeyTable_Get((Container020e0310*)&self->texts_, 1000));
 #if defined(jpn)
-                    func_0204500c(var2, var12, 0);
+                    func_0204500c(messages, comment, 0);
 #else
-                    func_0204500c(var2, var12, 0, 0xe3);
+                    func_0204500c(messages, comment, 0, 0xe3);
 #endif
-                    var2->unknown_19b2_ = 1;
-                    var2->unknown_19c8_ = 1;
-                    var2->unknown_99c_ = 2;
-                    if (arg0->unknown_b0c_ != NULL)
+                    messages->unknown_19b2_ = 1;
+                    messages->unknown_19c8_ = 1;
+                    messages->state = 2;
+                    if (self->page_ != NULL)
                     {
-                        arg0->unknown_b18_ |= 0x200;
-                        arg0->unknown_b10_ = 2;
-                        arg0->unknown_b11_ = 0;
+                        self->flags_ |= 0x200;
+                        self->state_ = 2;
+                        self->step_ = 0;
                         return;
                     }
                 }
@@ -266,54 +266,54 @@ extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned 
             else
             {
 #if !defined(jpn)
-                if (!(arg0->unknown_b18_ & 0x200))
-                    var4 = 0;
+                if (!(self->flags_ & 0x200))
+                    shown = 0;
 #endif
-                if (REGION_MESSAGE(arg0, var4))
+                if (REGION_MESSAGE(self, shown))
                 {
 #if defined(jpn)
                     func_0204500c(messages, KeyTable_Get((Container020e0310*)&self->texts_, 10000), 0);
 #else
                     func_0204500c(messages, KeyTable_Get((Container020e0310*)&self->texts_, 10000), 0, 0xe3);
 #endif
-                    var2->unknown_19b2_ = 1;
-                    var2->unknown_19c8_ = 1;
-                    var2->unknown_99c_ = 2;
+                    messages->unknown_19b2_ = 1;
+                    messages->unknown_19c8_ = 1;
+                    messages->state = 2;
                 }
             }
-            if (REGION_FLAG(arg0, 0x20000))
+            if (REGION_FLAG(self, 0x20000))
             {
-                var2->unknown_19c5_ = 1;
-                var2->unknown_19b2_ = 0;
-                arg0->unknown_b18_ |= 0x200;
-                arg0->unknown_b11_ = 1;
+                messages->unknown_19c5_ = 1;
+                messages->unknown_19b2_ = 0;
+                self->flags_ |= 0x200;
+                self->step_ = 1;
                 return;
             }
-            arg0->unknown_b18_ |= 0x20;
+            self->flags_ |= 0x20;
         }
-        arg0->unknown_b18_ |= 8;
-        arg0->unknown_b11_++;
+        self->flags_ |= 8;
+        self->step_++;
     }
-    if (var3 == 3)
+    if (step == 3)
     {
         int result = func_ov008_02186a30(self, ticks);
         int selected = GridCursor_GetSelectedIndex((GridCursor*)&self->cursor_);
 #if defined(jpn)
-        int var20 = 5;
-        int var21 = arg0->unknown_b29_;
-        var20 += var21;
-        if (var19 > var20)
-            arg0->unknown_b29_ = var19 - 5;
-        else if (var19 < var21)
-            arg0->unknown_b29_ = var19;
+        int limit = 5;
+        int first = self->unknown_b29_;
+        limit += first;
+        if (selected > limit)
+            self->unknown_b29_ = selected - 5;
+        else if (selected < first)
+            self->unknown_b29_ = selected;
 #else
-        if (var19 > arg0->unknown_b29_ + 5)
-            arg0->unknown_b29_ = var19 - 5;
-        else if (var19 < arg0->unknown_b29_)
-            arg0->unknown_b29_ = var19;
+        if (selected > self->unknown_b29_ + 5)
+            self->unknown_b29_ = selected - 5;
+        else if (selected < self->unknown_b29_)
+            self->unknown_b29_ = selected;
 #endif
-        unsigned char var22 = arg0->unknown_744_[var19];
-        if (g_keyManager.TestKeysPressed(0x401) || var18 == 1)
+        unsigned char kind = self->items_[selected];
+        if (g_keyManager.TestKeysPressed(0x401) || result == 1)
         {
             if (!LinkSession_IsGuest(LinkSession_GetInstance()) || kind != 5)
             {
@@ -325,12 +325,12 @@ extern "C" ARM void func_ov008_02185dc0(Struct_ov008_021842a0_2* arg0, unsigned 
                 return;
             }
         }
-        else if (g_keyManager.TestKeysPressed(0x806) || var18 == -2)
+        else if (g_keyManager.TestKeysPressed(0x806) || result == -2)
         {
-            arg0->unknown_b10_ = 13;
-            arg0->unknown_b11_ = 0;
-            arg0->unknown_b18_ &= ~8;
-            arg0->unknown_b18_ &= ~0x20;
+            self->state_ = 13;
+            self->step_ = 0;
+            self->flags_ &= ~8;
+            self->flags_ &= ~0x20;
         }
     }
 }

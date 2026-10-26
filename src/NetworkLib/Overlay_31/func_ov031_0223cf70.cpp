@@ -7,14 +7,14 @@ ARM unsigned int EnableSpecificInterrupts(unsigned int mask);
 extern HPXEAllocator* data_ov031_02290d3c;
 
 // USA: func_ov031_0223cf70
-extern "C" ARM unsigned int func_ov031_0223cf70(void** arg0) {
-    unsigned int var0 = DisableSpecificInterrupts(1);
-    void* var1 = *arg0;
-    if (var1 == NULL) {
-        return var0;
+extern "C" ARM unsigned int func_ov031_0223cf70(void** a) {
+    unsigned int prev = DisableSpecificInterrupts(1);
+    void* p = *a;
+    if (p == NULL) {
+        return prev;
     }
-    data_ov031_02290d3c->Free(var1);
-    EnableSpecificInterrupts(var0);
-    *arg0 = NULL;
+    data_ov031_02290d3c->Free(p);
+    EnableSpecificInterrupts(prev);
+    *a = NULL;
     return 0;
 }

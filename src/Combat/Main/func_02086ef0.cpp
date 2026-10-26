@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
-struct Struct_02048150 {
-    char unknown_0_[0xf78];
-    unsigned char unknown_f78_[4];
-    unsigned char unknown_f7c_;
+struct ArrayContainsByteStruct {
+    char pad[0xf78];
+    unsigned char arr[4];
+    unsigned char count;
 };
 
 // USA: func_02086ef0
-extern "C" ARM int func_02086ef0(struct Struct_02048150* arg0, int arg1) {
-    int var0;
-    for (var0 = 0; var0 < arg0->unknown_f7c_; var0++) {
-        if (arg1 == arg0->unknown_f78_[var0]) {
+extern "C" ARM int func_02086ef0(struct ArrayContainsByteStruct* s, int val) {
+    int i;
+    for (i = 0; i < s->count; i++) {
+        if (val == s->arr[i]) {
             return 1;
         }
     }

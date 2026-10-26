@@ -7,16 +7,16 @@
 struct SearchStruct {
     int state;
     unsigned short tgid;
-    unsigned char padding6[0x7ba];
+    unsigned char unknown_6_[0x7ba];
     SearchEntry0202c178 ownRecord;      // +0x7c0: this console's record (LinkSession_GetOwnRecord)
     unsigned char padding7d0[0x7f0];
     int busy;                           // +0xfc0
-    unsigned char paddingfc4[0x4a];
+    unsigned char unknown_fc4_[0x4a];
     unsigned char lostMask;             // +0x100e: aid bits of members whose console stopped answering
-    unsigned char activeMask;           // +0x100f: SetSearchFlagBit0202c660 sets, ClearSearchFlagBit0202c69c clears
-    unsigned char padding1010;
+    unsigned char activeMask;           // +0x100f: func_0202c660 sets, func_0202c69c clears
+    unsigned char unknown_1010_;
     unsigned char assignSlots;          // +0x1011: give newly connected aids a free party slot
-    unsigned char padding1012[0x26];
+    unsigned char unknown_1012_[0x26];
     signed char slotOfAid[16];          // +0x1038: each wireless aid's party slot
     signed char previousSlotOfAid[16];  // +0x1048: the slot each aid last held
     int IsActive() const {
@@ -35,25 +35,25 @@ enum {
 enum { kGlobalFlag_LinkFailed = 0x1000000 };
 enum { kSessionState_Failed = -1 };
 struct FlagWord02046708;
-unsigned short WH_GetCurrentAid();
-void* GlobalFlags_GetInstance();
-int FlagWord_TestBits(FlagWord02046708*, unsigned int);
-int WH_GetSystemState();
+extern "C" unsigned short WH_GetCurrentAid();
+extern "C" void* GlobalFlags_GetInstance();
+extern "C" int FlagWord_TestBits(FlagWord02046708*, unsigned int);
+extern "C" int WH_GetSystemState();
 extern "C" int WH_GetMeasureChannel();
 extern "C" void WH_ParentConnect(int, int, int);
 extern "C" void LinkSession_UpdateBeacon(SearchStruct*, int);
 extern "C" void LinkSession_ShareRecords(SearchStruct*);
 extern "C" void func_0202c04c(SearchStruct*);
 extern "C" int LinkSession_IsHostOrSolo(SearchStruct*);
-unsigned short LinkSession_GetConnectedAids(SearchStruct*);
-signed char LinkSession_FindAidOfSlot(SearchStruct*, int);
-int LinkSession_IsSlotConnected(SearchStruct*, int);
-void LinkSession_RemoveMember(SearchStruct*, int);
-int LinkSession_IsSlotMember(SearchStruct*, int);
-void LinkSession_MarkSlotLost(SearchStruct*, int);
-void LinkSession_AddMember(SearchStruct*, int);
-void SetSearchFlagBit0202c660(SearchStruct*, int);
-int WH_GetLastError();
+extern "C" unsigned short LinkSession_GetConnectedAids(SearchStruct*);
+extern "C" signed char LinkSession_FindAidOfSlot(SearchStruct*, int);
+extern "C" int LinkSession_IsSlotConnected(SearchStruct*, int);
+extern "C" void LinkSession_RemoveMember(SearchStruct*, int);
+extern "C" int LinkSession_IsSlotMember(SearchStruct*, int);
+extern "C" void LinkSession_MarkSlotLost(SearchStruct*, int);
+extern "C" void LinkSession_AddMember(SearchStruct*, int);
+extern "C" void func_0202c660(SearchStruct*, int);
+extern "C" int WH_GetLastError();
 
 // Main, originally func_0202b2f0 (USA 0x0202b2f0, EUR 0x0202b300, JPN 0x0202aea0)
 extern "C" ARM void LinkSession_Update(SearchStruct* session) {
@@ -165,7 +165,7 @@ slotChecked:
                     }
                 } else if (LinkSession_IsSlotConnected(session, slot)) {
                     LinkSession_AddMember(session, slot);
-                    SetSearchFlagBit0202c660(session, slot);
+                    func_0202c660(session, slot);
                     if (session->IsActive()) {
                         GameResources* resources = GetGameResources();
                         memset(resources->partyNames[slot], 0, sizeof(resources->partyNames[slot]));

@@ -3,20 +3,20 @@
 
 
 // USA: func_ov017_021b33d8
-extern "C" ARM void func_ov017_021b33d8(void* arg0) {
+extern "C" ARM void func_ov017_021b33d8(void* obj) {
 	int var0 = (int)BackgroundLoader::GetInstance();
-	int var1;
-	for (var1 = 0; var1 < 0xe; var1++) {
-		int var2 = *(int*)((char*)arg0 + var1 * 4 + 0x10);
-		if (var2 >= 0) {
-			((BackgroundLoader*)(var0))->RemoveTask((int)(var2));
+	int i;
+	for (i = 0; i < 0xe; i++) {
+		int v = *(int*)((char*)obj + i * 4 + 0x10);
+		if (v >= 0) {
+			((BackgroundLoader*)(var0))->RemoveTask((int)(v));
 		}
 	}
-	*(short*)((char*)arg0 + 8) = -1;
-	((unsigned char*)arg0)[0xa] = 0;
-	((unsigned char*)arg0)[0xb] = 0;
-	int var3;
-	for (var3 = 0; var3 < 0xe; var3++) {
-		*(int*)((char*)arg0 + var3 * 4 + 0x10) = -1;
+	*(short*)((char*)obj + 8) = -1;
+	((unsigned char*)obj)[0xa] = 0;
+	((unsigned char*)obj)[0xb] = 0;
+	int j;
+	for (j = 0; j < 0xe; j++) {
+		*(int*)((char*)obj + j * 4 + 0x10) = -1;
 	}
 }

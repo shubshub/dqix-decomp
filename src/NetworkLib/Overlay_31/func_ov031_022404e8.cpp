@@ -1,42 +1,42 @@
 #include <globaldefs.h>
 
-struct Struct_ov031_02240410 { void* unknown_0_; };
-extern "C" void func_ov031_02240410(void* arg0, int arg1, Struct_ov031_02240410** arg2, int* arg3);
-extern "C" signed char func_ov031_0224046c(void* arg0, void** arg1, int* arg2);
+struct Struct_ov031_02240410 { void* next; };
+extern "C" void func_ov031_02240410(void* obj, int idx, Struct_ov031_02240410** arg2, int* arg3);
+extern "C" signed char func_ov031_0224046c(void* obj, void** arg1, int* counter);
 
 // USA: func_ov031_022404e8
-extern "C" ARM int func_ov031_022404e8(void* arg0, int arg1, int arg2, int* arg3) {
+extern "C" ARM int func_ov031_022404e8(void* obj, int start, int end, int* outPtr) {
 	int var0 = 0;
-	if (arg3) {
-		*arg3 = -1;
+	if (outPtr) {
+		*outPtr = -1;
 	}
-	if (arg1 >= arg2) {
+	if (start >= end) {
 		goto fail;
 	}
-	Struct_ov031_02240410* var1;
-	int var2;
-	func_ov031_02240410(arg0, arg1, &var1, &var2);
-	if (arg1 >= arg2) {
+	Struct_ov031_02240410* node;
+	int rem;
+	func_ov031_02240410(obj, start, &node, &rem);
+	if (start >= end) {
 		goto fail;
 	}
-	int var3 = arg1;
+	int i = start;
 	do {
-		signed char var4 = func_ov031_0224046c(arg0, (void**)&var1, &var2);
-		if (var4 == ':' && arg3 && *arg3 < 0) {
-			*arg3 = var3;
+		signed char c = func_ov031_0224046c(obj, (void**)&node, &rem);
+		if (c == ':' && outPtr && *outPtr < 0) {
+			*outPtr = i;
 		}
 		if (!var0) {
-			if (var4 == '\r') {
+			if (c == '\r') {
 				var0 = 1;
 			}
 		} else {
-			if (var4 == '\n') {
-				return (var3 == arg2 - 1) ? 0 : var3 + 1;
+			if (c == '\n') {
+				return (i == end - 1) ? 0 : i + 1;
 			}
 			var0 = 0;
 		}
-		var3++;
-	} while (var3 < arg2);
+		i++;
+	} while (i < end);
 fail:
 	return -1;
 }

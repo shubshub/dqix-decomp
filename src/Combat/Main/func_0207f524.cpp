@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201f040 {
+struct ResetStruct {
     int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    int w4;
+    int w8;
     int unknown_c_;
     int unknown_10_;
     int unknown_14_;
@@ -13,32 +13,32 @@ struct Struct_0201f040 {
     int unknown_20_;
     int unknown_24_;
     int unknown_28_;
-    char unknown_2c_[0x400];
+    char pad[0x400];
     unsigned char unknown_42c_;
 };
 
-struct Struct_0201f040_2;
-struct Struct_02013fb4;
+struct StreamState;
+struct StreamHeader;
 
 struct Struct_0201f040_3;
 
 struct Struct_0207f524;
-extern "C" void func_0207f72c(struct Struct_0207f524* arg0);
+extern "C" void func_0207f72c(struct Struct_0207f524* p);
 
-struct Struct_02108ee0 { void* unknown_0_; void* unknown_4_; };
+struct Struct_02108ee0 { void* field0; void* field4; };
 extern struct Struct_02108ee0 data_02108ee0;
 extern int data_020f0fb0;
 
 // USA: func_0207f524
-extern "C" ARM void func_0207f524(void* arg0, void* arg1, struct Struct_02013fb4* arg2, int arg3) {
-    if (arg1 != 0 && arg2 != 0 && arg3 != 0) {
-        struct Struct_0201f040 var0;
-        data_02108ee0.unknown_0_ = arg1;
-        data_02108ee0.unknown_4_ = arg0;
-        ((Script*)&var0)->Initialize();
-        ((Script*)&var0)->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f0fb0);
-        ((Script*)((struct Struct_0201f040_2*)&var0))->Load(arg2, arg3);
-        ((Script*)((struct Struct_0201f040_3*)&var0))->Execute();
-        func_0207f72c((struct Struct_0207f524*)arg0);
+extern "C" ARM void func_0207f524(void* param0, void* param1, struct StreamHeader* param2, int param3) {
+    if (param1 != 0 && param2 != 0 && param3 != 0) {
+        struct ResetStruct local;
+        data_02108ee0.field0 = param1;
+        data_02108ee0.field4 = param0;
+        ((Script*)&local)->Initialize();
+        ((Script*)&local)->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f0fb0);
+        ((Script*)((struct StreamState*)&local))->Load(param2, param3);
+        ((Script*)((struct Struct_0201f040_3*)&local))->Execute();
+        func_0207f72c((struct Struct_0207f524*)param0);
     }
 }

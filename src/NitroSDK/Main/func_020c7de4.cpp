@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_0224e204 {
-    int unknown_0_; int unknown_4_; int unknown_8_; int unknown_c_;
-    int unknown_10_; int unknown_14_; int unknown_18_; int unknown_1c_;
+    int a; int b; int c; int d;
+    int e; int f; int g; int h;
 };
 
 // USA: func_020c7de4
-extern "C" ARM void func_020c7de4(struct Struct_ov031_0224e204 *arg0, int arg1, int arg2) {
-    arg0->unknown_4_ = 0;
-    arg0->unknown_0_ = 0;
-    arg0->unknown_c_ = 0;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_10_ = arg1;
-    arg0->unknown_14_ = arg2;
-    arg0->unknown_18_ = 0;
-    arg0->unknown_1c_ = 0;
+extern "C" ARM void func_020c7de4(struct Struct_ov031_0224e204 *s, int e, int f) {
+    s->b = 0;
+    s->a = 0;
+    s->d = 0;
+    s->c = 0;
+    s->e = e;
+    s->f = f;
+    s->g = 0;
+    s->h = 0;
 }

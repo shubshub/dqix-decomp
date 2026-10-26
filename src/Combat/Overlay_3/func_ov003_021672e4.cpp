@@ -11,21 +11,21 @@ extern "C" unsigned short GetSubBGVRAMBanks(void);
 extern "C" unsigned short GetSubObjVRAMBanks(void);
 
 struct Struct_02074b64;
-extern "C" void func_02074b64(struct Struct_02074b64* arg0);
+extern "C" void func_02074b64(struct Struct_02074b64* obj);
 
 struct Struct_ov003_021672e4 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
-    int unknown_18_;
+    int f0;
+    int f4;
+    int f8;
+    int fc;
+    int f10;
+    int f14;
+    int f18;
     char unknown_1c_[Enum_ov003_021672e4_96 - 0x1c];
-    int unknown_60_;
-    int unknown_64_;
-    int unknown_68_;
-    int unknown_6c_;
+    int f60;
+    int f64;
+    int f68;
+    int f6c;
     int unknown_70_;
     unsigned char unknown_74_;
     unsigned char unknown_75_;
@@ -33,22 +33,22 @@ struct Struct_ov003_021672e4 {
 };
 
 // USA: func_ov003_021672e4
-extern "C" ARM void func_ov003_021672e4(struct Struct_ov003_021672e4* arg0, int arg1, int arg2) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_c_ = 0;
-    arg0->unknown_10_ = 0;
-    arg0->unknown_14_ = GetSubBGVRAMBanks();
-    arg0->unknown_18_ = GetSubObjVRAMBanks();
-    *((unsigned char*)arg0 + 0x2c) = 0;
-    *((unsigned char*)arg0 + 0x2d) = 0;
-    func_02074b64((struct Struct_02074b64*)((char*)arg0 + 0x1c));
-    arg0->unknown_60_ = (*(volatile unsigned int*)0x4001000 & 0x1f00) >> 8;
-    arg0->unknown_64_ = -1;
-    arg0->unknown_68_ = arg0->unknown_6c_ = 0;
-    arg0->unknown_70_ = arg1;
-    arg0->unknown_74_ = 0;
-    arg0->unknown_75_ = 0;
-    arg0->unknown_76_ = (unsigned char)arg2;
+extern "C" ARM void func_ov003_021672e4(struct Struct_ov003_021672e4* obj, int p1, int p2) {
+    obj->f0 = 0;
+    obj->f4 = 0;
+    obj->f8 = 0;
+    obj->fc = 0;
+    obj->f10 = 0;
+    obj->f14 = GetSubBGVRAMBanks();
+    obj->f18 = GetSubObjVRAMBanks();
+    *((unsigned char*)obj + 0x2c) = 0;
+    *((unsigned char*)obj + 0x2d) = 0;
+    func_02074b64((struct Struct_02074b64*)((char*)obj + 0x1c));
+    obj->f60 = (*(volatile unsigned int*)0x4001000 & 0x1f00) >> 8;
+    obj->f64 = -1;
+    obj->f68 = obj->f6c = 0;
+    obj->unknown_70_ = p1;
+    obj->unknown_74_ = 0;
+    obj->unknown_75_ = 0;
+    obj->unknown_76_ = (unsigned char)p2;
 }

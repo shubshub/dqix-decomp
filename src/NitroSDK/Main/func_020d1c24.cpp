@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 
 // USA: func_020d1c24
-extern "C" ARM void func_020d1c24(unsigned int* arg0, unsigned int arg1) {
+extern "C" ARM void func_020d1c24(unsigned int* table, unsigned int arg1) {
     unsigned int var0;
-    unsigned int var1;
-    unsigned int var2;
-    var1 = 0;
+    unsigned int i;
+    unsigned int bit;
+    i = 0;
     do {
-        var0 = var1;
-        var2 = 0;
+        var0 = i;
+        bit = 0;
         do {
             if (var0 & 1) {
                 var0 = arg1 ^ (var0 >> 1);
             } else {
                 var0 = var0 >> 1;
             }
-            var2++;
-        } while (var2 < 8);
-        arg0[var1] = var0;
-        var1++;
-    } while (var1 < 0x100);
+            bit++;
+        } while (bit < 8);
+        table[i] = var0;
+        i++;
+    } while (i < 0x100);
 }

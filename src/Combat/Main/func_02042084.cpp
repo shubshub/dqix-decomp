@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
-extern "C" int func_020d2ff0(const char* arg0);
-extern "C" int func_020420e8(char* arg0, int arg1);
-extern "C" int sprintf(char* arg0, const char* arg1, ...);
+extern "C" int STD_GetStringLength(const char* s);
+extern "C" int Font_GetTextWidth(char* label, int extra);
+extern "C" int sprintf(char* dst, const char* fmt, ...);
 extern char data_020efe91;
 
 // USA: func_02042084
-extern "C" ARM int func_02042084(char* arg0, char* arg1, int arg2, int arg3) {
+extern "C" ARM int func_02042084(char* buffer, char* label, int width, int extra) {
 #if defined(jpn)
-    int var0 = func_020d2ff0(arg1);
-    var0 *= arg3;
-    int var2 = ((arg2 - (var0 >> 1)) >> 1) + 1;
+    int measured = STD_GetStringLength(label);
+    measured *= extra;
+    int count = ((width - (measured >> 1)) >> 1) + 1;
 #else
-    int var1 = func_020420e8(arg1, arg3);
-    int var2 = ((arg2 - var1) >> 1) + 1;
+    int measured = Font_GetTextWidth(label, extra);
+    int count = ((width - measured) >> 1) + 1;
 #endif
-    sprintf(arg0 + func_020d2ff0(arg0), &data_020efe91, var2);
-    sprintf(arg0 + func_020d2ff0(arg0), arg1);
-    return func_020d2ff0(arg0);
+    sprintf(buffer + STD_GetStringLength(buffer), &data_020efe91, count);
+    sprintf(buffer + STD_GetStringLength(buffer), label);
+    return STD_GetStringLength(buffer);
 }

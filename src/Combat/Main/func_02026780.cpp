@@ -3,16 +3,16 @@
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Memory.h"
 #include "NitroSDK/Matrix.h"
-struct Struct_02020554;
+struct MapDisplay;
 
 extern "C" void* LinkSession_GetInstance(void);
 extern "C" int LinkSession_IsGuest(void* p);
 extern "C" void* Zone3D_GetInstance(void);
 
-void MapDisplay_ClearRedChests(char* obj);
-void AppendRecord020269e4(char* obj, const void* src);
+extern "C" void MapDisplay_ClearRedChests(char* obj);
+extern "C" void func_020269e4(char* obj, const void* src);
 
-struct Cont02026780 {
+struct Struct_02026780_4 {
     unsigned short uniqueID;
     unsigned short itemIDOrRank;
     unsigned short lock : 2;
@@ -20,67 +20,67 @@ struct Cont02026780 {
     unsigned short containerType : 3;
     short angleOrCupboardNode;
     Vector3fix position;
-    struct Cont02026780* pNext;
+    struct Struct_02026780_4* pNext;
 };
 
 struct Struct_02026780_5 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
+    unsigned char type;
+    unsigned char pad1;
     unsigned char unknown_2_;
-    unsigned char unknown_3_;
-    char* unknown_4_;
-    fix32_t unknown_8_;
-    fix32_t unknown_c_;
-    struct Struct_02026780_5* unknown_10_;
+    unsigned char pad3;
+    char* names;
+    fix32_t x;
+    fix32_t z;
+    struct Struct_02026780_5* next;
 };
 
 struct Struct_02026780 {
 #if defined(jpn)
-    unsigned char unknown_0_[0x6a8];
+    unsigned char pad0[0x6a8];
 #else
-    unsigned char unknown1_0_[0x754];
+    unsigned char pad0[0x754];
 #endif
-    struct Struct_02026780_5* unknown_754_;
-    unsigned char unknown_758_[0x22];
-    unsigned char unknown_77a_;
-    unsigned char unknown_77b_[1];
-    char* unknown_77c_;
+    struct Struct_02026780_5* nodes;
+    unsigned char pad2[0x22];
+    unsigned char count;
+    unsigned char pad3[1];
+    char* names;
     unsigned char unknown_780_;
-    unsigned char unknown_781_[0x9b8 - 0x781];
-    unsigned char unknown_9b8_;
+    unsigned char pad5[0x9b8 - 0x781];
+    unsigned char flag;
 };
 
 struct Struct_02026780_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_;
+    unsigned short id;
+    unsigned short f2;
+    unsigned short f4;
     unsigned short unknown_6_;
-    unsigned short unknown_8_;
+    unsigned short f8;
     unsigned short unknown_a_;
-    unsigned int unknown_c_;
-    Vector3fix unknown_10_;
+    unsigned int pad;
+    Vector3fix pos;
 };
 
 struct Struct_02026780_3 {
-    char unknown_0_[4];
-    Struct_02026780_4* unknown_4_;
+    char unk_0[4];
+    Struct_02026780_4* pContainerList_;
     unsigned short unknown_8_;
 };
 
 // USA: func_02026780
-extern "C" ARM int func_02026780(Struct_02020554* arg0, void* arg1, unsigned int arg2) {
-    Struct_02026780* var0 = (Struct_02026780*)arg0;
-    char var1[0x800];
-    SafeAllocator var2;
-    Struct_02026780_3 var3;
-    Struct_02026780_2 var4;
-    int var5;
+extern "C" ARM int func_02026780(MapDisplay* arg0, void* arg1, unsigned int fileSize) {
+    Struct_02026780* self = (Struct_02026780*)arg0;
+    char buffer[0x800];
+    SafeAllocator alloc;
+    Struct_02026780_3 mgr;
+    Struct_02026780_2 rec;
+    int i;
     int var6;
-    fix32_t var7;
+    fix32_t ax;
     fix32_t var8;
-    struct Struct_02026780_5* var9;
+    struct Struct_02026780_5* node;
 
-    if (var0->unknown_77a_ == 0 || var0->unknown_77c_ == 0) {
+    if (self->count == 0 || self->names == 0) {
         return 0;
     }
 
@@ -94,65 +94,65 @@ extern "C" ARM int func_02026780(Struct_02020554* arg0, void* arg1, unsigned int
     alloc.ResetAllocatorPointer();
     alloc.CreateTypeA(buffer, sizeof(buffer));
 
-    var0->unknown_780_ = 0;
+    self->unknown_780_ = 0;
 
-    for (var5 = 0; var5 < var0->unknown_77a_; var5++) {
-        var7 = 0;
-        var8 = var7;
-        var9 = var0->unknown_754_;
+    for (i = 0; i < self->count; i++) {
+        ax = 0;
+        var8 = ax;
+        node = self->nodes;
         var6 = 1;
 
-        while (var9 != 0 && var6) {
-            if (var9->unknown_0_ == 1) {
-                int var10 = 0;
-                while (var10 < var9->unknown_2_ && var6) {
-                    if (*(unsigned short*)(var9->unknown_4_ + var10 * 2)
-                        == *(unsigned short*)(var0->unknown_77c_ + var5 * 0x1a)) {
-                        var7 = var9->unknown_8_;
-                        var8 = var9->unknown_c_;
+        while (node != 0 && var6) {
+            if (node->type == 1) {
+                int j = 0;
+                while (j < node->unknown_2_ && var6) {
+                    if (*(unsigned short*)(node->names + j * 2)
+                        == *(unsigned short*)(self->names + i * 0x1a)) {
+                        ax = node->x;
+                        var8 = node->z;
                         var6 = 0;
                     }
-                    var10++;
+                    j++;
                 }
             }
-            var9 = var9->unknown_10_;
+            node = node->next;
         }
 
-        var2.Reset();
-        ((LootableContainerManager*)&var3)->Reset();
-        ((LootableContainerManager*)&var3)->Reset();
+        alloc.Reset();
+        ((LootableContainerManager*)&mgr)->Reset();
+        ((LootableContainerManager*)&mgr)->Reset();
 
-        ((LootableContainerManager*)&var3)->LoadZoneContainers(
-            arg1, arg2, var0->unknown_77c_ + var5 * 0x1a + 2, &var2);
+        ((LootableContainerManager*)&mgr)->LoadZoneContainers(
+            arg1, fileSize, self->names + i * 0x1a + 2, &alloc);
 
-        for (Cont02026780* c = mgr.pContainerList_; c != 0; c = c->pNext) {
+        for (Struct_02026780_4* c = mgr.pContainerList_; c != 0; c = c->pNext) {
             VectorizedMemset(&rec, 0, sizeof(rec));
             rec.id = c->uniqueID;
             rec.f2 = c->lock;
             rec.f4 = c->lootType;
-            rec.f6 = c->containerType;
+            rec.unknown_6_ = c->containerType;
             rec.pos = c->position;
 
-            if (var4.unknown_6_ == 0) {
-                if (var11->unknown_2_ == 0) {
-                    var4.unknown_8_ = 0;
+            if (rec.unknown_6_ == 0) {
+                if (c->itemIDOrRank == 0) {
+                    rec.f8 = 0;
                 } else {
-                    var4.unknown_8_ = 1;
+                    rec.f8 = 1;
                 }
-                var4.unknown_a_ = var4.unknown_8_;
+                rec.unknown_a_ = rec.f8;
                 if (!var6) {
-                    var4.unknown_10_.x = var7 + fix32_Divide(var11->unknown_8_.x, 9830);
-                    var4.unknown_10_.z = var8 + fix32_Divide(var11->unknown_8_.z, 9830);
+                    rec.pos.x = ax + fix32_Divide(c->position.x, 9830);
+                    rec.pos.z = var8 + fix32_Divide(c->position.z, 9830);
                 }
-                func_020269e4((char*)var0, &var4);
+                func_020269e4((char*)self, &rec);
             }
         }
 
-        ((LootableContainerManager*)&var3)->ResetAllocator(&var2);
-        ((LootableContainerManager*)&var3)->Reset();
+        ((LootableContainerManager*)&mgr)->ResetAllocator(&alloc);
+        ((LootableContainerManager*)&mgr)->Reset();
     }
 
-    var2.Destroy();
-    var0->unknown_9b8_ = 0;
+    alloc.Destroy();
+    self->flag = 0;
     return 1;
 }

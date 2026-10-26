@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8 { int unknown_0_; int unknown_4_; };
-extern "C" void func_0209bd40(char* arg0, int arg1);
+struct Variant02030b0c { int tag; int val; };
+extern "C" void func_0209bd40(char* obj, int value);
 
 struct Struct_0209bb1c {
-    char* unknown_0_;
-    unsigned char unknown_4_[0x10];
-    int unknown_14_;
+    char* buffer;
+    unsigned char pad[0x10];
+    int active;
     int unknown_18_;
 };
 extern struct Struct_0209bb1c* data_02109bb0;
 
 // USA: func_0209bb1c
-extern "C" ARM int func_0209bb1c(struct Struct_0201c1c8* arg0) {
-    if (data_02109bb0->unknown_14_ == 0) return 1;
-    int var0 = ((Script::Parameter*)arg0)->ToInt();
-    func_0209bd40(data_02109bb0->unknown_0_, var0);
-    data_02109bb0->unknown_18_ = var0;
+extern "C" ARM int func_0209bb1c(struct Variant02030b0c* variant) {
+    if (data_02109bb0->active == 0) return 1;
+    int value = ((Script::Parameter*)variant)->ToInt();
+    func_0209bd40(data_02109bb0->buffer, value);
+    data_02109bb0->unknown_18_ = value;
     return 1;
 }

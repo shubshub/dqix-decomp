@@ -8,15 +8,15 @@
 
 struct HeadNode02046b24;
 struct EntryList0217208;
-int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
-void Zone3D_UpdateScriptNode(void* a, char* list);
-void GameObject_EnableControl(void* obj);
+extern "C" int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** obj);
+extern "C" void Zone3D_UpdateScriptNode(void* a, char* list);
+extern "C" void GameObject_EnableControl(void* obj);
 extern "C" void Zone3D_UpdateLoading(Zone3D* self);
 extern "C" void Zone3D_UpdateLootables(struct EntryList0217208* self);
 extern "C" void Zone3D_UpdateChests(Zone3D* self);
 extern "C" void func_020a84e0();
-void Zone3D_SetVisitedFlag(void*);
-void Zone3D_StartPendingFieldTask(unsigned char*);
+extern "C" void Zone3D_SetVisitedFlag(void*);
+extern "C" void Zone3D_StartPendingFieldTask(unsigned char*);
 
 // Main, originally func_02015438 (USA 0x02015438, EUR 0x02015448, JPN 0x02015204)
 extern "C" ARM void Zone3D_Update(Zone3D* self) {
@@ -57,5 +57,5 @@ extern "C" ARM void Zone3D_Update(Zone3D* self) {
     func_020a84e0();
     Zone3D_SetVisitedFlag(self);
     Zone3D_StartPendingFieldTask((unsigned char*)self);
-    MaybeClearGrottoState0201bfd4(self);
+    func_0201bfd4(self);
 }

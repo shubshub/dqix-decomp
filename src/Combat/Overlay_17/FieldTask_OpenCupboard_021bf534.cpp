@@ -2,14 +2,14 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-void GameObject_EnableControl(void* obj);
+extern "C" void GameObject_EnableControl(void* obj);
 extern "C" void func_ov017_021bf490(void*);
-int MessageSystem_GetInstance();
-void GameResources_UpdateSpecialItemEffect(void* obj);
+extern "C" int MessageSystem_GetInstance();
+extern "C" void GameResources_UpdateSpecialItemEffect(void* obj);
 
-typedef int (*StateHandler_021bf534)(void*);
-struct StateTable_021bf534 { StateHandler_021bf534 f[9]; };
-extern StateTable_021bf534 data_ov017_021d6cc4;
+typedef int (*Type_ov017_021bf534)(void*);
+struct Struct_ov017_021d6cc4 { Type_ov017_021bf534 f[9]; };
+extern Struct_ov017_021d6cc4 data_ov017_021d6cc4;
 
 struct Obj_021bf534 {
     unsigned char pad0;
@@ -32,8 +32,8 @@ extern "C" ARM void FieldTask_OpenCupboard(struct Obj_021bf534* obj) {
         GameResources_UpdateSpecialItemEffect(ov);
     }
 
-    StateTable_021bf534 table = data_ov017_021d6cc4;
-    StateHandler_021bf534 handler = table.f[obj->state];
+    Struct_ov017_021d6cc4 table = data_ov017_021d6cc4;
+    Type_ov017_021bf534 handler = table.f[obj->state];
     if (handler) {
         obj->state = (unsigned char)handler(obj);
     } else {

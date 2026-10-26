@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
 typedef void (*Type_020bd444_4)(int, int, int, int);
-extern "C" int func_020be09c(unsigned int arg0, Type_020bd444_4 arg1, void* arg2, unsigned int arg3, int arg4);
+extern "C" int func_020be09c(unsigned int index, Type_020bd444_4 callback, void* ctx, unsigned int arg3, int b);
 
 extern "C" void func_020be44c(int, int, int, int);
 extern "C" void* func_020bd444(void);
-extern "C" int func_020bd8ac(unsigned int arg0);
-extern "C" void func_020bd8d4(unsigned int arg0, int arg1);
+extern "C" int func_020bd8ac(unsigned int index);
+extern "C" void func_020bd8d4(unsigned int index, int value);
 
 // USA: func_020be13c
-extern "C" ARM int func_020be13c(unsigned int arg0, int arg1, int arg2) {
-    int var0 = func_020bd8ac(arg0);
-    if (var0 == 0) {
-        void* var1 = arg2 ? func_020bd444() : 0;
-        var0 = func_020be09c(arg0, func_020be44c, var1, arg0, arg1);
-        if (arg2 && var0 != 0) {
-            func_020bd8d4(arg0, var0);
+extern "C" ARM int func_020be13c(unsigned int index, int b, int flag) {
+    int result = func_020bd8ac(index);
+    if (result == 0) {
+        void* ctx = flag ? func_020bd444() : 0;
+        result = func_020be09c(index, func_020be44c, ctx, index, b);
+        if (flag && result != 0) {
+            func_020bd8d4(index, result);
         }
     }
-    return var0;
+    return result;
 }

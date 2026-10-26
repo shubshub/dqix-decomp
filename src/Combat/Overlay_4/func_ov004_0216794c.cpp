@@ -2,11 +2,11 @@
 #include "GameState/GameState.h"
 
 struct Obj02086aec;
-short Party_CountItem(struct Obj02086aec* obj, int key);
+extern "C" short Party_CountItem(struct Obj02086aec* obj, int key);
 
 struct Struct_ov004_02170010 {
-    short unknown_0_;
-    short unknown_2_;
+    short threshold;
+    short value;
 };
 extern struct Struct_ov004_02170010 data_ov004_02170010[];
 
@@ -22,16 +22,16 @@ extern "C" ARM void func_ov004_0216794c(short* current, short* matches, short* t
             goto found;
         }
     }
-    var1 = -1;
+    i = -1;
 found:
-    *arg4 = var1;
-    if (*arg4 >= 0) {
-        *arg2 = data_ov004_02170010[*arg4].unknown_0_;
-        if (*arg0 + *arg1 >= *arg2) {
-            *arg3 = 1;
+    *index = i;
+    if (*index >= 0) {
+        *threshold = data_ov004_02170010[*index].threshold;
+        if (*current + *matches >= *threshold) {
+            *reached = 1;
         }
     } else {
-        *arg2 = 0;
-        *arg3 = 0;
+        *threshold = 0;
+        *reached = 0;
     }
 }

@@ -7,7 +7,7 @@ struct Struct_0207d798;
 extern "C" ARM void* func_0207ddf0(Struct_0207d798*);
 extern "C" ARM void* func_0207de1c(Struct_0207d798*);
 
-extern "C" void __register_global_object(int arg0, int arg1, void* arg2);
+extern "C" void __register_global_object(int c, int b, void* node);
 
 extern func_0207d7c0 data_02108ea8;
 extern int data_02108e9c;

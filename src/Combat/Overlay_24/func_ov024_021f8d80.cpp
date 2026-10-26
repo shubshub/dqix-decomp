@@ -1,64 +1,64 @@
 #include <globaldefs.h>
 
-extern "C" void __clear(void* arg0, int arg1);
+extern "C" void __clear(void* dst, int size);
 
 struct Struct_ov024_021f8d80_3 {
 	unsigned short unknown_0_;
-	char unknown_2_[0x14 - 2];
+	char pad2[0x14 - 2];
 	unsigned int unknown_14_;
 };
 struct Struct_ov024_021f8d80 {
-	char unknown_0_[0x138];
-	struct Struct_ov024_021f8d80_3* unknown_138_;
+	char pad0[0x138];
+	struct Struct_ov024_021f8d80_3* stats;
 };
 struct Struct_ov024_021f8d80_2 {
-	char unknown_0_[0x10];
-	unsigned int unknown_10_;
+	char pad0[0x10];
+	unsigned int flags10;
 };
 
 // USA: func_ov024_021f8d80
-extern "C" ARM int func_ov024_021f8d80(void* arg0, int* arg1, struct Struct_ov024_021f8d80_2* arg2, struct Struct_ov024_021f8d80** arg3, int arg4, float* arg5, float* arg6, int arg7) {
-	int var0[8];
-	__clear(var0, sizeof(var0));
-	for (int var1 = 0; var1 < arg4; var1++) {
-		struct Struct_ov024_021f8d80_3* var2 = arg3[var1]->unknown_138_;
-		unsigned int var3 = var2->unknown_14_;
-		if ((arg2->unknown_10_ & 0x400) && (var3 & 0x200)) {
-			var0[var1] = -1;
-		} else if (var3 & 8) {
-			var0[var1] = 1;
-		} else if (var3 & 0x20) {
-			var0[var1] = 2;
-		} else if (var3 & 0x10) {
-			var0[var1] = 3;
-		} else if (var2->unknown_0_ <= arg6[var1]) {
-			var0[var1] = 5;
+extern "C" ARM int func_ov024_021f8d80(void* unused, int* outIndex, struct Struct_ov024_021f8d80_2* ctx, struct Struct_ov024_021f8d80** arg3, int count, float* arg5, float* arg6, int arg7) {
+	int priority[8];
+	__clear(priority, sizeof(priority));
+	for (int i = 0; i < count; i++) {
+		struct Struct_ov024_021f8d80_3* stats = arg3[i]->stats;
+		unsigned int flags = stats->unknown_14_;
+		if ((ctx->flags10 & 0x400) && (flags & 0x200)) {
+			priority[i] = -1;
+		} else if (flags & 8) {
+			priority[i] = 1;
+		} else if (flags & 0x20) {
+			priority[i] = 2;
+		} else if (flags & 0x10) {
+			priority[i] = 3;
+		} else if (stats->unknown_0_ <= arg6[i]) {
+			priority[i] = 5;
 		} else {
-			var0[var1] = 4;
+			priority[i] = 4;
 		}
 	}
-	int var4 = 0;
-	for (int var5 = 1; var5 < arg4; var5++) {
-		if (var0[var5] > var0[var4]) {
-			var4 = var5;
-		} else if (var0[var5] == var0[var4]) {
-			int var6 = arg3[var5]->unknown_138_->unknown_0_;
-			int var7 = arg3[var4]->unknown_138_->unknown_0_;
+	int best = 0;
+	for (int i = 1; i < count; i++) {
+		if (priority[i] > priority[best]) {
+			best = i;
+		} else if (priority[i] == priority[best]) {
+			int hp = arg3[i]->stats->unknown_0_;
+			int var7 = arg3[best]->stats->unknown_0_;
 			int var8 = 0;
-			int var9 = var6 - (int)arg5[var5] * arg7;
-			int var10 = var7 - (int)arg5[var4] * arg7;
-			if (var9 <= 0) {
+			int margin = hp - (int)arg5[i] * arg7;
+			int var10 = var7 - (int)arg5[best] * arg7;
+			if (margin <= 0) {
 				if (var10 > 0) {
 					var8 = 1;
-				} else if (var6 > var7) {
+				} else if (hp > var7) {
 					var8 = 1;
 				}
-			} else if (var9 < var10) {
+			} else if (margin < var10) {
 				var8 = 1;
 			}
-			if (var8) var4 = var5;
+			if (var8) best = i;
 		}
 	}
-	*arg1 = var4;
-	return var0[var4] >= 0;
+	*outIndex = best;
+	return priority[best] >= 0;
 }

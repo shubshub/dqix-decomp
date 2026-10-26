@@ -4,20 +4,20 @@ struct Struct_ov031_02290ca0_8 {
     unsigned char unknown_0_;
     unsigned char unknown_1_;
     unsigned char unknown_2_[6];
-    struct Struct_ov031_0222f6f8* unknown_8_;
+    struct Struct_ov031_0222f6f8* ctx;
 };
 
 struct Struct_ov031_0222f6f8 {
-    void* unknown_0_;
-    void* unknown_4_;
-    void* unknown_8_;
+    void* field0;
+    void* pad4;
+    void* field8;
     void* unknown_c_[2];
     void* unknown_14_;
     void* unknown_18_[7];
-    void* unknown_34_;
+    void* field34;
     void* unknown_38_;
-    void* unknown_3c_;
-    unsigned char unknown_40_;
+    void* field3c;
+    unsigned char field40;
 };
 
 extern struct Struct_ov031_02290ca0_8 data_ov031_02290ca0;
@@ -26,21 +26,21 @@ extern void* data_ov031_02290ca8;
 
 extern "C" int func_ov031_0223c054(int);
 extern "C" ARM int func_ov031_0223e2e0(int, void*);
-extern "C" int func_ov031_0223da58(void* arg0);
+extern "C" int func_ov031_0223da58(void* obj);
 extern "C" void func_ov031_022238cc(void);
-extern "C" void* func_ov031_0223c7c4(int arg0);
+extern "C" void* func_ov031_0223c7c4(int idx);
 extern "C" int func_ov031_02223440(void);
 extern "C" void func_ov031_02234f08(void);
-extern "C" void func_ov031_0223b710(void* arg0);
-extern "C" void func_ov031_022234d8(int arg0, void (*arg1)(int, int, unsigned int));
-extern "C" void func_ov031_0223cbbc(int arg0, int arg1);
-extern "C" unsigned int func_ov031_0223cf70(void** arg0);
+extern "C" void func_ov031_0223b710(void* a);
+extern "C" void func_ov031_022234d8(int a0, void (*cb)(int, int, unsigned int));
+extern "C" void func_ov031_0223cbbc(int channel, int mask);
+extern "C" unsigned int func_ov031_0223cf70(void** a);
 extern "C" void func_ov031_02235194(void);
 
 extern "C" void LoadToMainObjStandardPalette(int, int, unsigned int);
-extern "C" int func_ov031_0221b158(void* arg0);
+extern "C" int func_ov031_0221b158(void* p);
 extern "C" char* func_ov031_02235c70(void);
-extern "C" void func_ov031_02236094(int arg0);
+extern "C" void func_ov031_02236094(int a);
 extern "C" void* VectorizedMemset(void* dst, int val, int n);
 extern "C" void func_ov031_0222750c(int, int);
 extern "C" void func_ov031_022274d0(int, int);
@@ -57,34 +57,34 @@ extern "C" ARM void func_ov031_0222f6f8(void) {
     if (func_ov031_0223c054(1) != 0) return;
     if (func_ov031_0223c054(0) != 0) return;
 
-    func_ov031_0223e2e0(0, data_ov031_02290ca0.unknown_8_->unknown_0_);
-    func_ov031_0223e2e0(1, data_ov031_02290ca0.unknown_8_->unknown_3c_);
+    func_ov031_0223e2e0(0, data_ov031_02290ca0.ctx->field0);
+    func_ov031_0223e2e0(1, data_ov031_02290ca0.ctx->field3c);
 
-    int var0 = 0;
+    int i = 0;
     do {
-        void* var1 = data_ov031_02290ca0.unknown_8_->unknown_18_[var0];
-        func_ov031_0223da58(var1);
-        var0++;
-    } while (var0 < 7);
-    if (data_ov031_02290ca0.unknown_8_->unknown_34_ != 0) {
-        func_ov031_0223da58(data_ov031_02290ca0.unknown_8_->unknown_34_);
+        void* p = data_ov031_02290ca0.ctx->unknown_18_[i];
+        func_ov031_0223da58(p);
+        i++;
+    } while (i < 7);
+    if (data_ov031_02290ca0.ctx->field34 != 0) {
+        func_ov031_0223da58(data_ov031_02290ca0.ctx->field34);
     }
 
     func_ov031_02235194();
     func_ov031_0223c7c4(0);
     func_ov031_022238cc();
 
-    if (data_ov031_02290ca0.unknown_8_->unknown_40_ != 0xc) func_ov031_02223440();
+    if (data_ov031_02290ca0.ctx->field40 != 0xc) func_ov031_02223440();
 
     func_ov031_02234f08();
-    func_ov031_0223b710(data_ov031_02290ca0.unknown_8_->unknown_8_);
+    func_ov031_0223b710(data_ov031_02290ca0.ctx->field8);
 
-    int var2 = 0;
+    int j = 0;
     do {
-        void* var3 = data_ov031_02290ca0.unknown_8_->unknown_c_[var2];
-        func_ov031_0223b710(var3);
-        var2++;
-    } while (var2 < 2);
+        void* p = data_ov031_02290ca0.ctx->unknown_c_[j];
+        func_ov031_0223b710(p);
+        j++;
+    } while (j < 2);
 
     func_ov031_022234d8((int)&data_ov031_0224bb64, LoadToMainObjStandardPalette);
 
@@ -95,35 +95,35 @@ extern "C" ARM void func_ov031_0222f6f8(void) {
     *(volatile unsigned int*)0x4000018 = 0;
     *(volatile unsigned short*)0x400000c = (*(volatile unsigned short*)0x400000c & 0x43) | 0xe10;
 
-    int var4 = 0;
-    switch (data_ov031_02290ca0.unknown_8_->unknown_40_) {
+    int flag = 0;
+    switch (data_ov031_02290ca0.ctx->field40) {
     case 0:
     case 1:
-        func_ov031_0222750c(data_ov031_02290ca0.unknown_8_->unknown_40_, var4);
+        func_ov031_0222750c(data_ov031_02290ca0.ctx->field40, flag);
         func_ov031_022274d0(2, 0);
         func_ov031_022274c0((int)func_ov031_0222cbe0);
         break;
     case 4: case 5: case 6: case 9: case 10: {
-        unsigned int var5 = data_ov031_02290ca0.unknown_8_->unknown_40_;
-        int var6 = var5 - 4;
-        if (var5 >= 9) var6 -= 2;
+        unsigned int v = data_ov031_02290ca0.ctx->field40;
+        int r4 = v - 4;
+        if (v >= 9) r4 -= 2;
         func_ov031_022274d0(2, 0);
-        func_ov031_0222750c(var6, 0);
+        func_ov031_0222750c(r4, 0);
         func_ov031_022274c0((int)func_ov031_0222d720);
         break;
     }
     case 11: {
-        unsigned char* var7 = (unsigned char*)func_ov031_02235c70();
-        int var8 = func_ov031_0221b158(var7 + 0xf0);
-        var7[0xd0] = (unsigned char)var8;
-        if (var7[0xf5] != 0) {
-            VectorizedMemset(var7 + 0xc0, 0, 4);
-            VectorizedMemset(var7 + 0xc4, 0, 4);
-            VectorizedMemset(var7 + 0xf0, 0, 4);
-            var7[0xd0] = 0;
+        unsigned char* base = (unsigned char*)func_ov031_02235c70();
+        int bits = func_ov031_0221b158(base + 0xf0);
+        base[0xd0] = (unsigned char)bits;
+        if (base[0xf5] != 0) {
+            VectorizedMemset(base + 0xc0, 0, 4);
+            VectorizedMemset(base + 0xc4, 0, 4);
+            VectorizedMemset(base + 0xf0, 0, 4);
+            base[0xd0] = 0;
         }
-        if (var7[0xf6] != 0) {
-            VectorizedMemset(var7 + 0xc8, 0, 8);
+        if (base[0xf6] != 0) {
+            VectorizedMemset(base + 0xc8, 0, 8);
         }
         func_ov031_022274d0(2, 0);
         func_ov031_0222750c(0, 0);
@@ -131,18 +131,18 @@ extern "C" ARM void func_ov031_0222f6f8(void) {
         break;
     }
     case 12:
-        func_ov031_022274d0(var4, var4);
+        func_ov031_022274d0(flag, flag);
         func_ov031_022274c0((int)func_ov031_02230f00);
         break;
     case 13:
         if (data_ov031_02290ca0.unknown_1_ == 0) {
-            var4 = 1;
-            func_ov031_022274d0(2, var4);
+            flag = 1;
+            func_ov031_022274d0(2, flag);
             func_ov031_022274c0((int)func_ov031_02232508);
         } else {
             func_ov031_02236094(((unsigned char*)func_ov031_02235c70())[0xf4]);
-            var4 = 1;
-            func_ov031_022274d0(0, var4);
+            flag = 1;
+            func_ov031_022274d0(0, flag);
             func_ov031_022274c0((int)func_ov031_02233248);
         }
         break;

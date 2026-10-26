@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
 // USA: func_ov025_021e169c
-extern "C" ARM void func_ov025_021e169c(unsigned char* arg0, int arg1) {
-    for (int var0 = 0; var0 < 0x51; var0++) {
-        if (*arg0 == arg1) {
-            *arg0 = 0;
+extern "C" ARM void func_ov025_021e169c(unsigned char* p, int val) {
+    for (int i = 0; i < 0x51; i++) {
+        if (*p == val) {
+            *p = 0;
         }
-        arg0++;
+        p++;
     }
 }

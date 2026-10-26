@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "Resource/GridCursor.h"
 
-int GridCursor_GetSelectedIndex(struct GridCursor*);
+extern "C" int GridCursor_GetSelectedIndex(struct GridCursor*);
 extern "C" void GridCursor_SetSelectedIndex(void*, int);
 
 // Main, originally AdvanceWrappedAccumulator0205c4a8 (USA 0x0205c4a8, EUR 0x0205c4b8, JPN 0x0205d808)
-ARM void GridCursor_TurnPage(struct GridCursor* cursor, int delta) {
+extern "C" ARM void GridCursor_TurnPage(struct GridCursor* cursor, int delta) {
     int count;
     cursor->page += delta;
     if (cursor->pageCount <= cursor->page) {

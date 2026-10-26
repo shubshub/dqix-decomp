@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
-extern "C" void* __clear(void* arg0, int arg1);
+extern "C" void* __clear(void* buf, int len);
 
 struct Container020e0310;
-extern int KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" int KeyTable_Get(struct Container020e0310* c, int key);
 
 extern "C" int Font_GetTextWidth(void* p, int flag);
 extern "C" int sprintf(char* dst, const char* fmt, ...);
-extern int Text_Append(char* dst, const char* src);
+extern "C" int Text_Append(char* dst, const char* src);
 
 extern const char data_ov003_02180208;
 extern const char data_ov003_02180215;
 
 // USA: func_ov003_0216df38
-extern "C" ARM short func_ov003_0216df38(char* arg0, struct Struct_0201099c_3* arg1, int arg2) {
-    char var0[0x80];
-    __clear(var0, 0x80);
+extern "C" ARM short func_ov003_0216df38(char* dst, struct Container020e0310* c, int flag) {
+    char buf[0x80];
+    __clear(buf, 0x80);
 
     int w1;
     int key1 = 5;
@@ -38,7 +38,7 @@ extern "C" ARM short func_ov003_0216df38(char* arg0, struct Struct_0201099c_3* a
     sprintf(buf, (const char*)f3);
     Text_Append(dst, buf);
 
-    int var7 = (var1 + 0x1b) & ~7;
-    int var8 = var7 >> 3;
-    return (short)(var8 + (var8 & 1));
+    int rounded = (w1 + 0x1b) & ~7;
+    int half = rounded >> 3;
+    return (short)(half + (half & 1));
 }

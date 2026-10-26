@@ -8,14 +8,14 @@
 #include "Resource/Brightness.h"
 
 struct Struct_020dbd9c {
-    char unknown_0_[0x10];
-    int unknown_10_;
-    unsigned char unknown_14_;
+    char unk_0[0x10];
+    int state_;
+    unsigned char unk_14;
 };
 
 struct Struct_ov006_02154614_2 {
-    char unknown_0_[0x774];
-    unsigned short unknown_774_;
+    char unk_0[0x774];
+    unsigned short flags_;
     char unknown_776_[0x7];
     signed char unknown_77d_;
     char unknown_77e_[0x1d];
@@ -24,15 +24,15 @@ struct Struct_ov006_02154614_2 {
 };
 
 struct Struct_ov006_02156e54 {
-    char unknown_0_[0x7c];
+    char unk_0[0x7c];
 };
 
 struct Struct_ov006_021537d0 {
-    short unknown_0_;
+    short id_;
 };
 
 struct Struct_ov006_021555b0 {
-    short unknown_0_;
+    short id_;
     unsigned short unknown_2_0_ : 1;
     unsigned short unknown_2_1_ : 1;
     unsigned short unknown_2_2_ : 14;
@@ -40,63 +40,63 @@ struct Struct_ov006_021555b0 {
 
 struct Struct_ov006_02154614 {
 #if !defined(jpn)
-    char unknown_0_[3][0x80];
+    char names_[3][0x80];
 #endif
-    SafeAllocator* unknown_180_;
+    SafeAllocator* allocators_;
     SafeAllocator* unknown_184_;
     SafeAllocator* unknown_188_;
     SafeAllocator unknown_18c_;
-    void* unknown_1a0_;
-    void* unknown_1a4_;
+    void* previousCamera_;
+    void* canvasBuffer_;
     unsigned char* unknown_1a8_;
-    void* unknown_1ac_;
-    void* unknown_1b0_;
+    void* itemNames_;
+    void* texts_;
     Struct_ov006_021537d0* unknown_1b4_;
-    Struct_ov006_021537d0* unknown_1b8_;
+    Struct_ov006_021537d0* nextRecipe_;
     int unknown_1bc_;
     Struct_ov006_021555b0* unknown_1c0_;
     unsigned char* unknown_1c4_;
-    void* unknown_1c8_;
-    void* unknown_1cc_;
-    void* unknown_1d0_;
-    void* unknown_1d4_;
-    void* unknown_1d8_;
-    void* unknown_1dc_;
-    void* unknown_1e0_;
-    char unknown_1e4_[0x54];
+    void* layout_;
+    void* backgrounds_;
+    void* canvases_;
+    void* menu_;
+    void* item_;
+    void* nextItem_;
+    void* sprites_;
+    char renderer_[0x54];
     Object3D unknown_238_;
-    Object3D unknown_2e4_;
+    Object3D pot_;
     Object3D unknown_390_;
-    Object3D unknown_43c_;
-    Object3D unknown_4e8_;
+    Object3D effect_;
+    Object3D steam_;
     char unknown_594_[0x38];
-    char unknown_5cc_[0x2c8];
-    Struct_ov006_02156e54 unknown_894_[4];
+    char camera_[0x2c8];
+    Struct_ov006_02156e54 ingredients_[4];
     SafeAllocator unknown_a84_[4];
-    int unknown_ad4_;
+    int task_;
     int unknown_ad8_;
-    unsigned char unknown_adc_;
+    unsigned char state_;
     unsigned char unknown_add_;
     unsigned char unknown_ade_;
     unsigned char unknown_adf_;
     unsigned char unknown_ae0_;
     unsigned char unknown_ae1_;
-    unsigned short unknown_ae2_;
-    Struct_ov006_02154614_2 unknown_ae4_;
+    unsigned short flags_;
+    Struct_ov006_02154614_2 window_;
     SafeAllocator* unknown_1280_;
     SafeAllocator* unknown_1284_;
-    char unknown_1288_[0x18];
+    char partNames_[0x18];
     Struct_020dbd9c unknown_12a0_;
-    short unknown_12b8_;
+    short itemId_;
     signed char unknown_12ba_;
     unsigned char unknown_12bb_;
     unsigned char unknown_12bc_;
     unsigned char unknown_12bd_;
 };
 
-void SePlayer_LoadExtraArchiveB(void* sound, int a, int b);
-void SePlayer_PlayExtra(void* sound, int a, int b);
-void SePlayer_UnloadExtraArchiveB(void* sound);
+extern "C" void SePlayer_LoadExtraArchiveB(void* sound, int a, int b);
+extern "C" void SePlayer_PlayExtra(void* sound, int a, int b);
+extern "C" void SePlayer_UnloadExtraArchiveB(void* sound);
 
 extern char g_sePlayer[];
 extern char data_ov006_02160080[];
@@ -111,7 +111,7 @@ extern char data_ov006_021600a0[];
 extern char data_ov006_021600a9[];
 
 // USA: func_ov006_02155068
-extern "C" ARM void func_ov006_02155068(AlchemyPot* self) {
+extern "C" ARM void func_ov006_02155068(Struct_ov006_02154614* self) {
     unsigned int* resources = (unsigned int*)(void*)GameState::GetInstance()->GetResources();
     unsigned short flags = self->flags_;
     if (flags & 0x2000) {
@@ -121,33 +121,33 @@ extern "C" ARM void func_ov006_02155068(AlchemyPot* self) {
         return;
     }
     if (flags & 0x80) {
-        if (self->animationStep_ == 0) {
+        if (self->unknown_ae1_ == 0) {
             SePlayer_LoadExtraArchiveB(g_sePlayer, 0x7a, 0x7a);
             SePlayer_PlayExtra(g_sePlayer, 0, 0);
             self->pot_.SetAnimationByName(data_ov006_02160080, 1);
             self->effect_.SetAnimationByName(data_ov006_02160087, 1);
             self->steam_.SetAnimationByName(data_ov006_02160080, 9);
             self->steam_.DisableFlag(0x1000);
-        } else if (self->animationStep_ >= 1 && self->pot_.HasAnimationStopped()) {
-            self->animationStep_ = 0;
+        } else if (self->unknown_ae1_ >= 1 && self->pot_.HasAnimationStopped()) {
+            self->unknown_ae1_ = 0;
             self->flags_ &= ~0x80;
             self->effect_.SetAnimationByName(data_ov006_02160089, 1);
             self->pot_.SetAnimationByName(data_ov006_0216008b, 0);
             self->steam_.StopCurrentAnimation();
             return;
         }
-        arg0->unknown_ae1_++;
+        self->unknown_ae1_++;
         return;
     }
-    if (var1 & 0x100) {
-        if (!arg0->unknown_2e4_.HasAnimationReachedEnd())
+    if (flags & 0x100) {
+        if (!self->pot_.HasAnimationReachedEnd())
             return;
-        if (self->animationStep_ == 0) {
+        if (self->unknown_ae1_ == 0) {
             self->effect_.SetAnimationByName(data_ov006_02160092, 0);
-        } else if (self->animationStep_ == 1) {
+        } else if (self->unknown_ae1_ == 1) {
             self->effect_.SetAnimationByName(data_ov006_02160094, 1);
-        } else if (self->animationStep_ == 2) {
-            self->animationStep_ = 0;
+        } else if (self->unknown_ae1_ == 2) {
+            self->unknown_ae1_ = 0;
             self->pot_.StopCurrentAnimation();
             self->pot_.SetAnimationByName(data_ov006_02160096, 1);
             self->effect_.SetAnimationByName(data_ov006_0216009e, 0);
@@ -155,18 +155,18 @@ extern "C" ARM void func_ov006_02155068(AlchemyPot* self) {
             self->flags_ &= ~0x100;
             return;
         }
-        arg0->unknown_ae1_++;
+        self->unknown_ae1_++;
         return;
     }
-    if (var1 & 0x200) {
-        arg0->unknown_ae2_ = var1 | 0x800;
-        if (!arg0->unknown_2e4_.HasAnimationStopped()) {
-            arg0->unknown_ae1_++;
+    if (flags & 0x200) {
+        self->flags_ = flags | 0x800;
+        if (!self->pot_.HasAnimationStopped()) {
+            self->unknown_ae1_++;
             return;
         }
         ClearFlags04((GameResources*)resources, 0x2000);
         SePlayer_UnloadExtraArchiveB(g_sePlayer);
-        self->animationStep_ = 0;
+        self->unknown_ae1_ = 0;
         self->pot_.SetAnimationByName(data_ov006_021600a0, 1);
         self->effect_.StopCurrentAnimation();
         self->flags_ &= ~0x200;
@@ -174,7 +174,7 @@ extern "C" ARM void func_ov006_02155068(AlchemyPot* self) {
     }
     if (flags & 0x400) {
         if (self->pot_.HasAnimationStopped()) {
-            self->animationStep_ = 0;
+            self->unknown_ae1_ = 0;
             self->pot_.SetAnimationByName(data_ov006_021600a9, 0);
             self->effect_.StopCurrentAnimation();
             self->flags_ &= ~0x400;
@@ -183,7 +183,7 @@ extern "C" ARM void func_ov006_02155068(AlchemyPot* self) {
         self->pot_.SetAnimationByName(data_ov006_021600a0, 1);
         return;
     }
-    self->animationStep_ = 0;
+    self->unknown_ae1_ = 0;
     self->pot_.SetAnimationByName(data_ov006_021600a9, 0);
     self->effect_.StopCurrentAnimation();
 }

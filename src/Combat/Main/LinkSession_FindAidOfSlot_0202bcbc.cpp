@@ -8,7 +8,7 @@ struct SearchStruct {
 
 // Returns the wireless aid that holds party slot `slot`, or -1.
 // Main, originally FindSignedByteIndex_0202bcbc (USA 0x0202bcbc, EUR 0x0202bccc, JPN 0x0202b86c)
-ARM signed char LinkSession_FindAidOfSlot(struct SearchStruct* session, int slot) {
+extern "C" ARM signed char LinkSession_FindAidOfSlot(struct SearchStruct* session, int slot) {
     int aid;
     for (aid = 0; aid < 16; aid++) {
         if (session->slotOfAid[aid] == slot) {

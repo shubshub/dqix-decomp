@@ -5,35 +5,35 @@
 extern "C" void func_ov000_02169b78(void*);
 
 struct Struct_ov000_02184264_2 {
-    unsigned char unknown_0_[8];
-    SafeAllocator* unknown_8_;
+    unsigned char pad[8];
+    SafeAllocator* alloc;
 };
 extern struct Struct_ov000_02184264_2 data_ov000_02184264;
 
-struct Struct_0201c1c8 { int unknown_0_; int unknown_4_; };
+struct Variant02030b0c { int tag; int u; };
 
-struct Struct_0201d530 { int unknown_0_; union { int unknown_0_; float unknown1_0_; } unknown_4_; };
+struct Struct_0201d530 { int type; union { int i; float f; } value; };
 struct Vector3i;
 
 struct Struct_ov000_0216b328 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_[3];
-    unsigned char unknown_14_;
+    int tag;
+    int unused;
+    int vec[3];
+    unsigned char flag;
 };
 
 // USA: func_ov000_0216b328
-extern "C" ARM int func_ov000_0216b328(struct Struct_0201c1c8* arg0, int arg1) {
-    struct Struct_ov000_0216b328* var0 = (struct Struct_ov000_0216b328*)data_ov000_02184264.unknown_8_->Allocate(sizeof(struct Struct_ov000_0216b328));
-    var0->unknown_0_ = 0;
-    var0->unknown_4_ = 0;
-    var0->unknown_0_ = 0x32;
-    struct Struct_0201d530* var1 = (extern Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)arg0))->ToVec3fix((Vector3i*)var0->unknown_8_);
-    unsigned char var2 = 0;
-    if (arg1 >= 4) {
-        var2 = (unsigned char)((Script::Parameter*)((struct Struct_0201c1c8*)var1))->ToInt();
+extern "C" ARM int func_ov000_0216b328(struct Variant02030b0c* v, int count) {
+    struct Struct_ov000_0216b328* node = (struct Struct_ov000_0216b328*)data_ov000_02184264.alloc->Allocate(sizeof(struct Struct_ov000_0216b328));
+    node->tag = 0;
+    node->unused = 0;
+    node->tag = 0x32;
+    struct Struct_0201d530* tv = (extern Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)v))->ToVec3fix((Vector3i*)node->vec);
+    unsigned char flag = 0;
+    if (count >= 4) {
+        flag = (unsigned char)((Script::Parameter*)((struct Variant02030b0c*)tv))->ToInt();
     }
-    var0->unknown_14_ = var2;
-    func_ov000_02169b78(var0);
+    node->flag = flag;
+    func_ov000_02169b78(node);
     return 1;
 }

@@ -2,9 +2,9 @@
 #include "Memory/SafeAllocator.h"
 
 // USA: func_02092a74
-extern "C" ARM void func_02092a74(SafeAllocator* arg0, SafeAllocator* arg1) {
-    void* var0;
-    if (arg1 == NULL) return;
-    var0 = arg1->Allocate(0x800);
-    arg0->CreateTypeA(var0, 0x800);
+extern "C" ARM void func_02092a74(SafeAllocator* self, SafeAllocator* src) {
+    void* buf;
+    if (src == NULL) return;
+    buf = src->Allocate(0x800);
+    self->CreateTypeA(buf, 0x800);
 }

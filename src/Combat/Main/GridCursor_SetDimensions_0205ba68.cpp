@@ -2,7 +2,7 @@
 #include "Resource/GridCursor.h"
 
 // Main, originally SetupPointerTable0205ba68 (USA 0x0205ba68, EUR 0x0205ba78, JPN 0x0205cdc8)
-ARM void GridCursor_SetDimensions(struct GridCursor* cursor, int columns, int rows, int order) {
+extern "C" ARM void GridCursor_SetDimensions(struct GridCursor* cursor, int columns, int rows, int order) {
     cursor->columns = columns;
     cursor->rows = rows;
     cursor->order = order;

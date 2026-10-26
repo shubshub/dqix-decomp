@@ -8,13 +8,13 @@ enum { Enum_02082d6c_2128 = 0x7b8 };
 enum { Enum_02082d6c_2128 = 0x850 };
 #endif
 
-struct Struct_02082fa8 { unsigned int unknown_0_, unknown_4_, unknown_8_; };
+struct Struct_02082fa8 { unsigned int a, b, c; };
 
 struct Struct_02082cdc_2 {
-    unsigned int unknown_0_0_ : 10;
-    unsigned int unknown_1_2_ : 10;
-    unsigned int unknown_2_4_ : 10;
-    unsigned int unknown_3_6_ : 2;
+    unsigned int a : 10;
+    unsigned int b : 10;
+    unsigned int c : 10;
+    unsigned int hi : 2;
 };
 
 struct Struct_02082d6c_2 {
@@ -36,7 +36,7 @@ struct Struct_02082d6c_2 {
     unsigned char unknown_13e_;
     unsigned char unknown_13f_0_ : 3;
     unsigned char unknown_13f_3_ : 5;
-    unsigned char unknown_140_[0x14];
+    unsigned char b140[0x14];
     struct Struct_02082cdc_2 unknown_154_;
     unsigned char unknown_158_[8];
     unsigned char unknown_160_[0x1c];
@@ -44,12 +44,12 @@ struct Struct_02082d6c_2 {
 };
 
 struct Struct_02082d6c {
-    unsigned char unknown_0_[0x18];
+    unsigned char pad000[0x18];
     unsigned int unknown_18_;
     unsigned short unknown_1c_;
     unsigned short unknown_1e_;
     unsigned char unknown_20_[0x1c];
-    char unknown_3c_[0x3c];
+    char name3c[0x3c];
     unsigned int unknown_78_0_ : 30;
     unsigned int unknown_7b_6_ : 1;
     unsigned int unknown_7b_7_ : 1;
@@ -86,38 +86,38 @@ extern "C" void Font_DecodeText(void*, void*, int);
 extern char g_stringFormat[];
 
 // USA: func_02082d6c
-extern "C" ARM void func_02082d6c(struct Struct_02082d6c* arg0, struct Struct_02082d6c_2* arg1) {
-    if (arg1 == NULL) {
+extern "C" ARM void func_02082d6c(struct Struct_02082d6c* dst, struct Struct_02082d6c_2* src) {
+    if (src == NULL) {
         return;
     }
-    func_02082828(arg0);
-    arg0->unknown_56a_ = arg1->unknown_1_0_;
-    arg0->unknown_950_ = arg1->unknown_50_;
-    arg0->unknown_954_ = arg1->unknown_54_;
-    for (int var0 = 0; var0 < 13; var0++) {
-        arg0->unknown_16c_[var0] = arg1->unknown_2_[var0];
-        arg0->unknown_186_[var0] = arg1->unknown_f_[var0];
-        arg0->unknown_138_[var0] = arg1->unknown_1c_[var0];
+    func_02082828(dst);
+    dst->unknown_56a_ = src->unknown_1_0_;
+    dst->unknown_950_ = src->unknown_50_;
+    dst->unknown_954_ = src->unknown_54_;
+    for (int i = 0; i < 13; i++) {
+        dst->unknown_16c_[i] = src->unknown_2_[i];
+        dst->unknown_186_[i] = src->unknown_f_[i];
+        dst->unknown_138_[i] = src->unknown_1c_[i];
     }
-    func_02082fc4(arg0, NULL);
-    for (int var1 = 0; var1 < 13; var1++) {
-        func_02082fa8(&arg0->unknown_850_[var1], &arg1->unknown_58_[var1]);
+    func_02082fc4(dst, NULL);
+    for (int i = 0; i < 13; i++) {
+        func_02082fa8(&dst->unknown_850_[i], &src->unknown_58_[i]);
     }
-    arg0->unknown_564_ = arg1->unknown_f4_;
-    for (int var2 = 0; var2 < 27; var2++) {
-        arg0->unknown_464_[var2] = arg1->unknown_f6_[var2];
+    dst->unknown_564_ = src->unknown_f4_;
+    for (int j = 0; j < 27; j++) {
+        dst->unknown_464_[j] = src->unknown_f6_[j];
     }
-    memcpy(arg0->unknown_910_, arg1->unknown_111_, 9);
-    memcpy(arg0->unknown_8ec_, arg1->unknown_11a_, 0x24);
-    unsigned char var3 = arg1->unknown_13e_;
-    if (var3 & 1) {
-        arg0->unknown_18_ |= 1;
+    memcpy(dst->unknown_910_, src->unknown_111_, 9);
+    memcpy(dst->unknown_8ec_, src->unknown_11a_, 0x24);
+    unsigned char flags = src->unknown_13e_;
+    if (flags & 1) {
+        dst->unknown_18_ |= 1;
     }
-    if (var3 & 2) {
-        arg0->unknown_18_ |= 2;
+    if (flags & 2) {
+        dst->unknown_18_ |= 2;
     }
-    if (var3 & 4) {
-        arg0->unknown_18_ |= 4;
+    if (flags & 4) {
+        dst->unknown_18_ |= 4;
     }
 #if defined(jpn)
     sprintf(dst->name3c, g_stringFormat, src->b140);
@@ -127,12 +127,12 @@ extern "C" ARM void func_02082d6c(struct Struct_02082d6c* arg0, struct Struct_02
     Font_DecodeText(src->b140, local, 1);
     sprintf(dst->name3c, g_stringFormat, local);
 #endif
-    arg0->unknown_7b_6_ = arg1->unknown_1_4_;
-    arg0->unknown_1c_ = arg1->unknown_154_.unknown_1_2_;
-    arg0->unknown_1e_ = arg1->unknown_154_.unknown_2_4_;
-    memcpy(arg0->unknown_488_, arg1->unknown_160_, 0x1c);
-    arg0->unknown_56b_0_ = arg1->unknown_1_5_;
-    arg0->unknown_56b_4_ = arg1->unknown_13f_0_;
-    memcpy(arg0->unknown_4a4_, arg1->unknown_17c_, 0xc0);
-    arg0->unknown_94c_ = arg1->unknown_13f_3_;
+    dst->unknown_7b_6_ = src->unknown_1_4_;
+    dst->unknown_1c_ = src->unknown_154_.b;
+    dst->unknown_1e_ = src->unknown_154_.c;
+    memcpy(dst->unknown_488_, src->unknown_160_, 0x1c);
+    dst->unknown_56b_0_ = src->unknown_1_5_;
+    dst->unknown_56b_4_ = src->unknown_13f_0_;
+    memcpy(dst->unknown_4a4_, src->unknown_17c_, 0xc0);
+    dst->unknown_94c_ = src->unknown_13f_3_;
 }

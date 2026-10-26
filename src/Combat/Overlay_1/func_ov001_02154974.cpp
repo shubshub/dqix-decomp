@@ -3,63 +3,63 @@
 #include "Resource/Brightness.h"
 
 struct Struct_ov001_02154974 {
-    unsigned char unknown_0_0_ : 4;
-    unsigned char unknown_1_;
-    short unknown_2_;
-    char unknown_4_[4];
-    int unknown_8_;
+    unsigned char kind : 4;
+    unsigned char index;
+    short slot;
+    char pad4[4];
+    int key;
     char unknown_c_[0x11 - 0xc];
-    char unknown_11_[0x34 - 0x11];
-    struct Struct_ov001_02154974* unknown_34_;
+    char name[0x34 - 0x11];
+    struct Struct_ov001_02154974* next;
 };
 
 struct Struct_ov001_02154974_2 {
-    unsigned char unknown_0_;
-    char unknown_1_[0x28 - 1];
-    struct Struct_ov001_02154974_2* unknown_28_;
+    unsigned char type;
+    char pad1[0x28 - 1];
+    struct Struct_ov001_02154974_2* next;
 };
 
 struct Struct_ov001_02154974_3 {
 #if defined(jpn)
-    char unknown_0_[0xcc];
+    char pad0[0xcc];
 #else
-    char unknown1_0_[0xd0];
+    char pad0[0xd0];
 #endif
-    struct Struct_ov001_02154974* unknown_d0_;
-    struct Struct_ov001_02154974_2* unknown_d4_;
+    struct Struct_ov001_02154974* nodes;
+    struct Struct_ov001_02154974_2* others;
     char unknown_d8_[0xf8 - 0xd8];
-    unsigned int unknown_f8_0_ : 27;
+    unsigned int mode : 27;
 };
 
 struct Struct_ov001_02154974_4 {
-    char unknown_0_[0x98];
-    unsigned int unknown_98_;
+    char pad0[0x98];
+    unsigned int flags;
 };
 
 struct Struct_ov001_02154974_5 {
-    unsigned int unknown_0_;
-    char unknown_4_[0x18 - 4];
-    GameObject* unknown_18_;
+    unsigned int flags;
+    char pad4[0x18 - 4];
+    GameObject* object;
 };
 
 struct Struct_ov001_02154974_6 {
-    char unknown_0_[0xd4];
-    unsigned char unknown_d4_0_ : 1;
+    char pad0[0xd4];
+    unsigned char active : 1;
 };
 
 extern "C" {
-struct Struct_ov001_02154974_4* func_0203cf4c(void);
-void func_0200fd48(GameState* arg0, int arg1);
-struct Struct_ov001_02154974_5* func_0203df78(void* arg0, int arg1);
-int* func_0203dce4(void* arg0, int arg1);
-int func_02040404(void* arg0, const char* arg1);
-void func_0204039c(void* arg0, int arg1);
-void func_02040504(int* arg0);
-void func_0203dd10(void* arg0, int arg1, int arg2);
-void func_ov001_0215acd4(int arg0);
+extern "C" struct Struct_ov001_02154974_4* func_0203cf4c(void);
+extern "C" void func_0200fd48(GameState* gs, int id);
+extern "C" struct Struct_ov001_02154974_5* func_0203df78(void* list, int key);
+extern "C" int* func_0203dce4(void* list, int id);
+extern "C" int func_02040404(void* container, const char* name);
+extern "C" void func_0204039c(void* container, int index);
+extern "C" void func_02040504(int* entry);
+extern "C" void func_0203dd10(void* list, int index, int arg);
+extern "C" void func_ov001_0215acd4(int index);
 }
 
-extern "C" void* func_0203d004(void* arg0);
+extern "C" void* func_0203d004(void* list);
 
 #if defined(jpn)
 #define data_ov001_02164bd1 data_ov001_02166171
@@ -67,23 +67,23 @@ extern "C" void* func_0203d004(void* arg0);
 extern char data_ov001_02164bd1[];
 
 // USA: func_ov001_02154974
-extern "C" ARM void func_ov001_02154974(struct Struct_ov001_02154974_3* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    struct Struct_ov001_02154974_4* var1 = func_0203cf4c();
-    GameResources* var2 = GetGameResources();
-    struct Struct_ov001_02154974_2* var3;
-    struct Struct_ov001_02154974* var4;
+extern "C" ARM void func_ov001_02154974(struct Struct_ov001_02154974_3* self) {
+    GameState* gs = GameState::GetInstance();
+    struct Struct_ov001_02154974_4* global = func_0203cf4c();
+    GameResources* base = GetGameResources();
+    struct Struct_ov001_02154974_2* other;
+    struct Struct_ov001_02154974* node;
     struct Struct_ov001_02154974* var5;
-    int var6;
+    int i;
 
-    for (var3 = arg0->unknown_d4_; var3 != 0; var3 = var3->unknown_28_) {
-        for (var5 = arg0->unknown_d0_; var5 != 0; var5 = var5->unknown_34_) {
-            if (var5->unknown_1_ != var3->unknown_0_) {
+    for (other = self->others; other != 0; other = other->next) {
+        for (var5 = self->nodes; var5 != 0; var5 = var5->next) {
+            if (var5->index != other->type) {
                 continue;
             }
-            if (walk->kind == 0 || walk->kind == 1 || walk->kind == 9 || walk->kind == 0xb || walk->kind == 0xc ||
-                walk->kind == 0xd || walk->kind == 0xa || walk->kind == 4) {
-                GameObject* obj = gs->GetGameObjectByIndex(walk->slot);
+            if (var5->kind == 0 || var5->kind == 1 || var5->kind == 9 || var5->kind == 0xb || var5->kind == 0xc ||
+                var5->kind == 0xd || var5->kind == 0xa || var5->kind == 4) {
+                GameObject* obj = gs->GetGameObjectByIndex(var5->slot);
                 if (obj != 0) {
                     Object3D* o = &obj->obj3D_;
                     unsigned char animFlags = o->animationFlags_;
@@ -98,22 +98,22 @@ extern "C" ARM void func_ov001_02154974(struct Struct_ov001_02154974_3* arg0) {
         }
     }
 
-    var6 = 0;
-    for (var4 = arg0->unknown_d0_; var4 != 0; var4 = var4->unknown_34_) {
-        switch (var4->unknown_0_0_) {
+    i = 0;
+    for (node = self->nodes; node != 0; node = node->next) {
+        switch (node->kind) {
         case 5: {
-            struct Struct_ov001_02154974_5* var11 = func_0203df78(var1, var4->unknown_8_);
+            struct Struct_ov001_02154974_5* var11 = func_0203df78(global, node->key);
             if (var11 != 0) {
-                var11->unknown_0_ &= ~0x10000;
+                var11->flags &= ~0x10000;
             }
             break;
         }
         case 4: {
-            func_0200fd48(var0, var4->unknown_2_);
-            struct Struct_ov001_02154974_5* var12 = func_0203df78(var1, var4->unknown_8_);
-            if (var12 != 0 && var12->unknown_18_ != 0) {
-                ((struct Struct_ov001_02154974_6*)var12->unknown_18_)->unknown_d4_0_ = 0;
-                var12->unknown_0_ &= ~0x10000;
+            func_0200fd48(gs, node->slot);
+            struct Struct_ov001_02154974_5* var12 = func_0203df78(global, node->key);
+            if (var12 != 0 && var12->object != 0) {
+                ((struct Struct_ov001_02154974_6*)var12->object)->active = 0;
+                var12->flags &= ~0x10000;
             }
             break;
         }
@@ -121,18 +121,18 @@ extern "C" ARM void func_ov001_02154974(struct Struct_ov001_02154974_3* arg0) {
         case 6:
         case 7:
         case 8:
-            if (var0->GetGameObjectByIndex(var4->unknown_2_) != 0) {
-                func_0200fd48(var0, var4->unknown_2_);
+            if (gs->GetGameObjectByIndex(node->slot) != 0) {
+                func_0200fd48(gs, node->slot);
             }
             break;
         case 3: {
-            int* var13 = func_0203dce4(var1, var4->unknown_2_);
-            if (var13 != 0) {
-                void* var14 = func_0203d004(var1);
+            int* entry = func_0203dce4(global, node->slot);
+            if (entry != 0) {
+                void* container = func_0203d004(global);
                 func_0204039c(
-                    var14, func_02040404(var14, var4->unknown_11_));
-                func_02040504(var13);
-                func_0203dd10(var1, var4->unknown_2_, var6);
+                    container, func_02040404(container, node->name));
+                func_02040504(entry);
+                func_0203dd10(global, node->slot, i);
             }
             break;
         }
@@ -142,31 +142,31 @@ extern "C" ARM void func_ov001_02154974(struct Struct_ov001_02154974_3* arg0) {
         case 10:
             break;
         }
-        func_ov001_0215acd4(var4->unknown_1_);
+        func_ov001_0215acd4(node->index);
     }
 
-    if (arg0->unknown_f8_0_ == 0) {
+    if (self->mode == 0) {
         return;
     }
-    if (arg0->unknown_f8_0_ & 1) {
-        ClearFlags04(var2, 8);
+    if (self->mode & 1) {
+        ClearFlags04(base, 8);
     }
-    if (arg0->unknown_f8_0_ & 2) {
-        ClearFlags04(var2, 0x10);
+    if (self->mode & 2) {
+        ClearFlags04(base, 0x10);
     }
-    if (arg0->unknown_f8_0_ & 4) {
-        int var15;
-        for (var15 = 0; var15 < 4; var15++) {
-            GameObject* var16 = var0->GetGameObjectByIndex(var15);
-            if (var16 != 0) {
-                var16->obj3D_.DisableFlag(1);
+    if (self->mode & 4) {
+        int j;
+        for (j = 0; j < 4; j++) {
+            GameObject* obj = gs->GetGameObjectByIndex(j);
+            if (obj != 0) {
+                obj->obj3D_.DisableFlag(1);
             }
         }
     }
-    if (arg0->unknown_f8_0_ & 8) {
-        ClearFlags04(var2, 0x400);
+    if (self->mode & 8) {
+        ClearFlags04(base, 0x400);
     }
-    if (arg0->unknown_f8_0_ & 0x20) {
-        func_0203cf4c()->unknown_98_ &= ~2;
+    if (self->mode & 0x20) {
+        func_0203cf4c()->flags &= ~2;
     }
 }

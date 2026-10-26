@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 // USA: func_ov031_0220bb24
-extern "C" ARM int func_ov031_0220bb24(unsigned short* arg0, int arg1) {
-	while (arg1 != 0 && arg0[arg1 - 1] == 0) {
-		arg1--;
+extern "C" ARM int func_ov031_0220bb24(unsigned short* arr, int len) {
+	while (len != 0 && arr[len - 1] == 0) {
+		len--;
 	}
-	return arg1;
+	return len;
 }

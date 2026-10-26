@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 #if defined(jpn)
-enum { Enum_02065418_14076 = 0x34ec };
+enum { kRegionalFieldOffset = 0x34ec };
 #else
-enum { Enum_02065418_14076 = 0x36fc };
+enum { kRegionalFieldOffset = 0x36fc };
 #endif
 
 #include "GameState/GameState.h"
 #include "NitroSDK/ColorEffects.h"
 #include "NitroSDK/OverlayId.h"
 
-struct Struct_02015438;
+struct HeadNode02046b24;
 
-int Overlay_IsLoaded(unsigned int idx);
-int FieldTaskQueue_GetCurrentKind(HeadNode02046b24** head);
+extern "C" int Overlay_IsLoaded(unsigned int idx);
+extern "C" int FieldTaskQueue_GetCurrentKind(HeadNode02046b24** head);
 
 static inline int inline_02065418() {
     return (int)((*(volatile unsigned int*)0x4000000 & 0x1f00) >> 8);
@@ -23,7 +23,7 @@ static inline void inline_02065418_2(int arg0) {
 }
 
 // USA: func_02065418
-extern "C" ARM void func_02065418(int keepPlanes) {
+extern "C" ARM void func_02065418(int arg0) {
     if (!Overlay_IsLoaded(OVERLAY_ID(17))) {
         return;
     }

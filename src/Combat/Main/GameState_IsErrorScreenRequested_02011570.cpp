@@ -10,6 +10,6 @@ struct StateBits5ccc_11570 {
 };
 
 // Main, originally GetFlag0x5cccBit0_02011570 (USA 0x02011570, EUR 0x02011580, JPN 0x020112e0)
-ARM int GameState_IsErrorScreenRequested(struct StateBits5ccc_11570* gameState) {
+extern "C" ARM int GameState_IsErrorScreenRequested(struct StateBits5ccc_11570* gameState) {
     return gameState->returnToTitle;
 }

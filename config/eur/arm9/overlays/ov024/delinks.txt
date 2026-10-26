@@ -287,7 +287,7 @@ src/Combat/Overlay_24/func_ov024_021d8e6c.cpp:
     complete
     .text start:0x021d8e6c end:0x021d8eb0
 
-src/Combat/Overlay_30/func_ov030_021d8a40.cpp:
+src/Combat/Overlay_24/func_ov024_021d8a40.cpp:
     complete
     .text start:0x021d8a40 end:0x021d8a84
 
@@ -343,7 +343,7 @@ src/Combat/Overlay_24/func_ov024_021f6ae8.cpp:
     complete
     .text start:0x021f6ae8 end:0x021f6b28
 
-src/Combat/Overlay_24/ComputeScaledTableValues_021f70bc.cpp:
+src/Combat/Overlay_24/func_ov024_021f70bc.cpp:
     complete
     .text start:0x021f70bc end:0x021f7100
 
@@ -523,7 +523,7 @@ src/Combat/Overlay_24/func_ov024_021fc6dc.cpp:
     complete
     .text start:0x021fc6dc end:0x021fc74c
 
-src/Combat/Overlay_24/ComputeOffsetFloats_021f7244.cpp:
+src/Combat/Overlay_24/func_ov024_021f7244.cpp:
     complete
     .text start:0x021f7244 end:0x021f729c
 
@@ -827,7 +827,7 @@ src/Combat/Overlay_24/func_ov024_021ed9dc.cpp:
     complete
     .text start:0x021ed9dc end:0x021eda60
 
-src/Combat/Overlay_24/CheckAndClearOrEvaluateFlags_021eb1ec.cpp:
+src/Combat/Overlay_24/func_ov024_021eb1ec.cpp:
     complete
     .text start:0x021eb1ec end:0x021eb2b4
 
@@ -843,7 +843,7 @@ src/Combat/Overlay_24/func_ov024_021e929c.cpp:
     complete
     .text start:0x021e929c end:0x021e9320
 
-src/Combat/Overlay_23/CharacterCreationUI_RefreshNameText_021d9e60.cpp:
+src/Combat/Overlay_24/func_ov024_021d9e60.cpp:
     complete
     .text start:0x021d9e60 end:0x021d9f70
 
@@ -1015,7 +1015,7 @@ src/Combat/Overlay_24/func_ov024_021f72f8.cpp:
     complete
     .text start:0x021f72f8 end:0x021f736c
 
-src/Combat/Overlay_24/ComputeScaledSizeVec_021f729c.cpp:
+src/Combat/Overlay_24/func_ov024_021f729c.cpp:
     complete
     .text start:0x021f729c end:0x021f72f8
 
@@ -1179,7 +1179,7 @@ src/Combat/Overlay_24/func_ov024_021f4e84.cpp:
     complete
     .text start:0x021f4e84 end:0x021f4ed4
 
-src/Combat/Overlay_30/ReleaseBuffers_021d92f0.cpp:
+src/Combat/Overlay_24/func_ov024_021d92f0.cpp:
     complete
     .text start:0x021d92f0 end:0x021d92f8
 
@@ -1251,7 +1251,7 @@ src/Combat/Overlay_24/func_ov024_021f5ce4.cpp:
     complete
     .text start:0x021f5ce4 end:0x021f5db0
 
-src/Combat/Overlay_24/SetCombatantFaceIconByTableValue_021eb3e0.cpp:
+src/Combat/Overlay_24/func_ov024_021eb3e0.cpp:
     complete
     .text start:0x021eb3e0 end:0x021eb47c
 
@@ -1307,7 +1307,7 @@ src/Combat/Overlay_24/func_ov024_021fd5c0.cpp:
     complete
     .text start:0x021fd5c0 end:0x021fd5c4
 
-src/Combat/Overlay_24/UpdateDamageCounter_021e5be4.cpp:
+src/Combat/Overlay_24/func_ov024_021e5be4.cpp:
     complete
     .text start:0x021e5be4 end:0x021e5c7c
 
@@ -1589,7 +1589,7 @@ src/Combat/Overlay_24/func_ov024_021eb5d0.cpp:
     .text start:0x021eb5d0 end:0x021ed890
 
 
-src/Combat/Overlay_23/HandleElementSpecial17_021e6a90.cpp:
+src/Combat/Overlay_24/func_ov024_021e6a90.cpp:
     complete
     .text start:0x021e6a90 end:0x021e7ba8
 

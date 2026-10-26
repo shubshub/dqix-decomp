@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_ov000_0215d63c {
-    unsigned char unknown_0_[0xf78];
-    signed char unknown_f78_[4];
-    unsigned char unknown_f7c_;
+struct PartyInfo {
+    unsigned char pad[0xf78];
+    signed char order[4];
+    unsigned char count;
 };
 
 extern "C" unsigned char * func_02053c6c(unsigned char*);
@@ -25,7 +25,7 @@ extern "C" ARM void func_ov002_02161a8c() {
         color        = &colors[1];
         GameObject *member = gs->GetPartyMemberByIndex(idx);
         if (member == 0) continue;
-        unsigned char *f = GetFieldAt0x150_02053c6c((unsigned char*)member);
+        unsigned char *f = func_02053c6c((unsigned char*)member);
         if (f == 0) continue;
         unsigned char v = f[0x56a];
         if (v == 1 || v == 15) color = &colors[0];

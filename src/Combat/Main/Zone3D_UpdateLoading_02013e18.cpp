@@ -8,17 +8,17 @@
 #include "Resource/Brightness.h"
 
 extern "C" {
-    int _Z20Zone3D_UnpackMapListP6Zone3D(void*);
+    int Zone3D_UnpackMapList(void*);
     int _ZN6Zone3D13UnpackMapAMDJEv(void*);
-    int _Z31Zone3D_UnpackAtmosphericEffectsPv(void*);
+    int Zone3D_UnpackAtmosphericEffects(void*);
     int func_0201a600(void*);
     void Zone3D_RestoreElementsFromScenario(Zone3D*);
-    int _Z24ZoneId_IsMainGrottoFloori(int);
-    int _Z24ZoneId_IsGrottoBossFloori(int);
-    void _Z15Set3DClearColoriiiii(int, int, int, int, int);
-    void _Z29Zone3D_ApplyChestDiffuseColorPh(unsigned char*);
-    void _Z29Zone3D_CollectTerrainElementsPv(void*);
-    int _Z25GameState_GetFollowCameraPc(char const*);
+    int ZoneId_IsMainGrottoFloor(int);
+    int ZoneId_IsGrottoBossFloor(int);
+    void Set3DClearColor(int, int, int, int, int);
+    void Zone3D_ApplyChestDiffuseColor(unsigned char*);
+    void Zone3D_CollectTerrainElements(void*);
+    int GameState_GetFollowCamera(char const*);
 }
 
 // GameResources flags04 bit: while set, the field skips LightingManager::DrawBackgroundGradient (func_ov017_021960b8)
@@ -33,7 +33,7 @@ extern "C" ARM int Zone3D_UpdateLoading(Zone3D* zone)
     if (zone->unknown_424_ == 0)
         return 1;
 
-    if (!_Z20Zone3D_UnpackMapListP6Zone3D(zone))
+    if (!Zone3D_UnpackMapList(zone))
         return 0;
 
     if (!zone->UnpackMapAMBL())
@@ -45,17 +45,17 @@ extern "C" ARM int Zone3D_UpdateLoading(Zone3D* zone)
     if (!_ZN6Zone3D13UnpackMapAMDJEv(zone))
         return 0;
 
-    if (!_Z31Zone3D_UnpackAtmosphericEffectsPv(zone))
+    if (!Zone3D_UnpackAtmosphericEffects(zone))
         return 0;
 
     int zoneId = zone->pUnknownStruct_8_->unknown_0_;
 
-    if (_Z24ZoneId_IsMainGrottoFloori(zoneId))
+    if (ZoneId_IsMainGrottoFloor(zoneId))
     {
         func_02019728(zone, zoneId % 20, 0, 0, 0);
         func_0201a600(zone);
     }
-    else if (_Z24ZoneId_IsGrottoBossFloori(zoneId))
+    else if (ZoneId_IsGrottoBossFloor(zoneId))
     {
         func_0201a600(zone);
     }
@@ -74,7 +74,7 @@ extern "C" ARM int Zone3D_UpdateLoading(Zone3D* zone)
     else
         clearColor = zone->lighting_.advanced_.backgroundColor[lightingIndex];
 
-    _Z15Set3DClearColoriiiii(clearColor, kClearAlpha, kClearDepthFarthest, 0, 0);
+    Set3DClearColor(clearColor, kClearAlpha, kClearDepthFarthest, 0, 0);
 
     GameResources* resources = GetGameResources();
     // bit 7 of the zone table entry's byte 0xe
@@ -84,9 +84,9 @@ extern "C" ARM int Zone3D_UpdateLoading(Zone3D* zone)
     else
         ClearFlags04(resources, kResourcesFlag_NoBackgroundGradient);
 
-    _Z29Zone3D_ApplyChestDiffuseColorPh((unsigned char*)zone);
-    _Z29Zone3D_CollectTerrainElementsPv(zone);
-    (void)_Z25GameState_GetFollowCameraPc((char const*)GameState::GetInstance());
+    Zone3D_ApplyChestDiffuseColor((unsigned char*)zone);
+    Zone3D_CollectTerrainElements(zone);
+    (void)GameState_GetFollowCamera((char const*)GameState::GetInstance());
 
     zone->unk_830[1] = (char)lighting->timeOfDayIndex_;
     zone->unk_830[2] = 0;

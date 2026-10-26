@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
-struct Struct_ov003_0215e9a4 {
-    char unknown_0_;
-    signed char unknown_1_;
-    signed char unknown_2_;
-    char unknown_3_;
-    short* unknown_4_;
+struct Table0215e9a4 {
+    char pad0;
+    signed char width;
+    signed char height;
+    char pad3;
+    short* data;
 };
 
 // USA: func_ov003_0215e9a4
 #pragma optimize_for_size off
-extern "C" ARM int func_ov003_0215e9a4(Struct_ov003_0215e9a4* arg0, int arg1, int arg2) {
-    if (arg1 < 0) goto fail;
-    if (arg1 >= arg0->unknown_1_) goto fail;
-    if (arg2 < 0) goto fail;
-    if (arg2 >= arg0->unknown_2_) goto fail;
-    return (arg0->unknown_4_ + arg0->unknown_1_ * arg2)[arg1];
+extern "C" ARM int func_ov003_0215e9a4(Table0215e9a4* t, int row, int col) {
+    if (row < 0) goto fail;
+    if (row >= t->width) goto fail;
+    if (col < 0) goto fail;
+    if (col >= t->height) goto fail;
+    return (t->data + t->width * col)[row];
 fail:
     return -1;
 }

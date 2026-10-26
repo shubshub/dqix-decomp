@@ -1,87 +1,87 @@
 #include <globaldefs.h>
 
-extern "C" int func_020d2ff0(const char*);
+extern "C" int STD_GetStringLength(const char*);
 
-struct Struct_02072a68_2;
+struct TableA68;
 struct Struct_0207f524 {
-    void* unknown_0_;
-    short unknown_4_;
-    short unknown_6_;
+    void* entries;
+    short count;
+    short capacity;
 };
 
 struct Struct_020808c8 {
-    Struct_02072a68_2* unknown_0_;
-    Struct_0207f524 unknown_4_;
+    TableA68* unknown_0_;
+    Struct_0207f524 entries;
 };
 
-extern "C" void* func_0207f6ac(struct Struct_0207f524* arg0, int arg1);
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" int func_02042190(int arg0);
-extern "C" int func_020420e8(void* arg0, int arg1);
+extern "C" void* func_0207f6ac(struct Struct_0207f524* list, int entryId);
+extern "C" void* func_02072a68(struct TableA68* table, int key);
+extern "C" int func_02042190(int x);
+extern "C" int Font_GetTextWidth(void* value, int flag);
 
 struct Struct_020808c8_2 {
-    const char* unknown_0_;
-    char unknown_4_[0xa - 4];
-    short unknown_a_;
-    short unknown_c_;
-    short unknown_e_;
-    char unknown_10_[0x12 - 0x10];
-    unsigned char unknown_12_;
+    const char* literalText;
+    char pad1[0xa - 4];
+    short width;
+    short height;
+    short textId;
+    char pad2[0x12 - 0x10];
+    unsigned char kind;
     unsigned char unknown_13_0_ : 4;
     unsigned char unknown_13_4_ : 4;
 };
 
 // USA: func_020808c8
 
-extern "C" ARM void func_020808c8(void* arg0, int arg1, short* arg2, short* arg3) {
-    Struct_020808c8* var0 = static_cast<Struct_020808c8*>(arg0);
-    struct Struct_020808c8_2* var1 = (struct Struct_020808c8_2*)func_0207f6ac(&var0->unknown_4_, arg1);
-    if (var1 == NULL) {
+extern "C" ARM void func_020808c8(void* container, int entryId, short* width, short* height) {
+    Struct_020808c8* menu = static_cast<Struct_020808c8*>(container);
+    struct Struct_020808c8_2* entry = (struct Struct_020808c8_2*)func_0207f6ac(&menu->entries, entryId);
+    if (entry == NULL) {
         return;
     }
 
 #if !defined(jpn)
-    int var2 = func_02042190(var1->unknown_13_0_);
+    int isTwelve = func_02042190(entry->unknown_13_0_);
 #endif
-    int var3 = var1->unknown_12_;
+    int kind = entry->kind;
 
-    switch (var3) {
+    switch (kind) {
     case 0: {
-        void* var4 = func_02072a68(var0->unknown_0_, var1->unknown_e_);
-        if (var4 == NULL) {
+        void* found = func_02072a68(menu->unknown_0_, entry->textId);
+        if (found == NULL) {
             return;
         }
 #if defined(jpn)
-        int var5 = func_020d2ff0((const char*)var4) >> 1;
-        int var6 = var1->unknown_13_0_;
-        *arg2 = (short)(var5 * var6);
+        int glyphUnits = STD_GetStringLength((const char*)found) >> 1;
+        int var6 = entry->unknown_13_0_;
+        *width = (short)(glyphUnits * var6);
 #else
-        *arg2 = (short)func_020420e8(var4, var2);
+        *width = (short)Font_GetTextWidth(found, isTwelve);
 #endif
-        *arg3 = var1->unknown_13_0_;
+        *height = entry->unknown_13_0_;
         break;
     }
     case 1:
-        *arg2 = var1->unknown_a_;
-        *arg3 = var1->unknown_c_;
+        *width = entry->width;
+        *height = entry->height;
         break;
     case 4: {
-        if (var1->unknown_0_ == NULL) {
+        if (entry->literalText == NULL) {
             return;
         }
 #if defined(jpn)
-        int var7 = func_020d2ff0(var1->unknown_0_) >> 1;
-        int var8 = var1->unknown_13_0_;
-        *arg2 = (short)(var7 * var8);
+        int glyphUnits = STD_GetStringLength(entry->literalText) >> 1;
+        int var8 = entry->unknown_13_0_;
+        *width = (short)(glyphUnits * var8);
 #else
-        *arg2 = (short)func_020420e8(const_cast<char*>(var1->unknown_0_), var2);
+        *width = (short)Font_GetTextWidth(const_cast<char*>(entry->literalText), isTwelve);
 #endif
-        *arg3 = var1->unknown_13_0_;
+        *height = entry->unknown_13_0_;
         break;
     }
     default:
-        *arg3 = 0;
-        *arg2 = 0;
+        *height = 0;
+        *width = 0;
         break;
     }
 }

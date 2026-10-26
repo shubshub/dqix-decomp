@@ -10,22 +10,22 @@ extern char data_ov025_021ef7b5[];
 extern char data_ov025_021ef7be[];
 
 // USA: func_ov025_021e24d0
-extern "C" ARM int func_ov025_021e24d0(char* arg0, char* arg1, char* arg2) {
-    char* var0 = strstr(arg0, data_ov025_021ef778);
-    if (!var0) {
-        strstr(arg0, data_ov025_021ef781);
+extern "C" ARM int func_ov025_021e24d0(char* s, char* out2, char* out1) {
+    char* m = strstr(s, data_ov025_021ef778);
+    if (!m) {
+        strstr(s, data_ov025_021ef781);
     }
-    if (var0) {
-        strcpy(arg2, var0 + strlen(data_ov025_021ef78a));
-        strcpy(arg1, data_ov025_021ef791);
+    if (m) {
+        strcpy(out1, m + strlen(data_ov025_021ef78a));
+        strcpy(out2, data_ov025_021ef791);
         return 1;
     }
-    var0 = strstr(arg0, data_ov025_021ef7ac);
-    if (!var0) {
-        strstr(arg0, data_ov025_021ef7b5);
+    m = strstr(s, data_ov025_021ef7ac);
+    if (!m) {
+        strstr(s, data_ov025_021ef7b5);
     }
-    if (!var0) return 0;
-    strcpy(arg2, var0 + strlen(data_ov025_021ef78a));
-    strcpy(arg1, data_ov025_021ef7be);
+    if (!m) return 0;
+    strcpy(out1, m + strlen(data_ov025_021ef78a));
+    strcpy(out2, data_ov025_021ef7be);
     return 1;
 }

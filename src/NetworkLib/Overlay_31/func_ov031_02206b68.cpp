@@ -9,61 +9,61 @@ unsigned int SetIRQInterruptState(int mask);
 
 struct Struct_ov031_0224e22c;
 struct Struct_ov031_0224e230;
-extern "C" ARM void* func_ov031_02207108(Struct_ov031_0224e22c* arg0);
-extern "C" ARM void* func_ov031_02207168(Struct_ov031_0224e230* arg0);
+extern "C" ARM void* func_ov031_02207108(Struct_ov031_0224e22c* item);
+extern "C" ARM void* func_ov031_02207168(Struct_ov031_0224e230* item);
 
-struct Struct_ov031_02206a68 { Struct_ov031_02206a68* unknown_0_; };
-struct Struct_ov031_02206a68_2 { char unknown_0_[0x1c]; void (*unknown_1c_)(Struct_ov031_02206a68*); };
+struct Struct_ov031_02206a68 { Struct_ov031_02206a68* next; };
+struct Struct_ov031_02206a68_2 { char pad[0x1c]; void (*field1c)(Struct_ov031_02206a68*); };
 extern Struct_ov031_02206a68_2* data_ov031_022496a4;
 
 struct Struct_ov031_02206a68_3 {
-	char unknown_0_[0x100];
+	char pad[0x100];
 	int unknown_100_;
 	Struct_ov031_02206a68* unknown_104_;
-	unsigned short unknown_108_;
+	unsigned short field108;
 };
 
 struct Struct_ov031_02206a68_4 {
-	char unknown_0_[0x64];
+	char pad[0x64];
 	Struct_ov031_02206a68_3* unknown_64_;
-	void* unknown_68_;
-	char unknown_6c_[4];
+	void* field68;
+	char pad2[4];
 	unsigned short unknown_70_;
-	char unknown_72_;
+	char pad3;
 	signed char unknown_73_;
 };
 
 // USA: func_ov031_02206a68
-extern "C" ARM void func_ov031_02206a68(Struct_ov031_02206a68_4* arg0) {
-	if (arg0 == NULL) return;
-	arg0->unknown_70_ = 0;
+extern "C" ARM void func_ov031_02206a68(Struct_ov031_02206a68_4* a) {
+	if (a == NULL) return;
+	a->unknown_70_ = 0;
 	int var0 = 1;
-	signed char var1 = arg0->unknown_73_;
-	if (var1 != 0 && var1 != 4) var0 = 0;
+	signed char kind = a->unknown_73_;
+	if (kind != 0 && kind != 4) var0 = 0;
 	if (var0) {
-		func_ov031_02206b68(arg0->unknown_68_);
-		func_ov031_02206b68(arg0->unknown_64_);
-	} else if (var1 == 1) {
-		if (arg0->unknown_64_->unknown_104_ != NULL) {
-			Struct_ov031_02206a68* var2 = arg0->unknown_64_->unknown_104_;
+		func_ov031_02206b68(a->field68);
+		func_ov031_02206b68(a->unknown_64_);
+	} else if (kind == 1) {
+		if (a->unknown_64_->unknown_104_ != NULL) {
+			Struct_ov031_02206a68* node = a->unknown_64_->unknown_104_;
 			do {
-				Struct_ov031_02206a68* var3 = var2->unknown_0_;
-				data_ov031_022496a4->unknown_1c_(var2);
-				var2 = var3;
-			} while (var2 != NULL);
+				Struct_ov031_02206a68* next = node->next;
+				data_ov031_022496a4->field1c(node);
+				node = next;
+			} while (node != NULL);
 		}
-		arg0->unknown_64_->unknown_108_ = 0;
-		arg0->unknown_64_->unknown_100_ = 0;
-		arg0->unknown_64_->unknown_104_ = NULL;
-		UnblockContexts((struct BlockedContextList*)((char*)arg0->unknown_64_ + 0x10c));
-		func_ov031_02206b68(arg0->unknown_64_);
-	} else if (var1 == 2) {
-		func_ov031_02206b68(arg0->unknown_68_);
+		a->unknown_64_->field108 = 0;
+		a->unknown_64_->unknown_100_ = 0;
+		a->unknown_64_->unknown_104_ = NULL;
+		UnblockContexts((struct BlockedContextList*)((char*)a->unknown_64_ + 0x10c));
+		func_ov031_02206b68(a->unknown_64_);
+	} else if (kind == 2) {
+		func_ov031_02206b68(a->field68);
 	}
 
-	unsigned int var4 = DisableIRQInterrupts();
-	func_ov031_02207108((Struct_ov031_0224e22c*)arg0);
-	func_ov031_02207168((Struct_ov031_0224e230*)arg0);
-	data_ov031_022496a4->unknown_1c_((Struct_ov031_02206a68*)arg0);
-	SetIRQInterruptState(var4);
+	unsigned int prev = DisableIRQInterrupts();
+	func_ov031_02207108((Struct_ov031_0224e22c*)a);
+	func_ov031_02207168((Struct_ov031_0224e230*)a);
+	data_ov031_022496a4->field1c((Struct_ov031_02206a68*)a);
+	SetIRQInterruptState(prev);
 }

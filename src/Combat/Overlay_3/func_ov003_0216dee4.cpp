@@ -1,31 +1,31 @@
 #include <globaldefs.h>
 
-struct Struct_ov003_0216dee4_2 {
-    char unknown_0_[0x14];
-    int unknown_14_;
-    int unknown_18_;
-    char unknown_1c_[0x22 - 0x1c];
-    unsigned char unknown_22_;
-    char unknown_23_[0x25 - 0x23];
-    unsigned char unknown_25_;
+struct Elem0216dee4 {
+    char pad0[0x14];
+    int f14;
+    int f18;
+    char pad1[0x22 - 0x1c];
+    unsigned char f22;
+    char pad2[0x25 - 0x23];
+    unsigned char f25;
     unsigned char unknown_26_;
 };
 
 struct Struct_ov003_0216dee4 {
-    char unknown_0_[0x40];
-    struct Struct_ov003_0216dee4_2* unknown_40_;
+    char pad0[0x40];
+    struct Elem0216dee4* arr;
 };
 
-extern "C" void func_0205ac40(void*, struct Struct_ov003_0216dee4_2*);
+extern "C" void SpriteContext_DrawSprite(void*, struct Elem0216dee4*);
 
 // USA: func_ov003_0216dee4
-extern "C" ARM void func_ov003_0216dee4(struct Struct_ov003_0216dee4* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
-    struct Struct_ov003_0216dee4_2* var0 = (struct Struct_ov003_0216dee4_2*)((char*)arg0->unknown_40_ + arg1 * 0x28);
-    if (var0 == 0) return;
-    var0->unknown_14_ = arg2 << 12;
-    var0->unknown_18_ = arg3 << 12;
-    if (arg4 >= 0) var0->unknown_22_ = (unsigned char)arg4;
-    if (arg5 >= 0) var0->unknown_25_ = (unsigned char)arg5;
-    if (arg6 >= 0) var0->unknown_26_ = (unsigned char)arg6;
-    func_0205ac40(arg0, var0);
+extern "C" ARM void func_ov003_0216dee4(struct Struct_ov003_0216dee4* obj, int idx, int v14, int v18, int arg4, int arg5, int arg6) {
+    struct Elem0216dee4* e = (struct Elem0216dee4*)((char*)obj->arr + idx * 0x28);
+    if (e == 0) return;
+    e->f14 = v14 << 12;
+    e->f18 = v18 << 12;
+    if (arg4 >= 0) e->f22 = (unsigned char)arg4;
+    if (arg5 >= 0) e->f25 = (unsigned char)arg5;
+    if (arg6 >= 0) e->unknown_26_ = (unsigned char)arg6;
+    SpriteContext_DrawSprite(obj, e);
 }

@@ -16,7 +16,7 @@ struct UpdateStateStruct {
 };
 
 // Main, originally UpdateActivationState_02015a98 (USA 0x02015a98, EUR 0x02015aa8, JPN 0x02015864)
-ARM void ZoneChest_StartOpening(UpdateStateStruct* chest, int opener, int clearSpecial, int force) {
+extern "C" ARM void ZoneChest_StartOpening(UpdateStateStruct* chest, int opener, int clearSpecial, int force) {
     if (chest->state == ZoneChestState_Closed) {
         chest->state = ZoneChestState_Opening;
         chest->opener = opener;

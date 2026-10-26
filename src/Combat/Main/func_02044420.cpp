@@ -9,30 +9,30 @@ enum { Enum_02044420_65312 = 0xff20 };
 #endif
 
 #if defined(jpn)
-extern "C" ARM int func_02069444(void* arg0, unsigned short var0) {
-    int var1 = 0;
-    if (!func_02069430(arg0, var0)) return 0;
+extern "C" ARM int func_02069444(void* obj, unsigned short buf) {
+    int result = 0;
+    if (!func_02069430(obj, buf)) return 0;
 #else
 // USA: func_02044420
-extern "C" ARM int func_02044420(void* arg0, void* arg1) {
-    unsigned short var0;
-    int var1 = 0;
-    memcpy(&var0, arg1, 2);
-    if (!func_02044494(arg0, &var0)) {
+extern "C" ARM int func_02044420(void* obj, void* src) {
+    unsigned short buf;
+    int result = 0;
+    memcpy(&buf, src, 2);
+    if (!func_02044494(obj, &buf)) {
         return 0;
     }
 #endif
-    switch (var0) {
+    switch (buf) {
     case Enum_02044420_65312 + 0:
     case Enum_02044420_65312 + 1:
     case Enum_02044420_65312 + 3:
     case Enum_02044420_65312 + 4:
-        var1 = 1;
+        result = 1;
         break;
     case Enum_02044420_65312 + 2:
     case Enum_02044420_65312 + 5:
-        var1 = 2;
+        result = 2;
         break;
     }
-    return var1;
+    return result;
 }

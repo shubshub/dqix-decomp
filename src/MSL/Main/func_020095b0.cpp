@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
 // USA: func_020095b0
-extern "C" ARM int func_020095b0(unsigned char *arg0, int arg1) {
-    unsigned char *var0 = arg0 + 5 + arg1;
-    unsigned char var1 = *var0;
-    if (var1 > 5) return 1;
-    if (var1 < 5) return -1;
-    unsigned char var2 = arg0[4];
-    unsigned char *var3 = var0 + 1;
-    unsigned char *var4 = arg0 + 5 + var2;
-    if (var3 < var4) {
+extern "C" ARM int func_020095b0(unsigned char *obj, int index) {
+    unsigned char *p = obj + 5 + index;
+    unsigned char val = *p;
+    if (val > 5) return 1;
+    if (val < 5) return -1;
+    unsigned char len = obj[4];
+    unsigned char *q = p + 1;
+    unsigned char *end = obj + 5 + len;
+    if (q < end) {
         do {
-            if (*var3 != 0) return 1;
-            var3++;
-        } while (var3 < var4);
+            if (*q != 0) return 1;
+            q++;
+        } while (q < end);
     }
-    arg1 -= 1;
-    arg0 += arg1;
-    return (arg0[5] & 1) ? 1 : -1;
+    index -= 1;
+    obj += index;
+    return (obj[5] & 1) ? 1 : -1;
 }

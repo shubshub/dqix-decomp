@@ -2,11 +2,11 @@
 #include "GameState/GameState.h"
 #include "Combat/Main/BattleList.h"
 
-void* LinkMessageQueue_GetInstance(void);
+extern "C" void* LinkMessageQueue_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021ce524_2 {
-    char unknown_0_[9];
+    char padding[9];
     unsigned char unknown_9_;
     unsigned char unknown_a_;
     char unknown_b_;
@@ -18,67 +18,67 @@ struct Struct_ov017_021ce524_2 {
 };
 
 struct Struct_ov017_021ce524_3 {
-    char unknown_0_[0x800];
-    Struct_ov017_021ce524_2 unknown_800_;
+    char padding[0x800];
+    Struct_ov017_021ce524_2 stats;
 };
 
 struct Struct_ov017_021ce524_4 {
 #if defined(jpn)
-    char unknown_0_[0x1c];
+    char padding[0x1c];
 #else
-    char unknown1_0_[0x34];
+    char padding[0x34];
 #endif
-    Struct_ov017_021ce524_3 unknown_34_;
+    Struct_ov017_021ce524_3 fields;
 };
 
 struct Struct_ov017_021ce524_5 {
 #if defined(jpn)
-    char unknown_0_[0x80];
+    char padding[0x80];
 #else
-    char unknown1_0_[0x100];
+    char padding[0x100];
 #endif
     Struct_ov017_021ce524_4 unknown_100_;
 };
 
-extern "C" Struct_ov017_021ce524_5* func_02053c6c(unsigned char* arg0);
+extern "C" Struct_ov017_021ce524_5* func_02053c6c(unsigned char* obj);
 
 struct Struct_ov017_021ce524_6 {
-    short unknown_0_;
-    signed char unknown_2_;
+    short combatantId;
+    signed char field2;
     signed char unknown_3_;
-    signed char unknown_4_;
-    signed char unknown_5_;
-    signed char unknown_6_;
+    signed char field4;
+    signed char field5;
+    signed char field6;
     signed char unknown_7_;
 };
 
 struct Struct_ov017_021ce524 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[3];
-    Struct_ov017_021ce524_6 unknown_4_;
-    unsigned char unknown_c_[8];
+    unsigned char tag;
+    unsigned char pad0[3];
+    Struct_ov017_021ce524_6 sub;
+    unsigned char pad2[8];
 };
 
 // USA: func_ov017_021ce524
 extern "C" ARM void func_ov017_021ce524(short combatantId) {
-    LocalEvt021ce524 buf;
+    Struct_ov017_021ce524 buf;
     void* p = LinkMessageQueue_GetInstance();
     buf.tag = 0x29;
-    Sub021ce524* s = &buf.sub;
+    Struct_ov017_021ce524_6* s = &buf.sub;
     s->combatantId = combatantId;
 
-    GameObject* var3 = func_0200ff1c(GameState::GetInstance(), arg0);
-    if (var3 == NULL) return;
+    GameObject* combatant = func_0200ff1c(GameState::GetInstance(), combatantId);
+    if (combatant == NULL) return;
 
-    Struct_ov017_021ce524_5* var4 = func_02053c6c((unsigned char*)var3);
-    if (var4 == NULL) return;
+    Struct_ov017_021ce524_5* data = func_02053c6c((unsigned char*)combatant);
+    if (data == NULL) return;
 
-    Struct_ov017_021ce524_2* var5 = &var4->unknown_100_.unknown_34_.unknown_800_;
-    var2->unknown_2_ = var5->unknown_9_;
-    var2->unknown_3_ = var5->unknown_a_;
-    var2->unknown_4_ = var5->unknown_c_;
-    var2->unknown_5_ = var5->unknown_d_;
-    var2->unknown_6_ = var5->unknown_e_;
-    var2->unknown_7_ = var5->unknown_10_;
-    func_0205e330(var1, &var0, 0);
+    Struct_ov017_021ce524_2* stats = &data->unknown_100_.fields.stats;
+    s->field2 = stats->unknown_9_;
+    s->unknown_3_ = stats->unknown_a_;
+    s->field4 = stats->unknown_c_;
+    s->field5 = stats->unknown_d_;
+    s->field6 = stats->unknown_e_;
+    s->unknown_7_ = stats->unknown_10_;
+    func_0205e330(p, &buf, 0);
 }

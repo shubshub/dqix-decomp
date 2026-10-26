@@ -13,20 +13,20 @@ struct Struct_0209ff6c {
 };
 
 // USA: func_0209ff6c
-extern "C" ARM void func_0209ff6c(Struct_0209ff6c* arg0) {
-    if (arg0->unknown_60_ >= 0) {
-        if (func_ov017_021d4df8((char*)arg0 + 0xc, arg0->unknown_60_) == 0) {
-            arg0->unknown_60_ = -1;
+extern "C" ARM void func_0209ff6c(Struct_0209ff6c* obj) {
+    if (obj->unknown_60_ >= 0) {
+        if (func_ov017_021d4df8((char*)obj + 0xc, obj->unknown_60_) == 0) {
+            obj->unknown_60_ = -1;
             return;
         }
-        func_ov017_021d4ce4((char*)arg0 + 0xc, arg0->unknown_60_);
-        arg0->unknown_64_ = arg0->unknown_60_;
-        arg0->unknown_60_ = -1;
+        func_ov017_021d4ce4((char*)obj + 0xc, obj->unknown_60_);
+        obj->unknown_64_ = obj->unknown_60_;
+        obj->unknown_60_ = -1;
     } else {
-        if (arg0->unknown_64_ < 0) return;
-        func_ov017_021d4ccc((char*)arg0 + 0xc);
-        if (arg0->unknown_48_ != 0) {
-            arg0->unknown_64_ = -1;
+        if (obj->unknown_64_ < 0) return;
+        func_ov017_021d4ccc((char*)obj + 0xc);
+        if (obj->unknown_48_ != 0) {
+            obj->unknown_64_ = -1;
         }
     }
 }

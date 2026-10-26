@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
 // USA: func_ov017_021a193c
-extern "C" ARM int func_ov017_021a193c(int* arg0) {
-    return arg0[7];
+extern "C" ARM int func_ov017_021a193c(int* obj) {
+    return obj[7];
 }

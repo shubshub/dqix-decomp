@@ -6,88 +6,87 @@ enum { Enum_020652d0_564 = 0x1c4, Enum_020652d0_563 = 0x1c3 };
 enum { Enum_020652d0_564 = 0x234, Enum_020652d0_563 = 0x233 };
 #endif
 
-extern "C" void func_0205c790(char* arg0);
+extern "C" void func_0205c790(char* obj);
 
-struct Struct_0205ba68;
-extern "C" void func_0205ba68(struct Struct_0205ba68* arg0, int arg1, int arg2, int arg3);
+struct GridCursor;
+extern "C" void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
 
-struct Struct_0205bacc;
-extern "C" void func_0205bacc(struct Struct_0205bacc* arg0, int arg1);
+extern "C" void GridCursor_SetCount(struct GridCursor* s, int val);
 
-extern "C" void func_0205cb74(char* arg0, int arg1);
+extern "C" void func_0205cb74(char* obj, int value);
 
 #if defined(jpn)
-extern "C" void func_0205dfa8(void* arg0);
+extern "C" void func_0205dfa8(void* obj);
 extern "C" void func_0206cfd4(char*);
 #else
-extern "C" void func_0205cc50(void* arg0, int arg1, int arg2);
+extern "C" void func_0205cc50(void* obj, int a, int b);
 #endif
 
-extern "C" int func_020421a0(void);
-extern "C" void func_0206b7b0(char* arg0);
+extern "C" int MessageSystem_GetInstance(void);
+extern "C" void func_0206b7b0(char* base);
 
 struct Struct_0205bcdc;
-extern "C" void func_0205bcdc(struct Struct_0205bcdc* arg0, int arg1);
+extern "C" void GridCursor_SelectIfValid(struct Struct_0205bcdc* s, int index);
 
-extern "C" void func_0205bb04(void* arg0, int arg1);
+extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
 struct Struct_0205c77c;
-extern "C" void func_0205c77c(struct Struct_0205c77c* arg0, int arg1);
+extern "C" void func_0205c77c(struct Struct_0205c77c* p, int val);
 
-extern "C" void func_0205cd28(unsigned char* arg0);
+extern "C" void func_0205cd28(unsigned char* obj);
 
 // JPN: func_020665bc
 // USA: func_020652d0
 #if defined(jpn)
-extern "C" ARM void func_020665bc(char* arg0, int arg1, const char* arg2, const char* arg3) {
+extern "C" ARM void func_020665bc(char* obj, int a, const char* b, const char* c) {
 #else
-extern "C" ARM void func_020652d0(char* arg0, int arg1, int arg2, int arg3) {
+extern "C" ARM void func_020652d0(char* obj, int a, int b, int c) {
 #endif
-    func_0205c790(arg0);
+    func_0205c790(obj);
 
-    arg0[0xb1] = 1;
-    arg0[0xb0] = 1;
-    func_0205ba68((struct Struct_0205ba68*)(arg0 + 0x20), 1, 2, 0);
-    func_0205ba68((struct Struct_0205ba68*)(arg0 + 0x70), 1, 2, 0);
+    obj[0xb1] = 1;
+    obj[0xb0] = 1;
+    GridCursor_SetDimensions((struct GridCursor*)(obj + 0x20), 1, 2, 0);
+    GridCursor_SetDimensions((struct GridCursor*)(obj + 0x70), 1, 2, 0);
 
-    func_0205bacc((struct Struct_0205bacc*)(arg0 + 0x20), 2);
-    func_0205bacc((struct Struct_0205bacc*)(arg0 + 0x70), 2);
+    GridCursor_SetCount((struct GridCursor*)(obj + 0x20), 2);
+    GridCursor_SetCount((struct GridCursor*)(obj + 0x70), 2);
 
 #if defined(jpn)
-    func_0205cb74(arg0, (int)arg2);
-    func_0205cb74(arg0, (int)arg3);
+    func_0205cb74(obj, (int)b);
+    func_0205cb74(obj, (int)c);
 #else
-    func_0205cb74(arg0, arg2);
-    func_0205cb74(arg0, arg3);
+    func_0205cb74(obj, b);
+    func_0205cb74(obj, c);
 #endif
 
-    *(short*)(arg0 + 0xb4) = 0;
-    *(short*)(arg0 + 0xb6) = 0;
+    *(short*)(obj + 0xb4) = 0;
+    *(short*)(obj + 0xb6) = 0;
 
 #if defined(jpn)
-    func_0205dfa8(arg0);
-    func_0206cfd4((char*)func_020421a0());
-    func_0205dfa8(arg0);
+    func_0205dfa8(obj);
+    func_0206cfd4((char*)MessageSystem_GetInstance());
+    func_0205dfa8(obj);
 #else
-    func_0205cc50(arg0, 1, -4);
-    func_0206b7b0((char*)func_020421a0());
-    func_0205cc50(arg0, 1, -4);
+    func_0205cc50(obj, 1, -4);
+    func_0206b7b0((char*)MessageSystem_GetInstance());
+    func_0205cc50(obj, 1, -4);
 #endif
 
-    func_0205bcdc((struct Struct_0205bcdc*)(arg0 + 0x20), arg1);
-    func_0205bb04(arg0 + 0x70, arg1);
+    GridCursor_SelectIfValid((struct Struct_0205bcdc*)(obj + 0x20), a);
+    GridCursor_SetSelectedIndex(obj + 0x70, a);
 
-    arg0[Enum_020652d0_564] = 1;
-    func_0205c77c((struct Struct_0205c77c*)(arg0 + 0x4), 1);
+    obj[Enum_020652d0_564] = 1;
+    func_0205c77c((struct Struct_0205c77c*)(obj + 0x4), 1);
 
-    arg0[Enum_020652d0_563] = 1;
-    arg0[Enum_020652d0_564] = 1;
-    func_0205c77c((struct Struct_0205c77c*)(arg0 + 0x4), 1);
+    obj[Enum_020652d0_563] = 1;
+    obj[Enum_020652d0_564] = 1;
+    func_0205c77c((struct Struct_0205c77c*)(obj + 0x4), 1);
 
-    func_0205cd28((unsigned char*)arg0);
+    func_0205cd28((unsigned char*)obj);
 
-    int var0 = (*(volatile unsigned short*)0x4000304 & 0x8000) >> 15;
-    if (var0 == 1) {
-        arg0[0xb0] = 0;
+    int bit = (*(volatile unsigned short*)0x4000304 & 0x8000) >> 15;
+    if (bit == 1) {
+        obj[0xb0] = 0;
     }
 }

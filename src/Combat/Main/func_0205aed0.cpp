@@ -1,13 +1,13 @@
 // USA: func_0205aed0
-extern "C" void func_0205aed0(void* arg0, char* arg1, unsigned int arg2, int arg3)
+extern "C" void func_0205aed0(void* a, char* b, unsigned int c, int d)
 {
-    if (arg1 != 0) {
-        unsigned short var0 = 0;
-        while (var0 < arg2) {
-            unsigned char* var1 = (unsigned char*)(arg1 + var0 * 0x28);
-            var1[0x22] = (unsigned char)(var1[0x22] + arg3);
-            var1[0x22] &= 0x7f;
-            var0 = var0 + 1;
+    if (b != 0) {
+        unsigned short i = 0;
+        while (i < c) {
+            unsigned char* q = (unsigned char*)(b + i * 0x28);
+            q[0x22] = (unsigned char)(q[0x22] + d);
+            q[0x22] &= 0x7f;
+            i = i + 1;
         }
     }
 }

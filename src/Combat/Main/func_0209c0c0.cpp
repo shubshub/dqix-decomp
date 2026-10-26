@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
 struct Struct_0209c0c0 {
-    unsigned short unknown_0_[12];
-    unsigned short unknown_18_;
+    unsigned short arr[12];
+    unsigned short count;
 };
 
 // USA: func_0209c0c0
-extern "C" ARM unsigned short func_0209c0c0(struct Struct_0209c0c0* arg0, struct Struct_0209c0c0* arg1) {
-    int var0;
-    for (var0 = 0; var0 < arg0->unknown_18_; var0++) {
-        arg1->unknown_0_[var0] = arg0->unknown_0_[var0];
+extern "C" ARM unsigned short func_0209c0c0(struct Struct_0209c0c0* src, struct Struct_0209c0c0* dst) {
+    int i;
+    for (i = 0; i < src->count; i++) {
+        dst->arr[i] = src->arr[i];
     }
-    return arg0->unknown_18_;
+    return src->count;
 }

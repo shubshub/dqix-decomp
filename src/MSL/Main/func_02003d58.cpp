@@ -1,32 +1,32 @@
 #include <globaldefs.h>
 
 struct Struct_02003d58 {
-    char* unknown_0_;
-    int unknown_4_;
+    char* cursor;
+    int field4;
 };
 
 
 // USA: func_02003d58
-extern "C" ARM int func_02003d58(Struct_02003d58* arg0, int arg1, int arg2) {
-    switch (arg2) {
+extern "C" ARM int func_02003d58(Struct_02003d58* obj, int val, int cmd) {
+    switch (cmd) {
     case 0: {
-        char var0 = *arg0->unknown_0_;
-        if (var0 == 0) {
-            arg0->unknown_4_ = 1;
+        char c = *obj->cursor;
+        if (c == 0) {
+            obj->field4 = 1;
             return -1;
         }
-        arg0->unknown_0_++;
-        return (unsigned char)var0;
+        obj->cursor++;
+        return (unsigned char)c;
     }
     case 1:
-        if (arg0->unknown_4_ == 0) {
-            arg0->unknown_0_--;
+        if (obj->field4 == 0) {
+            obj->cursor--;
         } else {
-            arg0->unknown_4_ = 0;
+            obj->field4 = 0;
         }
-        return arg1;
+        return val;
     case 2:
-        return arg0->unknown_4_;
+        return obj->field4;
     default:
         return 0;
     }

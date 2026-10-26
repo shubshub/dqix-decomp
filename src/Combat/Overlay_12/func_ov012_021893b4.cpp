@@ -7,18 +7,18 @@
 #endif
 
 struct Struct_ov012_0218b008 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    signed char unknown_3_;
-    signed char unknown_4_;
-    unsigned char unknown_5_;
-    unsigned char unknown_6_;
+    unsigned char key;
+    unsigned char v1;
+    unsigned char v2;
+    signed char v3;
+    signed char v4;
+    unsigned char v5;
+    unsigned char v6;
 };
 extern struct Struct_ov012_0218b008 data_ov012_0218b008[];
 
 struct Struct_ov012_021893b4 {
-    char unknown_0_[LOW_REGION(0x130, 0xa0)];
+    char pad[LOW_REGION(0x130, 0xa0)];
     short unknown_a0_;
     short unknown_a2_;
     short unknown_a4_;
@@ -34,31 +34,31 @@ struct Struct_ov012_021893b4 {
 };
 
 // USA: func_ov012_021893b4
-extern "C" ARM void func_ov012_021893b4(void* arg0, int arg1, int arg2, int arg3) {
-    struct Struct_ov012_021893b4* var0 = (struct Struct_ov012_021893b4*)((char*)arg0 + LOW_REGION(0, 0xac));
-    int var1;
-    for (var1 = 0; data_ov012_0218b008[var1].unknown_0_ != 0xff; var1++) {
-        struct Struct_ov012_0218b008* var2 = &data_ov012_0218b008[var1];
-        if (var2->unknown_0_ == arg1) {
-            unsigned char var3, var4;
+extern "C" ARM void func_ov012_021893b4(void* obj, int key, int p2, int p3) {
+    struct Struct_ov012_021893b4* d = (struct Struct_ov012_021893b4*)((char*)obj + LOW_REGION(0, 0xac));
+    int i;
+    for (i = 0; data_ov012_0218b008[i].key != 0xff; i++) {
+        struct Struct_ov012_0218b008* e = &data_ov012_0218b008[i];
+        if (e->key == key) {
+            unsigned char t2, var4;
             signed char var5, var6;
             unsigned char var7, var8;
-            var0->unknown_b1_ = var2->unknown_0_;
-            var0->unknown_a4_ = arg2;
-            var0->unknown_a6_ = arg3;
-            var3 = var2->unknown_2_;
-            var4 = var2->unknown_1_;
-            var0->unknown_a8_ = var4;
-            var0->unknown_aa_ = var3;
-            var5 = var2->unknown_4_;
-            var6 = var2->unknown_3_;
-            var0->unknown_a0_ = var6;
-            var0->unknown_a2_ = var5;
-            var7 = var2->unknown_6_;
-            var8 = var2->unknown_5_;
-            var0->unknown_ac_ = var8;
-            var0->unknown_ae_ = var7;
-            var0->unknown_b5_ = 1;
+            d->unknown_b1_ = e->key;
+            d->unknown_a4_ = p2;
+            d->unknown_a6_ = p3;
+            t2 = e->v2;
+            var4 = e->v1;
+            d->unknown_a8_ = var4;
+            d->unknown_aa_ = t2;
+            var5 = e->v4;
+            var6 = e->v3;
+            d->unknown_a0_ = var6;
+            d->unknown_a2_ = var5;
+            var7 = e->v6;
+            var8 = e->v5;
+            d->unknown_ac_ = var8;
+            d->unknown_ae_ = var7;
+            d->unknown_b5_ = 1;
             return;
         }
     }

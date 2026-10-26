@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 // USA: func_020e2b94
-extern "C" ARM void func_020e2b94(int arg0) {
-    volatile unsigned int* var0 = (volatile unsigned int*)0x4000000;
-    *var0 = (*var0 & ~0xe000) | (arg0 << 13);
+extern "C" ARM void func_020e2b94(int val) {
+    volatile unsigned int* dispcnt = (volatile unsigned int*)0x4000000;
+    *dispcnt = (*dispcnt & ~0xe000) | (val << 13);
 }

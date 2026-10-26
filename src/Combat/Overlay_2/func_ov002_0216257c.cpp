@@ -9,16 +9,16 @@
 #define RG(u, j) (u)
 #endif
 
-struct Struct_0205de24_2;
+struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
 struct SePlayer;
-void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+extern "C" void func_0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int Window_GetSelectedIndex(struct Struct_0205c570 *s);
-int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
-void SePlayer_Play(struct SePlayer *o, int a, int b);
-int CheckFlagOrThreshold_02161b48(char *base, int a);
+extern "C" int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+extern "C" int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
+extern "C" void SePlayer_Play(struct SePlayer *o, int a, int b);
+extern "C" int func_ov002_02161b48(char *base, int a);
 extern "C" void func_ov002_02161cf0(void *base);
 extern "C" void func_ov002_0215c2c8(void *base);
 extern "C" void func_ov002_02156e90(void *base);
@@ -26,11 +26,11 @@ extern "C" void Zone3D_GetInstance(void);
 extern "C" void func_02017c58(void);
 extern "C" char g_sePlayer[];
 
-static inline int inline_ov002_0216257c(char *arg0, int arg1) {
-    return *(int *) (arg0 + arg1 * 4 + 0x1000 + RG(0xc54, 0xb18));
+static inline int inline_ov002_0216257c(char *b, int i) {
+    return *(int *) (b + i * 4 + 0x1000 + RG(0xc54, 0xb18));
 }
-static inline int inline_ov002_0216257c_2(int arg0) {
-    return (arg0 >= 0 && arg0 <= 3) ? 1 : 0;
+static inline int inline_ov002_0216257c_2(int v) {
+    return (v >= 0 && v <= 3) ? 1 : 0;
 }
 
 // USA: func_ov002_0216257c
@@ -38,8 +38,8 @@ extern "C" ARM void func_ov002_0216257c(char *base) {
     int state = *(int *) (base + 0x1000 + RG(0xbc0, 0xa88));
     if (state == 0) {
         *(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe2, 0xaa))        = 0;
-        *(signed char *) (base + 0x1000 + RG(0xc20, 0xae8)) = GetSlot0216257c(base, *(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe2, 0xaa)));
-        FindAndLinkMatchingEntry0205de24((struct Struct0205de24 *) (base + RG(0x2c8, 0) + RG(0xc00, 0xe20)), 0, 2);
+        *(signed char *) (base + 0x1000 + RG(0xc20, 0xae8)) = inline_ov002_0216257c(base, *(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe2, 0xaa)));
+        func_0205de24((struct Struct0205de24 *) (base + RG(0x2c8, 0) + RG(0xc00, 0xe20)), 0, 2);
         func_ov002_02161cf0(base);
         func_ov002_0215c2c8(base);
         *(int *) (base + 0x1000 + RG(0xbc0, 0xa88)) += 1;
@@ -53,17 +53,17 @@ extern "C" ARM void func_ov002_0216257c(char *base) {
             *(signed char *) (base + 0x1000 + RG(0xc20, 0xae8)) =
                 *(signed char *) (base + *(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe2, 0xaa)) + RG(0x1c00, 0x1b00) + RG(0x6e, 0x32));
             int v = *(signed char *) (base + RG(0x1c00, 0x1a00) + RG(0x20, 0xe8));
-            if (!InRange0216257c(v)) return;
+            if (!inline_ov002_0216257c_2(v)) return;
             *(unsigned int *) (base + 0x2000 + RG(0x47c, 0x2ac)) &= ~4;
             SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
-            SetNodeFieldsAndInsert_021a120c(GameState::GetInstance()->GetResources(), 3, v);
+            func_ov017_021a120c(GameState::GetInstance()->GetResources(), 3, v);
             *(int *) (base + 0x1000 + RG(0xbb8, 0xa80)) = RG(0x2b, 0x2e);
             *(int *) (base + 0x1000 + RG(0xbc0, 0xa88)) = 0;
             Zone3D_GetInstance();
             func_02017c58();
-        } else if (func_ov002_02161b48(arg0, 1)) {
-            *(short *) (arg0 + RG(0x1b00, 0x1a00) + RG(0xe2, 0xaa)) = -1;
-            func_ov002_02156e90(arg0);
+        } else if (func_ov002_02161b48(base, 1)) {
+            *(short *) (base + RG(0x1b00, 0x1a00) + RG(0xe2, 0xaa)) = -1;
+            func_ov002_02156e90(base);
         }
     }
 }

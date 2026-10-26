@@ -17,7 +17,7 @@ struct ZoneTerrainGrid {
     int count;                      // polygons collected (TerrainMesh_CollectPolygons)
     int scale;
     Vector3fix position;
-    int unknown914;
+    int unknown_914_;
     int angle;
     unsigned char unknown91c[4];
     unsigned char attributes[96];   // each polygon's 7-bit attribute, written when the mesh header's type is 3

@@ -12,14 +12,14 @@
 #define func_ov005_0215a37c func_ov005_0215b8d0
 #endif
 
-extern "C" int func_ov017_021a193c(int* arg0);
-extern "C" int func_ov023_021e3258(void* arg0, int arg1, int arg2, int arg3, short arg4);
+extern "C" int func_ov017_021a193c(int* obj);
+extern "C" int func_ov023_021e3258(void* obj, int a, int b, int c, short d);
 
 // USA: func_ov005_0215a37c
-extern "C" ARM void func_ov005_0215a37c(char* arg0) {
-	if (*(unsigned char*)(arg0 + STATE_OFFSET) != 3) return;
+extern "C" ARM void func_ov005_0215a37c(char* obj) {
+	if (*(unsigned char*)(obj + STATE_OFFSET) != 3) return;
 	char* var0 = (char*)GetGameResources();
-	int* var1 = *(int**)(var0 + RESOURCE_OFFSET);
-	int var2 = func_ov017_021a193c(var1);
-	func_ov023_021e3258((void*)var2, 0xbd, 0x10, 0xbd, 0x2f);
+	int* p = *(int**)(var0 + RESOURCE_OFFSET);
+	int field = func_ov017_021a193c(p);
+	func_ov023_021e3258((void*)field, 0xbd, 0x10, 0xbd, 0x2f);
 }

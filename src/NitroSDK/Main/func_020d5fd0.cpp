@@ -10,10 +10,10 @@ struct Struct_020d5d34_2
 {
     unsigned short unknown_0_;
     unsigned short unknown_2_;
-    unsigned short unknown_4_[254];
+    unsigned short data[254];
 };
 
-struct Struct_020d5d34
+struct WMDataSharingInfo
 {
     Struct_020d5d34_2 unknown_0_[4];
     unsigned short unknown_800_[4];
@@ -27,8 +27,8 @@ struct Struct_020d5d34
     unsigned short unknown_816_;
     unsigned short unknown_818_;
     unsigned short unknown_81a_;
-    unsigned short unknown_81c_;
-    unsigned short unknown_81e_[1];
+    unsigned short state;
+    unsigned short reserved[1];
 };
 
 struct Struct_020d5fd0;
@@ -36,120 +36,120 @@ struct Struct_020d5fd0_2;
 
 extern "C" int func_020d424c(int arg0, ...);
 extern "C" void func_020ca3b8(const void* src, void* dst, unsigned long size);
-extern "C" int func_020d59bc(Type_020d42e0 arg0, void* arg1, const unsigned short* arg2,
+extern "C" int func_020d59bc(Type_020d42e0 callback, void* arg, const unsigned short* arg2,
                              unsigned short arg3, unsigned short arg4, unsigned short arg5,
                              unsigned short arg6);
-extern "C" void func_020d6318(void* arg0);
+extern "C" void func_020d6318(void* callback);
 extern "C" unsigned short func_020d46cc();
 extern "C" unsigned short func_020d46fc();
-extern "C" void func_020d6610(Struct_020d5fd0* arg0, int arg1, int arg2);
-extern "C" void func_020d66dc(Struct_020d5fd0_2* arg0, int arg1);
+extern "C" void func_020d6610(Struct_020d5fd0* dsInfo, int aid, int data);
+extern "C" void func_020d66dc(Struct_020d5fd0_2* dsInfo, int arg1);
 
 // USA: func_020d5fd0
-extern "C" ARM int func_020d5fd0(Struct_020d5d34* arg0, const unsigned short* arg1, Struct_020d5d34_2* arg2)
+extern "C" ARM int func_020d5fd0(WMDataSharingInfo* dsInfo, const unsigned short* arg1, Struct_020d5d34_2* arg2)
 {
-    int var0;
-    unsigned short var1;
+    int result;
+    unsigned short aid;
     unsigned short var2;
-    unsigned short var3;
-    var0 = func_020d424c(2, 9, 10);
-    if (var0 != 0)
-        return var0;
-    if (arg0 == NULL)
+    unsigned short state;
+    result = func_020d424c(2, 9, 10);
+    if (result != 0)
+        return result;
+    if (dsInfo == NULL)
         return 6;
     if (arg1 == NULL)
         return 6;
     if (arg2 == NULL)
         return 6;
-    var1 = func_020d46cc();
-    if (var1 == 0)
+    aid = func_020d46cc();
+    if (aid == 0)
         var2 = func_020d46fc();
-    var3 = arg0->unknown_81c_;
-    if (var3 == 5)
+    state = dsInfo->state;
+    if (state == 5)
         return 1;
-    if (var3 != 1 && var3 != 4)
+    if (state != 1 && state != 4)
         return 3;
-    var0 = 5;
-    if (var1 == 0)
+    result = 5;
+    if (aid == 0)
     {
         int var4 = false;
         int var5 = false;
-        if (var3 == 4)
+        if (state == 4)
         {
-            int var6;
+            int res;
             int var7;
-            arg0->unknown_81c_ = 1;
-            var7 = (arg0->unknown_808_ + 4 - 1) & 3;
-            var6 = func_020d59bc(func_020d6318, arg0, (unsigned short*)&arg0->unknown_0_[var7],
-                                arg0->unknown_814_, arg0->unknown_80e_ & var2, arg0->unknown_816_, 1);
-            if (var6 == 7)
+            dsInfo->state = 1;
+            var7 = (dsInfo->unknown_808_ + 4 - 1) & 3;
+            res = func_020d59bc(func_020d6318, dsInfo, (unsigned short*)&dsInfo->unknown_0_[var7],
+                                dsInfo->unknown_814_, dsInfo->unknown_80e_ & var2, dsInfo->unknown_816_, 1);
+            if (res == 7)
             {
-                arg0->unknown_800_[var7] = 0xffff;
-                arg0->unknown_80a_ = (arg0->unknown_80a_ + 1) & 3;
+                dsInfo->unknown_800_[var7] = 0xffff;
+                dsInfo->unknown_80a_ = (dsInfo->unknown_80a_ + 1) & 3;
             }
-            else if (var6 != 0 && var6 != 2)
+            else if (res != 0 && res != 2)
             {
-                arg0->unknown_81c_ = 5;
+                dsInfo->state = 5;
                 return 1;
             }
         }
-        if (arg0->unknown_80c_ != arg0->unknown_80a_)
+        if (dsInfo->unknown_80c_ != dsInfo->unknown_80a_)
         {
-            arg0->unknown_0_[arg0->unknown_80c_].unknown_0_ |= 1;
-            func_020ca3b8(&arg0->unknown_0_[arg0->unknown_80c_], arg2, sizeof(Struct_020d5d34_2));
-            arg0->unknown_81a_ = arg0->unknown_800_[arg0->unknown_80c_];
-            arg0->unknown_80c_ = (arg0->unknown_80c_ + 1) & 3;
+            dsInfo->unknown_0_[dsInfo->unknown_80c_].unknown_0_ |= 1;
+            func_020ca3b8(&dsInfo->unknown_0_[dsInfo->unknown_80c_], arg2, sizeof(Struct_020d5d34_2));
+            dsInfo->unknown_81a_ = dsInfo->unknown_800_[dsInfo->unknown_80c_];
+            dsInfo->unknown_80c_ = (dsInfo->unknown_80c_ + 1) & 3;
             var4 = true;
-            var0 = 0;
-            if (arg0->unknown_818_ == false && var2 != 0 && arg0->unknown_0_[arg0->unknown_808_].unknown_0_ == 1)
+            result = 0;
+            if (dsInfo->unknown_818_ == false && var2 != 0 && dsInfo->unknown_0_[dsInfo->unknown_808_].unknown_0_ == 1)
                 var5 = true;
             else
                 var5 = false;
         }
-        func_020d66dc((Struct_020d5fd0_2*)arg0, false);
+        func_020d66dc((Struct_020d5fd0_2*)dsInfo, false);
         if (var4)
         {
-            func_020d6610((Struct_020d5fd0*)arg0, 0, (int)arg1);
-            if (arg0->unknown_818_ == false)
-                func_020d66dc((Struct_020d5fd0_2*)arg0, var5);
+            func_020d6610((Struct_020d5fd0*)dsInfo, 0, (int)arg1);
+            if (dsInfo->unknown_818_ == false)
+                func_020d66dc((Struct_020d5fd0_2*)dsInfo, var5);
         }
     }
     else
     {
         int var8 = false;
-        if (var3 == 4)
+        if (state == 4)
         {
             var8 = true;
-            arg0->unknown_81c_ = 1;
+            dsInfo->state = 1;
         }
-        else if (arg0->unknown_80c_ != arg0->unknown_808_)
+        else if (dsInfo->unknown_80c_ != dsInfo->unknown_808_)
         {
-            if (!(arg0->unknown_0_[arg0->unknown_80c_].unknown_0_ & 1))
+            if (!(dsInfo->unknown_0_[dsInfo->unknown_80c_].unknown_0_ & 1))
             {
-                arg0->unknown_0_[arg0->unknown_80c_].unknown_0_ |= 1;
+                dsInfo->unknown_0_[dsInfo->unknown_80c_].unknown_0_ |= 1;
             }
             else
             {
-                func_020ca3b8(&arg0->unknown_0_[arg0->unknown_80c_], arg2, sizeof(Struct_020d5d34_2));
-                arg0->unknown_81a_ = arg0->unknown_800_[arg0->unknown_80c_];
-                arg0->unknown_80c_ = (arg0->unknown_80c_ + 1) & 3;
+                func_020ca3b8(&dsInfo->unknown_0_[dsInfo->unknown_80c_], arg2, sizeof(Struct_020d5d34_2));
+                dsInfo->unknown_81a_ = dsInfo->unknown_800_[dsInfo->unknown_80c_];
+                dsInfo->unknown_80c_ = (dsInfo->unknown_80c_ + 1) & 3;
                 var8 = true;
-                var0 = 0;
+                result = 0;
             }
         }
         if (var8)
         {
-            unsigned short* const var9 = (unsigned short*)((unsigned char*)&arg0->unknown_0_[arg0->unknown_80a_] + 32);
-            int var10;
-            func_020ca3b8(arg1, var9, arg0->unknown_810_);
-            var10 = func_020d59bc(func_020d6318, arg0, var9, arg0->unknown_810_, arg0->unknown_80e_, arg0->unknown_816_, 1);
-            arg0->unknown_80a_ = (arg0->unknown_80a_ + 1) & 3;
-            if (var10 != 2 && var10 != 0)
+            unsigned short* const buf = (unsigned short*)((unsigned char*)&dsInfo->unknown_0_[dsInfo->unknown_80a_] + 32);
+            int res;
+            func_020ca3b8(arg1, buf, dsInfo->unknown_810_);
+            res = func_020d59bc(func_020d6318, dsInfo, buf, dsInfo->unknown_810_, dsInfo->unknown_80e_, dsInfo->unknown_816_, 1);
+            dsInfo->unknown_80a_ = (dsInfo->unknown_80a_ + 1) & 3;
+            if (res != 2 && res != 0)
             {
-                arg0->unknown_81c_ = 5;
-                var0 = 1;
+                dsInfo->state = 5;
+                result = 1;
             }
         }
     }
-    return var0;
+    return result;
 }

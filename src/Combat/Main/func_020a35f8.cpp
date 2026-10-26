@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
-extern "C" ARM int func_020a35e0(unsigned char* arg0, unsigned char arg1);
+extern "C" ARM int func_020a35e0(unsigned char* obj, unsigned char index);
 
 // USA: func_020a35f8
-extern "C" ARM int func_020a35f8(unsigned char* arg0) {
-    int var0 = 0;
-    int var1;
-    for (var1 = 0; var1 < 4; var1++) {
-        if (func_020a35e0(arg0, var1)) {
-            var0++;
+extern "C" ARM int func_020a35f8(unsigned char* obj) {
+    int count = 0;
+    int i;
+    for (i = 0; i < 4; i++) {
+        if (func_020a35e0(obj, i)) {
+            count++;
         }
     }
-    return var0;
+    return count;
 }

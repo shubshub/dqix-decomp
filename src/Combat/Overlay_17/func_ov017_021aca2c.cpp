@@ -2,22 +2,22 @@
 #include "Resource/Script.h"
 #include "Memory/SafeAllocator.h"
 
-int STD_GetStringLength(const char*);
-struct ScriptRecord021aca2c {
+extern "C" int STD_GetStringLength(const char*);
+struct Struct_ov017_021aca2c {
     char* first;
     char* second;
     char* third;
     short* values;
     unsigned short id;
     short index;
-    unsigned char field_14;
-    unsigned char field_15;
+    unsigned char unknown_14_;
+    unsigned char unknown_15_;
     unsigned char count;
     unsigned char loaded;
 };
 struct Struct_ov017_021d83cc {
-    SafeAllocator* unknown_0_;
-    Struct_ov017_021aca2c* unknown_4_;
+    SafeAllocator* allocator;
+    Struct_ov017_021aca2c* record;
 };
 extern Struct_ov017_021d83cc data_ov017_021d83cc;
 
@@ -28,8 +28,8 @@ extern "C" ARM int func_ov017_021aca2c(Script::Parameter* params, int count) {
     int index = params[1].ToInt();
     if (data_ov017_021d83cc.record->index != index) return 1;
     if (index < 0) return 1;
-    data_ov017_021d83cc.record->field_14 = params[2].ToInt();
-    data_ov017_021d83cc.record->field_15 = params[3].ToInt();
+    data_ov017_021d83cc.record->unknown_14_ = params[2].ToInt();
+    data_ov017_021d83cc.record->unknown_15_ = params[3].ToInt();
     const char* text = params[4].ToString();
     if (text) {
         int length = STD_GetStringLength(text);
@@ -50,9 +50,9 @@ extern "C" ARM int func_ov017_021aca2c(Script::Parameter* params, int count) {
             data_ov017_021d83cc.record->second[length] = 0;
         }
     }
-    Script::Parameter* lastText = params + 6;
+    Script::Parameter* var5 = params + 6;
     params += 7;
-    text = lastText->ToString();
+    text = var5->ToString();
     if (text) {
         int length = STD_GetStringLength(text);
         if (length) {
@@ -62,13 +62,13 @@ extern "C" ARM int func_ov017_021aca2c(Script::Parameter* params, int count) {
             data_ov017_021d83cc.record->third[length] = 0;
         }
     }
-    if (arg1 - 7) {
-        data_ov017_021d83cc.unknown_4_->unknown_16_ = arg1 - 7;
-        data_ov017_021d83cc.unknown_4_->unknown_c_ = (short*)data_ov017_021d83cc.unknown_0_->Allocate((arg1 - 7) * 2);
-        for (int var7 = 0; var7 < arg1 - 7; ++arg0, ++var7) {
-            data_ov017_021d83cc.unknown_4_->unknown_c_[var7] = arg0->ToInt();
+    if (count - 7) {
+        data_ov017_021d83cc.record->count = count - 7;
+        data_ov017_021d83cc.record->values = (short*)data_ov017_021d83cc.allocator->Allocate((count - 7) * 2);
+        for (int i = 0; i < count - 7; ++params, ++i) {
+            data_ov017_021d83cc.record->values[i] = params->ToInt();
         }
     }
-    data_ov017_021d83cc.unknown_4_->unknown_17_ = 1;
+    data_ov017_021d83cc.record->loaded = 1;
     return 1;
 }

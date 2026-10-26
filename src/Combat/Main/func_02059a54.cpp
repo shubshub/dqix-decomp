@@ -5,38 +5,38 @@
 struct Struct_02059720;
 struct Struct_020546c8;
 struct Struct_02059a54 {
-    char unknown_0_[5];
+    char pad0[5];
     unsigned char unknown_5_;
 };
 struct Struct_02059a54_2 {
-    int unknown_0_;
-    unsigned int unknown_4_;
-    char unknown_8_[8];
-    Vector3fix unknown_10_;
+    int field0;
+    unsigned int time;
+    char pad8[8];
+    Vector3fix origin;
     char unknown_1c_[0xc];
-    Struct_020546c8* unknown_28_;
-    unsigned char unknown_2c_;
+    Struct_020546c8* resource;
+    unsigned char active;
     char unknown_2d_[0x23];
-    float unknown_50_, unknown_54_;
+    float scaleX, scaleY;
     char unknown_58_[0x14];
-    float unknown_6c_, unknown_70_, unknown_74_, unknown_78_;
-    Object3D unknown_7c_;
-    int unknown_128_;
-    float unknown_12c_, unknown_130_, unknown_134_, unknown_138_, unknown_13c_, unknown_140_;
+    float velocityX, velocityY, velocityZ, speed;
+    Object3D object;
+    int polygonId;
+    float red, green, blue, alpha, width, height;
 };
-int CheckByte0xcZeroAndField8LeField4(State02059a2c*);
-EffectModelInfo02059a54* GetSubField0x14_02055108(S02055080*);
-void* Camera_GetInverseRotation(void*);
+extern "C" int func_02059a2c(Struct_02059720*);
+extern "C" Struct_02059a54* func_02055108(Struct_020546c8*);
+extern "C" void* Camera_GetInverseRotation(void*);
 extern "C" void MI_Copy36B(void*, const void*);
 extern "C" void NSBXX_Model_SetPolygonID(void*, int);
 extern int data_0210a0cc;
 extern Vector3fix data_020e7da4;
-static inline NSBXXInternalModel* inline_02059a54(Struct_02059a54_2* arg0) { return arg0->unknown_7c_.pModel_->rawInternalModel_; }
+static inline NSBXXInternalModel* inline_02059a54(Struct_02059a54_2* effect) { return effect->object.pModel_->rawInternalModel_; }
 
 // USA: func_02059a54
-extern "C" ARM void func_02059a54(Effect02059a54* self) {
-    if (self->active && !CheckByte0xcZeroAndField8LeField4((State02059a2c*)self)) {
-        EffectModelInfo02059a54* info = GetSubField0x14_02055108(self->resource);
+extern "C" ARM void func_02059a54(Struct_02059a54_2* self) {
+    if (self->active && !func_02059a2c((Struct_02059720*)self)) {
+        Struct_02059a54* info = func_02055108(self->resource);
         int x;
         int y;
         unsigned int time;
@@ -47,8 +47,8 @@ extern "C" ARM void func_02059a54(Effect02059a54* self) {
         self->object.position_.x = x;
         self->object.position_.y = y;
         self->object.position_.z = z;
-        if (!info->complex) {
-            NSBXXInternalModel* model = GetEffectModel(self);
+        if (!info->unknown_5_) {
+            NSBXXInternalModel* model = inline_02059a54(self);
             int blue = (int)self->blue;
             int red = (int)self->red;
             int green = (int)self->green;
@@ -68,7 +68,7 @@ extern "C" ARM void func_02059a54(Effect02059a54* self) {
             self->object.SetInheritedAlpha((int)self->alpha);
             self->object.DrawWithCurrentRenderConfig(true);
         } else {
-            arg0->unknown_7c_.Draw(true);
+            self->object.Draw(true);
         }
     }
 }

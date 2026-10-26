@@ -3,7 +3,7 @@
 #include "World/Zone3D.h"
 
 struct SePlayer;
-void SePlayer_Play(SePlayer*, int, int);
+extern "C" void SePlayer_Play(SePlayer*, int, int);
 int fix32sin(int);
 extern int g_sePlayer;
 
@@ -31,8 +31,8 @@ extern "C" ARM int ZoneChest_LiftLid(ChestRecord02015ae4* chest) {
         unsigned int elapsedCounter = chest->counter;
         int firstDuration = 0xbff4;
         int elapsed = (int)(4096.0f * ((float)chest->counter - (float)firstDuration / 4096.0f));
-        int totalDuration = 0x17fe8;
-        if ((float)elapsedCounter <= (float)totalDuration / 4096.0f) {
+        int var8 = 0x17fe8;
+        if ((float)elapsedCounter <= (float)var8 / 4096.0f) {
             int remaining = 0x1000 - fix32_Divide(elapsed, 0x17fe8);
             int coefficient = fix32_Divide(0xc90f, 0x17fe8);
             int angle = FIX32_MULTIPLY(coefficient, elapsed);

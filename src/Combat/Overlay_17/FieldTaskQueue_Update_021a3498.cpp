@@ -2,8 +2,8 @@
 #include "Resource/GameResources.h"
 #include "World/FieldTask.h"
 
-struct ClearList02046968;
-void ClearListUntilFlagZero(struct ClearList02046968* list);
+struct Struct_02046968;
+extern "C" void func_02046968(struct Struct_02046968* list);
 extern "C" void FieldTask_Update(void* queue, void* task);
 
 struct FieldTaskQueueKindList {
@@ -12,7 +12,7 @@ struct FieldTaskQueueKindList {
 extern struct FieldTaskQueueKindList FieldTaskQueue_countdownKinds;
 
 // Overlay 17, originally ClearIfMatchAndFinalize_021a3498 (USA/EUR 0x021a3498, JPN 0x021a3f0c)
-ARM void FieldTaskQueue_Update(FieldTaskQueue* self) {
+extern "C" ARM void FieldTaskQueue_Update(FieldTaskQueue* self) {
 #if defined(jpn)
  enum {regionalOffset0=0x134};
 #else
@@ -34,6 +34,6 @@ ARM void FieldTaskQueue_Update(FieldTaskQueue* self) {
             }
         }
     }
-    ClearListUntilFlagZero((struct ClearList02046968*)self);
+    func_02046968((struct Struct_02046968*)self);
     FieldTask_Update(self, self->head);
 }

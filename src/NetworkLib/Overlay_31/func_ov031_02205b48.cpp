@@ -11,65 +11,65 @@ struct Struct_ov031_02205b48_2 {
 
 struct Struct_ov031_02205b48 {
 	unsigned char unknown_0_[0x64];
-	struct Struct_ov031_02205b48_2* unknown_64_;
-	unsigned char unknown_68_[8];
-	short unknown_70_;
+	struct Struct_ov031_02205b48_2* counter;
+	unsigned char pad68[8];
+	short flags;
 	unsigned char unknown_72_;
 	signed char unknown_73_;
 	unsigned short unknown_74_;
 };
 
-extern "C" void* func_ov031_02205c50(struct Struct_ov031_02205b48* arg0, int* arg1,
-	unsigned short* arg2, unsigned short* arg3, unsigned int* arg4);
+extern "C" void* func_ov031_02205c50(struct Struct_ov031_02205b48* ctx, int* available,
+	unsigned short* tag, unsigned short* count, unsigned int* value);
 
 // USA: func_ov031_02205b48
-extern "C" ARM int func_ov031_02205b48(struct Struct_ov031_02205b48* arg0, void* arg1,
-	int arg2, unsigned short* arg3, unsigned int* arg4) {
-	unsigned short var0;
-	unsigned short var1;
-	int var2;
-	unsigned int var3;
-	int var4;
+extern "C" ARM int func_ov031_02205b48(struct Struct_ov031_02205b48* ctx, void* dst,
+	int length, unsigned short* outCount, unsigned int* arg4) {
+	unsigned short tag;
+	unsigned short count;
+	int available;
+	unsigned int value;
+	int result;
 	int var5 = DisableIRQInterrupts();
-	void* var6 = func_ov031_02205c50(arg0, &var2, &var0, &var1, &var3);
+	void* src = func_ov031_02205c50(ctx, &available, &tag, &count, &value);
 
-	if (var6 != NULL) {
-		int var7 = var2;
-		if (var7 == 0) {
-			var4 = -6;
+	if (src != NULL) {
+		int size = available;
+		if (size == 0) {
+			result = -6;
 		} else {
-			signed char var8 = arg0->unknown_73_;
+			signed char var8 = ctx->unknown_73_;
 			int var9 = 1;
-			if (arg2 > var7) {
-				arg2 = var7;
+			if (length > size) {
+				length = size;
 			}
 			if (var8 != 0 && var8 != 4) {
 				var9 = 0;
 			}
 			if (var9) {
-				var7 = arg2;
+				size = length;
 			}
-			VectorizedInvertedMemcpy(var6, arg1, arg2);
-			struct Struct_ov031_02205b48_2* var10 = arg0->unknown_64_;
-			if (var10->unknown_fe_ == 0) {
-				var10->unknown_f8_ = var10->unknown_f8_ + var7;
+			VectorizedInvertedMemcpy(src, dst, length);
+			struct Struct_ov031_02205b48_2* counter = ctx->counter;
+			if (counter->unknown_fe_ == 0) {
+				counter->unknown_f8_ = counter->unknown_f8_ + size;
 			}
-			var4 = var7;
+			result = size;
 		}
 	} else {
-		var4 = (var2 == 0) ? 0 : -28;
-		arg0->unknown_70_ = arg0->unknown_70_ & ~6;
+		result = (available == 0) ? 0 : -28;
+		ctx->flags = ctx->flags & ~6;
 	}
 
-	if (var4 >= 0) {
-		if (arg3 != NULL && arg4 != NULL) {
-			*arg3 = var1;
-			*arg4 = var3;
+	if (result >= 0) {
+		if (outCount != NULL && arg4 != NULL) {
+			*outCount = count;
+			*arg4 = value;
 		}
-		if (arg0->unknown_74_ == 0) {
-			arg0->unknown_74_ = var0;
+		if (ctx->unknown_74_ == 0) {
+			ctx->unknown_74_ = tag;
 		}
 	}
 	SetIRQInterruptState(var5);
-	return var4;
+	return result;
 }

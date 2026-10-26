@@ -2,38 +2,38 @@
 
 struct Struct_020098fc {
     unsigned char unknown_0_;
-    char unknown_1_;
+    char pad1;
     short unknown_2_;
-    unsigned char unknown_4_;
-    unsigned char unknown_5_[0x20] __attribute__((aligned(1)));
+    unsigned char count;
+    unsigned char digits[0x20] __attribute__((aligned(1)));
 };
 
 // USA: func_02009d1c
-extern "C" ARM int func_02009d1c(Struct_020098fc* arg0, Struct_020098fc* arg1) {
-    unsigned char var0 = arg0->unknown_5_[0];
-    if (var0 == 0) return arg1->unknown_5_[0] == 0;
-    if (arg1->unknown_5_[0] == 0) return var0 == 0;
-    if (arg0->unknown_2_ != arg1->unknown_2_) goto different;
-    int var1;
-    int var2;
+extern "C" ARM int func_02009d1c(Struct_020098fc* first, Struct_020098fc* second) {
+    unsigned char var0 = first->digits[0];
+    if (var0 == 0) return second->digits[0] == 0;
+    if (second->digits[0] == 0) return var0 == 0;
+    if (first->unknown_2_ != second->unknown_2_) goto different;
+    int i;
+    int limit;
     int var3;
-    var3 = arg0->unknown_4_;
-    int var4 = arg1->unknown_4_;
-    var1 = 0;
-    var2 = var3;
-    if (var2 > var4) var2 = var4;
-    if (var2 > 0) {
+    var3 = first->count;
+    int var4 = second->count;
+    i = 0;
+    limit = var3;
+    if (limit > var4) limit = var4;
+    if (limit > 0) {
         do {
-            if (arg0->unknown_5_[var1] != arg1->unknown_5_[var1]) return 0;
-            var1++;
-        } while (var1 < var2);
+            if (first->digits[i] != second->digits[i]) return 0;
+            i++;
+        } while (i < limit);
     }
-    if (var2 == var3) arg0 = arg1;
-    if (var1 < arg0->unknown_4_) {
+    if (limit == var3) first = second;
+    if (i < first->count) {
         do {
-            if (arg0->unknown_5_[var1]) return 0;
-            var1++;
-        } while (var1 < arg0->unknown_4_);
+            if (first->digits[i]) return 0;
+            i++;
+        } while (i < first->count);
     }
     return 1;
 different:

@@ -2,10 +2,10 @@
 #include "std_library_functions.h"
 
 // USA: func_0209bd40
-extern "C" ARM void func_0209bd40(char* arg0, int arg1) {
-    int var0 = *(int*)(arg0 + 0xc0);
-    if (var0 >= 6) return;
-    memset(arg0 + var0 * 0x20, 0, 0x20);
-    *(short*)(arg0 + var0 * 0x20) = arg1;
-    *(int*)(arg0 + 0xc0) += 1;
+extern "C" ARM void func_0209bd40(char* obj, int value) {
+    int count = *(int*)(obj + 0xc0);
+    if (count >= 6) return;
+    memset(obj + count * 0x20, 0, 0x20);
+    *(short*)(obj + count * 0x20) = value;
+    *(int*)(obj + 0xc0) += 1;
 }

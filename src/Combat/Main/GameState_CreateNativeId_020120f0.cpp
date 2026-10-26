@@ -7,7 +7,7 @@ enum { kNativeIdOffset = 0x74fe };
 #include <globaldefs.h>
 #include "Util/Random.h"
 
-int RTC_GetTime(int a);
+extern "C" int RTC_GetTime(int a);
 extern "C" void OS_GetMacAddress(void* macAddress);
 unsigned long long GetCurrentTimestamp(void);
 extern "C" unsigned long long _u32_div_f(unsigned int a, unsigned int b);

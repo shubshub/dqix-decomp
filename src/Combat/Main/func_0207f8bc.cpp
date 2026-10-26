@@ -5,21 +5,21 @@
 struct BackgroundLoader;
 
 // USA: func_0207f8bc
-extern "C" ARM void func_0207f8bc(Struct_0207f7f0 *arg0) {
-	if (arg0->unknown_1c_ >= 0) {
-		BackgroundLoader *var0 = BackgroundLoader::GetInstance();
-		var0->RemoveTask(arg0->unknown_1c_);
+extern "C" ARM void func_0207f8bc(Manager0207f7f0 *self) {
+	if (self->field1c >= 0) {
+		BackgroundLoader *loader = BackgroundLoader::GetInstance();
+		loader->RemoveTask(self->field1c);
 	}
 
 #if !defined(jpn)
-	for (int var1 = 0; var1 < 3; var1++) {
-		BackgroundLoader *var2 = BackgroundLoader::GetInstance();
-		int var3 = arg0->unknown_20_[var1];
-		if (var3 >= 0) {
-			var2->RemoveTask(var3);
+	for (int i = 0; i < 3; i++) {
+		BackgroundLoader *loader = BackgroundLoader::GetInstance();
+		int task = self->tasks[i];
+		if (task >= 0) {
+			loader->RemoveTask(task);
 		}
 	}
 #endif
 
-	func_0207f84c(arg0);
+	func_0207f84c(self);
 }

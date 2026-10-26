@@ -12,15 +12,15 @@ enum { kResourceNodeOffset = 0x70c };
 #include "Resource/Brightness.h"
 
 struct Obj020397cc;
-void GameObject_DisableControl(Obj020397cc* obj, int arg1);
-int GameState_GetFollowCamera(char* obj);
-void FollowCamera_DisableFollow(void* obj);
-void FollowCamera_EnableFollow(void* obj);
-void GameObject_EnableControl(void* obj);
-void GameResources_UpdateSpecialItemEffect(void* obj);
+extern "C" void GameObject_DisableControl(Obj020397cc* obj, int arg1);
+extern "C" int GameState_GetFollowCamera(char* obj);
+extern "C" void FollowCamera_DisableFollow(void* obj);
+extern "C" void FollowCamera_EnableFollow(void* obj);
+extern "C" void GameObject_EnableControl(void* obj);
+extern "C" void GameResources_UpdateSpecialItemEffect(void* obj);
 struct ListHead02046b38;
 struct ListNode02046b38;
-int ListContainsNode(ListHead02046b38* list, ListNode02046b38* target);
+extern "C" int func_02046b38(ListHead02046b38* list, ListNode02046b38* target);
 extern "C" void SearchPotTask_Release(void* self);
 
 typedef int (*SearchPotTaskStepFn)(void*);
@@ -96,7 +96,7 @@ extern "C" ARM void FieldTask_SearchPot(SearchPotTask021b58b8* self, ListNode020
         self->step = stepFn(self);
     }
 
-    if (ListContainsNode((ListHead02046b38*)queue, *(ListNode02046b38**)((char*)resources + 0x3000 + kResourceNodeOffset)) != 0) {
+    if (func_02046b38((ListHead02046b38*)queue, *(ListNode02046b38**)((char*)resources + 0x3000 + kResourceNodeOffset)) != 0) {
         self->done = 1;
         SearchPotTask_Release(self);
     }

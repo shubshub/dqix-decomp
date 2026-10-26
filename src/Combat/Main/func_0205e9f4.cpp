@@ -2,16 +2,16 @@
 
 extern "C" void func_0205e944(void*, int);
 
-struct Struct_02108760_2 {
+struct Obj0205e9f4 {
     char unknown_0_[0xc8];
     int unknown_c8_;
-    unsigned char unknown_cc_;
+    unsigned char field_cc;
 };
 
 // USA: func_0205e9f4
-extern "C" ARM void func_0205e9f4(struct Struct_02108760_2* arg0, int arg1) {
-    if (arg1 < 1) return;
-    if (arg1 > 5) return;
-    arg0->unknown_cc_ = (unsigned char)arg1;
-    func_0205e944(arg0, arg0->unknown_c8_);
+extern "C" ARM void func_0205e9f4(struct Obj0205e9f4* obj, int state) {
+    if (state < 1) return;
+    if (state > 5) return;
+    obj->field_cc = (unsigned char)state;
+    func_0205e944(obj, obj->unknown_c8_);
 }

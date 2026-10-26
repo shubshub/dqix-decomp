@@ -8,9 +8,9 @@ struct AllocatorUnion;
 #define func_ov008_021842a0 func_ov010_021842a0
 #endif
 extern "C" int func_ov010_02184354(void* obj);
-void ForwardAndClearField8_021c2710(unsigned char* self);
+extern "C" void func_ov017_021c2710(unsigned char* self);
 extern "C" void Overlay_Load(unsigned int id);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
 extern "C" void HaltSystem(void);
 extern "C" void func_ov008_021842a0(void* obj);
 extern char g_mainAllocator;
@@ -21,7 +21,7 @@ extern "C" ARM void FieldTask_DigPitfall(unsigned char* self) {
         if (func_ov010_02184354(*(void**)(self + 8)) == 0) {
             return;
         }
-        func_ov017_021c2710(arg0);
+        func_ov017_021c2710(self);
         return;
     }
     Overlay_Load(OVERLAY_ID(10));
@@ -29,5 +29,5 @@ extern "C" ARM void FieldTask_DigPitfall(unsigned char* self) {
     if (*(void**)(self + 8) == NULL) {
         HaltSystem();
     }
-    func_ov008_021842a0(*(void**)(arg0 + 8));
+    func_ov008_021842a0(*(void**)(self + 8));
 }

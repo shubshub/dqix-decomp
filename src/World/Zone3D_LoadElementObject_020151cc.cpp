@@ -50,18 +50,18 @@ extern "C" ARM int Zone3D_LoadElementObject(Zone3D *zone, Struct02012ff0 *tracke
         return 0;
     }
     if (object != NULL) {
-        ZoneAnimationResources resources = data_020e6f48;
-        for (ZoneAnimationResource *resource = resources.entries; resource->mask != 0; resource++) {
+        Struct_020e6f48 resources = data_020e6f48;
+        for (Struct_020151cc *resource = resources.entries; resource->mask != 0; resource++) {
             if (resource->mask & static_cast<unsigned char>(source->pad[2])) {
                 Zone3D_FormatElementFilePath(source->id, resource->extension, filename);
-                const void *animationFile = GetFileFromNARCInMemory(filename);
-                if (animationFile != NULL) {
-                    void *animationData = DecompressLZ77FileIntoAllocatedSpace(*allocator, animationFile, size);
-                    if (animationData != NULL) {
+                const void *var16 = GetFileFromNARCInMemory(filename);
+                if (var16 != NULL) {
+                    void *var17 = DecompressLZ77FileIntoAllocatedSpace(*allocator, var16, size);
+                    if (var17 != NULL) {
                         if (resource->slot < 0) {
-                            object->LoadType0AnimationPackageFromBCFGScript(allocator, animationData, size);
+                            object->LoadType0AnimationPackageFromBCFGScript(allocator, var17, size);
                         } else {
-                            object->LoadType0AnimationFromPersistentMemory(resource->slot, allocator, animationData, size);
+                            object->LoadType0AnimationFromPersistentMemory(resource->slot, allocator, var17, size);
                         }
                     }
                 }

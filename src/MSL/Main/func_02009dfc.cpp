@@ -2,46 +2,46 @@
 
 typedef struct Struct_020026b4 {
     char unknown_0_;
-    char unknown_1_;
+    char unused;
     short unknown_2_;
     struct {
-        unsigned char unknown_0_;
-        unsigned char unknown_1_[32];
-        unsigned char unknown_21_;
-    } unknown_4_;
+        unsigned char length;
+        unsigned char text[32];
+        unsigned char unused;
+    } sig;
 } Struct_020026b4;
 
 // USA: func_02009dfc
-extern "C" ARM int func_02009dfc(const Struct_020026b4* arg0, const Struct_020026b4* arg1) {
-    if (arg0->unknown_4_.unknown_1_[0] == 0) {
-        if (arg1->unknown_4_.unknown_1_[0] != 0)
+extern "C" ARM int func_02009dfc(const Struct_020026b4* x, const Struct_020026b4* y) {
+    if (x->sig.text[0] == 0) {
+        if (y->sig.text[0] != 0)
             return 1;
         return 0;
     }
-    if (arg1->unknown_4_.unknown_1_[0] == 0)
+    if (y->sig.text[0] == 0)
         return 0;
 
-    if (arg0->unknown_2_ == arg1->unknown_2_) {
-        int var0;
-        int var1 = arg0->unknown_4_.unknown_0_;
+    if (x->unknown_2_ == y->unknown_2_) {
+        int i;
+        int l = x->sig.length;
 
-        if (var1 > arg1->unknown_4_.unknown_0_)
-            var1 = arg1->unknown_4_.unknown_0_;
+        if (l > y->sig.length)
+            l = y->sig.length;
 
-        for (var0 = 0; var0 < var1; var0++) {
-            if (arg0->unknown_4_.unknown_1_[var0] < arg1->unknown_4_.unknown_1_[var0])
+        for (i = 0; i < l; i++) {
+            if (x->sig.text[i] < y->sig.text[i])
                 return 1;
-            if (arg1->unknown_4_.unknown_1_[var0] < arg0->unknown_4_.unknown_1_[var0])
+            if (y->sig.text[i] < x->sig.text[i])
                 return 0;
         }
 
-        if (var1 == arg0->unknown_4_.unknown_0_) {
-            for (; var0 < arg1->unknown_4_.unknown_0_; var0++) {
-                if (arg1->unknown_4_.unknown_1_[var0] != 0)
+        if (l == x->sig.length) {
+            for (; i < y->sig.length; i++) {
+                if (y->sig.text[i] != 0)
                     return 1;
             }
         }
         return 0;
     }
-    return arg0->unknown_2_ < arg1->unknown_2_;
+    return x->unknown_2_ < y->unknown_2_;
 }

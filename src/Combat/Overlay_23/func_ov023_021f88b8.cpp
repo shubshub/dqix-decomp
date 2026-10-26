@@ -1,36 +1,36 @@
 #include <globaldefs.h>
 
-extern "C" void* func_ov011_021849c8(void* arg0);
+extern "C" void* func_ov011_021849c8(void* obj);
 
-struct Struct_ov023_021f68b8 { void* unknown_0_; };
-extern "C" void* func_ov023_021f68b8(struct Struct_ov023_021f68b8* arg0, int arg1);
+struct Struct_ov023_021f68b8 { void* first; };
+extern "C" void* func_ov023_021f68b8(struct Struct_ov023_021f68b8* head, int n);
 
-extern "C" unsigned int func_ov023_021f6f10(void* arg0);
+extern "C" unsigned int func_ov023_021f6f10(void* obj);
 
-struct Struct_ov004_02153978 { char unknown_0_[6]; unsigned short unknown_6_; };
-extern "C" unsigned int func_ov023_021f6f08(struct Struct_ov004_02153978* arg0);
+struct Struct_ov004_02153978 { char pad[6]; unsigned short field6; };
+extern "C" unsigned int func_ov023_021f6f08(struct Struct_ov004_02153978* obj);
 
-struct Struct_ov023_021f88b8 { char unknown_0_[0x45]; unsigned char unknown_45_0_ : 1; };
+struct Struct_ov023_021f88b8 { char pad[0x45]; unsigned char bit0 : 1; };
 
-extern "C" int func_ov023_021f6f18(void* arg0);
+extern "C" int func_ov023_021f6f18(void* obj);
 
-extern "C" void func_ov023_021f809c(void* arg0, void* arg1);
+extern "C" void func_ov023_021f809c(void* obj, void* param2);
 
 // USA: func_ov023_021f88b8
-extern "C" ARM void func_ov023_021f88b8(void* arg0, void* arg1, int arg2) {
-    void* var0 = func_ov011_021849c8(arg1);
-    void* var1 = func_ov023_021f68b8((struct Struct_ov023_021f68b8*)var0, 0);
-    while (var1 != NULL) {
-        unsigned int var2 = func_ov023_021f6f10(var1);
-        if (var2 == 8 && *(unsigned short*)((char*)var1 + 0x34) == *(unsigned short*)((char*)arg0 + 0x6)) {
-            unsigned int var3 = func_ov023_021f6f08((struct Struct_ov004_02153978*)var1);
-            if ((unsigned int)arg2 == var3) {
-                ((struct Struct_ov023_021f88b8*)var1)->unknown_45_0_ = 1;
+extern "C" ARM void func_ov023_021f88b8(void* obj, void* param1, int id) {
+    void* sub = func_ov011_021849c8(param1);
+    void* node = func_ov023_021f68b8((struct Struct_ov023_021f68b8*)sub, 0);
+    while (node != NULL) {
+        unsigned int state = func_ov023_021f6f10(node);
+        if (state == 8 && *(unsigned short*)((char*)node + 0x34) == *(unsigned short*)((char*)obj + 0x6)) {
+            unsigned int var3 = func_ov023_021f6f08((struct Struct_ov004_02153978*)node);
+            if ((unsigned int)id == var3) {
+                ((struct Struct_ov023_021f88b8*)node)->bit0 = 1;
             } else {
-                ((struct Struct_ov023_021f88b8*)var1)->unknown_45_0_ = 0;
+                ((struct Struct_ov023_021f88b8*)node)->bit0 = 0;
             }
         }
-        var1 = (void*)func_ov023_021f6f18(var1);
+        node = (void*)func_ov023_021f6f18(node);
     }
-    func_ov023_021f809c(arg0, arg1);
+    func_ov023_021f809c(obj, param1);
 }

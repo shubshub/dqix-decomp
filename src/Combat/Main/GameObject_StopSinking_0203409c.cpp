@@ -6,6 +6,6 @@ enum {
 };
 
 // Main, originally ClearField0xc4KeepBit0x8000_0203409c (USA 0x0203409c, EUR 0x020340ac, JPN 0x02033bd4)
-ARM void GameObject_StopSinking(unsigned char* object) {
+extern "C" ARM void GameObject_StopSinking(unsigned char* object) {
     *(unsigned short*)(object + GameObject_timerBitsOffset) &= 0xFFFF0000 | TimerBits_TurningInPlace;  // sinkTimer = 0
 }

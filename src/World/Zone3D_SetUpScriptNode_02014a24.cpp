@@ -5,7 +5,7 @@
 
 // Main, originally func_02014a24 (USA 0x02014a24, EUR 0x02014a34, JPN 0x020147f0)
 extern "C" ARM int Zone3D_SetUpScriptNode(Zone3D *zone, void *data) {
-    ZoneResourceNode *node   = static_cast<ZoneResourceNode *>(data);
+    Struct_02014a24_2 *node   = static_cast<Struct_02014a24_2 *>(data);
     int count                = node->elementCount;
     SafeAllocator *allocator = zone->pAllocator_68_;
     node->trackers           = static_cast<Struct02012ff0 *>(allocator->Allocate(count * sizeof(Struct02012ff0)));

@@ -2,35 +2,35 @@
 #include "Resource/ActionDataTables.h"
 #include "GameState/GameState.h"
 
-extern "C" int func_ov000_021537b8(char* arg0, short arg1, void* arg2);
+extern "C" int func_ov000_021537b8(char* self, short id, void* rec);
 
-extern "C" int func_ov000_021543f4(GameObject* arg0);
-extern "C" void* func_02079e2c(char* arg0, int arg1);
+extern "C" int func_ov000_021543f4(GameObject* combatant);
+extern "C" void* func_02079e2c(char* p, int key);
 
 // USA: func_ov000_0215f110
-extern "C" ARM void func_ov000_0215f110(char* arg0) {
-    char* var0 = arg0;
-    Struct_02108e10* var1 = func_020797dc();
-    int var2 = 0;
-    while (var2 < *(int*)(var0 + 0x8000 + 0xe7c)) {
-        char* var3 = (char*)(*(int**)(var0 + 0x8000 + 0xe78)) + var2 * 0x28;
-        short var4 = *(short*)((char*)(*(void**)(var3 + 0x10)) + 0x20);
-        GameState* var5 = GameState::GetInstance();
-        GameObject* var6 = var5->GetCombatantByIndex(var4);
-        if (var6 == NULL) {
+extern "C" ARM void func_ov000_0215f110(char* self) {
+    char* var0 = self;
+    ActionDataTables* data = func_020797dc();
+    int i = 0;
+    while (i < *(int*)(var0 + 0x8000 + 0xe7c)) {
+        char* rec = (char*)(*(int**)(var0 + 0x8000 + 0xe78)) + i * 0x28;
+        short id = *(short*)((char*)(*(void**)(rec + 0x10)) + 0x20);
+        GameState* bs = GameState::GetInstance();
+        GameObject* c = bs->GetCombatantByIndex(id);
+        if (c == NULL) {
             return;
         }
-        if (!func_ov000_021543f4(var6)) {
-            short var7 = *(short*)var3;
-            void* var8 = func_02079e2c((char*)var1, var7);
-            if (var8 != NULL) {
-                unsigned int var9 = *(unsigned int*)((char*)var8 + 8);
-                if (((var9 << 3) >> 31) != 0) {
-                    short var10 = *(short*)((char*)(*(void**)(var3 + 0x10)) + 0x20);
-                    func_ov000_021537b8(var0, var10, var3);
+        if (!func_ov000_021543f4(c)) {
+            short key = *(short*)rec;
+            void* res = func_02079e2c((char*)data, key);
+            if (res != NULL) {
+                unsigned int v = *(unsigned int*)((char*)res + 8);
+                if (((v << 3) >> 31) != 0) {
+                    short var10 = *(short*)((char*)(*(void**)(rec + 0x10)) + 0x20);
+                    func_ov000_021537b8(var0, var10, rec);
                 }
             }
         }
-        var2++;
+        i++;
     }
 }

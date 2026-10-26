@@ -17,17 +17,17 @@ struct List020949bc;
 struct Obj020235c8;
 struct ScrollState02027438;
 
-void *GlobalFlags_GetInstance();
-int FlagWord_TestBits(FlagWord02046708 *flags, unsigned int mask);
-int *GetGlobal02109030_020936f8();
-int ListContainsId0209497c(List0209497c *list, int key);
-int ListContainsId020949bc(List020949bc *list, int key);
-void MoveValue3cbTo3cc_02093a58(char *list);
-void MoveValue3ccTo3cb_02093a98(char *list);
+extern "C" void *GlobalFlags_GetInstance();
+extern "C" int FlagWord_TestBits(FlagWord02046708 *flags, unsigned int mask);
+extern "C" int *func_020936f8();
+extern "C" int func_0209497c(List0209497c *list, int key);
+extern "C" int func_020949bc(List020949bc *list, int key);
+extern "C" void func_02093a58(char *list);
+extern "C" void func_02093a98(char *list);
 extern "C" int func_020e0a78(void *receiver);
 extern "C" void func_020e0f74(void *receiver);
 extern "C" void func_02026f34(void *receiver);
-void MapDisplay_DrawMapAndPanels(Obj020235c8 *receiver);
+extern "C" void MapDisplay_DrawMapAndPanels(Obj020235c8 *receiver);
 extern "C" void MapDisplay_SetMapScroll(ScrollState02027438 *receiver);
 
 // The MapDisplay fields this reads (header names: field764, field778, loadStage, field9c3, field9c4, field9c6,
@@ -35,13 +35,13 @@ extern "C" void MapDisplay_SetMapScroll(ScrollState02027438 *receiver);
 struct CombatUpdateReceiverView {
     unsigned char unknown0[IS_JPN ? 0x6b8 : 0x764];
     unsigned char field764;
-    unsigned char unknown765[0x778 - 0x765];
+    unsigned char unknown_765_[0x778 - 0x765];
     unsigned char field778;
-    unsigned char unknown779[0x9c2 - 0x779];
+    unsigned char unknown_779_[0x9c2 - 0x779];
     signed char loadStage;
     unsigned char modeLoading;       // MapDisplay_RunModeLoader runs the mode's loader while it is set
     unsigned char fadeInPending;     // the loaders set it at their end
-    unsigned char unknown9c5;
+    unsigned char unknown_9c5_;
     unsigned char holdSubScreenDark; // MapDisplay_SetHoldSubScreenDark
     unsigned char failed;            // MapDisplay_LoadLocalMap: the map script did not load
     unsigned char fadeInDelay;
@@ -57,15 +57,15 @@ extern "C" ARM void MapDisplay_Draw(void *receiver) {
     GameResources *resources = GetGameResources();
     // data_02109030: a queue of entries with an active and a saved half; while the map is loading an entry with
     // id 4 is moved to the saved half, and back once it has loaded
-    int *requestQueue        = GetGlobal02109030_020936f8();
+    int *requestQueue        = func_020936f8();
     if (self->modeLoading || self->loadStage <= 0) {
-        if (ListContainsId0209497c(reinterpret_cast<List0209497c *>(requestQueue), 4)) {
-            MoveValue3cbTo3cc_02093a58(reinterpret_cast<char *>(requestQueue));
+        if (func_0209497c(reinterpret_cast<List0209497c *>(requestQueue), 4)) {
+            func_02093a58(reinterpret_cast<char *>(requestQueue));
         }
         return;
     }
-    if (ListContainsId020949bc(reinterpret_cast<List020949bc *>(requestQueue), 4)) {
-        MoveValue3ccTo3cb_02093a98(reinterpret_cast<char *>(requestQueue));
+    if (func_020949bc(reinterpret_cast<List020949bc *>(requestQueue), 4)) {
+        func_02093a98(reinterpret_cast<char *>(requestQueue));
     }
     if (self->field764) {
         if (self->field778) {
@@ -77,7 +77,7 @@ extern "C" ARM void MapDisplay_Draw(void *receiver) {
         func_02026f34(receiver);
         MapDisplay_DrawMapAndPanels(static_cast<Obj020235c8 *>(receiver));
     }
-    if (ListContainsId0209497c(reinterpret_cast<List0209497c *>(requestQueue), 4)) {
+    if (func_0209497c(reinterpret_cast<List0209497c *>(requestQueue), 4)) {
         self->holdSubScreenDark  = 0;
         self->failed             = 0;
         self->fadeInPending      = 1;

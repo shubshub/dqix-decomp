@@ -72,18 +72,18 @@ enum FieldTaskKind {
     FieldTaskKind_LeaveGrotto = 78,
 };
 
-// The node every field task starts with: the list helpers' layout (AppendNodeToTail, InsertNodeAfterHead,
-// ClearListUntilFlagZero).
+// The node every field task starts with: the list helpers' layout (func_020469b4, func_02046a3c,
+// func_02046968).
 struct FieldTask {
     signed char kind;      // FieldTaskKind (FieldTask_Update and FieldTaskQueue_EndAll switch on it signed)
     unsigned char done;    // set by the kind's end function; FieldTaskQueue_Update then drops the task
-    unsigned char inList;  // set while queued (AppendNodeToTail, InsertNodeAfterHead; ClearListUntilFlagZero clears it)
-    unsigned char running; // set while it's the queue's head and not done (ClearListUntilFlagZero)
+    unsigned char inList;  // set while queued (func_020469b4, func_02046a3c; func_02046968 clears it)
+    unsigned char running; // set while it's the queue's head and not done (func_02046968)
     FieldTask* next;       // the next queued task
 };
 
 // A queue of field tasks (GameResources::fieldTaskQueue_ is the field's): FieldTaskQueue_Update runs it,
-// AppendNodeToTail adds to it, FieldTaskQueue_EndAll empties it.
+// func_020469b4 adds to it, FieldTaskQueue_EndAll empties it.
 struct FieldTaskQueue {
     FieldTask* head;       // the task that runs
     FieldTask* tail;
@@ -93,9 +93,9 @@ struct FieldTaskQueue {
 // FieldTask_ReceiveItem and func_ov017_021bf9a0 build one on the stack.
 struct LootTextContext {
     SafeAllocator allocator;
-    char itemTable[0x18];  // ItemTable_Construct, then ItemTable_Init through InitStruct0207cbe8
+    char itemTable[0x18];  // ItemTable_Construct, then ItemTable_Init through func_0207cbe8
     void* containerItems;  // the items to look it up in: the zone's containerItems_ for chests and pots
-    int unknown30;         // zeroed by InitStruct0207cbe8
+    int unknown30;         // zeroed by func_0207cbe8
     int unknown34;         // likewise
 };
 

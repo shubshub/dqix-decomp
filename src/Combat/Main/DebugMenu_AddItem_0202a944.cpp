@@ -2,7 +2,7 @@
 
 struct IndexList_0202a9ac;
 struct IndexNode_0202a9ac;
-struct IndexNode_0202a9ac* DebugMenu_GetItem(struct IndexList_0202a9ac* list, int index);
+extern "C" struct IndexNode_0202a9ac* DebugMenu_GetItem(struct IndexList_0202a9ac* list, int index);
 
 // A debug menu item (func_02029988's DebugMenuItem); an item of type DebugMenuItem_Submenu is itself a DebugMenu.
 struct ListNode0202a944 {
@@ -27,7 +27,7 @@ struct ListHead0202a944 {
 enum { DebugMenuItem_Submenu = 1 };
 
 // Main, originally AppendNodeToList0202a944 (USA 0x0202a944, EUR 0x0202a954, JPN 0x0202a4fc)
-ARM void DebugMenu_AddItem(struct ListHead0202a944* menu, struct ListNode0202a944* item) {
+extern "C" ARM void DebugMenu_AddItem(struct ListHead0202a944* menu, struct ListNode0202a944* item) {
     item->next = 0;
     if (menu->count == 0) {
         menu->items = item;

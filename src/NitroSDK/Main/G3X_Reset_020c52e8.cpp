@@ -3,7 +3,7 @@
 extern "C" void G3X_ResetMtxStack(void);
 
 // Main, originally ResetGxEngineState020c52e8 (USA 0x020c52e8, EUR 0x020c52f8, JPN 0x020c6db4)
-ARM void G3X_Reset(void) {
+extern "C" ARM void G3X_Reset(void) {
     while (*(volatile unsigned int*)0x4000600 & 0x8000000);
     *(volatile unsigned int*)0x4000600 |= 0x8000;
     *(volatile unsigned short*)0x4000060 |= 0x2000;

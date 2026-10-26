@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 
 struct Struct_ov000_02159eac {
-    unsigned long long unknown_0_;
+    unsigned long long value;
 };
 
 // USA: func_ov000_02159eac
-extern "C" ARM void func_ov000_02159eac(void* arg0, struct Struct_ov000_02159eac* arg1, unsigned int arg2) {
-    if (arg2 > 31) {
-        arg1->unknown_0_ |= ((unsigned long long)(1 << (arg2 - 31)) << 32) & 0xFFFFFFFF00000000ULL;
+extern "C" ARM void func_ov000_02159eac(void* unused, struct Struct_ov000_02159eac* bits, unsigned int bit) {
+    if (bit > 31) {
+        bits->value |= ((unsigned long long)(1 << (bit - 31)) << 32) & 0xFFFFFFFF00000000ULL;
     } else {
-        arg1->unknown_0_ |= (unsigned long long)(1 << arg2) & 0xFFFFFFFFULL;
+        bits->value |= (unsigned long long)(1 << bit) & 0xFFFFFFFFULL;
     }
 }

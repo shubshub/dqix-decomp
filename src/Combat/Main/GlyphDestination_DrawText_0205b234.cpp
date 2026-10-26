@@ -1,13 +1,31 @@
 #include <globaldefs.h>
 #include "Resource/MessageGlyphSlot.h"
 
-struct Struct_020424e4;
-struct Struct_0205b234_2 { unsigned char* unknown_0_; Struct_020424e4* unknown_4_; unsigned char unknown_8_; };
+struct Rect0205b1ac;
+struct GlyphDestination0205b234 { unsigned char* pixels; Rect0205b1ac* rectangles; unsigned char rectangleCount; };
 
-int Font_GetFallbackWidth(int);
-int Font_FindCharacterIndex(int, int);
-int Font_GetKerning(int, int, int);
-FontCharacter* Font_GetCharacter(int index, int fontIndex);
+#if defined(jpn)
+extern "C" FontCharacter* Font_FindGlyph(unsigned char size, const char* text);
+extern "C" void GlyphDestination_DrawCharacter(GlyphDestination0205b234* destination, FontCharacter* glyph, short x, short y, int size, int font);
+
+// JPN: GlyphDestination_DrawText (fixed-width_ Shift-JIS text)
+extern "C" ARM void GlyphDestination_DrawText(GlyphDestination0205b234* destination, short x, short y, const char* text, unsigned char size, int font) {
+    if (destination->pixels == 0 || destination->rectangles == 0 || destination->rectangleCount == 0 || text == 0) return;
+    unsigned char w = size;
+    while (*text != 0) {
+        FontCharacter* character = Font_FindGlyph(w, text);
+        if (character != 0) GlyphDestination_DrawCharacter(destination, character, x, y, w & 0xff, font);
+        unsigned char lead = *text;
+        if ((lead >= 0x81 && lead <= 0x9f) || (lead >= 0xe0 && lead <= 0xea)) text++;
+        text++;
+        x += w;
+    }
+}
+#else
+extern "C" int Font_GetFallbackWidth(int);
+extern "C" int Font_FindCharacterIndex(int, int);
+extern "C" int Font_GetKerning(int, int, int);
+extern "C" FontCharacter* Font_GetCharacter(int index, int fontIndex);
 extern "C" void GlyphDestination_DrawCharacter(GlyphDestination0205b234* destination, FontCharacter* glyph, short x, short y, unsigned char color, unsigned char font);
 
 // Main, originally func_0205b234 (USA 0x0205b234, EUR 0x0205b244, JPN 0x0205c5d0)
@@ -31,10 +49,10 @@ extern "C" ARM int GlyphDestination_DrawText(GlyphDestination0205b234* destinati
             advance = character->width_ + 1;
             length = character->byteLength_;
         }
-        var4 = var6;
-        arg3 += var8;
-        var5 += var7;
+        previousCharacter = index;
+        text += length;
+        cursorX += advance;
     }
-    return var5 - arg1;
+    return cursorX - x;
 }
 #endif

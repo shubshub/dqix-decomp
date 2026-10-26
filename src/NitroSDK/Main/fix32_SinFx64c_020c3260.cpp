@@ -9,20 +9,20 @@ extern "C" ARM long long fix32_SinFx64c(int x) {
     if (x < 0) {
         return -fix32_SinFx64c(-x);
     }
-    var0 = (long long)arg0 * 0x145F306DDLL;
-    int var1 = (int)(var0 >> 44);
-    unsigned long long var2 = (unsigned long long)((var0 >> 12) & 0xFFFFFFFFULL);
-    if (var1 & 1) {
-        var2 = 0x100000000ULL - var2;
+    m = (long long)x * 0x145F306DDLL;
+    int hi = (int)(m >> 44);
+    unsigned long long v = (unsigned long long)((m >> 12) & 0xFFFFFFFFULL);
+    if (hi & 1) {
+        v = 0x100000000ULL - v;
     }
-    long long var3;
-    if ((var1 + 1) & 2) {
-        var3 = func_020c3194((unsigned int)var2, (unsigned int)(var2 >> 32));
+    long long r;
+    if ((hi + 1) & 2) {
+        r = func_020c3194((unsigned int)v, (unsigned int)(v >> 32));
     } else {
-        var3 = func_020c30ac((unsigned int)var2, (unsigned int)(var2 >> 32));
+        r = func_020c30ac((unsigned int)v, (unsigned int)(v >> 32));
     }
-    if ((var1 & 7) <= 3) {
-        return var3;
+    if ((hi & 7) <= 3) {
+        return r;
     }
-    return -var3;
+    return -r;
 }

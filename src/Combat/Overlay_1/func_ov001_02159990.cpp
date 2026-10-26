@@ -10,7 +10,7 @@ extern int g_sePlayer;
 extern int data_ov001_0216587c;
 
 // USA: func_ov001_02159990
-ARM int DispatchFieldB4Zero_02159990(void* self) {
+extern "C" ARM int func_ov001_02159990(void* self) {
     SoundPlayer_PlayArchiveEntry(&g_sePlayer, *(int*)((char*)self + 0x10), 0, (int)&data_ov001_0216587c);
     return 0;
 }

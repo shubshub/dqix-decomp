@@ -1,59 +1,59 @@
 #include <globaldefs.h>
 
 struct Struct_020cf9f4 {
-    unsigned int unknown_0_;
-    unsigned int unknown_4_;
-    unsigned int unknown_8_;
+    unsigned int year;
+    unsigned int month;
+    unsigned int day;
     int unknown_c_;
 };
 
 extern int data_020f229c[12];
 
 // USA: func_020cf9f4
-extern "C" ARM void func_020cf9f4(Struct_020cf9f4* arg0, int arg1) {
-    unsigned int var0;
-    int var1;
+extern "C" ARM void func_020cf9f4(Struct_020cf9f4* date, int day) {
+    unsigned int year;
+    int month;
 
-    if (arg1 < 0) {
-        arg1 = 0;
+    if (day < 0) {
+        day = 0;
     }
-    if (arg1 > 36524) {
-        arg1 = 36524;
+    if (day > 36524) {
+        day = 36524;
     }
-    arg0->unknown_c_ = (arg1 + 6) % 7;
+    date->unknown_c_ = (day + 6) % 7;
 
-    for (var0 = 0; var0 < 99; var0++) {
-        int var2 = arg1;
-        arg1 -= (var0 & 3) == 0 ? 366 : 365;
-        if (arg1 < 0) {
-            arg1 = var2;
+    for (year = 0; year < 99; year++) {
+        int prev = day;
+        day -= (year & 3) == 0 ? 366 : 365;
+        if (day < 0) {
+            day = prev;
             break;
         }
     }
-    arg0->unknown_0_ = var0;
-    if (arg1 > 365) {
-        arg1 = 365;
+    date->year = year;
+    if (day > 365) {
+        day = 365;
     }
 
-    if ((var0 & 3) == 0) {
-        if (arg1 < 31 + 29) {
-            if (arg1 < 31) {
-                var1 = 1;
+    if ((year & 3) == 0) {
+        if (day < 31 + 29) {
+            if (day < 31) {
+                month = 1;
             } else {
-                arg1 -= 31;
-                var1 = 2;
+                day -= 31;
+                month = 2;
             }
-            arg0->unknown_4_ = var1;
-            arg0->unknown_8_ = arg1 + 1;
+            date->month = month;
+            date->day = day + 1;
             return;
         }
-        arg1--;
+        day--;
     }
 
-    for (var1 = 11; var1 >= 0; var1--) {
-        if (arg1 >= data_020f229c[var1]) {
-            arg0->unknown_4_ = var1 + 1;
-            arg0->unknown_8_ = arg1 - data_020f229c[var1] + 1;
+    for (month = 11; month >= 0; month--) {
+        if (day >= data_020f229c[month]) {
+            date->month = month + 1;
+            date->day = day - data_020f229c[month] + 1;
             return;
         }
     }

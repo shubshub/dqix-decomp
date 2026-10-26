@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
 struct Struct_ov023_021db4e4 {
-    char unknown_0_[8];
-    char* unknown_8_;
+    char pad8[8];
+    char* arr;
     char unknown_c_[0x14 - 0xc];
-    unsigned short unknown_14_;
+    unsigned short count;
 };
 
 // USA: func_ov023_021db4e4
-extern "C" ARM void* func_ov023_021db4e4(struct Struct_ov023_021db4e4* arg0, short arg1) {
-    char* var0 = arg0->unknown_8_;
-    if (!var0) return 0;
-    unsigned short var1 = arg0->unknown_14_;
-    if (var1 == 0) return 0;
-    for (unsigned short var2 = 0; var2 < var1; var2++) {
-        char* var3 = var0 + var2 * 0x18;
-        if (*(short*)var3 == arg1) return var3;
+extern "C" ARM void* func_ov023_021db4e4(struct Struct_ov023_021db4e4* obj, short key) {
+    char* arr = obj->arr;
+    if (!arr) return 0;
+    unsigned short count = obj->count;
+    if (count == 0) return 0;
+    for (unsigned short i = 0; i < count; i++) {
+        char* entry = arr + i * 0x18;
+        if (*(short*)entry == key) return entry;
     }
     return 0;
 }

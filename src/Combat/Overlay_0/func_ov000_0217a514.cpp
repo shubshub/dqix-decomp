@@ -15,10 +15,10 @@ struct GridCursor;
 extern "C" int func_ov000_0217538c(void* obj);
 extern "C" int func_ov000_021753d8(void* obj, int targetIndex);
 extern "C" void func_ov000_0217c638(void* obj, int a, int b);
-void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
-void GridCursor_SetCount(struct GridCursor* s, int val);
+extern "C" void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
+extern "C" void GridCursor_SetCount(struct GridCursor* s, int val);
 extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
-int MessageSystem_GetInstance();
+extern "C" int MessageSystem_GetInstance();
 extern "C" void func_ov000_0217a688(void* obj, void* entry, int b, void* buf);
 #if defined(jpn)
 extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
@@ -27,27 +27,27 @@ extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, in
 #endif
 
 // USA: func_ov000_0217a514
-extern "C" ARM void func_ov000_0217a514(char* arg0, char* arg1, int arg2, int arg3) {
-    if (arg1 == NULL) return;
+extern "C" ARM void func_ov000_0217a514(char* obj, char* entry, int a, int b) {
+    if (entry == NULL) return;
 
-    int var0 = func_ov000_0217538c(arg0);
-    int var1 = func_ov000_021753d8(arg0, *(signed char*)(arg1 + 0x1d));
-    func_ov000_0217c638(arg0, arg2, arg3);
+    int groups = func_ov000_0217538c(obj);
+    int group = func_ov000_021753d8(obj, *(signed char*)(entry + 0x1d));
+    func_ov000_0217c638(obj, a, b);
 
-    char* var2 = arg0 + 0x188;
+    char* base = obj + 0x188;
 #if defined(jpn)
-    *(short*)(var2 + 0xa0) = 1;
+    *(short*)(base + 0xa0) = 1;
 #else
-    *(short*)(var2 + 0xa0) = 0x10;
+    *(short*)(base + 0xa0) = 0x10;
 #endif
-    *(short*)(var2 + 0xa2) = 1;
-    *(short*)(var2 + 0xa4) = 0xd;
-    *(short*)(var2 + 0xa6) = 9;
-    *(short*)(var2 + 0xa8) = 0xc;
-    *(short*)(var2 + 0xaa) = 6;
-    *(short*)(var2 + 0xac) = 0xa;
-    *(short*)(var2 + 0xae) = 0x10;
-    *(unsigned char*)(var2 + 0xb1) = 0x19;
+    *(short*)(base + 0xa2) = 1;
+    *(short*)(base + 0xa4) = 0xd;
+    *(short*)(base + 0xa6) = 9;
+    *(short*)(base + 0xa8) = 0xc;
+    *(short*)(base + 0xaa) = 6;
+    *(short*)(base + 0xac) = 0xa;
+    *(short*)(base + 0xae) = 0x10;
+    *(unsigned char*)(base + 0xb1) = 0x19;
 
     GridCursor_SetDimensions((struct GridCursor*)(obj + 0x244), 1, groups, 0);
     *(int*)(obj + 0x248) = 1;

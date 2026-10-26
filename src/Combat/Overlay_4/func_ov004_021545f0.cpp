@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 struct Struct_ov004_021545f0 {
-	short unknown_0_;
-	short unknown_2_;
-	unsigned char unknown_4_;
-	unsigned char unknown_5_;
+	short a;
+	short b;
+	unsigned char c;
+	unsigned char d;
 };
 
 // USA: func_ov004_021545f0
-extern "C" ARM void func_ov004_021545f0(Struct_ov004_021545f0* arg0, int arg1, short arg2, short arg3, unsigned char arg4, unsigned char arg5) {
-	arg0[arg1].unknown_0_ = arg2;
-	arg0[arg1].unknown_2_ = arg3;
-	arg0[arg1].unknown_4_ = arg4;
-	arg0[arg1].unknown_5_ = arg5;
+extern "C" ARM void func_ov004_021545f0(Struct_ov004_021545f0* arr, int idx, short v0, short v1, unsigned char v2, unsigned char v3) {
+	arr[idx].a = v0;
+	arr[idx].b = v1;
+	arr[idx].c = v2;
+	arr[idx].d = v3;
 }

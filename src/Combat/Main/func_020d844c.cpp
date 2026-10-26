@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_020421a0();
-extern "C" void func_0204359c(void* arg0, int arg1);
-extern "C" void func_020439b0(int arg0, int arg1);
+extern "C" int MessageSystem_GetInstance();
+extern "C" void func_0204359c(void* obj, int count);
+extern "C" void func_020439b0(int a, int b);
 
 // USA: func_020d844c
 extern "C" ARM void func_020d844c(void*) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = func_020421a0();
-    unsigned int var2 = var0->GetTickCount();
-    func_0204359c((void*)var1, var2);
-    func_020439b0(var1, 0);
+    GameState* b = GameState::GetInstance();
+    int x = MessageSystem_GetInstance();
+    unsigned int y = b->GetTickCount();
+    func_0204359c((void*)x, y);
+    func_020439b0(x, 0);
 }

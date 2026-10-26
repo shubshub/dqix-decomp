@@ -2,17 +2,17 @@
 #include "std_library_functions.h"
 
 // USA: func_02011a74
-extern "C" ARM void func_02011a74(char* arg0, unsigned int arg1, const char* arg2) {
-    if (arg2 == NULL) return;
+extern "C" ARM void func_02011a74(char* obj, unsigned int index, const char* source) {
+    if (source == NULL) return;
 #if defined(jpn)
-    char* var0 = arg0 + 0x621e;
+    char* destination = obj + 0x621e;
 #else
-    char* var0 = arg0 + 0x649e;
+    char* destination = obj + 0x649e;
 #endif
-    if (var0 == NULL) return;
-    if (arg1 > 3) return;
+    if (destination == NULL) return;
+    if (index > 3) return;
 #if defined(jpn)
-    var0 += arg1 * 32;
+    destination += index * 32;
 #endif
-    strcpy(var0, arg2);
+    strcpy(destination, source);
 }

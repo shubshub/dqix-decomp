@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "Resource/Brightness.h"
 
-extern "C" void func_020a1ef0(int arg0);
+extern "C" void func_020a1ef0(int id);
 extern int data_ov001_021658b8;
 extern "C" void func_ov028_021d96bc(int);
 

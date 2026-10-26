@@ -2,7 +2,7 @@
 #include "NitroSDK/Cache.h"
 
 extern "C" void LoadToMainBG1ScreenData(void *p, int a, unsigned int size);
-extern "C" void func_ov031_0223e2c0(int arg0, int arg1);
+extern "C" void func_ov031_0223e2c0(int a, int b);
 
 extern void* data_ov031_02250bf4;
 

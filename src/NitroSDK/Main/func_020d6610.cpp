@@ -15,45 +15,45 @@ unsigned int DisableIRQInterrupts();
 unsigned int SetIRQInterruptState(int mask);
 
 struct Struct_020d6610 {
-    unsigned short unknown_0_;
+    unsigned short flagsA;
     unsigned short unknown_2_;
-    unsigned char unknown_4_[0x1fc];
+    unsigned char pad[0x1fc];
 };
 
 struct Struct_020d6610_2 {
-    unsigned char unknown_0_[8];
-    unsigned short unknown_8_;
-    unsigned char unknown_a_[4];
-    unsigned short unknown_e_;
-    unsigned short unknown_10_;
-    unsigned char unknown_12_[6];
-    unsigned short unknown_18_;
+    unsigned char pad0[8];
+    unsigned short idx;
+    unsigned char pad1[4];
+    unsigned short flags;
+    unsigned short field10;
+    unsigned char pad2[6];
+    unsigned short state;
 };
 
 struct Struct_020d5fd0 {
-    struct Struct_020d6610 unknown_0_[4];
-    struct Struct_020d6610_2 unknown_800_;
+    struct Struct_020d6610 blocks[4];
+    struct Struct_020d6610_2 sub;
 };
 
 // USA: func_020d6610
-extern "C" ARM void func_020d6610(struct Struct_020d5fd0* arg0, int arg1, int arg2) {
-    unsigned short var0 = (unsigned short)(1 << arg1);
-    unsigned short var1 = arg0->unknown_800_.unknown_e_;
-    if (!(var1 & var0)) return;
-    int var2 = arg0->unknown_800_.unknown_8_;
-    if (!(arg0->unknown_0_[var2].unknown_0_ & var0)) {
-        if (arg0->unknown_800_.unknown_18_ != 1) return;
-        var2 = (var2 + 1) & 3;
-        if (!(arg0->unknown_0_[var2].unknown_0_ & var0)) return;
+extern "C" ARM void func_020d6610(struct Struct_020d5fd0* obj, int bit, int extra) {
+    unsigned short mask = (unsigned short)(1 << bit);
+    unsigned short flags = obj->sub.flags;
+    if (!(flags & mask)) return;
+    int idx = obj->sub.idx;
+    if (!(obj->blocks[idx].flagsA & mask)) {
+        if (obj->sub.state != 1) return;
+        idx = (idx + 1) & 3;
+        if (!(obj->blocks[idx].flagsA & mask)) return;
     }
-    int var3 = func_020d6884(arg0, var1, (int)&arg0->unknown_0_[var2] + 4, arg1);
-    if (arg2 != 0) {
-        func_020ca3b8(arg2, var3, arg0->unknown_800_.unknown_10_);
+    int val = func_020d6884(obj, flags, (int)&obj->blocks[idx] + 4, bit);
+    if (extra != 0) {
+        func_020ca3b8(extra, val, obj->sub.field10);
     } else {
-        func_020ca390(0, (void*)var3, arg0->unknown_800_.unknown_10_);
+        func_020ca390(0, (void*)val, obj->sub.field10);
     }
-    unsigned int var4 = DisableIRQInterrupts();
-    arg0->unknown_0_[var2].unknown_0_ &= ~var0;
-    arg0->unknown_0_[var2].unknown_2_ |= var0;
-    SetIRQInterruptState(var4);
+    unsigned int state = DisableIRQInterrupts();
+    obj->blocks[idx].flagsA &= ~mask;
+    obj->blocks[idx].unknown_2_ |= mask;
+    SetIRQInterruptState(state);
 }

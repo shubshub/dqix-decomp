@@ -4,52 +4,52 @@
 #include "NitroSDK/Memory/SignedAllocator.h"
 #include "GameState/GameState.h"
 
-struct Struct_0201099c_10;
-struct Struct_0201099c_9;
-extern "C" struct Struct_0201099c_9* func_020dedd0(struct Struct_0201099c_10* arg0, int arg1);
+struct ItemTable;
+struct Element020de650;
+extern "C" struct Element020de650* ItemTable_Find(struct ItemTable* c, int key);
 
-extern "C" void* func_0207d6dc(SafeAllocator* arg0, int arg1, int arg2);
-extern "C" void* func_02010828(GameState* arg0);
+extern "C" void* func_0207d6dc(SafeAllocator* self, int param1, int param2);
+extern "C" void* GameState_GetParty(GameState* battleStruct);
 
-struct Struct_0207cf30_4;
-extern "C" int func_020a095c(struct Struct_0207cf30_4* arg0, int arg1, int arg2);
+struct KeyMap020a095c;
+extern "C" int func_020a095c(struct KeyMap020a095c* map, int key, int amount);
 
-extern "C" void func_0207cc18(void* arg0, struct Struct_0201099c_9* arg1);
+extern "C" void func_0207cc18(void* self, struct Element020de650* elem);
 
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
-extern AllocatorUnion data_02114e20;
+extern AllocatorUnion g_mainAllocator;
 
 struct Struct_0207ccf0_4 {
-    char unknown_0_[0x2c];
-    struct Struct_0201099c_10* unknown_2c_;
+    char pad[0x2c];
+    struct ItemTable* container;
     void* unknown_30_;
 };
 
 // USA: func_0207d200
-extern "C" ARM int func_0207d200(struct Struct_0207ccf0_4* arg0, short arg1, int arg2) {
-    int var0 = 0;
-    if (arg0->unknown_2c_ == NULL) {
-        func_0207d6dc((SafeAllocator*)arg0, (int)&arg1, 1);
-        var0 = 1;
+extern "C" ARM int func_0207d200(struct Struct_0207ccf0_4* self, short key, int amount) {
+    int flag = 0;
+    if (self->container == NULL) {
+        func_0207d6dc((SafeAllocator*)self, (int)&key, 1);
+        flag = 1;
     }
-    int var1 = 0;
-    struct Struct_0201099c_9* var2 = func_020dedd0(arg0->unknown_2c_, arg1);
-    if (var2 != NULL) {
-        GameState* var3 = GameState::GetInstance();
-        char* var4 = (char*)func_02010828(var3) + 0xe04;
-        var1 = func_020a095c((struct Struct_0207cf30_4*)var4, arg1, arg2);
-        if (var1) {
-            func_0207cc18(arg0, var2);
-            arg0->unknown_30_ = *(void**)((char*)var2 + 4);
+    int ret = 0;
+    struct Element020de650* elem = ItemTable_Find(self->container, key);
+    if (elem != NULL) {
+        GameState* battleStruct = GameState::GetInstance();
+        char* p = (char*)GameState_GetParty(battleStruct) + 0xe04;
+        ret = func_020a095c((struct KeyMap020a095c*)p, key, amount);
+        if (ret) {
+            func_0207cc18(self, elem);
+            self->unknown_30_ = *(void**)((char*)elem + 4);
         }
     }
-    if (var0) {
-        SafeAllocator* var5 = (SafeAllocator*)arg0;
-        SignedAllocatorHeader* var6 = var5->GetSignedAllocator();
-        var5->Destroy();
-        func_02012da4(&data_02114e20, var6);
-        arg0->unknown_2c_ = NULL;
+    if (flag) {
+        SafeAllocator* alloc = (SafeAllocator*)self;
+        SignedAllocatorHeader* sig = alloc->GetSignedAllocator();
+        alloc->Destroy();
+        AllocatorUnion_Free(&g_mainAllocator, sig);
+        self->container = NULL;
     }
-    return var1;
+    return ret;
 }

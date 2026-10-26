@@ -2,16 +2,16 @@
 #include "Combat/ActorAction.h"
 #include "GameState/GameState.h"
 
-unsigned char GameObject_IsClimbingLadder(char* obj);
-int GameState_GetProtagonistIndex(GameState* battleStruct);
-int GameState_GetFollowCamera(char* obj);
-int GetField0x21c020a277c(void* obj);
-void SetField0x21c_020a2770(void* obj, short value);
-typedef void (*SetField0x21cIntFn)(void* obj, int value);
-void LinkSession_UpdatePartySize(void* obj);
+extern "C" unsigned char GameObject_IsClimbingLadder(char* obj);
+extern "C" int GameState_GetProtagonistIndex(GameState* battleStruct);
+extern "C" int GameState_GetFollowCamera(char* obj);
+extern "C" int func_020a277c(void* obj);
+extern "C" void func_020a2770(void* obj, short value);
+typedef void (*Type_ov017_02191108)(void* obj, int value);
+extern "C" void LinkSession_UpdatePartySize(void* obj);
 
-struct Buf16_02191108 { int x[4]; };
-extern "C" void func_ov017_02190884(int b, struct Buf16_02191108* outBuf, int* zero, int c, int d, int e);
+struct Struct_ov017_02191108 { int x[4]; };
+extern "C" void func_ov017_02190884(int b, struct Struct_ov017_02191108* outBuf, int* zero, int c, int d, int e);
 extern "C" void* LinkSession_GetInstance(void* ctx);
 
 extern "C" void func_020a2be8(void* obj);
@@ -30,7 +30,7 @@ extern "C" ARM void Party_ReformLine(void* unused, int c, int d, int e, int flag
 
     int zero = 0;
     int fieldVal = GameState_GetProtagonistIndex(battle);
-    struct Buf16_02191108 buf;
+    struct Struct_ov017_02191108 buf;
     func_ov017_02190884(fieldVal, &buf, &zero, c, d, e);
     int idx = buf.x[0];
 
@@ -41,9 +41,9 @@ extern "C" ARM void Party_ReformLine(void* unused, int c, int d, int e, int flag
 
     void* p2 = (void*)GameState_GetFollowCamera((char*)battle);
     if (p2 != 0) {
-        int val = GetField0x21c020a277c(p2);
+        int val = func_020a277c(p2);
         if (val != 0xc9 && val != 0xca) {
-            ((SetField0x21cIntFn)SetField0x21c_020a2770)(p2, idx);
+            ((Type_ov017_02191108)func_020a2770)(p2, idx);
             if (flag != 0 && val != idx) {
                 func_020a2be8(p2);
             }

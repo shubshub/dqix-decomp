@@ -8,6 +8,6 @@
 
 
 // USA: func_ov000_02168720
-extern "C" ARM unsigned char func_ov000_02168720(char* arg0) {
-    return *(unsigned char*)(arg0 + REGION_OFFSET_0);
+extern "C" ARM unsigned char func_ov000_02168720(char* obj) {
+    return *(unsigned char*)(obj + REGION_OFFSET_0);
 }

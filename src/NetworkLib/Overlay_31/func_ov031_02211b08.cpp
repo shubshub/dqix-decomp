@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_0224e5a4_4 {
-	int unknown_0_;
-	int unknown_4_;
+	int field0;
+	int field4;
 };
 
 extern Struct_ov031_0224e5a4_4 data_ov031_0224e5a4;
 
 // USA: func_ov031_02211b08
-extern "C" ARM void func_ov031_02211b08(int arg0, int arg1) {
-	if (data_ov031_0224e5a4.unknown_0_ != 9) {
-		data_ov031_0224e5a4.unknown_0_ = arg0;
-		data_ov031_0224e5a4.unknown_4_ = arg1;
+extern "C" ARM void func_ov031_02211b08(int a, int b) {
+	if (data_ov031_0224e5a4.field0 != 9) {
+		data_ov031_0224e5a4.field0 = a;
+		data_ov031_0224e5a4.field4 = b;
 	}
 }

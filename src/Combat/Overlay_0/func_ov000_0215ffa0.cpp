@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
 // USA: func_ov000_0215ffa0
-extern "C" ARM short func_ov000_0215ffa0(void *arg0) {
-    unsigned char *var0 = (unsigned char*)arg0;
-    int var1;
-    unsigned char var2 = var0[0x17];
-    var1 = var2 - 1;
-    if (var2 > 3) var1 = 2;
-    if (var2 == 0) var1 = 0;
-    return *(short*)((char*)var0 + var1 * 2 + 0xe);
+extern "C" ARM short func_ov000_0215ffa0(void *obj_) {
+    unsigned char *obj = (unsigned char*)obj_;
+    int idx;
+    unsigned char b = obj[0x17];
+    idx = b - 1;
+    if (b > 3) idx = 2;
+    if (b == 0) idx = 0;
+    return *(short*)((char*)obj + idx * 2 + 0xe);
 }

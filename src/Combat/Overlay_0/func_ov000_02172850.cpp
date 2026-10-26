@@ -9,35 +9,35 @@
 #include "Memory/SafeAllocator.h"
 
 extern "C" void MapVRAMBanksToSubBG(int);
-extern "C" void func_ov000_02172944(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_ov000_02172978(int arg0, int arg1, int arg2, int arg3, int arg4);
+extern "C" void func_ov000_02172944(int screenSize, int colorMode, int screenBase, int charBase, int bit13);
+extern "C" void func_ov000_02172978(int screenSize, int colorMode, int screenBase, int charBase, int bit13);
 extern "C" void MapVRAMBanksToSubObj(unsigned short value);
 
 struct Struct_ov000_02172850 {
-    unsigned short unknown_0_0_ : 2;
-    unsigned short unknown_0_2_ : 4;
-    unsigned short unknown_0_6_ : 1;
-    unsigned short unknown_0_7_ : 1;
-    unsigned short unknown_1_0_ : 5;
-    unsigned short unknown_1_5_ : 1;
-    unsigned short unknown_1_6_ : 2;
+    unsigned short priority : 2;
+    unsigned short charBase : 4;
+    unsigned short pad1 : 1;
+    unsigned short colorMode : 1;
+    unsigned short screenBase : 5;
+    unsigned short bit13 : 1;
+    unsigned short screenSize : 2;
 };
 
 // USA: func_ov000_02172850
-extern "C" ARM void func_ov000_02172850(char* arg0) {
-    class SafeAllocator* var0 = *(class SafeAllocator**)(arg0 + 0x1000 + REGION_OFFSET_0);
-    if (var0) var0->Reset();
+extern "C" ARM void func_ov000_02172850(char* obj) {
+    class SafeAllocator* alloc = *(class SafeAllocator**)(obj + 0x1000 + REGION_OFFSET_0);
+    if (alloc) alloc->Reset();
 
-    int var1 = *(int*)(arg0 + 0x184);
+    int var1 = *(int*)(obj + 0x184);
     if (var1) MapVRAMBanksToSubBG(var1);
 
-    struct Struct_ov000_02172850* var2 = (struct Struct_ov000_02172850*)(arg0 + 0x180);
-    struct Struct_ov000_02172850* var3 = (struct Struct_ov000_02172850*)(arg0 + 0x182);
-    func_ov000_02172944(var2->unknown_1_6_, var2->unknown_0_7_, var2->unknown_1_0_, var2->unknown_0_2_, var3->unknown_1_5_);
-    func_ov000_02172978(var3->unknown_1_6_, var3->unknown_0_7_, var3->unknown_1_0_, var3->unknown_0_2_, var3->unknown_1_5_);
+    struct Struct_ov000_02172850* val2 = (struct Struct_ov000_02172850*)(obj + 0x180);
+    struct Struct_ov000_02172850* val1 = (struct Struct_ov000_02172850*)(obj + 0x182);
+    func_ov000_02172944(val2->screenSize, val2->colorMode, val2->screenBase, val2->charBase, val1->bit13);
+    func_ov000_02172978(val1->screenSize, val1->colorMode, val1->screenBase, val1->charBase, val1->bit13);
 
     unsigned short* var4 = (unsigned short*)0x4001008;
-    var4[0] = (var4[0] & ~3) | var2->unknown_0_0_;
-    var4[1] = (var4[1] & ~3) | var3->unknown_0_0_;
+    var4[0] = (var4[0] & ~3) | val2->priority;
+    var4[1] = (var4[1] & ~3) | val1->priority;
     MapVRAMBanksToSubObj(0x100);
 }

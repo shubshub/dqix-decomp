@@ -8,6 +8,6 @@ struct WHState_0202df58 {
 extern WHState_0202df58 data_021015a0;
 
 // Main, originally GetGlobalHalf0x0_0202df58 (USA 0x0202df58, EUR 0x0202df68, JPN 0x0202dac8)
-ARM unsigned short WH_GetCurrentAid(void) {
+extern "C" ARM unsigned short WH_GetCurrentAid(void) {
     return data_021015a0.myAid;
 }

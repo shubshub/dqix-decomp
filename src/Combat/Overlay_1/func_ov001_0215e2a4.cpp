@@ -12,47 +12,47 @@ extern "C" void func_0204500c(void*, int, int);
 #else
 extern "C" void func_0204500c(void*, int, int, int);
 #endif
-int MessageSystem_GetInstance();
-struct Table_02153884;
-void* FindTableEntry_02153884(struct Table_02153884* t, int key);
+extern "C" int MessageSystem_GetInstance();
+struct Struct_ov001_021658d8;
+extern "C" void* func_ov001_02153884(struct Struct_ov001_021658d8* t, int key);
 
 extern Struct_ov001_021658d8 data_ov001_021658d8;
 
-struct Struct_ov001_0215e2a4 { char unknown_0_[4]; int unknown_4_; };
-struct Struct_ov001_0215e2a4_2 { int unknown_0_; };
+struct Struct_ov001_0215e2a4 { char pad0[4]; int val; };
+struct Struct_ov001_0215e2a4_2 { int type; };
 
 // USA: func_ov001_0215e2a4
-extern "C" ARM int func_ov001_0215e2a4(Self0215e2a4* self, int mode) {
+extern "C" ARM int func_ov001_0215e2a4(Struct_ov001_0215e2a4_2* self, int mode) {
     char* g = (char*)MessageSystem_GetInstance();
     int type = self->type;
     switch (type) {
     case 0: {
-        int var2 = func_ov017_021d60f4(arg0);
-        Struct_ov001_0215e2a4* var3 = (Struct_ov001_0215e2a4*)func_ov001_02153884(&data_ov001_021658d8, var2);
-        if (var3 == NULL) return 0;
-        *(int*)(var0 + 0x1000 + Enum_ov001_0215e2a4_2104) = -1;
-        int var4 = 1;
-        if (arg1 >= 2) {
-            int var5 = func_ov017_021d60f4((char*)arg0 + 0x8);
-            if (var5 & 1) var4 = 0;
+        int idx = func_ov017_021d60f4(self);
+        Struct_ov001_0215e2a4* entry = (Struct_ov001_0215e2a4*)func_ov001_02153884(&data_ov001_021658d8, idx);
+        if (entry == NULL) return 0;
+        *(int*)(g + 0x1000 + Enum_ov001_0215e2a4_2104) = -1;
+        int flag = 1;
+        if (mode >= 2) {
+            int r = func_ov017_021d60f4((char*)self + 0x8);
+            if (r & 1) flag = 0;
         }
 #if defined(jpn)
-        func_0204500c(var0, var3->unknown_4_, var4);
+        func_0204500c(g, entry->val, flag);
 #else
-        func_0204500c(var0, var3->unknown_4_, var4, 0xe3);
+        func_0204500c(g, entry->val, flag, 0xe3);
 #endif
-        *(int*)(var0 + Enum_ov001_0215e2a4_2456) = 1;
+        *(int*)(g + Enum_ov001_0215e2a4_2456) = 1;
         break;
     }
     case 2: {
-        void* var6 = func_ov017_021d612c(arg0);
-        *(int*)(var0 + 0x1000 + Enum_ov001_0215e2a4_2104) = -1;
+        void* extra = func_ov017_021d612c(self);
+        *(int*)(g + 0x1000 + Enum_ov001_0215e2a4_2104) = -1;
 #if defined(jpn)
-        func_0204500c(var0, (int)var6, 1);
+        func_0204500c(g, (int)extra, 1);
 #else
-        func_0204500c(var0, (int)var6, 1, 0xe3);
+        func_0204500c(g, (int)extra, 1, 0xe3);
 #endif
-        *(int*)(var0 + Enum_ov001_0215e2a4_2456) = 1;
+        *(int*)(g + Enum_ov001_0215e2a4_2456) = 1;
         break;
     }
     }

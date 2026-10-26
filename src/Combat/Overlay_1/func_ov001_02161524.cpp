@@ -1,51 +1,51 @@
 #include <globaldefs.h>
 #include "World/Object3D.h"
 
-extern "C" int func_ov017_021d60f4(void* arg0);
+extern "C" int func_ov017_021d60f4(void* obj);
 
-struct Struct_ov001_02161524 { int unknown_0_; unsigned char unknown_4_[0x18 - 4]; void* unknown_18_; };
-struct Struct_ov001_02161524_2 { int unknown_0_; unsigned char unknown_4_[0xc - 4]; struct Struct_ov001_02161524* unknown_c_; };
-struct Struct_ov001_02165880_45 { char unknown_0_[4]; struct Struct_ov001_02161524_2* unknown_4_; };
+struct Struct_ov001_02161524 { int field0; unsigned char pad0[0x18 - 4]; void* field18; };
+struct Struct_ov001_02161524_2 { int type; unsigned char pad1[0xc - 4]; struct Struct_ov001_02161524* child; };
+struct Struct_ov001_02165880_45 { char pad[4]; struct Struct_ov001_02161524_2* table; };
 extern struct Struct_ov001_02165880_45 data_ov001_02165880;
 
 // USA: func_ov001_02161524
-extern "C" ARM int func_ov001_02161524(void* arg0) {
-    int var0 = func_ov017_021d60f4(arg0);
-    int var1 = func_ov017_021d60f4((char*)arg0 + 0x8);
-    switch (data_ov001_02165880.unknown_4_[var0].unknown_0_) {
+extern "C" ARM int func_ov001_02161524(void* self) {
+    int idx = func_ov017_021d60f4(self);
+    int flag = func_ov017_021d60f4((char*)self + 0x8);
+    switch (data_ov001_02165880.table[idx].type) {
         case 0:
         case 1:
         case 4:
         case 5: {
-            struct Struct_ov001_02161524* var2 = data_ov001_02165880.unknown_4_[var0].unknown_c_;
-            if (var2 == 0) return 0;
-            if (var1 != 0) {
-                ((Object3D*)((unsigned char*)var2))->DisableFlag(0x10);
+            struct Struct_ov001_02161524* child = data_ov001_02165880.table[idx].child;
+            if (child == 0) return 0;
+            if (flag != 0) {
+                ((Object3D*)((unsigned char*)child))->DisableFlag(0x10);
             } else {
-                ((Object3D*)((unsigned char*)var2))->EnableFlag(0x10);
+                ((Object3D*)((unsigned char*)child))->EnableFlag(0x10);
             }
             break;
         }
         case 6: {
-            struct Struct_ov001_02161524* var3 = data_ov001_02165880.unknown_4_[var0].unknown_c_;
-            if (var3 == 0 || var3->unknown_18_ == 0) return 0;
-            void* var4 = var3->unknown_18_;
-            if (var1 != 0) {
+            struct Struct_ov001_02161524* child = data_ov001_02165880.table[idx].child;
+            if (child == 0 || child->field18 == 0) return 0;
+            void* var4 = child->field18;
+            if (flag != 0) {
                 ((Object3D*)((unsigned char*)var4))->DisableFlag(0x10);
-                data_ov001_02165880.unknown_4_[var0].unknown_c_->unknown_0_ &= ~0x40;
+                data_ov001_02165880.table[idx].child->field0 &= ~0x40;
             } else {
                 ((Object3D*)((unsigned char*)var4))->EnableFlag(0x10);
-                data_ov001_02165880.unknown_4_[var0].unknown_c_->unknown_0_ |= 0x40;
+                data_ov001_02165880.table[idx].child->field0 |= 0x40;
             }
             break;
         }
         case 2: {
-            struct Struct_ov001_02161524* var5 = data_ov001_02165880.unknown_4_[var0].unknown_c_;
-            if (var5 == 0) return 0;
-            if (var1 != 0) {
-                var5->unknown_0_ &= ~0x40;
+            struct Struct_ov001_02161524* child = data_ov001_02165880.table[idx].child;
+            if (child == 0) return 0;
+            if (flag != 0) {
+                child->field0 &= ~0x40;
             } else {
-                var5->unknown_0_ |= 0x40;
+                child->field0 |= 0x40;
             }
             break;
         }

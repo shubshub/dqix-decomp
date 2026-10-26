@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 
-extern "C" void _ZN8Vector3iaSERKS_(int* arg0, int* arg1);
+extern "C" void _ZN8Vector3iaSERKS_(int* dst, int* src);
 
 struct Struct_0202ed7c {
-    int unknown_0_;    // 0x0
-    int unknown_4_[3]; // 0x4
-    int unknown_10_[3];   // 0x10
-    int unknown_1c_;     // 0x1c
-    int unknown_20_;     // 0x20
-    int unknown_24_;     // 0x24
+    int type;    // 0x0
+    int from[3]; // 0x4
+    int to[3];   // 0x10
+    int f1c;     // 0x1c
+    int f20;     // 0x20
+    int f24;     // 0x24
 };
 
 // USA: func_020a0d6c
-extern "C" ARM void func_020a0d6c(struct Struct_0202ed7c* arg0, int* arg1, int* arg2, int arg3, int arg4, int arg5) {
-    _ZN8Vector3iaSERKS_(arg0->unknown_4_, arg1);
-    _ZN8Vector3iaSERKS_(arg0->unknown_10_, arg2);
-    arg0->unknown_1c_ = arg3;
-    arg0->unknown_20_ = arg4;
-    arg0->unknown_24_ = arg5;
-    if (arg5 == 0) arg0->unknown_24_ = arg4;
-    arg0->unknown_0_ = 1;
+extern "C" ARM void func_020a0d6c(struct Struct_0202ed7c* rec, int* from, int* to, int a3, int a5, int a6) {
+    _ZN8Vector3iaSERKS_(rec->from, from);
+    _ZN8Vector3iaSERKS_(rec->to, to);
+    rec->f1c = a3;
+    rec->f20 = a5;
+    rec->f24 = a6;
+    if (a6 == 0) rec->f24 = a5;
+    rec->type = 1;
 }

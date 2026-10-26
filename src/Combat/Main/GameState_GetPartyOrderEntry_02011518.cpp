@@ -10,7 +10,7 @@
 #endif
 
 // Main, originally GetCheckedSignedByte_02011518 (USA 0x02011518, EUR 0x02011528, JPN 0x02011288)
-ARM int GameState_GetPartyOrderEntry(void* gameState, unsigned int position) {
+extern "C" ARM int GameState_GetPartyOrderEntry(void* gameState, unsigned int position) {
     if (position < ((unsigned char*)gameState)[PARTY_ORDER_COUNT]) {
         return ((signed char*)gameState + position)[PARTY_ORDER_INDICES];
     }

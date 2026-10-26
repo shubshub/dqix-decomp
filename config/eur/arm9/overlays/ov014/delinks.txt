@@ -49,7 +49,7 @@ src/Combat/Overlay_14/func_ov014_02189244.cpp:
     complete
     .text start:0x02189244 end:0x021892d4
 
-src/Combat/Overlay_14/UpdateCounterState_021882d4.cpp:
+src/Combat/Overlay_14/func_ov014_021882d4.cpp:
     complete
     .text start:0x021882d4 end:0x02188330
 
@@ -93,7 +93,7 @@ src/Combat/Overlay_14/func_ov014_02188bfc.cpp:
     complete
     .text start:0x02188bfc end:0x02188c34
 
-src/Combat/Overlay_12/ApplyElemState_021842a0.cpp:
+src/Combat/Overlay_14/func_ov014_021842a0.cpp:
     complete
     .text start:0x021842a0 end:0x02184300
 
@@ -141,7 +141,7 @@ src/Combat/Overlay_14/func_ov014_02188b20.cpp:
     complete
     .text start:0x02188b20 end:0x02188ba0
 
-src/Combat/Overlay_14/ResetLoaderAndAllocators_02186b30.cpp:
+src/Combat/Overlay_14/func_ov014_02186b30.cpp:
     complete
     .text start:0x02186b30 end:0x02186bc8
 
@@ -149,7 +149,7 @@ src/Combat/Overlay_14/func_ov014_02187488.cpp:
     complete
     .text start:0x02187488 end:0x021874f8
 
-src/Combat/Overlay_14/InitLargeStruct_02186a70.cpp:
+src/Combat/Overlay_14/func_ov014_02186a70.cpp:
     complete
     .text start:0x02186a70 end:0x02186b30
 
@@ -157,7 +157,7 @@ src/Combat/Overlay_14/func_ov014_021873a0.cpp:
     complete
     .text start:0x021873a0 end:0x02187450
 
-src/Combat/Overlay_14/AdvanceMappedMemberIdState_02187b38.cpp:
+src/Combat/Overlay_14/func_ov014_02187b38.cpp:
     complete
     .text start:0x02187b38 end:0x02187c04
 

@@ -11,6 +11,6 @@ struct FieldBlock63d6_11590 {
 };
 
 // Main, originally IsByte0x63d6Set_02011590 (USA 0x02011590, EUR 0x020115a0, JPN 0x02011300)
-ARM int GameState_HasMovieId(struct FieldBlock63d6_11590* gameState) {
+extern "C" ARM int GameState_HasMovieId(struct FieldBlock63d6_11590* gameState) {
     return gameState->movieId != 0;
 }

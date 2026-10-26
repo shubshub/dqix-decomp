@@ -41,12 +41,12 @@ struct Zone3D0201730c {
     void* lootableRenderingEnabled_2750_;
 };
 
-void* Camera_GetInverseRotation(void* obj);
-void RenderConfig_SetObjectRotation(void* arg);
-int GetBoxTestResult_020c56b0(int* out);
-void SubmitGxCommands02047648(unsigned char* obj, int idx, int something);
-void AdvanceStreamRecord0204724c(Obj0204724C* obj);
-void RenderTransformedFlaggedIndexedEntry(StructAt020472e4* obj, int param);
+extern "C" void* Camera_GetInverseRotation(void* obj);
+extern "C" void RenderConfig_SetObjectRotation(void* arg);
+extern "C" int func_020c56b0(int* out);
+extern "C" void func_02047648(unsigned char* obj, int idx, int something);
+extern "C" void func_0204724c(Obj0204724C* obj);
+extern "C" void func_020472e4(StructAt020472e4* obj, int param);
 
 extern Vector3i data_020e6e20;
 extern int data_020e6e64[4];
@@ -75,30 +75,30 @@ extern "C" ARM void Zone3D_DrawLootables(Zone3D0201730c* zone) {
         union {
             struct {
                 short xMin;
-                short yMin;
+                short unknown_2_;
                 short zMin;
-                short xSize;
-                short ySize;
-                short zSize;
+                short unknown_6_;
+                short unknown_8_;
+                short unknown_a_;
             } box;
             struct {
                 unsigned int a;
                 unsigned int b;
                 unsigned int c;
-            } u32s;
-        } boxParams;
-        boxParams.box.xMin = -0x800;
-        boxParams.box.yMin = 0;
-        boxParams.box.zMin = -0x800;
-        boxParams.box.xSize = 0x1000;
-        boxParams.box.ySize = 0x1000;
-        boxParams.box.zSize = 0x1000;
-        GXFIFO_TEST_BOX = boxParams.u32s.a;
-        GXFIFO_TEST_BOX = boxParams.u32s.b;
-        GXFIFO_TEST_BOX = boxParams.u32s.c;
+            } unknown1_0_;
+        } var6;
+        var6.box.xMin = -0x800;
+        var6.box.unknown_2_ = 0;
+        var6.box.zMin = -0x800;
+        var6.box.unknown_6_ = 0x1000;
+        var6.box.unknown_8_ = 0x1000;
+        var6.box.unknown_a_ = 0x1000;
+        GXFIFO_TEST_BOX = var6.unknown1_0_.a;
+        GXFIFO_TEST_BOX = var6.unknown1_0_.b;
+        GXFIFO_TEST_BOX = var6.unknown1_0_.c;
 
         int visible;
-        while (GetBoxTestResult_020c56b0(&visible) != 0) {}
+        while (func_020c56b0(&visible) != 0) {}
         if (visible == 0) continue;
 
         scale = lootable->primary[0].scale;
@@ -110,11 +110,11 @@ extern "C" ARM void Zone3D_DrawLootables(Zone3D0201730c* zone) {
         for (int j = 0; j < 4; j++) lootable->fragments[j].color = diffuseColor;
 
         if (lootable->state != ZoneLootableState_Breaking) {
-            SubmitGxCommands02047648((unsigned char*)&lootable->primary[0], 0, 1);
+            func_02047648((unsigned char*)&lootable->primary[0], 0, 1);
         } else if (lootable->state == ZoneLootableState_Breaking) {
             if (lootable->breakTimer < kBreakSpriteTicks) {
-                AdvanceStreamRecord0204724c((Obj0204724C*)&lootable->primary[1]);
-                RenderTransformedFlaggedIndexedEntry((StructAt020472e4*)&lootable->primary[1], 1);
+                func_0204724c((Obj0204724C*)&lootable->primary[1]);
+                func_020472e4((StructAt020472e4*)&lootable->primary[1], 1);
             }
             for (int j = 0; j < 4; j++) {
                 Foo02048004* fragment = &lootable->fragments[j];
@@ -129,7 +129,7 @@ extern "C" ARM void Zone3D_DrawLootables(Zone3D0201730c* zone) {
                 Mat3x3_Multiply(billboard, &rotation, &transformed);
                 RenderConfig_SetObjectRotation(&transformed);
                 RenderConfig::SubmitToFifo();
-                SubmitGxCommands02047648((unsigned char*)fragment, 0, 1);
+                func_02047648((unsigned char*)fragment, 0, 1);
             }
         }
     }

@@ -9,6 +9,6 @@ enum { Enum_ov017_02199480_14012 = 0x36bc };
 extern "C" void func_020a87cc(void);
 
 // USA: func_ov017_02199480
-extern "C" ARM void func_ov017_02199480(void* arg0) {
-    if (*(int*)((char*)arg0 + Enum_ov017_02199480_14012)) func_020a87cc();
+extern "C" ARM void func_ov017_02199480(void* obj) {
+    if (*(int*)((char*)obj + Enum_ov017_02199480_14012)) func_020a87cc();
 }

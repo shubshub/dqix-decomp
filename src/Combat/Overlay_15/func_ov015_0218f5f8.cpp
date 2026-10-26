@@ -4,55 +4,55 @@
 
 struct Struct_ov015_0218c03c_2
 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_;
+    char unk_0[0x1c];
+    unsigned char kind_;
     char unknown_1d_[3];
-    int* unknown_20_;
-    Object3D* unknown_24_;
+    int* parts_;
+    Object3D* objects_;
 };
 
-static inline const Vector3fix& inline_ov015_0218f5f8(const Object3D* arg0)
+static inline const Vector3fix& inline_ov015_0218f5f8(const Object3D* o)
 {
-    return arg0->rotation_;
+    return o->rotation_;
 }
 
-static inline void inline_ov015_0218f5f8_2(Object3D* arg0, const Vector3fix& arg1)
+static inline void inline_ov015_0218f5f8_2(Object3D* o, const Vector3fix& rotation)
 {
-    arg0->rotation_ = arg1;
+    o->rotation_ = rotation;
 }
 
 // USA: func_ov015_0218f5f8
-extern "C" ARM void func_ov015_0218f5f8(Struct_ov015_0218c03c_2* arg0, int arg1)
+extern "C" ARM void func_ov015_0218f5f8(Struct_ov015_0218c03c_2* self, int angle)
 {
-    Vector3fix var0 = {0};
-    switch (arg0->unknown_1c_)
+    Vector3fix rotation = {0};
+    switch (self->kind_)
     {
     case 0:
-        var0 = inline_ov015_0218f5f8(&arg0->unknown_24_[1]);
-        var0.y = fix32ReduceAngle0To2Pi(var0.y + arg1);
-        inline_ov015_0218f5f8_2(&arg0->unknown_24_[1], var0);
-        var0 = inline_ov015_0218f5f8(&arg0->unknown_24_[0]);
-        var0.y = fix32ReduceAngle0To2Pi(var0.y + arg1);
-        inline_ov015_0218f5f8_2(&arg0->unknown_24_[0], var0);
+        rotation = inline_ov015_0218f5f8(&self->objects_[1]);
+        rotation.y = fix32ReduceAngle0To2Pi(rotation.y + angle);
+        inline_ov015_0218f5f8_2(&self->objects_[1], rotation);
+        rotation = inline_ov015_0218f5f8(&self->objects_[0]);
+        rotation.y = fix32ReduceAngle0To2Pi(rotation.y + angle);
+        inline_ov015_0218f5f8_2(&self->objects_[0], rotation);
         break;
     case 1:
-        var0 = inline_ov015_0218f5f8(&arg0->unknown_24_[6]);
-        var0.y = fix32ReduceAngle0To2Pi(var0.y + arg1);
-        inline_ov015_0218f5f8_2(&arg0->unknown_24_[6], var0);
-        var0 = inline_ov015_0218f5f8(&arg0->unknown_24_[1]);
-        var0.y = fix32ReduceAngle0To2Pi(var0.y + arg1);
-        inline_ov015_0218f5f8_2(&arg0->unknown_24_[1], var0);
-        var0 = inline_ov015_0218f5f8(&arg0->unknown_24_[5]);
-        var0.y = fix32ReduceAngle0To2Pi(var0.y + arg1);
-        inline_ov015_0218f5f8_2(&arg0->unknown_24_[5], var0);
-        var0 = inline_ov015_0218f5f8(&arg0->unknown_24_[0]);
-        var0.y = fix32ReduceAngle0To2Pi(var0.y + arg1);
-        inline_ov015_0218f5f8_2(&arg0->unknown_24_[0], var0);
+        rotation = inline_ov015_0218f5f8(&self->objects_[6]);
+        rotation.y = fix32ReduceAngle0To2Pi(rotation.y + angle);
+        inline_ov015_0218f5f8_2(&self->objects_[6], rotation);
+        rotation = inline_ov015_0218f5f8(&self->objects_[1]);
+        rotation.y = fix32ReduceAngle0To2Pi(rotation.y + angle);
+        inline_ov015_0218f5f8_2(&self->objects_[1], rotation);
+        rotation = inline_ov015_0218f5f8(&self->objects_[5]);
+        rotation.y = fix32ReduceAngle0To2Pi(rotation.y + angle);
+        inline_ov015_0218f5f8_2(&self->objects_[5], rotation);
+        rotation = inline_ov015_0218f5f8(&self->objects_[0]);
+        rotation.y = fix32ReduceAngle0To2Pi(rotation.y + angle);
+        inline_ov015_0218f5f8_2(&self->objects_[0], rotation);
         break;
     default:
-        var0 = inline_ov015_0218f5f8(arg0->unknown_24_);
-        var0.y = fix32ReduceAngle0To2Pi(var0.y + arg1);
-        inline_ov015_0218f5f8_2(arg0->unknown_24_, var0);
+        rotation = inline_ov015_0218f5f8(self->objects_);
+        rotation.y = fix32ReduceAngle0To2Pi(rotation.y + angle);
+        inline_ov015_0218f5f8_2(self->objects_, rotation);
         break;
     }
 }

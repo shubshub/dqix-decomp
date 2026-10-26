@@ -5,9 +5,9 @@
 #endif
 
 // USA: func_020ca7e0
-extern "C" ARM int func_020ca7e0(int arg0, int* arg1) {
+extern "C" ARM int func_020ca7e0(int value, int* addr) {
     asm {
-        swp arg0, arg0, [arg1]
+        swp value, value, [addr]
     }
-    return arg0;
+    return value;
 }

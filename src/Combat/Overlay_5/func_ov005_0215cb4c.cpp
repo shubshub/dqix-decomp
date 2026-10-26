@@ -7,38 +7,38 @@
 #define LOW_REGION(j, u) (u)
 #endif
 
-struct Struct_02109bf4_2;
+struct Struct0209c830;
 
-struct Struct_ov005_02153954
+struct EquipmentMenu
 {
-    char unknown_0_[LOW_REGION(0x3d44, 0x3dcc)];
-    unsigned int unknown_3dcc_;
+    char unk_0[LOW_REGION(0x3d44, 0x3dcc)];
+    unsigned int flags_;
     char unknown_3dd0_[0x3df3 - 0x3dd0];
     unsigned char unknown_3df3_;
 };
 
-extern "C" void func_0209c830(Struct_02109bf4_2* arg0, int arg1);
-extern "C" int func_0209ca2c(void* arg0);
+extern "C" void func_0209c830(Struct0209c830* p, int value);
+extern "C" int func_0209ca2c(void* obj);
 
 extern "C" Struct0209c830 g_bgmPlayer;
 
 // USA: func_ov005_0215cb4c
-extern "C" ARM int func_ov005_0215cb4c(Struct_ov005_02153954* arg0)
+extern "C" ARM int func_ov005_0215cb4c(EquipmentMenu* self)
 {
-    if (!(arg0->unknown_3dcc_ & 0x10000))
+    if (!(self->flags_ & 0x10000))
         return 0;
-    unsigned char var0 = arg0->unknown_3df3_;
-    if (var0 == 0)
+    unsigned char step = self->unknown_3df3_;
+    if (step == 0)
     {
-        SetValueAndActivate0209c830(&g_bgmPlayer, 0x3d);
-        self->fadeStep_++;
+        func_0209c830(&g_bgmPlayer, 0x3d);
+        self->unknown_3df3_++;
     }
-    if (var0 == 1)
+    if (step == 1)
     {
-        if (IsAnimationActive0209ca2c(&g_bgmPlayer))
+        if (func_0209ca2c(&g_bgmPlayer))
             return 1;
-        arg0->unknown_3dcc_ &= ~0x10000;
-        arg0->unknown_3df3_ = 0;
+        self->flags_ &= ~0x10000;
+        self->unknown_3df3_ = 0;
         return 0;
     }
     return 1;

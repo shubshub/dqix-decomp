@@ -5,7 +5,7 @@ extern "C" void* memset(void* dst, int c, unsigned long n);
 extern "C" void OS_GetOwnerInfo(void* out);
 
 // Session block at +0x1000 of the link session (data_020fefec).
-struct SubState_0202aec0 {
+struct Struct_0202aec0 {
     int f0;
     int f4;
     int f8;
@@ -37,12 +37,12 @@ struct Obj_0202aec0 {
     int scanResultCount;                  // LinkSession_AgeScanResults ages and removes the 0xc0-byte records below
     unsigned char scanResults[10][0xc0];
     int scanResultLifetimes[10];
-    unsigned char pad7b8[8];
+    unsigned char unknown_7b8_[8];
     unsigned char sendBuffer[0x400];      // +0x7c0: this console's record (LinkSession_GetOwnRecord)
     unsigned char receiveBuffer[0x400];   // +0xbc0: each aid's 0x74-byte record (LinkSession_GetReceivedRecord)
     int busy;                             // +0xfc0: func_0205e57c and FieldTask_LeaveMultiplayer wait while it is set
     unsigned char ffc4[0x3c];
-    SubState_0202aec0 sub;
+    Struct_0202aec0 sub;
 };
 
 // NitroSDK OSOwnerInfo (OS_GetOwnerInfo): the DS user settings.
@@ -57,7 +57,7 @@ struct OSOwnerInfo {
     unsigned short commentLength;
 };
 
-extern "C" int _ZZ14GetTurnCountervE1s;
+extern "C" int _ZZ15inline_0202c04cvE1s;
 
 // Main, originally func_0202aec0 (USA 0x0202aec0, EUR 0x0202aed0, JPN 0x0202aa70)
 extern "C" ARM void LinkSession_Reset(Obj_0202aec0* session) {
@@ -88,7 +88,7 @@ extern "C" ARM void LinkSession_Reset(Obj_0202aec0* session) {
     session->sub.lostMask = 0;
     session->sub.ff = 0;
     session->sub.lostAnnouncedMask = 0;
-    (&_ZZ14GetTurnCountervE1s)[1] = 0;
+    (&_ZZ15inline_0202c04cvE1s)[1] = 0;
     memset(session->sub.slotOfAid, 0, sizeof(session->sub.slotOfAid));
     memset(session->sub.previousSlotOfAid, 0, sizeof(session->sub.previousSlotOfAid));
     session->sub.assignSlots = 1;

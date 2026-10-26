@@ -7,20 +7,20 @@
 #endif
 
 
-extern "C" int func_ov000_02176e3c(int arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
+extern "C" int func_ov000_02176e3c(int flag, void* obj, int byteVal, int val0, int field4, int one);
 
-struct Struct_ov000_02184288 { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Struct_ov000_02184288 { int field0; int field4; int field8; };
 extern struct Struct_ov000_02184288 data_ov000_02184288;
 extern int data_ov000_02183ff0;
 
 // USA: func_ov000_02170078
-extern "C" ARM void func_ov000_02170078(char* arg0) {
-    signed char var0 = *(signed char*)(arg0 + REGION_OFFSET_0);
-    if (var0 >= 0) {
-        int var1 = data_ov000_02184288.unknown_8_;
-        if (var1 != 0) {
-            func_ov000_02176e3c(var1, arg0, var0, data_ov000_02183ff0, data_ov000_02184288.unknown_4_, 1);
+extern "C" ARM void func_ov000_02170078(char* obj) {
+    signed char byteVal = *(signed char*)(obj + REGION_OFFSET_0);
+    if (byteVal >= 0) {
+        int flag = data_ov000_02184288.field8;
+        if (flag != 0) {
+            func_ov000_02176e3c(flag, obj, byteVal, data_ov000_02183ff0, data_ov000_02184288.field4, 1);
         }
-        *(signed char*)(arg0 + REGION_OFFSET_0) = -1;
+        *(signed char*)(obj + REGION_OFFSET_0) = -1;
     }
 }

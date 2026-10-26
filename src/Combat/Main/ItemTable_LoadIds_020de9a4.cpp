@@ -2,7 +2,7 @@
 #include "Resource/ItemTable.h"
 #include "std_library_functions.h"
 
-int ItemTable_LoadInPlace(void* table, void* itemData, void* size);
+extern "C" int ItemTable_LoadInPlace(void* table, void* itemData, void* size);
 extern "C" int ItemTable_CopyIds(void* allocator, void* dest, void* source, void* keys, short keyCount);
 
 // Main, originally func_020de9a4 (USA 0x020de9a4, EUR 0x020de9b4, JPN 0x020e0320)

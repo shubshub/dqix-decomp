@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 extern "C" void* func_ov031_022368e0();
-extern "C" int func_ov031_02236878(int arg0);
+extern "C" int func_ov031_02236878(int index);
 extern "C" void func_ov031_02237b2c(int, int, int, int, int);
 extern "C" void func_ov031_02222e98(void);
-extern "C" void func_ov031_022376e4(int arg0);
+extern "C" void func_ov031_022376e4(int val);
 extern "C" void func_ov031_022274c0(int);
 extern "C" void func_ov031_02234d98(void);
 extern "C" void func_ov031_02234b2c(void);
@@ -13,11 +13,11 @@ extern "C" void func_ov031_02234de4(void);
 extern unsigned char data_ov031_02290ce4;
 
 // USA: func_ov031_02234cac
-extern "C" ARM void func_ov031_02234cac(int arg0) {
+extern "C" ARM void func_ov031_02234cac(int mode) {
     if (data_ov031_02290ce4 != 0) {
         return;
     }
-    switch (arg0) {
+    switch (mode) {
     case 0:
         data_ov031_02290ce4 = 3;
         func_ov031_022368e0();

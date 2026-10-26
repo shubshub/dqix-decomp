@@ -1,46 +1,46 @@
 #include <globaldefs.h>
 
 struct Struct_020b0074;
-extern "C" unsigned char* func_020b0074(Struct_020b0074* arg0);
+extern "C" unsigned char* func_020b0074(Struct_020b0074* h);
 struct Struct_0205a658_2;
-extern "C" unsigned char* func_020b00e0(Struct_0205a658_2* arg0, unsigned int arg1);
-extern "C" void func_020b0094(char* arg0);
+extern "C" unsigned char* func_020b00e0(Struct_0205a658_2* h, unsigned int i);
+extern "C" void func_020b0094(char* base);
 
 struct Struct_020b0108 {
-    char unknown_0_[4];
+    char pad[4];
     int unknown_4_;
 };
 
 struct Struct_020b0108_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned char* unknown_4_;
-    char unknown_8_[0xc - 0x8];
-    Struct_020b0108* unknown_c_;
-    char unknown_10_[0x14 - 0x10];
+    unsigned short count;
+    unsigned short flags;
+    unsigned char* base;
+    char pad1[0xc - 0x8];
+    Struct_020b0108* sub;
+    char pad2[0x14 - 0x10];
     char* unknown_14_;
 };
 
 // USA: func_020b0108
-extern "C" ARM void func_020b0108(Struct_020b0108_2* arg0) {
-    arg0->unknown_4_ = arg0->unknown_4_ + (unsigned int)arg0;
-    unsigned char* var0 = func_020b0074((Struct_020b0074*)arg0);
-    unsigned short var1 = 0;
-    if (var1 < arg0->unknown_0_) {
+extern "C" ARM void func_020b0108(Struct_020b0108_2* self) {
+    self->base = self->base + (unsigned int)self;
+    unsigned char* var0 = func_020b0074((Struct_020b0074*)self);
+    unsigned short i = 0;
+    if (i < self->count) {
         do {
-            Struct_020b0108* var2 = (Struct_020b0108*)func_020b00e0((Struct_0205a658_2*)arg0, var1);
-            var2->unknown_4_ = var2->unknown_4_ + (int)var0;
-            var1 = var1 + 1;
-        } while (var1 < arg0->unknown_0_);
+            Struct_020b0108* e = (Struct_020b0108*)func_020b00e0((Struct_0205a658_2*)self, i);
+            e->unknown_4_ = e->unknown_4_ + (int)var0;
+            i = i + 1;
+        } while (i < self->count);
     }
-    if (arg0->unknown_c_ != 0) {
-        Struct_020b0108* var3 = (Struct_020b0108*)((char*)arg0->unknown_c_ + (unsigned int)arg0);
-        arg0->unknown_c_ = var3;
-        var3->unknown_4_ = var3->unknown_4_ + (int)var3;
-        arg0->unknown_c_ = var3;
+    if (self->sub != 0) {
+        Struct_020b0108* sub = (Struct_020b0108*)((char*)self->sub + (unsigned int)self);
+        self->sub = sub;
+        sub->unknown_4_ = sub->unknown_4_ + (int)sub;
+        self->sub = sub;
     }
-    if (arg0->unknown_14_ != 0) {
-        arg0->unknown_14_ = arg0->unknown_14_ + (unsigned int)arg0;
-        func_020b0094(arg0->unknown_14_);
+    if (self->unknown_14_ != 0) {
+        self->unknown_14_ = self->unknown_14_ + (unsigned int)self;
+        func_020b0094(self->unknown_14_);
     }
 }

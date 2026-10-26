@@ -5,9 +5,9 @@
 struct func_0208e9f4;
 struct Struct_0208e9f4;
 extern "C" ARM void* func_0208f4bc(Struct_0208e9f4*);
-extern "C" ARM void* func_0208f4d0(void* arg0);
+extern "C" ARM void* func_0208f4d0(void* obj);
 
-extern "C" void __register_global_object(int arg0, int arg1, void* arg2);
+extern "C" void __register_global_object(int c, int b, void* node);
 
 extern func_0208e9f4 data_02109020;
 extern int data_02109014;

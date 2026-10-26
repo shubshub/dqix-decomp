@@ -1,24 +1,24 @@
 #include <globaldefs.h>
 
 struct Struct_0206ed44_2 {
-    char unknown_0_[0x10];
-    struct Struct_0206ed44_2* unknown_10_;
+    char unk[0x10];
+    struct Struct_0206ed44_2* next;
 };
 
 struct Struct_0206ed44 {
-    struct Struct_0206ed44_2* unknown_0_;
-    unsigned char unknown_4_;
+    struct Struct_0206ed44_2* head;
+    unsigned char count;
 };
 
 // USA: func_0206eeec
-extern "C" ARM void func_0206eeec(struct Struct_0206ed44* arg0, struct Struct_0206ed44_2* arg1) {
-    struct Struct_0206ed44_2* var0 = arg0->unknown_0_;
-    if (var0 != 0) {
-        arg1->unknown_10_ = var0;
-        arg0->unknown_0_ = arg1;
+extern "C" ARM void func_0206eeec(struct Struct_0206ed44* list, struct Struct_0206ed44_2* node) {
+    struct Struct_0206ed44_2* head = list->head;
+    if (head != 0) {
+        node->next = head;
+        list->head = node;
     } else {
-        arg0->unknown_0_ = arg1;
-        arg1->unknown_10_ = 0;
+        list->head = node;
+        node->next = 0;
     }
-    arg0->unknown_4_++;
+    list->count++;
 }

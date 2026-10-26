@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
 struct Struct_ov003_0215570c {
-    char unknown_0_[0x20];
-    int* unknown_20_;
+    char pad0[0x20];
+    int* f20;
 };
 
 // USA: func_ov003_0215570c
-extern "C" ARM int func_ov003_0215570c(struct Struct_ov003_0215570c* arg0) {
-    int var0 = 0;
-    for (unsigned char var1 = 0; var1 < 0xc; var1++) {
-        if (arg0->unknown_20_[var1] != 0) var0++;
+extern "C" ARM int func_ov003_0215570c(struct Struct_ov003_0215570c* obj) {
+    int count = 0;
+    for (unsigned char i = 0; i < 0xc; i++) {
+        if (obj->f20[i] != 0) count++;
     }
-    return var0;
+    return count;
 }

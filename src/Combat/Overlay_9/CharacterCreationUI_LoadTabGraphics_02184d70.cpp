@@ -2,10 +2,10 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "Resource/CharacterCreationUI.h"
 
-int KeyTable_Get(Container020e0310*, int);
+extern "C" int KeyTable_Get(Container020e0310*, int);
 
 // Overlay 9, originally UpdateCombatantState_02184d70 (USA/EUR 0x02184d70, JPN 0x02186098)
-ARM void CharacterCreationUI_LoadTabGraphics(void* storage) {
+extern "C" ARM void CharacterCreationUI_LoadTabGraphics(void* storage) {
     CharacterCreationUI* self = (CharacterCreationUI*)storage;
     if (!(self->flags & CreationFlag_TabLoading) || self->resourceStep == TabLoadStep_Loaded)
         return;

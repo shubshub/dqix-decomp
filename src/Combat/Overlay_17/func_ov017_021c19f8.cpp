@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov012_02185a24(void* arg0);
+extern "C" void func_ov012_02185a24(void* p);
 
 // USA: func_ov017_021c19f8
-extern "C" ARM void func_ov017_021c19f8(void* arg0) {
-    void* var0 = *(void**)((char*)arg0 + 0x20);
-    if (var0) func_ov012_02185a24(var0);
+extern "C" ARM void func_ov017_021c19f8(void* obj) {
+    void* p = *(void**)((char*)obj + 0x20);
+    if (p) func_ov012_02185a24(p);
 }

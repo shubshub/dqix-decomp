@@ -1,58 +1,58 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void* func_ov000_02160f20(void* arg0);
-extern "C" int func_ov000_02160f9c(void* arg0);
+extern "C" void* func_ov000_02160f20(void* obj);
+extern "C" int func_ov000_02160f9c(void* obj);
 struct Struct_ov000_0215440c_2;
 struct Struct_ov000_02160094;
-extern "C" struct Struct_ov000_02160094* func_ov000_02160094(struct Struct_ov000_0215440c_2* arg0, int arg1);
+extern "C" struct Struct_ov000_02160094* func_ov000_02160094(struct Struct_ov000_0215440c_2* list, int index);
 struct Struct_ov000_0215440c;
 struct Struct_ov000_021600f8;
-extern "C" struct Struct_ov000_021600f8* func_ov000_021600f8(struct Struct_ov000_0215440c* arg0, int arg1);
-extern "C" int func_02048bd0(unsigned char* arg0);
-extern "C" short func_ov000_0215ffa0(void* arg0);
-extern "C" int func_02048ae0(void* arg0, int arg1, void* arg2, int arg3);
+extern "C" struct Struct_ov000_021600f8* func_ov000_021600f8(struct Struct_ov000_0215440c* list, int index);
+extern "C" int func_02048bd0(unsigned char* obj);
+extern "C" short func_ov000_0215ffa0(void* obj);
+extern "C" int func_02048ae0(void* obj, int type, void* out, int flag);
 
 // USA: func_ov025_021dfa9c
-extern "C" ARM int func_ov025_021dfa9c(void* arg0, void* arg1) {
-    GameState* var0 = GameState::GetInstance();
-    void* var1 = func_ov000_02160f20(arg0);
-    int var2 = func_ov000_02160f9c(arg0);
-    struct Struct_ov000_02160094* var3 = func_ov000_02160094((struct Struct_ov000_0215440c_2*)var1, 0);
-    int var4;
-    GameObject* var5;
-    char* var6;
-    struct Struct_ov000_02160094* var7;
-    struct Struct_ov000_021600f8* var8;
-    struct Struct_ov000_021600f8* var9;
-    int var10[2];
-    int var11;
+extern "C" ARM int func_ov025_021dfa9c(void* obj, void* base) {
+    GameState* battle = GameState::GetInstance();
+    void* slot = func_ov000_02160f20(obj);
+    int count = func_ov000_02160f9c(obj);
+    struct Struct_ov000_02160094* node = func_ov000_02160094((struct Struct_ov000_0215440c_2*)slot, 0);
+    int flagVal;
+    GameObject* combatant;
+    char* target;
+    struct Struct_ov000_02160094* node2;
+    struct Struct_ov000_021600f8* nodeA;
+    struct Struct_ov000_021600f8* nodeB;
+    int localBuf[2];
+    int result;
 
-    if (var3 == NULL) goto fail;
-    var4 = *(unsigned short*)var1;
-    var5 = var0->GetCombatantByIndex(*(unsigned short*)((char*)var3 + 0x20));
-    if (var5 == NULL) goto fail;
-    if (var2 <= 0) goto fail;
-    if (var4 != 1) goto fail;
-    if (!func_02048bd0((unsigned char*)var5)) goto fail;
+    if (node == NULL) goto fail;
+    flagVal = *(unsigned short*)slot;
+    combatant = battle->GetCombatantByIndex(*(unsigned short*)((char*)node + 0x20));
+    if (combatant == NULL) goto fail;
+    if (count <= 0) goto fail;
+    if (flagVal != 1) goto fail;
+    if (!func_02048bd0((unsigned char*)combatant)) goto fail;
 
-    var6 = (char*)arg1 + 0x21c + 0x8000 + (var2 - 1) * 0x28;
-    if (var6 == NULL) goto fail;
+    target = (char*)base + 0x21c + 0x8000 + (count - 1) * 0x28;
+    if (target == NULL) goto fail;
 
-    var7 = func_ov000_02160094((struct Struct_ov000_0215440c_2*)var6, 0);
-    if (var7 == NULL) goto fail;
-    if (*(unsigned short*)((char*)var7 + 0x20) != *(unsigned short*)((char*)var3 + 0x20)) goto fail;
+    node2 = func_ov000_02160094((struct Struct_ov000_0215440c_2*)target, 0);
+    if (node2 == NULL) goto fail;
+    if (*(unsigned short*)((char*)node2 + 0x20) != *(unsigned short*)((char*)node + 0x20)) goto fail;
 
-    var8 = func_ov000_021600f8((struct Struct_ov000_0215440c*)var1, 0);
-    var9 = func_ov000_021600f8((struct Struct_ov000_0215440c*)var6, 0);
-    if (var8 == NULL || var9 == NULL) goto fail;
-    if (*(short*)((char*)var8 + 0xe) != *(short*)((char*)var9 + 0xe)) goto fail;
-    if (*(unsigned short*)var6 != 1) goto fail;
+    nodeA = func_ov000_021600f8((struct Struct_ov000_0215440c*)slot, 0);
+    nodeB = func_ov000_021600f8((struct Struct_ov000_0215440c*)target, 0);
+    if (nodeA == NULL || nodeB == NULL) goto fail;
+    if (*(short*)((char*)nodeA + 0xe) != *(short*)((char*)nodeB + 0xe)) goto fail;
+    if (*(unsigned short*)target != 1) goto fail;
 
-    if (*(short*)((char*)var9 + 0xe) != func_ov000_0215ffa0(var9)) goto fail;
+    if (*(short*)((char*)nodeB + 0xe) != func_ov000_0215ffa0(nodeB)) goto fail;
 
-    var11 = func_02048ae0(var5, var4, &var10[0], 2);
-    if (var11 >= 2) return var10[1];
+    result = func_02048ae0(combatant, flagVal, &localBuf[0], 2);
+    if (result >= 2) return localBuf[1];
 
 fail:
     return 0;

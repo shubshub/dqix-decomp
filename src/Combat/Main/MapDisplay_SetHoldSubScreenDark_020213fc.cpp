@@ -11,6 +11,6 @@ struct SetFlagStruct {
 };
 
 // Main, originally SetFlag0x9c6_020213fc (USA 0x020213fc, EUR 0x0202140c, JPN 0x02020ff0)
-ARM void MapDisplay_SetHoldSubScreenDark(struct SetFlagStruct* mapDisplay, int hold) {
+extern "C" ARM void MapDisplay_SetHoldSubScreenDark(struct SetFlagStruct* mapDisplay, int hold) {
     mapDisplay->holdSubScreenDark = (hold != 0) ? 1 : 0;
 }

@@ -1,55 +1,55 @@
 #include <globaldefs.h>
 #include <GameState/GameState.h>
 
-extern "C" void* func_02010828(GameState*);
+extern "C" void* GameState_GetParty(GameState*);
 
-extern "C" ARM void func_ov000_0217ee7c(signed char* arg0, signed char* arg1,
-                                     int arg2, int arg3)
+extern "C" ARM void func_ov000_0217ee7c(signed char* indices, signed char* count,
+                                     int arg2, int mode)
 {
-    unsigned char* var0 = static_cast<unsigned char*>(func_02010828(GameState::GetInstance()));
-    signed char var1 = *arg1;
-    switch (arg3) {
+    unsigned char* inventory = static_cast<unsigned char*>(GameState_GetParty(GameState::GetInstance()));
+    signed char remaining = *count;
+    switch (mode) {
     case 0:
         break;
     case 1:
-        for (signed char var2 = 0; var2 < *arg1; ++var2) {
-            signed char var3 = arg0[var2];
-            int var4 = 0;
-            for (signed char var5 = 0; var5 < var0[0xf7c]; ++var5) {
-                if (var3 == (var0 + var5)[0xf78]) {
-                    var4 = true;
+        for (signed char slot = 0; slot < *count; ++slot) {
+            signed char selected = indices[slot];
+            int present = 0;
+            for (signed char party = 0; party < inventory[0xf7c]; ++party) {
+                if (selected == (inventory + party)[0xf78]) {
+                    present = true;
                     break;
                 }
             }
-            if (!var4) {
-                --var1;
-                arg0[var2] = -1;
+            if (!present) {
+                --remaining;
+                indices[slot] = -1;
             }
         }
         break;
     case 2:
         int var6 = arg2 >= 0 && arg2 <= 3;
         if (var6) {
-            for (signed char var7 = 0; var7 < var1; ++var7) {
-                if (arg2 == arg0[var7]) {
-                    --var1;
-                    arg0[var7] = -1;
+            for (signed char slot = 0; slot < remaining; ++slot) {
+                if (arg2 == indices[slot]) {
+                    --remaining;
+                    indices[slot] = -1;
                     break;
                 }
             }
         }
         break;
     }
-    for (signed char var8 = 0; var8 < *arg1 - 1; ++var8) {
-        if (arg0[var8] < 0) {
-            for (signed char var9 = var8 + 1; var9 < *arg1; ++var9) {
-                if (arg0[var9] >= 0) {
-                    arg0[var8] = arg0[var9];
-                    arg0[var9] = -1;
+    for (signed char slot = 0; slot < *count - 1; ++slot) {
+        if (indices[slot] < 0) {
+            for (signed char next = slot + 1; next < *count; ++next) {
+                if (indices[next] >= 0) {
+                    indices[slot] = indices[next];
+                    indices[next] = -1;
                     break;
                 }
             }
         }
     }
-    *arg1 = var1;
+    *count = remaining;
 }

@@ -14,9 +14,9 @@
 #endif
 
 
-struct Struct_02043368 {
-    int unknown_0_;
-    unsigned short unknown_4_;
+struct ClearTarget0205a234 {
+    int field0;
+    unsigned short field4;
 };
 struct Foo0207df50;
 struct Struct020dfc40;
@@ -27,17 +27,17 @@ struct FlagWord020466f4;
 struct Obj020444e0;
 struct Obj0203bdb0;
 
-unsigned int* GlobalFlags_GetInstance();
-void DispatchWithGlobalContext020daf9c(int a, int b, int c, int d);
-void SpriteContext_Init(char* obj);
-void Sprite_Init(Struct0205a198* obj);
-void ClearField0And40205a234(ClearTarget0205a234* obj);
+extern "C" unsigned int* GlobalFlags_GetInstance();
+extern "C" void func_020daf9c(int a, int b, int c, int d);
+extern "C" void SpriteContext_Init(char* obj);
+extern "C" void Sprite_Init(Struct0205a198* obj);
+extern "C" void func_0205a234(ClearTarget0205a234* obj);
 extern "C" void GXx_SetMasterBrightness_(short* reg, int value);
-void SetWord0x0_0200fb84(int* obj, int value);
-char* BgVram_GetInstance();
-void BgVram_Clear(char* obj);
+extern "C" void func_0200fb84(int* obj, int value);
+extern "C" char* BgVram_GetInstance();
+extern "C" void BgVram_Clear(char* obj);
 extern "C" void* OamManager_GetInstance(void);
-void OamManager_Init(char* ctx);
+extern "C" void OamManager_Init(char* ctx);
 void LockStagedTextureVRAMCopying();
 extern "C" unsigned int DisableTextureImageVRAMBanks();
 extern "C" unsigned int DisableTexturePaletteVRAMBanks();
@@ -46,73 +46,73 @@ extern "C" unsigned int DisableSubBGVRAMBanks();
 extern "C" unsigned int DisableMainObjVRAMBanks();
 extern "C" unsigned int DisableSubObjVRAMBanks();
 extern "C" void MapVRAMBanksToTextureImage(int banks);
-extern "C" void func_020bb48c(unsigned int arg0, int arg1);
+extern "C" void func_020bb48c(unsigned int mode, int arg1);
 extern "C" void MapVRAMBanksToTexturePalette(int banks);
 extern "C" void MapVRAMBanksToMainBG(int banks);
-void GX_SetGraphicsMode(int mode, int a, int b);
+extern "C" void GX_SetGraphicsMode(int mode, int a, int b);
 extern "C" void MapVRAMBanksToMainObj(int banks);
 void UpdateVRAMStagingVRAMBanks();
 void UnlockStagedTextureVRAMCopying();
 void Finish3DRendering();
 extern "C" void func_020c51dc();
-void ResetMatrixStacks020c537c();
-void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fogEnable);
-void G3i_OrthoW_(int, int, int, int, int, int, int, int, void*);
-void InitGlobalStateAndInstallHandlers020bb780(void* arg, int flag);
+extern "C" void func_020c537c();
+extern "C" void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fogEnable);
+extern "C" void G3i_OrthoW_(int, int, int, int, int, int, int, int, void*);
+extern "C" void func_020bb780(void* arg, int flag);
 extern "C" void VramState_Reserve(void* obj, int a, int b);
-MessageSystem* MessageSystem_GetInstance();
+extern "C" MessageSystem* MessageSystem_GetInstance();
 extern "C" void func_02042c68(MessageSystem* g);
 extern "C" void MessageSystem_Stop(MessageSystem* g);
-void SetField0x1e28_02042b30(void* g, void* tables);
-void VramState_Rewind(Foo0207df50* obj);
-void VramState_Restore(char* obj);
+extern "C" void func_02042b30(void* g, void* tables);
+extern "C" void VramState_Rewind(Foo0207df50* obj);
+extern "C" void VramState_Restore(char* obj);
 extern "C" void func_020432c4(MessageSystem* g);
-void VramState_Save(char* obj);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void CallFunc0202f310AtField0x19e0_020440b8(char* g, void* alloc, void* data);
-void DebugConsole_Clear();
-void DebugConsole_Upload();
-void KeyTable_Reset(Struct020dfc40* obj);
+extern "C" void VramState_Save(char* obj);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void func_020440b8(char* g, void* alloc, void* data);
+extern "C" void DebugConsole_Clear();
+extern "C" void DebugConsole_Upload();
+extern "C" void KeyTable_Reset(Struct020dfc40* obj);
 extern "C" void KeyTable_Load(void* dest, SafeAllocator* allocator, void* fileData, unsigned int size);
-const char* KeyTable_Get(Container020e0310* texts, int id);
-void WriteControlAndToggle020d86d0(int a, int b);
-void OS_WaitVBlankIntr();
-void ProcessRingJobs020bbcb4();
+extern "C" const char* KeyTable_Get(Container020e0310* texts, int id);
+extern "C" void func_020d86d0(int a, int b);
+extern "C" void OS_WaitVBlankIntr();
+extern "C" void func_020bbcb4();
 void UnlockAndSetMainBrightness(GameResources* res, int target, int frames);
 void UnlockAndSetSubBrightness(GameResources* res, int target, int frames);
 void UpdateAndApplyBrightness(GameResources* res);
 extern "C" void func_020c38d4();
-extern "C" void __clear(void* arg0, int arg1);
+extern "C" void __clear(void* ptr, int size);
 unsigned long long GetCurrentTimestamp();
-void Main_UpdateLidAndInput();
+extern "C" void Main_UpdateLidAndInput();
 extern "C" int func_020457e0(MessageSystem* g);
-void FlagWord_SetBits(unsigned int* field, unsigned int bits);
-void ClearStruct020a9ea4(Struct020a9ea4* obj);
-int Pac_CountFiles(PacRecord* entries);
-void* Pac_GetFile(PacRecord* recs, int index, void** outField, int* outSize);
+extern "C" void FlagWord_SetBits(unsigned int* field, unsigned int bits);
+extern "C" void func_020a9ea4(Struct020a9ea4* obj);
+extern "C" int Pac_CountFiles(PacRecord* entries);
+extern "C" void* Pac_GetFile(PacRecord* recs, int index, void** outField, int* outSize);
 extern "C" void SpriteContext_LoadFile(void* obj, void* rec, int size, SafeAllocator* alloc);
 extern "C" int func_020ab7a8(void* obj, int flag);
-void FlagWord_ClearBits(FlagWord020466f4* field, unsigned int bits);
-void ResetAndDispatchActorContext0209c6d8(void* actor, int id);
-int TriggerDispatchIfFlagOrByte_0218c240(void* scene);
-int SendShortBufferOrReturnZero020aba5c(int flag);
+extern "C" void FlagWord_ClearBits(FlagWord020466f4* field, unsigned int bits);
+extern "C" void func_0209c6d8(void* actor, int id);
+extern "C" int func_ov019_0218c240(void* scene);
+extern "C" int func_020aba5c(int flag);
 extern "C" void func_02043368(MessageSystem* g);
 extern "C" void func_020bbd9c();
-void G3X_Reset();
+extern "C" void G3X_Reset();
 extern "C" void G3X_ResetMtxStack();
-void G3i_LookAt_(int, int, int, int, void*);
-void ReleaseField0x38IfValid020444e0(Obj020444e0* obj);
+extern "C" void G3i_LookAt_(int, int, int, int, void*);
+extern "C" void func_020444e0(Obj020444e0* obj);
 extern "C" void func_ov019_0218c178(void* scene);
-void OamManager_FlushBuffers(void* oam);
-void Forward0204359c(void* obj, int value);
-void OamManager_UploadBuffers(Obj0203bdb0* obj);
+extern "C" void OamManager_FlushBuffers(void* oam);
+extern "C" void func_0204359c(void* obj, int value);
+extern "C" void OamManager_UploadBuffers(Obj0203bdb0* obj);
 extern "C" void func_020439b0(MessageSystem* g, int a);
-void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
-void SetByte0x4_0200fb94(char* obj, unsigned char value);
-void SetWord0x7f6c_02012010(void* obj, int value);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" void func_0200fb94(char* obj, unsigned char value);
+extern "C" void func_02012010(void* obj, int value);
 
 void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength);
-extern "C" void* ExtractFileFromGP2(const char* arg0, const char* arg1, unsigned int* arg2);
+extern "C" void* ExtractFileFromGP2(const char* arg0, const char* innerFilePath, unsigned int* outSize);
 
 #if defined(jpn)
 #define data_ov019_0218c2c0 data_ov019_0218cea0
@@ -133,12 +133,12 @@ extern Vector3fix data_ov019_0218c294;
 extern Vector3fix data_ov019_0218c2a0;
 
 #if defined(jpn)
-struct Struct_02072a68_2;
+struct TableA68;
 struct Struct_020727d8;
-struct Struct_02013fb4;
-extern "C" void* func_02072a68(struct Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_020727d8(struct Struct_020727d8* arg0);
-extern "C" void func_020728ac(int arg0, int arg1, struct Struct_02013fb4* arg2, int arg3, int arg4, unsigned short arg5, unsigned char arg6);
+struct StreamHeader;
+extern "C" void* func_02072a68(struct TableA68* table, int key);
+extern "C" void func_020727d8(struct Struct_020727d8* list);
+extern "C" void func_020728ac(int param0, int param1, struct StreamHeader* buffer, int length, int arg4, unsigned short arg5, unsigned char arg6);
 extern char data_ov019_0218ceb8[];
 enum { Enum_ov019_0218b5a8_24 = 0x8, Enum_ov019_0218b5a8_728 = 0x228 };
 #else
@@ -146,101 +146,101 @@ enum { Enum_ov019_0218b5a8_24 = 0x18, Enum_ov019_0218b5a8_728 = 0x2d8 };
 #endif
 
 struct Struct_ov019_0218b5a8 {
-    char unknown_0_[0x28];
-    unsigned char unknown_28_;
+    char resources[0x28];
+    unsigned char drawn;
     char unknown_29_[0x2c - 0x29];
-    char unknown_2c_[0x34 - 0x2c];
-    char unknown_34_[Enum_ov019_0218b5a8_24];
-    int unknown_4c_;
+    char menu[0x34 - 0x2c];
+    char texts[Enum_ov019_0218b5a8_24];
+    int flags;
     int unknown_50_;
-    char unknown_54_[0x90 - 0x54];
-    Struct_02043368* unknown_90_;
-    Struct_02043368_2* unknown_94_;
+    char icons[0x90 - 0x54];
+    ClearTarget0205a234* unknown_90_;
+    Struct0205a198* unknown_94_;
     char unknown_98_[0xa0 - 0x98];
-    short unknown_a0_;
+    short iconCount;
     char unknown_a2_[0xa4 - 0xa2];
     unsigned char unknown_a4_;
     char unknown_a5_[0xa8 - 0xa5];
-    Struct_02043368_2 unknown_a8_[14];
-    Struct_02043368 unknown_2d8_;
+    Struct0205a198 entries[14];
+    ClearTarget0205a234 tail;
 };
 
-static inline void inline_ov019_0218b5a8(Struct_02021b84* arg0, Struct_ov019_0218b5a8* arg1, int arg2) {
+static inline void inline_ov019_0218b5a8(MessageSystem* g, Struct_ov019_0218b5a8* self, int id) {
 #if defined(jpn)
-    func_0204500c(arg0, (const char*)func_02072a68((struct Struct_02072a68_2*)arg1->unknown_34_, arg2), 0);
+    func_0204500c(g, (const char*)func_02072a68((struct TableA68*)self->texts, id), 0);
 #else
     func_0204500c(g, KeyTable_Get((Container020e0310*)self->texts, id), 0, 0xe3);
 #endif
 }
 
-static inline void inline_ov016_0218b5c4(int arg0) {
-    unsigned int var0 = DISPCNT;
-    DISPCNT = (var0 & ~0x7000000) | (arg0 << 24);
+static inline void inline_ov016_0218b5c4(int offset) {
+    unsigned int dispcnt = DISPCNT;
+    DISPCNT = (dispcnt & ~0x7000000) | (offset << 24);
 }
 
-static inline void inline_ov016_0218b5c4_2(int arg0) {
-    unsigned int var0 = DISPCNT;
-    DISPCNT = (var0 & ~0x38000000) | (arg0 << 27);
+static inline void inline_ov016_0218b5c4_2(int offset) {
+    unsigned int dispcnt = DISPCNT;
+    DISPCNT = (dispcnt & ~0x38000000) | (offset << 27);
 }
 
-static inline void inline_ov017_021a86d0_2(int arg0) {
-    unsigned int var0 = DISPCNT;
-    DISPCNT = (var0 & ~0x1f00) | (arg0 << 8);
+static inline void inline_ov017_021a86d0_2(int plane) {
+    unsigned int dispcnt = DISPCNT;
+    DISPCNT = (dispcnt & ~0x1f00) | (plane << 8);
 }
 
-static inline void inline_ov019_0218b5a8_2(int arg0) {
-    unsigned int var0 = DISPCNT;
-    DISPCNT = (var0 & 0xffcfffef) | arg0;
+static inline void inline_ov019_0218b5a8_2(int mode) {
+    unsigned int dispcnt = DISPCNT;
+    DISPCNT = (dispcnt & 0xffcfffef) | mode;
 }
 
-static inline void inline_ov017_021c0850(int arg0) {
-    *(volatile unsigned short*)0x4000304 = (unsigned short)((*(volatile unsigned short*)0x4000304 & ~0x8000) | (arg0 << 15));
+static inline void inline_ov017_021c0850(int sel) {
+    *(volatile unsigned short*)0x4000304 = (unsigned short)((*(volatile unsigned short*)0x4000304 & ~0x8000) | (sel << 15));
 }
 
-static inline void inline_ov019_0218b5a8_3(int arg0) {
-    BG0CNT = (unsigned short)((BG0CNT & ~3) | arg0);
+static inline void inline_ov019_0218b5a8_3(int priority) {
+    BG0CNT = (unsigned short)((BG0CNT & ~3) | priority);
 }
 
-static inline void G3_OrthoW(int t, int b, int l, int r, int n, int f, int scaleW, void* mtx) {
+static inline void inline_ov019_0218b5a8_4(int t, int b, int l, int r, int n, int f, int scaleW, void* mtx) {
     G3i_OrthoW_(t, b, l, r, n, f, scaleW, 1, mtx);
 }
 
-static inline void inline_ov019_0218b5a8_5(int arg0) {
-    GXFIFO_MATRIX_STORE = arg0;
+static inline void inline_ov019_0218b5a8_5(int num) {
+    GXFIFO_MATRIX_STORE = num;
 }
 
-static inline void inline_ov019_0218b5a8_6(int arg0, int arg1, int arg2, int arg3) {
-    *(volatile unsigned int*)0x4000580 = arg0 | (arg1 << 8) | (arg2 << 16) | (arg3 << 24);
+static inline void inline_ov019_0218b5a8_6(int x1, int arg1, int x2, int y2) {
+    *(volatile unsigned int*)0x4000580 = x1 | (arg1 << 8) | (x2 << 16) | (y2 << 24);
 }
 
 static inline void inline_ov019_0218b5a8_7() {
     DISPCNTSUB |= 0x10000;
 }
 
-static inline void inline_ov019_0218b5a8_8(int arg0) {
-    GXFIFO_MATRIX_MODE = arg0;
+static inline void inline_ov019_0218b5a8_8(int mode) {
+    GXFIFO_MATRIX_MODE = mode;
 }
 
-static inline void G3_LookAt(Vector3fix* camPos, Vector3fix* camUp, Vector3fix* target, void* mtx) {
+static inline void inline_ov019_0218b5a8_9(Vector3fix* camPos, Vector3fix* camUp, Vector3fix* target, void* mtx) {
     G3i_LookAt_((int)camPos, (int)camUp, (int)target, 1, mtx);
 }
 
 // USA: func_ov019_0218b5a8
-extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
+extern "C" ARM void func_ov019_0218b5a8(Struct_ov019_0218b5a8* self) {
     GameState* gs = GameState::GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     unsigned int* inputFlags = GlobalFlags_GetInstance();
-    DispatchWithGlobalContext020daf9c(0, 0, 1, 0);
+    func_020daf9c(0, 0, 1, 0);
     self->flags = 0;
-    self->loadCount = 0;
+    self->unknown_50_ = 0;
     SpriteContext_Init(self->icons);
     for (int i = 0; i < 14; i++) {
         Sprite_Init(&self->entries[i]);
     }
-    ClearField0And40205a234(&self->tail);
+    func_0205a234(&self->tail);
     GXx_SetMasterBrightness_((short*)0x400006c, -16);
     GXx_SetMasterBrightness_((short*)0x400106c, -16);
-    SetWord0x0_0200fb84((int*)gs, (int)self);
+    func_0200fb84((int*)gs, (int)self);
     loader->ClearQueue();
     BgVram_Clear(BgVram_GetInstance());
     void* ctx = OamManager_GetInstance();
@@ -259,7 +259,7 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
     inline_ov016_0218b5c4(0);
     inline_ov016_0218b5c4_2(0);
     BG1CNT = (BG1CNT & 0x43) | 4;
-    GX_SetVisiblePlane(0x11);
+    inline_ov017_021a86d0_2(0x11);
     GX_SetGraphicsMode(1, 0, 1);
     MapVRAMBanksToMainObj(0x20);
     inline_ov019_0218b5a8_2(0x10);
@@ -268,14 +268,14 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
     UnlockStagedTextureVRAMCopying();
     Finish3DRendering();
     func_020c51dc();
-    ResetMatrixStacks020c537c();
-    G2_SetBG0Priority(0);
+    func_020c537c();
+    inline_ov019_0218b5a8_3(0);
     Set3DClearColor(0, 0x1f, 0x7fff, 0, 0);
-    G3_OrthoW(0, 0xc0000, 0, 0x100000, -0x400000, 0x400000, 0x400000, NULL);
-    G3_StoreMtx(0);
-    G3_ViewPort(0, 0, 255, 191);
-    ConfigurePairMode020bb48c(4, 1);
-    InitGlobalStateAndInstallHandlers020bb780((void*)0x4000, 1);
+    inline_ov019_0218b5a8_4(0, 0xc0000, 0, 0x100000, -0x400000, 0x400000, 0x400000, NULL);
+    inline_ov019_0218b5a8_5(0);
+    inline_ov019_0218b5a8_6(0, 0, 255, 191);
+    func_020bb48c(4, 1);
+    func_020bb780((void*)0x4000, 1);
 
     char tables[0x70];
     char savedTables[0x70];
@@ -284,13 +284,13 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
     MessageSystem* g = MessageSystem_GetInstance();
     func_02042c68(g);
     MessageSystem_Stop(g);
-    SetField0x1e28_02042b30(g, tables);
+    func_02042b30(g, tables);
     VramState_Rewind((Foo0207df50*)tables);
     VramState_Restore(tables);
     func_020432c4(g);
     VramState_Save(tables);
 
-    unsigned int var8;
+    unsigned int size;
     BackgroundLoader::AddLockGlobal();
     if (LoadFileIntoMemory(data_ov019_0218c2c0, g_fileLoadBuffer, &size) == NULL) {
         BackgroundLoader::RemoveLockGlobal();
@@ -303,23 +303,23 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
     NarcHandle narc;
     if (narc.Initialize(data_ov019_0218c2d4, g_fileLoadBuffer)) {
         VramState_Restore(savedTables);
-        CallFunc0202f310AtField0x19e0_020440b8((char*)g, &alloc, g_fileLoadBuffer);
+        func_020440b8((char*)g, &alloc, g_fileLoadBuffer);
         VramState_Save(savedTables);
         narc.Destroy();
     }
     DebugConsole_Clear();
     DebugConsole_Upload();
-    *(int*)((char*)g + regionalG2d8) = 0;
+    *(int*)((char*)g + Enum_ov019_0218b5a8_728) = 0;
 #if defined(jpn)
     if (LoadFileIntoMemory(data_ov019_0218ceb8, g_fileLoadBuffer, &size) == NULL) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    ResetListHeader020727d8((struct List020727d8*)self->texts);
+    func_020727d8((struct Struct_020727d8*)self->texts);
     func_020728ac((int)self->texts, (int)&alloc, (struct StreamHeader*)g_fileLoadBuffer, size, 0, 0, 0);
 #else
-    void* var12 = ExtractFileFromGP2(data_ov019_0218c2d8, data_ov019_0218c2ed, &var8);
-    if (var12 == NULL) {
+    void* strings = ExtractFileFromGP2(data_ov019_0218c2d8, data_ov019_0218c2ed, &size);
+    if (strings == NULL) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
@@ -328,37 +328,37 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
 #endif
     BackgroundLoader::RemoveLockGlobal();
 
-    int var13 = 0;
-    unsigned char var14 = var0->unknown_5cc8_;
-    if (var14 == 0) {
-        inline_ov019_0218b5a8(var7, arg0, 0);
-    } else if (var14 == 1) {
-        inline_ov019_0218b5a8(var7, arg0, 1);
-    } else if (var14 == 2) {
-        inline_ov019_0218b5a8(var7, arg0, 2);
-        var13 = 1;
-    } else if (var14 == 4) {
-        inline_ov019_0218b5a8(var7, arg0, 10);
+    int state = 0;
+    unsigned char mode = gs->unknown_5cc8_;
+    if (mode == 0) {
+        inline_ov019_0218b5a8(g, self, 0);
+    } else if (mode == 1) {
+        inline_ov019_0218b5a8(g, self, 1);
+    } else if (mode == 2) {
+        inline_ov019_0218b5a8(g, self, 2);
+        state = 1;
+    } else if (mode == 4) {
+        inline_ov019_0218b5a8(g, self, 10);
     } else {
-        inline_ov019_0218b5a8(var7, arg0, 8);
-        var13 = 8;
+        inline_ov019_0218b5a8(g, self, 8);
+        state = 8;
     }
     g->active = 1;
-    WriteControlAndToggle020d86d0(0, 1);
+    func_020d86d0(0, 1);
     OS_WaitVBlankIntr();
-    ProcessRingJobs020bbcb4();
+    func_020bbcb4();
     UnlockAndSetMainBrightness((GameResources*)self, 0, 5);
     UnlockAndSetSubBrightness((GameResources*)self, -16, 1);
     UpdateAndApplyBrightness((GameResources*)self);
-    RestoreDisplayMode_020c38d4();
-    GXS_DispOn();
+    func_020c38d4();
+    inline_ov019_0218b5a8_7();
 
-    Vector3fix var15 = data_ov019_0218c294;
-    Vector3fix var16;
-    __clear(&var16, sizeof(var16));
-    Vector3fix var17 = data_ov019_0218c2a0;
-    int var18 = 1;
-    unsigned long long var19 = GetCurrentTimestamp();
+    Vector3fix target = data_ov019_0218c294;
+    Vector3fix eye;
+    __clear(&eye, sizeof(eye));
+    Vector3fix up = data_ov019_0218c2a0;
+    int running = 1;
+    unsigned long long last = GetCurrentTimestamp();
 
     for (;;) {
         Main_UpdateLidAndInput();
@@ -367,33 +367,33 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
             if (g->active == 0) {
                 if (func_020457e0(g) == 0) {
                     FlagWord_SetBits(inputFlags, 0x80);
-                    ShowText(g, self, 5);
-                    ClearStruct020a9ea4((Struct020a9ea4*)self->menu);
+                    inline_ov019_0218b5a8(g, self, 5);
+                    func_020a9ea4((Struct020a9ea4*)self->menu);
                     state = 3;
                 } else if (func_020457e0(g) == 1) {
-                    ShowText(g, self, 3);
+                    inline_ov019_0218b5a8(g, self, 3);
                     state = 2;
                 }
-                var7->unknown_998_ = 1;
+                g->active = 1;
             }
             break;
         case 2:
-            if (var7->unknown_998_ == 0) {
-                if (func_020457e0(var7) == 0) {
-                    inline_ov019_0218b5a8(var7, arg0, 4);
-                    var13 = 9;
-                } else if (func_020457e0(var7) == 1) {
-                    inline_ov019_0218b5a8(var7, arg0, 2);
-                    var13 = 1;
+            if (g->active == 0) {
+                if (func_020457e0(g) == 0) {
+                    inline_ov019_0218b5a8(g, self, 4);
+                    state = 9;
+                } else if (func_020457e0(g) == 1) {
+                    inline_ov019_0218b5a8(g, self, 2);
+                    state = 1;
                 }
-                var7->unknown_998_ = 1;
+                g->active = 1;
             }
             break;
         case 3:
-            if (var7->unknown_9a0_ == 4) {
+            if (g->mode == 4) {
                 BackgroundLoader::AddLockGlobal();
                 BackgroundLoader::FreeAllocationsGlobal();
-                if (self->loadCount == 0) {
+                if (self->unknown_50_ == 0) {
                     if (LoadFileIntoMemory(data_ov019_0218c2fe, g_fileLoadBuffer, &size) == NULL) {
                         BackgroundLoader::RemoveLockGlobal();
                         return;
@@ -402,11 +402,11 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
                     for (int i = 0; i < 14; i++) {
                         Sprite_Init(&self->entries[i]);
                     }
-                    ClearField0And40205a234(&self->tail);
-                    self->iconByte = 0;
-                    self->iconEntries = self->entries;
+                    func_0205a234(&self->tail);
+                    self->unknown_a4_ = 0;
+                    self->unknown_94_ = self->entries;
                     self->iconCount = 14;
-                    self->iconTail = &self->tail;
+                    self->unknown_90_ = &self->tail;
                     void* data = g_fileLoadBuffer;
                     int count = Pac_CountFiles((PacRecord*)data);
                     for (int i = 0; i < count; i++) {
@@ -416,17 +416,17 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
                         SpriteContext_LoadFile(self->icons, rec, recSize, &alloc);
                     }
                     self->flags |= 1;
-                    self->loadCount++;
-                } else if (self->loadCount == 1) {
+                    self->unknown_50_++;
+                } else if (self->unknown_50_ == 1) {
                     int result = func_020ab7a8(self->menu, 1);
                     if (result == 1) {
-                        ShowText(g, self, 0);
+                        inline_ov019_0218b5a8(g, self, 0);
                         g->active = 1;
                         FlagWord_ClearBits((FlagWord020466f4*)inputFlags, 0x80);
                         self->flags &= ~1;
                         state = 0;
                     } else if (result == 2) {
-                        ShowText(g, self, 1);
+                        inline_ov019_0218b5a8(g, self, 1);
                         g->active = 1;
                         FlagWord_ClearBits((FlagWord020466f4*)inputFlags, 0x80);
                         self->flags &= ~1;
@@ -445,67 +445,67 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
         case 4:
             self->flags &= ~1;
             if (g->active == 0) {
-                ShowText(g, self, 7);
+                inline_ov019_0218b5a8(g, self, 7);
                 g->active = 1;
-                ResetAndDispatchActorContext0209c6d8(g_bgmPlayer, 0x35);
+                func_0209c6d8(g_bgmPlayer, 0x35);
                 state = 5;
             }
             break;
         case 5:
-            if (var7->unknown_998_ == 0) {
-                var18 = 0;
+            if (g->active == 0) {
+                running = 0;
             }
             break;
         case 6:
-            arg0->unknown_4c_ &= ~1;
-            if (var7->unknown_998_ == 0) {
-                if (var0->unknown_5cc8_ == 0) {
-                    inline_ov019_0218b5a8(var7, arg0, 0);
-                    var13 = 0;
+            self->flags &= ~1;
+            if (g->active == 0) {
+                if (gs->unknown_5cc8_ == 0) {
+                    inline_ov019_0218b5a8(g, self, 0);
+                    state = 0;
                 } else {
-                    ShowText(g, self, 6);
-                    ResetAndDispatchActorContext0209c6d8(g_bgmPlayer, 0x3d);
+                    inline_ov019_0218b5a8(g, self, 6);
+                    func_0209c6d8(g_bgmPlayer, 0x3d);
                     state = 7;
                 }
-                var7->unknown_998_ = 1;
+                g->active = 1;
             }
             break;
         case 7:
-            arg0->unknown_4c_ &= ~1;
-            if (var7->unknown_998_ == 0) {
-                inline_ov019_0218b5a8(var7, arg0, 4);
-                var13 = 9;
-                var7->unknown_998_ = 1;
+            self->flags &= ~1;
+            if (g->active == 0) {
+                inline_ov019_0218b5a8(g, self, 4);
+                state = 9;
+                g->active = 1;
             }
             break;
         case 9:
-            if (var7->unknown_998_ == 0) {
-                var18 = 0;
+            if (g->active == 0) {
+                running = 0;
             }
             break;
         case 8:
-            arg0->unknown_4c_ &= ~1;
-            if (var7->unknown_9a0_ == 3 && func_ov019_0218c240(arg0) != 0) {
+            self->flags &= ~1;
+            if (g->mode == 3 && func_ov019_0218c240(self) != 0) {
                 if (func_020aba5c(1) == 0) {
-                    inline_ov019_0218b5a8(var7, arg0, 1);
-                    var13 = 0;
+                    inline_ov019_0218b5a8(g, self, 1);
+                    state = 0;
                 } else {
-                    inline_ov019_0218b5a8(var7, arg0, 9);
-                    var13 = 9;
+                    inline_ov019_0218b5a8(g, self, 9);
+                    state = 9;
                 }
             }
             break;
         }
-        if (!var18) {
+        if (!running) {
             break;
         }
-        UpdateAndApplyBrightness((GameResources*)arg0);
-        var1->RemoveAllLocks();
-        if (!(arg0->unknown_4c_ & 1)) {
-            func_02043368(var7);
+        UpdateAndApplyBrightness((GameResources*)self);
+        loader->RemoveAllLocks();
+        if (!(self->flags & 1)) {
+            func_02043368(g);
         }
-        if (var7->unknown_9a0_ != 3 && !(var13 == 3 && var7->unknown_9a0_ == 4)) {
-            var7->func_020444d4(1);
+        if (g->mode != 3 && !(state == 3 && g->mode == 4)) {
+            g->func_020444d4(1);
         }
         func_020bbd9c();
         G3X_Reset();
@@ -513,15 +513,15 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
         RenderConfig::Reset();
         DISP3DCNT = (DISP3DCNT & ~0x3000) | 8;
         DISP3DCNT = (DISP3DCNT & ~0x3000) | 0x10;
-        G3_MtxMode(0);
-        G3_LookAt(&eye, &up, &target, NULL);
-        G3_OrthoW(0, 0xc0000, 0, 0x100000, -0x400000, 0x400000, 0x400000, NULL);
-        G3_MtxMode(2);
-        ReleaseField0x38IfValid020444e0((Obj020444e0*)g);
+        inline_ov019_0218b5a8_8(0);
+        inline_ov019_0218b5a8_9(&eye, &up, &target, NULL);
+        inline_ov019_0218b5a8_4(0, 0xc0000, 0, 0x100000, -0x400000, 0x400000, 0x400000, NULL);
+        inline_ov019_0218b5a8_8(2);
+        func_020444e0((Obj020444e0*)g);
         func_ov019_0218c178(self);
         OamManager_FlushBuffers(ctx);
-        Forward0204359c(g, 0x10);
-        WriteControlAndToggle020d86d0(0, 1);
+        func_0204359c(g, 0x10);
+        func_020d86d0(0, 1);
         self->drawn = 1;
         OS_WaitVBlankIntr();
         OamManager_UploadBuffers((Obj0203bdb0*)ctx);
@@ -532,6 +532,6 @@ extern "C" ARM void func_ov019_0218b5a8(TitleScene0218b5a8* self) {
 
     alloc.Destroy();
     AllocatorUnion_Free(&g_mainAllocator, buffer);
-    SetByte0x4_0200fb94((char*)gs, 6);
-    SetWord0x7f6c_02012010(gs, 0);
+    func_0200fb94((char*)gs, 6);
+    func_02012010(gs, 0);
 }

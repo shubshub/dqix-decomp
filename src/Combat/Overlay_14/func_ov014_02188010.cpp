@@ -15,25 +15,25 @@
 struct Struct_ov014_02184f78 {
     Struct_ov014_02184f78* unknown_0_;
     const char* unknown_4_;
-    const char* unknown_8_;
+    const char* name_;
     short unknown_c_;
     char unknown_e_[4];
     signed char unknown_12_;
     unsigned char unknown_13_0_ : 1;
     unsigned char unknown_13_1_ : 1;
     unsigned char unknown_13_2_ : 6;
-    char unknown_14_[6];
+    char unk_14[6];
     short unknown_1a_;
-    char unknown_1c_[4];
+    char unk_1c[4];
 };
 
-struct Struct_020a95a4_5;
+struct MonsterRecord;
 
 struct Struct_ov000_0217ab8c {
-    char unknown_0_[0x2c];
-    void* unknown_2c_;
+    char unk_0[0x2c];
+    void* backgrounds_;
     char unknown_30_[6];
-    short unknown_36_;
+    short cursor_;
     unsigned char unknown_38_;
     char unknown_39_;
     unsigned char unknown_3a_;
@@ -41,42 +41,42 @@ struct Struct_ov000_0217ab8c {
 };
 
 struct Struct_020974b0 {
-    char unknown_0_[0x10];
+    char unk_0[0x10];
 };
 
 struct Struct_ov014_02186bc8 {
-    char unknown_0_[0x48];
+    char unk_0[0x48];
     Struct_ov014_02184f78* unknown_48_;
     Struct_ov014_02184f78* unknown_4c_;
-    char unknown_50_[0x31];
-    unsigned char unknown_81_;
+    char unk_50[0x31];
+    unsigned char flags_;
     unsigned char unknown_82_0_ : 1;
     unsigned char unknown_82_1_ : 1;
     unsigned char unknown_82_2_ : 1;
     unsigned char unknown_82_3_ : 1;
     unsigned char unknown_82_4_ : 4;
     char unknown_83_[0x21];
-    Struct_020974b0 unknown_a4_;
+    Struct_020974b0 list_;
     void* unknown_b4_;
-    Struct_ov014_02184f78* unknown_b8_;
+    Struct_ov014_02184f78* entries_;
     Struct_ov014_02184f78* unknown_bc_;
-    Struct_ov000_0217ab8c* unknown_c0_;
-    void* unknown_c4_;
-    void* unknown_c8_;
-    void* unknown_cc_;
-    short* unknown_d0_;
+    Struct_ov000_0217ab8c* menu_;
+    void* backgrounds_;
+    void* canvases_;
+    void* canvasBuffer_;
+    short* cursor_;
     void* unknown_d4_;
-    void* unknown_d8_;
+    void* animations_;
     void* unknown_dc_;
-    char unknown_e0_[0x18];
-    char unknown_f8_[0x54];
+    char textTable_[0x18];
+    char spriteRenderer_[0x54];
     char unknown_14c_[0xc];
     unsigned short unknown_158_;
     unsigned char unknown_15a_;
     char unknown_15b_;
     int unknown_15c_;
     int unknown_160_;
-    int unknown_164_;
+    int ticks_;
     int unknown_168_;
     int unknown_16c_;
     short unknown_170_;
@@ -100,113 +100,113 @@ struct Struct_ov014_02187450;
 struct Struct_ov014_02187450_2;
 struct Struct_ov014_02184f10;
 
-extern "C" short func_02080468(void* arg0, int arg1);
+extern "C" short func_02080468(void* obj, int id);
 extern "C" void func_0208203c(Struct_02081f20_2*);
 extern "C" void func_0207fdcc(Struct_0207fdcc_2*, int);
 extern "C" int func_ov014_02186ff0(char*);
-extern "C" Struct_020a95a4_5* func_ov014_02187450(Struct_ov014_02187450*, Struct_ov014_02187450_2*);
+extern "C" MonsterRecord* func_ov014_02187450(Struct_ov014_02187450*, Struct_ov014_02187450_2*);
 extern "C" void func_ov014_02184f10(Struct_ov014_02184f10*, int, int);
 extern "C" void func_ov014_02184e3c(unsigned char*);
 
 extern "C" {
-void func_ov014_02188330(Struct_ov014_02186bc8* arg0);
-void func_ov014_021884cc(Struct_ov014_02186bc8* arg0);
-void func_ov014_0218854c(Struct_ov014_02186bc8* arg0);
-void func_ov014_021885bc(Struct_ov014_02186bc8* arg0);
-Struct_ov014_02184f78* func_ov014_021873a0(Struct_ov014_02186bc8* arg0);
-void func_ov014_02184f78(Struct_ov014_02186bc8* arg0, Struct_ov014_02184f78* arg1, Struct_020a95a4_5* arg2, bool arg3);
-bool func_ov014_02187074(Struct_ov014_02186bc8* arg0);
-void func_ov014_021872dc(Struct_ov014_02186bc8* arg0, int arg1);
-bool func_ov014_02186f10(Struct_ov014_02186bc8* arg0);
-void func_ov014_02184dcc(Struct_ov014_02186bc8* arg0);
-void func_ov014_02184d08(Struct_ov014_02186bc8* arg0);
+void func_ov014_02188330(Struct_ov014_02186bc8* self);
+void func_ov014_021884cc(Struct_ov014_02186bc8* self);
+void func_ov014_0218854c(Struct_ov014_02186bc8* self);
+void func_ov014_021885bc(Struct_ov014_02186bc8* self);
+Struct_ov014_02184f78* func_ov014_021873a0(Struct_ov014_02186bc8* self);
+void func_ov014_02184f78(Struct_ov014_02186bc8* self, Struct_ov014_02184f78* monster, MonsterRecord* record, bool arg3);
+bool func_ov014_02187074(Struct_ov014_02186bc8* self);
+void func_ov014_021872dc(Struct_ov014_02186bc8* self, int pages);
+bool func_ov014_02186f10(Struct_ov014_02186bc8* self);
+void func_ov014_02184dcc(Struct_ov014_02186bc8* self);
+void func_ov014_02184d08(Struct_ov014_02186bc8* self);
 }
 
-static inline Struct_020a95a4_5* inline_ov014_02188010(Struct_ov014_02186bc8* arg0, Struct_ov014_02184f78* arg1)
+static inline MonsterRecord* inline_ov014_02188010(Struct_ov014_02186bc8* self, Struct_ov014_02184f78* entry)
 {
-    return func_ov014_02187450((Struct_ov014_02187450*)arg0, (Struct_ov014_02187450_2*)arg1);
+    return func_ov014_02187450((Struct_ov014_02187450*)self, (Struct_ov014_02187450_2*)entry);
 }
 
-static inline void inline_ov014_02188010_2(Struct_ov014_02186bc8* arg0, Struct_ov014_02184f78* arg1, Struct_020a95a4_5* arg2)
+static inline void inline_ov014_02188010_2(Struct_ov014_02186bc8* self, Struct_ov014_02184f78* entry, MonsterRecord* record)
 {
-    func_ov014_02184f10((Struct_ov014_02184f10*)arg0, (int)arg1, (int)arg2);
+    func_ov014_02184f10((Struct_ov014_02184f10*)self, (int)entry, (int)record);
 }
 
 // USA: func_ov014_02188010
-extern "C" ARM void func_ov014_02188010(Struct_ov014_02186bc8* arg0)
+extern "C" ARM void func_ov014_02188010(Struct_ov014_02186bc8* self)
 {
-    if (arg0->unknown_17b_ == 0)
+    if (self->unknown_17b_ == 0)
     {
-        if (arg0->unknown_17e_ & 0x10)
+        if (self->unknown_17e_ & 0x10)
             return;
-        arg0->unknown_bc_ = arg0->unknown_b8_;
-        func_ov014_02188330(arg0);
-        func_ov014_021884cc(arg0);
-        func_ov014_0218854c(arg0);
-        arg0->unknown_170_ = 5;
-        arg0->unknown_176_ = func_02080468(arg0->unknown_c0_, arg0->unknown_170_);
-        func_ov014_021885bc(arg0);
-        func_0208203c((Struct_02081f20_2*)arg0->unknown_14c_);
-        arg0->unknown_d0_ = NULL;
-        arg0->unknown_17b_++;
-        arg0->unknown_48_ = NULL;
-        arg0->unknown_4c_ = NULL;
-        Struct_ov014_02184f78* var0 = func_ov014_021873a0(arg0);
-        func_ov014_02184f78(arg0, var0, inline_ov014_02188010(arg0, var0), true);
-        arg0->unknown_82_3_ = true;
+        self->unknown_bc_ = self->entries_;
+        func_ov014_02188330(self);
+        func_ov014_021884cc(self);
+        func_ov014_0218854c(self);
+        self->unknown_170_ = 5;
+        self->unknown_176_ = func_02080468(self->menu_, self->unknown_170_);
+        func_ov014_021885bc(self);
+        func_0208203c((Struct_02081f20_2*)self->unknown_14c_);
+        self->cursor_ = NULL;
+        self->unknown_17b_++;
+        self->unknown_48_ = NULL;
+        self->unknown_4c_ = NULL;
+        Struct_ov014_02184f78* entry = func_ov014_021873a0(self);
+        func_ov014_02184f78(self, entry, inline_ov014_02188010(self, entry), true);
+        self->unknown_82_3_ = true;
     }
-    else if (arg0->unknown_17b_ == 1)
+    else if (self->unknown_17b_ == 1)
     {
-        arg0->unknown_d0_ = &arg0->unknown_176_;
-        if (func_ov014_02187074(arg0))
+        self->cursor_ = &self->unknown_176_;
+        if (func_ov014_02187074(self))
         {
-            if (arg0->unknown_178_ < 0)
+            if (self->unknown_178_ < 0)
             {
-                Struct_ov014_02184f78* var1 = func_ov014_021873a0(arg0);
-                if (var1->unknown_13_1_)
-                    inline_ov014_02188010_2(arg0, var1, inline_ov014_02188010(arg0, var1));
-                arg0->unknown_178_ = *arg0->unknown_d0_;
+                Struct_ov014_02184f78* entry = func_ov014_021873a0(self);
+                if (entry->unknown_13_1_)
+                    inline_ov014_02188010_2(self, entry, inline_ov014_02188010(self, entry));
+                self->unknown_178_ = *self->cursor_;
             }
             return;
         }
-        if (arg0->unknown_160_ != 0 || arg0->unknown_178_ != *arg0->unknown_d0_)
+        if (self->unknown_160_ != 0 || self->unknown_178_ != *self->cursor_)
         {
-            if (arg0->unknown_160_ & 0x10)
-                func_ov014_021872dc(arg0, 1);
-            else if (arg0->unknown_160_ & 0x20)
-                func_ov014_021872dc(arg0, -1);
-            func_ov014_021885bc(arg0);
-            Struct_ov014_02184f78* var2 = func_ov014_021873a0(arg0);
-            inline_ov014_02188010_2(arg0, var2, inline_ov014_02188010(arg0, var2));
+            if (self->unknown_160_ & 0x10)
+                func_ov014_021872dc(self, 1);
+            else if (self->unknown_160_ & 0x20)
+                func_ov014_021872dc(self, -1);
+            func_ov014_021885bc(self);
+            Struct_ov014_02184f78* entry = func_ov014_021873a0(self);
+            inline_ov014_02188010_2(self, entry, inline_ov014_02188010(self, entry));
         }
-        if (func_ov014_02186f10(arg0))
+        if (func_ov014_02186f10(self))
         {
-            if (arg0->unknown_17e_ & 0x40)
+            if (self->unknown_17e_ & 0x40)
             {
-                Struct_ov014_02184f78* var3 = func_ov014_021873a0(arg0);
-                inline_ov014_02188010_2(arg0, var3, inline_ov014_02188010(arg0, var3));
+                Struct_ov014_02184f78* entry = func_ov014_021873a0(self);
+                inline_ov014_02188010_2(self, entry, inline_ov014_02188010(self, entry));
             }
             else
-                func_ov014_02184e3c((unsigned char*)arg0);
+                func_ov014_02184e3c((unsigned char*)self);
         }
         else if (g_keyManager.TestKeysPressed(0x800))
-            func_ov014_02184dcc(arg0);
-        else if (func_ov014_02186ff0((char*)arg0))
+            func_ov014_02184dcc(self);
+        else if (func_ov014_02186ff0((char*)self))
         {
-            arg0->unknown_81_ &= ~4;
-            if (arg0->unknown_17d_ >= 0)
-                arg0->unknown_17a_ = 3;
-            if (arg0->unknown_17d_ < 0)
-                arg0->unknown_17a_ = 2;
-            arg0->unknown_48_ = NULL;
-            arg0->unknown_4c_ = NULL;
-            arg0->unknown_17e_ |= 0x10;
-            func_0207fdcc((Struct_0207fdcc_2*)arg0->unknown_c0_, arg0->unknown_170_);
-            arg0->unknown_17b_ = 0;
-            arg0->unknown_d0_ = NULL;
-            func_0207fdcc((Struct_0207fdcc_2*)arg0->unknown_c0_, 4);
-            func_0207fdcc((Struct_0207fdcc_2*)arg0->unknown_c0_, 3);
-            func_ov014_02184d08(arg0);
+            self->flags_ &= ~4;
+            if (self->unknown_17d_ >= 0)
+                self->unknown_17a_ = 3;
+            if (self->unknown_17d_ < 0)
+                self->unknown_17a_ = 2;
+            self->unknown_48_ = NULL;
+            self->unknown_4c_ = NULL;
+            self->unknown_17e_ |= 0x10;
+            func_0207fdcc((Struct_0207fdcc_2*)self->menu_, self->unknown_170_);
+            self->unknown_17b_ = 0;
+            self->cursor_ = NULL;
+            func_0207fdcc((Struct_0207fdcc_2*)self->menu_, 4);
+            func_0207fdcc((Struct_0207fdcc_2*)self->menu_, 3);
+            func_ov014_02184d08(self);
         }
     }
 }

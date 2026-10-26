@@ -2,12 +2,12 @@
 #include "Resource/CharacterCreationUI.h"
 
 struct Obj0205d2bc;
-void Window_TransferLayers(Obj0205d2bc*);
+extern "C" void Window_TransferLayers(Obj0205d2bc*);
 extern "C" void Background_TransferMap(BackgroundGraphics*, void*);
 extern "C" void CharacterCreationUI_ApplyTabGraphics(unsigned char*);
 extern "C" void CharacterCreationUI_RefreshSummary(char*);
-void RefreshFieldIfFlag4000_021d9d34(char*);
-void CharacterCreationUI_RefreshNameText(char*);
+extern "C" void func_ov023_021d9d34(char*);
+extern "C" void CharacterCreationUI_RefreshNameText(char*);
 extern "C" void CharacterCreationUI_RefreshYesNoMenu(unsigned char*);
 
 // Overlay 9, originally func_ov009_02184ca4 (USA/EUR 0x02184ca4, JPN 0x02185fd0)
@@ -37,7 +37,7 @@ extern "C" ARM void CharacterCreationUI_UpdateVBlank(unsigned char* storage) {
         self->flags &= ~CreationFlag_RedrawPanel;
     }
     CharacterCreationUI_RefreshSummary((char*)storage);
-    RefreshFieldIfFlag4000_021d9d34((char*)storage);
+    func_ov023_021d9d34((char*)storage);
     CharacterCreationUI_RefreshNameText((char*)storage);
     CharacterCreationUI_RefreshYesNoMenu(storage);
 }

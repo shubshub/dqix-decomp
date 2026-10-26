@@ -1,39 +1,39 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-struct Struct_ov017_021d4af8_3 { int unknown_0_; int unknown_4_; int unknown_8_; };
-struct Struct_ov017_021d4af8 { int unknown_0_; char unknown_4_[4]; int unknown_8_; int unknown_c_; };
+struct Struct_ov017_021d4af8_3 { int f0; int f4; int f8; };
+struct Struct_ov017_021d4af8 { int f0; char pad4[4]; int f8; int fc; };
 
 struct Struct_ov017_021d4af8_2 {
-	char unknown_0_[0x14];
-	int unknown_14_;
-	char unknown_18_[0x28 - 0x14 - 4];
-	struct Struct_ov017_021d4af8_3* unknown_28_;
+	char pad0[0x14];
+	int f14;
+	char pad1[0x28 - 0x14 - 4];
+	struct Struct_ov017_021d4af8_3* f28;
 	struct Struct_ov017_021d4af8_3* unknown_2c_;
 	int unknown_30_;
-	struct Struct_ov017_021d4af8* unknown_34_;
-	char unknown_38_[0x48 - 0x34 - 4];
+	struct Struct_ov017_021d4af8* f34;
+	char pad2[0x48 - 0x34 - 4];
 	int unknown_48_;
 };
 
-extern "C" void func_0200159c(int arg0);
+extern "C" void func_0200159c(int code);
 
 // USA: func_ov017_021d4af8
-extern "C" ARM int func_ov017_021d4af8(struct Struct_ov017_021d4af8_2* arg0, struct Struct_ov017_021d4af8* arg1, int arg2) {
-	struct Struct_ov017_021d4af8_3* var0 = arg0->unknown_28_;
-	if (var0 >= arg0->unknown_2c_) {
+extern "C" ARM int func_ov017_021d4af8(struct Struct_ov017_021d4af8_2* self, struct Struct_ov017_021d4af8* arg, int value) {
+	struct Struct_ov017_021d4af8_3* dst = self->f28;
+	if (dst >= self->unknown_2c_) {
 		func_0200159c(-2);
 	}
-	var0->unknown_0_ = arg2;
-	arg0->unknown_28_->unknown_8_ = (int)arg0->unknown_34_;
-	arg0->unknown_28_->unknown_4_ = arg0->unknown_30_;
+	dst->f0 = value;
+	self->f28->f8 = (int)self->f34;
+	self->f28->f4 = self->unknown_30_;
 
-	arg0->unknown_30_ = arg0->unknown_14_ - (arg1->unknown_c_ << 3);
-	arg0->unknown_14_ = arg0->unknown_30_ + (arg1->unknown_8_ << 3);
-	arg0->unknown_34_ = arg1;
-	arg0->unknown_28_ = (struct Struct_ov017_021d4af8_3*)((char*)arg0->unknown_28_ + 0xc);
+	self->unknown_30_ = self->f14 - (arg->fc << 3);
+	self->f14 = self->unknown_30_ + (arg->f8 << 3);
+	self->f34 = arg;
+	self->f28 = (struct Struct_ov017_021d4af8_3*)((char*)self->f28 + 0xc);
 
-	memset((void*)(arg0->unknown_30_ + (arg0->unknown_34_->unknown_c_ << 3)), 0, (arg0->unknown_34_->unknown_8_ - arg0->unknown_34_->unknown_c_) << 3);
+	memset((void*)(self->unknown_30_ + (self->f34->fc << 3)), 0, (self->f34->f8 - self->f34->fc) << 3);
 
-	return arg0->unknown_48_ + arg1->unknown_0_;
+	return self->unknown_48_ + arg->f0;
 }

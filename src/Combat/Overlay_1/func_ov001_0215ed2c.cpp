@@ -10,35 +10,35 @@ extern "C" void func_ov001_0215ec94(void*, int);
 extern "C" int func_ov001_0215ad3c(char*, char*, char*);
 
 struct Struct_ov001_0215ed2c {
-    int unknown_0_;
-    char* unknown_4_;
+    int type;
+    char* path;
 };
 
 // USA: func_ov001_0215ed2c
-extern "C" ARM int func_ov001_0215ed2c(void* arg0, int arg1) {
+extern "C" ARM int func_ov001_0215ed2c(void* entries, int count) {
 #if defined(jpn)
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    char var1[0x50];
-    char var2[0x50];
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    char tag[0x50];
+    char archive[0x50];
     *(int*)((char*)&data_ov001_021658b8 + 0x88) = 0;
-    Struct_ov001_0215ed2c* var3 = (Struct_ov001_0215ed2c*)arg0;
-    for (int var4 = 0; var4 < arg1; var4++) {
-        char* var5 = (char*)func_ov017_021d612c(var3++);
-        if (func_ov001_0215ad3c(var5, var1, var2) != 0) {
-            data_ov001_021658e0[var4] = var0->QueueLoadFileInGP2(var2, var1, NULL);
+    Struct_ov001_0215ed2c* parameter = (Struct_ov001_0215ed2c*)entries;
+    for (int i = 0; i < count; i++) {
+        char* path = (char*)func_ov017_021d612c(parameter++);
+        if (func_ov001_0215ad3c(path, tag, archive) != 0) {
+            data_ov001_021658e0[i] = loader->QueueLoadFileInGP2(archive, tag, NULL);
         } else {
-            sprintf(var1, data_ov001_02165745, var5);
-            data_ov001_021658e0[var4] = var0->QueueLoadFile(var1, NULL);
+            sprintf(tag, data_ov001_02165745, path);
+            data_ov001_021658e0[i] = loader->QueueLoadFile(tag, NULL);
         }
         *(int*)((char*)&data_ov001_021658b8 + 0x88) += 1;
     }
 #else
     *(int*)((char*)&data_ov001_021658b8 + 0x88) = 0;
-    int var6;
-    for (var6 = 0; var6 < arg1; var6++) {
-        void* var7 = func_ov017_021d612c(arg0);
-        arg0 = (char*)arg0 + 8;
-        func_ov001_0215ec94(var7, var6);
+    int i;
+    for (i = 0; i < count; i++) {
+        void* var7 = func_ov017_021d612c(entries);
+        entries = (char*)entries + 8;
+        func_ov001_0215ec94(var7, i);
     }
 #endif
     return 1;

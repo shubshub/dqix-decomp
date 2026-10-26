@@ -3,9 +3,9 @@
 #pragma define_section initcode ".init" RX
 
 struct Struct_ov028_021d977c;
-extern "C" void func_ov028_021d977c(struct Struct_ov028_021d977c* arg0);
-extern "C" void* func_ov028_021d979c(void* arg0);
-extern "C" void __register_global_object(void* arg0, void* arg1, void* arg2);
+extern "C" void func_ov028_021d977c(struct Struct_ov028_021d977c* obj);
+extern "C" void* func_ov028_021d979c(void* obj);
+extern "C" void __register_global_object(void* a, void* b, void* c);
 
 extern int data_ov028_021d9b14;
 extern int data_ov028_021d9ae0;

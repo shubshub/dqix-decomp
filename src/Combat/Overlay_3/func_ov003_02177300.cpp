@@ -13,59 +13,59 @@ enum { Enum_ov003_02177300_2204 = 0x89c };
 #include "GameState/GameState.h"
 
 struct Struct_0207fdcc_2;
-extern "C" void func_02080c20(struct Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_02080c68(void* arg0, int arg1, int arg2);
-struct Struct_02080f8c;
-extern "C" void func_02080f8c(struct Struct_02080f8c* arg0, int arg1, int arg2);
+extern "C" void func_02080c20(struct Struct_0207fdcc_2* obj, int key);
+extern "C" void func_02080c68(void* obj, int id, int value);
+struct Container02080f8c;
+extern "C" void func_02080f8c(struct Container02080f8c* obj, int id, int value);
 struct Struct_02080cc0;
-extern "C" void func_02080cc0(struct Struct_02080cc0* arg0, int arg1, int arg2);
-extern "C" int func_020dcc98(int arg0);
-extern "C" void func_020813ec(void* arg0, int arg1);
+extern "C" void func_02080cc0(struct Struct_02080cc0* obj, int id, int value);
+extern "C" int func_020dcc98(int combatantId);
+extern "C" void func_020813ec(void* obj, int key);
 
 // USA: func_ov003_02177300
 #pragma opt_common_subs off
-extern "C" ARM void func_ov003_02177300(char* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = *(int*)(arg0 + Enum_ov003_02177300_4144);
-    struct Struct_0207fdcc_2* var2 = *(struct Struct_0207fdcc_2**)(arg0 + Enum_ov003_02177300_2204);
-    int var3 = -1, var4 = -1;
+extern "C" ARM void func_ov003_02177300(char* self) {
+    GameState* battle = GameState::GetInstance();
+    int field = *(int*)(self + Enum_ov003_02177300_4144);
+    struct Struct_0207fdcc_2* var2 = *(struct Struct_0207fdcc_2**)(self + Enum_ov003_02177300_2204);
+    int key1 = -1, key2 = -1;
 
-    switch (var1) {
+    switch (field) {
     case 2:
-        var3 = 0xb;
-        var4 = 0x5d;
+        key1 = 0xb;
+        key2 = 0x5d;
         break;
     case 3:
-        var3 = 0xc;
-        var4 = 0x60;
+        key1 = 0xc;
+        key2 = 0x60;
         break;
     case 4:
-        var3 = 0xd;
-        var4 = 0x64;
+        key1 = 0xd;
+        key2 = 0x64;
         break;
     }
-    if (var3 < 0) {
+    if (key1 < 0) {
         return;
     }
 
-    func_02080c20(var2, var3);
-    func_02080c68(var2, var3, 0);
+    func_02080c20(var2, key1);
+    func_02080c68(var2, key1, 0);
 
-    int var5;
-    unsigned char var6;
-    for (var6 = 0; var6 < *(int*)(arg0 + Enum_ov003_02177300_4144); var6++) {
-        var5 = 0;
-        GameObject* var7 = func_0200ff1c(var0, *(int*)(arg0 + Enum_ov003_02177300_4124 + var6 * 4));
-        if (var7 != 0) {
-            var5 = *(int*)((char*)var7 + 0x134);
+    int hp;
+    unsigned char i;
+    for (i = 0; i < *(int*)(self + Enum_ov003_02177300_4144); i++) {
+        hp = 0;
+        GameObject* combatant = func_0200ff1c(battle, *(int*)(self + Enum_ov003_02177300_4124 + i * 4));
+        if (combatant != 0) {
+            hp = *(int*)((char*)combatant + 0x134);
         }
-        func_02080f8c((struct Struct_02080f8c*)var2, var4, var5);
+        func_02080f8c((struct Container02080f8c*)var2, key2, hp);
 
-        int var8 = func_020dcc98((signed char)*(int*)(arg0 + Enum_ov003_02177300_4124 + var6 * 4));
-        func_02080cc0((struct Struct_02080cc0*)var2, var4, var8);
+        int var8 = func_020dcc98((signed char)*(int*)(self + Enum_ov003_02177300_4124 + i * 4));
+        func_02080cc0((struct Struct_02080cc0*)var2, key2, var8);
 
-        var4 = (short)(var4 + 1);
+        key2 = (short)(key2 + 1);
     }
 
-    func_020813ec(var2, var3);
+    func_020813ec(var2, key1);
 }

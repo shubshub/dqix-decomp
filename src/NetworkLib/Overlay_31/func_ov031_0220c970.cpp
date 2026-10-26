@@ -7,26 +7,26 @@ extern "C" ARM void func_ov031_0220d8d4(void);
 extern void* data_ov031_0224e53c;
 
 // USA: func_ov031_0220c970
-extern "C" ARM int func_ov031_0220c970(unsigned int arg0, unsigned int arg1) {
-	int var0 = DisableIRQInterrupts();
+extern "C" ARM int func_ov031_0220c970(unsigned int a, unsigned int b) {
+	int state = DisableIRQInterrupts();
 	if (data_ov031_0224e53c != 0) {
-		SetIRQInterruptState(var0);
+		SetIRQInterruptState(state);
 		return 1;
 	}
-	if (arg0 == 0) {
-		SetIRQInterruptState(var0);
+	if (a == 0) {
+		SetIRQInterruptState(state);
 		return 1;
 	}
-	if (arg0 & 0x1f) {
-		SetIRQInterruptState(var0);
+	if (a & 0x1f) {
+		SetIRQInterruptState(state);
 		return 1;
 	}
-	if (arg1 < 0x2300) {
-		SetIRQInterruptState(var0);
+	if (b < 0x2300) {
+		SetIRQInterruptState(state);
 		return 6;
 	}
-	data_ov031_0224e53c = (void*)arg0;
-	*(unsigned int*)((char*)arg0 + 0x2000 + 0x260) = 1;
+	data_ov031_0224e53c = (void*)a;
+	*(unsigned int*)((char*)a + 0x2000 + 0x260) = 1;
 	*(unsigned short*)((char*)data_ov031_0224e53c + 0x2200 + 0x80) = 0;
 	*(unsigned short*)((char*)data_ov031_0224e53c + 0x2200 + 0x68) = 0;
 	*(unsigned char*)((char*)data_ov031_0224e53c + 0x2000 + 0x26a) = 0;
@@ -38,6 +38,6 @@ extern "C" ARM int func_ov031_0220c970(unsigned int arg0, unsigned int arg1) {
 	if (!Is64BitTimerInitialized()) Initialize64BitTimer();
 	if (!IsAlarmListInitialized()) InitializeActiveAlarmList();
 	ZeroInitializeAlarm((Alarm*)((char*)data_ov031_0224e53c + 0x22cc));
-	SetIRQInterruptState(var0);
+	SetIRQInterruptState(state);
 	return 0;
 }

@@ -2,16 +2,16 @@
 #include "Memory/SafeAllocator.h"
 #include "World/Object3D.h"
 
-struct Struct_02020cb8;
-extern "C" void func_0204af64(Struct_02020cb8* arg0);
+struct BackgroundGraphics;
+extern "C" void Background_Init(BackgroundGraphics* obj);
 
 struct Struct_ov003_02173c40 {
-    int unknown_0_;
+    int field0;
     class SafeAllocator unknown_4_;
     class SafeAllocator unknown_18_;
     class SafeAllocator unknown_2c_;
-    unsigned char unknown_40_[0x20];
-    unsigned char unknown_60_[0x20];
+    unsigned char list40[0x20];
+    unsigned char list60[0x20];
     unsigned char unknown_80_[0xac];
     unsigned char unknown_12c_;
     signed char unknown_12d_;
@@ -19,7 +19,7 @@ struct Struct_ov003_02173c40 {
     int unknown_134_;
     int unknown_138_;
     int unknown_13c_;
-    unsigned char unknown_140_;
+    unsigned char b140;
     unsigned char unknown_141_;
     unsigned char unknown_142_;
     unsigned char unknown_143_;
@@ -28,25 +28,25 @@ struct Struct_ov003_02173c40 {
 };
 
 // USA: func_ov003_0217bcb8
-extern "C" ARM void func_ov003_0217bcb8(Struct_ov003_02173c40* arg0) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_.ResetAllocatorPointer();
-    arg0->unknown_18_.ResetAllocatorPointer();
-    arg0->unknown_2c_.ResetAllocatorPointer();
-    func_0204af64((Struct_02020cb8*)arg0->unknown_40_);
-    func_0204af64((Struct_02020cb8*)arg0->unknown_60_);
-    ((Object3D*)arg0->unknown_80_)->Initialize();
-    arg0->unknown_12c_ = 0;
-    int var0 = arg0->unknown_12c_ - 1;
-    arg0->unknown_12d_ = var0;
-    arg0->unknown_130_ = var0;
-    arg0->unknown_134_ = var0;
-    arg0->unknown_138_ = var0;
-    arg0->unknown_13c_ = var0;
-    arg0->unknown_140_ = 0;
-    arg0->unknown_141_ = 0;
-    arg0->unknown_143_ = 0;
-    arg0->unknown_142_ = 0;
-    arg0->unknown_160_ = 0;
-    *(short*)((char*)arg0 + 0x15c) = 0;
+extern "C" ARM void func_ov003_0217bcb8(Struct_ov003_02173c40* self) {
+    self->field0 = 0;
+    self->unknown_4_.ResetAllocatorPointer();
+    self->unknown_18_.ResetAllocatorPointer();
+    self->unknown_2c_.ResetAllocatorPointer();
+    Background_Init((BackgroundGraphics*)self->list40);
+    Background_Init((BackgroundGraphics*)self->list60);
+    ((Object3D*)self->unknown_80_)->Initialize();
+    self->unknown_12c_ = 0;
+    int var0 = self->unknown_12c_ - 1;
+    self->unknown_12d_ = var0;
+    self->unknown_130_ = var0;
+    self->unknown_134_ = var0;
+    self->unknown_138_ = var0;
+    self->unknown_13c_ = var0;
+    self->b140 = 0;
+    self->unknown_141_ = 0;
+    self->unknown_143_ = 0;
+    self->unknown_142_ = 0;
+    self->unknown_160_ = 0;
+    *(short*)((char*)self + 0x15c) = 0;
 }

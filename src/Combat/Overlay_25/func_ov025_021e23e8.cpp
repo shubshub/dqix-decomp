@@ -1,43 +1,43 @@
 #include <globaldefs.h>
 
 struct Struct_ov000_02171738_2 {
-    char unknown_0_[1];
-    unsigned char unknown_1_;
-    char unknown_2_[6];
-    struct Struct_ov000_02171738_2* unknown_8_;
+    char pad0[1];
+    unsigned char val;
+    char pad2[6];
+    struct Struct_ov000_02171738_2* next;
 };
 struct Struct_ov000_02171738 {
-    struct Struct_ov000_02171738_2* unknown_0_;
+    struct Struct_ov000_02171738_2* head;
 };
 
 // USA: func_ov025_021e23e8
 #if defined(jpn)
-extern "C" ARM struct Struct_ov000_02171738_2* func_ov000_02171738(struct Struct_ov000_02171738* arg0)
+extern "C" ARM struct Struct_ov000_02171738_2* func_ov000_02171738(struct Struct_ov000_02171738* list)
 #else
-extern "C" ARM struct Struct_ov000_02171738_2* func_ov025_021e23e8(struct Struct_ov000_02171738* arg0)
+extern "C" ARM struct Struct_ov000_02171738_2* func_ov025_021e23e8(struct Struct_ov000_02171738* list)
 #endif
 {
-    struct Struct_ov000_02171738_2* var0 = arg0->unknown_0_;
-    struct Struct_ov000_02171738_2* var1 = NULL;
+    struct Struct_ov000_02171738_2* cur = list->head;
+    struct Struct_ov000_02171738_2* prev = NULL;
     unsigned int var2 = 0xff;
-    struct Struct_ov000_02171738_2* var3 = NULL;
+    struct Struct_ov000_02171738_2* best = NULL;
     struct Struct_ov000_02171738_2* var4 = NULL;
-    while (var0 != NULL) {
-        unsigned char var5 = var0->unknown_1_;
-        if (var5 < var2) {
-            var4 = var1;
-            var3 = var0;
-            var2 = var5;
+    while (cur != NULL) {
+        unsigned char v = cur->val;
+        if (v < var2) {
+            var4 = prev;
+            best = cur;
+            var2 = v;
         }
-        var1 = var0;
-        var0 = var0->unknown_8_;
+        prev = cur;
+        cur = cur->next;
     }
-    if (var3 != NULL) {
+    if (best != NULL) {
         if (var4 != NULL) {
-            var4->unknown_8_ = var3->unknown_8_;
+            var4->next = best->next;
         } else {
-            arg0->unknown_0_ = var3->unknown_8_;
+            list->head = best->next;
         }
     }
-    return var3;
+    return best;
 }

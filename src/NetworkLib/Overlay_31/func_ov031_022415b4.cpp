@@ -2,6 +2,6 @@
 #include "NitroSDK/Memory.h"
 
 // USA: func_ov031_022415b4
-extern "C" ARM void func_ov031_022415b4(void* arg0, unsigned int arg1) {
-	VectorizedMemset(arg0, 0, arg1);
+extern "C" ARM void func_ov031_022415b4(void* obj, unsigned int len) {
+	VectorizedMemset(obj, 0, len);
 }

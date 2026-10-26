@@ -4,30 +4,30 @@
 #include "World/Object3D.h"
 #include "Resource/GameResources.h"
 
-struct Struct_02109bf4_2;
+struct Struct0209c830;
 
 struct Struct_ov003_0217c2bc {
-    SafeAllocator *unknown_0_;
-    SafeAllocator unknown_4_;
+    SafeAllocator *allocator;
+    SafeAllocator allocA;
     char unknown_18_[0x80 - 4 - sizeof(SafeAllocator)];
-    char unknown_80_[0x140 - 0x80];
-    unsigned char unknown_140_;
-    signed char unknown_141_;
-    unsigned char unknown_142_;
+    char object[0x140 - 0x80];
+    unsigned char mode;
+    signed char state;
+    unsigned char timer;
 };
 
-void SePlayer_PlayExtra(void *obj, int a, int b);
-extern "C" void func_ov003_0217cb3c(Scene0217c2bc *self, int mainScreen, int alternate);
-void Set3DClearColor(int a, int b, int c, int d, int e);
-extern "C" void func_ov003_0217c974(Scene0217c2bc *self);
-void SetValueAndActivate0209c830(Struct0209c830*, int);
+extern "C" void SePlayer_PlayExtra(void *obj, int a, int b);
+extern "C" void func_ov003_0217cb3c(Struct_ov003_0217c2bc *self, int arg1, int alternate);
+extern "C" void Set3DClearColor(int a, int b, int c, int d, int e);
+extern "C" void func_ov003_0217c974(Struct_ov003_0217c2bc *self);
+extern "C" void func_0209c830(Struct0209c830*, int);
 
 extern int g_sePlayer;
 extern struct Struct0209c830 g_bgmPlayer;
 
 // USA: func_ov003_0217c2bc
-extern "C" ARM void func_ov003_0217c2bc(Struct_ov003_0217c2bc *arg0) {
-    GameResources *var0 = GetGameResources();
+extern "C" ARM void func_ov003_0217c2bc(Struct_ov003_0217c2bc *self) {
+    GameResources *resources = GetGameResources();
 
     if (self->state == 0) {
         self->timer = 0x4b;
@@ -91,7 +91,7 @@ extern "C" ARM void func_ov003_0217c2bc(Struct_ov003_0217c2bc *arg0) {
         self->state++;
     } else if (self->state == 12) {
         if (IsBrightnessTransitionActive(resources)) return;
-        SetValueAndActivate0209c830(&g_bgmPlayer, 0x43);
+        func_0209c830(&g_bgmPlayer, 0x43);
         SetBrightness(resources, 0, 0x3c);
         func_ov003_0217cb3c(self, 0, 1);
         self->state++;

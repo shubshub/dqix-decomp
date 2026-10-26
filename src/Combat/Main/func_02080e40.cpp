@@ -1,41 +1,41 @@
 #include <globaldefs.h>
 
 struct Struct_0207f0ac_2 {
-    short* unknown_0_;
+    short* entries;
     char unknown_4_[4];
-    short unknown_8_;
-    short unknown_a_;
-    short unknown_c_;
+    short id;
+    short tileX;
+    short tileY;
     char unknown_e_[5];
-    unsigned char unknown_13_;
+    unsigned char count;
     char unknown_14_[4];
 };
 
 struct Struct_0207f6ac {
     char unknown_0_[4];
-    short unknown_4_;
-    short unknown_6_;
-    short unknown_8_;
-    short unknown_a_;
-    short unknown_c_;
+    short id;
+    short x;
+    short y;
+    short width;
+    short height;
     char unknown_e_[4];
-    unsigned char unknown_12_;
+    unsigned char kind;
     char unknown_13_[5];
-    Struct_0207f6ac* unknown_18_;
-    Struct_0207f6ac* unknown_1c_;
-    Struct_0207f6ac* unknown_20_;
-    Struct_0207f6ac* unknown_24_;
-    short unknown_28_;
-    unsigned char unknown_2a_;
+    Struct_0207f6ac* down;
+    Struct_0207f6ac* up;
+    Struct_0207f6ac* right;
+    Struct_0207f6ac* left;
+    short xOffset;
+    unsigned char flags;
     char unknown_2b_[5];
 };
 
-struct Struct_0207f0ac { Struct_0207f0ac_2* unknown_0_; short unknown_4_; };
-struct Struct_0207f524 { Struct_0207f6ac* unknown_0_; short unknown_4_; };
+struct Struct_0207f0ac { Struct_0207f0ac_2* entries; short count; };
+struct Struct_0207f524 { Struct_0207f6ac* entries; short count; };
 struct Struct_0207fdcc_2 {
-    void* unknown_0_;
-    Struct_0207f524 unknown_4_;
-    Struct_0207f0ac unknown_c_;
+    void* table;
+    Struct_0207f524 items;
+    Struct_0207f0ac groups;
 };
 
 extern "C" int func_02080d54(Struct_0207fdcc_2*, int, int, int);
@@ -44,30 +44,30 @@ extern "C" Struct_0207f6ac* func_0207f6ac(Struct_0207f524*, int);
 
 // USA: func_02080e40
 
-extern "C" ARM int func_02080e40(Struct_0207fdcc_2* arg0, int arg1, int arg2, int arg3) {
-    if (!func_02080d54(arg0, arg1, arg2, arg3)) return -1;
-    Struct_0207f0ac_2* var0 = func_0207f0ac(&arg0->unknown_c_, arg1);
-    if (!var0) return -1;
-    short var1 = var0->unknown_a_ * 8;
-    short var2 = var0->unknown_c_ * 8;
-    for (unsigned char var3 = 0; var3 < var0->unknown_13_; var3++) {
-        int var4 = var0->unknown_0_[var3];
-        Struct_0207f6ac* var5 = func_0207f6ac(&arg0->unknown_4_, var4);
-        if (!var5 || var5->unknown_12_ == 1) continue;
-        if (var5->unknown_2a_ & 1) continue;
-        if (!var5->unknown_18_ && !var5->unknown_1c_ && !var5->unknown_20_ && !var5->unknown_24_) continue;
-        short var6 = var5->unknown_6_ + var5->unknown_28_;
-        short var7 = var5->unknown_8_;
-        short var8 = var6 + var5->unknown_a_;
-        short var9 = var7 + var5->unknown_c_;
-        var6 += var1;
-        var7 += var2;
-        var8 += var1;
-        var9 += var2;
-        if (arg3 < var7) continue;
-        if (var9 <= arg3) continue;
-        if (arg2 < var6) continue;
-        if (var8 > arg2) return var4;
+extern "C" ARM int func_02080e40(Struct_0207fdcc_2* menu, int arg1, int arg2, int arg3) {
+    if (!func_02080d54(menu, arg1, arg2, arg3)) return -1;
+    Struct_0207f0ac_2* group = func_0207f0ac(&menu->groups, arg1);
+    if (!group) return -1;
+    short var1 = group->tileX * 8;
+    short var2 = group->tileY * 8;
+    for (unsigned char i = 0; i < group->count; i++) {
+        int id = group->entries[i];
+        Struct_0207f6ac* entry = func_0207f6ac(&menu->items, id);
+        if (!entry || entry->kind == 1) continue;
+        if (entry->flags & 1) continue;
+        if (!entry->down && !entry->up && !entry->right && !entry->left) continue;
+        short left = entry->x + entry->xOffset;
+        short top = entry->y;
+        short right = left + entry->width;
+        short bottom = top + entry->height;
+        left += var1;
+        top += var2;
+        right += var1;
+        bottom += var2;
+        if (arg3 < top) continue;
+        if (bottom <= arg3) continue;
+        if (arg2 < left) continue;
+        if (right > arg2) return id;
     }
     return -1;
 }

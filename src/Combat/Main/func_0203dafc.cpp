@@ -1,24 +1,24 @@
 #include <globaldefs.h>
 
-struct Struct_0203d028_11 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
-    int unknown_18_;
-    int unknown_1c_;
+struct Struct_203dafc {
+    int field0;
+    int field4;
+    int field8;
+    int fieldc;
+    int field10;
+    int field14;
+    int field18;
+    int field1c;
 };
 
 // USA: func_0203dafc
-extern "C" ARM void func_0203dafc(struct Struct_0203d028_11* arg0) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_c_ = 0;
-    arg0->unknown_10_ = 0;
-    arg0->unknown_14_ = 0;
-    arg0->unknown_18_ = 0;
-    arg0->unknown_1c_ = 0;
+extern "C" ARM void func_0203dafc(struct Struct_203dafc* obj) {
+    obj->field0 = 0;
+    obj->field4 = 0;
+    obj->field8 = 0;
+    obj->fieldc = 0;
+    obj->field10 = 0;
+    obj->field14 = 0;
+    obj->field18 = 0;
+    obj->field1c = 0;
 }

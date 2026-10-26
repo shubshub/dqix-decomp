@@ -3,7 +3,7 @@
 #include <globaldefs.h>
 
 struct Struct_0205c570;
-struct Struct0205cf1c;
+struct Struct_0205cf1c;
 struct SePlayer;
 
 #if defined(jpn)
@@ -12,30 +12,30 @@ enum { Enum_ov003_0215d150_0 = 0x18, Enum_ov003_0215d150_0_2 = -0x34, Enum_ov003
 enum { Enum_ov003_0215d150_0 = 0, Enum_ov003_0215d150_0_2 = 0, Enum_ov003_0215d150_0_3 = 0, Enum_ov003_0215d150_0_4 = 0, Enum_ov003_0215d150_0_5 = 0 };
 #endif
 
-struct Struct_ov003_0215d150_2 {
-    char unknown_0_[0x5c + Enum_ov003_0215d150_0_2];
-    char *unknown_5c_;
-    char unknown_60_[0x998 - 0x60 + Enum_ov003_0215d150_0_3 - Enum_ov003_0215d150_0_2];
+struct Ctl {
+    char pad0[0x5c + Enum_ov003_0215d150_0_2];
+    char *strings;
+    char pad60[0x998 - 0x60 + Enum_ov003_0215d150_0_3 - Enum_ov003_0215d150_0_2];
     int unknown_998_;
     char unknown_99c_[4];
-    int unknown_9a0_;
+    int w9a0;
 };
 
-struct Struct_ov003_02154af4_3 {
-    char unknown_0_[0x64];
-    Struct_0201099c_3 unknown_64_;
-    char unknown_6c_[0x98 - 0x6c + Enum_ov003_0215d150_0];
-    char unknown_98_[0x3b8 - 0x98];
-    unsigned char unknown_3b8_;
+struct Scene {
+    char pad0[0x64];
+    Container020e0310 cont64;
+    char pad6c[0x98 - 0x6c + Enum_ov003_0215d150_0];
+    char list98[0x3b8 - 0x98];
+    unsigned char state;
     char unknown_3b9_[2];
     unsigned char unknown_3bb_;
     unsigned char unknown_3bc_;
     unsigned char unknown_3bd_[4];
-    signed char unknown_3c1_;
+    signed char b3c1;
     unsigned char unknown_3c2_;
     unsigned char unknown_3c3_;
     char unknown_3c4_[0x3cc - 0x3c4];
-    int unknown_3cc_;
+    int w3cc;
     int unknown_3d0_;
     char unknown_3d4_[0x3ec - 0x3d4];
     unsigned char unknown_3ec_;
@@ -47,48 +47,48 @@ struct Struct_ov003_02154af4_3 {
 };
 
 struct Struct_01ff91ac_29 {
-    char unknown_0_[0xb3c];
+    char pad0[0xb3c];
     int unknown_b3c_;
 };
 
-struct Struct_ov003_0215d150 {
-    char unknown_0_[0x1840 + Enum_ov003_0215d150_0_5];
-    Struct_01ff91ac_29 unknown_1840_;
+struct Zone {
+    char pad0[0x1840 + Enum_ov003_0215d150_0_5];
+    Struct_01ff91ac_29 sub;
 };
 
-static inline Struct_01ff91ac_29 *inline_ov003_0215d150(Struct_ov003_0215d150 *arg0) { return &arg0->unknown_1840_; }
-static inline int inline_ov003_0215d150_2(Struct_01ff91ac_29 *arg0) { return arg0->unknown_b3c_; }
+static inline Struct_01ff91ac_29 *inline_ov003_0215d150(Zone *z) { return &z->sub; }
+static inline int inline_ov003_0215d150_2(Struct_01ff91ac_29 *s) { return s->unknown_b3c_; }
 
-Ctl *MessageSystem_GetInstance();
+extern "C" Ctl *MessageSystem_GetInstance();
 extern "C" int *LinkSession_GetInstance();
 extern "C" Zone *Zone3D_GetInstance();
 extern "C" void func_02046380(void *obj);
 struct StoreStruct;
-void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
-void SetByteInRange_020465f0(unsigned char *, int, unsigned char);
-int LinkSession_IsActive(int *p);
+extern "C" void func_020465c0(StoreStruct*, int, int);
+extern "C" void func_020465f0(unsigned char *, int, unsigned char);
+extern "C" int LinkSession_IsActive(int *p);
 extern "C" int LinkSession_IsGuest(int *p);
 extern "C" int LinkSession_IsHostOrSolo(int *p);
 struct Obj02046574;
-void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
-const char * KeyTable_Get(Container020e0310*, int);
-int Text_Append(char *dst, const char *src);
+extern "C" void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
+extern "C" const char * KeyTable_Get(Container020e0310*, int);
+extern "C" int Text_Append(char *dst, const char *src);
 extern "C" void func_ov003_0215cab0(char *obj, void *flag);
 extern "C" void func_ov003_0215ddc0(char *base);
 extern "C" void func_ov003_0215df1c(void *self);
 extern "C" void func_ov003_0215dd3c(char *obj);
 struct Struct_0205d81c;
-void Window_SetPanePalette(Struct_0205d81c*, int, int);
-void SetChannelAFlag0205cef8(void *obj);
-void SetChannelBFlag0205cf04(void *obj);
-int Window_GetSelectedIndex(Struct_0205c570 *);
+extern "C" void Window_SetPanePalette(Struct_0205d81c*, int, int);
+extern "C" void func_0205cef8(void *obj);
+extern "C" void func_0205cf04(void *obj);
+extern "C" int Window_GetSelectedIndex(Struct_0205c570 *);
 struct Entry_0205d6a0;
-void Window_ClosePane(Entry_0205d6a0*, int);
-void SePlayer_Play(SePlayer *, int, int);
-void ClearChannelAFlag0205cf10(void *p);
-void ClearFlagByte0205cf1c(Struct0205cf1c *);
+extern "C" void Window_ClosePane(Entry_0205d6a0*, int);
+extern "C" void SePlayer_Play(SePlayer *, int, int);
+extern "C" void func_0205cf10(void *p);
+extern "C" void func_0205cf1c(Struct_0205cf1c *);
 extern "C" int func_ov003_0215dcb8(char *obj);
-ARM int IsFlagStateOrField98Eq2_0215dd00(char *self);
+extern "C" ARM int func_ov003_0215dd00(char *self);
 
 extern int g_sePlayer;
 
@@ -99,31 +99,31 @@ extern "C" ARM void func_ov003_0215d150(Scene *self) {
     int *a       = LinkSession_GetInstance();
     Zone *b      = Zone3D_GetInstance();
 
-    if (var1->unknown_9a0_ == 3) {
-        *(unsigned char *) ((char *) var1 + 0x1000 + 0x9ae + Enum_ov003_0215d150_0_4) = 0;
+    if (g->w9a0 == 3) {
+        *(unsigned char *) ((char *) g + 0x1000 + 0x9ae + Enum_ov003_0215d150_0_4) = 0;
     }
 
-    unsigned char var4 = arg0->unknown_3b8_;
-    int var5;
+    unsigned char state = self->state;
+    int k1;
 
-    if (var4 == 0) {
-        func_02046380(var1);
-        func_020465c0((Struct_020465c0*)var1, 0, arg0->unknown_3c3_);
-        func_020465f0((unsigned char *) var1, 0, 0);
-        func_020465c0((Struct_020465c0*)var1, 1, arg0->unknown_3cc_);
-        func_020465f0((unsigned char *) var1, 1, 0);
+    if (state == 0) {
+        func_02046380(g);
+        func_020465c0((StoreStruct*)g, 0, self->unknown_3c3_);
+        func_020465f0((unsigned char *) g, 0, 0);
+        func_020465c0((StoreStruct*)g, 1, self->w3cc);
+        func_020465f0((unsigned char *) g, 1, 0);
 
         int sb;
-        sb = (self->w3d0 == 0) ? 1 : 0;
+        sb = (self->unknown_3d0_ == 0) ? 1 : 0;
         if (LinkSession_IsActive(a) != 0) {
             if (LinkSession_IsGuest(a) != 0) {
                 sb = 2;
             }
         }
-        var1->unknown_998_ = 1;
+        g->unknown_998_ = 1;
 
         char *buf = g->strings;
-        if (self->b3f0 != 0) {
+        if (self->unknown_3f0_ != 0) {
             MessageSystem_SetStringArgument((Obj02046574*)g, 0, (char*)(*(void **) ((char *) gs->GetPartyMemberByIndex(0) + 0x134)));
 
             int flag = 0;
@@ -135,12 +135,12 @@ extern "C" ARM void func_ov003_0215d150(Scene *self) {
                 Text_Append(buf, KeyTable_Get(&self->cont64, (short)0x64));
             }
 
-            if (inline_ov003_0215d150_2(inline_ov003_0215d150(var3)) == 6) {
-                var5 = 0x67;
-            } else if (arg0->unknown_3d0_ != 0) {
-                var5 = 0x65;
+            if (inline_ov003_0215d150_2(inline_ov003_0215d150(b)) == 6) {
+                k1 = 0x67;
+            } else if (self->unknown_3d0_ != 0) {
+                k1 = 0x65;
             } else {
-                var5 = 0x68;
+                k1 = 0x68;
             }
             Text_Append(buf, KeyTable_Get(&self->cont64, (short)k1));
 
@@ -148,7 +148,7 @@ extern "C" ARM void func_ov003_0215d150(Scene *self) {
                 Text_Append(buf, KeyTable_Get(&self->cont64, (short)0x6f));
             } else {
                 int k2;
-                k2 = (self->w3d0 != 0) ? 0x66 : 0x69;
+                k2 = (self->unknown_3d0_ != 0) ? 0x66 : 0x69;
                 Text_Append(buf, KeyTable_Get(&self->cont64, (short)k2));
             }
         } else {
@@ -156,58 +156,58 @@ extern "C" ARM void func_ov003_0215d150(Scene *self) {
             Text_Append(buf, KeyTable_Get(&self->cont64, (short)k0));
         }
 
-        func_ov003_0215cab0((char *) arg0, var7);
-        arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
+        func_ov003_0215cab0((char *) self, buf);
+        self->state = self->state + 1;
     }
 
-    if (var4 == 1) {
-        if (var1->unknown_9a0_ != 3) {
+    if (state == 1) {
+        if (g->w9a0 != 3) {
             return;
         }
-        arg0->unknown_3ec_ = 1;
-        arg0->unknown_3ed_ = 0;
-        arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
+        self->unknown_3ec_ = 1;
+        self->unknown_3ed_ = 0;
+        self->state = self->state + 1;
     }
-    if (var4 == 2) {
-        if (arg0->unknown_3ec_ != 0) {
+    if (state == 2) {
+        if (self->unknown_3ec_ != 0) {
             return;
         }
-        if (arg0->unknown_3f2_ == 0) {
-            func_ov003_0215ddc0((char *) arg0);
+        if (self->unknown_3f2_ == 0) {
+            func_ov003_0215ddc0((char *) self);
         }
         func_ov003_0215df1c(self);
         Window_SetPanePalette((Struct_0205d81c*)self->list98, 0, 0);
         self->state = self->state + 1;
     }
-    if (var4 == 3) {
-        arg0->unknown_3c1_ = 0;
-        func_ov003_0215dd3c((char *) arg0);
-        func_0205cef8(arg0->unknown_98_);
-        func_0205cf04(arg0->unknown_98_);
-        arg0->unknown_3b8_ = arg0->unknown_3b8_ + 1;
+    if (state == 3) {
+        self->b3c1 = 0;
+        func_ov003_0215dd3c((char *) self);
+        func_0205cef8(self->list98);
+        func_0205cf04(self->list98);
+        self->state = self->state + 1;
     }
     if (state == 4) {
-        self->b3c2 = 1;
+        self->unknown_3c2_ = 1;
         self->b3c1 = Window_GetSelectedIndex((Struct_0205c570 *) self->list98);
         if (func_ov003_0215dcb8((char *) self) != 0) {
-            self->b3c2 = 0;
+            self->unknown_3c2_ = 0;
             Window_ClosePane((Entry_0205d6a0*)self->list98, 0);
             SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
-            ClearChannelAFlag0205cf10(self->list98);
-            ClearFlagByte0205cf1c((Struct0205cf1c *) self->list98);
-            switch (self->tab3bd[self->b3c1]) {
-            case 0: self->b3bc = 2; break;
-            case 1: self->b3bc = 3; break;
-            case 2: self->b3bc = 4; break;
+            func_0205cf10(self->list98);
+            func_0205cf1c((Struct_0205cf1c *) self->list98);
+            switch (self->unknown_3bd_[self->b3c1]) {
+            case 0: self->unknown_3bc_ = 2; break;
+            case 1: self->unknown_3bc_ = 3; break;
+            case 2: self->unknown_3bc_ = 4; break;
             }
-            arg0->unknown_3b8_ = 0;
+            self->state = 0;
         } else {
-            if (IsFlagStateOrField98Eq2_0215dd00((char *) self) != 0) {
-                self->b3c2 = 0;
+            if (func_ov003_0215dd00((char *) self) != 0) {
+                self->unknown_3c2_ = 0;
                 Window_ClosePane((Entry_0205d6a0*)self->list98, 0);
-                ClearChannelAFlag0205cf10(self->list98);
-                ClearFlagByte0205cf1c((Struct0205cf1c *) self->list98);
-                self->b3bc = 4;
+                func_0205cf10(self->list98);
+                func_0205cf1c((Struct_0205cf1c *) self->list98);
+                self->unknown_3bc_ = 4;
                 self->state = 0;
             }
         }

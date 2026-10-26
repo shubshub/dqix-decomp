@@ -1,58 +1,58 @@
 #include <globaldefs.h>
 #include "NitroSDK/Cache.h"
 
-struct Struct_020200c0_4 {
-    int unknown_0_;
+struct S_b20c {
+    int field_0;
     int unknown_4_;
-    unsigned char unknown_8_;
+    unsigned char field_8;
 };
-struct Struct_ov023_021e6b8c {
-    int unknown_0_;
-    short unknown_4_;
+struct WeightedEntry021e6b8c {
+    int field_0;
+    short offset;
     short unknown_6_;
-    short unknown_8_;
-    short unknown_a_;
+    short width;
+    short height;
 };
 struct Struct_ov023_021e6b8c_2 {
-    unsigned int unknown_0_;
-    unsigned short unknown_4_;
+    unsigned int field_0;
+    unsigned short flags;
 };
 struct Struct_ov023_021e6b8c_3 {
-    void* unknown_0_;
-    Struct_ov023_021e6b8c_2* unknown_4_;
+    void* data;
+    Struct_ov023_021e6b8c_2* flags;
 };
-struct Struct_ov023_021e6b8c_4 : Struct_ov023_021e6b8c_3 {
+struct SpriteEntry021e6b8c : Struct_ov023_021e6b8c_3 {
     unsigned char unknown_8_[0x20];
 };
 struct Struct_ov023_021e6b8c_5 {
-    short unknown_0_;
+    short field_0;
     short unknown_2_;
-    const char* unknown_4_;
-    const char* unknown_8_;
+    const char* text;
+    const char* alternate;
     unsigned char unknown_c_;
-    unsigned char unknown_d_;
-    unsigned char unknown_e_;
+    unsigned char mode;
+    unsigned char index;
 };
 struct Struct_ov023_021e6b8c_6 {
-    Struct_ov023_021e6b8c_5* unknown_0_;
+    Struct_ov023_021e6b8c_5* selected;
     unsigned char unknown_4_[0x1a];
-    unsigned char unknown_1e_;
+    unsigned char flags;
     unsigned char unknown_1f_;
-    unsigned char unknown_20_;
+    unsigned char mode;
 };
 struct Struct_ov023_021e6b8c_7 {
-    Struct_ov023_021e6b8c_6* unknown_0_;
+    Struct_ov023_021e6b8c_6* owner;
     unsigned char unknown_4_[0x1364 - 4];
-    Struct_ov023_021e6b8c_4* unknown_1364_;
+    SpriteEntry021e6b8c* sprites;
     unsigned char unknown_1368_[8];
-    unsigned char unknown_1370_;
-    unsigned char unknown_1371_;
+    unsigned char index;
+    unsigned char mode;
     unsigned char unknown_1372_[10];
-    void* unknown_137c_;
+    void* buffer;
 };
-void GlyphDestination_Clear(S_b20c*);
-void GlyphDestination_SetPixels(void*, int);
-void GlyphDestination_SetRects(void*, int, unsigned char);
+extern "C" void GlyphDestination_Clear(S_b20c*);
+extern "C" void GlyphDestination_SetPixels(void*, int);
+extern "C" void GlyphDestination_SetRects(void*, int, unsigned char);
 extern "C" {
 void Keyboard_GetKeySize(int, short*, short*);
 void CanvasRect_InitFromSprite(WeightedEntry021e6b8c*, int, SpriteEntry021e6b8c*);
@@ -64,7 +64,7 @@ void LoadToMainObjVRAM(const void*, unsigned int, unsigned int);
 }
 
 // USA: func_ov023_021e6b8c
-extern "C" ARM void func_ov023_021e6b8c(LabelState021e6b8c* self, unsigned short address, Label021e6b8c* label, int size) {
+extern "C" ARM void func_ov023_021e6b8c(Struct_ov023_021e6b8c_7* self, unsigned short address, Struct_ov023_021e6b8c_5* label, int size) {
     if (self->mode != 14 || self->index <= 1 || self->index >= 10) return;
     label = self->owner->selected;
     if (label == 0 || label->index == 3) return;
@@ -76,7 +76,7 @@ extern "C" ARM void func_ov023_021e6b8c(LabelState021e6b8c* self, unsigned short
     for (int i = 0; i < 3; i++) {
         entries[i].field_0 = 0;
         entries[i].offset = 0;
-        entries[i].field_6 = 0;
+        entries[i].unknown_6_ = 0;
         entries[i].width = 0;
         entries[i].height = 0;
     }
@@ -88,7 +88,7 @@ extern "C" ARM void func_ov023_021e6b8c(LabelState021e6b8c* self, unsigned short
         offset += entries[i].width;
         size += (entries[i].width * entries[i].height) >> 1;
     }
-    SpriteHeader021e6b8c copy = *sprite;
+    Struct_ov023_021e6b8c_3 copy = *sprite;
     address = (unsigned short)(copy.flags->flags & 0x3ff) << 5;
     memcpy(self->buffer, (const void*)(0x6400000 + address), size);
     unsigned char flags = self->owner->flags;

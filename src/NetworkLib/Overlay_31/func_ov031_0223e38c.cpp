@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 
 // USA: func_ov031_0223e38c
-extern "C" ARM int func_ov031_0223e38c(char* arg0, const char* arg1, int arg2) {
-    int var0;
-    int var1 = 0;
-    var0 = 0;
-    if (arg2 > 0) do {
-        int var2 = *arg1;
-        if (var2 != 0) {
-            var1++;
-            arg1++;
-            *arg0++ = var2;
+extern "C" ARM int func_ov031_0223e38c(char* destination, const char* source, int length) {
+    int index;
+    int copied = 0;
+    index = 0;
+    if (length > 0) do {
+        int character = *source;
+        if (character != 0) {
+            copied++;
+            source++;
+            *destination++ = character;
         } else {
-            *arg0++ = 0;
+            *destination++ = 0;
         }
-        var0++;
-    } while (var0 < arg2);
-    return var1;
+        index++;
+    } while (index < length);
+    return copied;
 }

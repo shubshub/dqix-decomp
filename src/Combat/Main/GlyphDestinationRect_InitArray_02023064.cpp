@@ -10,11 +10,11 @@ struct Struct02020520 {
     short height;
 };
 
-void GlyphDestinationRect_Clear(struct Struct02020520* s);
+extern "C" void GlyphDestinationRect_Clear(struct Struct02020520* s);
 
 // Fills count rectangles from the four arrays, each one's pixels following the previous one's (4bpp: w * h / 2 bytes)
 // Main, originally InitWeightedEntries02023064 (USA 0x02023064, EUR 0x02023074, JPN 0x02022ae4)
-ARM void GlyphDestinationRect_InitArray(struct Struct02020520* rects, unsigned int count, short* xs, short* ys, short* widths, short* heights) {
+extern "C" ARM void GlyphDestinationRect_InitArray(struct Struct02020520* rects, unsigned int count, short* xs, short* ys, short* widths, short* heights) {
     int pixelOffset = 0;
     unsigned int i;
     for (i = 0; i < count; i++) {

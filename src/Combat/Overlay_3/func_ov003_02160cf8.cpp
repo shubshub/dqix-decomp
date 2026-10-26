@@ -23,33 +23,33 @@ enum { Enum_ov003_02160cf8_1192 = 0x4a8 };
 enum { Enum_ov003_02160cf8_1128 = 0x468 };
 #endif
 
-void* GlobalFlags_GetInstance(void);
-void FlagWord_SetBits(unsigned int* word, unsigned int bits);
-void ApplyElementEffect02161438(void* obj);
+extern "C" void* GlobalFlags_GetInstance(void);
+extern "C" void FlagWord_SetBits(unsigned int* word, unsigned int bits);
+extern "C" void func_ov003_02161438(void* obj);
 
 struct Struct_ov003_02160cf8_2 {
-	void* unknown_0_;
+	void* field0;
 };
 
-extern "C" void func_ov003_021672e4(struct Struct_ov003_02160cf8_2* arg0, int arg1, int arg2);
-extern "C" void func_ov003_0216724c(struct Struct_ov003_02160cf8_2* arg0, SafeAllocator* arg1);
-extern "C" int func_ov003_0216759c(struct Struct_ov003_02160cf8_2* arg0);
+extern "C" void func_ov003_021672e4(struct Struct_ov003_02160cf8_2* view, int a, int b);
+extern "C" void func_ov003_0216724c(struct Struct_ov003_02160cf8_2* view, SafeAllocator* alloc);
+extern "C" int func_ov003_0216759c(struct Struct_ov003_02160cf8_2* view);
 
 struct Struct_ov003_02160cf8 {
-	char unknown_0_[Enum_ov003_02160cf8_572];
+	char pad0[Enum_ov003_02160cf8_572];
 	SafeAllocator unknown_23c_;
 	char unknown_250_[Enum_ov003_02160cf8_792 - Enum_ov003_02160cf8_572 - sizeof(SafeAllocator)];
-	struct Struct_ov003_02160cf8_2* unknown_318_;
+	struct Struct_ov003_02160cf8_2* view;
 	char unknown_31c_[Enum_ov003_02160cf8_920 - Enum_ov003_02160cf8_796];
 	void* unknown_398_;
 	char unknown_39c_[Enum_ov003_02160cf8_1124 - Enum_ov003_02160cf8_924];
 	unsigned int unknown_464_;
 	char unknown_468_[Enum_ov003_02160cf8_1192 - Enum_ov003_02160cf8_1128];
-	unsigned char unknown_4a8_;
+	unsigned char state;
 };
 
 // USA: func_ov003_02160cf8
-extern "C" ARM int func_ov003_02160cf8(struct Self02160cf8* self) {
+extern "C" ARM int func_ov003_02160cf8(struct Struct_ov003_02160cf8* self) {
 	GameResources* res = GetGameResources();
 	void* dataPtr = GlobalFlags_GetInstance();
 	int result = 0;
@@ -60,26 +60,26 @@ extern "C" ARM int func_ov003_02160cf8(struct Self02160cf8* self) {
 	} else if (self->state == 1) {
 		if (IsSubBrightnessTransitionActive(res) == 0) {
 			FlagWord_SetBits((unsigned int*)dataPtr, 1);
-			self->alloc23c.Reset();
+			self->unknown_23c_.Reset();
 			func_ov003_021672e4(self->view, 0, -1);
-			self->view->field0 = self->field398;
-			func_ov003_0216724c(self->view, &self->alloc23c);
+			self->view->field0 = self->unknown_398_;
+			func_ov003_0216724c(self->view, &self->unknown_23c_);
 			self->state++;
 		}
-	} else if (arg0->unknown_4a8_ == 2) {
-		if (func_ov003_0216759c(arg0->unknown_318_) != 0) {
-			func_ov003_02161438(arg0);
-			arg0->unknown_4a8_++;
+	} else if (self->state == 2) {
+		if (func_ov003_0216759c(self->view) != 0) {
+			func_ov003_02161438(self);
+			self->state++;
 		}
-	} else if (arg0->unknown_4a8_ == 3) {
-		SetSubBrightness(var0, 0, 8);
-		arg0->unknown_4a8_++;
-	} else if (arg0->unknown_4a8_ == 4) {
-		if (IsSubBrightnessTransitionActive(var0) == 0) {
-			arg0->unknown_4a8_ = 0;
-			var2 = 1;
-			arg0->unknown_464_ &= ~0x400;
+	} else if (self->state == 3) {
+		SetSubBrightness(res, 0, 8);
+		self->state++;
+	} else if (self->state == 4) {
+		if (IsSubBrightnessTransitionActive(res) == 0) {
+			self->state = 0;
+			result = 1;
+			self->unknown_464_ &= ~0x400;
 		}
 	}
-	return var2;
+	return result;
 }

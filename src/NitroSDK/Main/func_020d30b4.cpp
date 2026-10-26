@@ -1,28 +1,28 @@
 #include <globaldefs.h>
 
 struct Struct_020d30b4 {
-    unsigned int unknown_0_;
-    char* unknown_4_;
+    unsigned int remaining;
+    char* cursor;
 };
 
 // USA: func_020d30b4
-extern "C" ARM void func_020d30b4(struct Struct_020d30b4* arg0, char arg1, int arg2) {
-    unsigned int var0;
-    unsigned int var1;
-    if (arg2 <= 0) {
+extern "C" ARM void func_020d30b4(struct Struct_020d30b4* sink, char value, int count) {
+    unsigned int i;
+    unsigned int limit;
+    if (count <= 0) {
         return;
     }
-    var1 = arg0->unknown_0_;
-    if (var1 > (unsigned int)arg2) {
-        var1 = arg2;
+    limit = sink->remaining;
+    if (limit > (unsigned int)count) {
+        limit = count;
     }
-    var0 = 0;
-    if (var0 < var1) {
+    i = 0;
+    if (i < limit) {
         do {
-            arg0->unknown_4_[var0] = arg1;
-            var0++;
-        } while (var0 < var1);
+            sink->cursor[i] = value;
+            i++;
+        } while (i < limit);
     }
-    arg0->unknown_0_ = arg0->unknown_0_ - var1;
-    arg0->unknown_4_ = arg0->unknown_4_ + arg2;
+    sink->remaining = sink->remaining - limit;
+    sink->cursor = sink->cursor + count;
 }

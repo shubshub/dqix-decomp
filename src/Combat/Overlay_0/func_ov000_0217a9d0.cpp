@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
-struct Struct_0205d0e0;
+struct Elem_0205d81c;
 struct Struct_0205d81c;
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" void func_02050400(unsigned char* arg0, int arg1);
+extern "C" struct Elem_0205d81c* func_0205d81c(struct Struct_0205d81c* s, int key);
+extern "C" void func_02050400(unsigned char* obj, int value);
 
 // USA: func_ov000_0217a9d0
-extern "C" ARM void func_ov000_0217a9d0(int arg0, int arg1, int arg2, struct Struct_0205d81c* arg3) {
-    struct Struct_0205d0e0* var0 = func_0205d81c(arg3, arg0);
-    int var1;
-    if (var0 == 0) return;
-    var1 = 0;
-    if (arg2 < arg1) var1 = 1;
-    func_02050400((unsigned char*)var0, var1);
+extern "C" ARM void func_ov000_0217a9d0(int key, int b, int c, struct Struct_0205d81c* s) {
+    struct Elem_0205d81c* elem = func_0205d81c(s, key);
+    int v;
+    if (elem == 0) return;
+    v = 0;
+    if (c < b) v = 1;
+    func_02050400((unsigned char*)elem, v);
 }

@@ -3,12 +3,12 @@
 #include "GameState/GameState.h"
 
 // USA: func_020abf38
-extern "C" ARM int func_020abf38(void* arg0) {
+extern "C" ARM int func_020abf38(void* dst) {
 #if defined(jpn)
-    enum { Enum_020abf38_30192 = 0x73b0 };
+    enum { regionalOffset0 = 0x73b0 };
 #else
-    enum { Enum_020abf38_30192 = 0x75f0 };
+    enum { regionalOffset0 = 0x75f0 };
 #endif
-    memcpy(arg0, (char*)GameState::GetInstance() + Enum_020abf38_30192, 0x4d0);
+    memcpy(dst, (char*)GameState::GetInstance() + regionalOffset0, 0x4d0);
     return 1;
 }

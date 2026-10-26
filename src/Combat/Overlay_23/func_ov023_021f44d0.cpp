@@ -12,19 +12,19 @@
 #endif
 
 // USA: func_ov023_021f44d0
-extern "C" ARM int func_ov023_021f44d0(void* arg0) {
+extern "C" ARM int func_ov023_021f44d0(void* obj) {
     GameState::GetInstance();
-    unsigned int var0 = *(unsigned int*)((char*)arg0 + RATIO_A);
-    unsigned short var1 = *(unsigned short*)((char*)arg0 + RATIO_B);
-    unsigned short var2 = *(unsigned short*)((char*)arg0 + RATIO_C);
-    float var3 = (float)var0;
-    float var4 = (float)var1;
-    float var5 = (float)var2;
-    float var6 = var3 * (var5 / var4);
-    if (0.0f < var6) {
-        if (var6 < 1.0f) {
-            var6 = 1.0f;
+    unsigned int a = *(unsigned int*)((char*)obj + RATIO_A);
+    unsigned short b = *(unsigned short*)((char*)obj + RATIO_B);
+    unsigned short c = *(unsigned short*)((char*)obj + RATIO_C);
+    float fa = (float)a;
+    float fb = (float)b;
+    float fc = (float)c;
+    float result = fa * (fc / fb);
+    if (0.0f < result) {
+        if (result < 1.0f) {
+            result = 1.0f;
         }
     }
-    return (int)var6;
+    return (int)result;
 }

@@ -32,11 +32,11 @@ struct DebugMenu {
     unsigned char touchEnabled;
     unsigned char touchList;
     unsigned char touchBar;
-    char pad75[3];
+    char unknown_75_[3];
     int unknown78[2];
 };
 
-void DebugMenuItem_Init(char* item);
+extern "C" void DebugMenuItem_Init(char* item);
 
 // Main, originally func_02029568 (USA 0x02029568, EUR 0x02029578, JPN 0x02029120)
 extern "C" ARM void DebugMenu_Init(struct DebugMenu* menu) {

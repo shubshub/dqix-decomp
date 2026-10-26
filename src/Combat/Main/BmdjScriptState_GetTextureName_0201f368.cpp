@@ -14,7 +14,7 @@ struct Container_1f368 {
 };
 
 // Main, originally GetPointerFromArray0x18_0201f368 (USA 0x0201f368, EUR 0x0201f378, JPN 0x0201f0f4)
-ARM void* BmdjScriptState_GetTextureName(struct Container_1f368* state, int index) {
+extern "C" ARM void* BmdjScriptState_GetTextureName(struct Container_1f368* state, int index) {
     if (index < 0 || state->textureNameCount <= index) {
         return 0;
     }

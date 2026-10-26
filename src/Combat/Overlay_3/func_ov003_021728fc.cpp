@@ -15,17 +15,17 @@ enum { Enum_ov003_021728fc_250 = 0xfa };
 enum { Enum_ov003_021728fc_969 = 0x3c9 };
 #endif
 
-int MessageSystem_GetInstance();
+extern "C" int MessageSystem_GetInstance();
 
-int GameState_UpdatePlayClocks(int commit);
-struct MainBgControlBackup02074af4;
-extern "C" ARM void func_02074af4(struct MainBgControlBackup02074af4* obj);
-void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fogEnable);
-int* GetGlobal02109030_020936f8(void);
-void ReleaseHandleAndClearFlags(struct Obj020941b0* p);
-void ResetAndSetFlag0x3c9Bit0_020939dc(void* obj);
-void* GlobalFlags_GetInstance(void);
-void FlagWord_SetBits(unsigned int* p, unsigned int mask);
+extern "C" int GameState_UpdatePlayClocks(int commit);
+struct Struct_02074af4;
+extern "C" ARM void func_02074af4(struct Struct_02074af4* obj);
+extern "C" void Set3DClearColor(int color, int alpha, int depth, int polygonId, int fogEnable);
+extern "C" int* func_020936f8(void);
+extern "C" void func_020941b0(struct Struct_02093b90_2* p);
+extern "C" void func_020939dc(void* obj);
+extern "C" void* GlobalFlags_GetInstance(void);
+extern "C" void FlagWord_SetBits(unsigned int* p, unsigned int mask);
 
 struct Struct_ov003_021728fc {
     char unknown_0_[Enum_ov003_021728fc_236];
@@ -37,41 +37,41 @@ struct Struct_ov003_021728fc {
 };
 
 // USA: func_ov003_021728fc
-extern "C" ARM void func_ov003_021728fc(Struct_ov003_021728fc* arg0) {
-    GameResources* var0 = GetGameResources();
-    if (arg0->unknown_ee_ != 0) return;
+extern "C" ARM void func_ov003_021728fc(Struct_ov003_021728fc* obj) {
+    GameResources* field4 = GetGameResources();
+    if (obj->unknown_ee_ != 0) return;
 
     GameState_UpdatePlayClocks(0);
 #if defined(jpn)
     *(int*)((char*)obj + 0xf0) = *(int*)(MessageSystem_GetInstance() + 0x28);
 #endif
-    func_02074af4((struct Struct_02074af4*)((char*)arg0 + Enum_ov003_021728fc_250));
+    func_02074af4((struct Struct_02074af4*)((char*)obj + Enum_ov003_021728fc_250));
 
-    volatile unsigned int* var1 = (volatile unsigned int*)0x4000000;
-    unsigned int var2 = (*var1 & 0x1f00) >> 8;
-    arg0->unknown_120_ = var2;
-    unsigned int var3 = 4;
-    *var1 = (*var1 & ~0x1f00) | 0x1300;
+    volatile unsigned int* dispcnt = (volatile unsigned int*)0x4000000;
+    unsigned int v = (*dispcnt & 0x1f00) >> 8;
+    obj->unknown_120_ = v;
+    unsigned int mask = 4;
+    *dispcnt = (*dispcnt & ~0x1f00) | 0x1300;
 
-    volatile unsigned short* var4 = (volatile unsigned short*)((char*)var1 + 8);
-    var4[0] = var4[0] & ~3;
-    var4[1] = (var4[1] & ~3) | 1;
-    var4[2] = (var4[2] & ~3) | 2;
-    var4[3] = (var4[3] & ~3) | 3;
-    var4[1] = (var4[1] & 0x43) | 0xf00;
+    volatile unsigned short* bg = (volatile unsigned short*)((char*)dispcnt + 8);
+    bg[0] = bg[0] & ~3;
+    bg[1] = (bg[1] & ~3) | 1;
+    bg[2] = (bg[2] & ~3) | 2;
+    bg[3] = (bg[3] & ~3) | 3;
+    bg[1] = (bg[1] & 0x43) | 0xf00;
 
-    SetFlags00(var0, var3);
-    SetFlags04(var0, 0x8de);
+    SetFlags00(field4, mask);
+    SetFlags04(field4, 0x8de);
 
     Set3DClearColor(0, 0, 0x7fff, 0, 0);
 
-    int* var5 = func_020936f8();
-    func_020941b0((struct Struct_02093b90_2*)var5);
-    ((unsigned char*)var5)[Enum_ov003_021728fc_969] = (((unsigned char*)var5)[Enum_ov003_021728fc_969] & ~1) | 1;
-    func_020939dc(var5);
+    int* g = func_020936f8();
+    func_020941b0((struct Struct_02093b90_2*)g);
+    ((unsigned char*)g)[Enum_ov003_021728fc_969] = (((unsigned char*)g)[Enum_ov003_021728fc_969] & ~1) | 1;
+    func_020939dc(g);
 
     FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0x1000);
 
-    arg0->unknown_ec_ = 1;
-    arg0->unknown_ee_ = 0;
+    obj->unknown_ec_ = 1;
+    obj->unknown_ee_ = 0;
 }

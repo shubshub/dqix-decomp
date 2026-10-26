@@ -8,11 +8,11 @@ struct Struct_020979c0;
 
 extern "C" void func_020a0cc4(unsigned int size);
 extern "C" void ROMFilesystem_InitFileTables(void);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void InitStruct020979c0(Obj020979c0* obj, unsigned char flag);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void func_020979c0(Struct_020979c0* obj, unsigned char flag);
 extern "C" void Overlay_Load(unsigned int id);
-void PushInputLogB_020a1ef0(int value);
-void PopStack1AndTrigger_020a1f4c(int value);
+extern "C" void func_020a1ef0(int value);
+extern "C" void func_020a1f4c(int value);
 extern "C" void func_ov014_02186a70(void* obj);
 extern "C" void func_ov014_021868b8(void* obj, SafeAllocator* allocator);
 extern "C" int func_ov014_02186bc8(void* obj, unsigned int tick);
@@ -21,17 +21,17 @@ extern "C" int func_02097a04(void* obj);
 extern "C" void func_02097b34(void* obj);
 extern char g_mainAllocator;
 
-struct Struct_ov017_021c03a4 {
-    char unknown_0_;
-    unsigned char unknown_1_;
-    char unknown_2_[8 - 2];
-    SafeAllocator unknown_8_;
-    void* unknown_1c_;
-    void* unknown_20_;
-    unsigned char unknown_24_;
+struct Task021c03a4 {
+    char pad0;
+    unsigned char failed;
+    char pad1[8 - 2];
+    SafeAllocator allocator;
+    void* f1c;
+    void* f20;
+    unsigned char step;
 };
 
-extern "C" void func_ov017_021c0364(Struct_ov017_021c03a4* arg0);
+extern "C" void func_ov017_021c0364(Task021c03a4* task);
 
 // Overlay 17, originally func_ov017_021c03a4 (USA/EUR 0x021c03a4, JPN 0x021c094c)
 extern "C" ARM void FieldTask_OpenMonsterList(Task021c03a4* task) {
@@ -53,33 +53,33 @@ extern "C" ARM void FieldTask_OpenMonsterList(Task021c03a4* task) {
             task->failed = 1;
             return;
         }
-        InitStruct020979c0((Obj020979c0*)task->f1c, 1);
+        func_020979c0((Struct_020979c0*)task->f1c, 1);
         Overlay_Load(OVERLAY_ID(14));
-        PushInputLogB_020a1ef0(1);
+        func_020a1ef0(1);
         func_ov014_02186a70(task->f20);
         func_ov014_021868b8(task->f20, &task->allocator);
         task->step++;
         return;
     }
-    if (arg0->unknown_24_ == 1) {
-        if (func_02097a04(arg0->unknown_1c_)) {
-            arg0->unknown_24_++;
+    if (task->step == 1) {
+        if (func_02097a04(task->f1c)) {
+            task->step++;
         }
         return;
     }
-    if (arg0->unknown_24_ == 2) {
-        if (func_ov014_02186bc8(arg0->unknown_20_, GameState::GetInstance()->GetTickCount())) {
-            arg0->unknown_24_++;
+    if (task->step == 2) {
+        if (func_ov014_02186bc8(task->f20, GameState::GetInstance()->GetTickCount())) {
+            task->step++;
         }
         return;
     }
-    if (arg0->unknown_24_ != 3) {
+    if (task->step != 3) {
         return;
     }
     func_ov014_02186b30(task->f20);
     func_02097b34(task->f1c);
     func_ov017_021c0364(task);
     ROMFilesystem_InitFileTables();
-    PopStack1AndTrigger_020a1f4c(1);
+    func_020a1f4c(1);
     task->failed = 1;
 }

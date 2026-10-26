@@ -1,81 +1,81 @@
 #include <globaldefs.h>
 
-struct Struct_0201099c_3;
+struct Container020e0310;
 
-extern "C" int func_020420e8(const char* arg0, int arg1);
-extern "C" int func_02041c08(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" int func_02041ea4(char* arg0, int arg1);
-extern "C" int func_020e0434(struct Struct_0201099c_3* arg0, int arg1);
-extern "C" int func_02041a28(char* arg0, int arg1);
-extern "C" int func_02041fac(char* arg0, int arg1, int arg2);
-extern "C" int func_02041b70(char* arg0, int arg1, const char* arg2);
-extern "C" int func_02042058(char* arg0, const char* arg1);
+extern "C" int Font_GetTextWidth(const char* str, int flags);
+extern "C" int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+extern "C" int Text_AppendCursorTag(char* dst, int cursor);
+extern "C" int KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" int func_02041a28(char* dst, int x);
+extern "C" int func_02041fac(char* buf, int a, int b);
+extern "C" int Text_AppendNTag(char* dst, int n, const char* name);
+extern "C" int Text_Append(char* dst, const char* src);
 
 #if defined(jpn)
-extern "C" int func_02042638(char* arg0, int arg1, int arg2);
+extern "C" int func_02042638(char* dst, int str, int a);
 #endif
 
 // USA: func_ov002_0215fbd4
 #if defined(jpn)
-extern "C" ARM void func_ov002_0215fbd4(char* arg0, char* arg1, int arg2) {
-    if (arg1 == NULL) return;
+extern "C" ARM void func_ov002_0215fbd4(char* obj, char* dst, int flag) {
+    if (dst == NULL) return;
 
-    int var0 = *(short*)(arg0 + 0x1a00 + 0xcc);
-    short var1 = 0x109c;
+    int cursor = *(short*)(obj + 0x1a00 + 0xcc);
+    short key = 0x109c;
 
-    if (arg2) {
-        func_02041c08(arg1, var0, 8, 5, 5, 5);
+    if (flag) {
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var0);
+    Text_AppendCursorTag(dst, cursor);
 
-    func_02041a28(arg1, 0xf);
-    struct Struct_0201099c_3* var2 = (struct Struct_0201099c_3*)(arg0 + 0x8);
-    var0 = func_020e0434(var2, 0x109a);
-    func_02042638(arg1, var0, 0x10);
+    func_02041a28(dst, 0xf);
+    struct Container020e0310* c = (struct Container020e0310*)(obj + 0x8);
+    cursor = KeyTable_Get(c, 0x109a);
+    func_02042638(dst, cursor, 0x10);
 
-    char* var3;
-    int var4;
-    var4 = 0;
-    for (; var4 < 6; var4++) {
-        var3 = arg0 + 0x1000;
-        short var5 = var1;
-        var1++;
-        int var6 = func_020e0434(var2, var5);
-        func_02041b70(arg1, var4, (const char*)var6);
-        if (var4 != 5) {
-            func_02042058(arg1, *(char**)(var3 + 0xaa4));
+    char* ptr;
+    int i;
+    i = 0;
+    for (; i < 6; i++) {
+        ptr = obj + 0x1000;
+        short oldKey = key;
+        key++;
+        int name = KeyTable_Get(c, oldKey);
+        Text_AppendNTag(dst, i, (const char*)name);
+        if (i != 5) {
+            Text_Append(dst, *(char**)(ptr + 0xaa4));
         }
     }
 }
 #else
-extern "C" ARM void func_ov002_0215fbd4(char* arg0, char* arg1, int arg2) {
-    if (arg1 == NULL) return;
+extern "C" ARM void func_ov002_0215fbd4(char* obj, char* dst, int flag) {
+    if (dst == NULL) return;
 
-    int var7 = *(short*)(arg0 + 0x1c00 + 0x4);
-    short var8 = 0x109c;
+    int cursor = *(short*)(obj + 0x1c00 + 0x4);
+    short key = 0x109c;
 
-    if (arg2) {
-        func_02041c08(arg1, var7, 8, 5, 5, 5);
+    if (flag) {
+        Text_AppendFrameTag(dst, cursor, 8, 5, 5, 5);
     }
-    func_02041ea4(arg1, var7);
+    Text_AppendCursorTag(dst, cursor);
 
-    struct Struct_0201099c_3* var9 = (struct Struct_0201099c_3*)(arg0 + 0x20);
-    var7 = func_020e0434(var9, 0x109a);
-    int var10 = func_020420e8((const char*)var7, 0);
-    func_02041a28(arg1, (0x78 - var10) >> 1);
-    func_02041fac(arg1, var7, 0x10);
+    struct Container020e0310* c = (struct Container020e0310*)(obj + 0x20);
+    cursor = KeyTable_Get(c, 0x109a);
+    int width = Font_GetTextWidth((const char*)cursor, 0);
+    func_02041a28(dst, (0x78 - width) >> 1);
+    func_02041fac(dst, cursor, 0x10);
 
-    char* var11;
-    int var12;
-    var12 = 0;
-    var11 = arg0 + 0x1000;
-    for (; var12 < 6; var12++) {
-        short var13 = var8;
-        var8++;
-        int var14 = func_020e0434(var9, var13);
-        func_02041b70(arg1, var12, (const char*)var14);
-        if (var12 != 5) {
-            func_02042058(arg1, *(char**)(var11 + 0xbdc));
+    char* ptr;
+    int i;
+    i = 0;
+    ptr = obj + 0x1000;
+    for (; i < 6; i++) {
+        short oldKey = key;
+        key++;
+        int name = KeyTable_Get(c, oldKey);
+        Text_AppendNTag(dst, i, (const char*)name);
+        if (i != 5) {
+            Text_Append(dst, *(char**)(ptr + 0xbdc));
         }
     }
 }

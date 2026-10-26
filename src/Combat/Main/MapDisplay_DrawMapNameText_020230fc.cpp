@@ -27,12 +27,12 @@ enum {
 };
 
 extern "C" void* Zone3D_GetInstance(void);
-int STD_GetStringLength(const char* text);
+extern "C" int STD_GetStringLength(const char* text);
 extern "C" void* __clear(void* dst, int count);
-void GlyphDestinationRect_InitArray(struct Struct02020520* rects, unsigned int count, short* xs, short* ys, short* widths, short* heights);
-void GlyphDestination_Clear(struct S_b20c* obj);
-void GlyphDestination_SetPixels(void* obj, int value);
-void GlyphDestination_SetRects(void* obj, int value, unsigned char flag);
+extern "C" void GlyphDestinationRect_InitArray(struct Struct02020520* rects, unsigned int count, short* xs, short* ys, short* widths, short* heights);
+extern "C" void GlyphDestination_Clear(struct S_b20c* obj);
+extern "C" void GlyphDestination_SetPixels(void* obj, int value);
+extern "C" void GlyphDestination_SetRects(void* obj, int value, unsigned char flag);
 extern "C" int GlyphDestination_DrawText(void* destination, short x, int y, char* text, int color, int font);
 
 // Main, originally func_020230fc (USA 0x020230fc, EUR 0x0202310c, JPN 0x02022b7c)

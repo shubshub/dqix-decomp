@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
-struct Struct_0205a254;
-extern "C" void func_020e27ec(struct Struct_0205a254* arg0, int arg1, short arg2, short arg3);
+struct Container0205a3d0;
+extern "C" void SpriteEntryList_SetPosition(struct Container0205a3d0* c, int key, short a, short b);
 
 struct Struct_020e28f0 {
-    char unknown_0_[0x1c];
-    unsigned short unknown_1c_;
-    char unknown_1e_[2];
-    struct Struct_0205a254* unknown_20_;
+    char pad0[0x1c];
+    unsigned short key;
+    char pad1[2];
+    struct Container0205a3d0* container;
 };
 
 // USA: func_020e28f0
-extern "C" ARM void func_020e28f0(struct Struct_020e28f0* arg0, short arg1, short arg2) {
-    func_020e27ec(arg0->unknown_20_, arg0->unknown_1c_, arg1, arg2);
+extern "C" ARM void func_020e28f0(struct Struct_020e28f0* obj, short a, short b) {
+    SpriteEntryList_SetPosition(obj->container, obj->key, a, b);
 }

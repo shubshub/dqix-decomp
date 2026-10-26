@@ -1,28 +1,28 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov004_02153978(void* arg0, short* arg1, short* arg2, short* arg3);
-extern "C" void func_ov023_021f645c(void* arg0, int arg1, unsigned short arg2, int arg3);
-extern "C" void func_ov023_021f64a8(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov004_021536e0(void* arg0, int arg1, int arg2);
+extern "C" void func_ov004_02153978(void* self, short* a, short* b, short* c);
+extern "C" void func_ov023_021f645c(void* a, int b, unsigned short c, int d);
+extern "C" void func_ov023_021f64a8(void* a, int b, int c, int d);
+extern "C" void func_ov004_021536e0(void* a, int b, int c);
 
-struct Struct_ov004_021546c0 { short unknown_0_; short unknown_2_; unsigned char unknown_4_; unsigned char unknown_5_; };
+struct Struct_ov004_021546c0 { short id; short id2; unsigned char field4; unsigned char field5; };
 extern Struct_ov004_021546c0* data_ov004_021707c0;
-extern "C" void func_ov004_021546c0(Struct_ov004_021546c0* arg0, int arg1, int arg2, unsigned char* arg3, unsigned char* arg4);
+extern "C" void func_ov004_021546c0(Struct_ov004_021546c0* arr, int key1, int key2, unsigned char* out1, unsigned char* out2);
 
 // USA: func_ov004_02154748
-extern "C" ARM int func_ov004_02154748(void* arg0) {
-    short var0, var1, var2;
-    func_ov004_02153978(arg0, &var0, &var1, &var2);
-    unsigned short var3 = (unsigned short)(var1 - 1);
-    unsigned short var4 = (unsigned short)(var3 + 0x25);
-    func_ov023_021f645c(arg0, 0x27, 5, 0xf);
-    func_ov023_021f645c(arg0, 0x28, var4, 0xf);
+extern "C" ARM int func_ov004_02154748(void* a) {
+    short fa, f8, var2;
+    func_ov004_02153978(a, &fa, &f8, &var2);
+    unsigned short tmp = (unsigned short)(f8 - 1);
+    unsigned short v = (unsigned short)(tmp + 0x25);
+    func_ov023_021f645c(a, 0x27, 5, 0xf);
+    func_ov023_021f645c(a, 0x28, v, 0xf);
 
-    unsigned char var5, var6;
-    func_ov004_021546c0(data_ov004_021707c0, var1, -1, &var5, &var6);
-    func_ov023_021f64a8(arg0, 0x38, var6, 0xf);
+    unsigned char out1, out2;
+    func_ov004_021546c0(data_ov004_021707c0, f8, -1, &out1, &out2);
+    func_ov023_021f64a8(a, 0x38, out2, 0xf);
 #if !defined(jpn)
-    func_ov004_021536e0(arg0, 0x38, 0x19);
+    func_ov004_021536e0(a, 0x38, 0x19);
 #endif
     return 0;
 }

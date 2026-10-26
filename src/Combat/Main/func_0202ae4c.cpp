@@ -6,11 +6,11 @@
 #define data_020ef7a0 data_020ef690
 #endif
 
-extern "C" void __clear(void* arg0, int arg1);
+extern "C" void __clear(void* buf, int n);
 struct Struct_020fefec;
 struct Struct_020feffc;
-extern "C" ARM void func_0202baf4(struct Struct_020fefec* arg0, struct Struct_020feffc* arg1);
-extern "C" ARM int func_020d2f28(char* arg0, const char* arg1, int arg2);
+extern "C" ARM void func_0202baf4(struct Struct_020fefec* obj, struct Struct_020feffc* item);
+extern "C" ARM int func_020d2f28(char* dst, const char* src, int n);
 
 extern char data_020ef7a0[];
 extern struct Struct_020fefec data_020fefec;
@@ -26,19 +26,19 @@ struct Struct_0202ae4c {
 };
 
 // USA: func_0202ae4c
-extern "C" ARM void func_0202ae4c(struct Struct_0202ae4c* arg0) {
-    char var0[0x18];
+extern "C" ARM void func_0202ae4c(struct Struct_0202ae4c* item) {
+    char buf[0x18];
 #if !defined(jpn)
-    __clear(var0, 0x15);
+    __clear(buf, 0x15);
 #endif
-    if (arg0->unknown_3c_ != 0 && arg0->unknown_4a_ == 0x24) {
+    if (item->unknown_3c_ != 0 && item->unknown_4a_ == 0x24) {
 #if defined(jpn)
-        VectorizedInvertedMemcpy(arg0->unknown_50_, var0, arg0->unknown_64_ << 1);
+        VectorizedInvertedMemcpy(item->unknown_50_, buf, item->unknown_64_ << 1);
 #else
-        memcpy(var0, arg0->unknown_50_, arg0->unknown_64_);
+        memcpy(buf, item->unknown_50_, item->unknown_64_);
 #endif
     } else {
-        func_020d2f28(var0, data_020ef7a0, 0x15);
+        func_020d2f28(buf, data_020ef7a0, 0x15);
     }
-    func_0202baf4(&data_020fefec, (struct Struct_020feffc*)arg0);
+    func_0202baf4(&data_020fefec, (struct Struct_020feffc*)item);
 }

@@ -1,30 +1,30 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" void func_ov017_021bdb78(int arg0);
-extern "C" void func_ov017_02191e5c(int arg0, int arg1, short arg2, unsigned char arg3, unsigned short arg4);
+extern "C" GameObject* func_0200ff1c(GameState* battleStruct, int combatantId);
+extern "C" void func_ov017_021bdb78(int id);
+extern "C" void func_ov017_02191e5c(int a, int b, short c, unsigned char d, unsigned short e);
 
-extern "C" void func_ov017_0218f80c(int arg0, int arg1);
+extern "C" void func_ov017_0218f80c(int a, int b);
 
 // USA: func_ov017_02191f4c
-extern "C" ARM void func_ov017_02191f4c(int arg0, int arg1) {
+extern "C" ARM void func_ov017_02191f4c(int a, int b) {
 #if defined(jpn)
- enum {Enum_ov017_02191f4c_396=0x180};
+ enum {regionalOffset0=0x180};
 #else
- enum {Enum_ov017_02191f4c_396=0x18c};
+ enum {regionalOffset0=0x18c};
 #endif
-	GameState* var0 = GameState::GetInstance();
-	GameObject* var1 = var0->GetCombatantByIndex(arg1);
-	if (!var1) return;
-	GameObject* var2 = func_0200ff1c(var0, arg1);
-	if (var2 != NULL && (*(int*)((char*)var2 + Enum_ov017_02191f4c_396) & 0x40)) {
-		func_ov017_021bdb78(arg1);
+	GameState* battleStruct = GameState::GetInstance();
+	GameObject* combatant = battleStruct->GetCombatantByIndex(b);
+	if (!combatant) return;
+	GameObject* c2 = func_0200ff1c(battleStruct, b);
+	if (c2 != NULL && (*(int*)((char*)c2 + regionalOffset0) & 0x40)) {
+		func_ov017_021bdb78(b);
 		return;
 	}
-	func_ov017_02191e5c(arg0, arg1, 0x1000, 0, 0);
-	int var3 = (arg1 >= 0 && arg1 <= 3);
-	if (var3) {
-		func_ov017_0218f80c(arg0, arg1);
+	func_ov017_02191e5c(a, b, 0x1000, 0, 0);
+	int inRange = (b >= 0 && b <= 3);
+	if (inRange) {
+		func_ov017_0218f80c(a, b);
 	}
 }

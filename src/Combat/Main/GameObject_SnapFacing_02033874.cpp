@@ -23,7 +23,7 @@ struct Obj02033874 {
 short fix32ReduceAngle0To2Pi(int);
 
 // Main, originally SetVecYFromValue02033874 (USA 0x02033874, EUR 0x02033884, JPN 0x020333ac)
-ARM void GameObject_SnapFacing(struct Obj02033874* self, int angle) {
+extern "C" ARM void GameObject_SnapFacing(struct Obj02033874* self, int angle) {
     struct RotationVector* rotationOut = (struct RotationVector*)((char*)self + 0x50);
     struct RotationVector* rotationIn = (struct RotationVector*)((char*)self + 0x50);
     int x, y, z;

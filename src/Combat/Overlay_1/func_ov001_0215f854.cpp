@@ -5,47 +5,47 @@
 
 extern "C" int func_ov017_021d60f4(void*);
 extern "C" void* func_ov017_021d612c(void*);
-extern "C" int func_ov001_0215ad2c(int arg0);
+extern "C" int func_ov001_0215ad2c(int x);
 extern SafeAllocator* data_ov001_021658b8[8];
-void* GetFieldPtrAt0x5ca4_02010768(void* obj);
-void GameState_SetCamera(GameState* battleStruct, int value);
+extern "C" void* func_02010768(void* obj);
+extern "C" void GameState_SetCamera(GameState* battleStruct, int value);
 
 struct Struct_0204a120;
-extern "C" void func_0204a120(struct Struct_0204a120* arg0);
+extern "C" void func_0204a120(struct Struct_0204a120* obj);
 
 struct Struct_0204a3f0_2;
 struct Struct_0204a3f0;
-extern "C" void func_0204a3f0(struct Struct_0204a3f0_2* arg0, struct Struct_0204a3f0* arg1);
+extern "C" void func_0204a3f0(struct Struct_0204a3f0_2* owner, struct Struct_0204a3f0* h);
 
-extern "C" void func_0204a440(char* arg0, const char* arg1);
-extern "C" void func_0204a464(char* arg0, const char* arg1);
+extern "C" void func_0204a440(char* obj, const char* src);
+extern "C" void func_0204a464(char* obj, const char* src);
 
 // USA: func_ov001_0215f854
-extern "C" ARM int func_ov001_0215f854(char* arg0) {
-	GameState* var0 = GameState::GetInstance();
-	SafeAllocator* var1 = data_ov001_021658b8[0];
-	void* var2 = func_02010768(var0);
+extern "C" ARM int func_ov001_0215f854(char* self) {
+	GameState* bs = GameState::GetInstance();
+	SafeAllocator* allocator = data_ov001_021658b8[0];
+	void* fieldPtr = func_02010768(bs);
 
-	int var3 = func_ov017_021d60f4(arg0);
-	void* var4 = func_ov017_021d612c(arg0 + 0x8);
-	void* var5 = func_ov017_021d612c(arg0 + 0x10);
+	int a = func_ov017_021d60f4(self);
+	void* name = func_ov017_021d612c(self + 0x8);
+	void* var5 = func_ov017_021d612c(self + 0x10);
 
-	int var6 = func_ov001_0215ad2c(var3);
+	int id = func_ov001_0215ad2c(a);
 
-	GameObject* var7 = var0->GetGameObjectByIndex(var6);
-	if (var7 == NULL) return 0;
+	GameObject* combatant = bs->GetGameObjectByIndex(id);
+	if (combatant == NULL) return 0;
 
-	void* var8 = var1->Allocate(0x268);
+	void* newObj = allocator->Allocate(0x268);
 
 	*(void**)((char*)fieldPtr + 0x4) = bs->GetCamera();
 
-	func_0204a120((struct Struct_0204a120*)var8);
-	func_0204a3f0((struct Struct_0204a3f0_2*)var8, (struct Struct_0204a3f0*)var7);
-	func_0204a440((char*)var8, (const char*)var4);
-	func_0204a464((char*)var8, (const char*)var5);
+	func_0204a120((struct Struct_0204a120*)newObj);
+	func_0204a3f0((struct Struct_0204a3f0_2*)newObj, (struct Struct_0204a3f0*)combatant);
+	func_0204a440((char*)newObj, (const char*)name);
+	func_0204a464((char*)newObj, (const char*)var5);
 
-	((Object3D*)((unsigned char*)var7))->EnableFlag(1);
-	((Object3D*)((unsigned char*)var7))->EnableFlag(0x20);
+	((Object3D*)((unsigned char*)combatant))->EnableFlag(1);
+	((Object3D*)((unsigned char*)combatant))->EnableFlag(0x20);
 
 	GameState_SetCamera(bs, (int)newObj);
 	return 1;

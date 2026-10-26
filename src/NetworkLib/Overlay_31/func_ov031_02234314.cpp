@@ -5,7 +5,7 @@ extern "C" void func_ov031_02234354(void);
 extern "C" void func_ov031_02223998(int);
 extern "C" void func_ov031_022235a0(int);
 extern "C" void func_ov031_02236878(int);
-extern "C" void func_ov031_022274c0(int arg0);
+extern "C" void func_ov031_022274c0(int v);
 extern "C" void func_ov031_022343d4(void);
 
 // USA: func_ov031_02234314

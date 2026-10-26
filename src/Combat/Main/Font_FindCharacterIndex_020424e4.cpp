@@ -3,7 +3,7 @@
 extern "C" int memcmp(const void* a, const void* b, unsigned int length); // memcmp
 
 // Main, originally FindEntryIndexByKey020424e4 (USA 0x020424e4, EUR 0x020424f4; JPN not identified)
-ARM int Font_FindCharacterIndex(int text, int font) {
+extern "C" ARM int Font_FindCharacterIndex(int text, int font) {
     FontCharacterTable* table;
     unsigned int i;
     if (text == 0) {

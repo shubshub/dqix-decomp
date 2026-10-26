@@ -2,7 +2,7 @@
 
 extern "C" int func_ov017_021d60f4(void*);
 
-struct Struct_ov001_02165880_11 { void* unknown_0_; char* unknown_4_; };
+struct Struct_ov001_02165880_11 { void* unused0; char* base; };
 extern Struct_ov001_02165880_11 data_ov001_02165880;
 
 struct Struct_02040668;
@@ -10,18 +10,18 @@ struct Struct_020406b0;
 extern "C" void func_02040668(struct Struct_02040668*);
 extern "C" void func_020406b0(struct Struct_020406b0*);
 
-struct Struct_ov001_0215c730 { int unknown_0_; char unknown_4_[8]; void* unknown_c_; };
+struct Struct_ov001_0215c730 { int word0; char pad[8]; void* fieldC; };
 
 // USA: func_ov001_0215c730
-extern "C" ARM int func_ov001_0215c730(void* arg0) {
-    int var0 = func_ov017_021d60f4(arg0);
-    int var1 = func_ov017_021d60f4((char*)arg0 + 0x8);
-    Struct_ov001_0215c730* var2 = (Struct_ov001_0215c730*)data_ov001_02165880.unknown_4_;
-    if (var2[var0].unknown_0_ != 2) return 1;
-    if (var1 != 0) {
-        func_02040668((struct Struct_02040668*)var2[var0].unknown_c_);
+extern "C" ARM int func_ov001_0215c730(void* self) {
+    int idx = func_ov017_021d60f4(self);
+    int w = func_ov017_021d60f4((char*)self + 0x8);
+    Struct_ov001_0215c730* table = (Struct_ov001_0215c730*)data_ov001_02165880.base;
+    if (table[idx].word0 != 2) return 1;
+    if (w != 0) {
+        func_02040668((struct Struct_02040668*)table[idx].fieldC);
     } else {
-        func_020406b0((struct Struct_020406b0*)var2[var0].unknown_c_);
+        func_020406b0((struct Struct_020406b0*)table[idx].fieldC);
     }
     return 1;
 }

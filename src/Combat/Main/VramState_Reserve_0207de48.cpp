@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "Graphics/VramState.h"
 
-void NNS_GfdGetFrmTexVramState(int* out);
-void NNS_GfdGetFrmPlttVramState(int* dst);
+extern "C" void NNS_GfdGetFrmTexVramState(int* out);
+extern "C" void NNS_GfdGetFrmPlttVramState(int* dst);
 extern "C" int NNS_GfdAllocFrmTexVram(unsigned int size, int fromFront, int unused);
 extern "C" int NNS_GfdAllocFrmPlttVram(unsigned int size, int b4Pltt, int bAllocFromLo);
 

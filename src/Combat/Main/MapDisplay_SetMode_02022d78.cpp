@@ -19,7 +19,7 @@ struct Obj02022d78 {
 };
 
 // Main, originally SetActiveModeSavingPrevious02022d78 (USA 0x02022d78, EUR 0x02022d88, JPN 0x020227f8)
-ARM void MapDisplay_SetMode(struct Obj02022d78* obj, int mode) {
+extern "C" ARM void MapDisplay_SetMode(struct Obj02022d78* obj, int mode) {
     if (obj->modeLoading != 0) {
         SetSubBrightness(GetGameResources(), Brightness_Black, 0);
     }

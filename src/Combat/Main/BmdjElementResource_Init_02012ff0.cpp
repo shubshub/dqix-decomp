@@ -3,7 +3,7 @@
 
 
 // Main, originally InitTrackerFields02012ff0 (USA 0x02012ff0, EUR 0x02013000, JPN 0x02012db8)
-ARM void BmdjElementResource_Init(struct Struct02012ff0* tracker) {
+extern "C" ARM void BmdjElementResource_Init(struct Struct02012ff0* tracker) {
     tracker->field0 = -1;
     tracker->field2 = 0;
     tracker->field4 = 0;

@@ -7,43 +7,43 @@ struct BlockedContextList;
 void BlockCurrentContext(BlockedContextList* p);
 
 struct Struct_ov031_02206368 {
-    char unknown_0_[0x100];
+    char pad0[0x100];
     unsigned short unknown_100_;
-    char unknown_102_[0x104 - 0x100 - 2];
+    char pad1[0x104 - 0x100 - 2];
     char unknown_104_;
 };
 
 struct Struct_ov031_02206368_2 {
-    char unknown_0_[0x68];
-    Struct_ov031_02206368* unknown_68_;
+    char pad[0x68];
+    Struct_ov031_02206368* q;
 };
 
-extern "C" ARM int func_ov031_022063ec(Struct_ov031_02206368_2* arg0);
+extern "C" ARM int func_ov031_022063ec(Struct_ov031_02206368_2* obj);
 
 // USA: func_ov031_02206368
-extern "C" ARM int func_ov031_02206368(Struct_ov031_02206368_2* arg0, int arg1, int arg2, int* arg3, int arg4) {
-    Struct_ov031_02206368* var0 = arg0->unknown_68_;
-    if (arg2 > arg1) {
-        arg2 = arg1;
+extern "C" ARM int func_ov031_02206368(Struct_ov031_02206368_2* obj, int arg1, int max, int* out, int flags) {
+    Struct_ov031_02206368* q = obj->q;
+    if (max > arg1) {
+        max = arg1;
     }
-    unsigned int var1 = DisableIRQInterrupts();
-    int var2;
-    int var3 = arg4 & 1;
+    unsigned int state = DisableIRQInterrupts();
+    int result;
+    int bit0 = flags & 1;
     for (;;) {
-        var2 = func_ov031_022063ec(arg0);
-        if (var2 >= arg2) {
-            *arg3 = var0->unknown_100_;
-            if (var2 >= arg1) {
-                var2 = arg1;
+        result = func_ov031_022063ec(obj);
+        if (result >= max) {
+            *out = q->unknown_100_;
+            if (result >= arg1) {
+                result = arg1;
             }
             break;
         }
-        if (!var3) {
-            var2 = 0;
+        if (!bit0) {
+            result = 0;
             break;
         }
-        BlockCurrentContext((BlockedContextList*)&var0->unknown_104_);
+        BlockCurrentContext((BlockedContextList*)&q->unknown_104_);
     }
-    SetIRQInterruptState(var1);
-    return var2;
+    SetIRQInterruptState(state);
+    return result;
 }

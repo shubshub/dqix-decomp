@@ -3,33 +3,33 @@
 #include "NitroSDK/ProcessorContext.h"
 
 struct Struct_ov027_021dd3f8 {
-	Struct_ov027_021dd3f8* unknown_0_;
+	Struct_ov027_021dd3f8* next;
 	union {
-		unsigned int unknown_4_;
+		unsigned int flags;
 		struct {
-			unsigned int unknown_4_0_ : 1;
-			unsigned int unknown_4_1_ : 31;
+			unsigned int active : 1;
+			unsigned int priority : 31;
 		};
 	};
-	unsigned int unknown_8_;
-	unsigned int unknown_c_;
+	unsigned int f8;
+	unsigned int fc;
 };
 
-struct Struct_ov027_021e3420_3 { void* unknown_0_; };
+struct Struct_ov027_021e3420_3 { void* field0; };
 extern Struct_ov027_021e3420_3 data_ov027_021e3420;
 
 extern "C" int func_ov027_021dd3b0(void);
 
 // USA: func_ov027_021dd3f8
-extern "C" ARM void func_ov027_021dd3f8(void* arg0, unsigned int arg1, unsigned int arg2, unsigned int arg3) {
-	Struct_ov027_021dd3f8* var0 = (Struct_ov027_021dd3f8*)arg0;
-	ProcessorContext* var1 = (ProcessorContext*)data_ov027_021e3420.unknown_0_;
+extern "C" ARM void func_ov027_021dd3f8(void* a0, unsigned int a1, unsigned int a2, unsigned int a3) {
+	Struct_ov027_021dd3f8* node = (Struct_ov027_021dd3f8*)a0;
+	ProcessorContext* ctx = (ProcessorContext*)data_ov027_021e3420.field0;
 	if (!func_ov027_021dd3b0()) return;
-	if (var0->unknown_4_0_) return;
+	if (node->active) return;
 
-	unsigned int var2 = arg3;
+	unsigned int var2 = a3;
 	if (var2 > 0x1f) {
-		unsigned int var3 = GetContextPriority(var1);
+		unsigned int var3 = GetContextPriority(ctx);
 		if (var2 == 0x20) {
 			var2 = (var3 != 0) ? (var3 - 1) : 0;
 		} else if (var2 == 0x21) {
@@ -41,50 +41,50 @@ extern "C" ARM void func_ov027_021dd3f8(void* arg0, unsigned int arg1, unsigned 
 		}
 	}
 
-	int var4 = DisableIRQInterrupts();
-	var0->unknown_4_0_ = 1;
-	var0->unknown_4_1_ = var2;
-	var0->unknown_8_ = arg1;
-	var0->unknown_c_ = arg2;
+	int state = DisableIRQInterrupts();
+	node->active = 1;
+	node->priority = var2;
+	node->f8 = a1;
+	node->fc = a2;
 
-	Struct_ov027_021dd3f8** var5 = (Struct_ov027_021dd3f8**)((char*)var1 + 0xc0);
-	Struct_ov027_021dd3f8* var6 = *var5;
-	if (var6 == 0) {
-		if (var0 == (Struct_ov027_021dd3f8*)((char*)var1 + 0xc4)) {
-			data_ov027_021e3420.unknown_0_ = 0;
+	Struct_ov027_021dd3f8** var5 = (Struct_ov027_021dd3f8**)((char*)ctx + 0xc0);
+	Struct_ov027_021dd3f8* head = *var5;
+	if (head == 0) {
+		if (node == (Struct_ov027_021dd3f8*)((char*)ctx + 0xc4)) {
+			data_ov027_021e3420.field0 = 0;
 		}
-		*var5 = var0;
-		MarkContextReadyAndSwitch(var1);
+		*var5 = node;
+		MarkContextReadyAndSwitch(ctx);
 	} else {
 		Struct_ov027_021dd3f8* var7 = *(Struct_ov027_021dd3f8* volatile*)var5;
-		if (var0 == (Struct_ov027_021dd3f8*)((char*)var1 + 0xc4)) {
-			Struct_ov027_021dd3f8* var8 = var7;
-			Struct_ov027_021dd3f8* var9 = var8->unknown_0_;
+		if (node == (Struct_ov027_021dd3f8*)((char*)ctx + 0xc4)) {
+			Struct_ov027_021dd3f8* last = var7;
+			Struct_ov027_021dd3f8* var9 = last->next;
 			if (var9 != 0) {
 				do {
-					var8 = var9;
-					var9 = var8->unknown_0_;
+					last = var9;
+					var9 = last->next;
 				} while (var9 != 0);
 			}
-			var8->unknown_0_ = var0;
-			data_ov027_021e3420.unknown_0_ = 0;
+			last->next = node;
+			data_ov027_021e3420.field0 = 0;
 		} else {
-			if (var2 < var7->unknown_4_1_) {
-				*var5 = var0;
-				var0->unknown_0_ = var7;
+			if (var2 < var7->priority) {
+				*var5 = node;
+				node->next = var7;
 			} else {
-				Struct_ov027_021dd3f8* var10 = var7;
-				Struct_ov027_021dd3f8* var11;
+				Struct_ov027_021dd3f8* prev = var7;
+				Struct_ov027_021dd3f8* cur;
 				goto test_cur;
 				do {
-					var10 = var11;
+					prev = cur;
 				test_cur:
-					var11 = var10->unknown_0_;
-				} while (var11 != 0 && var2 >= var11->unknown_4_1_);
-				var0->unknown_0_ = var11;
-				var10->unknown_0_ = var0;
+					cur = prev->next;
+				} while (cur != 0 && var2 >= cur->priority);
+				node->next = cur;
+				prev->next = node;
 			}
 		}
 	}
-	SetIRQInterruptState(var4);
+	SetIRQInterruptState(state);
 }

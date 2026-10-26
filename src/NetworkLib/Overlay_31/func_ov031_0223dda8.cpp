@@ -17,38 +17,38 @@ extern "C" void MapVRAMBanksToArm7WorkRAM(int flag);
 extern "C" void func_ov031_0223df4c(void);
 
 struct Struct_ov031_02290d68 {
-	int unknown_0_;
-	int unknown_4_;
-	int unknown_8_;
-	int unknown_c_;
-	int unknown_10_;
-	int unknown_14_;
-	int unknown_18_;
-	int unknown_1c_;
-	int unknown_20_;
-	int unknown_24_;
-	int unknown_28_;
-	int unknown_2c_;
+	int field0;
+	int field4;
+	int field8;
+	int fieldC;
+	int field10;
+	int field14;
+	int field18;
+	int field1c;
+	int field20;
+	int field24;
+	int field28;
+	int field2c;
 	int unknown_30_;
 };
 extern Struct_ov031_02290d68 data_ov031_02290d68;
 
 // USA: func_ov031_0223dda8
 extern "C" ARM void func_ov031_0223dda8(void) {
-	data_ov031_02290d68.unknown_0_ = DisableMainBGVRAMBanks();
-	data_ov031_02290d68.unknown_4_ = DisableMainObjVRAMBanks();
-	data_ov031_02290d68.unknown_8_ = DisableMainBGExtendedPaletteVRAMBanks();
-	data_ov031_02290d68.unknown_c_ = DisableMainObjExtendedPaletteVRAMBanks();
-	data_ov031_02290d68.unknown_10_ = DisableTextureImageVRAMBanks();
-	data_ov031_02290d68.unknown_14_ = DisableTexturePaletteVRAMBanks();
-	data_ov031_02290d68.unknown_18_ = DisableClearTextureVRAMBanks();
-	data_ov031_02290d68.unknown_1c_ = DisableSubBGVRAMBanks();
-	data_ov031_02290d68.unknown_20_ = DisableSubObjVRAMBanks();
-	data_ov031_02290d68.unknown_24_ = DisableSubBGExtendedPaletteVRAMBanks();
-	data_ov031_02290d68.unknown_28_ = DisableSubObjExtendedPaletteVRAMBanks();
-	data_ov031_02290d68.unknown_2c_ = DisableArm7WorkVRAMBanks();
+	data_ov031_02290d68.field0 = DisableMainBGVRAMBanks();
+	data_ov031_02290d68.field4 = DisableMainObjVRAMBanks();
+	data_ov031_02290d68.field8 = DisableMainBGExtendedPaletteVRAMBanks();
+	data_ov031_02290d68.fieldC = DisableMainObjExtendedPaletteVRAMBanks();
+	data_ov031_02290d68.field10 = DisableTextureImageVRAMBanks();
+	data_ov031_02290d68.field14 = DisableTexturePaletteVRAMBanks();
+	data_ov031_02290d68.field18 = DisableClearTextureVRAMBanks();
+	data_ov031_02290d68.field1c = DisableSubBGVRAMBanks();
+	data_ov031_02290d68.field20 = DisableSubObjVRAMBanks();
+	data_ov031_02290d68.field24 = DisableSubBGExtendedPaletteVRAMBanks();
+	data_ov031_02290d68.field28 = DisableSubObjExtendedPaletteVRAMBanks();
+	data_ov031_02290d68.field2c = DisableArm7WorkVRAMBanks();
 	data_ov031_02290d68.unknown_30_ = DisableLCDCMappedVRAMBanks();
 
-	MapVRAMBanksToArm7WorkRAM(data_ov031_02290d68.unknown_2c_);
+	MapVRAMBanksToArm7WorkRAM(data_ov031_02290d68.field2c);
 	func_ov031_0223df4c();
 }

@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Struct_021f71d8 {
-    char unknown_0_[0xc];
+    char unk0[0xc];
     unsigned short unknown_c_;
     char unknown_e_[0x14 - 0xe];
     float unknown_14_;
@@ -11,8 +11,8 @@ struct Struct_021f71d8 {
 };
 
 // USA: func_ov024_021f71d8
-extern "C" ARM int func_ov024_021f71d8(struct Struct_021f71d8* arg0) {
-    arg0->unknown_1c_ = (4.0f * arg0->unknown_14_) / (float)(arg0->unknown_c_ + 1);
-    arg0->unknown_20_ = (4.0f * arg0->unknown_18_) / (float)(arg0->unknown_c_ + 1);
+extern "C" ARM int func_ov024_021f71d8(struct Struct_021f71d8* obj) {
+    obj->unknown_1c_ = (4.0f * obj->unknown_14_) / (float)(obj->unknown_c_ + 1);
+    obj->unknown_20_ = (4.0f * obj->unknown_18_) / (float)(obj->unknown_c_ + 1);
     return 1;
 }

@@ -3,18 +3,18 @@
 extern "C" void func_0209953c(unsigned short);
 
 // USA: func_0206ec1c
-extern "C" ARM int func_0206ec1c(int arg0, int arg1, unsigned char* arg2, unsigned int arg3) {
-    int var0 = arg1 % 2;
-    int var1 = arg1 / 2;
-    if (arg3 <= var1) {
+extern "C" ARM int func_0206ec1c(int unused, int idx, unsigned char* arr, unsigned int limit) {
+    int rem = idx % 2;
+    int q = idx / 2;
+    if (limit <= q) {
         func_0209953c(0x3e7);
         return 0;
     }
     {
-        int var2 = arg2[var1];
-        if (var0 != 0) {
-            return var2 & 0xf;
+        int b = arr[q];
+        if (rem != 0) {
+            return b & 0xf;
         }
-        return var2 >> 4;
+        return b >> 4;
     }
 }

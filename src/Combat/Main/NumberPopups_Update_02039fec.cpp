@@ -28,7 +28,7 @@ enum { kNumberPopupTimer_Placed = 0x22 };   // the frame NumberPopups_AvoidOverl
 extern "C" void NumberPopups_AvoidOverlap(struct Obj02039fec* numberPopups, int index);
 
 // Main, originally ProcessSlotDamping02039fec (USA 0x02039fec, EUR 0x02039ffc, JPN 0x02039a44)
-ARM void NumberPopups_Update(struct Obj02039fec* numberPopups) {
+extern "C" ARM void NumberPopups_Update(struct Obj02039fec* numberPopups) {
     int i = numberPopups->head;
     while (i != numberPopups->tail) {
         struct NumberPopup* popup = &numberPopups->popups[i];

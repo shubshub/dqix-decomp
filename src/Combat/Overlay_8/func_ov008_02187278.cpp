@@ -30,136 +30,136 @@ struct Struct_ov008_02187278 {
     unsigned int unknown_b_4_ : 4;
 };
 
-struct Struct_01ff8b48_13 {
+struct TextTable {
     int unknown_0_[0x18 / 4];
 };
 
 
-struct Struct_02081870_2 {
+struct TextWindow {
     int unknown_0_[0xbc / 4];
 };
 
-struct Struct_ov006_02158478 {
+struct Canvas {
     int unknown_0_[0xe0 / 4];
 };
 
-struct Struct_ov009_02186e00_2 {
+struct WindowCursor {
     int unknown_0_[0x40 / 4];
 };
 
 struct Struct_ov008_021842a0_2 {
-    SafeAllocator unknown_0_;
+    SafeAllocator allocator_;
     SafeAllocator unknown_14_;
-    SafeAllocator unknown_28_;
-    SafeAllocator unknown_3c_;
-    SafeAllocator unknown_50_;
-    SafeAllocator unknown_64_;
-    SafeAllocator unknown_78_;
+    SafeAllocator textAllocator_;
+    SafeAllocator spriteAllocator_;
+    SafeAllocator iconAllocator_;
+    SafeAllocator modelAllocator_;
+    SafeAllocator titleAllocator_;
     SafeAllocator unknown_8c_;
-    Struct_01ff8b48_13 unknown_a0_;
-    char* unknown_b8_;
+    TextTable texts_;
+    char* text_;
     char unknown_bc_[0x14];
-    Struct_ov003_021594c4 unknown_d0_[3];
-    Struct_02081870_2 unknown_130_;
-    Struct_ov006_02158478 unknown_1ec_[6];
-    void* unknown_72c_;
-    void* unknown_730_;
-    void* unknown_734_;
-    void* unknown_738_;
-    void* unknown_73c_;
-    void* unknown_740_;
-    unsigned char unknown_744_[8];
+    BackgroundGraphics backgrounds_[3];
+    TextWindow window_;
+    Canvas canvases_[6];
+    void* pixels_;
+    void* renderer_;
+    void* sprites_;
+    void* animations_;
+    void* iconRenderer_;
+    void* iconSprite_;
+    unsigned char items_[8];
     unsigned char unknown_74c_;
-    Struct_ov009_02186e00_2 unknown_750_;
-    Object3D unknown_790_;
-    char unknown_83c_[0x2c8];
-    void* unknown_b04_;
+    WindowCursor cursor_;
+    Object3D model_;
+    char camera_[0x2c8];
+    void* titles_;
     void* unknown_b08_;
-    void* unknown_b0c_;
-    signed char unknown_b10_;
-    unsigned char unknown_b11_;
+    void* page_;
+    signed char state_;
+    unsigned char step_;
     unsigned char unknown_b12_;
     unsigned char unknown_b13_;
     short unknown_b14_;
     short unknown_b16_;
-    int unknown_b18_;
+    int flags_;
     int unknown_b1c_;
-    int unknown_b20_;
-    int unknown_b24_;
-    unsigned char unknown_b28_;
+    int task_;
+    int mode_;
+    unsigned char kind_;
     unsigned char unknown_b29_;
     unsigned char unknown_b2a_;
 #if !defined(jpn)
-    int unknown_b2c_;
+    int titleX_;
 #endif
     const void* unknown_b30_;
     Struct_ov008_02187278* unknown_b34_;
     void* unknown_b38_;
-    void* unknown_b3c_;
+    void* guestTitles_;
     Struct_020ac4f8 unknown_b40_[2];
 };
 
-struct Struct_0201099c_3;
+struct Container020e0310;
 
-void* MessageSystem_GetInstance();
-void Text_AppendPaletteTag(char* text, int color);
-void AppendYTag_02041a5c(char* text, int y);
-const char* KeyTable_Get(Container020e0310* texts, int id);
-void Text_Append(char* text, const char* append);
+extern "C" void* MessageSystem_GetInstance();
+extern "C" void Text_AppendPaletteTag(char* text, int color);
+extern "C" void func_02041a5c(char* text, int y);
+extern "C" const char* KeyTable_Get(Container020e0310* texts, int id);
+extern "C" void Text_Append(char* text, const char* append);
 
 extern "C" {
-void __clear(void* arg0, unsigned long arg1);
-int sprintf(char* arg0, const char* arg1, ...);
+void __clear(void* buffer, unsigned long size);
+int sprintf(char* buffer, const char* format, ...);
 }
 
 #if defined(jpn)
-struct Struct_020465c0;
+struct StoreStruct;
 extern "C" void func_02046380(void*);
-extern "C" void func_020465c0(Struct_020465c0*, int, int);
+extern "C" void func_020465c0(StoreStruct*, int, int);
 extern "C" void func_020465f0(unsigned char*, int, unsigned char);
 extern "C" void func_020465d8(unsigned char*, int, unsigned char);
 extern "C" void func_020474a8(void*, int, const char*, char*);
 #endif
 
 // USA: func_ov008_02187278
-extern "C" ARM void func_ov008_02187278(Struct_ov008_021842a0_2* arg0, char* arg1, int arg2, Struct_ov008_021843f8_2* arg3)
+extern "C" ARM void func_ov008_02187278(Struct_ov008_021842a0_2* self, char* text, int index, Struct_ov008_021843f8_2* records)
 {
-    if (arg1 == NULL)
+    if (text == NULL)
         return;
-    Struct_020ac4f8* var0 = NULL;
+    Struct_020ac4f8* time = NULL;
     Struct_020ac4f8 var1;
     func_ov008_02184598(&var1);
-    if (arg2 == 0)
+    if (index == 0)
     {
-        Struct_ov008_02187278* var2 = arg0->unknown_b34_;
-        var0 = &arg0->unknown_b40_[0];
+        Struct_ov008_02187278* var2 = self->unknown_b34_;
+        time = &self->unknown_b40_[0];
         if (var2 != NULL)
         {
-            var0 = &var1;
-            var1.unknown_0_ = var2->unknown_0_0_;
-            var1.unknown_2_ = arg0->unknown_b34_->unknown_8_0_;
+            time = &var1;
+            var1.hours = var2->unknown_0_0_;
+            var1.minutes = self->unknown_b34_->unknown_8_0_;
         }
-        else if (arg3 != NULL)
+        else if (records != NULL)
         {
-            var0 = &arg3->unknown_0_[0];
+            time = &records->unknown_0_[0];
         }
     }
-    else if (arg2 == 1)
+    else if (index == 1)
     {
-        Struct_ov008_02187278* var3 = arg0->unknown_b34_;
-        var0 = &arg0->unknown_b40_[1];
+        Struct_ov008_02187278* var3 = self->unknown_b34_;
+        time = &self->unknown_b40_[1];
         if (var3 != NULL)
         {
-            var0 = &var1;
-            var1.unknown_0_ = var3->unknown_4_0_;
-            var1.unknown_2_ = arg0->unknown_b34_->unknown_8_7_;
+            time = &var1;
+            var1.hours = var3->unknown_4_0_;
+            var1.minutes = self->unknown_b34_->unknown_8_7_;
         }
-        else if (arg3 != NULL)
+        else if (records != NULL)
         {
-            var0 = &arg3->unknown_0_[1];
+            time = &records->unknown_0_[1];
         }
     }
-    if (var0 == NULL)
+    if (time == NULL)
         return;
     GameState::GetInstance();
 #if defined(jpn)
@@ -167,19 +167,19 @@ extern "C" ARM void func_ov008_02187278(Struct_ov008_021842a0_2* arg0, char* arg
     char buffer[0x40];
     __clear(buffer, sizeof(buffer));
     func_02046380(messages);
-    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 0, time->hours);
-    SetByteInRange_020465f0((unsigned char*)messages, 0, 4);
-    SetByteAtIndex_020465d8((unsigned char*)messages, 0, 1);
-    StoreInArray0x8b0_020465c0((StoreStruct*)messages, 1, time->minutes);
-    SetByteInRange_020465f0((unsigned char*)messages, 1, 2);
-    SetByteAtIndex_020465d8((unsigned char*)messages, 1, 1);
+    func_020465c0((StoreStruct*)messages, 0, time->hours);
+    func_020465f0((unsigned char*)messages, 0, 4);
+    func_020465d8((unsigned char*)messages, 0, 1);
+    func_020465c0((StoreStruct*)messages, 1, time->minutes);
+    func_020465f0((unsigned char*)messages, 1, 2);
+    func_020465d8((unsigned char*)messages, 1, 1);
     func_020474a8(messages, 10, KeyTable_Get((Container020e0310*)&self->texts_, 0x6e), buffer);
     Text_AppendPaletteTag(text, 0xe);
     Text_Append(text, buffer);
 #else
     MessageSystem_GetInstance();
     Text_AppendPaletteTag(text, 0xe);
-    AppendYTag_02041a5c(text, 2);
+    func_02041a5c(text, 2);
     char buffer[0x40];
     __clear(buffer, sizeof(buffer));
     const char* format = KeyTable_Get((Container020e0310*)&self->texts_, 0x6e);

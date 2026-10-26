@@ -12,7 +12,7 @@ struct Container0205a3d0 {
 };
 
 // Main, originally FindEntryByHalfword0205a3d0 (USA 0x0205a3d0, EUR 0x0205a3e0, JPN 0x0205b76c)
-ARM struct Elem0205a3d0* SpriteEntryList_Find(struct Container0205a3d0* c, int key) {
+extern "C" ARM struct Elem0205a3d0* SpriteEntryList_Find(struct Container0205a3d0* c, int key) {
     struct Elem0205a3d0* result;
     unsigned short i;
     if (c->entries == NULL) {

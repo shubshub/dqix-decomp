@@ -3,67 +3,67 @@
 #include "Filesystem/FileIO.h"
 #include "std_library_functions.h"
 
-extern "C" void *__clear(void *arg0, int arg1);
+extern "C" void *__clear(void *destination, int count);
 extern const char data_020f0049[24];
 extern const char data_020f0061[24];
 
-struct Struct_0204254c {
-    int unknown_0_;
-    char unknown_4_;
-    signed char unknown_5_0_ : 6;
+struct Entry0204254c {
+    int val;
+    char pad4;
+    signed char field5 : 6;
     signed char unknown_5_6_ : 2;
-    char unknown_6_[2];
+    char pad6[2];
 };
 
 struct Struct_020425e4 {
-    unsigned short unknown_0_;
-    signed char unknown_2_;
-    unsigned char unknown_3_;
+    unsigned short key;
+    signed char val;
+    unsigned char pad;
 };
 
 struct Struct_02042804 {
-    unsigned char unknown_0_[4];
+    unsigned char unknown0[4];
     unsigned int unknown_4_;
-    unsigned int unknown_8_;
-    Struct_020425e4 *unknown_c_;
-    Struct_0204254c *unknown_10_;
-    void *unknown_14_;
+    unsigned int keyCount;
+    Struct_020425e4 *keys;
+    Entry0204254c *entries;
+    void *unknown14;
 };
 
 struct Struct_02042804_2 {
-    unsigned char unknown_0_[12];
-    void *unknown_c_;
+    unsigned char unknown0[12];
+    void *data;
 };
 
 // USA: func_02042804
-extern "C" ARM void func_02042804(void *arg0, const char *arg1, int *arg2, int *arg3) {
-    SafeAllocator *var0 = static_cast<SafeAllocator *>(arg0);
-    char var1[64];
-    __clear(var1, sizeof(var1));
-    sprintf(var1, data_020f0049, arg1);
-    unsigned int var2 = 0;
-    LoadFileIntoMemory(var1, data_0211e33c, &var2);
-    if (var2 != 0) {
-        *arg2 = reinterpret_cast<int>(var0->Allocate(var2));
-        memcpy(reinterpret_cast<void *>(*arg2), data_0211e33c, var2);
-        Struct_02042804 *var3 = reinterpret_cast<Struct_02042804 *>(*arg2);
-        char *var4               = reinterpret_cast<char *>(var3);
-        var3->unknown_c_             = reinterpret_cast<Struct_020425e4 *>(var4 + reinterpret_cast<int>(var3->unknown_c_));
-        var3->unknown_10_          = reinterpret_cast<Struct_0204254c *>(var4 + reinterpret_cast<int>(var3->unknown_10_));
-        var3->unknown_14_        = var4 + reinterpret_cast<int>(var3->unknown_14_);
-        for (unsigned int var5 = 0; var5 < var3->unknown_4_; ++var5) {
-            var3->unknown_10_[var5].unknown_0_ = reinterpret_cast<int>(var4 + var3->unknown_10_[var5].unknown_0_);
+extern "C" ARM void func_02042804(void *receiver, const char *name, int *firstOutput, int *secondOutput) {
+    SafeAllocator *allocator = static_cast<SafeAllocator *>(receiver);
+    char path[64];
+    __clear(path, sizeof(path));
+    sprintf(path, data_020f0049, name);
+    unsigned int fileSize = 0;
+    LoadFileIntoMemory(path, g_fileLoadBuffer, &fileSize);
+    if (fileSize != 0) {
+        *firstOutput = reinterpret_cast<int>(allocator->Allocate(fileSize));
+        memcpy(reinterpret_cast<void *>(*firstOutput), g_fileLoadBuffer, fileSize);
+        Struct_02042804 *header = reinterpret_cast<Struct_02042804 *>(*firstOutput);
+        char *base               = reinterpret_cast<char *>(header);
+        header->keys             = reinterpret_cast<Struct_020425e4 *>(base + reinterpret_cast<int>(header->keys));
+        header->entries          = reinterpret_cast<Entry0204254c *>(base + reinterpret_cast<int>(header->entries));
+        header->unknown14        = base + reinterpret_cast<int>(header->unknown14);
+        for (unsigned int i = 0; i < header->unknown_4_; ++i) {
+            header->entries[i].val = reinterpret_cast<int>(base + header->entries[i].val);
         }
     }
 
-    memset(var1, 0, sizeof(var1));
-    sprintf(var1, data_020f0061, arg1);
-    var2 = 0;
-    LoadFileIntoMemory(var1, data_0211e33c, &var2);
-    if (var2 != 0) {
-        *arg3 = reinterpret_cast<int>(var0->Allocate(var2));
-        memcpy(reinterpret_cast<void *>(*arg3), data_0211e33c, var2);
-        Struct_02042804_2 *var6 = reinterpret_cast<Struct_02042804_2 *>(*arg3);
-        var6->unknown_c_            = reinterpret_cast<char *>(var6) + reinterpret_cast<int>(var6->unknown_c_);
+    memset(path, 0, sizeof(path));
+    sprintf(path, data_020f0061, name);
+    fileSize = 0;
+    LoadFileIntoMemory(path, g_fileLoadBuffer, &fileSize);
+    if (fileSize != 0) {
+        *secondOutput = reinterpret_cast<int>(allocator->Allocate(fileSize));
+        memcpy(reinterpret_cast<void *>(*secondOutput), g_fileLoadBuffer, fileSize);
+        Struct_02042804_2 *header = reinterpret_cast<Struct_02042804_2 *>(*secondOutput);
+        header->data            = reinterpret_cast<char *>(header) + reinterpret_cast<int>(header->data);
     }
 }

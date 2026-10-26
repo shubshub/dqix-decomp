@@ -6,7 +6,7 @@ extern "C" void func_ov031_0223c078(int, int, int, int);
 extern "C" ARM void func_ov031_022274c0(int);
 extern "C" void func_ov031_022347f4(void);
 
-struct Struct_ov031_02290ce0 { unsigned char unknown_0_; };
+struct Struct_ov031_02290ce0 { unsigned char flag; };
 extern Struct_ov031_02290ce0 data_ov031_02290ce0;
 
 // USA: func_ov031_02234790
@@ -15,7 +15,7 @@ extern "C" ARM void func_ov031_02234790(void) {
 		return;
 	}
 	func_ov031_02222ddc();
-	if (data_ov031_02290ce0.unknown_0_ == 0) {
+	if (data_ov031_02290ce0.flag == 0) {
 		func_ov031_0223c078(3, 1, 1, 8);
 	}
 	func_ov031_0223c078(3, 0, 0x15, 8);

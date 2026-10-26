@@ -14,8 +14,8 @@ extern "C" void func_ov031_0222a908(void);
 extern "C" ARM void func_ov031_0222a890(void) {
 	func_ov031_0222a900();
 	func_ov031_0222a904();
-	signed char var0 = func_ov031_02237e9c();
-	switch (var0) {
+	signed char v = func_ov031_02237e9c();
+	switch (v) {
 	case 0:
 		(&data_ov031_02290c78)[1] = 0;
 		func_ov031_02236878(7);

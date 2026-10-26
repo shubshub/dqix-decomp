@@ -14,17 +14,17 @@ struct Struct_ov031_022203f0 {
 };
 
 // USA: func_ov031_022203f0
-extern "C" THUMB int func_ov031_022203f0(struct Struct_ov031_022203f0* arg0) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_1_ = 0;
-    arg0->unknown_2_ = 0;
-    arg0->unknown_3_ = 0;
-    arg0->unknown_4_ = 0;
-    arg0->unknown_5_ = 0;
-    arg0->unknown_6_ = 0;
-    arg0->unknown_7_ = 0;
+extern "C" THUMB int func_ov031_022203f0(struct Struct_ov031_022203f0* self) {
+    self->unknown_0_ = 0;
+    self->unknown_1_ = 0;
+    self->unknown_2_ = 0;
+    self->unknown_3_ = 0;
+    self->unknown_4_ = 0;
+    self->unknown_5_ = 0;
+    self->unknown_6_ = 0;
+    self->unknown_7_ = 0;
 
-    int var0 = (int)func_ov031_02220390((unsigned char*)arg0 + 8) - (int)arg0;
-    ((unsigned short*)arg0)[0] = (unsigned short)(var0 - 8);
-    return var0;
+    int size = (int)func_ov031_02220390((unsigned char*)self + 8) - (int)self;
+    ((unsigned short*)self)[0] = (unsigned short)(size - 8);
+    return size;
 }

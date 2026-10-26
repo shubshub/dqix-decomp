@@ -19,79 +19,79 @@ extern char data_ov000_02183a54[];
 extern char data_ov000_021839e2[];
 extern char g_stringFormat[];
 
-struct Struct_02013fb4;
-struct Struct_02070b6c_3 { unsigned char unknown_0_[0xc]; };
-struct Struct_0203d028_11 {
-    int unknown_0_;
+struct StreamHeader;
+struct Struct_02070b6c_3 { unsigned char data[0xc]; };
+struct Struct_203dafc {
+    int field0;
     int unknown_4_;
     int unknown_8_;
-    SafeAllocator* unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
-    int unknown_18_;
-    int unknown_1c_;
+    SafeAllocator* allocator;
+    int field10;
+    int field14;
+    int field18;
+    int field1c;
 };
-struct Struct_0203d028;
+struct Foo0207df50;
 
-struct Struct_ov000_02166070_3 { int unknown_0_; const char* unknown_4_; };
+struct Struct_ov000_02166070_3 { int id; const char* name; };
 struct Struct_ov000_02166070_4 {
-    unsigned char unknown_0_[0x14]; unsigned int unknown_14_; unsigned char unknown_18_[0x14]; char unknown_2c_[1]; };
-struct Struct_020484f8_2 { Struct_ov000_02166070_3* unknown_0_; Struct_ov000_02166070_4* unknown_4_; int unknown_8_; };
+    unsigned char unknown_0_[0x14]; unsigned int words; unsigned char unknown_18_[0x14]; char name[1]; };
+struct Struct_020484f8_2 { Struct_ov000_02166070_3* entry; Struct_ov000_02166070_4* names; int script; };
 
 struct Struct_ov000_02166070 {
     unsigned char unknown_0_[0x678];
-    Struct_0206ef48 unknown_678_;
-    Struct_02070b6c_3 unknown_684_;
+    Struct_0206ef48 search;
+    Struct_02070b6c_3 names;
 };
 struct Struct_ov000_02166070_2 {
     unsigned char unknown_0_[0x44];
-    SafeAllocator unknown_44_;
+    SafeAllocator allocator;
 #if defined(jpn)
     unsigned char unknown_58_[0x138 - 0x44 - sizeof(SafeAllocator)];
-    char unknown_14c_[0x70];
-    char unknown_1bc_[0x21c - 0x1a8];
-    Struct_ov000_02166070* unknown_2a0_;
+    char tables14c[0x70];
+    char tables1bc[0x21c - 0x1a8];
+    Struct_ov000_02166070* roster;
     unsigned char unknown_220_[0xe34 - 0x220];
 #else
     unsigned char unknown1_58_[0x14c - 0x44 - sizeof(SafeAllocator)];
-    char unknown_14c_[0x70];
-    char unknown_1bc_[0x2a0 - 0x1bc];
-    Struct_ov000_02166070* unknown_2a0_;
+    char tables14c[0x70];
+    char tables1bc[0x2a0 - 0x1bc];
+    Struct_ov000_02166070* roster;
     unsigned char unknown_2a4_[0xeb8 - 0x2a4];
 #endif
-    Object3D* unknown_eb8_[4];
+    Object3D* models[4];
 };
 
-ModelEntry* SearchWithComparator0206f4f0(BinarySearchByComparatorStruct*, int);
-void SetFlag0x400Reset020484d0(void*);
-void VramState_Restore(char*);
-void VramState_Save(char*);
-void ClearEightWords_0203dafc(struct Struct_203dafc*);
-ModelNames* SearchWithLow15Comparator02070fd0(struct Container02070e60*, int);
-void RunOverlayScript0216d1c4(int, struct StreamHeader*, int, int*);
-void InitObjectFields020484f8(Object3D*, Input020484f8*);
-void VramState_Rewind(struct Foo0207df50*);
+extern "C" Struct_ov000_02166070_3* func_0206f4f0(Struct_0206f01c_2*, int);
+extern "C" void func_020484d0(void*);
+extern "C" void VramState_Restore(char*);
+extern "C" void VramState_Save(char*);
+extern "C" void func_0203dafc(struct Struct_203dafc*);
+extern "C" Struct_ov000_02166070_4* func_02070fd0(struct Struct_02070b6c_3*, int);
+extern "C" void func_ov000_0216d1c4(int, struct StreamHeader*, int, int*);
+extern "C" void func_020484f8(Object3D*, Struct_020484f8_2*);
+extern "C" void VramState_Rewind(struct Foo0207df50*);
 extern "C" void _ZN8Object3D13SetSoundGroupEt(Object3D*, unsigned int);
 extern "C" void _ZN8Object3D15SetSoundArchiveEt(Object3D*, unsigned int);
 extern "C" void VramState_Reserve(char*, int, int);
 
 // USA: func_ov000_02166070
-extern "C" ARM void func_ov000_02166070(Scene02166070* self, GPCReadPair* pair, int slot, int id, int flag, unsigned int offset) {
-    CombatantRoster02166070* roster = self->roster;
-    BinarySearchByComparatorStruct* search = &roster->search.table;
+extern "C" ARM void func_ov000_02166070(Struct_ov000_02166070_2* self, GPCReadPair* pair, int slot, int id, int flag, unsigned int offset) {
+    Struct_ov000_02166070* roster = self->roster;
+    Struct_0206f01c_2* search = &roster->search.table;
     SafeAllocator* alloc = &self->allocator;
-    Container02070e60* names = &roster->names;
+    Struct_02070b6c_3* names = &roster->names;
     char path[0x10];
     struct Struct_203dafc params;
-    Input020484f8 input;
+    Struct_020484f8_2 input;
     unsigned int length;
     const void* filePtr;
     unsigned int fileSize;
-    unsigned int modelLength;
-    unsigned int animLength;
+    unsigned int var10;
+    unsigned int var11;
     const void* scriptPtr;
     unsigned int scriptSize;
-    ModelEntry* entry = SearchWithComparator0206f4f0(search, (short)id);
+    Struct_ov000_02166070_3* entry = func_0206f4f0(search, (short)id);
     if (entry == 0) return;
     sprintf(path, data_ov000_02183a47, entry->name);
     if (!DecompressFileFromGPCByName(pair->pGPCFile, pair->machine, g_fileLoadBuffer + offset, length, 0x30000 - offset, path)) {
@@ -104,46 +104,46 @@ extern "C" ARM void func_ov000_02166070(Scene02166070* self, GPCReadPair* pair, 
         if (flag) BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    void* model = DecompressLZ77FileIntoAllocatedSpace(*alloc, filePtr, modelLength);
+    void* model = DecompressLZ77FileIntoAllocatedSpace(*alloc, filePtr, var10);
     if (!FindFilesInNarcBySubstring(g_fileLoadBuffer + offset, data_ov000_02183a54, &filePtr, &fileSize, 1)) {
         pair->Reset();
         if (flag) BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    void* anim = DecompressLZ77FileIntoAllocatedSpace(*alloc, filePtr, animLength);
+    void* anim = DecompressLZ77FileIntoAllocatedSpace(*alloc, filePtr, var11);
     if (!FindFilesInNarcBySubstring(g_fileLoadBuffer + offset, data_ov000_021839e2, &scriptPtr, &scriptSize, 1)) {
         scriptPtr = 0;
         scriptSize = 0;
     }
-    Object3D* var17 = (Object3D*)var2->Allocate(0xb8);
-    if (var17 == 0) {
-        arg1->Reset();
-        if (arg4) BackgroundLoader::RemoveLockGlobal();
+    Object3D* obj = (Object3D*)alloc->Allocate(0xb8);
+    if (obj == 0) {
+        pair->Reset();
+        if (flag) BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    SetFlag0x400Reset020484d0(obj);
+    func_020484d0(obj);
     obj->unknown_2_ = id;
     VramState_Restore(self->tables1bc);
-    ClearEightWords_0203dafc(&params);
-    params.fieldTable = (int)model;
-    params.fieldLength = modelLength;
+    func_0203dafc(&params);
+    params.unknown_4_ = (int)model;
+    params.unknown_8_ = var10;
     params.allocator = alloc;
     obj->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&params, 0);
     VramState_Save(self->tables1bc);
-    ClearEightWords_0203dafc(&params);
-    params.fieldTable = (int)anim;
-    params.fieldLength = animLength;
+    func_0203dafc(&params);
+    params.unknown_4_ = (int)anim;
+    params.unknown_8_ = var11;
     params.allocator = alloc;
     obj->LoadFromCCHROrCMOTArchive((ObjectArchiveLoadInfo*)&params, 0);
-    input.names = SearchWithLow15Comparator02070fd0(names, id);
-    input.entry = SearchWithComparator0206f4f0(search, id << 16 >> 16);
+    input.names = func_02070fd0(names, id);
+    input.entry = func_0206f4f0(search, id << 16 >> 16);
     sprintf(input.names->name, g_stringFormat, input.entry->id);
     if (scriptPtr == 0) {
         input.script = 0;
     } else {
-        func_ov000_0216d1c4((int)var2, (Struct_02013fb4*)var12, var13, &var6.unknown_8_);
+        func_ov000_0216d1c4((int)alloc, (StreamHeader*)scriptPtr, scriptSize, &input.script);
     }
-    InitObjectFields020484f8(obj, &input);
+    func_020484f8(obj, &input);
     unsigned int low = (unsigned short)input.names->words;
     unsigned int high;
     _ZN8Object3D13SetSoundGroupEt(obj, (high = input.names->words >> 16, low));

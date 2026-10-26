@@ -18,7 +18,7 @@ extern char data_020ef587; // "%s.bmmp"
 extern char data_020ef58f; // "T99MAP01"
 
 // Main, originally FormatAndCopyNames02020b98 (USA 0x02020b98, EUR 0x02020ba8, JPN 0x020207b4)
-ARM int MapDisplay_QueueMapScript(void* mapDisplay) {
+extern "C" ARM int MapDisplay_QueueMapScript(void* mapDisplay) {
     char fileName[0x20];
     int loader = (int)BackgroundLoader::GetInstance();
     Zone3D* zone = Zone3D_GetInstance();

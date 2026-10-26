@@ -5,10 +5,10 @@
 #endif
 #include "GameState/GameState.h"
 
-struct Struct_02012de8;
+struct FlagWord02046708;
 
-void* GlobalFlags_GetInstance();
-int FlagWord_TestBits(FlagWord02046708* flags, unsigned int mask);
+extern "C" void* GlobalFlags_GetInstance();
+extern "C" int FlagWord_TestBits(FlagWord02046708* flags, unsigned int mask);
 
 struct StateObj0201fa2c {
     unsigned char state;
@@ -45,9 +45,9 @@ struct MapDisplayMemberStatus {
 
 struct MapDisplayMember {
 #if defined(jpn)
-    char unknown1_0_[0x1a6];
+    char pad[0x1a6];
 #else
-    char unknown_0_[0x1b2];
+    char pad[0x1b2];
 #endif
     unsigned short uniqueId;
 };
@@ -70,9 +70,9 @@ enum { kRecordVisibleOffset = 0x558, kUpdateMaskOffset = 0x55d, kRedrawMaskOffse
 extern StateObj0201fa2c data_020fdc60[4];
 extern MapDisplayMemberStatus data_020fdcb0[4];
 
-void UpdateStopwatchState0201fbac(struct Stopwatch0201fbac* panel);
-void ResetStateTimer0201fc40(struct StateObj0201fc40* panel, int showDuration);
-void MapDisplayMemberPanel_Update(StateObj0201fa2c* panel, unsigned int deltaTime);
+extern "C" void func_0201fbac(struct Stopwatch0201fbac* panel);
+extern "C" void func_0201fc40(struct StateObj0201fc40* panel, int showDuration);
+extern "C" void MapDisplayMemberPanel_Update(StateObj0201fa2c* panel, unsigned int deltaTime);
 extern "C" void MapDisplay_RefreshMemberPanel(int memberId, void* sprite);
 
 typedef void (*UpdateStateTimer0201fa2cFn)(StateObj0201fa2c* panel, unsigned int deltaTime, unsigned char memberId);
@@ -108,16 +108,16 @@ extern "C" ARM void func_02026f34(void* displayPtr) {
         }
 
         if (data_020fdc60[0].holdFlags & PanelHold_All) {
-            UpdateStopwatchState0201fbac((struct Stopwatch0201fbac*)panel);
+            func_0201fbac((struct Stopwatch0201fbac*)panel);
         } else {
             if ((panel->holdFlags & PanelHold_UniqueId) && ((MapDisplayMember*)member)->uniqueId == 0) {
                 panel->holdFlags &= ~PanelHold_UniqueId;
                 panel->showDuration = kPanelShowAfterChangeMs;
             } else if (((MapDisplayMember*)member)->uniqueId != 0) {
-                UpdateStopwatchState0201fbac((struct Stopwatch0201fbac*)panel);
+                func_0201fbac((struct Stopwatch0201fbac*)panel);
                 panel->holdFlags |= PanelHold_UniqueId;
             } else if (showDuration > 0 && (display + memberId)[kRecordVisibleOffset]) {
-                ResetStateTimer0201fc40((struct StateObj0201fc40*)panel, showDuration);
+                func_0201fc40((struct StateObj0201fc40*)panel, showDuration);
             }
         }
         ((UpdateStateTimer0201fa2cFn)MapDisplayMemberPanel_Update)(panel, deltaTime, memberId);

@@ -1,16 +1,17 @@
 #include <globaldefs.h>
 #include "World/ZoneFeatures.h"
 
-// USA: func_0201e4b0
-ARM void Struct_020134e0::func_0201e4b0(const Struct_0201c96c& arg0) {
-    int var0 = unknown_10_;
-    Struct_0201c96c* var1;
-    if (var0 >= unknown_14_) {
+// USA: CreateOpcode66Entry
+// Main, originally ZoneFeatures::CreateOpcode66Entry_0201e4b0 (USA 0x0201e4b0, EUR 0x0201e4c0, JPN 0x0201e23c)
+ARM void ZoneFeatures::CreateOpcode66Entry(const Opcode66Entry& source) {
+    int index = arraySize66_;
+    Opcode66Entry* dst;
+    if (index >= arrayCapacity66_) {
         return;
     }
-    var1 = &unknown_c_[var0];
-    COPY_ARRAY(var1->unknown_0_, arg0.unknown_0_);
-    COPY_ARRAY(var1->unknown_18_, arg0.unknown_18_);
-    var1->unknown_20_ = arg0.unknown_20_;
-    unknown_10_++;
+    dst = &entries66_[index];
+    COPY_ARRAY(dst->unk_0, source.unk_0);
+    COPY_ARRAY(dst->unknown_18_, source.unknown_18_);
+    dst->unk_20 = source.unk_20;
+    arraySize66_++;
 }

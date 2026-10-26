@@ -17,36 +17,36 @@
 
 struct Struct_ov005_021579ec;
 
-struct Struct_ov005_02153954 {
-    char unknown_0_[R(0x19ac, 0x1a34)];
-    char unknown_1a34_[4];
+struct EquipmentMenu {
+    char unk_0[R(0x19ac, 0x1a34)];
+    char frame_[4];
 };
 
-extern "C" void func_ov005_02154d18(Struct_ov005_021579ec* arg0, int arg1, int arg2);
-extern "C" void func_ov005_02154d50(Struct_ov005_021579ec* arg0, int arg1, int arg2);
-extern "C" void func_ov005_021553b4(Struct_ov005_02153954* arg0, int arg1, int* arg2, int* arg3);
+extern "C" void func_ov005_02154d18(Struct_ov005_021579ec* frame, int x, int y);
+extern "C" void func_ov005_02154d50(Struct_ov005_021579ec* frame, int width, int height);
+extern "C" void func_ov005_021553b4(EquipmentMenu* self, int slot, int* x, int* y);
 
 // USA: func_ov005_021579ec
-extern "C" ARM void func_ov005_021579ec(Struct_ov005_02153954* arg0, unsigned int arg1, unsigned char arg2) {
-    int var0 = 0;
-    int var1 = 0;
-    switch (arg1) {
+extern "C" ARM void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot) {
+    int x = 0;
+    int y = 0;
+    switch (state) {
     case 2:
-        var0 = arg2 * 16 + 0x81;
-        if (arg2 == 7)
-            var0--;
-        func_ov005_02154d18((Struct_ov005_021579ec*)arg0->unknown_1a34_, var0 << 12, 0x1000);
-        func_ov005_02154d50((Struct_ov005_021579ec*)arg0->unknown_1a34_, 0xf000, 0x11000);
+        x = slot * 16 + 0x81;
+        if (slot == 7)
+            x--;
+        func_ov005_02154d18((Struct_ov005_021579ec*)self->frame_, x << 12, 0x1000);
+        func_ov005_02154d50((Struct_ov005_021579ec*)self->frame_, 0xf000, 0x11000);
         break;
     case 3:
-        func_ov005_02154d18((Struct_ov005_021579ec*)arg0->unknown_1a34_, 0x85000, 0x17000);
-        func_ov005_02154d50((Struct_ov005_021579ec*)arg0->unknown_1a34_, 0x76000, 0x16000);
+        func_ov005_02154d18((Struct_ov005_021579ec*)self->frame_, 0x85000, 0x17000);
+        func_ov005_02154d50((Struct_ov005_021579ec*)self->frame_, 0x76000, 0x16000);
         break;
     case 4:
     case 6:
-        func_ov005_021553b4(arg0, arg2, &var0, &var1);
-        func_ov005_02154d18((Struct_ov005_021579ec*)arg0->unknown_1a34_, var0 << 12, var1 << 12);
-        func_ov005_02154d50((Struct_ov005_021579ec*)arg0->unknown_1a34_, 0x18000, 0x18000);
+        func_ov005_021553b4(self, slot, &x, &y);
+        func_ov005_02154d18((Struct_ov005_021579ec*)self->frame_, x << 12, y << 12);
+        func_ov005_02154d50((Struct_ov005_021579ec*)self->frame_, 0x18000, 0x18000);
         break;
     }
 }

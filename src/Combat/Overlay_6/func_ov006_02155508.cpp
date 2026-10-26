@@ -8,47 +8,47 @@
 #include "Filesystem/BackgroundLoader.h"
 
 struct Struct_ov006_02155508 {
-    unsigned char unknown_0_[LOW_REGION(0x34, 0x1b4)];
+    unsigned char pad0[LOW_REGION(0x34, 0x1b4)];
     unsigned int unknown_1b4_;
     unsigned int unknown_1b8_;
-    unsigned char unknown_1bc_[0x1c0 - 0x1bc];
+    unsigned char pad1[0x1c0 - 0x1bc];
     unsigned int unknown_1c0_;
-    unsigned char unknown_1c4_[0xad4 - 0x1c4];
+    unsigned char pad2[0xad4 - 0x1c4];
     int unknown_ad4_;
     int unknown_ad8_;
-    unsigned char unknown_adc_[0xade - 0xadc];
+    unsigned char pad3[0xade - 0xadc];
     unsigned char unknown_ade_;
     unsigned char unknown_adf_;
-    unsigned char unknown_ae0_[0xae2 - 0xae0];
-    unsigned short unknown_ae2_;
+    unsigned char pad4[0xae2 - 0xae0];
+    unsigned short flags;
 };
 
 // USA: func_ov006_02155508
-extern "C" ARM void func_ov006_02155508(Struct_ov006_02155508* arg0) {
-    if (arg0->unknown_ae2_ & 1)
+extern "C" ARM void func_ov006_02155508(Struct_ov006_02155508* s) {
+    if (s->flags & 1)
         return;
 
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
-    if (arg0->unknown_ad4_ >= 0) {
-        var0->RemoveTask(arg0->unknown_ad4_);
-        arg0->unknown_ad4_ = -1;
+    if (s->unknown_ad4_ >= 0) {
+        loader->RemoveTask(s->unknown_ad4_);
+        s->unknown_ad4_ = -1;
     }
-    arg0->unknown_ad4_ = -1;
+    s->unknown_ad4_ = -1;
 
-    arg0->unknown_ade_ = 0;
-    arg0->unknown_ae2_ &= ~2;
+    s->unknown_ade_ = 0;
+    s->flags &= ~2;
 
-    if (arg0->unknown_ad8_ >= 0) {
-        var0->RemoveTask(arg0->unknown_ad8_);
-        arg0->unknown_ad8_ = -1;
+    if (s->unknown_ad8_ >= 0) {
+        loader->RemoveTask(s->unknown_ad8_);
+        s->unknown_ad8_ = -1;
     }
-    arg0->unknown_ad8_ = -1;
+    s->unknown_ad8_ = -1;
 
-    arg0->unknown_adf_ = 0;
-    arg0->unknown_1b4_ = 0;
-    arg0->unknown_1b8_ = 0;
-    arg0->unknown_1c0_ = 0;
+    s->unknown_adf_ = 0;
+    s->unknown_1b4_ = 0;
+    s->unknown_1b8_ = 0;
+    s->unknown_1c0_ = 0;
 
-    arg0->unknown_ae2_ = (arg0->unknown_ae2_ | 1) & ~4;
+    s->flags = (s->flags | 1) & ~4;
 }

@@ -5,25 +5,25 @@
 #pragma optimize_for_size off
 
 // USA: func_ov027_021d9e1c
-extern "C" ARM int func_ov027_021d9e1c(NitroVM* arg0) {
-	char var0[0x60];
-	char* var1 = NULL;
-	int var2 = 0;
-	if (arg0 != NULL) {
-		int var3 = *(int*)((char*)arg0 + 0x2c);
-		int var4 = *(int*)((char*)arg0 + 0x24);
-		int var5 = var3 - var4;
-		int var6 = NitroVM_ReadSync(arg0, var0, 0x60);
-		if ((unsigned int)var6 >= 0x60) var1 = var0;
-		NitroVM_Seek(arg0, var5, 0);
+extern "C" ARM int func_ov027_021d9e1c(NitroVM* vm) {
+	char buf[0x60];
+	char* p4 = NULL;
+	int r5 = 0;
+	if (vm != NULL) {
+		int a = *(int*)((char*)vm + 0x2c);
+		int b = *(int*)((char*)vm + 0x24);
+		int off = a - b;
+		int n = NitroVM_ReadSync(vm, buf, 0x60);
+		if ((unsigned int)n >= 0x60) p4 = buf;
+		NitroVM_Seek(vm, off, 0);
 	} else {
-		var1 = (char*)0x27ffe00;
+		p4 = (char*)0x27ffe00;
 	}
-	if (var1 != NULL) {
-		int var7 = *(int*)(var1 + 0x2c);
-		int var8 = *(int*)(var1 + 0x3c);
-		var2 = var7 + 0x268 + var8;
-		if ((unsigned int)var2 < 0x10000) var2 = 0x10000;
+	if (p4 != NULL) {
+		int a = *(int*)(p4 + 0x2c);
+		int b = *(int*)(p4 + 0x3c);
+		r5 = a + 0x268 + b;
+		if ((unsigned int)r5 < 0x10000) r5 = 0x10000;
 	}
-	return var2;
+	return r5;
 }

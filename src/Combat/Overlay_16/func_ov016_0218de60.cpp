@@ -3,63 +3,63 @@
 #include "Memory/SafeAllocator.h"
 
 struct Struct_ov016_0218de60_2 {
-    short unknown_0_;
-    short unknown_2_;
-    char* unknown_4_;
-    char* unknown_8_;
-    char* unknown_c_;
+    short id;
+    short kind;
+    char* name;
+    char* resource;
+    char* option;
 #if !defined(jpn)
-    bool unknown_10_;
-    bool unknown_11_;
+    bool enabled;
+    bool alternate;
 #endif
-    short unknown_12_;
-    int unknown_14_;
-    Struct_ov016_0218de60_2* unknown_18_;
+    short priority;
+    int value;
+    Struct_ov016_0218de60_2* next;
 };
 struct Struct_ov016_0218de60 {
-    Struct_ov016_0218de60_2* unknown_0_;
-    unsigned int unknown_4_;
-    SafeAllocator* unknown_8_;
+    Struct_ov016_0218de60_2* head;
+    unsigned int count;
+    SafeAllocator* allocator;
 };
 extern Struct_ov016_0218de60* data_ov016_0219d1bc;
 extern "C" void func_ov016_0218e020(Struct_ov016_0218de60*, void*);
 
 // USA: func_ov016_0218de60
-extern "C" ARM int func_ov016_0218de60(Script::Parameter* arg0, int arg1) {
-    SafeAllocator* var0 = data_ov016_0219d1bc->unknown_8_;
-    Struct_ov016_0218de60_2 var1;
-    memset(&var1, 0, sizeof(var1));
-    var1.unknown_0_ = arg0[0].ToInt();
-    var1.unknown_2_ = arg0[1].ToInt();
-    const char* var2 = arg0[2].ToString();
-    if (var2) {
-        var1.unknown_4_ = (char*)var0->Allocate(strlen(var2) + 1);
-        if (var1.unknown_4_) strcpy(var1.unknown_4_, var2);
+extern "C" ARM int func_ov016_0218de60(Script::Parameter* params, int count) {
+    SafeAllocator* allocator = data_ov016_0219d1bc->allocator;
+    Struct_ov016_0218de60_2 node;
+    memset(&node, 0, sizeof(node));
+    node.id = params[0].ToInt();
+    node.kind = params[1].ToInt();
+    const char* text = params[2].ToString();
+    if (text) {
+        node.name = (char*)allocator->Allocate(strlen(text) + 1);
+        if (node.name) strcpy(node.name, text);
     }
-    var2 = arg0[3].ToString();
-    if (var2 && strlen(var2)) {
-        var1.unknown_8_ = (char*)var0->Allocate(strlen(var2) + 1);
-        if (var1.unknown_8_) strcpy(var1.unknown_8_, var2);
+    text = params[3].ToString();
+    if (text && strlen(text)) {
+        node.resource = (char*)allocator->Allocate(strlen(text) + 1);
+        if (node.resource) strcpy(node.resource, text);
     }
-    var2 = arg0[4].ToString();
-    if (var2 && strlen(var2)) {
-        var1.unknown_c_ = (char*)var0->Allocate(strlen(var2) + 1);
-        if (var1.unknown_c_) strcpy(var1.unknown_c_, var2);
+    text = params[4].ToString();
+    if (text && strlen(text)) {
+        node.option = (char*)allocator->Allocate(strlen(text) + 1);
+        if (node.option) strcpy(node.option, text);
     }
-    var1.unknown_12_ = arg0[5].ToInt();
-    arg0 += 6;
-    var1.unknown_14_ = (arg0++)->ToInt();
+    node.priority = params[5].ToInt();
+    params += 6;
+    node.value = (params++)->ToInt();
 #if !defined(jpn)
-    arg1 -= 7;
-    if (arg1 > 0) {
-        var1.unknown_10_ = (arg0++)->ToInt() != 0;
-        --arg1;
+    count -= 7;
+    if (count > 0) {
+        node.enabled = (params++)->ToInt() != 0;
+        --count;
     } else {
-        var1.unknown_10_ = true;
+        node.enabled = true;
     }
-    if (arg1 > 0) var1.unknown_11_ = arg0->ToInt() != 0;
-    else var1.unknown_11_ = false;
+    if (count > 0) node.alternate = params->ToInt() != 0;
+    else node.alternate = false;
 #endif
-    func_ov016_0218e020(data_ov016_0219d1bc, &var1);
+    func_ov016_0218e020(data_ov016_0219d1bc, &node);
     return 1;
 }

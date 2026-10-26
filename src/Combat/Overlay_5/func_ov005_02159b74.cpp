@@ -11,59 +11,59 @@ enum { Enum_ov005_02159b74_3684 = 0xe64 };
 struct SePlayer;
 
 struct Struct_ov005_02159b74 {
-    char unknown_0_[0x38];
+    char unk_0[0x38];
     unsigned char unknown_38_;
-    unsigned char unknown_39_;
+    unsigned char palette_;
 };
 
 struct Struct_ov005_02159b74_2 {
-    char unknown_0_[0xc];
+    char unk_0[0xc];
     Struct_ov005_02159b74* unknown_c_;
     unsigned char* unknown_10_;
 
     Struct_ov005_02159b74* inline_ov005_02159b74() { return unknown_c_; }
 };
 
-struct Struct_ov005_02153954 {
-    char unknown_0_[Enum_ov005_02159b74_3684];
+struct EquipmentMenu {
+    char unk_0[Enum_ov005_02159b74_3684];
     Struct_ov005_02159b74_2* unknown_e64_;
 };
 
 extern int g_sePlayer;
 
-struct Obj020e280c;
-void ResetAndReposition020e280c(Obj020e280c*, void*);
-void SetHalfwordAtIndex020e16dc(unsigned char* panel, int idx, short val);
-struct Obj020e1674;
-void TransferObjPaletteEntry020e1674(Obj020e1674*, int, int);
-struct Wf11Outer;
-void ComputeElementPositions_020e1e24(Wf11Outer*, unsigned short*, unsigned short*, int);
-struct WinObj020e28f0;
-void SetEntryPositionFromObject(WinObj020e28f0*, short, short);
-struct Ctx020e263c;
-void UpdateEntryStateAndPosition(Ctx020e263c*, int);
-void SePlayer_Play(SePlayer* obj, int a, int b);
+struct Struct_020e280c;
+extern "C" void func_020e280c(Struct_020e280c*, void*);
+extern "C" void func_020e16dc(unsigned char* panel, int idx, short val);
+struct Struct_020e1674_2;
+extern "C" void func_020e1674(Struct_020e1674_2*, int, int);
+struct Struct_020e1e24;
+extern "C" void func_020e1e24(Struct_020e1e24*, unsigned short*, unsigned short*, int);
+struct Struct_020e28f0;
+extern "C" void func_020e28f0(Struct_020e28f0*, short, short);
+struct Struct_020e263c_2;
+extern "C" void func_020e263c(Struct_020e263c_2*, int);
+extern "C" void SePlayer_Play(SePlayer* obj, int a, int b);
 
 // USA: func_ov005_02159b74
-extern "C" ARM void func_ov005_02159b74(Struct_ov005_02153954* arg0) {
-    short var0;
-    short var1;
-    func_020e280c((Struct_020e280c*)arg0->unknown_e64_, (void*)-1);
+extern "C" ARM void func_ov005_02159b74(EquipmentMenu* self) {
+    short x;
+    short y;
+    func_020e280c((Struct_020e280c*)self->unknown_e64_, (void*)-1);
 #if defined(jpn)
-    Struct_ov005_02159b74* var2 = arg0->unknown_e64_->inline_ov005_02159b74();
-    var2->unknown_38_ = 0xc2;
-    var2->unknown_39_ = 0x4c;
+    Struct_ov005_02159b74* label = self->unknown_e64_->inline_ov005_02159b74();
+    label->unknown_38_ = 0xc2;
+    label->palette_ = 0x4c;
 #else
-    arg0->unknown_e64_->inline_ov005_02159b74()->unknown_39_ = 0x4c;
+    self->unknown_e64_->inline_ov005_02159b74()->palette_ = 0x4c;
 #endif
-    unsigned char* panel = self->yesNo_->panel_;
-    SetHalfwordAtIndex020e16dc(panel, 0, 0x18c6);
-    TransferObjPaletteEntry020e1674((Obj020e1674*)panel, 1, 0);
-    ComputeElementPositions_020e1e24((Wf11Outer*)panel, (unsigned short*)&x, (unsigned short*)&y, 0);
-    SetEntryPositionFromObject((WinObj020e28f0*)self->yesNo_, x, y + 4);
+    unsigned char* panel = self->unknown_e64_->unknown_10_;
+    func_020e16dc(panel, 0, 0x18c6);
+    func_020e1674((Struct_020e1674_2*)panel, 1, 0);
+    func_020e1e24((Struct_020e1e24*)panel, (unsigned short*)&x, (unsigned short*)&y, 0);
+    func_020e28f0((Struct_020e28f0*)self->unknown_e64_, x, y + 4);
     int tick = GameState::GetInstance()->GetTickCount();
     if (tick == 0)
         tick = 1;
-    UpdateEntryStateAndPosition((Ctx020e263c*)self->yesNo_, tick);
+    func_020e263c((Struct_020e263c_2*)self->unknown_e64_, tick);
     SePlayer_Play((SePlayer*)&g_sePlayer, 5, 0);
 }

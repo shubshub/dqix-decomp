@@ -2,16 +2,16 @@
 
 extern "C" void* func_ov000_02161318(void*, int);
 
-struct Struct_ov000_02175f80 { char unknown_0_[0x28]; int unknown_28_; };
+struct Struct_ov000_02175f80 { char pad[0x28]; int field28; };
 
 // USA: func_ov000_02175f80
-extern "C" ARM int func_ov000_02175f80(void* arg0) {
-    int var0 = 0;
-    for (int var1 = 0; var1 < 4; var1++) {
-        struct Struct_ov000_02175f80* var2 = (struct Struct_ov000_02175f80*)func_ov000_02161318(arg0, var1);
-        if (var2) {
-            if ((var2->unknown_28_ & 1) == 0) var0++;
+extern "C" ARM int func_ov000_02175f80(void* obj) {
+    int count = 0;
+    for (int i = 0; i < 4; i++) {
+        struct Struct_ov000_02175f80* node = (struct Struct_ov000_02175f80*)func_ov000_02161318(obj, i);
+        if (node) {
+            if ((node->field28 & 1) == 0) count++;
         }
     }
-    return var0;
+    return count;
 }

@@ -2,7 +2,7 @@
 #include "std_library_functions.h"
 
 // Main, originally CopyOutRegion0x571d_020114ec (USA 0x020114ec, EUR 0x020114fc, JPN 0x0201125c)
-ARM unsigned char GameState_GetPartyOrder(char* gameState, void* outIndices) {
+extern "C" ARM unsigned char GameState_GetPartyOrder(char* gameState, void* outIndices) {
 #if defined(jpn)
     unsigned char count = *(unsigned char*)(gameState + 0x54c1);
 #else

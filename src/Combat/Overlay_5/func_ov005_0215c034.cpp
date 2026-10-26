@@ -5,11 +5,11 @@
 #include "GameState/GameState.h"
 
 
-extern "C" void func_ov005_02158e04(void *arg0, unsigned int arg1);
+extern "C" void func_ov005_02158e04(void *combatant, unsigned int scaleCount);
 
 // USA: func_ov005_0215c034
-extern "C" ARM void func_ov005_0215c034(void *arg0) {
-	unsigned int var0 = GameState::GetInstance()->GetTickCount();
-	if (var0 == 0) var0 = 1;
-	func_ov005_02158e04(arg0, var0);
+extern "C" ARM void func_ov005_0215c034(void *combatant) {
+	unsigned int scaleCount = GameState::GetInstance()->GetTickCount();
+	if (scaleCount == 0) scaleCount = 1;
+	func_ov005_02158e04(combatant, scaleCount);
 }

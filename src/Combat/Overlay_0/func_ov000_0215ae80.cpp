@@ -2,30 +2,30 @@
 #include "GameState/GameState.h"
 #include "std_library_functions.h"
 
-struct Struct_02010088;
-extern "C" int func_02010088(struct Struct_02010088* arg0);
-extern "C" int func_ov000_02153c0c(GameObject* arg0);
+struct S_10088;
+extern "C" int func_02010088(struct S_10088* obj);
+extern "C" int func_ov000_02153c0c(GameObject* combatant);
 
 struct Struct_ov000_0215ae80 {
-    char unknown_0_[0x20];
-    short unknown_20_;
+    char pad0[0x20];
+    short combatantId;
 };
 
 struct Struct_ov000_0215440c_2;
 struct Struct_ov000_0215440c;
-extern "C" Struct_ov000_0215ae80* func_ov000_02160094(struct Struct_ov000_0215440c_2* arg0, int arg1);
-extern "C" void* func_ov000_021600f8(struct Struct_ov000_0215440c* arg0, int arg1);
+extern "C" Struct_ov000_0215ae80* func_ov000_02160094(struct Struct_ov000_0215440c_2* list, int index);
+extern "C" void* func_ov000_021600f8(struct Struct_ov000_0215440c* list, int index);
 
 struct Struct_ov000_0215ae80_2 {
-    char unknown_0_[0x28];
+    char pad0[0x28];
 };
 
-extern "C" void* func_ov000_0215e9d8(void* arg0);
-extern "C" void func_ov000_02160030(void* arg0);
+extern "C" void* func_ov000_0215e9d8(void* work);
+extern "C" void func_ov000_02160030(void* obj);
 
 struct Struct_ov000_0215ae80_3 {
-    char unknown_0_[0x7770];
-    Struct_ov000_0215ae80_2 unknown_7770_[0x40];
+    char pad0[0x7770];
+    Struct_ov000_0215ae80_2 actions[0x40];
     char unknown_8170_[0x8e0a - 0x8170];
     unsigned char unknown_8e0a_;
     char unknown_8e0b_[0x8e0f - 0x8e0b];
@@ -35,24 +35,24 @@ struct Struct_ov000_0215ae80_3 {
 };
 
 // USA: func_ov000_0215ae80
-extern "C" ARM void func_ov000_0215ae80(Struct_ov000_0215ae80_3* arg0) {
-    int var0;
-    for (var0 = arg0->unknown_8e0a_; var0 < arg0->unknown_8e0f_; var0++) {
-        void* var1 = func_ov000_0215e9d8(arg0);
-        if (var1 == NULL) return;
-        func_ov000_02160030(var1);
-        Struct_ov000_0215ae80_2* var2 = &arg0->unknown_7770_[var0];
-        Struct_ov000_0215ae80* var3 = func_ov000_02160094((struct Struct_ov000_0215440c_2*)var2, 0);
-        if (var3 != NULL && func_ov000_021600f8((struct Struct_ov000_0215440c*)var2, 0) != NULL) {
-            short var4 = var3->unknown_20_;
-            GameState* var5 = GameState::GetInstance();
-            GameObject* var6 = var5->GetCombatantByIndex(var4);
-            if (var6 == NULL) return;
-            if (func_02010088((struct Struct_02010088*)var6)) return;
-            if (func_ov000_02153c0c(var6)) return;
-            memcpy(var1, var2, sizeof(Struct_ov000_0215ae80_2));
-            arg0->unknown_8e24_++;
+extern "C" ARM void func_ov000_0215ae80(Struct_ov000_0215ae80_3* self) {
+    int i;
+    for (i = self->unknown_8e0a_; i < self->unknown_8e0f_; i++) {
+        void* work = func_ov000_0215e9d8(self);
+        if (work == NULL) return;
+        func_ov000_02160030(work);
+        Struct_ov000_0215ae80_2* node = &self->actions[i];
+        Struct_ov000_0215ae80* entry = func_ov000_02160094((struct Struct_ov000_0215440c_2*)node, 0);
+        if (entry != NULL && func_ov000_021600f8((struct Struct_ov000_0215440c*)node, 0) != NULL) {
+            short id = entry->combatantId;
+            GameState* gs = GameState::GetInstance();
+            GameObject* c = gs->GetCombatantByIndex(id);
+            if (c == NULL) return;
+            if (func_02010088((struct S_10088*)c)) return;
+            if (func_ov000_02153c0c(c)) return;
+            memcpy(work, node, sizeof(Struct_ov000_0215ae80_2));
+            self->unknown_8e24_++;
         }
     }
-    arg0->unknown_8e0a_ = arg0->unknown_8e0f_;
+    self->unknown_8e0a_ = self->unknown_8e0f_;
 }

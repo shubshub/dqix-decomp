@@ -5,7 +5,7 @@
 extern "C" float _fflt(int v);
 
 struct GameObjectFall {
-    char padding_00[0x24];
+    char unknown_0_[0x24];
     int fallY;
     int fallLandY;
     unsigned short fallStep;
@@ -19,12 +19,12 @@ struct GameObjectTimerBits {
 struct GameObjectFields : Object3D {
     short field_ac, facing, turnSpeed;
     short speed, maximumSpeed, acceleration;
-    char paddingb8[6];
+    char unknown_b8_[6];
     unsigned char motionState, previousMotionState;
-    char paddingc0;
+    char unknown_c0_;
     unsigned char c1_low : 2;
     unsigned char c1_bit2 : 1;
-    unsigned char c1_high : 5;
+    unsigned char unknown_c1_3_ : 5;
     unsigned char c2_low : 5;
     unsigned char c2_bit5 : 1;
     unsigned char c2_high : 2;
@@ -34,8 +34,8 @@ struct GameObjectFields : Object3D {
     Vector3fix glideTarget;
     Vector3fix moveTarget;
     unsigned char e0_bit0 : 1;
-    unsigned char e0_rest : 7;
-    char padding_e1[0x1f];
+    unsigned char unknown_e0_1_ : 7;
+    char unknown_e1_[0x1f];
     GameObjectFall fall;
 };
 

@@ -19,7 +19,7 @@ struct NpcWalker0203c794 {
     unsigned char talkReturnFrames; // frames left of the talk-return pose (NpcWalker_UpdateTalkAnimation counts it down)
     unsigned char fourDirections;   // only four facing animations (NpcWalker_SelectDirectionAnimation)
     char pad96[2];
-    int talkerX;          // the leader's x when the talk pose was set (SetCombatFlags0x5c)
+    int talkerX;          // the leader's x when the talk pose was set (func_0203cedc)
 };
 
 enum {
@@ -29,7 +29,7 @@ enum {
 };
 
 // Main, originally InitializeRandomMotion0203c794 (USA 0x0203c794, EUR 0x0203c7a4, JPN 0x0203cccc)
-ARM void NpcWalker_Init(void* rawWalker) {
+extern "C" ARM void NpcWalker_Init(void* rawWalker) {
     NpcWalker0203c794* walker = (NpcWalker0203c794*)rawWalker;
     func_0203ef7c(walker);
     walker->angle = 0;

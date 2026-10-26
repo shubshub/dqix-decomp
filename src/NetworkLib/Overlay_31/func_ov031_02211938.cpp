@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_02211938 {
-	unsigned char unknown_0_;
-	unsigned char unknown_1_;
-	unsigned char unknown_2_[2];
-	unsigned char unknown_4_[0x100];
+	unsigned char i;
+	unsigned char j;
+	unsigned char unk_2[2];
+	unsigned char s[0x100];
 };
 
 // KEEP-NAME: the ROM symbol here is the mangled C++ name, not a func_ tag.

@@ -4,22 +4,22 @@
 struct Struct_020d76b8;
 
 struct Struct_ov000_021626a0_2 {
-    char unknown_0_[0x10];
+    char pad0[0x10];
     unsigned int unknown_10_0_ : 27;
-    unsigned int unknown_13_3_ : 1;
+    unsigned int hidden : 1;
     unsigned int unknown_13_4_ : 4;
 };
 
 struct Struct_ov000_021626a0 {
-    char unknown_0_[0x148];
-    struct Struct_ov000_021626a0_2* unknown_148_;
+    char pad0[0x148];
+    struct Struct_ov000_021626a0_2* info;
 };
 
 struct Struct_ov000_02160da0 {
 #if defined(jpn)
-    char unknown_0_[0x218];
+    char pad0[0x218];
 #else
-    char unknown1_0_[0x29c];
+    char pad0[0x29c];
 #endif
     char* unknown_29c_;
     unsigned char* unknown_2a0_;
@@ -27,72 +27,72 @@ struct Struct_ov000_02160da0 {
     struct Struct_020d76b8* unknown_ea4_;
 };
 
-extern "C" void* func_ov000_02160f20(void* arg0);
-extern "C" int func_ov000_021820bc(void* arg0, int arg1, int arg2, int arg3);
-extern "C" struct Struct_ov000_021626a0* func_0200fea4(GameState* arg0, int arg1);
-extern "C" int func_02049ee8(unsigned char* arg0);
-extern "C" void func_020d76b8(struct Struct_020d76b8* arg0, int arg1);
-extern "C" void func_020d76d8(unsigned char* arg0, int arg1);
-extern "C" int func_ov000_0215fc60(char* arg0);
-extern "C" int func_020a35e0(unsigned char* arg0, unsigned char arg1);
+extern "C" void* func_ov000_02160f20(void* obj);
+extern "C" int func_ov000_021820bc(void* obj, int unused, int index, int arg);
+extern "C" struct Struct_ov000_021626a0* func_0200fea4(GameState* gameState, int combatantId);
+extern "C" int func_02049ee8(unsigned char* obj);
+extern "C" void func_020d76b8(struct Struct_020d76b8* obj, int index);
+extern "C" void func_020d76d8(unsigned char* base, int bit);
+extern "C" int func_ov000_0215fc60(char* base);
+extern "C" int func_020a35e0(unsigned char* obj, unsigned char index);
 
 // USA: func_ov000_021626a0
-extern "C" ARM void func_ov000_021626a0(Struct_ov000_02160da0* arg0, int arg1, int arg2) {
-    int var0[16];
-    GameState* var1;
+extern "C" ARM void func_ov000_021626a0(Struct_ov000_02160da0* work, int index, int show) {
+    int ids[16];
+    GameState* gs;
     char* var2;
-    int var3;
-    int var4;
-    int var5;
-    GameObject* var6;
-    int var7;
-    struct Struct_020d76b8* var8;
-    void* var9;
-    struct Struct_ov000_021626a0* var10;
-    struct Struct_ov000_021626a0_2* var11;
+    int i;
+    int j;
+    int count;
+    GameObject* obj;
+    int visible;
+    struct Struct_020d76b8* remap;
+    void* slot;
+    struct Struct_ov000_021626a0* combatant;
+    struct Struct_ov000_021626a0_2* info;
 
-    var1 = GameState::GetInstance();
-    var2 = arg0->unknown_29c_;
-    var8 = arg0->unknown_ea4_;
-    var9 = func_ov000_02160f20(arg0);
-    if (var8 == NULL) {
+    gs = GameState::GetInstance();
+    var2 = work->unknown_29c_;
+    remap = work->unknown_ea4_;
+    slot = func_ov000_02160f20(work);
+    if (remap == NULL) {
         return;
     }
-    var5 = func_ov000_021820bc(arg0->unknown_29c_, (int)var9, arg1, (int)var0);
-    for (var3 = 0; var3 < var5; var3++) {
-        var6 = var1->GetGameObjectByIndex(var0[var3]);
-        if (var6 == NULL) {
+    count = func_ov000_021820bc(work->unknown_29c_, (int)slot, index, (int)ids);
+    for (i = 0; i < count; i++) {
+        obj = gs->GetGameObjectByIndex(ids[i]);
+        if (obj == NULL) {
             continue;
         }
-        var7 = arg2;
-        if (var6->obj3D_.unknown_0_ & 0x400) {
-            var10 = func_0200fea4(var1, var0[var3]);
-            if (var10 != NULL) {
-                var11 = var10->unknown_148_;
-                if (func_02049ee8((unsigned char*)var10) == 0 && var11->unknown_13_3_) {
-                    var7 = 0;
+        visible = show;
+        if (obj->obj3D_.unknown_0_ & 0x400) {
+            combatant = func_0200fea4(gs, ids[i]);
+            if (combatant != NULL) {
+                info = combatant->info;
+                if (func_02049ee8((unsigned char*)combatant) == 0 && info->hidden) {
+                    visible = 0;
                 }
             }
         }
-        if (var7) {
-            var6->obj3D_.MakeVisible();
-            func_020d76b8(var8, var0[var3]);
+        if (visible) {
+            obj->obj3D_.MakeVisible();
+            func_020d76b8(remap, ids[i]);
         } else {
-            var6->obj3D_.MakeHidden();
-            func_020d76d8((unsigned char*)var8, var0[var3]);
+            obj->obj3D_.MakeHidden();
+            func_020d76d8((unsigned char*)remap, ids[i]);
         }
     }
     if (func_ov000_0215fc60(var2) == 0) {
         return;
     }
-    for (var4 = 1; var4 < 4; var4++) {
-        var6 = var1->GetGameObjectByIndex(var4);
-        if (var6 == NULL) {
+    for (j = 1; j < 4; j++) {
+        obj = gs->GetGameObjectByIndex(j);
+        if (obj == NULL) {
             continue;
         }
-        if (func_020a35e0(arg0->unknown_2a0_, var4)) {
-            var6->obj3D_.MakeHidden();
-            func_020d76d8((unsigned char*)var8, var4);
+        if (func_020a35e0(work->unknown_2a0_, j)) {
+            obj->obj3D_.MakeHidden();
+            func_020d76d8((unsigned char*)remap, j);
         }
     }
 }

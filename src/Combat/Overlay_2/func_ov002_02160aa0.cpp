@@ -2,21 +2,21 @@
 
 
 struct Container020e0310;
-int KeyTable_Get(struct Container020e0310 *c, int key);
-int Text_AppendFrameTag(char *dst, int a1, int a2, int a3, int a4, int a5);
-int Text_AppendCursorTag(char *dst, int cursor);
-int Text_AppendPaletteTag(char *dst, int palette);
-int Text_AppendNTag(char *dst, int n, const char *name);
-int Text_Append(char *dst, const char *src);
-int NextIndexOrZero_0215a9b4(void *base, short i);
-int GetShortFromTable0206e3d4(int a, int b);
-void SetElementStateOrCreate0215b918(unsigned char *self, int a, int b, int c);
+extern "C" int KeyTable_Get(struct Container020e0310 *c, int key);
+extern "C" int Text_AppendFrameTag(char *dst, int a1, int a2, int a3, int a4, int a5);
+extern "C" int Text_AppendCursorTag(char *dst, int cursor);
+extern "C" int Text_AppendPaletteTag(char *dst, int palette);
+extern "C" int Text_AppendNTag(char *dst, int n, const char *name);
+extern "C" int Text_Append(char *dst, const char *src);
+extern "C" int func_ov002_0215a9b4(void *base, short i);
+extern "C" int func_0206e3d4(int a, int b);
+extern "C" void func_ov002_0215b918(unsigned char *self, int a, int b, int c);
 extern "C" char *Scenario_GetInstance(void);
 extern "C" char data_ov002_0216d2b4[];
 
 // USA: func_ov002_02160aa0
-extern "C" ARM void func_ov002_02160aa0(unsigned char *arg0, char *arg1, int arg2) {
-    if (arg1 == NULL) return;
+extern "C" ARM void func_ov002_02160aa0(unsigned char *base, char *dst, int flag) {
+    if (dst == NULL) return;
 
     short c                                    = *(short *) (base + 0x1c00 + 0xc);
     int cursor                                 = c % 16;
@@ -32,7 +32,7 @@ extern "C" ARM void func_ov002_02160aa0(unsigned char *arg0, char *arg1, int arg
     end             = i + 0x10;
     char *save      = Scenario_GetInstance();
     for (; i < end; i++) {
-        cursor = GetShortFromTable0206e3d4((int) save, NextIndexOrZero_0215a9b4(base, i));
+        cursor = func_0206e3d4((int) save, func_ov002_0215a9b4(base, i));
         if (cursor == 0) {
             Text_AppendPaletteTag(dst, 0xf);
             Text_AppendNTag(dst, n,
@@ -57,5 +57,5 @@ extern "C" ARM void func_ov002_02160aa0(unsigned char *arg0, char *arg1, int arg
         }
     }
     Text_AppendPaletteTag(dst, 0xf);
-    SetElementStateOrCreate0215b918(base, 0x22, *(unsigned char *) (base + 0x2000 + 0x484), 2);
+    func_ov002_0215b918(base, 0x22, *(unsigned char *) (base + 0x2000 + 0x484), 2);
 }

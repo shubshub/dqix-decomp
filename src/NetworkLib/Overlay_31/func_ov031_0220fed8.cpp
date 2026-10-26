@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 extern void* data_ov031_0224e580;
-extern "C" void func_ov031_02210314(int arg0);
+extern "C" void func_ov031_02210314(int v);
 
 // USA: func_ov031_0220fed8
 extern "C" ARM void func_ov031_0220fed8(void) {

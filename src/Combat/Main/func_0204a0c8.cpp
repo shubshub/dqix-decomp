@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 // USA: func_0204a0c8
-extern "C" ARM void func_0204a0c8(unsigned char* arg0) {
-    int* var0 = *(int**)(arg0 + 0x13c);
-    if (var0 != 0) {
-        var0[8] |= 0x400;
+extern "C" ARM void func_0204a0c8(unsigned char* obj) {
+    int* p = *(int**)(obj + 0x13c);
+    if (p != 0) {
+        p[8] |= 0x400;
     }
 }

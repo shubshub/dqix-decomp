@@ -1,29 +1,29 @@
 #include <globaldefs.h>
 
 // USA: func_0200d9e4
-extern "C" ARM void* func_0200d9e4(void* arg0, int* arg1) {
-    unsigned char* var0 = (unsigned char*)arg0;
-    unsigned int var1 = var0[0];
-    switch (var1 & 1) {
+extern "C" ARM void* func_0200d9e4(void* ptr, int* arg1) {
+    unsigned char* data = (unsigned char*)ptr;
+    unsigned int first = data[0];
+    switch (first & 1) {
     case 0:
-        *arg1 = var1 >> 1;
-        return var0 + 1;
+        *arg1 = first >> 1;
+        return data + 1;
     default:
-        unsigned int var2 = var0[1];
-        switch (var1 & 2) {
+        unsigned int second = data[1];
+        switch (first & 2) {
         case 0:
-            *arg1 = var2 | ((var1 >> 2) << 8);
-            return var0 + 2;
+            *arg1 = second | ((first >> 2) << 8);
+            return data + 2;
         default:
-            unsigned int var3 = var0[2];
-            switch (var1 & 4) {
+            unsigned int third = data[2];
+            switch (first & 4) {
             case 0:
-                *arg1 = var3 | (((var1 >> 3) << 16) | (var2 << 8));
-                return var0 + 3;
+                *arg1 = third | (((first >> 3) << 16) | (second << 8));
+                return data + 3;
             default:
-                unsigned int var4 = var0[3];
-                *arg1 = var4 | (((var1 >> 3) << 24) | (var2 << 16) | (var3 << 8));
-                return var0 + 4;
+                unsigned int var4 = data[3];
+                *arg1 = var4 | (((first >> 3) << 24) | (second << 16) | (third << 8));
+                return data + 4;
             }
         }
     }

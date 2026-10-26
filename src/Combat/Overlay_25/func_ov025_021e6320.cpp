@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
-extern "C" void func_0205ebc0(void* arg0, int arg1, int arg2);
+extern "C" void SePlayer_LoadExtraArchiveB(void* obj, int arg1, int arg2);
 
-extern char data_02108760;
+extern char g_sePlayer;
 
-struct Struct_ov025_021e6320 { char unknown_0_[8]; unsigned short unknown_8_; unsigned short unknown_a_; };
+struct Struct_ov025_021e6320 { char pad[8]; unsigned short field_8; unsigned short field_a; };
 
 // USA: func_ov025_021e6320
-extern "C" ARM int func_ov025_021e6320(struct Struct_ov025_021e6320* arg0) {
-    func_0205ebc0(&data_02108760, arg0->unknown_8_, arg0->unknown_a_);
+extern "C" ARM int func_ov025_021e6320(struct Struct_ov025_021e6320* p) {
+    SePlayer_LoadExtraArchiveB(&g_sePlayer, p->field_8, p->field_a);
     return 1;
 }

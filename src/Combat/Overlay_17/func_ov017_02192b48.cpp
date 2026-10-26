@@ -4,38 +4,38 @@
 #include "Resource/GameResources.h"
 #include "World/Object3D.h"
 
-struct Struct_020312bc {
-    Vector3fix unknown_0_[3];
-    Vector3fix unknown_24_;
+struct GeometryTriangle {
+    Vector3fix vertices[3];
+    Vector3fix normal;
 };
 
-struct Struct_02033edc {
-    Vector3fix unknown_0_[3];
-    Vector3fix unknown_24_;
+struct CopySrc02033edc {
+    Vector3fix vertices[3];
+    Vector3fix normal;
 };
 
-struct Struct_02033edc_2;
+struct CopyDst02033edc;
 
-struct Struct_02033f6c {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_;
+struct FourHalfwords02033f7c {
+    unsigned short f0;
+    unsigned short f2;
+    unsigned short f4;
     unsigned short unknown_6_;
 };
 
 struct Struct_ov017_02192b48_5 {
-    int unknown_0_;
+    int type;
 };
 
 struct Struct_ov017_02192b48_6 {
-    Struct_ov017_02192b48_5* unknown_0_;
+    Struct_ov017_02192b48_5* header;
     unsigned char unknown_4_[0x10];
-    Struct_02033f6c* unknown_14_;
+    FourHalfwords02033f7c* unknown_14_;
 };
 
 struct Struct_ov017_02192b48_7 {
-    int unknown_0_;
-    Struct_ov017_02192b48_6* unknown_4_;
+    int unused;
+    Struct_ov017_02192b48_6* polygons;
 };
 
 struct Struct_ov017_02192b48_8 {
@@ -50,16 +50,16 @@ struct Struct_ov017_02192b48_9 {
 
 struct Struct_ov017_02192b48_10 {
     unsigned char unknown_0_[0x44];
-    Struct_ov017_02192b48_9* unknown_44_;
+    Struct_ov017_02192b48_9* scene;
 };
 
 struct Struct_ov017_02192b48 {
-    Struct_ov017_02192b48_10* unknown_0_;
+    Struct_ov017_02192b48_10* node;
     unsigned char unknown_4_[0x44];
 };
 
-struct Struct_ov017_02192b48_2 {
-    unsigned short unknown_0_;
+struct Zone02192b48 {
+    unsigned short id;
 #if defined(jpn)
     unsigned char unknown_2_[0x440 - 0x2];
 #else
@@ -73,19 +73,19 @@ struct Struct_ov017_02192b48_2 {
 };
 
 struct Struct_02017d90 {
-    short unknown_0_[96][12];
+    short cells[96][12];
     int unknown_900_;
-    int unknown_904_;
-    Vector3i unknown_908_;
+    int scale;
+    Vector3i position;
     int unknown_914_;
-    int unknown_918_;
+    int angle;
     int unknown_91c_;
     unsigned char unknown_920_[96];
 };
 
 struct Struct_ov017_02192b48_3 {
-    Vector3i unknown_0_;
-    Vector3i unknown_c_;
+    Vector3i top;
+    Vector3i bottom;
 };
 
 class Struct_ov017_02192b48_4 : public Object3D {
@@ -93,7 +93,7 @@ public:
     short unknown_ac_;
     unsigned char unknown_ae_[0xd4 - 0xae];
     Vector3i unknown_d4_;
-    unsigned char unknown_e0_;
+    unsigned char flagsE0;
 };
 
 extern int data_ov017_021d62d8[8];
@@ -106,20 +106,20 @@ extern "C" long long fix32_SinFx64c(int);
 extern "C" float _ll_sto_f(long long);
 extern "C" int ZoneTerrain_FindFloorHit(GeometryTriangle* triangles, int count, Vector3fix* start, Vector3fix* end, Vector3fix* point);
 extern "C" int ZoneTerrain_PushOutOfWalls(GeometryTriangle* triangles, int count, Vector3fix* originalPosition, fix32_t radius, Vector3fix* position, Vector3i* backupPosition);
-void GameObject_SetFloorAttribute(void* obj, FourHalfwords02033f7c* src);
-void GameObject_SetWallAttribute(void* obj, FourHalfwords02033f7c* src);
-void GameObject_SetWallHit(CopyDst02033edc* dst, CopySrc02033edc* src);
+extern "C" void GameObject_SetFloorAttribute(void* obj, FourHalfwords02033f7c* src);
+extern "C" void GameObject_SetWallAttribute(void* obj, FourHalfwords02033f7c* src);
+extern "C" void GameObject_SetWallHit(CopyDst02033edc* dst, CopySrc02033edc* src);
 
 // USA: func_ov017_02192b48
-extern "C" ARM int func_ov017_02192b48(Struct_02017d90* arg0, Struct_ov017_02192b48_3* arg1, int arg2, Struct_ov017_02192b48_4* arg3, unsigned char arg4, Vector3i* arg5, Vector3i* arg6, int* arg7, int* arg8, int arg9, int* arg10, unsigned char arg11, int arg12, int arg13) {
-    Struct_020312bc var0[96];
-    GameState* var1;
-    Struct_ov017_02192b48_2* var2;
-    int var3;
-    int var4;
-    int var5;
+extern "C" ARM int func_ov017_02192b48(Struct_02017d90* grid, Struct_ov017_02192b48_3* probe, int count, Struct_ov017_02192b48_4* self, unsigned char arg4, Vector3i* dest, Vector3i* pos, int* y, int* arg8, int enable, int* reset, unsigned char arg11, int index, int hidden) {
+    GeometryTriangle samples[96];
+    GameState* gs;
+    Zone02192b48* zone;
+    int total;
+    int threshold;
+    int i;
 
-    var1 = GameState::GetInstance();
+    gs = GameState::GetInstance();
     GetGameResources();
     zone = (Zone02192b48*)Zone3D_GetInstance();
     total = 0;
@@ -150,42 +150,42 @@ extern "C" ARM int func_ov017_02192b48(Struct_02017d90* arg0, Struct_ov017_02192
         if (idx != -1) {
             hit.y += 0x199;
             Vector3fix_Add(&hit, &grid->position, &hit);
-            if (*yLow < hit.y) {
+            if (*arg8 < hit.y) {
                 threshold = 0x800;
                 if (zone->id == 0x1131) {
                     unsigned int ticks = gs->GetTickCount();
                     if (ticks > 10) {
                         ticks = 10;
                     }
-                    var4 = (int)(4096.0f * (0.1f + 0.25f * (float)var15));
+                    threshold = (int)(4096.0f * (0.1f + 0.25f * (float)ticks));
                 }
-                if (*arg7 - var10.y < var4 || (arg13 && *arg7 - var10.y < 0x1800)) {
-                    if (var10.y < *arg7 || fix32abs(*arg7 - var10.y) < 0x1000 || arg13) {
-                        *arg10 = 1;
-                        arg6->y = *arg7;
-                        arg3->position_ = *arg6;
-                        *arg8 = var10.y;
-                        if (fix32abs(*arg7 - var10.y) > 0x28) {
-                            arg6->y = var10.y;
-                            arg3->position_ = *arg6;
+                if (*y - hit.y < threshold || (hidden && *y - hit.y < 0x1800)) {
+                    if (hit.y < *y || fix32abs(*y - hit.y) < 0x1000 || hidden) {
+                        *reset = 1;
+                        pos->y = *y;
+                        self->position_ = *pos;
+                        *arg8 = hit.y;
+                        if (fix32abs(*y - hit.y) > 0x28) {
+                            pos->y = hit.y;
+                            self->position_ = *pos;
                         }
-                        if (arg13) {
-                            arg3->unknown_d4_ = *arg6;
-                            arg3->unknown_e0_ |= 0x20;
+                        if (hidden) {
+                            self->unknown_d4_ = *pos;
+                            self->flagsE0 |= 0x20;
                         }
-                        arg3->unknown_ac_ = 0;
+                        self->unknown_ac_ = 0;
                         if (arg11) {
-                            Struct_ov017_02192b48_8* var16;
-                            if (var2->unknown_23b8_ == 0) {
-                                var16 = var2->unknown_824_[arg12];
+                            Struct_ov017_02192b48_8* node;
+                            if (zone->unknown_23b8_ == 0) {
+                                node = zone->unknown_824_[index];
                             } else {
-                                var16 = var2->unknown_420_[arg12].unknown_0_->unknown_44_->unknown_2c_;
+                                node = zone->unknown_420_[index].node->scene->unknown_2c_;
                             }
-                            GeometryData* geometry;
-                            PolygonData* polygons;
-                            if (node != NULL && (geometry = node->geometry) != NULL && (polygons = geometry->polygons) != NULL) {
+                            Struct_ov017_02192b48_7* var17;
+                            Struct_ov017_02192b48_6* polygons;
+                            if (node != NULL && (var17 = node->unknown_24_) != NULL && (polygons = var17->polygons) != NULL) {
                                 if (polygons->header->type == 3) {
-                                    FourHalfwords02033f7c material = polygons->materials[grid->materialIndex[idx]];
+                                    FourHalfwords02033f7c material = polygons->unknown_14_[grid->unknown_920_[idx]];
                                     GameObject_SetFloorAttribute(self, &material);
                                 }
                             }
@@ -211,22 +211,22 @@ extern "C" ARM int func_ov017_02192b48(Struct_02017d90* arg0, Struct_ov017_02192
                             }
                         }
                     }
-                    if (var20) {
-                        *arg10 = 0;
+                    if (clear) {
+                        *reset = 0;
                     }
                 }
             }
         }
     }
 
-    if (arg9 && !(arg3->GetFlags() & 0x80)) {
-        Vector3i var27 = var6;
-        var27.y += 0x800;
-        int var28 = 0x800;
-        if (arg3->unknown_0_ & 0x20) {
-            int var29 = arg3->GetRadius() >> 2;
+    if (enable && !(self->GetFlags() & 0x80)) {
+        Vector3i center = local;
+        center.y += 0x800;
+        int radius = 0x800;
+        if (self->unknown_0_ & 0x20) {
+            int var29 = self->GetRadius() >> 2;
             if (var29 > 0x800) {
-                var28 = var29;
+                radius = var29;
             }
         }
         int idx = ZoneTerrain_PushOutOfWalls(samples, count, &center, radius, &hit, dest);
@@ -243,23 +243,23 @@ extern "C" ARM int func_ov017_02192b48(Struct_02017d90* arg0, Struct_ov017_02192
             Vector3fix_Add(&samples[idx].vertices[2], &grid->position, &triangle.vertices[2]);
             triangle.normal = samples[idx].normal;
             GameObject_SetWallHit((CopyDst02033edc*)self, &triangle);
-            if (applyMaterial && inCell) {
-                TerrainNode* node;
-                if (zone->useScenes == 0) {
-                    node = zone->terrain[index];
+            if (arg4 && arg11) {
+                Struct_ov017_02192b48_8* node;
+                if (zone->unknown_23b8_ == 0) {
+                    node = zone->unknown_824_[index];
                 } else {
-                    var32 = var2->unknown_420_[arg12].unknown_0_->unknown_44_->unknown_2c_;
+                    node = zone->unknown_420_[index].node->scene->unknown_2c_;
                 }
-                GeometryData* geometry;
-                PolygonData* polygons;
-                if (node != NULL && (geometry = node->geometry) != NULL && (polygons = geometry->polygons) != NULL) {
+                Struct_ov017_02192b48_7* var33;
+                Struct_ov017_02192b48_6* polygons;
+                if (node != NULL && (var33 = node->unknown_24_) != NULL && (polygons = var33->polygons) != NULL) {
                     if (polygons->header->type == 3) {
-                        FourHalfwords02033f7c material = polygons->materials[grid->materialIndex[idx]];
+                        FourHalfwords02033f7c material = polygons->unknown_14_[grid->unknown_920_[idx]];
                         GameObject_SetWallAttribute(self, &material);
                     }
                 }
             }
         }
     }
-    return var3;
+    return total;
 }

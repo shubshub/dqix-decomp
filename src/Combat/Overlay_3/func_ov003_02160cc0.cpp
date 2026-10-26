@@ -5,17 +5,17 @@ enum { Enum_ov003_02160cc0_1124 = 0x28c };
 enum { Enum_ov003_02160cc0_1124 = 0x464 };
 #endif
 
-extern "C" int func_ov003_02160cf8(void* arg0);
-extern "C" int func_ov003_02160e34(void* arg0);
+extern "C" int func_ov003_02160cf8(void* obj);
+extern "C" int func_ov003_02160e34(void* obj);
 
 // USA: func_ov003_02160cc0
-extern "C" ARM int func_ov003_02160cc0(char* arg0) {
-    int var0 = *(int*)(arg0 + Enum_ov003_02160cc0_1124);
-    int var1 = 1;
-    if (var0 & 0x400) {
-        var1 = func_ov003_02160cf8(arg0);
-    } else if (var0 & 0x800) {
-        var1 = func_ov003_02160e34(arg0);
+extern "C" ARM int func_ov003_02160cc0(char* obj) {
+    int flags = *(int*)(obj + Enum_ov003_02160cc0_1124);
+    int result = 1;
+    if (flags & 0x400) {
+        result = func_ov003_02160cf8(obj);
+    } else if (flags & 0x800) {
+        result = func_ov003_02160e34(obj);
     }
-    return var1;
+    return result;
 }

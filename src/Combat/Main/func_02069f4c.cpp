@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-struct Struct_02069f4c { void* unknown_0_; };
+struct Struct_02069f4c { void* dest; };
 
 // USA: func_02069f4c
-extern "C" ARM int func_02069f4c(struct Struct_02069f4c* arg0) {
-    void* var0 = arg0->unknown_0_;
-    unsigned short var1 = 0xff17;
-    memcpy(var0, &var1, 2);
+extern "C" ARM int func_02069f4c(struct Struct_02069f4c* obj) {
+    void* d = obj->dest;
+    unsigned short v = 0xff17;
+    memcpy(d, &v, 2);
     return 2;
 }

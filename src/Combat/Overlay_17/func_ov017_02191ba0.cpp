@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 struct Struct_ov017_02191b70_2 {
-    unsigned char unknown_0_;
+    unsigned char pending;
     unsigned char unknown_1_;
-    unsigned short unknown_2_;
+    unsigned short value;
 };
 
 struct Struct_ov017_02191b70 {
@@ -12,14 +12,14 @@ struct Struct_ov017_02191b70 {
 #else
     unsigned char unknown1_0_[0x449c];
 #endif
-    Struct_ov017_02191b70_2 unknown_449c_[4];
+    Struct_ov017_02191b70_2 entries[4];
 };
 
 // USA: func_ov017_02191ba0
-extern "C" ARM void func_ov017_02191ba0(char* arg0, int arg1, int arg2) {
-    int var0 = arg1 >= 0 && arg1 <= 3;
+extern "C" ARM void func_ov017_02191ba0(char* resources, int index, int value) {
+    int var0 = index >= 0 && index <= 3;
     if (!var0) return;
-    Struct_ov017_02191b70* var1 = (Struct_ov017_02191b70*)arg0;
-    var1->unknown_449c_[arg1].unknown_2_ = arg2;
-    var1->unknown_449c_[arg1].unknown_0_ = 1;
+    Struct_ov017_02191b70* var1 = (Struct_ov017_02191b70*)resources;
+    var1->entries[index].value = value;
+    var1->entries[index].pending = 1;
 }

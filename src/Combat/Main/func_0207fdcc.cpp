@@ -5,20 +5,20 @@ struct Struct_0207fdcc;
 
 struct Struct_0207fdcc_2 {
 #if defined(jpn)
-    char unknown_0_[0x24];
+    char pad0[0x24];
 #else
-    char unknown1_0_[0x30];
+    char pad0[0x30];
 #endif
-    struct Struct_0207fdcc* unknown_30_;
+    struct Struct_0207fdcc* elems;
 };
 
-extern "C" struct Struct_0207fdcc* func_02081da8(struct Struct_0207fdcc_2* arg0, int arg1);
+extern "C" struct Struct_0207fdcc* func_02081da8(struct Struct_0207fdcc_2* obj, int key);
 
 // USA: func_0207fdcc
-extern "C" ARM void func_0207fdcc(struct Struct_0207fdcc_2* arg0, int arg1) {
-    struct Struct_0207fdcc* var0;
-    if (arg0->unknown_30_ == NULL) return;
-    var0 = func_02081da8(arg0, arg1);
-    if (var0 == NULL) return;
-    func_0204c804((void*)(var0));
+extern "C" ARM void func_0207fdcc(struct Struct_0207fdcc_2* obj, int key) {
+    struct Struct_0207fdcc* e;
+    if (obj->elems == NULL) return;
+    e = func_02081da8(obj, key);
+    if (e == NULL) return;
+    func_0204c804((void*)(e));
 }

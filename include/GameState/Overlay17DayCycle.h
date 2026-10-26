@@ -20,14 +20,14 @@ struct Struct_ov017_021d75b8 {
 };
 
 struct Struct_ov017_021d837c {
-    float unknown_0_;
+    float unknown0;
 #if defined(jpn)
     float unknown_14_;
 #endif
-    float unknown_4_;
-    float unknown_8_;
-    float unknown_c_;
-    float unknown_10_;
+    float dayStart;
+    float eveningStart;
+    float morningStart;
+    float nightStart;
 #if !defined(jpn)
     float unknown_14_;
 #endif

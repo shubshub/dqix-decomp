@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-extern "C" int func_0205bd78(void* arg0, int arg1, int arg2);
+extern "C" int func_0205bd78(void* p, int b, int c);
 
 // USA: func_0205bea0
-extern "C" ARM int func_0205bea0(void* arg0) {
+extern "C" ARM int func_0205bea0(void* p) {
     if (g_touchInput.pressed_ != 0) {
-        int var0;
-        int var1;
-        g_touchInput.GetTouchPoint(&var0, &var1);
-        return (func_0205bd78(arg0, var0, var1) >= 0) ? 1 : 0;
+        int v1;
+        int v2;
+        g_touchInput.GetTouchPoint(&v1, &v2);
+        return (func_0205bd78(p, v1, v2) >= 0) ? 1 : 0;
     }
     return 0;
 }

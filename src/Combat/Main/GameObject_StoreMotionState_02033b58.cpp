@@ -7,7 +7,7 @@ struct Foo02033b58 {
 };
 
 // Main, originally SetByteSavingPrevious (USA 0x02033b58, EUR 0x02033b68, JPN 0x02033690)
-ARM void GameObject_StoreMotionState(struct Foo02033b58* self, unsigned char state) {
+extern "C" ARM void GameObject_StoreMotionState(struct Foo02033b58* self, unsigned char state) {
     self->previousMotionState = self->motionState;
     self->motionState = state;
 }

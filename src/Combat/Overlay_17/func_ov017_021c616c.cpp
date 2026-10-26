@@ -8,50 +8,50 @@ enum { Enum_ov017_021c616c_1816 = 0x718 };
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void* func_ov017_021b8478(void* arg0);
-extern "C" void func_ov017_021b848c(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
-extern "C" GameObject* func_ov017_021a278c(void* arg0, int arg1);
+extern "C" void* func_ov017_021b8478(void* obj);
+extern "C" void func_ov017_021b848c(void* h, void* buf, int a, int b, int c, int d, int e, int f);
+extern "C" GameObject* func_ov017_021a278c(void* unused, int val);
 extern "C" void func_02076ccc(void*, int);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
+extern "C" GameObject* func_0200ff1c(GameState* battleStruct, int combatantId);
 struct Struct_02053f7c_3;
-extern "C" void func_02053f7c(struct Struct_02053f7c_3* arg0, unsigned short arg1, int arg2);
-extern "C" void func_ov017_021c6034(signed char* arg0);
+extern "C" void func_02053f7c(struct Struct_02053f7c_3* obj, unsigned short a, int b);
+extern "C" void func_ov017_021c6034(signed char* arr);
 
 struct Struct_ov017_021c616c {
-    unsigned char unknown_0_[8];
-    unsigned short unknown_8_;
+    unsigned char pad0[8];
+    unsigned short field8;
 };
 
 struct Struct_ov017_021c616c_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    signed char unknown_4_[4];
-    signed char unknown_8_;
+    unsigned short field4;
+    unsigned short field6;
+    signed char flags[4];
+    signed char fieldc;
     signed char unknown_9_;
     signed short unknown_a_;
 };
 
 // USA: func_ov017_021c616c
-extern "C" ARM void func_ov017_021c616c(int arg0, unsigned char* arg1, GameState* arg2, unsigned char* arg3) {
-    void* var0 = *(void**)(arg3 + 0x3000 + Enum_ov017_021c616c_1816);
-    Struct_ov017_021c616c* var1 = (Struct_ov017_021c616c*)func_ov017_021b8478(var0);
-    Struct_ov017_021c616c_2* var2 = (Struct_ov017_021c616c_2*)(arg1 + 4);
-    if (var1 != NULL && var1->unknown_8_ == var2->unknown_0_) {
-        func_ov017_021b848c(var0, var2->unknown_4_, var2->unknown_8_, 0, var2->unknown_2_, var2->unknown_9_, 1, var2->unknown_a_);
+extern "C" ARM void func_ov017_021c616c(int unused0, unsigned char* arg1, GameState* battleStruct, unsigned char* base) {
+    void* table = *(void**)(base + 0x3000 + Enum_ov017_021c616c_1816);
+    Struct_ov017_021c616c* hdr = (Struct_ov017_021c616c*)func_ov017_021b8478(table);
+    Struct_ov017_021c616c_2* evt = (Struct_ov017_021c616c_2*)(arg1 + 4);
+    if (hdr != NULL && hdr->field8 == evt->field4) {
+        func_ov017_021b848c(table, evt->flags, evt->fieldc, 0, evt->field6, evt->unknown_9_, 1, evt->unknown_a_);
     } else {
-        void* var3 = GetGameResources();
-        GameObject* var4 = func_ov017_021a278c(var3, var2->unknown_0_);
-        if (var4 != NULL) {
-            func_02076ccc(var4, 9);
+        void* x = GetGameResources();
+        GameObject* c = func_ov017_021a278c(x, evt->field4);
+        if (c != NULL) {
+            func_02076ccc(c, 9);
         }
     }
-    for (unsigned int var5 = 0; var5 < 4; var5++) {
-        if (var2->unknown_4_[var5] != 0) {
-            GameObject* var6 = func_0200ff1c(arg2, var5);
-            if (var6 != NULL) {
-                func_02053f7c((struct Struct_02053f7c_3*)var6, var2->unknown_0_, 1);
+    for (unsigned int i = 0; i < 4; i++) {
+        if (evt->flags[i] != 0) {
+            GameObject* c2 = func_0200ff1c(battleStruct, i);
+            if (c2 != NULL) {
+                func_02053f7c((struct Struct_02053f7c_3*)c2, evt->field4, 1);
             }
         }
     }
-    func_ov017_021c6034(var2->unknown_4_);
+    func_ov017_021c6034(evt->flags);
 }

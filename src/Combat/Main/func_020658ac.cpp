@@ -10,24 +10,24 @@
 #endif
 
 // USA: func_020658ac
-extern "C" ARM void func_020658ac(unsigned char* arg0, unsigned int arg1) {
-    unsigned char var0;
-    if (arg0[ACTIVE_FLAG] != 0) {
-        if (arg0[TIMER_FLAG] == 0) {
-            arg0[TIMER_FLAG] = 1;
-            arg0[TIMER_COUNT] = 0x1e;
+extern "C" ARM void func_020658ac(unsigned char* base, unsigned int amount) {
+    unsigned char c;
+    if (base[ACTIVE_FLAG] != 0) {
+        if (base[TIMER_FLAG] == 0) {
+            base[TIMER_FLAG] = 1;
+            base[TIMER_COUNT] = 0x1e;
         }
     }
-    if (arg0[TIMER_FLAG] == 0) return;
-    var0 = arg0[TIMER_COUNT];
-    if (var0 <= arg1) {
-        if (arg0[ACTIVE_FLAG] != 0) {
-            arg0[TIMER_COUNT] = var0 + (0x1e - arg1);
+    if (base[TIMER_FLAG] == 0) return;
+    c = base[TIMER_COUNT];
+    if (c <= amount) {
+        if (base[ACTIVE_FLAG] != 0) {
+            base[TIMER_COUNT] = c + (0x1e - amount);
         } else {
-            arg0[TIMER_COUNT] = 0;
-            arg0[TIMER_FLAG] = 0;
+            base[TIMER_COUNT] = 0;
+            base[TIMER_FLAG] = 0;
         }
     } else {
-        arg0[TIMER_COUNT] = var0 - arg1;
+        base[TIMER_COUNT] = c - amount;
     }
 }

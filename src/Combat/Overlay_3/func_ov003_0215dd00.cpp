@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 #if defined(jpn)
-enum { Enum_ov003_0215dd00_152 = 0xb0 };
+enum { kRegion98 = 0xb0 };
 #else
-enum { Enum_ov003_0215dd00_152 = 0x98 };
+enum { kRegion98 = 0x98 };
 #endif
 
-extern "C" int func_0205d97c(void* arg0);
+extern "C" int func_0205d97c(void* obj);
 
 // USA: func_ov003_0215dd00
-extern "C" ARM int func_ov003_0215dd00(char* arg0) {
+extern "C" ARM int func_ov003_0215dd00(char* self) {
     if (g_keyManager.TestKeysPressed(2)) {
         return 1;
     }
-    return func_0205d97c(arg0 + Enum_ov003_0215dd00_152) == 2;
+    return func_0205d97c(self + kRegion98) == 2;
 }

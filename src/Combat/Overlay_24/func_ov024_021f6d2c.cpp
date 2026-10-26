@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
-extern "C" int func_020882f8(unsigned char* arg0);
+extern "C" int func_020882f8(unsigned char* obj);
 
-struct Struct_ov024_021de25c { char unknown_0_[0x14]; int unknown_14_; };
-struct Struct_ov024_021de124 { char unknown_0_[0x138]; struct Struct_ov024_021de25c* unknown_138_; };
-extern "C" int func_ov024_021de25c(struct Struct_ov024_021de124* arg0);
+struct Struct_ov024_021de25c { char unk[0x14]; int flags; };
+struct Struct_ov024_021de124 { char unk[0x138]; struct Struct_ov024_021de25c* inner; };
+extern "C" int func_ov024_021de25c(struct Struct_ov024_021de124* obj);
 
 struct Struct_ov024_021f6d2c {
-    int unknown_0_;
-    struct Struct_ov024_021de124* unknown_4_;
-    int unknown_8_[3];
-    float unknown_14_;
-    float unknown_18_;
+    int pad0;
+    struct Struct_ov024_021de124* combatant;
+    int pad2[3];
+    float x;
+    float y;
     float unknown_1c_;
     float unknown_20_;
 };
 
 // USA: func_ov024_021f6d2c
-extern "C" ARM int func_ov024_021f6d2c(struct Struct_ov024_021f6d2c* arg0) {
-    struct Struct_ov024_021de124* var0 = arg0->unknown_4_;
-    if (func_020882f8((unsigned char*)var0->unknown_138_) || func_ov024_021de25c(var0)) {
-        arg0->unknown_1c_ = arg0->unknown_14_ * 2.0f;
-        arg0->unknown_20_ = arg0->unknown_18_ * 2.0f;
+extern "C" ARM int func_ov024_021f6d2c(struct Struct_ov024_021f6d2c* obj) {
+    struct Struct_ov024_021de124* combatant = obj->combatant;
+    if (func_020882f8((unsigned char*)combatant->inner) || func_ov024_021de25c(combatant)) {
+        obj->unknown_1c_ = obj->x * 2.0f;
+        obj->unknown_20_ = obj->y * 2.0f;
     }
     return 1;
 }

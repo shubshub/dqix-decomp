@@ -3,21 +3,21 @@
 #include "Filesystem/BackgroundLoader.h"
 
 #if defined(jpn)
-extern "C" int func_020e12ec(char* arg0, const char* arg1);
-extern "C" int func_020da930(const char* arg0, void* arg1,
-    unsigned int* arg2, unsigned int arg3, bool arg4);
+extern "C" int func_020e12ec(char* destination, const char* source);
+extern "C" int func_020da930(const char* filename, void* buffer,
+    unsigned int* outLength, unsigned int capacity, bool flag);
 
 // JPN: func_020e0968
-extern "C" ARM void* func_020e0968(const char* arg0, unsigned int* arg1) {
-    if (arg0 == 0)
+extern "C" ARM void* func_020e0968(const char* filename, unsigned int* outLength) {
+    if (filename == 0)
         return 0;
-    char var0[0x40];
-    *arg1 = 0;
-    func_020e12ec(var0, arg0);
+    char path[0x40];
+    *outLength = 0;
+    func_020e12ec(path, filename);
     BackgroundLoader::FreeAllocationsGlobal();
-    func_020da930(var0, data_0211e33c, arg1, sizeof(data_0211e33c), false);
-    if (*arg1 != 0)
-        return data_0211e33c;
+    func_020da930(path, g_fileLoadBuffer, outLength, sizeof(g_fileLoadBuffer), false);
+    if (*outLength != 0)
+        return g_fileLoadBuffer;
     return 0;
 }
 #endif

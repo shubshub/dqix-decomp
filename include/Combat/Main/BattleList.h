@@ -34,6 +34,6 @@ struct ModifiableCombatStats {
 class GameState;
 class GameObject;
 
-GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int combatantId);
-void* GameState_GetParty(GameState* gameState);
-int GetByteField0x5721_02011538(GameState* gameState);
+extern "C" GameObject* func_0200ff1c(GameState* gameState, int combatantId);
+extern "C" void* GameState_GetParty(GameState* gameState);
+extern "C" int func_02011538(GameState* gameState);

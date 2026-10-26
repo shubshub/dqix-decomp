@@ -4,4 +4,4 @@ class AllocatorUnion;
 
 
 
-extern "C" void func_02012de4(AllocatorUnion* arg0);
+extern "C" void func_02012de4(AllocatorUnion* allocator);

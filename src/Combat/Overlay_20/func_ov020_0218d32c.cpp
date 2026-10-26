@@ -10,26 +10,26 @@ extern "C" void GXx_SetMasterBrightness_(short* out, int value);
 extern "C" void MapVRAMBanksToMainBG(int);
 extern "C" void func_ov020_0218c7bc(int, int, int, int, int);
 struct BackgroundGraphics;
-void Background_Init(BackgroundGraphics*);
-void Background_SetMapSize(unsigned char*, int);
+extern "C" void Background_Init(BackgroundGraphics*);
+extern "C" void Background_SetMapSize(unsigned char*, int);
 extern "C" void Background_SetPriority(void*, int);
-void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
-void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
-void Background_SetScroll(BackgroundGraphics*, int, int);
+extern "C" void Background_AllocateMap(BackgroundGraphics*, SafeAllocator*);
+extern "C" void Background_AllocateScreens(BackgroundGraphics*, int, SafeAllocator*);
+extern "C" void Background_SetScroll(BackgroundGraphics*, int, int);
 extern "C" int DisableSubObjVRAMBanks();
 extern "C" int DisableSubBGVRAMBanks();
-void GXS_SetGraphicsMode(unsigned int);
+extern "C" void GXS_SetGraphicsMode(unsigned int);
 extern "C" void MapVRAMBanksToSubObj(unsigned short value);
 extern "C" void MapVRAMBanksToSubBG(int);
 extern "C" void func_ov020_0218cd64(int, int, int, int, int);
 void LoadFileIntoMemory(const char*, void*, unsigned int*);
 struct PacRecord;
-int Pac_CountFiles(PacRecord*);
-void* Pac_GetFile(PacRecord*, int, void**, int*);
-void Background_FlushFile(void*, char*);
-void Background_UploadFile(BackgroundGraphics*, char*);
-void Background_UploadMap(BackgroundGraphics*, void*);
-void Background_Destroy(BackgroundGraphics*);
+extern "C" int Pac_CountFiles(PacRecord*);
+extern "C" void* Pac_GetFile(PacRecord*, int, void**, int*);
+extern "C" void Background_FlushFile(void*, char*);
+extern "C" void Background_UploadFile(BackgroundGraphics*, char*);
+extern "C" void Background_UploadMap(BackgroundGraphics*, void*);
+extern "C" void Background_Destroy(BackgroundGraphics*);
 extern "C" void ColorEffect_ConfigureAlphaBlend(unsigned int* out, unsigned char a, unsigned char b, unsigned char c, int d);
 
 extern char data_ov020_0218dce2;
@@ -37,35 +37,35 @@ extern char data_ov020_0218dcf8;
 extern int g_fileLoadBuffer;
 
 struct Struct_ov020_0218d32c {
-    unsigned char unknown_0_[0x1c];
+    unsigned char pad[0x1c];
     unsigned char unknown_1c_0_ : 4;
     unsigned char unknown_1c_4_ : 4;
-    unsigned char unknown_1d_[3];
+    unsigned char pad2[3];
 };
 
 struct Struct_ov020_0218d32c_2 {
 #if defined(jpn)
-    char unknown_0_[0x400];
+    char pad0[0x400];
 #else
-    char unknown1_0_[0x470];
+    char pad0[0x470];
 #endif
 
-    SafeAllocator unknown_470_;
+    SafeAllocator allocator;
 };
 
 // USA: func_ov020_0218d32c
-extern "C" ARM void func_ov020_0218d32c(struct Struct_ov020_0218d32c_2* arg0, int arg1) {
+extern "C" ARM void func_ov020_0218d32c(struct Struct_ov020_0218d32c_2* self, int mode) {
 #if defined(jpn)
- enum {Enum_ov020_0218d32c_156=0x2c};
+ enum {regionalOffset0=0x2c};
 #else
- enum {Enum_ov020_0218d32c_156=0x9c};
+ enum {regionalOffset0=0x9c};
 #endif
-    unsigned char* var0 = (unsigned char*)arg0;
-    unsigned int var1;
-    void* var2;
-    char* volatile var3[3];
-    int var4[3];
-    unsigned char var5[0x20];
+    unsigned char* base = (unsigned char*)self;
+    unsigned int outLen;
+    void* recFieldScratch;
+    char* volatile resultsArray[3];
+    int sizeArr[3];
+    unsigned char list3[0x20];
 
     self->allocator.Reset();
     GXx_SetMasterBrightness_((short*)0x400006c, -16);
@@ -75,9 +75,9 @@ extern "C" ARM void func_ov020_0218d32c(struct Struct_ov020_0218d32c_2* arg0, in
 
     Background_Init((BackgroundGraphics*)(base + regionalOffset0 + 0x400));
     Background_SetMapSize((unsigned char*)(base + regionalOffset0 + 0x400), 0);
-    struct List0218d32c* list = (struct List0218d32c*)(base + regionalOffset0 + 0x400);
-    list->lowNibble = 0;
-    list->highNibble = 1;
+    struct Struct_ov020_0218d32c* list = (struct Struct_ov020_0218d32c*)(base + regionalOffset0 + 0x400);
+    list->unknown_1c_0_ = 0;
+    list->unknown_1c_4_ = 1;
     Background_SetPriority(list, 1);
     Background_AllocateMap((BackgroundGraphics*)(base + regionalOffset0 + 0x400), (SafeAllocator*)&self->allocator);
     Background_AllocateScreens((BackgroundGraphics*)(base + regionalOffset0 + 0x400), 1, (SafeAllocator*)&self->allocator);

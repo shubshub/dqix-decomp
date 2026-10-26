@@ -3,64 +3,64 @@
 #include <NitroSDK/Matrix.h>
 #include "Resource/GameResources.h"
 
-struct Struct_02033b68;
-struct Struct_02033834_2;
-struct Struct_02033834;
-struct Struct_02033b58;
-struct Struct_020391ac { unsigned int unknown_0_; };
-struct Struct_020391ac_2 { int unknown_0_, unknown_4_; };
-struct Struct_020391ac_3 {
-    Object3D unknown_0_;
+struct Obj02033b68;
+struct Obj02033834;
+struct Obj02033874;
+struct Foo02033b58;
+struct Struct_020391ac { unsigned int bits; };
+struct Struct_020391ac_2 { int x, z; };
+struct FollowingActor {
+    Object3D object;
     short unknown_ac_;
     unsigned char unknown_ae_[6];
-    unsigned short unknown_b4_;
+    unsigned short animation;
     unsigned char unknown_b6_[8];
-    unsigned char unknown_be_;
+    unsigned char state;
     unsigned char unknown_bf_;
     unsigned char unknown_c0_;
     unsigned char unknown_c1_[0x6f];
-    Struct_020391ac* unknown_130_;
+    Struct_020391ac* flags;
 #if defined(jpn)
     unsigned char unknown_134_[0x88];
 #else
     unsigned char unknown1_134_[0x94];
 #endif
-    signed char unknown_1c8_;
+    signed char partyIndex;
     unsigned char unknown_1c9_;
-    signed char unknown_1ca_;
+    signed char targetIndex;
     signed char unknown_1cb_;
     signed char unknown_1cc_;
-    unsigned char unknown_1cd_;
-    unsigned char unknown_1ce_;
+    unsigned char queued;
+    unsigned char followFlags;
     unsigned char unknown_1cf_;
     Struct_020391ac_2 unknown_1d0_[16];
     unsigned char unknown_250_[0x18];
-    int unknown_268_;
+    int fade;
     unsigned char unknown_26c_;
     unsigned char unknown_26d_;
 };
 
 extern "C" void func_ov017_021917f0(int, int);
-void GameObject_SetMotionState(Obj02033b68*, int);
+extern "C" void GameObject_SetMotionState(Obj02033b68*, int);
 int fix32ReduceAngle0To2Pi(int);
-void GameObject_SetFacing(Obj02033834*, int);
-void GameObject_ResetTrail(unsigned char*);
-void GameObject_StoreMotionState(Foo02033b58*, unsigned char);
-int FieldTaskQueue_IsEmpty(void**);
-void GameObject_SnapFacing(Obj02033874*, int);
+extern "C" void GameObject_SetFacing(Obj02033834*, int);
+extern "C" void GameObject_ResetTrail(unsigned char*);
+extern "C" void GameObject_StoreMotionState(Foo02033b58*, unsigned char);
+extern "C" int FieldTaskQueue_IsEmpty(void**);
+extern "C" void GameObject_SnapFacing(Obj02033874*, int);
 
 // Main, originally func_020391ac (USA 0x020391ac, EUR 0x020391bc, JPN 0x02038c04)
 extern "C" ARM void GameObject_UpdateFollower(FollowingActor* actor) {
     GameState* game;
     FollowingActor* leader;
     FollowingActor* target;
-    int moving;
-    int separation;
-    int trailDistance;
+    int var3;
+    int var4;
+    int var5;
     int spacing;
-    int gap;
+    int var7;
     int threshold;
-    int ready;
+    int var9;
     int angle;
     int previousIndex;
     void** resource;
@@ -83,8 +83,8 @@ extern "C" ARM void GameObject_UpdateFollower(FollowingActor* actor) {
         func_ov017_021917f0(actor->object.actorIndex_, 0);
         GameObject_SetMotionState((Obj02033b68*)actor, 0);
     }
-    if (target->followerEnabled) {
-        if (target->targetMode == 0 || target->targetMode == 1 || target->targetMode == 2) {
+    if (target->unknown_26c_) {
+        if (target->unknown_26d_ == 0 || target->unknown_26d_ == 1 || target->unknown_26d_ == 2) {
             Vector3fix origin = actor->object.position_;
             origin.y = 0;
             Vector3fix destination = target->object.position_;
@@ -105,7 +105,7 @@ extern "C" ARM void GameObject_UpdateFollower(FollowingActor* actor) {
             actor->fade += (int)(1.5f * game->GetTickCount());
             if (actor->fade > 31)
                 actor->fade = 31;
-        } else if (target->targetMode == 3 || target->targetMode == 4 || target->targetMode == 5) {
+        } else if (target->unknown_26d_ == 3 || target->unknown_26d_ == 4 || target->unknown_26d_ == 5) {
             actor->fade = 0;
             actor->object.position_ = target->object.position_;
             actor->object.SetInheritedAlpha(31);
@@ -115,22 +115,22 @@ extern "C" ARM void GameObject_UpdateFollower(FollowingActor* actor) {
         }
         return;
     }
-    arg0->unknown_268_ = 0;
-    Vector3fix var17 = var1->unknown_0_.position_;
-    var17.y = 0;
-    Vector3fix var18 = arg0->unknown_0_.position_;
-    var18.y = 0;
-    var4 = Vector3fix_Distance(&var18, &var17);
-    if (arg0->unknown_1cd_ == 0) {
-        switch (var1->unknown_c0_) {
+    actor->fade = 0;
+    Vector3fix leaderPosition = leader->object.position_;
+    leaderPosition.y = 0;
+    Vector3fix actorPosition = actor->object.position_;
+    actorPosition.y = 0;
+    var4 = Vector3fix_Distance(&actorPosition, &leaderPosition);
+    if (actor->queued == 0) {
+        switch (leader->unknown_c0_) {
         case 1:
         case 2:
         case 3:
         case 4:
         case 5:
-            arg0->unknown_1cd_ = 1;
-            arg0->unknown_1d0_[arg0->unknown_1cb_].unknown_0_ = var17.x;
-            arg0->unknown_1d0_[arg0->unknown_1cb_].unknown_4_ = var17.z;
+            actor->queued = 1;
+            actor->unknown_1d0_[actor->unknown_1cb_].x = leaderPosition.x;
+            actor->unknown_1d0_[actor->unknown_1cb_].z = leaderPosition.z;
             break;
         }
     }
@@ -138,61 +138,61 @@ extern "C" ARM void GameObject_UpdateFollower(FollowingActor* actor) {
         GameObject_StoreMotionState((Foo02033b58*)actor, 0);
         return;
     }
-    var3 = arg0->unknown_ac_ != 0;
-    Vector3fix var19 = {0, 0, 0};
-    var11 = arg0->unknown_1cb_;
-    var19.x = arg0->unknown_1d0_[var11].unknown_0_;
-    var19.z = arg0->unknown_1d0_[var11].unknown_4_;
-    var5 = Vector3fix_Distance(&var17, &var19);
-    var6 = 0x800;
-    if ((arg0->unknown_130_->unknown_0_ & 1) && (var1->unknown_130_->unknown_0_ & 1)) {
-        int var20 = arg0->unknown_1cb_ - arg0->unknown_1cc_;
-        if (var20 < 0)
-            var20 = 16 - arg0->unknown_1cc_ + arg0->unknown_1cb_;
-        if (var20 <= 2)
-            var6 = 0xe66;
+    var3 = actor->unknown_ac_ != 0;
+    Vector3fix previous = {0, 0, 0};
+    previousIndex = actor->unknown_1cb_;
+    previous.x = actor->unknown_1d0_[previousIndex].x;
+    previous.z = actor->unknown_1d0_[previousIndex].z;
+    var5 = Vector3fix_Distance(&leaderPosition, &previous);
+    spacing = 0x800;
+    if ((actor->flags->bits & 1) && (leader->flags->bits & 1)) {
+        int pending = actor->unknown_1cb_ - actor->unknown_1cc_;
+        if (pending < 0)
+            pending = 16 - actor->unknown_1cc_ + actor->unknown_1cb_;
+        if (pending <= 2)
+            spacing = 0xe66;
     }
-    if (var5 > var6) {
-        ++arg0->unknown_1cb_;
-        arg0->unknown_1cb_ %= 16;
-        arg0->unknown_1d0_[arg0->unknown_1cb_].unknown_0_ = var17.x;
-        arg0->unknown_1d0_[arg0->unknown_1cb_].unknown_4_ = var17.z;
+    if (var5 > spacing) {
+        ++actor->unknown_1cb_;
+        actor->unknown_1cb_ %= 16;
+        actor->unknown_1d0_[actor->unknown_1cb_].x = leaderPosition.x;
+        actor->unknown_1d0_[actor->unknown_1cb_].z = leaderPosition.z;
     }
-    if (arg0->unknown_1cb_ < 0)
+    if (actor->unknown_1cb_ < 0)
         return;
-    var7 = arg0->unknown_1cb_ - arg0->unknown_1cc_;
+    var7 = actor->unknown_1cb_ - actor->unknown_1cc_;
     if (var7 < 0)
-        var7 = 16 - arg0->unknown_1cc_ + arg0->unknown_1cb_;
+        var7 = 16 - actor->unknown_1cc_ + actor->unknown_1cb_;
     if (var7 > 2)
-        arg0->unknown_b4_ = 0x24d;
+        actor->animation = 0x24d;
     else if (var7 <= 1)
-        arg0->unknown_b4_ = 0x9d;
+        actor->animation = 0x9d;
     else
         actor->animation = 0x189;
     threshold = spacing + 0xb33;
-    ready = 1;
+    var9 = 1;
     if (!FieldTaskQueue_IsEmpty(resource))
-        ready = 0;
-    if (gap >= 1 || (separation > threshold && ready) || moving) {
+        var9 = 0;
+    if (var7 >= 1 || (var4 > threshold && var9) || var3) {
         Vector3fix origin = actor->object.position_;
         origin.y = 0;
         Vector3fix destination = {0, 0, 0};
-        destination.x = actor->trail[actor->readIndex].x;
-        destination.z = actor->trail[actor->readIndex].z;
+        destination.x = actor->unknown_1d0_[actor->unknown_1cc_].x;
+        destination.z = actor->unknown_1d0_[actor->unknown_1cc_].z;
         Vector3fix direction;
         Vector3fix_Subtract(&destination, &origin, &direction);
         int distance = Vector3fix_Length(&direction);
         Vector3fix_Normalize(&direction, &direction);
         angle = fix32ReduceAngle0To2Pi(fix32_Atan2(direction.x, direction.z));
-        if (moving)
+        if (var3)
             GameObject_SnapFacing((Obj02033874*)actor, leader->object.rotation_.y);
         else
             GameObject_SetFacing((Obj02033834*)actor, angle);
-        if (distance <= 0x800 && actor->readIndex != actor->writeIndex) {
-            ++actor->readIndex;
-            actor->readIndex %= 16;
+        if (distance <= 0x800 && actor->unknown_1cc_ != actor->unknown_1cb_) {
+            ++actor->unknown_1cc_;
+            actor->unknown_1cc_ %= 16;
         }
-        if (moving)
+        if (var3)
             GameObject_SetMotionState((Obj02033b68*)actor, 0);
         else if (actor->state != 1)
             GameObject_SetMotionState((Obj02033b68*)actor, 1);

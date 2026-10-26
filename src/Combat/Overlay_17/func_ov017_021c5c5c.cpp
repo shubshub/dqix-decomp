@@ -3,34 +3,34 @@
 #include "Graphics/Vector.h"
 #include "Resource/GameResources.h"
 
-struct Struct_02038598_5;
+struct ListHead02046b60;
 
 struct Struct_ov017_021c5c5c {
-    char unknown_0_[8];
-    unsigned short unknown_8_;
+    char pad0[8];
+    unsigned short targetId;
 };
 
 struct Struct_ov017_021c5c5c_2 {
-    char unknown_0_[2];
-    unsigned char unknown_2_;
+    char pad0[2];
+    unsigned char active;
 };
 
 struct Struct_ov017_021c5c5c_3 {
-    char unknown_0_;
-    unsigned char unknown_1_;
-    char unknown_2_;
+    char pad0;
+    unsigned char field1;
+    char pad2;
     unsigned char unknown_3_;
-    char unknown_4_[0x64 - 4];
+    char pad4[0x64 - 4];
     int unknown_64_;
 };
 
 struct Struct_ov017_021c5c5c_4 {
 #if defined(jpn)
-    char unknown_0_[0x34ec];
+    char pad0[0x34ec];
 #else
-    char unknown1_0_[0x36fc];
+    char pad0[0x36fc];
 #endif
-    Struct_02038598_5* unknown_36fc_;
+    ListHead02046b60* list;
     char unknown_3700_[0x3718 - 0x3700];
     Struct_ov017_021c5c5c_2* unknown_3718_;
 #if defined(jpn)
@@ -40,19 +40,19 @@ struct Struct_ov017_021c5c5c_4 {
 #endif
     Struct_ov017_021c5c5c_3* unknown_3b0c_;
     char unknown_3b10_[0x42e7 - 0x3b10];
-    unsigned char unknown_42e7_;
+    unsigned char busy;
 };
 
 struct Struct_ov017_021c5c5c_5 {
-    unsigned int unknown_0_;
+    unsigned int flags;
 };
 
-struct Struct_ov017_021c5c5c_6 {
-    Object3D unknown_0_;
+struct Combatant_021c5c5c {
+    Object3D obj3D;
     char unknown_ac_[0xc3 - 0xac];
-    unsigned char unknown_c3_;
+    unsigned char fieldC3;
     char unknown_c4_[0x130 - 0xc4];
-    Struct_ov017_021c5c5c_5* unknown_130_;
+    Struct_ov017_021c5c5c_5* status;
     char unknown_134_[0x17d - 0x134];
     unsigned char unknown_17d_;
 #if defined(jpn)
@@ -63,55 +63,55 @@ struct Struct_ov017_021c5c5c_6 {
     unsigned int unknown_18c_;
 };
 
-extern "C" Event_021c5c5c* func_ov017_021b8478(Node718_021c5c5c* node);
-Combatant_021c5c5c* FindCombatantByField16a_021a278c(void* base, int val);
-unsigned char GameObject_IsClimbingLadder(char* obj);
-int ListContainsId(ListHead02046b60* list, int id);
-void SetFlagAndMaybeNotify_021ab010(void* obj, int flag);
-int FieldTaskQueue_IsEmpty(void** list);
+extern "C" Struct_ov017_021c5c5c* func_ov017_021b8478(Struct_ov017_021c5c5c_2* node);
+extern "C" Combatant_021c5c5c* func_ov017_021a278c(void* base, int val);
+extern "C" unsigned char GameObject_IsClimbingLadder(char* obj);
+extern "C" int func_02046b60(ListHead02046b60* list, int id);
+extern "C" void func_ov017_021ab010(void* obj, int flag);
+extern "C" int FieldTaskQueue_IsEmpty(void** list);
 
 // USA: func_ov017_021c5c5c
 extern "C" ARM int func_ov017_021c5c5c(int unused, int id) {
     GameState* gs = GameState::GetInstance();
-    Ctx_021c5c5c* ctx = (Ctx_021c5c5c*)GetGameResources();
+    Struct_ov017_021c5c5c_4* ctx = (Struct_ov017_021c5c5c_4*)GetGameResources();
     Combatant_021c5c5c* leader;
     ListHead02046b60* list = ctx->list;
     leader = (Combatant_021c5c5c*)gs->GetLeader();
     if (leader == NULL) {
         return 0;
     }
-    if (var1->unknown_42e7_ != 0) {
+    if (ctx->busy != 0) {
         return 0;
     }
-    if (var1->unknown_3718_->unknown_2_ != 0) {
-        Struct_ov017_021c5c5c* var4 = func_ov017_021b8478(var1->unknown_3718_);
-        if (var4->unknown_8_ == arg1) {
+    if (ctx->unknown_3718_->active != 0) {
+        Struct_ov017_021c5c5c* ev = func_ov017_021b8478(ctx->unknown_3718_);
+        if (ev->targetId == id) {
             return 1;
         }
     }
-    if (!(var2->unknown_130_->unknown_0_ & 1) && !(var2->unknown_18c_ & 1) && (int)var2->unknown_c3_ > 0) {
+    if (!(leader->status->flags & 1) && !(leader->unknown_18c_ & 1) && (int)leader->fieldC3 > 0) {
         return 0;
     }
 
-    Struct_ov017_021c5c5c_6* var5 = func_ov017_021a278c(var1, arg1);
-    if (var5 == NULL) {
+    Combatant_021c5c5c* other = func_ov017_021a278c(ctx, id);
+    if (other == NULL) {
         return 0;
     }
-    unsigned char var6 = var5->unknown_17d_ & 0x80;
+    unsigned char var6 = other->unknown_17d_ & 0x80;
     if (var6) {
         return 0;
     }
-    var5->unknown_17d_ |= 0x80;
+    other->unknown_17d_ |= 0x80;
 
-    if (var2->unknown_0_.GetField06() != var5->unknown_0_.GetField06()) {
+    if (leader->obj3D.GetField06() != other->obj3D.GetField06()) {
         return 0;
     }
     if (GameObject_IsClimbingLadder((char*)leader) != 0) {
         return 0;
     }
 
-    Vector3fix var7 = var2->unknown_0_.position_;
-    Vector3fix var8 = var5->unknown_0_.position_;
+    Vector3fix var7 = leader->obj3D.position_;
+    Vector3fix var8 = other->obj3D.position_;
     if (fix32abs(var7.y - var8.y) > 0x1800) {
         return 0;
     }
@@ -119,12 +119,12 @@ extern "C" ARM int func_ov017_021c5c5c(int unused, int id) {
         return 0;
     }
 
-    Struct_ov017_021c5c5c_3* var9 = var1->unknown_3b0c_;
-    if (func_02046b60(var3, 0x1a) && var9->unknown_64_ != 0) {
+    Struct_ov017_021c5c5c_3* node = ctx->unknown_3b0c_;
+    if (func_02046b60(list, 0x1a) && node->unknown_64_ != 0) {
         return 0;
     }
-    if (node->field3 != 0 && node->field1 == 0) {
-        SetFlagAndMaybeNotify_021ab010(node, 0);
+    if (node->unknown_3_ != 0 && node->field1 == 0) {
+        func_ov017_021ab010(node, 0);
     } else if (!FieldTaskQueue_IsEmpty((void**)list)) {
         return 0;
     }

@@ -7,14 +7,14 @@
 #endif
 
 
-struct Struct_ov000_02171640 { char unknown_0_[REGION_OFFSET_0]; int unknown_9c_[0x42]; };
+struct S02171698 { char pad[REGION_OFFSET_0]; int field[0x42]; };
 
 // USA: func_ov000_02171698
-extern "C" ARM signed char func_ov000_02171698(struct Struct_ov000_02171640* arg0) {
-    signed char var0 = 0;
-    int var1;
-    for (var1 = 0; var1 < 0x42; var1++) {
-        if (arg0->unknown_9c_[var1] != 0) var0++;
+extern "C" ARM signed char func_ov000_02171698(struct S02171698* s) {
+    signed char count = 0;
+    int i;
+    for (i = 0; i < 0x42; i++) {
+        if (s->field[i] != 0) count++;
     }
-    return var0;
+    return count;
 }

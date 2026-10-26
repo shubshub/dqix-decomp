@@ -1,42 +1,42 @@
 #include <globaldefs.h>
 #include <std_library_functions.h>
 
-struct Struct_ov003_0215f4e4_2 {
-    short unknown_0_;
-    short unknown_2_;
-    const char* unknown_4_;
-    const char* unknown_8_;
-    unsigned char unknown_c_;
-    unsigned char unknown_d_;
-    unsigned char unknown_e_;
+struct KeyboardKey {
+    short x_;
+    short y_;
+    const char* text_;
+    const char* shiftedText_;
+    unsigned char flags_;
+    unsigned char unk_d;
+    unsigned char size_;
     unsigned char unknown_f_;
-    char unknown_10_[4];
+    char unk_10[4];
 };
 
-struct Struct_ov012_0218ab34 {
-    Struct_ov003_0215f4e4_2* unknown_0_;
-    short unknown_4_;
-    short unknown_6_;
+struct KeyboardLayout {
+    KeyboardKey* unknown_0_;
+    short unk_4;
+    short count_;
 };
 
-struct Struct_ov003_0215f4e4 {
-    Struct_ov003_0215f4e4_2* unknown_0_;
-    Struct_ov012_0218ab34* unknown_4_;
-    char* unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
+struct Keyboard {
+    KeyboardKey* key_;
+    KeyboardLayout* layout_;
+    char* text_;
+    int unk_c;
+    int size_;
+    int unk_14;
     int unknown_18_;
-    short unknown_1c_;
+    short unk_1c;
     unsigned char unknown_1e_;
-    unsigned char unknown_1f_;
+    unsigned char palette_;
     unsigned char unknown_20_;
 };
 
 struct Struct_ov012_0218ab34_2 {
-    char unknown_0_[8];
-    void* unknown_8_;
-    char unknown_c_[0xa0 - 0xc];
+    char unk_0[8];
+    void* pixels_;
+    char unk_c[0xa0 - 0xc];
     int unknown_a0_;
     char unknown_a4_[0xac - 0xa4];
     short unknown_ac_;
@@ -44,80 +44,80 @@ struct Struct_ov012_0218ab34_2 {
 };
 
 struct Struct_0205d81c;
-struct Struct_02072a68_2;
+struct TableA68;
 
 struct Struct_ov012_0218ab34_3 {
-    Struct_ov003_0215f4e4* unknown_0_;
-    Struct_ov012_0218ab34* unknown_4_;
-    char unknown_8_[0xac - 0x8];
+    Keyboard* keyboard_;
+    KeyboardLayout* layout_;
+    char unk_8[0xac - 0x8];
     char unknown_ac_[0x133c - 0xac];
-    char unknown_133c_[4];
+    char texts_[4];
 };
 
-KeyboardCanvas* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
-const char* FindEntryByKey_02072a68(struct TableA68* table, int key);
+extern "C" Struct_ov012_0218ab34_2* func_0205d81c(struct Struct_0205d81c* s, int key);
+extern "C" const char* func_02072a68(struct TableA68* table, int key);
 extern "C" int Font_GetTextWidth(const char* text, int large);
-void SetField0xa0AndByte0xc4IfFlag0x1Clear_0204f160(unsigned char* obj, int value, int key);
-extern "C" void func_0204ecb4(KeyboardCanvas* wnd, int a, int b, int w, int h, signed char* margins);
-extern "C" void func_0204f41c(KeyboardCanvas* ctx, short x, short y, const char* str, int size,
+extern "C" void func_0204f160(unsigned char* obj, int value, int key);
+extern "C" void func_0204ecb4(Struct_ov012_0218ab34_2* wnd, int a, int b, int w, int h, signed char* arg5);
+extern "C" void func_0204f41c(Struct_ov012_0218ab34_2* ctx, short x, short y, const char* str, int size,
                               unsigned char palette, short* outA, short* outB, int flag);
-extern "C" void func_0204f3bc(KeyboardCanvas* ctx, int value);
+extern "C" void func_0204f3bc(Struct_ov012_0218ab34_2* ctx, int value);
 extern "C" void Keyboard_GetKeySize(int size, short* width, short* height);
-extern "C" void func_0204f914(KeyboardCanvas* obj, int mode, short x0, short y0, short x1, short y1);
-struct Obj0204fbf8;
-void InvokeHandlerAfterCacheFlush0204fbf8(struct Obj0204fbf8* obj);
+extern "C" void func_0204f914(Struct_ov012_0218ab34_2* obj, int mode, short arg2, short arg3, short x1, short arg5);
+struct Struct_0204fbf8_2;
+extern "C" void func_0204fbf8(struct Struct_0204fbf8_2* obj);
 
 // USA: func_ov012_0218ab34
-extern "C" ARM void func_ov012_0218ab34(Struct_ov012_0218ab34_3* arg0, int arg1)
+extern "C" ARM void func_ov012_0218ab34(Struct_ov012_0218ab34_3* self, int arg1)
 {
     if (arg1 != 0)
         return;
 
-    Struct_ov012_0218ab34_2* var0 = func_0205d81c((struct Struct_0205d81c*)arg0->unknown_ac_, 0xe);
-    if (var0 == NULL)
+    Struct_ov012_0218ab34_2* canvas = func_0205d81c((struct Struct_0205d81c*)self->unknown_ac_, 0xe);
+    if (canvas == NULL)
         return;
 
-    short originX = canvas->originX_ * 8;
-    short originY = canvas->originY_ * 8;
-    const char* title = FindEntryByKey_02072a68((struct TableA68*)self->texts_, 0xe);
+    short originX = canvas->unknown_ac_ * 8;
+    short originY = canvas->unknown_ae_ * 8;
+    const char* title = func_02072a68((struct TableA68*)self->texts_, 0xe);
     int titleX = (0xf0 - Font_GetTextWidth(title, 1)) >> 1;
 
-    Struct_ov003_0215f4e4* var5 = arg0->unknown_0_;
-    Struct_ov012_0218ab34* var6 = arg0->unknown_4_;
-    unsigned char var7;
+    Keyboard* keyboard = self->keyboard_;
+    KeyboardLayout* layout = self->layout_;
+    unsigned char mask;
     unsigned char var8;
-    int var9;
-    Struct_ov003_0215f4e4_2* var10;
-    int var11;
-    int var12;
-    var12 = var5->unknown_1f_;
-    var7 = var5->unknown_1e_;
-    var8 = var5->unknown_20_;
-    var9 = var6->unknown_6_;
-    var10 = var6->unknown_0_;
+    int count;
+    KeyboardKey* key;
+    int i;
+    int palette;
+    palette = keyboard->palette_;
+    mask = keyboard->unknown_1e_;
+    var8 = keyboard->unknown_20_;
+    count = layout->count_;
+    key = layout->unknown_0_;
 
-    short var13;
-    short var14;
-    short var15;
-    short var16;
+    short outA;
+    short outB;
+    short width;
+    short height;
 
-    if (var0->unknown_8_ != NULL)
-        memset(var0->unknown_8_, 0, 0x7800);
-    func_0204f160((unsigned char*)var0, var0->unknown_a0_, 0xe);
-    func_0204ecb4(var0, 0, 0, 0x1e, 0x12, 0);
-    func_0204f41c(var0, var4, 6, var3, 0xc, 0xf, &var13, &var14, var12);
-    func_0204f3bc(var0, 0x18);
+    if (canvas->pixels_ != NULL)
+        memset(canvas->pixels_, 0, 0x7800);
+    func_0204f160((unsigned char*)canvas, canvas->unknown_a0_, 0xe);
+    func_0204ecb4(canvas, 0, 0, 0x1e, 0x12, 0);
+    func_0204f41c(canvas, titleX, 6, title, 0xc, 0xf, &outA, &outB, palette);
+    func_0204f3bc(canvas, 0x18);
 
-    for (var11 = 0; var11 < var9; var11++, var10++) {
-        if ((var10->unknown_c_ & var7) == 0)
+    for (i = 0; i < count; i++, key++) {
+        if ((key->flags_ & mask) == 0)
             continue;
 
-        const char* var17 = var10->unknown_4_;
-        const char* var18 = var17;
-        if (var8 != 0 || (var7 & 2) != 0)
-            var18 = var10->unknown_8_;
-        if (var10->unknown_d_ != 0)
-            var18 = var17;
+        const char* normal = key->text_;
+        const char* text = normal;
+        if (var8 != 0 || (mask & 2) != 0)
+            text = key->shiftedText_;
+        if (key->unk_d != 0)
+            text = normal;
 
         int textWidth = Font_GetTextWidth(text, 1);
         Keyboard_GetKeySize(key->size_, &width, &height);
@@ -128,5 +128,5 @@ extern "C" ARM void func_ov012_0218ab34(Struct_ov012_0218ab34_3* arg0, int arg1)
         func_0204f41c(canvas, width + x, y + 2, text, 0xc, 0xf, &outA, &outB, palette);
     }
 
-    func_0204fbf8((struct Struct_0204fbf8_2*)var0);
+    func_0204fbf8((struct Struct_0204fbf8_2*)canvas);
 }

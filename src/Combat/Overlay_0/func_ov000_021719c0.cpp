@@ -7,14 +7,14 @@
 #endif
 
 
-struct Struct_ov000_02171968 { char unknown_0_[REGION_OFFSET_0]; int unknown_1a4_[0x93]; };
+struct S021719c0 { char pad[REGION_OFFSET_0]; int field[0x93]; };
 
 // USA: func_ov000_021719c0
-extern "C" ARM short func_ov000_021719c0(struct Struct_ov000_02171968* arg0) {
-    short var0 = 0;
-    int var1;
-    for (var1 = 0; var1 < 0x93; var1++) {
-        if (arg0->unknown_1a4_[var1] != 0) var0++;
+extern "C" ARM short func_ov000_021719c0(struct S021719c0* s) {
+    short count = 0;
+    int i;
+    for (i = 0; i < 0x93; i++) {
+        if (s->field[i] != 0) count++;
     }
-    return var0;
+    return count;
 }

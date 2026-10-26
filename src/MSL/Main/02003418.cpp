@@ -2,14 +2,14 @@
 #include "std_library_functions.h"
 
 struct Struct_02003418 {
-    unsigned char unknown_0_;
+    unsigned char alignment;
     unsigned char unknown_1_;
     unsigned char unknown_2_;
-    unsigned char unknown_3_;
-    unsigned char unknown_4_;
+    unsigned char alternate;
+    unsigned char length;
     unsigned char unknown_5_;
-    unsigned char unknown_6_[2];
-    int unknown_8_;
+    unsigned char field6[2];
+    int width;
     int unknown_c_;
 };
 typedef char* Type_02003418;
@@ -28,169 +28,169 @@ extern const unsigned short data_020eef28[];
 extern const char data_020eef2c[];
 
 // USA: func_02003418
-extern "C" ARM int func_02003418(Type_02003418_3 arg0, void* arg1, const char* arg2, Type_02003418 arg3) {
-    char var0[1];
+extern "C" ARM int func_02003418(Type_02003418_3 arg0, void* state, const char* format, Type_02003418 args) {
+    char padding[1];
     char var1;
     Struct_02003418 var2;
-    char var3[512];
+    char buffer[512];
     long long var4;
     const char* var5;
-    const char* var6;
-    int var7;
-    int var8;
-    int var9;
-    int var10 = 0;
-    var0[0] = ' ';
-    if (*arg2) do {
-        var5 = strchr(arg2, '%');
+    const char* text;
+    int width;
+    int value;
+    int length;
+    int total = 0;
+    padding[0] = ' ';
+    if (*format) do {
+        var5 = strchr(format, '%');
         if (var5 == 0) {
-            unsigned int var11 = strlen(arg2);
-            var10 += var11;
-            if (var11 && !arg0(arg1, arg2, var11)) return -1;
+            unsigned int tail = strlen(format);
+            total += tail;
+            if (tail && !arg0(state, format, tail)) return -1;
             break;
         }
-        unsigned int var12 = var5 - arg2;
-        var10 += var12;
-        if (var12 && !arg0(arg1, arg2, var12)) return -1;
-        arg2 = func_02001bdc(var5, &arg3, &var2);
+        unsigned int var12 = var5 - format;
+        total += var12;
+        if (var12 && !arg0(state, format, var12)) return -1;
+        format = func_02001bdc(var5, &args, &var2);
         switch (var2.unknown_5_) {
         case 'd': case 'i':
-            if (var2.unknown_4_ == 3) var8 = FORMAT_ARGUMENT02003418(arg3, long);
-            else if (var2.unknown_4_ == 4) var4 = FORMAT_ARGUMENT02003418(arg3, long long);
-            else if (var2.unknown_4_ == 6) var4 = FORMAT_ARGUMENT02003418(arg3, long long);
-            else if (var2.unknown_4_ == 7) var8 = FORMAT_ARGUMENT02003418(arg3, size_t);
-            else if (var2.unknown_4_ == 8) var8 = FORMAT_ARGUMENT02003418(arg3, Type_02003418_2);
+            if (var2.length == 3) value = FORMAT_ARGUMENT02003418(args, long);
+            else if (var2.length == 4) var4 = FORMAT_ARGUMENT02003418(args, long long);
+            else if (var2.length == 6) var4 = FORMAT_ARGUMENT02003418(args, long long);
+            else if (var2.length == 7) value = FORMAT_ARGUMENT02003418(args, size_t);
+            else if (var2.length == 8) value = FORMAT_ARGUMENT02003418(args, Type_02003418_2);
             else {
-                var8 = FORMAT_ARGUMENT02003418(arg3, int);
+                value = FORMAT_ARGUMENT02003418(args, int);
             }
-            if (var2.unknown_4_ == 2) var8 = (short)var8;
-            if (var2.unknown_4_ == 1) var8 = (signed char)var8;
-            if (var2.unknown_4_ == 4 || var2.unknown_4_ == 6) {
-                var6 = func_020023b8(var4, var3 + sizeof(var3), var2);
-                if (var6 == 0) goto invalid;
+            if (var2.length == 2) value = (short)value;
+            if (var2.length == 1) value = (signed char)value;
+            if (var2.length == 4 || var2.length == 6) {
+                text = func_020023b8(var4, buffer + sizeof(buffer), var2);
+                if (text == 0) goto invalid;
             } else {
-                var6 = func_0200216c(var8, var3 + sizeof(var3), var2);
-                if (var6 == 0) goto invalid;
+                text = func_0200216c(value, buffer + sizeof(buffer), var2);
+                if (text == 0) goto invalid;
             }
-            var9 = var3 + sizeof(var3) - 1 - var6;
+            length = buffer + sizeof(buffer) - 1 - text;
             break;
         case 'o': case 'u': case 'x': case 'X':
-            if (var2.unknown_4_ == 3) var8 = FORMAT_ARGUMENT02003418(arg3, unsigned long);
-            else if (var2.unknown_4_ == 4) var4 = FORMAT_ARGUMENT02003418(arg3, unsigned long long);
-            else if (var2.unknown_4_ == 6) var4 = FORMAT_ARGUMENT02003418(arg3, unsigned long long);
-            else if (var2.unknown_4_ == 7) var8 = FORMAT_ARGUMENT02003418(arg3, size_t);
-            else if (var2.unknown_4_ == 8) var8 = FORMAT_ARGUMENT02003418(arg3, Type_02003418_2);
+            if (var2.length == 3) value = FORMAT_ARGUMENT02003418(args, unsigned long);
+            else if (var2.length == 4) var4 = FORMAT_ARGUMENT02003418(args, unsigned long long);
+            else if (var2.length == 6) var4 = FORMAT_ARGUMENT02003418(args, unsigned long long);
+            else if (var2.length == 7) value = FORMAT_ARGUMENT02003418(args, size_t);
+            else if (var2.length == 8) value = FORMAT_ARGUMENT02003418(args, Type_02003418_2);
             else {
-                var8 = FORMAT_ARGUMENT02003418(arg3, unsigned int);
+                value = FORMAT_ARGUMENT02003418(args, unsigned int);
             }
-            if (var2.unknown_4_ == 2) var8 = (unsigned short)var8;
-            if (var2.unknown_4_ == 1) var8 = (unsigned char)var8;
-            if (var2.unknown_4_ == 4 || var2.unknown_4_ == 6) {
-                var6 = func_020023b8(var4, var3 + sizeof(var3), var2);
-                if (var6 == 0) goto invalid;
+            if (var2.length == 2) value = (unsigned short)value;
+            if (var2.length == 1) value = (unsigned char)value;
+            if (var2.length == 4 || var2.length == 6) {
+                text = func_020023b8(var4, buffer + sizeof(buffer), var2);
+                if (text == 0) goto invalid;
             } else {
-                var6 = func_0200216c(var8, var3 + sizeof(var3), var2);
-                if (var6 == 0) goto invalid;
+                text = func_0200216c(value, buffer + sizeof(buffer), var2);
+                if (text == 0) goto invalid;
             }
-            var9 = var3 + sizeof(var3) - 1 - var6;
+            length = buffer + sizeof(buffer) - 1 - text;
             break;
         case 'e': case 'E': case 'f': case 'F': case 'g': case 'G': {
             long double var13;
-            if (var2.unknown_4_ == 9) {
-                var13 = FORMAT_ARGUMENT02003418(arg3, long double);
+            if (var2.length == 9) {
+                var13 = FORMAT_ARGUMENT02003418(args, long double);
             } else {
-                var13 = FORMAT_ARGUMENT02003418(arg3, double);
+                var13 = FORMAT_ARGUMENT02003418(args, double);
             }
-            var6 = func_02002cb4(var13, var3 + sizeof(var3), var2);
-            if (var6 == 0) goto invalid;
-            var9 = var3 + sizeof(var3) - 1 - var6;
+            text = func_02002cb4(var13, buffer + sizeof(buffer), var2);
+            if (text == 0) goto invalid;
+            length = buffer + sizeof(buffer) - 1 - text;
             break;
         }
         case 'a': case 'A': {
             long double var14;
-            if (var2.unknown_4_ == 9) {
-                var14 = FORMAT_ARGUMENT02003418(arg3, long double);
+            if (var2.length == 9) {
+                var14 = FORMAT_ARGUMENT02003418(args, long double);
             } else {
-                var14 = FORMAT_ARGUMENT02003418(arg3, double);
+                var14 = FORMAT_ARGUMENT02003418(args, double);
             }
-            var6 = func_020026b4(var14, var3 + sizeof(var3), var2);
-            if (var6 == 0) goto invalid;
-            var9 = var3 + sizeof(var3) - 1 - var6;
+            text = func_020026b4(var14, buffer + sizeof(buffer), var2);
+            if (text == 0) goto invalid;
+            length = buffer + sizeof(buffer) - 1 - text;
             break;
         }
         case 's':
-            if (var2.unknown_4_ == 5) {
-                const unsigned short* var15 = FORMAT_ARGUMENT02003418(arg3, const unsigned short*);
+            if (var2.length == 5) {
+                const unsigned short* var15 = FORMAT_ARGUMENT02003418(args, const unsigned short*);
                 if (var15 == 0) var15 = data_020eef28;
-                if (func_020019c8(var3, var15, sizeof(var3)) < 0) goto invalid;
-                var6 = var3;
-            } else var6 = FORMAT_ARGUMENT02003418(arg3, char*);
-            if (var6 == 0) var6 = data_020eef2c;
-            if (var2.unknown_3_) {
-                var9 = (unsigned char)*var6++;
-                if (var2.unknown_2_ && var9 > var2.unknown_c_) var9 = var2.unknown_c_;
+                if (func_020019c8(buffer, var15, sizeof(buffer)) < 0) goto invalid;
+                text = buffer;
+            } else text = FORMAT_ARGUMENT02003418(args, char*);
+            if (text == 0) text = data_020eef2c;
+            if (var2.alternate) {
+                length = (unsigned char)*text++;
+                if (var2.unknown_2_ && length > var2.unknown_c_) length = var2.unknown_c_;
             } else if (var2.unknown_2_) {
-                var9 = var2.unknown_c_;
-                const char* var16 = func_02001ac0(var6, 0, var9);
-                if (var16) var9 = var16 - var6;
-            } else var9 = strlen(var6);
+                length = var2.unknown_c_;
+                const char* end = func_02001ac0(text, 0, length);
+                if (end) length = end - text;
+            } else length = strlen(text);
             break;
         case 'n': {
-            void* var17 = FORMAT_ARGUMENT02003418(arg3, void*);
-            switch (var2.unknown_4_) {
-            case 0: *(int*)var17 = var10; break;
-            case 2: *(short*)var17 = var10; break;
-            case 3: *(long*)var17 = var10; break;
-            case 6: *(long long*)var17 = var10; break;
-            case 7: *(size_t*)var17 = var10; break;
-            case 8: *(Type_02003418_2*)var17 = var10; break;
-            case 4: *(long long*)var17 = var10; break;
+            void* destination = FORMAT_ARGUMENT02003418(args, void*);
+            switch (var2.length) {
+            case 0: *(int*)destination = total; break;
+            case 2: *(short*)destination = total; break;
+            case 3: *(long*)destination = total; break;
+            case 6: *(long long*)destination = total; break;
+            case 7: *(size_t*)destination = total; break;
+            case 8: *(Type_02003418_2*)destination = total; break;
+            case 4: *(long long*)destination = total; break;
             default: goto next;
             }
             goto next;
         }
         case 'c':
-            var3[0] = FORMAT_ARGUMENT02003418(arg3, int);
-            var6 = var3;
-            var9 = 1;
+            buffer[0] = FORMAT_ARGUMENT02003418(args, int);
+            text = buffer;
+            length = 1;
             break;
         case '%':
-            var3[0] = '%';
-            var6 = var3;
-            var9 = 1;
+            buffer[0] = '%';
+            text = buffer;
+            length = 1;
             break;
         case 255:
         default:
         invalid:
             {
                 int var18 = strlen(var5);
-                if (var18 && !arg0(arg1, var5, var18)) return -1;
-                return var10 + var18;
+                if (var18 && !arg0(state, var5, var18)) return -1;
+                return total + var18;
             }
         }
-        var7 = var9;
-        if (var2.unknown_0_) {
-            var0[0] = var2.unknown_0_ == 2 ? '0' : ' ';
-            if ((*var6 == '+' || *var6 == '-' || *var6 == ' ') && var0[0] == '0') {
-                if (!arg0(arg1, var6, 1)) return -1;
-                var6++;
-                var9--;
+        width = length;
+        if (var2.alignment) {
+            padding[0] = var2.alignment == 2 ? '0' : ' ';
+            if ((*text == '+' || *text == '-' || *text == ' ') && padding[0] == '0') {
+                if (!arg0(state, text, 1)) return -1;
+                text++;
+                length--;
             }
-            if (var7 < var2.unknown_8_) do {
-                if (!arg0(arg1, var0, 1)) return -1;
-                var7++;
-            } while (var7 < var2.unknown_8_);
+            if (width < var2.width) do {
+                if (!arg0(state, padding, 1)) return -1;
+                width++;
+            } while (width < var2.width);
         }
-        if (var9 && !arg0(arg1, var6, var9)) return -1;
-        if (var2.unknown_0_ == 0 && var7 < var2.unknown_8_) {
+        if (length && !arg0(state, text, length)) return -1;
+        if (var2.alignment == 0 && width < var2.width) {
             do {
                 var1 = ' ';
-                if (!arg0(arg1, &var1, 1)) return -1;
-                var7++;
-            } while (var7 < var2.unknown_8_);
+                if (!arg0(state, &var1, 1)) return -1;
+                width++;
+            } while (width < var2.width);
         }
-        var10 += var7;
+        total += width;
     next:;
-    } while (*arg2);
-    return var10;
+    } while (*format);
+    return total;
 }

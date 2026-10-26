@@ -2,62 +2,62 @@
 #include "std_library_functions.h"
 
 #if defined(jpn)
-struct Struct_0203bdf4_2 {
+struct CachedTextEntry {
     short unknown_0_;
-    short unknown_2_;
-    char unknown_4_[10];
-    unsigned char unknown_e_;
-    unsigned char unknown_f_;
+    short tileIndex;
+    char text[10];
+    unsigned char references;
+    unsigned char unknownf;
 };
-struct Struct_0203bdf4 {
-    void* unknown_0_;
-    Struct_0203bdf4_2 unknown_4_[96];
+struct CachedTextTable {
+    void* drawingBuffer;
+    CachedTextEntry entries[96];
 };
 #else
-struct Struct_0203bdf4_2 {
-    unsigned char unknown_0_[32];
-    unsigned char unknown_20_[8];
+struct CachedTextEntry {
+    unsigned char glyphIndices[32];
+    unsigned char unknown20[8];
 };
-struct Struct_0203bdf4 {
-    void* unknown_0_;
-    Struct_0203bdf4_2 unknown_4_[32];
+struct CachedTextTable {
+    void* drawingBuffer;
+    CachedTextEntry entries[32];
 };
 #endif
 
-extern Struct_0203bdf4* data_02105244;
-extern "C" int func_020d2ff0(const char* arg0);
-extern "C" void func_02042764(const unsigned char* arg0, char* arg1, int arg2);
+extern CachedTextTable* data_02105244;
+extern "C" int STD_GetStringLength(const char* text);
+extern "C" void Font_DecodeText(const unsigned char* glyphIndices, char* output, int fontIndex);
 
 #if defined(jpn)
 // USA: func_0203c248
-extern "C" ARM void func_0203bdf4(const short* arg0, char* arg1) {
-    Struct_0203bdf4* var0 = data_02105244;
-    if (var0 == NULL) return;
-    Struct_0203bdf4_2* var1;
-    int var2 = 0;
-    var1 = var0->unknown_4_;
+extern "C" ARM void func_0203bdf4(const short* textSlots, char* output) {
+    CachedTextTable* cache = data_02105244;
+    if (cache == NULL) return;
+    CachedTextEntry* entries;
+    int used = 0;
+    entries = cache->entries;
 
-    for (int var3 = 0; var3 < 10; ++var3) {
-        short var4 = arg0[var3];
-        if (var4 >= 0) {
-            Struct_0203bdf4_2* var5 = &var1[var4];
-            int var6 = func_020d2ff0(var5->unknown_4_);
-            memcpy(arg1 + var2, var5->unknown_4_, var6);
-            var2 += var6;
-            ++var3;
+    for (int slot = 0; slot < 10; ++slot) {
+        short index = textSlots[slot];
+        if (index >= 0) {
+            CachedTextEntry* entry = &entries[index];
+            int length = STD_GetStringLength(entry->text);
+            memcpy(output + used, entry->text, length);
+            used += length;
+            ++slot;
         }
     }
 }
 #else
 // USA: func_0203c248
-extern "C" ARM void func_0203c248(char* arg0, int arg1) {
-    Struct_0203bdf4* var0 = data_02105244;
-    Struct_0203bdf4_2* var1;
-    short var2;
-    if (var0 == NULL) return;
-    var1 = var0->unknown_4_;
-    var2 = *reinterpret_cast<short*>(arg0 + 0x14);
-    if (var2 < 0) return;
-    func_02042764(var1[var2].unknown_0_, reinterpret_cast<char*>(arg1), 0);
+extern "C" ARM void func_0203c248(char* object, int destination) {
+    CachedTextTable* cache = data_02105244;
+    CachedTextEntry* entries;
+    short index;
+    if (cache == NULL) return;
+    entries = cache->entries;
+    index = *reinterpret_cast<short*>(object + 0x14);
+    if (index < 0) return;
+    Font_DecodeText(entries[index].glyphIndices, reinterpret_cast<char*>(destination), 0);
 }
 #endif

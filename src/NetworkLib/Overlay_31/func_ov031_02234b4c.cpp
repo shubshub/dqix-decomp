@@ -14,8 +14,8 @@ extern "C" ARM void func_ov031_02234b4c(void) {
         return;
     }
     func_ov031_02222ddc();
-    unsigned char var0 = data_ov031_02290ce4;
-    if ((unsigned char)(var0 + 0xfe) <= 1) {
+    unsigned char v = data_ov031_02290ce4;
+    if ((unsigned char)(v + 0xfe) <= 1) {
         func_ov031_0223c078(3, 1, 1, 8);
     }
     func_ov031_0223c078(3, 0, 0x15, 8);

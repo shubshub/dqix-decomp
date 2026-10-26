@@ -8,18 +8,18 @@ extern "C" int memcmp(void* a, void* b, int n);
 // The table functions as the upload functions' C++ symbols type them: (void* source, int offset, int size).
 typedef void (*BackgroundUploadFunction)(void*, int, int);
 
-void Background_UploadCharacterData(int* a0, BackgroundUploadFunction fn, char* ctx);
+extern "C" void Background_UploadCharacterData(int* a0, BackgroundUploadFunction fn, char* ctx);
 
 struct Obj0204abcc;
 struct P0204abcc;
-void Background_UploadPalette(struct Obj0204abcc* obj, BackgroundUploadFunction fn, struct P0204abcc* p);
+extern "C" void Background_UploadPalette(struct Obj0204abcc* obj, BackgroundUploadFunction fn, struct P0204abcc* p);
 
-void BackgroundScreen_Upload(unsigned char* dst, BackgroundUploadFunction callback, unsigned char* src);
+extern "C" void BackgroundScreen_Upload(unsigned char* dst, BackgroundUploadFunction callback, unsigned char* src);
 
-void ClearRecordFields(struct BackgroundScreen* rec);
+extern "C" void ClearRecordFields(struct BackgroundScreen* rec);
 
 // Main, originally DispatchByTagLookup0204b3a0 (USA 0x0204b3a0, EUR 0x0204b3b0, JPN 0x0204c1c0)
-ARM void Background_UploadFile(struct BackgroundGraphics* layer, char* file) {
+extern "C" ARM void Background_UploadFile(struct BackgroundGraphics* layer, char* file) {
     char tag[5];
 
     if (file == 0) {

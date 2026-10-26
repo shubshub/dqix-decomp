@@ -18,7 +18,7 @@ struct Holder020159c0 {
 };
 
 // Main, originally ClearMatchingEntries020159c0 (USA 0x020159c0, EUR 0x020159d0, JPN 0x0201578c)
-ARM void Zone3D_ClearChestIconsByOpener(struct Holder020159c0* zone, int opener) {
+extern "C" ARM void Zone3D_ClearChestIconsByOpener(struct Holder020159c0* zone, int opener) {
     int isPlayerIndex;
     int i;
     if (opener >= 0 && opener <= 3) {

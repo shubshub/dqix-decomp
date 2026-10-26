@@ -1,35 +1,35 @@
 #include <globaldefs.h>
 
 struct Struct_020482e0_2 {
-    unsigned int unknown_0_;
-    unsigned short unknown_4_;
+    unsigned int flags;
+    unsigned short count;
 };
 
 struct Struct_020482e0 {
-    char unknown_0_[0x130];
-    struct Struct_020482e0_2* unknown_130_;
+    char pad[0x130];
+    struct Struct_020482e0_2* sub;
 };
 
 // USA: func_020482e0
-extern "C" ARM int func_020482e0(struct Struct_020482e0* arg0, int arg1, int arg2) {
-    struct Struct_020482e0_2* var0 = arg0->unknown_130_;
-    unsigned short var1 = var0->unknown_4_;
-    if (var1 <= arg1) {
-        if (arg2 == 0) {
-            var0->unknown_4_ = 1;
-            return var1 - 1;
+extern "C" ARM int func_020482e0(struct Struct_020482e0* c, int amount, int force) {
+    struct Struct_020482e0_2* sub = c->sub;
+    unsigned short count = sub->count;
+    if (count <= amount) {
+        if (force == 0) {
+            sub->count = 1;
+            return count - 1;
         }
-        var0->unknown_4_ = 0;
+        sub->count = 0;
         int var2 = 0;
-        if (arg0->unknown_130_->unknown_0_ & 4) {
+        if (c->sub->flags & 4) {
             var2 = 1;
         }
-        arg0->unknown_130_->unknown_0_ = 1;
+        c->sub->flags = 1;
         if (var2) {
-            arg0->unknown_130_->unknown_0_ |= 4;
+            c->sub->flags |= 4;
         }
-        return var1;
+        return count;
     }
-    var0->unknown_4_ = var1 - arg1;
-    return arg1;
+    sub->count = count - amount;
+    return amount;
 }

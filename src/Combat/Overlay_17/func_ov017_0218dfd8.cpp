@@ -4,64 +4,64 @@
 #include "World/Object3D.h"
 
 struct Struct_ov017_0218dfd8 {
-    Object3D unknown_0_;
+    Object3D obj3D;
 #if defined(jpn)
-    char unknown_ac_[0x180 - sizeof(Object3D)];
+    char pad[0x180 - sizeof(Object3D)];
 #else
-    char unknown1_ac_[0x18c - sizeof(Object3D)];
+    char pad[0x18c - sizeof(Object3D)];
 #endif
-    unsigned int unknown_18c_;
+    unsigned int flags;
 };
 
-struct Struct_0201777c {
-    char unknown_0_[0x2];
-    short unknown_2_;
-    char unknown_4_[0x20];
-    Vector3fix unknown_24_;
+struct ActorEntry {
+    char pad0[0x2];
+    short state;
+    char pad4[0x20];
+    Vector3fix position;
     char unknown_30_[0x368 - 0x30];
 };
 
 // Zone3D up to lootables_ (this file's copy)
 struct Zone3D0218dfd8 {
 #if defined(jpn)
-    char unknown_0_[0x496];
+    char pad0[0x496];
 #else
-    char unknown1_0_[0x476];
+    char pad0[0x476];
 #endif
-    unsigned char unknown_476_;
+    unsigned char count;
     char unknown_477_[0x1];
-    Struct_0201777c* unknown_478_;
+    ActorEntry* entries;
 };
 
 struct Struct_ov017_0218dfd8_2 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    short unknown_2_;
-    unsigned char unknown_4_[4];
-    Struct_0201777c* unknown_8_;
+    unsigned char tag;
+    unsigned char pad1;
+    short index;
+    unsigned char pad4[4];
+    ActorEntry* target;
     int unknown_c_;
-    short unknown_10_;
-    unsigned short unknown_12_;
+    short angle;
+    unsigned short pad12;
 };
 
-struct Struct_ov017_0218dfd8_3 {
-    unsigned char unknown_0_[3];
-    unsigned char unknown_3_;
+struct Header0218dfd8 {
+    unsigned char pad0[3];
+    unsigned char busy;
 };
 
 class Zone3D;
 extern "C" Zone3D0218dfd8* Zone3D_GetInstance(void);
-ActorEntry* Zone3D_GetLootable(Zone3D* zone, int index);
-unsigned int IsFlag0x1ceBit0x8Set_02039dcc(unsigned char* obj);
+extern "C" ActorEntry* Zone3D_GetLootable(Zone3D* zone, int index);
+extern "C" unsigned int func_02039dcc(unsigned char* obj);
 struct Vec3;
-short GetAbsAngleDeltaBetween_021a4754(Vector3fix*, int, Vector3fix*);
-int FieldTaskQueue_IsEmpty(void** obj);
-int GameObject_IsGesturing(signed char* obj);
-void InitObj0219a674(unsigned char* self);
-extern "C" void func_ov017_0219b33c(GameResources* res, Event0218dfd8* event);
+extern "C" short func_ov017_021a4754(Vector3fix*, int, Vector3fix*);
+extern "C" int FieldTaskQueue_IsEmpty(void** obj);
+extern "C" int GameObject_IsGesturing(signed char* obj);
+extern "C" void func_ov017_0219a674(unsigned char* self);
+extern "C" void func_ov017_0219b33c(GameResources* res, Struct_ov017_0218dfd8_2* event);
 
 // USA: func_ov017_0218dfd8
-extern "C" ARM int func_ov017_0218dfd8(Actor0218dfd8* self) {
+extern "C" ARM int func_ov017_0218dfd8(Struct_ov017_0218dfd8* self) {
     GameResources* res = GetGameResources();
     if (((Header0218dfd8*)res->unknown_ptr_array_3700[3])->busy != 0) {
         return 0;
@@ -73,54 +73,54 @@ extern "C" ARM int func_ov017_0218dfd8(Actor0218dfd8* self) {
     if (entry == NULL) {
         return 0;
     }
-    int var5 = arg0->unknown_0_.GetRadius() / 2 + 0x800;
-    int var6 = 0x3244;
+    int var5 = self->obj3D.GetRadius() / 2 + 0x800;
+    int bestAngle = 0x3244;
     int var7 = -1;
-    Struct_0201777c* var8 = NULL;
-    for (int var9 = 0; var9 < var3->unknown_476_; var4++, var9++) {
-        if (var4->unknown_2_ != 0) {
+    ActorEntry* best = NULL;
+    for (int i = 0; i < manager->count; entry++, i++) {
+        if (entry->state != 0) {
             continue;
         }
-        Vector3fix var10 = var1;
-        Vector3fix var11 = var4->unknown_24_;
-        if (fix32abs(var10.y - var11.y) >= 0x1000) {
+        Vector3fix a = pos;
+        Vector3fix b = entry->position;
+        if (fix32abs(a.y - b.y) >= 0x1000) {
             continue;
         }
-        var10.y = 0;
-        var11.y = 0;
-        int var12 = Vector3fix_Distance(&var10, &var11);
-        if (var12 < var5) {
-            if (!func_02039dcc((unsigned char*)arg0)) {
-                Vector3fix var13;
-                Vector3fix_Subtract(&var10, &var11, &var13);
-                Vector3fix_Normalize(&var13, &var13);
-                Vector3fixMultiplyScalar(&var13, var5, &var13);
-                Vector3fix_Add(&var11, &var13, &var10);
-                var1.x = var10.x;
-                var1.z = var10.z;
-                arg0->unknown_0_.position_ = var1;
+        a.y = 0;
+        b.y = 0;
+        int dist = Vector3fix_Distance(&a, &b);
+        if (dist < var5) {
+            if (!func_02039dcc((unsigned char*)self)) {
+                Vector3fix dir;
+                Vector3fix_Subtract(&a, &b, &dir);
+                Vector3fix_Normalize(&dir, &dir);
+                Vector3fixMultiplyScalar(&dir, var5, &dir);
+                Vector3fix_Add(&b, &dir, &a);
+                pos.x = a.x;
+                pos.z = a.z;
+                self->obj3D.position_ = pos;
             }
-            var2 = 1;
+            moved = 1;
         }
-        if (var12 < var5 + 0x400) {
-            int var14 = func_ov017_021a4754(&var1, (short)arg0->unknown_0_.rotation_.y, &var11);
-            if (var14 < var6) {
-                var6 = var14;
-                var7 = var9;
-                var8 = var4;
+        if (dist < var5 + 0x400) {
+            int angle = func_ov017_021a4754(&pos, (short)self->obj3D.rotation_.y, &b);
+            if (angle < bestAngle) {
+                bestAngle = angle;
+                var7 = i;
+                best = entry;
             }
         }
     }
     void** list = (void**)res->fieldTaskQueue_;
     if (best != NULL && FieldTaskQueue_IsEmpty(list) != 0 &&
         GameObject_IsGesturing((signed char*)self) == 0 && !(self->flags & 0x40) && bestAngle < 0xc91) {
-        Event0218dfd8 event;
-        InitObj0219a674((unsigned char*)&event);
+        Struct_ov017_0218dfd8_2 event;
+        func_ov017_0219a674((unsigned char*)&event);
         event.tag = 5;
         event.angle = bestAngle;
         event.target = best;
-        event.index = bestIndex;
+        event.index = var7;
         func_ov017_0219b33c(res, &event);
     }
-    return var2;
+    return moved;
 }

@@ -4,7 +4,7 @@
 
 extern Vector3i Zone3D_chestScale;
 extern Vector3i Zone3D_chestLidOffset;
-void RenderConfig_SetObjectRotation(void* rotation);
+extern "C" void RenderConfig_SetObjectRotation(void* rotation);
 
 // Main, originally func_02017540 (USA 0x02017540, EUR 0x02017550, JPN 0x020172e0)
 extern "C" ARM void Zone3D_DrawChests(Zone3D* zone) {
@@ -12,9 +12,9 @@ extern "C" ARM void Zone3D_DrawChests(Zone3D* zone) {
     NSBXXInternalModel* models[3] = {};
     models[0] = zone->models_498_[0].rawInternalModel_;
     models[1] = zone->models_498_[1].rawInternalModel_;
-    NSBXXTex* textures[3] = {};
-    textures[0] = zone->models_498_[0].GetTEX0();
-    textures[1] = zone->models_498_[1].GetTEX0();
+    NSBXXTex* var1[3] = {};
+    var1[0] = zone->models_498_[0].GetTEX0();
+    var1[1] = zone->models_498_[1].GetTEX0();
     Vector3i scale = Zone3D_chestScale;
     RenderConfig::SetObjectScale(&scale);
     int* palette = zone->chestPaletteOffsets_5f0_;
@@ -22,15 +22,15 @@ extern "C" ARM void Zone3D_DrawChests(Zone3D* zone) {
         NSBXXTex** texture;
         NSBXXInternalModel** model;
         model = models;
-        texture = textures;
+        texture = var1;
         while (*texture != NULL && *model != NULL) {
             int paletteOffset = *palette;
             palette++;
             NSBXX_Tex_WritePaletteVRAMOffset(*texture, paletteOffset);
             NSBXX_DetachTexturePaletteFromModel(*model);
-            NSBXXInternalModel* currentModel = *model++;
-            NSBXXTex* currentTexture = *texture++;
-            NSBXX_AttachTexturePaletteToModel(currentModel, currentTexture);
+            NSBXXInternalModel* var8 = *model++;
+            NSBXXTex* var9 = *texture++;
+            NSBXX_AttachTexturePaletteToModel(var8, var9);
         }
         ZoneChestRenderRecord* chest = zone->chests_;
         for (int i = 0; i < zone->numChests_; chest++, i++) {
@@ -40,9 +40,9 @@ extern "C" ARM void Zone3D_DrawChests(Zone3D* zone) {
                 short lidAngle = chest->lidAngle;
                 RenderConfig::SetObjectPosition(&position);
                 Matrix3x3 rotationY;
-                fix32_t cosineY = fix32cos(angleY);
-                fix32_t sineY = fix32sin(angleY);
-                Mat3x3_WriteRotationY(&rotationY, sineY, cosineY);
+                fix32_t var16 = fix32cos(angleY);
+                fix32_t var17 = fix32sin(angleY);
+                Mat3x3_WriteRotationY(&rotationY, var17, var16);
                 RenderConfig_SetObjectRotation(&rotationY);
                 RenderConfig::SubmitToFifo();
                 zone->models_498_[0].DrawMeshWithMaterial(true, 0, 0, 1);
@@ -58,7 +58,7 @@ extern "C" ARM void Zone3D_DrawChests(Zone3D* zone) {
                 Mat3x3_Multiply(&rotationX, &rotationY, &rotation);
                 RenderConfig_SetObjectRotation(&rotation);
                 RenderConfig::SubmitToFifo();
-                arg0->models_498_[1].DrawMeshWithMaterial(true, 0, 0, 1);
+                zone->models_498_[1].DrawMeshWithMaterial(true, 0, 0, 1);
             }
         }
     }

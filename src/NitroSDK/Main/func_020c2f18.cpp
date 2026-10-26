@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
-struct Struct_020c2f18 { int unknown_0_, unknown_4_, unknown_8_; };
+struct Struct_020c2f18 { int x, y, z; };
 
 struct Struct_020c2f18_2 {
     volatile unsigned short unknown_0_;
-    unsigned char unknown_2_[0xe];
+    unsigned char pad0[0xe];
     unsigned int unknown_10_;
     unsigned int unknown_14_;
     unsigned int unknown_18_;
     unsigned int unknown_1c_;
-    unsigned char unknown_20_[0x30 - 0x20];
+    unsigned char pad1[0x30 - 0x20];
     volatile unsigned short unknown_30_;
-    unsigned char unknown_32_[0x38 - 0x32];
+    unsigned char pad2[0x38 - 0x32];
     unsigned int unknown_38_;
     unsigned int unknown_3c_;
 };
 
 // USA: func_020c2f18
-extern "C" ARM void Vector3fix_Normalize(struct Struct_020c2f18* arg0, struct Struct_020c2f18* arg1) {
-    long long var0 = (long long)arg0->unknown_0_ * arg0->unknown_0_;
-    int var1 = arg0->unknown_4_;
+extern "C" ARM void Vector3fix_Normalize(struct Struct_020c2f18* v, struct Struct_020c2f18* out) {
+    long long var0 = (long long)v->x * v->x;
+    int var1 = v->y;
     var0 += (long long)var1 * var1;
-    var0 += (long long)arg0->unknown_8_ * arg0->unknown_8_;
+    var0 += (long long)v->z * v->z;
 
     struct Struct_020c2f18_2* var2 = (struct Struct_020c2f18_2*)0x4000280;
     var2->unknown_0_ = 2;
@@ -39,8 +39,8 @@ extern "C" ARM void Vector3fix_Normalize(struct Struct_020c2f18* arg0, struct St
     while (*(volatile unsigned short*)0x4000280 & 0x8000) {}
     long long var4 = *(volatile long long*)0x40002a0;
 
-    long long var5 = var4 * (long long)var3;
-    arg1->unknown_0_ = (int)((var5 * (long long)arg0->unknown_0_ + (1LL << 44)) >> 45);
-    arg1->unknown_4_ = (int)((var5 * (long long)arg0->unknown_4_ + (1LL << 44)) >> 45);
-    arg1->unknown_8_ = (int)((var5 * (long long)arg0->unknown_8_ + (1LL << 44)) >> 45);
+    long long scale = var4 * (long long)var3;
+    out->x = (int)((scale * (long long)v->x + (1LL << 44)) >> 45);
+    out->y = (int)((scale * (long long)v->y + (1LL << 44)) >> 45);
+    out->z = (int)((scale * (long long)v->z + (1LL << 44)) >> 45);
 }

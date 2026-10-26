@@ -2,8 +2,8 @@
 #include "NitroSDK/Memory.h"
 #include "std_library_functions.h"
 
-struct Struct_02011b68 {
-    unsigned char unknown_0_[6];
+struct SixBytes {
+    unsigned char b[6];
 };
 struct KeyTimerFlags {
     unsigned char active : 1;
@@ -12,29 +12,29 @@ struct KeyTimerFlags {
 struct State0200fad4 {
     SixBytes key;
     KeyTimerFlags state;
-    unsigned char pad_07;
+    unsigned char unknown_7_;
     float elapsed;
 };
 struct MemberKey {
     SixBytes key;
     signed char objectIndex;
-    char pad_07[3];
+    char unknown_7_[3];
 };
 struct KeyRecord {
     SixBytes key;
-    char pad_06[0xb];
+    char unknown_6_[0xb];
     unsigned char timer;
     unsigned short count : 14;
     unsigned short active : 1;
     unsigned short flag : 1;
-    char pad_14[0x18];
+    char unknown_14_[0x18];
 };
 struct GameStateKeys {
-    char pad_00[0x3ac];
+    char unknown_0_[0x3ac];
     int protagonistObjectIndex_;
-    char pad_3b0[0x14];
+    char unknown_3b0_[0x14];
     unsigned int numTicks_;
-    char pad_3c8[0xc];
+    char unknown_3c8_[0xc];
     float daySpeed_;
 #if defined(jpn)
     char unknown_3d8_[0x50e5];
@@ -57,8 +57,8 @@ struct GameStateKeys {
 #endif
     State0200fad4 keyTimers[3];
 };
-extern "C" int func_02011fb4(unsigned char*, Struct_02011b68);
-extern "C" void func_0200fad4(Struct_0200f3a4_11*);
+extern "C" int func_02011fb4(unsigned char*, SixBytes);
+extern "C" void func_0200fad4(State0200fad4*);
 
 // USA: func_02011b68
 extern "C" ARM void func_02011b68(GameStateKeys* gameState) {
@@ -80,7 +80,7 @@ extern "C" ARM void func_02011b68(GameStateKeys* gameState) {
                 if (memberKey->objectIndex >= 0 && memberKey->objectIndex != gameState->protagonistObjectIndex_) {
                     isNew = 1;
                     for (int k = 0; k < 3; k++) {
-                        if (CompareSixBytes_02011fb4(gameState->keyTimers[k].key.b, key)) {
+                        if (func_02011fb4(gameState->keyTimers[k].key.b, key)) {
                             gameState->keyTimers[k].state.active = 1;
                             isNew = 0;
                             break;
@@ -102,13 +102,13 @@ extern "C" ARM void func_02011b68(GameStateKeys* gameState) {
                 goto checkedKey;
             }
         }
-        var12 = 1;
+        empty = 1;
 checkedKey:
         if (!empty) {
             for (int j = 0; j < 3; j++) {
                 if (!gameState->keyTimers[j].state.active) {
                     State0200fad4* timer = &gameState->keyTimers[j];
-                    ClearFlagsAndValue0200fad4(timer);
+                    func_0200fad4(timer);
                     gameState->keyTimers[j].state.active = 1;
                     timer->key = newKeys[i];
                     break;
@@ -123,7 +123,7 @@ checkedKey:
             if (gameState->keyTimers[i].elapsed >= 60.0f) {
                 KeyRecord* record = gameState->keyRecords;
                 for (int j = 0; j < 16; j++, record++) {
-                    if (record->active && CompareSixBytes_02011fb4(record->key.b, gameState->keyTimers[i].key)) {
+                    if (record->active && func_02011fb4(record->key.b, gameState->keyTimers[i].key)) {
                         if (++record->timer >= 60) {
                             if (record->count >= 9999) record->timer = 59;
                             else {
@@ -139,6 +139,6 @@ checkedKey:
         }
     }
     for (int i = 0; i < 3; i++) {
-        if (!gameState->keyTimers[i].state.active) ClearFlagsAndValue0200fad4(&gameState->keyTimers[i]);
+        if (!gameState->keyTimers[i].state.active) func_0200fad4(&gameState->keyTimers[i]);
     }
 }

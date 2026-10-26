@@ -4,30 +4,30 @@
 #include <globaldefs.h>
 #include "Resource/FontGlyphTable.h"
 
-struct Struct_ov003_0216e714;
+struct Run0216e714;
 #if !defined(jpn)
 extern "C" struct Run0216e714 *Zone3D_GetInstance(void);
 #endif
 struct PacRecord;
-int Pac_CountFiles(PacRecord *pac);
-void *Pac_GetFile(PacRecord *pac, int index, void **outName, int *outSize);
+extern "C" int Pac_CountFiles(PacRecord *pac);
+extern "C" void *Pac_GetFile(PacRecord *pac, int index, void **outName, int *outSize);
 extern "C" void WindowPane_Init(void *obj);
 extern "C" void __clear(void *dst, int count);
 extern "C" void Font_DecodeText(void *src, void *dst, int flag);
 extern "C" void func_0204f41c(void *obj, short x, short y, void *str, int d, int e, short *outA, short *outB, int zero);
 struct Container020e0310;
-int KeyTable_Get(Container020e0310 *c, int key);
+extern "C" int KeyTable_Get(Container020e0310 *c, int key);
 extern "C" int Font_GetTextWidth(void *p, int flag);
 extern "C" void func_0204e038(void *canvas, char *str, int a, int b, int c, int d, int e, int f);
 struct BackgroundGraphics;
-void Background_Init(struct BackgroundGraphics *obj);
-void Background_SetMapSize(unsigned char *obj, int value);
-int Background_SetScroll(struct BackgroundGraphics *obj, int a, int b);
+extern "C" void Background_Init(struct BackgroundGraphics *obj);
+extern "C" void Background_SetMapSize(unsigned char *obj, int value);
+extern "C" int Background_SetScroll(struct BackgroundGraphics *obj, int a, int b);
 void CleanInvalidateCacheRange(const void *addr, unsigned int size);
 extern "C" int LoadToMainBG3ScreenData(int arg0, int arg1, unsigned int arg2);
 extern "C" void Background_LoadFile(void *graphics, void *file, SafeAllocator *allocator, unsigned int size);
-void Background_UploadMap(struct BackgroundGraphics *obj, void *buf);
-void Background_Destroy(struct BackgroundGraphics *obj);
+extern "C" void Background_UploadMap(struct BackgroundGraphics *obj, void *buf);
+extern "C" void Background_Destroy(struct BackgroundGraphics *obj);
 
 extern char data_ov003_0218028b[];
 extern char data_ov003_0218029b[];
@@ -39,86 +39,86 @@ extern char data_ov003_021802bc[];
 extern char data_ov003_0217f5bc[];
 
 struct Struct_01ff8b48_17 {
-    unsigned char unknown_0_[0xb38];
-    int unknown_b38_;
+    unsigned char pad0[0xb38];
+    int count;
 };
 
 #if defined(jpn)
-struct Struct_ov003_0216e714 {
-    unsigned char unknown_0_[0x1000];
-    struct Struct_01ff8b48_17 unknown_1840_;
+struct Run0216e714 {
+    unsigned char pad0[0x1000];
+    struct Struct_01ff8b48_17 progress;
 };
 
-struct Struct_ov003_0216e714_2 {
-    unsigned char unknown_0_[0x860];
-    struct Struct_ov003_0216e714 unknown_860_;
+struct Game0216e714 {
+    unsigned char pad0[0x860];
+    struct Run0216e714 run;
 };
 extern "C" struct Game0216e714 *Zone3D_GetInstance(void);
 #else
-struct Struct_ov003_0216e714 {
-    unsigned char unknown_0_[0x1840];
-    struct Struct_01ff8b48_17 unknown_1840_;
+struct Run0216e714 {
+    unsigned char pad0[0x1840];
+    struct Struct_01ff8b48_17 progress;
 };
 #endif
 
-static inline struct Struct_01ff8b48_17 *inline_ov003_0216e714_2(struct Struct_ov003_0216e714 *arg0) { return &arg0->unknown_1840_; }
-static inline int inline_ov003_0216e714(struct Struct_01ff8b48_17 *arg0) { return arg0->unknown_b38_; }
+static inline struct Struct_01ff8b48_17 *GetProgress(struct Run0216e714 *run) { return &run->progress; }
+static inline int inline_ov003_0216e714(struct Struct_01ff8b48_17 *progress) { return progress->count; }
 
 struct Struct_ov003_0216e714_3 {
-    int unknown_0_;
-    int unknown_4_;
-    unsigned char unknown_8_[3];
-    unsigned char unknown_b_0_ : 7;
+    int unk_0;
+    int unk_4;
+    unsigned char unk_8[3];
+    unsigned char year : 7;
     unsigned char unknown_b_7_ : 1;
-    unsigned int unknown_c_0_ : 4;
-    unsigned int unknown_c_4_ : 4;
+    unsigned int kind : 4;
+    unsigned int category : 4;
     unsigned int unknown_d_0_ : 7;
-    unsigned int unknown_d_7_ : 4;
-    unsigned int unknown_e_3_ : 5;
+    unsigned int rank : 4;
+    unsigned int level : 5;
     unsigned int unknown_f_0_ : 8;
 };
 
 struct Struct_ov003_0216e714_4 {
-    char unknown_0_[8];
-    char *unknown_8_;
-    char unknown_c_[0xa8 - 0xc];
-    short unknown_a8_;
-    short unknown_aa_;
-    char unknown_ac_[0xb4 - 0xac];
+    char unk_0[8];
+    char *text;
+    char unk_c[0xa8 - 0xc];
+    short width;
+    short height;
+    char unk_ac[0xb4 - 0xac];
     short unknown_b4_;
     short unknown_b6_;
-    char unknown_b8_[0xe0 - 0xb8];
+    char unk_b8[0xe0 - 0xb8];
 };
 
 struct Struct_ov003_0216e714_5 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
+    char unk_0[0x1c];
+    unsigned char lo : 4;
+    unsigned char hi : 4;
     char unknown_1d_[3];
 };
 
-struct Struct_ov003_0216e714_6 {
-    char unknown_0_[0xc];
-    unsigned int unknown_c_;
-    char unknown_10_[1];
+struct File0216e714 {
+    char unk_0[0xc];
+    unsigned int size;
+    char data[1];
 };
 
 struct Struct_ov003_0216e714_7 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    signed char unknown_2_;
-    unsigned char unknown_3_;
-    unsigned char unknown_4_;
-    unsigned char unknown_5_;
-    signed char unknown_6_;
-    signed char unknown_7_;
-    char unknown_8_[0x1c - 0x8];
-    int unknown_1c_;
-    unsigned short unknown_20_;
-    char unknown_22_[0xdc - 0x22];
-    char unknown_dc_[0x18];
-    Struct_ov003_0216e714_3 *unknown_f4_[(0x3b0 - 0xf4) / 4];
-    int unknown_3b0_[8];
+    unsigned char page;
+    unsigned char state;
+    signed char step;
+    unsigned char move;
+    unsigned char pages;
+    unsigned char count;
+    signed char cursor;
+    signed char selected;
+    char unk_8[0x1c - 0x8];
+    int task;
+    unsigned short flags;
+    char unk_22[0xdc - 0x22];
+    char texts[0x18];
+    Struct_ov003_0216e714_3 *records[(0x3b0 - 0xf4) / 4];
+    int kinds[8];
 };
 
 #if defined(jpn)
@@ -143,22 +143,22 @@ extern char data_ov003_0217ea74[];
 extern char data_ov003_0217ea83[];
 extern char data_ov003_0217ea86[];
 extern char data_ov003_0217ea89[];
-extern "C" void func_02050678(void *arg0, short arg1, short arg2, char *arg3, int arg4, int arg5, short *arg6, short *arg7);
+extern "C" void func_02050678(void *obj, short x, short y, char *str, int d, int e, short *outA, short *outB);
 
 struct Struct_ov003_0216e714_8 {
-    char unknown_0_[0x40];
+    char s[0x40];
 };
 
-extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
+extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *self) {
     int row;
     int start;
     int index;
-    Record0216e714 *rec;
+    Struct_ov003_0216e714_3 *rec;
     int end;
     Run0216e714 *run         = &Zone3D_GetInstance()->run;
     BackgroundLoader *loader = BackgroundLoader::GetInstance();
     if (self->step == 0) {
-        Path0216e714 path = *(Path0216e714 *) data_ov003_0217e264;
+        Struct_ov003_0216e714_8 path = *(Struct_ov003_0216e714_8 *) data_ov003_0217e264;
         self->task        = loader->QueueLoadFile(path.s, 0);
         if (!(self->flags & 0x20)) {
             ColorEffect_ConfigureAlphaBlend(0x04000050, 0x18, 1, 0, 0x10);
@@ -166,11 +166,11 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
         self->step = 1;
     } else if (self->step == 1) {
         if (loader->GetTaskStatus(self->task) != 0) {
-            Canvas0216e714 canvas;
+            Struct_ov003_0216e714_4 canvas;
             char text[0x80];
             File0216e714 *files[3];
             int sizes[3];
-            Background0216e714 bg;
+            Struct_ov003_0216e714_5 bg;
             void *entry;
             void *file;
             unsigned int size;
@@ -186,38 +186,38 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
             canvas.text   = (char *) files[0] + 0x10;
             canvas.width  = 0x20;
             canvas.height = 0x18;
-            canvas.fontW  = 10;
-            canvas.fontH  = 10;
+            canvas.unknown_b4_  = 10;
+            canvas.unknown_b6_  = 10;
             row           = 0;
             start         = (self->page - 1) * 8;
             __clear(text, sizeof(text));
             end = start + 8;
             for (index = start; index < end; row++, index++) {
-                if (index >= GetCount(GetProgress(run))) break;
+                if (index >= inline_ov003_0216e714(GetProgress(run))) break;
                 rec          = self->records[index];
-                canvas.fontW = 10;
-                canvas.fontH = 10;
+                canvas.unknown_b4_ = 10;
+                canvas.unknown_b6_ = 10;
                 if (index == self->selected + (self->page - 1) * 8) {
                     sprintf(text, data_ov003_0217ea1f, rec);
                 } else {
-                    sprintf(var9, data_ov003_0217ea2b, var3);
+                    sprintf(text, data_ov003_0217ea2b, rec);
                 }
-                func_02050678(&var8, 0x14, var0 * 16 + 0x2f, var9, 10, 15, &var16, &var17);
-                switch (var3->unknown_c_0_) {
-                    case 0: sprintf(var9, data_ov003_0217ea2e); break;
-                    case 1: sprintf(var9, data_ov003_0217ea33); break;
-                    case 2: sprintf(var9, data_ov003_0217ea38); break;
-                    case 3: sprintf(var9, data_ov003_0217ea3d); break;
-                    case 4: sprintf(var9, data_ov003_0217ea42); break;
-                    case 5: sprintf(var9, data_ov003_0217ea47); break;
-                    case 6: sprintf(var9, data_ov003_0217ea4c); break;
-                    case 7: sprintf(var9, data_ov003_0217ea51); break;
-                    case 8: sprintf(var9, data_ov003_0217ea56); break;
-                    case 9: sprintf(var9, data_ov003_0217ea5b); break;
-                    case 10: sprintf(var9, data_ov003_0217ea60); break;
-                    case 11: sprintf(var9, data_ov003_0217ea65); break;
-                    case 12: sprintf(var9, data_ov003_0217ea6a); break;
-                    default: sprintf(var9, data_ov003_0217ea6f); break;
+                func_02050678(&canvas, 0x14, row * 16 + 0x2f, text, 10, 15, &outA, &outB);
+                switch (rec->kind) {
+                    case 0: sprintf(text, data_ov003_0217ea2e); break;
+                    case 1: sprintf(text, data_ov003_0217ea33); break;
+                    case 2: sprintf(text, data_ov003_0217ea38); break;
+                    case 3: sprintf(text, data_ov003_0217ea3d); break;
+                    case 4: sprintf(text, data_ov003_0217ea42); break;
+                    case 5: sprintf(text, data_ov003_0217ea47); break;
+                    case 6: sprintf(text, data_ov003_0217ea4c); break;
+                    case 7: sprintf(text, data_ov003_0217ea51); break;
+                    case 8: sprintf(text, data_ov003_0217ea56); break;
+                    case 9: sprintf(text, data_ov003_0217ea5b); break;
+                    case 10: sprintf(text, data_ov003_0217ea60); break;
+                    case 11: sprintf(text, data_ov003_0217ea65); break;
+                    case 12: sprintf(text, data_ov003_0217ea6a); break;
+                    default: sprintf(text, data_ov003_0217ea6f); break;
                 }
                 func_02050678(&canvas, 0x51, row * 16 + 0x2f, text, 10, 15, &outA, &outB);
                 switch (rec->category) {
@@ -230,29 +230,29 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
                     case 10: sprintf(text, (char *) KeyTable_Get((Container020e0310 *) self->texts, 3)); break;
                     default: sprintf(text, (char *) KeyTable_Get((Container020e0310 *) self->texts, 4)); break;
                 }
-                func_02050678(&var8, 0x80, var0 * 16 + 0x2f, var9, 10, 15, &var16, &var17);
-                var8.unknown_b4_ = 8;
-                var8.unknown_b6_ = 8;
-                sprintf(var9, data_ov003_0217ea74, var3->unknown_b_0_ + 2000, var3->unknown_d_7_, var3->unknown_e_3_);
-                func_02050678(&var8, 0xa0, var0 * 16 + 0x30, var9, 8, 15, &var16, &var17);
+                func_02050678(&canvas, 0x80, row * 16 + 0x2f, text, 10, 15, &outA, &outB);
+                canvas.unknown_b4_ = 8;
+                canvas.unknown_b6_ = 8;
+                sprintf(text, data_ov003_0217ea74, rec->year + 2000, rec->rank, rec->level);
+                func_02050678(&canvas, 0xa0, row * 16 + 0x30, text, 8, 15, &outA, &outB);
             }
-            if (inline_ov003_0216e714(inline_ov003_0216e714_2(var5)) > 8) {
-                var8.unknown_b4_ = 8;
-                var8.unknown_b6_ = 8;
-                func_02050678(&var8, 0xc, 0xb2, data_ov003_0217ea83, 8, 15, &var16, &var17);
-                func_02050678(&var8, 0xee, 0xb2, data_ov003_0217ea86, 8, 15, &var16, &var17);
-                var8.unknown_b4_ = 10;
-                var8.unknown_b6_ = 10;
-                sprintf(var9, data_ov003_0217ea89, arg0->unknown_0_, arg0->unknown_4_);
-                func_02050678(&var8, 0x71, 0xaf, var9, 8, 15, &var16, &var17);
+            if (inline_ov003_0216e714(GetProgress(run)) > 8) {
+                canvas.unknown_b4_ = 8;
+                canvas.unknown_b6_ = 8;
+                func_02050678(&canvas, 0xc, 0xb2, data_ov003_0217ea83, 8, 15, &outA, &outB);
+                func_02050678(&canvas, 0xee, 0xb2, data_ov003_0217ea86, 8, 15, &outA, &outB);
+                canvas.unknown_b4_ = 10;
+                canvas.unknown_b6_ = 10;
+                sprintf(text, data_ov003_0217ea89, self->page, self->pages);
+                func_02050678(&canvas, 0x71, 0xaf, text, 8, 15, &outA, &outB);
             }
-            switch (arg0->unknown_3_) {
-                case 1: arg0->unknown_6_ = arg0->unknown_5_ - 1; break;
-                case 2: arg0->unknown_6_ = 0; break;
+            switch (self->move) {
+                case 1: self->cursor = self->count - 1; break;
+                case 2: self->cursor = 0; break;
             }
-            arg0->unknown_3_ = 0;
-            if (arg0->unknown_6_ >= arg0->unknown_5_) {
-                arg0->unknown_6_ = arg0->unknown_5_ - 1;
+            self->move = 0;
+            if (self->cursor >= self->count) {
+                self->cursor = self->count - 1;
             }
             Background_Init((struct BackgroundGraphics *) &bg);
             bg.lo = 0;
@@ -260,12 +260,12 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
             Background_SetMapSize((unsigned char *) &bg, 0);
             Background_SetScroll((struct BackgroundGraphics *) &bg, 0, 0);
             BG3CNT = (BG3CNT & 0x43) | 0xf00;
-            for (int var21 = 0; var21 < var19; var21++) {
-                if (var21 == 2) {
-                    Struct_ov003_0216e714_6 *var22  = var10[var21];
-                    unsigned int var23 = var22->unknown_c_;
-                    CleanInvalidateCacheRange((char *) var22 + 0x10, var23);
-                    LoadToMainBG3ScreenData((int) ((char *) var22 + 0x10), 0, var23);
+            for (int i = 0; i < numFiles; i++) {
+                if (i == 2) {
+                    File0216e714 *f  = files[i];
+                    unsigned int len = f->size;
+                    CleanInvalidateCacheRange((char *) f + 0x10, len);
+                    LoadToMainBG3ScreenData((int) ((char *) f + 0x10), 0, len);
                 } else {
                     Background_LoadFile(&bg, files[i], 0, sizes[i]);
                 }
@@ -280,23 +280,23 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
                 BG1CNT      = BG1CNT & ~3;
                 BG2CNT      = (BG2CNT & ~3) | 1;
                 BG3CNT      = (BG3CNT & ~3) | 2;
-                arg0->unknown_1_ = 3;
-                arg0->unknown_2_  = 0;
+                self->state = 3;
+                self->step  = 0;
             } else {
                 DISPCNT     = (DISPCNT & ~0x1f00) | 0x1f00;
                 BG0CNT      = BG0CNT & ~3;
                 BG1CNT      = (BG1CNT & ~3) | 1;
                 BG2CNT      = (BG2CNT & ~3) | 2;
                 BG3CNT      = (BG3CNT & ~3) | 3;
-                arg0->unknown_1_ = 4;
-                arg0->unknown_2_  = 0;
+                self->state = 4;
+                self->step  = 0;
             }
         }
     }
 }
 #else
 // USA: func_ov003_0216e714
-extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
+extern "C" ARM void func_ov003_0216e714(Struct_ov003_0216e714_7 *self) {
     int end;
     Run0216e714 *run         = Zone3D_GetInstance();
     BackgroundLoader *loader = BackgroundLoader::GetInstance();
@@ -308,12 +308,12 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
         self->step = 1;
     } else if (self->step == 1) {
         if (loader->GetTaskStatus(self->task) != 0) {
-            Canvas0216e714 canvas;
+            Struct_ov003_0216e714_4 canvas;
             char text[0x80];
             File0216e714 *files[7];
             int sizes[7];
             char name[0x30];
-            Background0216e714 bg;
+            Struct_ov003_0216e714_5 bg;
             void *entry;
             void *file;
             unsigned int size;
@@ -322,7 +322,7 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
             int row;
             int start;
             int index;
-            Record0216e714 *rec;
+            Struct_ov003_0216e714_3 *rec;
             int y;
             int slot;
             loader->GetLoadedFileByID(self->task, &file, &size);
@@ -334,8 +334,8 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
             canvas.text   = (char *) files[0] + 0x10;
             canvas.width  = 0x20;
             canvas.height = 0x18;
-            canvas.fontW  = 10;
-            canvas.fontH  = 10;
+            canvas.unknown_b4_  = 10;
+            canvas.unknown_b6_  = 10;
             row           = 0;
             start         = (self->page - 1) * 8;
             __clear(text, sizeof(text));
@@ -343,35 +343,35 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
             memset(self->kinds, -1, sizeof(self->kinds));
             end = start + 8;
             for (index = start; index < end; row++, index++) {
-                if (index >= GetCount(GetProgress(run))) break;
+                if (index >= inline_ov003_0216e714(GetProgress(run))) break;
                 rec          = self->records[index];
                 y            = row * 16 + 0x2f;
-                canvas.fontW = 10;
-                canvas.fontH = 10;
+                canvas.unknown_b4_ = 10;
+                canvas.unknown_b6_ = 10;
                 __clear(name, sizeof(name));
                 Font_DecodeText(rec, name, 1);
                 if (index == self->selected + (self->page - 1) * 8) {
                     sprintf(text, data_ov003_021802a7, name);
                 } else {
-                    sprintf(var28, data_ov003_021802b3, var31);
+                    sprintf(text, data_ov003_021802b3, name);
                 }
-                func_0204f41c(&var27, 0x14, var42, var28, 10, 15, &var36, &var37, 0);
-                arg0->unknown_3b0_[var43] = var41->unknown_c_0_;
-                var43++;
-                int var46 = 4;
-                switch (var41->unknown_c_4_) {
-                    case 2: var46 = 0; break;
+                func_0204f41c(&canvas, 0x14, y, text, 10, 15, &outA, &outB, 0);
+                self->kinds[slot] = rec->kind;
+                slot++;
+                int key = 4;
+                switch (rec->category) {
+                    case 2: key = 0; break;
                     case 3:
-                    case 4: var46 = 1; break;
+                    case 4: key = 1; break;
                     case 5:
-                    case 6: var46 = 2; break;
+                    case 6: key = 2; break;
                     case 9:
-                    case 10: var46 = 3; break;
+                    case 10: key = 3; break;
                 }
                 sprintf(text, (char *) KeyTable_Get((Container020e0310 *) self->texts, key));
                 func_0204f41c(&canvas, 0xb0 - Font_GetTextWidth(text, 0), y, text, 10, 15, &outA, &outB, 0);
-                canvas.fontW = 8;
-                canvas.fontH = 8;
+                canvas.unknown_b4_ = 8;
+                canvas.unknown_b6_ = 8;
                 sprintf(text, data_ov003_021802b6, rec->level);
                 func_0204f41c(&canvas, 0xc8 - Font_GetTextWidth(text, 0), y, text, 10, 15, &outA, &outB, 0);
                 sprintf(text, data_ov003_021802b3,
@@ -381,7 +381,7 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
                 sprintf(text, data_ov003_021802b6, rec->year + 2000);
                 func_0204f41c(&canvas, 0xf4 - Font_GetTextWidth(text, 0), y, text, 10, 15, &outA, &outB, 0);
             }
-            if (GetCount(GetProgress(run)) > 8) {
+            if (inline_ov003_0216e714(GetProgress(run)) > 8) {
                 char *str = Font_FindGlyph(8, data_ov003_021802b9);
                 if (str != 0) {
                     func_0204e038(&canvas, str, 0xc, 0xb2, 8, 8, 0xf0, 0xf);
@@ -396,13 +396,13 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
                 sprintf(text, data_ov003_021802b6, self->pages);
                 func_0204f41c(&canvas, 0x82, 0xaf, text, 8, 15, &outA, &outB, 0);
             }
-            switch (arg0->unknown_3_) {
-                case 1: arg0->unknown_6_ = arg0->unknown_5_ - 1; break;
-                case 2: arg0->unknown_6_ = 0; break;
+            switch (self->move) {
+                case 1: self->cursor = self->count - 1; break;
+                case 2: self->cursor = 0; break;
             }
-            arg0->unknown_3_ = 0;
-            if (arg0->unknown_6_ >= arg0->unknown_5_) {
-                arg0->unknown_6_ = arg0->unknown_5_ - 1;
+            self->move = 0;
+            if (self->cursor >= self->count) {
+                self->cursor = self->count - 1;
             }
             Background_Init((struct BackgroundGraphics *) &bg);
             bg.lo = 0;
@@ -410,12 +410,12 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
             Background_SetMapSize((unsigned char *) &bg, 0);
             Background_SetScroll((struct BackgroundGraphics *) &bg, 0, 0);
             BG3CNT = (BG3CNT & 0x43) | 0xf00;
-            for (int var48 = 0; var48 < var44; var48++) {
-                if (var48 == 2) {
-                    Struct_ov003_0216e714_6 *var49  = var29[var48];
-                    unsigned int var50 = var49->unknown_c_;
-                    CleanInvalidateCacheRange((char *) var49 + 0x10, var50);
-                    LoadToMainBG3ScreenData((int) ((char *) var49 + 0x10), 0, var50);
+            for (int i = 0; i < numFiles; i++) {
+                if (i == 2) {
+                    File0216e714 *f  = files[i];
+                    unsigned int len = f->size;
+                    CleanInvalidateCacheRange((char *) f + 0x10, len);
+                    LoadToMainBG3ScreenData((int) ((char *) f + 0x10), 0, len);
                 } else {
                     Background_LoadFile(&bg, files[i], 0, sizes[i]);
                 }
@@ -430,16 +430,16 @@ extern "C" ARM void func_ov003_0216e714(Menu0216e714 *self) {
                 BG1CNT      = BG1CNT & ~3;
                 BG2CNT      = (BG2CNT & ~3) | 1;
                 BG3CNT      = (BG3CNT & ~3) | 2;
-                arg0->unknown_1_ = 3;
-                arg0->unknown_2_  = 0;
+                self->state = 3;
+                self->step  = 0;
             } else {
                 DISPCNT     = (DISPCNT & ~0x1f00) | 0x1f00;
                 BG0CNT      = BG0CNT & ~3;
                 BG1CNT      = (BG1CNT & ~3) | 1;
                 BG2CNT      = (BG2CNT & ~3) | 2;
                 BG3CNT      = (BG3CNT & ~3) | 3;
-                arg0->unknown_1_ = 4;
-                arg0->unknown_2_  = 0;
+                self->state = 4;
+                self->step  = 0;
             }
         }
     }

@@ -2,24 +2,24 @@
 
 struct Struct_ov031_02230120_2 {
     union {
-        unsigned long unknown1_0_;
+        unsigned long attributes;
         struct { unsigned short unknown_0_; unsigned short unknown_2_; };
         struct {
-            unsigned long unknown_0_0_ : 8;
+            unsigned long y : 8;
             unsigned long unknown_1_0_ : 2;
-            unsigned long unknown_1_2_ : 2;
+            unsigned long objMode : 2;
             unsigned long unknown_1_4_ : 1;
-            unsigned long unknown_1_5_ : 1;
-            unsigned long unknown_1_6_ : 2;
-            unsigned long unknown_2_0_ : 9;
+            unsigned long colorMode : 1;
+            unsigned long shape : 2;
+            unsigned long x : 9;
             unsigned long unknown_3_1_ : 5;
-            unsigned long unknown_3_6_ : 2;
+            unsigned long size : 2;
         };
         struct {
-            unsigned long unknown1_0_0_ : 28;
+            unsigned long unused0 : 28;
             unsigned long unknown_3_4_ : 1;
             unsigned long unknown_3_5_ : 1;
-            unsigned long unknown1_3_6_ : 2;
+            unsigned long unused1 : 2;
         };
     };
     union {
@@ -27,7 +27,7 @@ struct Struct_ov031_02230120_2 {
         unsigned long unknown1_4_;
         struct {
             unsigned long unknown_4_0_ : 10;
-            unsigned long unknown_5_2_ : 2;
+            unsigned long priority : 2;
             unsigned long unknown_5_4_ : 4;
             unsigned long unknown_6_0_ : 16;
         };
@@ -35,62 +35,62 @@ struct Struct_ov031_02230120_2 {
 };
 struct Struct_ov031_02230120 {
     unsigned char unknown_0_[0x18];
-    Struct_ov031_02230120_2* unknown_18_[7];
-    Struct_ov031_02230120_2* unknown_34_;
+    Struct_ov031_02230120_2* sprites[7];
+    Struct_ov031_02230120_2* selected;
     unsigned char unknown_38_[0xc];
     unsigned char unknown_44_;
 };
 struct Struct_ov031_02290ca0_14 {
     unsigned char unknown_0_[4];
-    unsigned short unknown_4_;
+    unsigned short position;
     unsigned short unknown_6_;
-    Struct_ov031_02230120* unknown_8_;
+    Struct_ov031_02230120* manager;
 };
 extern Struct_ov031_02290ca0_14 data_ov031_02290ca0;
 extern "C" int FastIntDivide(int, int);
 extern "C" int FastIntModulus(int, int);
 
-static inline void inline_ov031_02230120(const Struct_ov031_02230120_2* arg0, unsigned long* arg1, unsigned long* arg2) {
-    *arg1 = (arg0->unknown1_0_ & 0x1ff0000) >> 16;
-    *arg2 = arg0->unknown1_0_ & 0xff;
+static inline void inline_ov031_02230120(const Struct_ov031_02230120_2* sprite, unsigned long* x, unsigned long* y) {
+    *x = (sprite->attributes & 0x1ff0000) >> 16;
+    *y = sprite->attributes & 0xff;
 }
 
-static inline void inline_ov031_02230120_2(Struct_ov031_02230120_2* arg0, int arg1, int arg2) {
-    arg0->unknown1_0_ = (arg0->unknown1_0_ & ~0x01ff00ff) | (arg2 & 0xff) | ((arg1 & 0x1ff) << 16);
+static inline void inline_ov031_02230120_2(Struct_ov031_02230120_2* sprite, int x, int y) {
+    sprite->attributes = (sprite->attributes & ~0x01ff00ff) | (y & 0xff) | ((x & 0x1ff) << 16);
 }
 
 // USA: func_ov031_02230120
 extern "C" ARM void func_ov031_02230120() {
-    int var0;
-    int var1;
-    int var2 = FastIntDivide(data_ov031_02290ca0.unknown_4_, 29);
-    int var3 = 52 - FastIntModulus(data_ov031_02290ca0.unknown_4_, 29);
-    if (data_ov031_02290ca0.unknown_8_->unknown_34_) {
-        if (var2 == 0) var0 = 38;
-        else var0 = 256;
-        inline_ov031_02230120_2(data_ov031_02290ca0.unknown_8_->unknown_34_, var0, var3);
+    int spriteX;
+    int spriteY;
+    int row = FastIntDivide(data_ov031_02290ca0.position, 29);
+    int y = 52 - FastIntModulus(data_ov031_02290ca0.position, 29);
+    if (data_ov031_02290ca0.manager->selected) {
+        if (row == 0) spriteX = 38;
+        else spriteX = 256;
+        inline_ov031_02230120_2(data_ov031_02290ca0.manager->selected, spriteX, y);
     }
-    int var4 = var3;
-    int var5 = 0;
+    int cur = y;
+    int i = 0;
     do {
-        Struct_ov031_02230120_2* var6 = data_ov031_02290ca0.unknown_8_->unknown_18_[var5];
-        inline_ov031_02230120(var6, (unsigned long*)&var0, (unsigned long*)&var1);
-        inline_ov031_02230120_2(var6, var0, var4);
-        var4 += 29;
-    } while (++var5 < 5);
-    if (var2 <= 2) {
-        Struct_ov031_02230120_2* var7 = data_ov031_02290ca0.unknown_8_->unknown_18_[5];
-        inline_ov031_02230120(var7, (unsigned long*)&var0, (unsigned long*)&var1);
-        inline_ov031_02230120_2(var7, var0, var3 + (2 - var2) * 29);
+        Struct_ov031_02230120_2* sprite = data_ov031_02290ca0.manager->sprites[i];
+        inline_ov031_02230120(sprite, (unsigned long*)&spriteX, (unsigned long*)&spriteY);
+        inline_ov031_02230120_2(sprite, spriteX, cur);
+        cur += 29;
+    } while (++i < 5);
+    if (row <= 2) {
+        Struct_ov031_02230120_2* sprite = data_ov031_02290ca0.manager->sprites[5];
+        inline_ov031_02230120(sprite, (unsigned long*)&spriteX, (unsigned long*)&spriteY);
+        inline_ov031_02230120_2(sprite, spriteX, y + (2 - row) * 29);
     } else {
-        inline_ov031_02230120_2(data_ov031_02290ca0.unknown_8_->unknown_18_[5], 256, 0);
+        inline_ov031_02230120_2(data_ov031_02290ca0.manager->sprites[5], 256, 0);
     }
-    if (var2 >= 2 && var2 <= 6) {
-        Struct_ov031_02230120_2* var8 = data_ov031_02290ca0.unknown_8_->unknown_18_[6];
-        inline_ov031_02230120(var8, (unsigned long*)&var0, (unsigned long*)&var1);
-        inline_ov031_02230120_2(var8, var0, var3 + (6 - var2) * 29);
+    if (row >= 2 && row <= 6) {
+        Struct_ov031_02230120_2* sprite = data_ov031_02290ca0.manager->sprites[6];
+        inline_ov031_02230120(sprite, (unsigned long*)&spriteX, (unsigned long*)&spriteY);
+        inline_ov031_02230120_2(sprite, spriteX, y + (6 - row) * 29);
     } else {
-        inline_ov031_02230120_2(data_ov031_02290ca0.unknown_8_->unknown_18_[6], 256, 0);
+        inline_ov031_02230120_2(data_ov031_02290ca0.manager->sprites[6], 256, 0);
     }
-    data_ov031_02290ca0.unknown_8_->unknown_44_ = 1;
+    data_ov031_02290ca0.manager->unknown_44_ = 1;
 }

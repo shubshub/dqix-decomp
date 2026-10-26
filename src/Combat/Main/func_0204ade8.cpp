@@ -5,9 +5,9 @@
 extern const int data_020e7b68[];
 
 // USA: func_0204ade8
-extern "C" ARM void func_0204ade8(void* arg0, int arg1, int arg2, unsigned char* arg3) {
-    int var0;
-    memcpy((char*)arg0 + 8, arg3 + 0xc, 4);
-    var0 = *(int*)((char*)arg0 + 8);
-    StageMemoryToVRAM((VRAMSubregion)(data_020e7b68[arg1] + arg2 * 2), arg3 + 0x10, 0, var0, 1, 0);
+extern "C" ARM void func_0204ade8(void* obj, int index, int y, unsigned char* ctx) {
+    int tmp;
+    memcpy((char*)obj + 8, ctx + 0xc, 4);
+    tmp = *(int*)((char*)obj + 8);
+    StageMemoryToVRAM((VRAMSubregion)(data_020e7b68[index] + y * 2), ctx + 0x10, 0, tmp, 1, 0);
 }

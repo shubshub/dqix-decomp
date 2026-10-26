@@ -1,33 +1,33 @@
 #include <globaldefs.h>
 
 struct Struct_ov000_0217179c_2 {
-    char unknown_0_[8];
-    struct Struct_ov000_0217179c_2* unknown_8_;
+    char pad0[8];
+    struct Struct_ov000_0217179c_2* next;
 };
 struct Struct_ov000_0217179c {
-    struct Struct_ov000_0217179c_2* unknown_0_;
+    struct Struct_ov000_0217179c_2* head;
 };
 
 // USA: func_ov025_021e244c
 #if defined(jpn)
-extern "C" ARM void func_ov000_0217179c(struct Struct_ov000_0217179c* arg0, struct Struct_ov000_0217179c_2* arg1)
+extern "C" ARM void func_ov000_0217179c(struct Struct_ov000_0217179c* list, struct Struct_ov000_0217179c_2* target)
 #else
-extern "C" ARM void func_ov025_021e244c(struct Struct_ov000_0217179c* arg0, struct Struct_ov000_0217179c_2* arg1)
+extern "C" ARM void func_ov025_021e244c(struct Struct_ov000_0217179c* list, struct Struct_ov000_0217179c_2* target)
 #endif
 {
-    struct Struct_ov000_0217179c_2* var0 = arg0->unknown_0_;
-    struct Struct_ov000_0217179c_2* var1 = NULL;
-    while (var0 != NULL) {
-        if (var0 == arg1) {
-            if (var1 != NULL) {
-                var1->unknown_8_ = var0->unknown_8_;
+    struct Struct_ov000_0217179c_2* node = list->head;
+    struct Struct_ov000_0217179c_2* prev = NULL;
+    while (node != NULL) {
+        if (node == target) {
+            if (prev != NULL) {
+                prev->next = node->next;
             } else {
-                arg0->unknown_0_ = var0->unknown_8_;
+                list->head = node->next;
             }
-            arg1->unknown_8_ = NULL;
+            target->next = NULL;
             return;
         }
-        var1 = var0;
-        var0 = var0->unknown_8_;
+        prev = node;
+        node = node->next;
     }
 }

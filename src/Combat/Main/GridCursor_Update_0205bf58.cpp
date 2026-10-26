@@ -5,9 +5,9 @@
 struct NavigationSteps { int values[4]; };
 struct NavigationKeys { unsigned short values[5]; };
 struct NavigationRepeatDirections { unsigned char values[4]; };
-void GridCursor_ResetKeyRepeat(GridCursor*);
-int GridCursor_GetSelectedIndex(GridCursor*);
-void GridCursor_TurnPage(GridCursor*, int);
+extern "C" void GridCursor_ResetKeyRepeat(GridCursor*);
+extern "C" int GridCursor_GetSelectedIndex(GridCursor*);
+extern "C" void GridCursor_TurnPage(GridCursor*, int);
 extern "C" void GridCursor_SetSelectedIndex(GridCursor*, int);
 extern const NavigationKeys GridCursor_directionKeys;
 extern const NavigationSteps GridCursor_directionSteps;

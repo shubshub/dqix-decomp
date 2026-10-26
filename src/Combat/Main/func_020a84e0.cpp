@@ -5,36 +5,36 @@
 #include "Resource/GameResources.h"
 
 
-struct Struct_02012de8 { unsigned int unknown_0_; };
+struct FlagWord02046708 { unsigned int flags; };
 
-void* GlobalFlags_GetInstance(void);
+extern "C" void* GlobalFlags_GetInstance(void);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void* Scenario_GetInstance(void);
-void* GameState_GetParty(GameState* battleStruct);
-int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
-int ForwardCombatantField0x44_02094b5c(void* self, int combatantId);
-unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
-void SetByteFlagBitAndCombatantField0x6c_020a8ac8(unsigned char* obj, int bit);
+extern "C" void* GameState_GetParty(GameState* battleStruct);
+extern "C" int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
+extern "C" int func_02094b5c(void* self, int combatantId);
+extern "C" unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
+extern "C" void func_020a8ac8(unsigned char* obj, int bit);
 extern "C" void func_020a8c4c(void* obj, unsigned char axis);
 extern "C" void func_020a8b0c(void* obj, int bit);
 extern "C" void func_020a8d08(void* obj, int bit);
 extern "C" void func_020a87d0(void* obj);
-struct Obj020a8874 {
+struct Struct_020a84e0 {
     unsigned char byte0;
-    unsigned char byte1;
-    unsigned char byte2;
-    unsigned char byte3_pad;
-    unsigned char flag_0x4;
-    unsigned char mask_0x5;
+    unsigned char unknown_1_;
+    unsigned char unknown_2_;
+    unsigned char unknown_3_;
+    unsigned char unknown_4_;
+    unsigned char unknown_5_;
 };
-extern "C" void func_020a8874(struct Struct_020a84e0* arg0);
-extern "C" void func_020a88e8(void* arg0);
+extern "C" void func_020a8874(struct Struct_020a84e0* obj);
+extern "C" void func_020a88e8(void* obj);
 extern "C" void func_020aeb34(void);
-int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+extern "C" int Scenario_TestFlag(int unused, unsigned char* arr, int index);
 
 // USA: func_020a84e0
 extern "C" ARM void func_020a84e0() {
-    GameState* var0 = GameState::GetInstance();
+    GameState* gs = GameState::GetInstance();
     GetGameResources();
     struct FlagWord02046708* fw = (struct FlagWord02046708*)GlobalFlags_GetInstance();
     Zone3D* zone = (Zone3D*)Zone3D_GetInstance();
@@ -49,7 +49,7 @@ extern "C" ARM void func_020a84e0() {
         if (!entry) {
             break;
         }
-        if (var8->unknown_4_ != 0xc) {
+        if (entry->maybeType != 0xc) {
             continue;
         }
         unsigned char* sub = (unsigned char*)&entry->unk_2c.type12;
@@ -59,17 +59,17 @@ extern "C" ARM void func_020a84e0() {
             po = gs->GetPartyMemberByIndex(*(unsigned char*)(list + 0xf78 + j));
             if (po) {
                 if (!FlagWord_TestBits(fw, 0x200000) &&
-                    ForwardCombatantField0x44_02094b5c(entry, po->obj3D_.actorIndex_) != 0) {
+                    func_02094b5c(entry, po->obj3D_.actorIndex_) != 0) {
                     switch (sub[0]) {
                     case 2:
-                        SetByteFlagBitAndCombatantField0x6c_020a8ac8(sub, po->obj3D_.actorIndex_ & 0xff);
+                        func_020a8ac8(sub, po->obj3D_.actorIndex_ & 0xff);
                         break;
                     case 3:
                         func_020a8c4c(sub, po->obj3D_.actorIndex_ & 0xff);
                         break;
                     }
                 }
-                switch (var9[0]) {
+                switch (sub[0]) {
                 case 2:
                     func_020a8b0c(sub, po->obj3D_.actorIndex_ & 0xff);
                     break;
@@ -78,23 +78,23 @@ extern "C" ARM void func_020a84e0() {
                     break;
                 }
             }
-            var5++;
+            j++;
         }
         if (!FlagWord_TestBits(fw, 0x200000) &&
-            ForwardCombatantField0x44_02094b5c(entry, GameState_GetLeaderIndex(gs)) != 0) {
+            func_02094b5c(entry, GameState_GetLeaderIndex(gs)) != 0) {
             if (sub[0] == 1) {
                 func_020a87d0(sub);
             }
         } else {
-            if (var9[0] == 1) {
-                func_020a8874((struct Struct_020a84e0*)var9);
+            if (sub[0] == 1) {
+                func_020a8874((struct Struct_020a84e0*)sub);
             }
         }
-        if (var9[0] == 1) {
-            func_020a88e8(var9);
+        if (sub[0] == 1) {
+            func_020a88e8(sub);
         }
     }
-    if (var2->currentZoneID_ != 0x1644) {
+    if (zone->currentZoneID_ != 0x1644) {
         return;
     }
     if (Scenario_TestFlag(ctx, (unsigned char*)ctx + 0x8c, 0x384) == 0) {

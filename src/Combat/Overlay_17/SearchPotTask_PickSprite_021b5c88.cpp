@@ -44,8 +44,8 @@ struct SearchPotTask021b5c88 : FieldTask {
 };
 
 extern "C" Zone3D021b5c88* Zone3D_GetInstance(void);
-StructDE234_020de234* ItemTable_Find(ItemTable* table, int key);
-unsigned short ItemRecord_GetFileNumber(StructDE234_020de234* record, int preferMid);
+extern "C" StructDE234_020de234* ItemTable_Find(ItemTable* table, int key);
+extern "C" unsigned short ItemRecord_GetFileNumber(StructDE234_020de234* record, int preferMid);
 
 // Overlay 17, originally func_ov017_021b5c88 (USA/EUR 0x021b5c88, JPN 0x021b623c)
 extern "C" ARM int SearchPotTask_PickSprite(SearchPotTask021b5c88* self) {

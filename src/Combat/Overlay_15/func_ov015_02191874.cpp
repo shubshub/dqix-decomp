@@ -4,11 +4,11 @@
 #include "NitroSDK/Matrix.h"
 #include "Input/Input.h"
 
-struct Struct_ov009_0218aa28
+struct Vec3
 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    int x;
+    int y;
+    int z;
 };
 
 struct Struct_ov015_0218f44c_2;
@@ -16,42 +16,42 @@ struct Struct_ov015_0218c03c_2;
 
 struct Struct_ov015_02190acc
 {
-    char unknown_0_[0x34];
+    char unk_0[0x34];
     Struct_ov015_0218c03c_2* unknown_34_;
 };
 
 void Vector3fixMultiplyScalar(const Vector3i* in, int scale, Vector3i* out);
-extern "C" void func_ov015_0218f44c(Struct_ov015_0218f44c_2* arg0, Struct_ov009_0218aa28 arg1);
-extern "C" void func_ov015_0218f5f8(Struct_ov015_0218c03c_2* arg0, int arg1);
+extern "C" void func_ov015_0218f44c(Struct_ov015_0218f44c_2* object, Vec3 offset);
+extern "C" void func_ov015_0218f5f8(Struct_ov015_0218c03c_2* object, int angle);
 
 // USA: func_ov015_02191874
-extern "C" ARM void func_ov015_02191874(Struct_ov015_02190acc* arg0)
+extern "C" ARM void func_ov015_02191874(Struct_ov015_02190acc* self)
 {
-    if (arg0->unknown_34_ == NULL)
+    if (self->unknown_34_ == NULL)
         return;
     GameState::GetInstance();
-    Vector3fix var0 = {0};
-    Matrix3x3 var1;
+    Vector3fix move = {0};
+    Matrix3x3 view;
     if (g_keyManager.TestKeysHeld(0x40))
-        var0.z = -0x199;
+        move.z = -0x199;
     if (g_keyManager.TestKeysHeld(0x80))
-        var0.z = 0x199;
+        move.z = 0x199;
     if (g_keyManager.TestKeysHeld(0x10))
-        var0.x = 0x199;
+        move.x = 0x199;
     if (g_keyManager.TestKeysHeld(0x20))
-        var0.x = -0x199;
-    memcpy(&var1, RenderConfig::GetInverseViewMatrix(), sizeof(var1));
-    Mat3x3_ApplyToVector(&var0, &var1, &var0);
-    var0.y = 0;
-    Vector3fix_Normalize(&var0, &var0);
-    Vector3fixMultiplyScalar(&var0, 0x199, &var0);
+        move.x = -0x199;
+    memcpy(&view, RenderConfig::GetInverseViewMatrix(), sizeof(view));
+    Mat3x3_ApplyToVector(&move, &view, &move);
+    move.y = 0;
+    Vector3fix_Normalize(&move, &move);
+    Vector3fixMultiplyScalar(&move, 0x199, &move);
     if (g_keyManager.TestKeysHeld(0x400))
-        var0.y += 0x199;
+        move.y += 0x199;
     if (g_keyManager.TestKeysHeld(0x800))
-        var0.y -= 0x199;
-    func_ov015_0218f44c((Struct_ov015_0218f44c_2*)arg0->unknown_34_, *(Struct_ov009_0218aa28*)&var0);
+        move.y -= 0x199;
+    func_ov015_0218f44c((Struct_ov015_0218f44c_2*)self->unknown_34_, *(Vec3*)&move);
     if (g_keyManager.TestKeysHeld(0x200))
-        func_ov015_0218f5f8(arg0->unknown_34_, 0x199);
+        func_ov015_0218f5f8(self->unknown_34_, 0x199);
     if (g_keyManager.TestKeysHeld(0x100))
-        func_ov015_0218f5f8(arg0->unknown_34_, -0x199);
+        func_ov015_0218f5f8(self->unknown_34_, -0x199);
 }

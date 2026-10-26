@@ -8,14 +8,14 @@
 
 struct Struct_02074af4 {
     unsigned short unknown_0_;
-    char unknown_2_[2];
+    char pad2[2];
     unsigned short unknown_4_;
-    char unknown_6_[2];
+    char pad6[2];
     unsigned short unknown_8_;
-    char unknown_a_[2];
+    char padA[2];
     unsigned short unknown_c_;
     char unknown_e_[2];
-    unsigned char unknown_10_;
+    unsigned char initialized;
     unsigned char unknown_11_;
 };
 
@@ -23,83 +23,83 @@ struct InitTarget0205cfd4 {
     char data[0xbc];
 };
 
-struct Struct_02000c9c_83 {
-    char unknown_0_[0xe0];
+struct Elem0204c684 {
+    char data[0xe0];
 };
 
 struct Struct_ov003_0215c650 {
     SafeAllocator unknown_0_;
     SafeAllocator unknown_14_;
-    SafeAllocator unknown_28_;
-    SafeAllocator unknown_3c_;
+    SafeAllocator alloc28;
+    SafeAllocator alloc3c;
     SafeAllocator unknown_50_;
-    struct Struct_0201099c_14 unknown_64_;
+    struct Struct020dfc40 sub64;
 #if defined(jpn)
-    struct Struct_0201099c_14 unknown_7c_;
+    struct Struct020dfc40 sub7c;
 #endif
     void* textBuf;
-    struct MainBgControlBackup02074af4 bgBackup;
-    int savedBgPlanes;
+    struct Struct_02074af4 unknown_80_;
+    int unknown_94_;
     struct InitTarget0205cfd4 sub98;
     struct BackgroundGraphics lists[2];
     struct Elem0204c684 elems[2];
-    int field354;
+    int unknown_354_;
     char sub358[0x3ac - 0x358];
-    int field3ac;
-    int field3b0;
-    int field3b4;
-    unsigned char field3b8;
-    unsigned char field3b9;
-    unsigned char field3ba;
-    unsigned char field3bb;
-    unsigned char field3bc;
-    unsigned char field3bd[3];
-    unsigned char field3c0;
-    signed char field3c1;
-    unsigned char field3c2;
-    unsigned char field3c3;
-    unsigned char field3c4[4];
-    int field3c8;
-    int field3cc;
+    int unknown_3ac_;
+    int unknown_3b0_;
+    int unknown_3b4_;
+    unsigned char unknown_3b8_;
+    unsigned char unknown_3b9_;
+    unsigned char unknown_3ba_;
+    unsigned char unknown_3bb_;
+    unsigned char unknown_3bc_;
+    unsigned char unknown_3bd_[3];
+    unsigned char unknown_3c0_;
+    signed char unknown_3c1_;
+    unsigned char unknown_3c2_;
+    unsigned char unknown_3c3_;
+    unsigned char unknown_3c4_[4];
+    int unknown_3c8_;
+    int unknown_3cc_;
     int timeOfDay;
-    float nightToMorning;
-    float morningToDay;
-    float dayToEvening;
-    float eveningToNight;
-    float transitionTime;
-    int field3e8;
-    unsigned char field3ec;
-    unsigned char field3ed;
-    unsigned char field3ee;
-    unsigned char field3ef;
-    unsigned char field3f0;
-    unsigned char field3f1;
-    unsigned char field3f2;
-    unsigned char field3f3;
-    unsigned char field3f4;
-    unsigned char field3f5;
+    float unknown_3d4_;
+    float unknown_3d8_;
+    float unknown_3dc_;
+    float unknown_3e0_;
+    float unknown_3e4_;
+    int unknown_3e8_;
+    unsigned char unknown_3ec_;
+    unsigned char unknown_3ed_;
+    unsigned char unknown_3ee_;
+    unsigned char unknown_3ef_;
+    unsigned char unknown_3f0_;
+    unsigned char unknown_3f1_;
+    unsigned char unknown_3f2_;
+    unsigned char unknown_3f3_;
+    unsigned char unknown_3f4_;
+    unsigned char unknown_3f5_;
     int field3f8;
 };
 
-extern "C" void func_02074af4(struct MainBgControlBackup02074af4* obj);
-void KeyTable_Reset(struct Struct020dfc40* p);
-void Window_Init(struct InitTarget0205cfd4* s);
-void Background_Init(struct BackgroundGraphics* obj);
+extern "C" void func_02074af4(struct Struct_02074af4* obj);
+extern "C" void KeyTable_Reset(struct Struct020dfc40* p);
+extern "C" void Window_Init(struct InitTarget0205cfd4* s);
+extern "C" void Background_Init(struct BackgroundGraphics* obj);
 extern "C" void WindowPane_Init(struct Elem0204c684* obj);
-void SpriteContext_Init(char* obj);
+extern "C" void SpriteContext_Init(char* obj);
 
 // USA: func_ov003_0215c650
-extern "C" ARM void func_ov003_0215c650(struct Struct_ov003_0215c650* arg0) {
-    arg0->unknown_80_.unknown_10_ = 0;
-    arg0->unknown_80_.unknown_11_ = 0;
-    func_02074af4(&arg0->unknown_80_);
-    arg0->unknown_94_ = (DISPCNT & 0x1f00) >> 8;
+extern "C" ARM void func_ov003_0215c650(struct Struct_ov003_0215c650* self) {
+    self->unknown_80_.initialized = 0;
+    self->unknown_80_.unknown_11_ = 0;
+    func_02074af4(&self->unknown_80_);
+    self->unknown_94_ = (DISPCNT & 0x1f00) >> 8;
     DISPCNT = (DISPCNT & ~0x1f00) | 0x100;
 
-    self->alloc0.ResetAllocatorPointer();
+    self->unknown_0_.ResetAllocatorPointer();
     self->alloc28.ResetAllocatorPointer();
     self->alloc3c.ResetAllocatorPointer();
-    self->alloc50.ResetAllocatorPointer();
+    self->unknown_50_.ResetAllocatorPointer();
     KeyTable_Reset(&self->sub64);
 #if defined(jpn)
     KeyTable_Reset(&self->sub7c);
@@ -114,41 +114,41 @@ extern "C" ARM void func_ov003_0215c650(struct Struct_ov003_0215c650* arg0) {
         WindowPane_Init(&self->elems[j]);
     }
 
-    self->field354 = 0;
+    self->unknown_354_ = 0;
     SpriteContext_Init(self->sub358);
-    self->field3ac = 0;
-    self->field3b0 = 0;
-    self->field3b4 = 0;
-    self->field3b8 = 0;
-    self->field3b9 = 0;
-    self->field3bc = 0;
-    self->field3ba = 0;
-    self->field3bb = 0;
+    self->unknown_3ac_ = 0;
+    self->unknown_3b0_ = 0;
+    self->unknown_3b4_ = 0;
+    self->unknown_3b8_ = 0;
+    self->unknown_3b9_ = 0;
+    self->unknown_3bc_ = 0;
+    self->unknown_3ba_ = 0;
+    self->unknown_3bb_ = 0;
     for (int k = 0; k < 3; k++) {
-        self->field3bd[k] = 0xff;
+        self->unknown_3bd_[k] = 0xff;
     }
-    arg0->unknown_3c0_ = 0;
-    arg0->unknown_3c1_ = -1;
-    arg0->unknown_3c2_ = 0;
-    arg0->unknown_3c3_ = 0;
-    for (int var3 = 0; var3 < 4; var3++) {
-        arg0->unknown_3c4_[var3] = 0xff;
+    self->unknown_3c0_ = 0;
+    self->unknown_3c1_ = -1;
+    self->unknown_3c2_ = 0;
+    self->unknown_3c3_ = 0;
+    for (int m = 0; m < 4; m++) {
+        self->unknown_3c4_[m] = 0xff;
     }
-    arg0->unknown_3c8_ = -1;
-    arg0->unknown_3cc_ = -1;
-    GetDayThresholds(&arg0->unknown_3d4_, &arg0->unknown_3d8_, &arg0->unknown_3dc_,
-                     &arg0->unknown_3e0_, &arg0->unknown_3e4_);
-    arg0->unknown_3d0_ = GameState::GetInstance()->IsMorningDayOrEvening();
-    arg0->unknown_3ec_ = 0;
-    arg0->unknown_3ed_ = 0;
-    arg0->unknown_3ee_ = 0;
-    arg0->unknown_3ef_ = 1;
-    arg0->unknown_3f0_ = 0;
-    arg0->unknown_3f1_ = 0;
-    arg0->unknown_3f2_ = 0;
-    arg0->unknown_3f3_ = 0;
-    arg0->unknown_3f8_ = 0;
-    arg0->unknown_3f4_ = 0;
-    arg0->unknown_3f5_ = 0;
-    arg0->unknown_3e8_ = 0;
+    self->unknown_3c8_ = -1;
+    self->unknown_3cc_ = -1;
+    GetDayThresholds(&self->unknown_3d4_, &self->unknown_3d8_, &self->unknown_3dc_,
+                     &self->unknown_3e0_, &self->unknown_3e4_);
+    self->timeOfDay = GameState::GetInstance()->IsMorningDayOrEvening();
+    self->unknown_3ec_ = 0;
+    self->unknown_3ed_ = 0;
+    self->unknown_3ee_ = 0;
+    self->unknown_3ef_ = 1;
+    self->unknown_3f0_ = 0;
+    self->unknown_3f1_ = 0;
+    self->unknown_3f2_ = 0;
+    self->unknown_3f3_ = 0;
+    self->field3f8 = 0;
+    self->unknown_3f4_ = 0;
+    self->unknown_3f5_ = 0;
+    self->unknown_3e8_ = 0;
 }

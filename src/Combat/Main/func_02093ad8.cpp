@@ -2,37 +2,37 @@
 
 struct Struct_02093b54 {
 #if defined(jpn)
-    char unknown1_0_[11];
+    char data[11];
 #else
-    char unknown_0_[48];
+    char data[48];
 #endif
 };
 
 struct Struct_02093ad8 {
-    Struct_02093b54 unknown_0_;
+    Struct_02093b54 payload;
 #if defined(jpn)
-    unsigned char unknown_b_;
+    unsigned char unknownB;
 #endif
     short unknown_30_;
-    signed char unknown_32_;
-    unsigned char unknown_33_;
+    signed char partySlot;
+    unsigned char flags;
 };
 
-extern "C" void func_02093980(char* arg0);
-extern "C" void func_02093b54(Struct_02093ad8* arg0, Struct_02093ad8* arg1);
+extern "C" void func_02093980(char* storage);
+extern "C" void func_02093b54(Struct_02093ad8* destination, Struct_02093ad8* source);
 
 // USA: func_02093ad8
-extern "C" ARM void func_02093ad8(void* arg0, Struct_02093ad8* arg1, Struct_02093ad8* arg2, int arg3) {
-    int var0;
-    for (var0 = 0; var0 < 8; var0++) {
-        func_02093980((char*)(arg2 + var0));
+extern "C" ARM void func_02093ad8(void* unused, Struct_02093ad8* source, Struct_02093ad8* destination, int count) {
+    int i;
+    for (i = 0; i < 8; i++) {
+        func_02093980((char*)(destination + i));
     }
-    int var1;
-    for (var1 = 0; var1 < arg3; var1++) {
-        func_02093b54(arg2 + var1, arg1 + var1);
+    int j;
+    for (j = 0; j < count; j++) {
+        func_02093b54(destination + j, source + j);
     }
-    int var2;
-    for (var2 = 0; var2 < 8; var2++) {
-        func_02093980((char*)(arg1 + var2));
+    int k;
+    for (k = 0; k < 8; k++) {
+        func_02093980((char*)(source + k));
     }
 }

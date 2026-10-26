@@ -6,7 +6,7 @@
 
 struct Struct_020fdc4c_6 {
     unsigned short unknown_0_;
-    unsigned short unknown_2_;
+    unsigned short unknown2;
 };
 
 // The map script context (CombatScriptContext in Combat/CombatScriptContext.h, defined here field by field): the

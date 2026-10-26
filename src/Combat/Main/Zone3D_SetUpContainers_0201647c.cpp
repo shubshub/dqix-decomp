@@ -8,7 +8,7 @@
 // One loot point of LootPointList_GetInstance's list (the layout func_ov017_021986fc picks them up with).
 struct LootPoint0201647c {
     unsigned int itemId : 16;       // what it gives (func_ov017_021986fc hands it to the pickup task)
-    unsigned int pointId : 7;       // func_ov017_021986fc: EnqueueEventTag183_021d38f8's pointId, progress flag + 0xc12
+    unsigned int pointId : 7;       // func_ov017_021986fc: func_ov017_021d38f8's pointId, progress flag + 0xc12
     unsigned int unknown2_7 : 9;
     unsigned int kind : 4;
     unsigned int flags : 28;
@@ -26,10 +26,10 @@ struct LootPointList0201647c {
 extern "C" void* Scenario_GetInstance();
 extern "C" int* LinkSession_GetInstance();
 extern "C" void* LootPointList_GetInstance();
-int LootPointList_AppliesToMap(void*, char*);
-int Scenario_TestFlag(int, unsigned char*, int);
-int LinkSession_IsActive(int*);
-void ItemTable_Init(void*);
+extern "C" int LootPointList_AppliesToMap(void*, char*);
+extern "C" int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" int LinkSession_IsActive(int*);
+extern "C" void ItemTable_Init(void*);
 extern "C" int ItemTable_LoadIds(void*, SafeAllocator*, void*, unsigned int, short*, unsigned short);
 extern "C" void Zone3D_SetUpLootables(Zone3D*, SafeAllocator*);
 extern const char* g_itemDataArchive;

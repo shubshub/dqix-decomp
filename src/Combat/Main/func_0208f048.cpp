@@ -8,60 +8,60 @@
 
 #include "GameState/GameState.h"
 
-extern "C" void* func_02012fe4(void);
+extern "C" void* Zone3D_GetInstance(void);
 extern "C" int _s32_div_f(int a, int b);
 
 struct Struct_0208f048 {
-    char unknown_0_[0x188];
+    char pad[0x188];
     Struct_0208ec78 unknown_188_;
     Struct_0208ec78 unknown_18c_;
 };
 
 // USA: func_0208f048
-extern "C" ARM void func_0208f048(unsigned char* arg0) {
-    void* var0;
+extern "C" ARM void func_0208f048(unsigned char* p0) {
+    void* g;
     char* var1;
-    int var2;
-    int var3;
-    int var4;
-    GameState* var5;
+    int total;
+    int count1;
+    int i;
+    GameState* bs;
     struct Struct_0208f048* var6;
 
-    if (*arg0 != 0x62) {
+    if (*p0 != 0x62) {
         return;
     }
 
-    var0 = func_02012fe4();
-    var1 = (char*)((int)var0 + (IS_JPN ? 0x1860 : 0x1840));
-    var2 = _s32_div_f(*(int*)(var1 + 0xb34), 100) + 4;
-    if (var2 > 14) {
-        var2 = 14;
+    g = Zone3D_GetInstance();
+    var1 = (char*)((int)g + (IS_JPN ? 0x1860 : 0x1840));
+    total = _s32_div_f(*(int*)(var1 + 0xb34), 100) + 4;
+    if (total > 14) {
+        total = 14;
     }
-    var3 = var2 - 7;
+    count1 = total - 7;
 
-    var5 = GameState::GetInstance();
-    var6 = (struct Struct_0208f048*)((char*)var5 + (IS_JPN ? 0x5a7c : 0x5cdc));
+    bs = GameState::GetInstance();
+    var6 = (struct Struct_0208f048*)((char*)bs + (IS_JPN ? 0x5a7c : 0x5cdc));
 
-    var4 = 0;
-    while (var3 > 0) {
-        unsigned int var7 = var6->unknown_18c_.unknown1_0_;
-        unsigned int var8 = (var7 << 7) >> 24;
-        var6->unknown_18c_.unknown1_0_ = (var7 & 0xfe01ffff) | (((var8 | (1u << var4)) << 24) >> 7);
-        var4++;
-        var3--;
+    i = 0;
+    while (count1 > 0) {
+        unsigned int v = var6->unknown_18c_.word;
+        unsigned int var8 = (v << 7) >> 24;
+        var6->unknown_18c_.word = (v & 0xfe01ffff) | (((var8 | (1u << i)) << 24) >> 7);
+        i++;
+        count1--;
     }
-    func_ov017_021d38f8(0, 0, (var6->unknown_18c_.unknown1_0_ << 7) >> 24, 0x63, &var6->unknown_18c_);
+    func_ov017_021d38f8(0, 0, (var6->unknown_18c_.word << 7) >> 24, 0x63, &var6->unknown_18c_);
 
-    if (var4 > 0) {
-        var4 = 0;
-        var2 = 7;
+    if (i > 0) {
+        i = 0;
+        total = 7;
     }
-    while (var2 > 0) {
-        unsigned int var9 = var6->unknown_188_.unknown1_0_;
-        unsigned int var10 = (var9 << 7) >> 24;
-        var6->unknown_188_.unknown1_0_ = (var9 & 0xfe01ffff) | (((var10 | (1u << var4)) << 24) >> 7);
-        var2--;
-        var4++;
+    while (total > 0) {
+        unsigned int v = var6->unknown_188_.word;
+        unsigned int var10 = (v << 7) >> 24;
+        var6->unknown_188_.word = (v & 0xfe01ffff) | (((var10 | (1u << i)) << 24) >> 7);
+        total--;
+        i++;
     }
-    func_ov017_021d38f8(0, 0, (var6->unknown_188_.unknown1_0_ << 7) >> 24, 0x62, &var6->unknown_188_);
+    func_ov017_021d38f8(0, 0, (var6->unknown_188_.word << 7) >> 24, 0x62, &var6->unknown_188_);
 }

@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "Resource/GridCursor.h"
 
-void GridCursor_InitGrid(struct GridCursor*);
+extern "C" void GridCursor_InitGrid(struct GridCursor*);
 
 // Main, originally Init0205bef8 (USA 0x0205bef8, EUR 0x0205bf08, JPN 0x0205d258)
-ARM void GridCursor_Init(struct GridCursor* cursor) {
+extern "C" ARM void GridCursor_Init(struct GridCursor* cursor) {
     GridCursor_InitGrid(cursor);
     cursor->step = 0;
     cursor->heldKey = 0;

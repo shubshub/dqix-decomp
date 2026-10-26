@@ -328,24 +328,24 @@ int Model3D::TestVisible()
     NSBXXInternalModel* model = rawInternalModel_;
 
     union {
-        ModelBoundingBox unknown1_0_;
+        ModelBoundingBox box;
         struct {
-            uint32_t unknown_0_;
-            uint32_t unknown_4_;
-            uint32_t unknown_8_;
+            uint32_t a;
+            uint32_t b;
+            uint32_t c;
         } unknown_0_;
     } boxparams;
 
-    boxparams.unknown1_0_.xMin_ = model->bounds_.xMin_;
-    boxparams.unknown1_0_.yMin_ = model->bounds_.yMin_;
-    boxparams.unknown1_0_.zMin_ = model->bounds_.zMin_;
-    boxparams.unknown1_0_.xSize_ = model->bounds_.xSize_;
-    boxparams.unknown1_0_.ySize_ = model->bounds_.ySize_;
-    boxparams.unknown1_0_.zSize_ = model->bounds_.zSize_;
+    boxparams.box.xMin_ = model->bounds_.xMin_;
+    boxparams.box.yMin_ = model->bounds_.yMin_;
+    boxparams.box.zMin_ = model->bounds_.zMin_;
+    boxparams.box.xSize_ = model->bounds_.xSize_;
+    boxparams.box.ySize_ = model->bounds_.ySize_;
+    boxparams.box.zSize_ = model->bounds_.zSize_;
 
-    GXFIFO_TEST_BOX = boxparams.unknown_0_.unknown_0_;
-    GXFIFO_TEST_BOX = boxparams.unknown_0_.unknown_4_;
-    GXFIFO_TEST_BOX = boxparams.unknown_0_.unknown_8_;
+    GXFIFO_TEST_BOX = boxparams.unknown_0_.a;
+    GXFIFO_TEST_BOX = boxparams.unknown_0_.b;
+    GXFIFO_TEST_BOX = boxparams.unknown_0_.c;
 
     int result;
     while (func_020c56b0(&result) != 0) {}

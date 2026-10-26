@@ -17,22 +17,22 @@
 #include "Memory/SafeAllocator.h"
 
 struct Struct_ov008_02189284 {
-    char unknown_0_[0x1f4];
+    char pad[0x1f4];
     void* unknown_1f4_;
     void* unknown_1f8_;
     void* unknown_1fc_;
-    SafeAllocator unknown_200_[6];
+    SafeAllocator allocs[6];
 };
 
 // USA: func_ov008_02189284
-extern "C" ARM void func_ov008_02189284(Struct_ov008_02189284* arg0, SafeAllocator* arg1) {
-    arg0->unknown_200_[0].CreateTypeA(arg1->Allocate(0xa000), 0xa000);
-    arg0->unknown_200_[1].CreateTypeA(arg1->Allocate(R(0x800, 0xc00)), R(0x800, 0xc00));
-    arg0->unknown_200_[2].CreateTypeA(arg1->Allocate(0x5c00), 0x5c00);
-    arg0->unknown_200_[3].CreateTypeA(arg1->Allocate(0x800), 0x800);
-    arg0->unknown_200_[4].CreateTypeA(arg1->Allocate(R(0x1c00, 0x2400)), R(0x1c00, 0x2400));
-    arg0->unknown_200_[5].CreateTypeA(arg1->Allocate(0x5400), 0x5400);
-    arg0->unknown_1f8_ = arg1->Allocate(0x140);
-    arg0->unknown_1f4_ = arg1->Allocate(0x54);
-    arg0->unknown_1fc_ = arg1->Allocate(0x8);
+extern "C" ARM void func_ov008_02189284(Struct_ov008_02189284* obj, SafeAllocator* alloc) {
+    obj->allocs[0].CreateTypeA(alloc->Allocate(0xa000), 0xa000);
+    obj->allocs[1].CreateTypeA(alloc->Allocate(R(0x800, 0xc00)), R(0x800, 0xc00));
+    obj->allocs[2].CreateTypeA(alloc->Allocate(0x5c00), 0x5c00);
+    obj->allocs[3].CreateTypeA(alloc->Allocate(0x800), 0x800);
+    obj->allocs[4].CreateTypeA(alloc->Allocate(R(0x1c00, 0x2400)), R(0x1c00, 0x2400));
+    obj->allocs[5].CreateTypeA(alloc->Allocate(0x5400), 0x5400);
+    obj->unknown_1f8_ = alloc->Allocate(0x140);
+    obj->unknown_1f4_ = alloc->Allocate(0x54);
+    obj->unknown_1fc_ = alloc->Allocate(0x8);
 }

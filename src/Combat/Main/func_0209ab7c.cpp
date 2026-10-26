@@ -1,49 +1,49 @@
 #include <globaldefs.h>
 
-struct Struct_0209ab7c_2 { unsigned short unknown_0_; unsigned short unknown_2_; };
+struct Struct_0209ab7c_2 { unsigned short a; unsigned short b; };
 struct Struct_0209ab7c_5 {
-    unsigned char unknown_0_[0xc];
-    struct Struct_0209ab7c_2 unknown_c_[17];
+    unsigned char pad0[0xc];
+    struct Struct_0209ab7c_2 pairs[17];
 };
 struct Struct_0209ab7c {
     unsigned char unknown_0_[0x100];
-    struct Struct_0209ab7c_5 unknown_100_[13];
+    struct Struct_0209ab7c_5 slots[13];
     unsigned char unknown_510_[0xc];
-    int unknown_51c_[16];
+    int counts[16];
 };
 struct Struct_0209ab7c_3 {
-    struct Struct_0209ab7c* unknown_0_;
+    struct Struct_0209ab7c* base;
 };
 struct Struct_0209ab7c_4 {
 #if defined(jpn)
-    unsigned char unknown_0_[0x8b8];
+    unsigned char pad[0x8b8];
 #else
-    unsigned char unknown1_0_[0x950];
+    unsigned char pad[0x950];
 #endif
-    int unknown_950_;
+    int slot;
 };
 
-extern "C" int func_02053c6c(unsigned char* arg0);
+extern "C" int func_02053c6c(unsigned char* obj);
 
 // USA: func_0209ab7c
-extern "C" ARM int func_0209ab7c(struct Struct_0209ab7c_3* arg0, unsigned char* arg1, unsigned char* arg2,
-                                 int arg3) {
-    if (&arg0->unknown_0_->unknown_100_[0].unknown_c_[0] == NULL) return 0;
-    if (&arg0->unknown_0_->unknown_51c_[0] == NULL) return 0;
-    struct Struct_0209ab7c_4* var0 = (struct Struct_0209ab7c_4*)func_02053c6c(arg1);
-    if (var0 == 0) return 0;
-    int var1 = var0->unknown_950_;
-    int var2;
-    unsigned short var3;
-    int var4 = 0;
-    for (var2 = 0; var2 < arg0->unknown_0_->unknown_51c_[var1]; var2++) {
-        int var5 = *(unsigned short*)((unsigned char*)var0 + var0->unknown_950_ * 2 + 0x100 + 0x6c);
-        int var6 = arg0->unknown_0_->unknown_100_[var1].unknown_c_[var2].unknown_2_;
-        var3 = arg0->unknown_0_->unknown_100_[var1].unknown_c_[var2].unknown_0_;
-        if (var5 >= var6) {
-            arg2[var4] = (unsigned char)var3;
-            var4++;
+extern "C" ARM int func_0209ab7c(struct Struct_0209ab7c_3* h, unsigned char* path, unsigned char* out,
+                                 int threshold) {
+    if (&h->base->slots[0].pairs[0] == NULL) return 0;
+    if (&h->base->counts[0] == NULL) return 0;
+    struct Struct_0209ab7c_4* f = (struct Struct_0209ab7c_4*)func_02053c6c(path);
+    if (f == 0) return 0;
+    int slot = f->slot;
+    int idx;
+    unsigned short a;
+    int count = 0;
+    for (idx = 0; idx < h->base->counts[slot]; idx++) {
+        int var5 = *(unsigned short*)((unsigned char*)f + f->slot * 2 + 0x100 + 0x6c);
+        int b = h->base->slots[slot].pairs[idx].b;
+        a = h->base->slots[slot].pairs[idx].a;
+        if (var5 >= b) {
+            out[count] = (unsigned char)a;
+            count++;
         }
     }
-    return var4;
+    return count;
 }

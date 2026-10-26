@@ -1,51 +1,51 @@
 #include <globaldefs.h>
 
-extern "C" void func_020d8654(void);
+extern "C" void VCountIrq_PushDisable(void);
 extern "C" void func_020d84e4(void);
 extern "C" void func_020d84e8(void);
-extern "C" void* func_0202ae18(void);
-extern "C" void func_020d8694(void);
-extern "C" int func_0202b7d8(int* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" void VCountIrq_PopDisable(void);
+extern "C" int LinkSession_IsActive(int* obj);
 
 struct Struct_0205e1e4_2 {
-    char unknown_0_[0x18];
-    struct Struct_0205e1e4_2* unknown_18_;
+    char pad[0x18];
+    struct Struct_0205e1e4_2* next;
 };
 struct Struct_0205e1e4 {
-    struct Struct_0205e1e4_2* unknown_0_;
-    struct Struct_0205e1e4_2* unknown_4_;
-    int unknown_8_;
+    struct Struct_0205e1e4_2* head;
+    struct Struct_0205e1e4_2* tail;
+    int count;
 };
-extern "C" struct Struct_0205e1e4_2* func_0205e1e4(struct Struct_0205e1e4* arg0);
+extern "C" struct Struct_0205e1e4_2* func_0205e1e4(struct Struct_0205e1e4* list);
 
 struct Struct_0205e18c_2 {
-    char unknown_0_[0x18];
-    struct Struct_0205e18c_2* unknown_18_;
+    char pad[0x18];
+    struct Struct_0205e18c_2* next;
 };
 struct Struct_0205e18c {
-    struct Struct_0205e18c_2* unknown_0_;
-    struct Struct_0205e18c_2* unknown_4_;
-    int unknown_8_;
+    struct Struct_0205e18c_2* head;
+    struct Struct_0205e18c_2* tail;
+    int count;
 };
-extern "C" void func_0205e18c(struct Struct_0205e18c* arg0, struct Struct_0205e18c_2* arg1);
+extern "C" void func_0205e18c(struct Struct_0205e18c* list, struct Struct_0205e18c_2* node);
 
 // USA: func_0205e41c
-extern "C" ARM struct Struct_0205e1e4_2* func_0205e41c(void* arg0, int* arg1) {
-    struct Struct_0205e1e4_2* var0;
-    func_020d8654();
+extern "C" ARM struct Struct_0205e1e4_2* func_0205e41c(void* obj, int* outPtr) {
+    struct Struct_0205e1e4_2* node;
+    VCountIrq_PushDisable();
     func_020d84e4();
-    var0 = NULL;
-    if (func_0202b7d8((int*)func_0202ae18())) {
-        var0 = func_0205e1e4((struct Struct_0205e1e4*)((char*)arg0 + 0x1518));
-        if (var0 == NULL) {
-            *arg1 = -1;
-            var0 = NULL;
+    node = NULL;
+    if (LinkSession_IsActive((int*)LinkSession_GetInstance())) {
+        node = func_0205e1e4((struct Struct_0205e1e4*)((char*)obj + 0x1518));
+        if (node == NULL) {
+            *outPtr = -1;
+            node = NULL;
         } else {
-            func_0205e18c((struct Struct_0205e18c*)((char*)arg0 + 0x1500), (struct Struct_0205e18c_2*)var0);
-            *arg1 = *(short*)((char*)var0 + 0x14);
+            func_0205e18c((struct Struct_0205e18c*)((char*)obj + 0x1500), (struct Struct_0205e18c_2*)node);
+            *outPtr = *(short*)((char*)node + 0x14);
         }
     }
     func_020d84e8();
-    func_020d8694();
-    return var0;
+    VCountIrq_PopDisable();
+    return node;
 }

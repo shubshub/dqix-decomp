@@ -4,15 +4,15 @@
 
 
 struct Struct_020ac4f8 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
+    unsigned short hours;
+    unsigned char minutes;
+    unsigned char seconds;
 };
 
 extern "C" void func_ov008_02184598(Struct_020ac4f8*);
 
 struct Struct_02061c04_2 {
-    Struct_020ac4f8 unknown_0_;
+    Struct_020ac4f8 elapsed;
     Struct_020ac4f8 unknown_4_;
 };
 
@@ -34,7 +34,7 @@ struct Struct_02061c04_3 {
     unsigned int unknown_15_0_ : 14;
     unsigned int unknown_16_6_ : 10;
     unsigned int unknown_18_0_ : 24;
-    unsigned int unknown_1b_0_ : 1;
+    unsigned int captured : 1;
     unsigned int unknown_1b_1_ : 7;
     unsigned int unknown_1c_;
 };
@@ -61,7 +61,7 @@ struct Struct_02061c04 {
     unsigned int unknown_1e_0_ : 16;
     unsigned int unknown_20_0_ : 16;
     unsigned int unknown_22_0_ : 16;
-    unsigned int unknown_24_;
+    unsigned int unknown24;
     unsigned int unknown_28_0_ : 12;
     unsigned int unknown_29_4_ : 10;
     unsigned int unknown_2a_6_ : 10;
@@ -77,9 +77,9 @@ struct Struct_02061c04 {
     unsigned int unknown_3f_0_ : 8;
     unsigned int unknown_40_0_ : 24;
     unsigned int unknown_43_0_ : 8;
-    unsigned int unknown_44_;
-    unsigned int unknown_48_;
-    unsigned char unknown_4c_[0x1c];
+    unsigned int unknown44;
+    unsigned int unknown48;
+    unsigned char unknown4c[0x1c];
     Struct_02061c04_2 unknown_68_;
     unsigned int unknown_70_[5];
     unsigned int unknown_84_0_ : 10;
@@ -93,6 +93,6 @@ struct Struct_02061c04 {
 };
 
 
-extern "C" int func_020ac4c0(void* arg0);
+extern "C" int func_020ac4c0(void* destination);
 
 #endif

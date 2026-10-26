@@ -2,70 +2,70 @@
 #include <NitroSDK/Memory/SignedAllocator.h>
 
 struct Struct_02056d80_6 {
-    int unknown_0_;
+    int x;
     union {
-        float unknown_4_;
-        unsigned int unknown1_4_;
+        float y;
+        unsigned int duration;
     };
-    float unknown_8_;
-    float unknown_c_;
+    float z;
+    float w;
 };
 struct Struct_020557a4 {
     Struct_02056d80_6* unknown_0_;
 };
 struct Struct_020546c8 {
-    unsigned char unknown_0_[8];
+    unsigned char padding[8];
     SignedAllocatorList unknown_8_[3];
-    SignedAllocatorList unknown_2c_[3];
-    SignedAllocatorList unknown_50_[3];
-    SignedAllocatorList unknown_74_;
-    SignedAllocatorList unknown_80_[3];
-    SignedAllocatorList unknown_a4_;
+    SignedAllocatorList rotation[3];
+    SignedAllocatorList scale[3];
+    SignedAllocatorList duration;
+    SignedAllocatorList extra[3];
+    SignedAllocatorList vector;
     SignedAllocatorList unknown_b0_[4];
     unsigned char unknown_e0_[12];
     SignedAllocatorList unknown_ec_[4];
     SignedAllocatorList unknown_11c_;
 };
 struct Struct_02056d80_5 {
-    unsigned char unknown_0_[16];
+    unsigned char padding[16];
     unsigned char unknown_10_[4];
 };
 struct Struct_02056d80_7 {
-    unsigned char unknown_0_[0x24];
+    unsigned char padding[0x24];
     unsigned char unknown_24_[3];
-    unsigned char unknown_27_[3];
-    unsigned char unknown_2a_[3];
+    unsigned char rotation[3];
+    unsigned char scale[3];
 };
 struct Struct_02056d80_8 {
-    unsigned char unknown_0_[4];
-    unsigned char unknown_4_;
+    unsigned char padding[4];
+    unsigned char count;
 };
 struct Struct_02056d80 {
-    unsigned char unknown_0_[16];
+    unsigned char padding[16];
     unsigned char unknown_10_[3];
-    unsigned char unknown_13_;
+    unsigned char vector;
 };
 struct Struct_02056d80_2 {
     unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
+    unsigned char delay;
+    unsigned char repeat;
+    unsigned char flags;
 };
 struct Struct_02056d80_3 {
-    unsigned char unknown_0_[12];
+    unsigned char padding[12];
     unsigned short unknown_c_;
 };
 struct Struct_02056d80_4 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    unsigned char unknown_c_;
+    int field_0x0;
+    int frame;
+    int endFrame;
+    unsigned char repeat;
     unsigned char unknown_d_[0x1b];
-    void* unknown_28_;
+    void* active;
     int unknown_2c_;
-    Struct_020546c8* unknown_30_;
+    Struct_020546c8* resource;
     unsigned char unknown_34_[4];
-    unsigned char unknown_38_;
+    unsigned char flags;
     unsigned char unknown_39_[0x13];
     float unknown_4c_[4];
     unsigned short unknown_5c_[4];
@@ -86,13 +86,13 @@ struct Struct_02056d80_4 {
     unsigned char unknown_c4_[0x54];
     float unknown_118_[4];
     float unknown_128_[3];
-    float unknown_134_[3];
-    float unknown_140_[3];
-    float unknown_14c_;
+    float rotation[3];
+    float scale[3];
+    float duration;
     int unknown_150_;
-    int unknown_154_;
-    float unknown_158_[3];
-    float unknown_164_[3];
+    int delay;
+    float extra[3];
+    float vector[3];
 };
 
 extern "C" int func_02055168(Struct_020546c8*);
@@ -104,106 +104,106 @@ extern "C" void* func_02055090(Struct_020546c8*);
 extern "C" float func_020578e8(Struct_020557a4*, Struct_020557a4*);
 
 // USA: func_02056d80
-extern "C" ARM void func_02056d80(Struct_02056d80_4* arg0) {
-    if (!arg0->unknown_30_ || !arg0->unknown_28_) return;
-    Struct_02056d80_5* var0 = (Struct_02056d80_5*)func_02055168(arg0->unknown_30_);
-    Struct_020557a4* var1;
-    Struct_020557a4* var2;
-    var1 = (Struct_020557a4*)arg0->unknown_30_->unknown_ec_[0].ElementAfter(0);
-    arg0->unknown_118_[0] = var1->unknown_0_->unknown_4_;
-    if (var0->unknown_10_[0] > 1) {
-        arg0->unknown_5c_[0] = 1;
-        var2 = (Struct_020557a4*)arg0->unknown_30_->unknown_b0_[0].GetNthElement(1);
-        if (var2) arg0->unknown_4c_[0] = func_020578e8(var1, var2);
+extern "C" ARM void func_02056d80(Struct_02056d80_4* self) {
+    if (!self->resource || !self->active) return;
+    Struct_02056d80_5* counts = (Struct_02056d80_5*)func_02055168(self->resource);
+    Struct_020557a4* previous;
+    Struct_020557a4* next;
+    previous = (Struct_020557a4*)self->resource->unknown_ec_[0].ElementAfter(0);
+    self->unknown_118_[0] = previous->unknown_0_->y;
+    if (counts->unknown_10_[0] > 1) {
+        self->unknown_5c_[0] = 1;
+        next = (Struct_020557a4*)self->resource->unknown_b0_[0].GetNthElement(1);
+        if (next) self->unknown_4c_[0] = func_020578e8(previous, next);
     }
-    var1 = (Struct_020557a4*)arg0->unknown_30_->unknown_ec_[1].ElementAfter(0);
-    arg0->unknown_118_[1] = var1->unknown_0_->unknown_4_;
-    if (var0->unknown_10_[1] > 1) {
-        arg0->unknown_5c_[1] = 1;
-        var2 = (Struct_020557a4*)arg0->unknown_30_->unknown_b0_[1].GetNthElement(1);
-        if (var2) arg0->unknown_4c_[1] = func_020578e8(var1, var2);
+    previous = (Struct_020557a4*)self->resource->unknown_ec_[1].ElementAfter(0);
+    self->unknown_118_[1] = previous->unknown_0_->y;
+    if (counts->unknown_10_[1] > 1) {
+        self->unknown_5c_[1] = 1;
+        next = (Struct_020557a4*)self->resource->unknown_b0_[1].GetNthElement(1);
+        if (next) self->unknown_4c_[1] = func_020578e8(previous, next);
     }
-    var1 = (Struct_020557a4*)arg0->unknown_30_->unknown_ec_[2].ElementAfter(0);
-    arg0->unknown_118_[2] = var1->unknown_0_->unknown_4_;
-    if (var0->unknown_10_[2] > 1) {
-        arg0->unknown_5c_[2] = 1;
-        var2 = (Struct_020557a4*)arg0->unknown_30_->unknown_b0_[2].GetNthElement(1);
-        if (var2) arg0->unknown_4c_[2] = func_020578e8(var1, var2);
+    previous = (Struct_020557a4*)self->resource->unknown_ec_[2].ElementAfter(0);
+    self->unknown_118_[2] = previous->unknown_0_->y;
+    if (counts->unknown_10_[2] > 1) {
+        self->unknown_5c_[2] = 1;
+        next = (Struct_020557a4*)self->resource->unknown_b0_[2].GetNthElement(1);
+        if (next) self->unknown_4c_[2] = func_020578e8(previous, next);
     }
-    var1 = (Struct_020557a4*)arg0->unknown_30_->unknown_ec_[3].ElementAfter(0);
-    arg0->unknown_118_[3] = var1->unknown_0_->unknown_4_;
-    if (var0->unknown_10_[3] > 1) {
-        arg0->unknown_5c_[3] = 1;
-        var2 = (Struct_020557a4*)arg0->unknown_30_->unknown_b0_[3].GetNthElement(1);
-        if (var2) arg0->unknown_4c_[3] = func_020578e8(var1, var2);
+    previous = (Struct_020557a4*)self->resource->unknown_ec_[3].ElementAfter(0);
+    self->unknown_118_[3] = previous->unknown_0_->y;
+    if (counts->unknown_10_[3] > 1) {
+        self->unknown_5c_[3] = 1;
+        next = (Struct_020557a4*)self->resource->unknown_b0_[3].GetNthElement(1);
+        if (next) self->unknown_4c_[3] = func_020578e8(previous, next);
     }
-    Struct_02056d80_7* var3 = (Struct_02056d80_7*)func_020550a8(arg0->unknown_30_);
-    for (int var4 = 0; var4 < 3; var4++) {
-        var1 = (Struct_020557a4*)arg0->unknown_30_->unknown_8_[var4].ElementAfter(0);
-        arg0->unknown_128_[var4] = var1->unknown_0_->unknown_4_;
-        if (var3->unknown_24_[var4] > 1) {
-            arg0->unknown_88_[var4] = 1;
-            var2 = (Struct_020557a4*)arg0->unknown_30_->unknown_8_[var4].GetNthElement(arg0->unknown_88_[var4]);
-            if (var2) arg0->unknown_64_[var4] = func_020578e8(var1, var2);
+    Struct_02056d80_7* var3 = (Struct_02056d80_7*)func_020550a8(self->resource);
+    for (int i = 0; i < 3; i++) {
+        previous = (Struct_020557a4*)self->resource->unknown_8_[i].ElementAfter(0);
+        self->unknown_128_[i] = previous->unknown_0_->y;
+        if (var3->unknown_24_[i] > 1) {
+            self->unknown_88_[i] = 1;
+            next = (Struct_020557a4*)self->resource->unknown_8_[i].GetNthElement(self->unknown_88_[i]);
+            if (next) self->unknown_64_[i] = func_020578e8(previous, next);
         }
     }
-    for (int var5 = 0; var5 < 3; var5++) {
-        var1 = (Struct_020557a4*)arg0->unknown_30_->unknown_2c_[var5].ElementAfter(0);
-        arg0->unknown_134_[var5] = var1->unknown_0_->unknown_4_;
-        if (var3->unknown_27_[var5] > 1) {
-            arg0->unknown_8e_[var5] = 1;
-            var2 = (Struct_020557a4*)arg0->unknown_30_->unknown_2c_[var5].GetNthElement(arg0->unknown_8e_[var5]);
-            if (var2) arg0->unknown_70_[var5] = func_020578e8(var1, var2);
+    for (int i = 0; i < 3; i++) {
+        previous = (Struct_020557a4*)self->resource->rotation[i].ElementAfter(0);
+        self->rotation[i] = previous->unknown_0_->y;
+        if (var3->rotation[i] > 1) {
+            self->unknown_8e_[i] = 1;
+            next = (Struct_020557a4*)self->resource->rotation[i].GetNthElement(self->unknown_8e_[i]);
+            if (next) self->unknown_70_[i] = func_020578e8(previous, next);
         }
     }
-    for (int var6 = 0; var6 < 3; var6++) {
-        var1 = (Struct_020557a4*)arg0->unknown_30_->unknown_50_[var6].ElementAfter(0);
-        arg0->unknown_140_[var6] = var1->unknown_0_->unknown_4_;
-        if (var3->unknown_2a_[var6] > 1) {
-            arg0->unknown_94_[var6] = 1;
-            var2 = (Struct_020557a4*)arg0->unknown_30_->unknown_50_[var6].GetNthElement(arg0->unknown_94_[var6]);
-            if (var2) arg0->unknown_7c_[var6] = func_020578e8(var1, var2);
+    for (int i = 0; i < 3; i++) {
+        previous = (Struct_020557a4*)self->resource->scale[i].ElementAfter(0);
+        self->scale[i] = previous->unknown_0_->y;
+        if (var3->scale[i] > 1) {
+            self->unknown_94_[i] = 1;
+            next = (Struct_020557a4*)self->resource->scale[i].GetNthElement(self->unknown_94_[i]);
+            if (next) self->unknown_7c_[i] = func_020578e8(previous, next);
         }
     }
-    Struct_02056d80_8* var7 = (Struct_02056d80_8*)func_020550c0(arg0->unknown_30_);
-    var1 = (Struct_020557a4*)arg0->unknown_30_->unknown_74_.ElementAfter(0);
-    arg0->unknown_14c_ = (float)var1->unknown_0_->unknown1_4_;
-    if (var7->unknown_4_ > 1) {
-        arg0->unknown_a0_ = 1;
-        var2 = (Struct_020557a4*)arg0->unknown_30_->unknown_74_.GetNthElement(1);
-        if (var2) arg0->unknown_9c_ = func_020578e8(var1, var2);
+    Struct_02056d80_8* duration = (Struct_02056d80_8*)func_020550c0(self->resource);
+    previous = (Struct_020557a4*)self->resource->duration.ElementAfter(0);
+    self->duration = (float)previous->unknown_0_->duration;
+    if (duration->count > 1) {
+        self->unknown_a0_ = 1;
+        next = (Struct_020557a4*)self->resource->duration.GetNthElement(1);
+        if (next) self->unknown_9c_ = func_020578e8(previous, next);
     }
-    Struct_02056d80* var8 = (Struct_02056d80*)func_020550d8(arg0->unknown_30_);
-    for (int var9 = 0; var9 < 3; var9++) {
-        var1 = (Struct_020557a4*)arg0->unknown_30_->unknown_80_[var9].ElementAfter(0);
-        arg0->unknown_158_[var9] = var1->unknown_0_->unknown_4_;
-        if (var8->unknown_10_[var9] > 1) {
-            arg0->unknown_bc_[var9] = 1;
-            var2 = (Struct_020557a4*)arg0->unknown_30_->unknown_80_[var9].GetNthElement(arg0->unknown_bc_[var9]);
-            if (var2) arg0->unknown_a4_[var9] = func_020578e8(var1, var2);
+    Struct_02056d80* extra = (Struct_02056d80*)func_020550d8(self->resource);
+    for (int i = 0; i < 3; i++) {
+        previous = (Struct_020557a4*)self->resource->extra[i].ElementAfter(0);
+        self->extra[i] = previous->unknown_0_->y;
+        if (extra->unknown_10_[i] > 1) {
+            self->unknown_bc_[i] = 1;
+            next = (Struct_020557a4*)self->resource->extra[i].GetNthElement(self->unknown_bc_[i]);
+            if (next) self->unknown_a4_[i] = func_020578e8(previous, next);
         }
     }
-    var1 = (Struct_020557a4*)arg0->unknown_30_->unknown_a4_.ElementAfter(0);
-    arg0->unknown_164_[0] = var1->unknown_0_->unknown_4_;
-    arg0->unknown_164_[1] = var1->unknown_0_->unknown_8_;
-    arg0->unknown_164_[2] = var1->unknown_0_->unknown_c_;
-    if (var8->unknown_13_ > 1) {
-        arg0->unknown_c2_ = 1;
-        var2 = (Struct_020557a4*)arg0->unknown_30_->unknown_a4_.GetNthElement(1);
-        if (var2) {
-            arg0->unknown_b0_[0] = (var2->unknown_0_->unknown_4_ - var1->unknown_0_->unknown_4_) / (float)(var2->unknown_0_->unknown_0_ - var1->unknown_0_->unknown_0_);
-            arg0->unknown_b0_[1] = (var2->unknown_0_->unknown_8_ - var1->unknown_0_->unknown_8_) / (float)(var2->unknown_0_->unknown_0_ - var1->unknown_0_->unknown_0_);
-            arg0->unknown_b0_[2] = (var2->unknown_0_->unknown_c_ - var1->unknown_0_->unknown_c_) / (float)(var2->unknown_0_->unknown_0_ - var1->unknown_0_->unknown_0_);
+    previous = (Struct_020557a4*)self->resource->vector.ElementAfter(0);
+    self->vector[0] = previous->unknown_0_->y;
+    self->vector[1] = previous->unknown_0_->z;
+    self->vector[2] = previous->unknown_0_->w;
+    if (extra->vector > 1) {
+        self->unknown_c2_ = 1;
+        next = (Struct_020557a4*)self->resource->vector.GetNthElement(1);
+        if (next) {
+            self->unknown_b0_[0] = (next->unknown_0_->y - previous->unknown_0_->y) / (float)(next->unknown_0_->x - previous->unknown_0_->x);
+            self->unknown_b0_[1] = (next->unknown_0_->z - previous->unknown_0_->z) / (float)(next->unknown_0_->x - previous->unknown_0_->x);
+            self->unknown_b0_[2] = (next->unknown_0_->w - previous->unknown_0_->w) / (float)(next->unknown_0_->x - previous->unknown_0_->x);
         }
     }
-    Struct_02056d80_2* var10 = (Struct_02056d80_2*)func_020550f0(arg0->unknown_30_);
-    arg0->unknown_4_ = 0;
-    arg0->unknown_8_ = var10->unknown_0_ + var10->unknown_1_;
-    arg0->unknown_c_ = var10->unknown_2_;
-    arg0->unknown_38_ = var10->unknown_3_;
-    arg0->unknown_154_ = var10->unknown_1_;
-    if (var10->unknown_2_) arg0->unknown_c_ = 1;
-    if (((Struct_02056d80_3*)func_02055090(arg0->unknown_30_))->unknown_c_ == 0) return;
-    var1 = (Struct_020557a4*)arg0->unknown_30_->unknown_11c_.ElementAfter(0);
-    arg0->unknown_150_ = var1->unknown_0_->unknown_0_;
+    Struct_02056d80_2* settings = (Struct_02056d80_2*)func_020550f0(self->resource);
+    self->frame = 0;
+    self->endFrame = settings->unknown_0_ + settings->delay;
+    self->repeat = settings->repeat;
+    self->flags = settings->flags;
+    self->delay = settings->delay;
+    if (settings->repeat) self->repeat = 1;
+    if (((Struct_02056d80_3*)func_02055090(self->resource))->unknown_c_ == 0) return;
+    previous = (Struct_020557a4*)self->resource->unknown_11c_.ElementAfter(0);
+    self->unknown_150_ = previous->unknown_0_->x;
 }

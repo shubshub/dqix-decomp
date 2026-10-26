@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-extern "C" int func_020c5650(int* arg0);
-extern "C" int func_020c5680(int* arg0);
+extern "C" int func_020c5650(int* out);
+extern "C" int func_020c5680(int* out);
 
 // USA: func_020c537c
 extern "C" ARM void func_020c537c(void) {

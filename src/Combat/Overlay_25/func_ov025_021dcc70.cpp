@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Struct_ov025_021d8c30_11;
-extern "C" void func_ov025_021dcd28(Struct_ov025_021d8c30_11* arg0, Struct_ov025_021d8c30_11* arg1);
+extern "C" void func_ov025_021dcd28(Struct_ov025_021d8c30_11* dst, Struct_ov025_021d8c30_11* src);
 
 #if defined(jpn)
 #define ROW_COUNT 0x703d
@@ -16,33 +16,33 @@ extern "C" void func_ov025_021dcd28(Struct_ov025_021d8c30_11* arg0, Struct_ov025
 #endif
 
 // USA: func_ov025_021dcc70
-extern "C" ARM void func_ov025_021dcc70(char* arg0, char* arg1) {
-    unsigned char var0 = *(unsigned char*)(arg0 + ROW_COUNT);
-    if (var0 >= 5) return;
+extern "C" ARM void func_ov025_021dcc70(char* obj, char* src) {
+    unsigned char count = *(unsigned char*)(obj + ROW_COUNT);
+    if (count >= 5) return;
 
-    char* var1 = arg0 + ROW_DATA + (var0 << 5);
-    func_ov025_021dcd28((Struct_ov025_021d8c30_11*)var1, (Struct_ov025_021d8c30_11*)arg1);
+    char* dst = obj + ROW_DATA + (count << 5);
+    func_ov025_021dcd28((Struct_ov025_021d8c30_11*)dst, (Struct_ov025_021d8c30_11*)src);
 
-    unsigned char var2 = *(unsigned char*)(arg0 + ROW_COUNT);
-    short var3 = *(short*)(arg1 + 0x18);
-    *(short*)(arg0 + ROW_BASE + (var2 << 5) + ROW_FIELD(0x68)) = var3;
+    unsigned char idx = *(unsigned char*)(obj + ROW_COUNT);
+    short v0 = *(short*)(src + 0x18);
+    *(short*)(obj + ROW_BASE + (idx << 5) + ROW_FIELD(0x68)) = v0;
 
-    var2 = *(unsigned char*)(arg0 + ROW_COUNT);
-    short var4 = *(short*)(arg1 + 0x1a);
-    *(short*)(arg0 + ROW_BASE + (var2 << 5) + ROW_FIELD(0x6a)) = var4;
+    idx = *(unsigned char*)(obj + ROW_COUNT);
+    short v1 = *(short*)(src + 0x1a);
+    *(short*)(obj + ROW_BASE + (idx << 5) + ROW_FIELD(0x6a)) = v1;
 
-    var2 = *(unsigned char*)(arg0 + ROW_COUNT);
-    *(short*)(arg0 + ROW_BASE + (var2 << 5) + ROW_FIELD(0x6c)) = 0;
+    idx = *(unsigned char*)(obj + ROW_COUNT);
+    *(short*)(obj + ROW_BASE + (idx << 5) + ROW_FIELD(0x6c)) = 0;
 
-    var2 = *(unsigned char*)(arg0 + ROW_COUNT);
-    *(short*)(arg0 + ROW_BASE + (var2 << 5) + ROW_FIELD(0x6e)) = 0;
+    idx = *(unsigned char*)(obj + ROW_COUNT);
+    *(short*)(obj + ROW_BASE + (idx << 5) + ROW_FIELD(0x6e)) = 0;
 
-    var2 = *(unsigned char*)(arg0 + ROW_COUNT);
-    if (var2 != 0) {
-        unsigned short var5 = *(unsigned short*)(arg0 + ROW_BASE + ((var2 - 1) << 5) + ROW_FIELD(0x6c));
-        *(unsigned short*)(arg0 + ROW_BASE + (var2 << 5) + ROW_FIELD(0x6e)) = var5;
+    idx = *(unsigned char*)(obj + ROW_COUNT);
+    if (idx != 0) {
+        unsigned short prev = *(unsigned short*)(obj + ROW_BASE + ((idx - 1) << 5) + ROW_FIELD(0x6c));
+        *(unsigned short*)(obj + ROW_BASE + (idx << 5) + ROW_FIELD(0x6e)) = prev;
     }
 
-    unsigned char var6 = *(unsigned char*)(arg0 + ROW_COUNT);
-    *(unsigned char*)(arg0 + ROW_COUNT) = var6 + 1;
+    unsigned char c = *(unsigned char*)(obj + ROW_COUNT);
+    *(unsigned char*)(obj + ROW_COUNT) = c + 1;
 }

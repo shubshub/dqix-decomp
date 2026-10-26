@@ -7,18 +7,18 @@
 
 #include "std_library_functions.h"
 
-void ClearFourRegions0204f0ec(char* obj);
+extern "C" void func_0204f0ec(char* obj);
 struct BackgroundScreen;
-void ClearRecordFields(struct BackgroundScreen* rec);
+extern "C" void ClearRecordFields(struct BackgroundScreen* rec);
 
-struct BitsD8_0204c684 {
+struct Struct_0204c684 {
     unsigned char flagA : 1;
-    unsigned char flagB : 1;
+    unsigned char unknown_0_1_ : 1;
 #if defined(jpn)
-    unsigned char valD : 6;
+    unsigned char unknown_0_3_ : 6;
 #else
     unsigned char flagC : 1;
-    unsigned char valD : 5;
+    unsigned char unknown_0_3_ : 5;
 #endif
 };
 
@@ -27,7 +27,7 @@ extern "C" ARM void WindowPane_Init(char* obj) {
     *(int*)(obj + 0x0) = 0;
     *(int*)(obj + 0x4) = 0;
     *(int*)(obj + 0x8) = 0;
-    ClearFourRegions0204f0ec(obj);
+    func_0204f0ec(obj);
 
     *(int*)(obj + 0x9c) = 0;
     *(int*)(obj + 0xa0) = 0;
@@ -53,13 +53,13 @@ extern "C" ARM void WindowPane_Init(char* obj) {
 
     ClearRecordFields((struct BackgroundScreen*)(obj + 0xc8));
 
-    BitsD8_0204c684* bits = (BitsD8_0204c684*)(obj + 0xd8);
+    Struct_0204c684* bits = (Struct_0204c684*)(obj + 0xd8);
     bits->flagA = 0;
-    bits->valD = 0;
+    bits->unknown_0_3_ = 0;
     *(unsigned char*)(obj + 0xd9) = 0;
     *(unsigned char*)(obj + 0xda) = 0;
 
-    bits->flagB = 1;
+    bits->unknown_0_1_ = 1;
 #if !defined(jpn)
     bits->flagC = 0;
 #endif

@@ -15,7 +15,7 @@ struct Big02028894 {
 enum { kZoneRecordCount = 4, kSafeAllocatorSize = 0x14 };
 
 // Main, originally InitEntries02028894 (USA 0x02028894, EUR 0x020288a4, JPN 0x020280fc)
-ARM void ZoneRecords_Init(struct Big02028894* records, char* allocators, char* secondAllocators) {
+extern "C" ARM void ZoneRecords_Init(struct Big02028894* records, char* allocators, char* secondAllocators) {
     int i;
     ZoneRecords_Reset(records);
     for (i = 0; i < kZoneRecordCount; i++) {

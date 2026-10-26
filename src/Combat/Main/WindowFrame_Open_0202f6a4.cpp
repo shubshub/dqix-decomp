@@ -17,7 +17,7 @@ struct Field440Obj0202f6a4 {
 // Starts opening the frame: full width, zero height, state 1 (opening); WindowFrame_Update makes it
 // state 2 (open) at full height on its next update.
 // Main, originally SetupField440Type1 (USA 0x0202f6a4, EUR 0x0202f6b4, JPN 0x0202f214)
-ARM void WindowFrame_Open(struct Field440Obj0202f6a4* frame) {
+extern "C" ARM void WindowFrame_Open(struct Field440Obj0202f6a4* frame) {
     if (frame->rect == 0) {
         return;
     }

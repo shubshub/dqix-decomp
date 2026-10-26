@@ -2,7 +2,7 @@
 #include "std_library_functions.h"
 
 // Main, originally InitStruct0205a444 (USA 0x0205a444, EUR 0x0205a454, JPN 0x0205b7e0)
-ARM void SpriteContext_Init(char* obj) {
+extern "C" ARM void SpriteContext_Init(char* obj) {
     memset(obj, 0, 0x24);
     memset(obj + 0x24, 0, 0x14);
     *(int*)(obj + 0x38) = 0;

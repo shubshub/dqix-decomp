@@ -5,32 +5,32 @@ enum { Enum_020a88e8_14092 = 0x34fc };
 #else
 enum { Enum_020a88e8_14092 = 0x370c };
 #endif
-struct Obj020a88e8 { unsigned char pad0, key1, key2, pad3, pad4, increase, pad6, instant, key3, key4; };
+struct Struct_020a88e8 { unsigned char pad0, key1, key2, pad3, pad4, unknown_5_, pad6, unknown_7_, key3, key4; };
 struct Entry02019508 { unsigned short id, flags; signed char level:7; signed char other:1; };
 struct Base02019508;
-struct Trigger020a88e8 { char pad[3]; unsigned char instant; };
-struct Manager020a88e8 { char pad[kManagerPrefix]; Trigger020a88e8* trigger; };
+struct Struct_020a88e8_2 { char pad[3]; unsigned char unknown_3_; };
+struct Struct_020a88e8_3 { char pad[Enum_020a88e8_14092]; Struct_020a88e8_2* trigger; };
 extern "C" Base02019508* Zone3D_GetInstance();
-Entry02019508* Zone3D_FindSceneElement(Base02019508*, int, int);
-void SetFlag0x80_020133b4(void*, int);
+extern "C" Entry02019508* Zone3D_FindSceneElement(Base02019508*, int, int);
+extern "C" void func_020133b4(void*, int);
 // USA: func_020a88e8
-extern "C" ARM void func_020a88e8(Obj020a88e8* self) {
+extern "C" ARM void func_020a88e8(Struct_020a88e8* self) {
     Base02019508* base = Zone3D_GetInstance();
     Entry02019508* first = Zone3D_FindSceneElement(base, self->key1, self->key2);
     Entry02019508* second = Zone3D_FindSceneElement(base, self->key3, self->key4);
     if (!first || !second) return;
-    SetFlag0x80_020133b4(first, 1);
-    Trigger020a88e8* trigger = ((Manager020a88e8*)GetGameResources())->trigger;
-    if (self->increase) {
+    func_020133b4(first, 1);
+    Struct_020a88e8_2* trigger = ((Struct_020a88e8_3*)GetGameResources())->trigger;
+    if (self->unknown_5_) {
         unsigned char value = first->level;
-        if (self->instant || trigger->instant) { self->instant = 0; value = 31; }
+        if (self->unknown_7_ || trigger->unknown_3_) { self->unknown_7_ = 0; value = 31; }
         else { value+=2; if (value > 31) value = 31; }
         first->level = (signed char)value;
     } else {
-        if (arg0->unknown_7_ || var3->unknown_3_) { var1->unknown_4_0_ = 0; arg0->unknown_7_ = 0; }
-        else if (var1->unknown_4_0_ < 2) var1->unknown_4_0_ = 0;
-        else var1->unknown_4_0_ = (signed char)(var1->unknown_4_0_-2);
+        if (self->unknown_7_ || trigger->unknown_3_) { first->level = 0; self->unknown_7_ = 0; }
+        else if (first->level < 2) first->level = 0;
+        else first->level = (signed char)(first->level-2);
     }
-    if (var1->unknown_4_0_ >= 10) var2->unknown_2_|=4;
-    else var2->unknown_2_&=~4;
+    if (first->level >= 10) second->flags|=4;
+    else second->flags&=~4;
 }

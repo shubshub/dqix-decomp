@@ -3,32 +3,32 @@
 struct Struct_020e23c0;
 
 struct Struct_0204459c_3 {
-    short unknown_0_;
-    short unknown_2_;
+    short b;
+    short a;
 };
 
 struct Struct_0204459c {
-    char unknown_0_[0x14];
-    short unknown_14_;
+    char pad0[0x14];
+    short f14;
     short unknown_16_;
-    short unknown_18_;
+    short f18;
     short unknown_1a_;
 };
 
 struct Struct_0204459c_2 {
 #if !defined(jpn)
-    char unknown_0_[0x34];
+    char pad0[0x34];
 #endif
-    void* unknown_34_;
-    struct Struct_020e23c0* unknown_38_;
+    void* field34;
+    struct Struct_020e23c0* field38;
 #if defined(jpn)
     char unknown_8_[0x7d0 - 0x8];
 #else
     char unknown_3c_[0x900 - 0x3c];
 #endif
-    struct Struct_0204459c unknown_900_;
+    struct Struct_0204459c pose;
     char unknown_91c_[0x9a0 - 0x91c];
-    int unknown_9a0_;
+    int mode;
 #if defined(jpn)
     char unknown_874_[0x17de - 0x874];
 #else
@@ -44,48 +44,48 @@ struct Struct_0204459c_2 {
     unsigned char unknown_19ca_;
 };
 
-extern "C" void func_0204455c(void* arg0, short* arg1, short* arg2);
-extern "C" void func_0204f914(void* arg0, int arg1, short arg2, short arg3, short arg4, short arg5);
+extern "C" void func_0204455c(void* obj, short* a, short* b);
+extern "C" void func_0204f914(void* obj, int mode, short a, short b, short c, short d);
 extern "C" void func_020e23c0(struct Struct_020e23c0*, int, int, int, short, short);
 
 // USA: func_0204459c
-extern "C" ARM void func_0204459c(struct Struct_0204459c_2* arg0, int arg1) {
-    if (arg0->unknown_9a0_ == 1 || arg0->unknown_9a0_ == 3 || arg0->unknown_9a0_ == 2) {
-        if (arg0->unknown_19ca_ == 0) return;
-        if (arg1 != 0) {
+extern "C" ARM void func_0204459c(struct Struct_0204459c_2* obj, int flag) {
+    if (obj->mode == 1 || obj->mode == 3 || obj->mode == 2) {
+        if (obj->unknown_19ca_ == 0) return;
+        if (flag != 0) {
             struct Struct_0204459c_3 var0;
-            func_0204455c(arg0->unknown_34_, &var0.unknown_2_, &var0.unknown_0_);
-            int var1 = var0.unknown_0_;
-            int var2 = var0.unknown_2_;
-            func_0204f914(arg0->unknown_34_, 0, var2 - 3, var1, var2 + 4, var1 + 4);
+            func_0204455c(obj->field34, &var0.a, &var0.b);
+            int b = var0.b;
+            int a = var0.a;
+            func_0204f914(obj->field34, 0, a - 3, b, a + 4, b + 4);
         }
     }
-    if (arg0->unknown_19af_ != 1) return;
-    if (arg1 != 0) {
-        short var3;
-        short var4;
-        func_0204455c(arg0->unknown_34_, &var3, &var4);
-        if (arg0->unknown_19ae_ <= 15) return;
-        for (short var5 = 0; var5 < 4; var5++) {
-            func_0204f914(arg0->unknown_34_, 15, var3 - (3 - var5), var4 + var5, var3 + (4 - var5), var4 + var5 + 1);
-        }
-        return;
-    }
-    short var6 = arg0->unknown_900_.unknown_1a_;
-    short var7 = arg0->unknown_900_.unknown_16_;
-    short var8 = arg0->unknown_900_.unknown_18_;
-    short var9 = arg0->unknown_900_.unknown_14_;
-    int var10 = var9 + (var8 >> 1);
-    int var11 = var7 + var6 - 3;
-    if (arg0->unknown_38_ != 0) {
-        if (arg0->unknown_19ae_ <= 15) return;
-        int var12 = var6 - 8;
-        for (short var13 = 0; var13 < 4; var13++) {
-            func_020e23c0(arg0->unknown_38_, 15, (short)((var8 >> 1) - (3 - var13)), (short)(var12 + var13), (4 - var13) + (var8 >> 1), var12 + var13 + 1);
+    if (obj->unknown_19af_ != 1) return;
+    if (flag != 0) {
+        short p;
+        short q;
+        func_0204455c(obj->field34, &p, &q);
+        if (obj->unknown_19ae_ <= 15) return;
+        for (short i = 0; i < 4; i++) {
+            func_0204f914(obj->field34, 15, p - (3 - i), q + i, p + (4 - i), q + i + 1);
         }
         return;
     }
-    unsigned int var14 = 0xf000f000;
+    short x = obj->pose.unknown_1a_;
+    short y = obj->pose.unknown_16_;
+    short z = obj->pose.f18;
+    short w = obj->pose.f14;
+    int var10 = w + (z >> 1);
+    int var11 = y + x - 3;
+    if (obj->field38 != 0) {
+        if (obj->unknown_19ae_ <= 15) return;
+        int base = x - 8;
+        for (short i = 0; i < 4; i++) {
+            func_020e23c0(obj->field38, 15, (short)((z >> 1) - (3 - i)), (short)(base + i), (4 - i) + (z >> 1), base + i + 1);
+        }
+        return;
+    }
+    unsigned int v = 0xf000f000;
     volatile unsigned int* var15 = (volatile unsigned int*)0x04000444;
     var15[0] = 0;
     var15[0x3c / 4] = 0x7fff;
@@ -101,9 +101,9 @@ extern "C" ARM void func_0204459c(struct Struct_0204459c_2* arg0, int arg1) {
     var15[0xbc / 4] = 0;
     var15[0x48 / 4] = 0;
     var15[0x48 / 4] = 0;
-    var15[0x48 / 4] = var14;
+    var15[0x48 / 4] = v;
     var15[0x48 / 4] = 0;
-    var15[0x48 / 4] = var14 - 0xe000;
+    var15[0x48 / 4] = v - 0xe000;
     var15[0x48 / 4] = 0;
     var15[0xc0 / 4] = 0;
     var15[4 / 4] = 1;

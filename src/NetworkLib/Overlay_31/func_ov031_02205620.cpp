@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov031_022070bc(int arg0);
+extern "C" int func_ov031_022070bc(int x);
 
 struct Struct_ov031_02205620 {
-	int unknown_0_;
-	int unknown_4_;
+	int field0;
+	int field4;
 };
 
 // USA: func_ov031_02205620
-extern "C" ARM int func_ov031_02205620(int arg0, struct Struct_ov031_02205620* arg1, int arg2) {
-	arg1->unknown_4_ = arg2 ? arg0 : 0;
-	arg1->unknown_0_ = arg2;
-	return arg0 + func_ov031_022070bc(arg2);
+extern "C" ARM int func_ov031_02205620(int a, struct Struct_ov031_02205620* p, int c) {
+	p->field4 = c ? a : 0;
+	p->field0 = c;
+	return a + func_ov031_022070bc(c);
 }

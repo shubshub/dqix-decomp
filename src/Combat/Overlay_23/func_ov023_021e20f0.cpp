@@ -7,171 +7,171 @@ extern "C" void memcpy(void* dst, const void* src, int n);
 extern unsigned char data_ov023_021fdc90;
 
 struct Struct_ov023_021e20f0_4 {
-    char unknown_0_[4];
-    int unknown_4_;
-    char unknown_8_[0xc - 0x8];
-    int unknown_c_;
-    char unknown_10_[0x14 - 0x10];
-    int unknown_14_;
-    int unknown_18_;
+    char pad0[4];
+    int field4;
+    char pad8[0xc - 0x8];
+    int fieldC;
+    char pad10[0x14 - 0x10];
+    int field14;
+    int field18;
 };
 
 struct Struct_ov023_021e20f0_5 {
-    char unknown_0_[8];
-    void* unknown_8_;   // 0x8
-    void* unknown_c_;   // 0xc
-    char unknown_10_[0x14 - 0x10];
-    unsigned short unknown_14_; // 0x14
-    unsigned short unknown_16_;    // 0x16
+    char pad0[8];
+    void* arr1;   // 0x8
+    void* arr2;   // 0xc
+    char pad10[0x14 - 0x10];
+    unsigned short count1; // 0x14
+    unsigned short sum;    // 0x16
 };
 
 struct Struct_ov023_021e20f0_6 {
-    char unknown_0_[4];
-    int unknown_4_;
-    short unknown_8_;
-    short unknown_a_;
+    char pad0[4];
+    int field4;
+    short field8;
+    short fieldA;
     char unknown_c_[0xe - 0xc];
     unsigned short unknown_e_;
-    unsigned short unknown_10_;
-    unsigned short unknown_12_;
-    unsigned short unknown_14_;
+    unsigned short field10;
+    unsigned short field12;
+    unsigned short field14;
     unsigned short unknown_16_;
-    unsigned short unknown_18_;
+    unsigned short field18;
 };
 
 struct Struct_ov023_021e20f0_7 {
-    signed short unknown_0_;
-    unsigned short unknown_2_;
-    void* unknown_4_;
-    signed short unknown_8_;
-    signed short unknown_a_;
-    signed short unknown_c_;
+    signed short field0;
+    unsigned short field2;
+    void* field4;
+    signed short field8;
+    signed short fieldA;
+    signed short fieldC;
     signed short unknown_e_;
-    signed short unknown_10_;
-    signed short unknown_12_;
-    unsigned short unknown_14_;
+    signed short field10;
+    signed short field12;
+    unsigned short field14;
     unsigned char unknown_16_;
     unsigned char unknown_17_;
 };
 
 struct Struct_ov023_021e20f0 {
-    int unknown_0_;
-    short unknown_4_;
-    short unknown_6_;
-    signed short unknown_8_;
-    char unknown_a_[0x10 - 0xa];
-    unsigned short unknown_10_;
-    unsigned short unknown_12_;
+    int field0;
+    short field4;
+    short field6;
+    signed short field8;
+    char pad8[0x10 - 0xa];
+    unsigned short field10;
+    unsigned short field12;
 };
 
-struct Struct_ov023_021e20f0_2 { unsigned char unknown_0_0_ : 4; unsigned char unknown_0_4_ : 4; };
+struct Struct_ov023_021e20f0_2 { unsigned char unknown_0_0_ : 4; unsigned char hiNibble : 4; };
 
 struct Struct_ov023_021e20f0_3 {
-    short unknown_0_;
-    unsigned char unknown_2_;
+    short field0;
+    unsigned char field2;
     unsigned char unknown_3_;
-    signed short unknown_4_;
-    signed short unknown_6_;
-    signed short unknown_8_;
-    signed short unknown_a_;
-    int unknown_c_;
-    unsigned char unknown_10_;
+    signed short field4;
+    signed short field6;
+    signed short field8;
+    signed short fieldA;
+    int fieldC;
+    unsigned char field10;
 };
 
 // USA: func_ov023_021e20f0
-extern "C" ARM int func_ov023_021e20f0(struct Struct_ov023_021e20f0_5* arg0, SafeAllocator* arg1,
-        struct Struct_ov023_021e20f0_4* arg2, void* arg3) {
+extern "C" ARM int func_ov023_021e20f0(struct Struct_ov023_021e20f0_5* p, SafeAllocator* alloc,
+        struct Struct_ov023_021e20f0_4* header, void* arg3) {
     short var0 = -1;
-    if (arg1 == 0) return 1;
-    if (arg2 == 0) return 1;
+    if (alloc == 0) return 1;
+    if (header == 0) return 1;
     if (arg3 == 0) return 1;
 
     if (memcmp((unsigned char*)((char*)header + 8), &data_ov023_021fdc90, 3) != 0) {
         return 1;
     }
 
-    arg2->unknown_c_ = (int)((char*)arg2 + arg2->unknown_c_);
-    arg2->unknown_14_ = (int)((char*)arg2 + arg2->unknown_14_);
-    arg0->unknown_14_ = 0;
-    arg0->unknown_16_ = 0;
-    arg0->unknown_14_ = arg2->unknown_18_;
-    arg0->unknown_8_ = arg1->Allocate(arg0->unknown_14_ * 0x18);
-    struct Struct_ov023_021e20f0_6* var1 = (struct Struct_ov023_021e20f0_6*)((char*)arg2 + arg2->unknown_4_);
-    unsigned short var2 = arg0->unknown_14_;
+    header->fieldC = (int)((char*)header + header->fieldC);
+    header->field14 = (int)((char*)header + header->field14);
+    p->count1 = 0;
+    p->sum = 0;
+    p->count1 = header->field18;
+    p->arr1 = alloc->Allocate(p->count1 * 0x18);
+    struct Struct_ov023_021e20f0_6* var1 = (struct Struct_ov023_021e20f0_6*)((char*)header + header->field4);
+    unsigned short count1 = p->count1;
 
-    unsigned short var3;
-    for (var3 = 0; var3 < var2; var3++) {
-        struct Struct_ov023_021e20f0_6* var4 = (struct Struct_ov023_021e20f0_6*)((char*)var1 + var3 * 0x1c);
-        struct Struct_ov023_021e20f0_7* var5 = (struct Struct_ov023_021e20f0_7*)((char*)arg0->unknown_8_ + var3 * 0x18);
+    unsigned short i;
+    for (i = 0; i < count1; i++) {
+        struct Struct_ov023_021e20f0_6* src = (struct Struct_ov023_021e20f0_6*)((char*)var1 + i * 0x1c);
+        struct Struct_ov023_021e20f0_7* dst = (struct Struct_ov023_021e20f0_7*)((char*)p->arr1 + i * 0x18);
 
-        var5->unknown_0_ = var0;
-        var5->unknown_2_ = 0;
-        var5->unknown_4_ = 0;
-        var5->unknown_a_ = 0;
-        var5->unknown_8_ = var5->unknown_a_;
-        var5->unknown_c_ = var0;
-        var5->unknown_e_ = var0;
-        var5->unknown_10_ = var0;
-        var5->unknown_12_ = var0;
-        var5->unknown_14_ = 0;
-        var5->unknown_16_ = 3;
-        var5->unknown_17_ = 0xff;
+        dst->field0 = var0;
+        dst->field2 = 0;
+        dst->field4 = 0;
+        dst->fieldA = 0;
+        dst->field8 = dst->fieldA;
+        dst->fieldC = var0;
+        dst->unknown_e_ = var0;
+        dst->field10 = var0;
+        dst->field12 = var0;
+        dst->field14 = 0;
+        dst->unknown_16_ = 3;
+        dst->unknown_17_ = 0xff;
 
-        var5->unknown_8_ = var4->unknown_8_;
-        var5->unknown_a_ = var4->unknown_a_;
-        var5->unknown_2_ = var4->unknown_e_;
-        var5->unknown_4_ = arg1->Allocate(var4->unknown_e_ * 2);
-        char* var6 = (char*)arg2->unknown_14_ + var4->unknown_4_;
+        dst->field8 = src->field8;
+        dst->fieldA = src->fieldA;
+        dst->field2 = src->unknown_e_;
+        dst->field4 = alloc->Allocate(src->unknown_e_ * 2);
+        char* var6 = (char*)header->field14 + src->field4;
         if (var6 != 0) {
-            memcpy(var5->unknown_4_, var6, var4->unknown_e_ * 2);
+            memcpy(dst->field4, var6, src->unknown_e_ * 2);
         }
-        var5->unknown_0_ = var4->unknown_10_;
-        var5->unknown_c_ = var4->unknown_12_;
-        var5->unknown_e_ = var4->unknown_14_;
-        var5->unknown_10_ = var4->unknown_16_;
-        var5->unknown_12_ = var4->unknown_18_;
-        arg0->unknown_16_ = arg0->unknown_16_ + var5->unknown_2_;
+        dst->field0 = src->field10;
+        dst->fieldC = src->field12;
+        dst->unknown_e_ = src->field14;
+        dst->field10 = src->unknown_16_;
+        dst->field12 = src->field18;
+        p->sum = p->sum + dst->field2;
     }
 
-    arg0->unknown_c_ = arg1->Allocate(arg0->unknown_16_ * 0x14);
-    struct Struct_ov023_021e20f0* var7 = (struct Struct_ov023_021e20f0*)arg2->unknown_c_;
+    p->arr2 = alloc->Allocate(p->sum * 0x14);
+    struct Struct_ov023_021e20f0* var7 = (struct Struct_ov023_021e20f0*)header->fieldC;
 
-    unsigned short var8;
-    for (var8 = 0; var8 < arg0->unknown_16_; var8++) {
-        struct Struct_ov023_021e20f0* var9 = (struct Struct_ov023_021e20f0*)((char*)var7 + var8 * 0x28);
-        struct Struct_ov023_021e20f0_3* var10 = (struct Struct_ov023_021e20f0_3*)((char*)arg0->unknown_c_ + var8 * 0x14);
+    unsigned short j;
+    for (j = 0; j < p->sum; j++) {
+        struct Struct_ov023_021e20f0* var9 = (struct Struct_ov023_021e20f0*)((char*)var7 + j * 0x28);
+        struct Struct_ov023_021e20f0_3* var10 = (struct Struct_ov023_021e20f0_3*)((char*)p->arr2 + j * 0x14);
 
-        var10->unknown_0_ = -1;
-        var10->unknown_2_ = 0;
-        struct Struct_ov023_021e20f0_2* var11 = (struct Struct_ov023_021e20f0_2*)&var10->unknown_3_;
-        var11->unknown_0_0_ = 0xa;
-        var11->unknown_0_4_ = 0xf;
-        var10->unknown_6_ = 0;
-        var10->unknown_4_ = var10->unknown_6_;
-        var10->unknown_a_ = 0;
-        var10->unknown_8_ = var10->unknown_a_;
-        var10->unknown_c_ = 0;
-        var10->unknown_10_ = 0;
+        var10->field0 = -1;
+        var10->field2 = 0;
+        struct Struct_ov023_021e20f0_2* b3 = (struct Struct_ov023_021e20f0_2*)&var10->unknown_3_;
+        b3->unknown_0_0_ = 0xa;
+        b3->hiNibble = 0xf;
+        var10->field6 = 0;
+        var10->field4 = var10->field6;
+        var10->fieldA = 0;
+        var10->field8 = var10->fieldA;
+        var10->fieldC = 0;
+        var10->field10 = 0;
 
-        var10->unknown_4_ = var9->unknown_4_;
-        var10->unknown_6_ = var9->unknown_6_;
-        var10->unknown_0_ = var9->unknown_8_;
+        var10->field4 = var9->field4;
+        var10->field6 = var9->field6;
+        var10->field0 = var9->field8;
 
-        switch (var9->unknown_0_) {
+        switch (var9->field0) {
         case 0:
-            var10->unknown_2_ = 2;
-            var10->unknown_8_ = *(unsigned short*)((char*)var9 + 0xc);
-            var10->unknown_a_ = *(unsigned short*)((char*)var9 + 0xe);
+            var10->field2 = 2;
+            var10->field8 = *(unsigned short*)((char*)var9 + 0xc);
+            var10->fieldA = *(unsigned short*)((char*)var9 + 0xe);
             break;
         case 1:
-            var10->unknown_2_ = 1;
-            var10->unknown_8_ = *(unsigned short*)((char*)var9 + 0xc);
-            var10->unknown_a_ = *(unsigned short*)((char*)var9 + 0xe);
+            var10->field2 = 1;
+            var10->field8 = *(unsigned short*)((char*)var9 + 0xc);
+            var10->fieldA = *(unsigned short*)((char*)var9 + 0xe);
             break;
         case 3:
             if (*(int*)((char*)var9 + 0xc) == 0) {
-                var10->unknown_8_ = var9->unknown_10_;
-                var10->unknown_a_ = var9->unknown_12_;
+                var10->field8 = var9->field10;
+                var10->fieldA = var9->field12;
             }
             break;
         case 2:

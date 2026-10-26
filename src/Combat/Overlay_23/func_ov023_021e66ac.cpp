@@ -2,101 +2,101 @@
 #include "std_library_functions.h"
 #include "GameState/GameState.h"
 
-int GameState_GetStoryChapter(char* game);
+extern "C" int GameState_GetStoryChapter(char* game);
 extern "C" void* LinkSession_GetInstance(void);
 
-struct Struct_02072a68_2 { struct Struct_02072a68* unknown_0_; short unknown_4_; };
-extern "C" void* func_02072a68(Struct_02072a68_2* arg0, int arg1);
+struct TableA68 { struct Struct_02072a68* entries; short count; };
+extern "C" void* func_02072a68(TableA68* table, int key);
 
 struct Struct_ov023_021e66ac_3 {
-    unsigned int unknown_0_0_ : 29;
+    unsigned int unknown0 : 29;
     unsigned int unknown_3_5_ : 1;
     unsigned int unknown_3_6_ : 1;
     unsigned int unknown_3_7_ : 1;
-    unsigned int unknown_4_0_ : 9;
-    signed int unknown_5_1_ : 10;
+    unsigned int unknown4 : 9;
+    signed int title : 10;
     unsigned int unknown_6_3_ : 13;
 };
 
 struct Struct_ov023_021e66ac_4 {
 #if defined(jpn)
-    unsigned char unknown_0_[0x543c];
+    unsigned char unknown0[0x543c];
 #else
-    unsigned char unknown1_0_[0x569c];
+    unsigned char unknown0[0x569c];
 #endif
-    Struct_ov023_021e66ac_3 unknown_569c_;
+    Struct_ov023_021e66ac_3 profile;
 };
 
 struct Struct_ov023_021e66ac_5 {
 #if defined(jpn)
-    unsigned char unknown_0_[0x1314];
-    Struct_02072a68_2 unknown_133c_;
+    unsigned char unknown0[0x1314];
+    TableA68 strings;
     unsigned char unknown_131c_[0x1458 - 0x131c];
 #else
-    unsigned char unknown1_0_[0x133c];
-    Struct_02072a68_2 unknown_133c_;
+    unsigned char unknown0[0x133c];
+    TableA68 strings;
     unsigned char unknown_1344_[0x1400 - 0x1344];
 #endif
-    char unknown_1400_[0x40];
-    char unknown_1440_[0x40];
+    char accoladeText[0x40];
+    char titleText[0x40];
 };
 
 struct Struct_ov023_021e66ac {
-    unsigned char unknown_0_[0x49c];
-    unsigned char unknown_49c_0_ : 1;
+    unsigned char unknown0[0x49c];
+    unsigned char female : 1;
 #if defined(jpn)
     unsigned char unknown_49d_[0x8b8 - 0x49d];
 #else
     unsigned char unknown1_49d_[0x950 - 0x49d];
 #endif
-    int unknown_950_;
+    int vocation;
 };
 
 struct Struct_ov023_021e66ac_2 {
 #if defined(jpn)
-    unsigned char unknown_0_[0x144];
+    unsigned char unknown0[0x144];
 #else
-    unsigned char unknown1_0_[0x150];
+    unsigned char unknown0[0x150];
 #endif
     Struct_ov023_021e66ac* unknown_150_;
 };
 
 // USA: func_ov023_021e66ac
-extern "C" ARM void func_ov023_021e66ac(void* arg0) {
-    Struct_ov023_021e66ac_5* var0 = (Struct_ov023_021e66ac_5*)arg0;
-    GameState* var1 = GameState::GetInstance();
-    Struct_ov023_021e66ac_3* var2 = &((Struct_ov023_021e66ac_4*)var1)->unknown_569c_;
+extern "C" ARM void func_ov023_021e66ac(void* editor) {
+    Struct_ov023_021e66ac_5* self = (Struct_ov023_021e66ac_5*)editor;
+    GameState* game = GameState::GetInstance();
+    Struct_ov023_021e66ac_3* profile = &((Struct_ov023_021e66ac_4*)game)->profile;
 
-    if (!profile->accoladeChosen) {
+    if (!profile->unknown_3_5_) {
         memset(self->accoladeText, 0, sizeof(self->accoladeText));
-        void* entry = FindEntryByKey_02072a68(&self->strings, 0x6d);
+        void* entry = func_02072a68(&self->strings, 0x6d);
         memcpy(self->accoladeText, entry, 7);
-    } else if (profile->vocationAccolade) {
+    } else if (profile->unknown_3_6_) {
         LinkSession_GetInstance();
-        ProfileProtagonist* protagonist = (ProfileProtagonist*)game->GetProtagonist();
-        int vocation = protagonist->partyData->vocation;
+        Struct_ov023_021e66ac_2* protagonist = (Struct_ov023_021e66ac_2*)game->GetProtagonist();
+        int vocation = protagonist->unknown_150_->vocation;
         if (GameState_GetStoryChapter((char*)game) == 1) {
             vocation = 13;
         }
-        int var6 = 0x50dc;
+        int base = 0x50dc;
 #if !defined(jpn)
-        if (var4->unknown_150_->unknown_49c_0_ == 1) {
-            var6 += 0x32;
+        if (protagonist->unknown_150_->female == 1) {
+            base += 0x32;
         }
 #endif
-        short var7 = (short)(var6 + var5);
-        char* var8 = (char*)func_02072a68(&var0->unknown_133c_, var7);
-        memset(var0->unknown_1400_, 0, sizeof(var0->unknown_1400_));
-        unsigned int var9 = strlen(var8);
-        memcpy(var0->unknown_1400_, var8, var9);
+        short key = (short)(base + vocation);
+        char* entry = (char*)func_02072a68(&self->strings, key);
+        memset(self->accoladeText, 0, sizeof(self->accoladeText));
+        unsigned int length = strlen(entry);
+        memcpy(self->accoladeText, entry, length);
     }
 
-    if (var2->unknown_5_1_ != 300) {
+    if (profile->title != 300) {
         return;
     }
 
-    memset(var0->unknown_1440_, 0, sizeof(var0->unknown_1440_));
-    char* var10 = (char*)func_02072a68(&var0->unknown_133c_, 0x6d);
-    unsigned int var11 = strlen(var10);
-    memcpy(var0->unknown_1440_, var10, var11);
+    memset(self->titleText, 0, sizeof(self->titleText));
+    char* entry = (char*)func_02072a68(&self->strings, 0x6d);
+    unsigned int length = strlen(entry);
+    memcpy(self->titleText, entry, length);
 }

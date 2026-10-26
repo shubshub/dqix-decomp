@@ -3,22 +3,22 @@
 extern unsigned char data_020edf2c[];
 
 // USA: func_020d2ac4
-extern "C" ARM unsigned short func_020d2ac4(int arg0) {
-    int var0;
-    if (arg0 < -723) {
-        arg0 = -723;
-    } else if (arg0 > 0) {
-        arg0 = 0;
+extern "C" ARM unsigned short func_020d2ac4(int v) {
+    int level;
+    if (v < -723) {
+        v = -723;
+    } else if (v > 0) {
+        v = 0;
     }
-    unsigned char var1 = data_020edf2c[arg0 + 0x2d3];
-    if (arg0 < -240) {
-        var0 = 3;
-    } else if (arg0 < -120) {
-        var0 = 2;
-    } else if (arg0 < -60) {
-        var0 = 1;
+    unsigned char b = data_020edf2c[v + 0x2d3];
+    if (v < -240) {
+        level = 3;
+    } else if (v < -120) {
+        level = 2;
+    } else if (v < -60) {
+        level = 1;
     } else {
-        var0 = 0;
+        level = 0;
     }
-    return (unsigned short)(var1 | (var0 << 8));
+    return (unsigned short)(b | (level << 8));
 }

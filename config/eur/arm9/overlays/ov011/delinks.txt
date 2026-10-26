@@ -60,7 +60,7 @@ src/Combat/Overlay_11/func_ov011_02184c00.cpp:
     complete
     .text start:0x02184c00 end:0x02184c14
 
-src/Combat/Overlay_11/InitField20And34_0218513c.cpp:
+src/Combat/Overlay_11/func_ov011_0218513c.cpp:
     complete
     .text start:0x0218513c end:0x0218515c
 
@@ -68,7 +68,7 @@ src/Combat/Overlay_11/func_ov011_02185110.cpp:
     complete
     .text start:0x02185110 end:0x0218513c
 
-src/Combat/Overlay_11/InitObjWithVTable_02185ce0.cpp:
+src/Combat/Overlay_11/func_ov011_02185ce0.cpp:
     complete
     .text start:0x02185ce0 end:0x02185d04
 
@@ -144,7 +144,7 @@ src/Combat/Overlay_11/func_ov011_02187f38.cpp:
     complete
     .text start:0x02187f38 end:0x02187f4c
 
-src/Combat/Overlay_11/InitControllerFromGlobalField1c_02187460.cpp:
+src/Combat/Overlay_11/func_ov011_02187460.cpp:
     complete
     .text start:0x02187460 end:0x02187480
 
@@ -164,7 +164,7 @@ src/Combat/Overlay_11/func_ov011_02186d78.cpp:
     complete
     .text start:0x02186d78 end:0x02186d90
 
-src/Combat/Overlay_11/SetFieldFromGlobal998_021874b0.cpp:
+src/Combat/Overlay_11/func_ov011_021874b0.cpp:
     complete
     .text start:0x021874b0 end:0x021874d0
 
@@ -388,7 +388,7 @@ src/Combat/Overlay_11/func_ov011_02184a0c.cpp:
     complete
     .text start:0x02184a0c end:0x02184a18
 
-src/Combat/Overlay_12/ApplyElemState_021842a0.cpp:
+src/Combat/Overlay_11/func_ov011_021842a0.cpp:
     complete
     .text start:0x021842a0 end:0x021842c8
 
@@ -412,7 +412,7 @@ src/Combat/Overlay_11/func_ov011_02187f4c.cpp:
     complete
     .text start:0x02187f4c end:0x02187f68
 
-src/Combat/Overlay_11/Trans_02188014.cpp:
+src/Combat/Overlay_11/func_ov011_02188014.cpp:
     complete
     .text start:0x02188014 end:0x02188030
 
@@ -440,11 +440,11 @@ src/Combat/Overlay_11/func_ov011_02185600.cpp:
     complete
     .text start:0x02185600 end:0x0218563c
 
-src/Combat/Overlay_11/CallFunc02184c68IfState3_02188534.cpp:
+src/Combat/Overlay_11/func_ov011_02188534.cpp:
     complete
     .text start:0x02188534 end:0x02188560
 
-src/Combat/Overlay_11/CallFunc02184c68UnlessState0Or3_02187480.cpp:
+src/Combat/Overlay_11/func_ov011_02187480.cpp:
     complete
     .text start:0x02187480 end:0x021874b0
 
@@ -472,7 +472,7 @@ src/Combat/Overlay_11/func_ov011_02186808.cpp:
     complete
     .text start:0x02186808 end:0x02186834
 
-src/Combat/Overlay_11/SetGlobalFlagByte9caFromTagged_02188158.cpp:
+src/Combat/Overlay_11/func_ov011_02188158.cpp:
     complete
     .text start:0x02188158 end:0x02188184
 
@@ -488,7 +488,7 @@ src/Combat/Overlay_11/func_ov011_02187f04.cpp:
     complete
     .text start:0x02187f04 end:0x02187f38
 
-src/Combat/Overlay_11/UpdateBattleScaleAndPollTicket_021848a8.cpp:
+src/Combat/Overlay_11/func_ov011_021848a8.cpp:
     complete
     .text start:0x021848a8 end:0x021849ac
 
@@ -496,7 +496,7 @@ src/Combat/Overlay_11/func_ov011_021842c8.cpp:
     complete
     .text start:0x021842c8 end:0x02184324
 
-src/Combat/Overlay_12/InitEntry_021845f8.cpp:
+src/Combat/Overlay_11/func_ov011_021845f8.cpp:
     complete
     .text start:0x021845f8 end:0x02184604
 
@@ -504,7 +504,7 @@ src/Combat/Overlay_11/func_ov011_02187a14.cpp:
     complete
     .text start:0x02187a14 end:0x02187b30
 
-src/Combat/Overlay_11/AllocateAndRestorePairTables_02184fb0.cpp:
+src/Combat/Overlay_11/func_ov011_02184fb0.cpp:
     complete
     .text start:0x02184fb0 end:0x02185018
 
@@ -552,7 +552,7 @@ src/Combat/Overlay_11/func_ov011_021858f4.cpp:
     complete
     .text start:0x021858f4 end:0x02185948
 
-src/Combat/Overlay_11/TriggerDispatchIfFlagOrByte55_021884d0.cpp:
+src/Combat/Overlay_11/func_ov011_021884d0.cpp:
     complete
     .text start:0x021884d0 end:0x02188534
 
@@ -576,7 +576,7 @@ src/Combat/Overlay_11/func_ov011_021870a4.cpp:
     complete
     .text start:0x021870a4 end:0x02187154
 
-src/Combat/Overlay_11/AllocateBuffersAndInitFields_02184550.cpp:
+src/Combat/Overlay_11/func_ov011_02184550.cpp:
     complete
     .text start:0x02184550 end:0x021845c8
 
@@ -584,11 +584,11 @@ src/Combat/Overlay_11/func_ov011_02187c6c.cpp:
     complete
     .text start:0x02187c6c end:0x02187cd8
 
-src/Combat/Overlay_11/DispatchTaggedKeyCase_02184cc0.cpp:
+src/Combat/Overlay_11/func_ov011_02184cc0.cpp:
     complete
     .text start:0x02184cc0 end:0x02184de4
 
-src/Combat/Overlay_14/UpdateCounterState_021882d4.cpp:
+src/Combat/Overlay_11/func_ov011_021882d4.cpp:
     complete
     .text start:0x021882d4 end:0x02188384
 
@@ -596,7 +596,7 @@ src/Combat/Overlay_11/func_ov011_0218554c.cpp:
     complete
     .text start:0x0218554c end:0x021855cc
 
-src/Combat/Overlay_11/InitOrRefreshNodeState_02184694.cpp:
+src/Combat/Overlay_11/func_ov011_02184694.cpp:
     complete
     .text start:0x02184694 end:0x02184740
 
@@ -604,11 +604,11 @@ src/Combat/Overlay_11/func_ov011_021862a4.cpp:
     complete
     .text start:0x021862a4 end:0x02186360
 
-src/Combat/Overlay_11/ResetTreeAndGraphicsState_02184770.cpp:
+src/Combat/Overlay_11/func_ov011_02184770.cpp:
     complete
     .text start:0x02184770 end:0x021848a0
 
-src/Combat/Overlay_11/SetFieldsIfType8FromTagged_0218702c.cpp:
+src/Combat/Overlay_11/func_ov011_0218702c.cpp:
     complete
     .text start:0x0218702c end:0x021870a4
 

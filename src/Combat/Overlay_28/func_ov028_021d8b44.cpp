@@ -2,19 +2,19 @@
 #include "Memory/SafeAllocator.h"
 
 struct Struct_ov028_021d8b44 {
-    char unknown_0_[0x40];
-    void* unknown_40_;
-    SafeAllocator unknown_44_;
+    char pad[0x40];
+    void* field40;
+    SafeAllocator allocator;
 };
 
 // USA: func_ov028_021d8b44
-extern "C" ARM void func_ov028_021d8b44(Struct_ov028_021d8b44* arg0, SafeAllocator* arg1) {
-    if (arg1 == 0) {
+extern "C" ARM void func_ov028_021d8b44(Struct_ov028_021d8b44* self, SafeAllocator* alloc) {
+    if (alloc == 0) {
         return;
     }
-    void* var0 = arg1->AllocateReversed(0xa000);
-    arg0->unknown_40_ = (char*)var0 + 0x1000;
-    arg0->unknown_44_.ResetAllocatorPointer();
-    void* var1 = arg1->AllocateReversed(0x5000);
-    arg0->unknown_44_.CreateTypeA(var1, 0x5000);
+    void* p1 = alloc->AllocateReversed(0xa000);
+    self->field40 = (char*)p1 + 0x1000;
+    self->allocator.ResetAllocatorPointer();
+    void* p2 = alloc->AllocateReversed(0x5000);
+    self->allocator.CreateTypeA(p2, 0x5000);
 }

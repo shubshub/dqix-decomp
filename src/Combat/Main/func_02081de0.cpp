@@ -8,7 +8,7 @@ enum { Enum_02081de0_48 = 0x30 };
 
 struct Struct_02081de0 {
     unsigned char unknown_0_[0xc4];
-    unsigned char unknown_c4_;
+    unsigned char field_c4;
     unsigned char unknown_c5_[0x1b];
 };
 
@@ -20,16 +20,16 @@ struct Struct_020813ec_2 {
 };
 
 // USA: func_02081de0
-extern "C" ARM struct Struct_02081de0* func_02081de0(struct Struct_020813ec_2 *arg0) {
-    unsigned char var0 = arg0->unknown_39_;
-    struct Struct_02081de0 *var1 = arg0->unknown_30_;
-    unsigned char var2 = 0;
-    while (var2 < var0) {
-        if (var1->unknown_c4_ == 0xff) {
-            return var1;
+extern "C" ARM struct Struct_02081de0* func_02081de0(struct Struct_020813ec_2 *obj) {
+    unsigned char count = obj->unknown_39_;
+    struct Struct_02081de0 *p = obj->unknown_30_;
+    unsigned char i = 0;
+    while (i < count) {
+        if (p->field_c4 == 0xff) {
+            return p;
         }
-        var1++;
-        var2++;
+        p++;
+        i++;
     }
     return NULL;
 }

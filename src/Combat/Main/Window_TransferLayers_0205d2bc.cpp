@@ -19,7 +19,7 @@ struct Obj0205d2bc {
 extern "C" void Background_TransferMap(BackgroundGraphics*, int);
 
 // Main, originally InitEntries0205d2bc (USA 0x0205d2bc, EUR 0x0205d2cc, JPN 0x0205e5ec)
-ARM void Window_TransferLayers(struct Obj0205d2bc* window) {
+extern "C" ARM void Window_TransferLayers(struct Obj0205d2bc* window) {
     unsigned char i;
     if (window->layers == 0) return;
     for (i = 0; i < window->layerCount; i++) {

@@ -54,19 +54,19 @@ struct Struct_ov000_02174738_7 {
     short unknown_a_;
 };
 
-int GameState_GetProtagonistIndex(GameState* battleStruct);
-void GlyphDestination_Clear(struct S_b20c* obj);
-void GlyphDestination_SetPixels(void* obj, int value);
-void GlyphDestination_SetRects(void* obj, int value, unsigned char flag);
-void* GetTableEntry020421b0(int idx);
-void SetOrClearFlag0x4At0x24_ov000_02174a38(void* obj, int cond);
+extern "C" int GameState_GetProtagonistIndex(GameState* arg0);
+extern "C" void GlyphDestination_Clear(struct Struct_ov000_02174738_6* arg0);
+extern "C" void GlyphDestination_SetPixels(void* arg0, int arg1);
+extern "C" void GlyphDestination_SetRects(void* arg0, int arg1, unsigned char arg2);
+extern "C" void* func_020421b0(int arg0);
+extern "C" void func_ov000_02174a38(void* arg0, int arg1);
 
 extern "C" void func_ov000_021710ac(struct Struct_ov000_02174738_3* arg0, int arg1, int arg2);
 extern "C" void func_ov000_02171138(void* arg0);
 extern "C" void func_ov000_02174b14(struct Struct_ov000_02174738_5* arg0);
 extern "C" int func_ov017_021bdbcc();
-extern "C" int Font_GetTextWidth(char* label, int extra);
-extern "C" void GlyphDestination_DrawText(struct S_b20c* a, short b, int c, void* buf, unsigned char d, unsigned char e);
+extern "C" int Font_GetTextWidth(char* arg0, int arg1);
+extern "C" void GlyphDestination_DrawText(struct Struct_ov000_02174738_6* arg0, short arg1, int arg2, void* arg3, unsigned char arg4, unsigned char arg5);
 
 extern char data_ov000_0218405b;
 extern int data_ov000_02183ff0;
@@ -98,79 +98,18 @@ checkvalid:
         }
     }
 
-    void* vram = self->group.vram;
-    char* info;
-    char* info2;
-    GameObject* c = GameState::GetInstance()->GetPartyMemberByIndex(id);
-    if (c != NULL) {
-        char* slot = GetBoundedArrayElement0x40((struct Obj0216fe74*)((char*)self + 0x11c),
-                                                (unsigned short)(id + 0x20));
-        if (slot != NULL) {
-          info = *(char**)(slot + 8);
-          if (info != NULL) {
-            int idx950 = *(int*)(*(char**)((char*)c + 0x150) + 0x950);
-            unsigned char sel = (unsigned char)(idx950 * 4 + 0x28);
-            GetGameResources();
-            if (func_ov017_021bdbcc() != 0) {
-                sel = 0x28;
-            }
-            memcpy(vram, GetTableEntry020421b0(sel), 0x80);
-
-            unsigned short tm = *(unsigned short*)(info + 4) & 0x3ff;
-            unsigned int off = tm << 7;
-            CleanInvalidateCacheRange(vram, 0x80);
-            LoadToSubObjVRAM(vram, off, 0x80);
-            CleanCacheRange(vram, 0x80);
-          }
-        }
-        {
-            char* slot2 = GetBoundedArrayElement0x40((struct Obj0216fe74*)((char*)self + 0x11c),
-                                                     (unsigned short)(id + 0x24));
-            if (slot2 != NULL) {
-              info2 = *(char**)(slot2 + 8);
-              if (info2 != NULL) {
-                memset(vram, 0, 0x80);
-                struct S_b20c local;
-                struct TextSlot02174738 text;
-                text.a = 0;
-                text.b = 0;
-                text.c = 0;
-                text.d = 0x10;
-                text.e = 0x10;
-                GlyphDestination_Clear(&local);
-                GlyphDestination_SetPixels(&local, (int)vram);
-                GlyphDestination_SetRects(&local, (int)&text, 1);
-                char* field150 = *(char**)((char*)c + 0x150);
-                int idx = *(int*)(field150 + 0x950);
-                char* p = field150 + idx * 2 + 0x100;
-                unsigned short val = *(unsigned short*)(p + 0x6c);
-                char label[8];
-                sprintf(label, &data_ov000_0218405b, val);
-                short posX = (short)(0x10 - Font_GetTextWidth(label, 0));
-                GlyphDestination_DrawText(&local, posX, 0, label, 0xf, 0);
-
-                unsigned short tm2 = *(unsigned short*)(info2 + 4) & 0x3ff;
-                unsigned int off2 = tm2 << 7;
-                CleanInvalidateCacheRange(vram, 0x80);
-                LoadToSubObjVRAM(vram, off2, 0x80);
-                CleanCacheRange(vram, 0x80);
-              }
-            }
-        }
-    }
-
-    GameState* bs = GameState::GetInstance();
-    for (int i = 0; i < 4; i++) {
-        struct Entry02174738* e = &self->group.entries[self->order[i]];
-        if (self->order[i] != id) {
+    GameState* var5 = GameState::GetInstance();
+    for (int var6 = 0; var6 < 4; var6++) {
+        struct Struct_ov000_02174738_3* var7 = &arg0->unknown_158_.unknown_800_[arg0->unknown_6c_[var6]];
+        if (arg0->unknown_6c_[var6] != arg1) {
             continue;
         }
         if (var7->unknown_4c_ >= 0) {
             continue;
         }
-        func_ov000_021710ac(e, id, id == GameState_GetProtagonistIndex(bs));
-        SetOrClearFlag0x4At0x24_ov000_02174a38(e, id == GameState_GetProtagonistIndex(bs));
-        func_ov000_02171138(e);
+        func_ov000_021710ac(var7, arg1, arg1 == GameState_GetProtagonistIndex(var5));
+        func_ov000_02174a38(var7, arg1 == GameState_GetProtagonistIndex(var5));
+        func_ov000_02171138(var7);
         data_ov000_02183ff0 = data_ov000_02183ff0 + 1;
         func_ov000_02174b14(arg0);
         if (data_ov000_02183ff0 > 4) {
@@ -245,17 +184,17 @@ checkvalid:
                 var24.unknown_6_ = 0;
                 var24.unknown_8_ = 0x10;
                 var24.unknown_a_ = 0x10;
-                func_0205b20c(&var23);
-                func_0205b220(&var23, (int)var13);
-                func_0205b228(&var23, (int)&var24, 1);
+                GlyphDestination_Clear(&var23);
+                GlyphDestination_SetPixels(&var23, (int)var13);
+                GlyphDestination_SetRects(&var23, (int)&var24, 1);
                 char* var25 = *(char**)((char*)var16 + 0x150);
                 int var26 = *(int*)(var25 + 0x950);
                 char* var27 = var25 + var26 * 2 + 0x100;
                 unsigned short var28 = *(unsigned short*)(var27 + 0x6c);
                 char var29[8];
                 sprintf(var29, &data_ov000_0218405b, var28);
-                short var30 = (short)(0x10 - func_020420e8(var29, 0));
-                func_0205b234(&var23, var30, 0, var29, 0xf, 0);
+                short var30 = (short)(0x10 - Font_GetTextWidth(var29, 0));
+                GlyphDestination_DrawText(&var23, var30, 0, var29, 0xf, 0);
 
                 unsigned short var31 = *(unsigned short*)(var15 + 4) & 0x3ff;
                 unsigned int var32 = var31 << 7;
@@ -276,8 +215,8 @@ checkvalid:
         if (var35->unknown_4c_ >= 0) {
             continue;
         }
-        func_ov000_021710ac(var35, arg1, arg1 == func_020100a8(var33));
-        func_ov000_02174a38(var35, arg1 == func_020100a8(var33));
+        func_ov000_021710ac(var35, arg1, arg1 == GameState_GetProtagonistIndex(var33));
+        func_ov000_02174a38(var35, arg1 == GameState_GetProtagonistIndex(var33));
         func_ov000_02171138(var35);
         data_ov000_02183ff0 = data_ov000_02183ff0 + 1;
         func_ov000_02174b14(arg0);

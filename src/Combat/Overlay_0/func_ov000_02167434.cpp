@@ -12,11 +12,11 @@
 
 
 // USA: func_ov000_02167434
-extern "C" ARM void func_ov000_02167434(unsigned char* arg0, int arg1) {
-	int var0;
-	for (var0 = 0; var0 < arg0[REGION_OFFSET_0]; var0++) {
-		if (*(int*)(arg0 + REGION_OFFSET_1 + var0 * 4) == arg1) {
-			arg0[REGION_OFFSET_2] &= ~(1 << var0);
+extern "C" ARM void func_ov000_02167434(unsigned char* obj, int value) {
+	int i;
+	for (i = 0; i < obj[REGION_OFFSET_0]; i++) {
+		if (*(int*)(obj + REGION_OFFSET_1 + i * 4) == value) {
+			obj[REGION_OFFSET_2] &= ~(1 << i);
 			return;
 		}
 	}

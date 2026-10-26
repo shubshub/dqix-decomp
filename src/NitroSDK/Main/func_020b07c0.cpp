@@ -3,54 +3,54 @@
 #include "NitroSDK/LoadToVRAM.h"
 
 struct Struct_020b07c0_2 {
-    int unknown_0_;
-    int unknown_4_;
-    unsigned int unknown_8_;
-    const void* unknown_c_;
+    int f0;
+    int f4;
+    unsigned int f8;
+    const void* f0c;
 };
 
 struct Struct_020b07c0 {
-    int unknown_0_;
-    int unknown_4_;
-    char unknown_8_[0x18];
+    int f0;
+    int f4;
+    char pad8[0x18];
 };
 
-extern "C" void func_020b035c(char* arg0, int arg1, int arg2);
+extern "C" void func_020b035c(char* base, int index, int value);
 
 // USA: func_020b07c0
-extern "C" ARM void func_020b07c0(Struct_020b07c0_2* arg0, int arg1, int arg2, Struct_020b07c0* arg3) {
-    const void* var0 = arg0->unknown_c_;
-    unsigned int var1 = arg0->unknown_8_;
+extern "C" ARM void func_020b07c0(Struct_020b07c0_2* res, int arg1, int arg2, Struct_020b07c0* out) {
+    const void* data = res->f0c;
+    unsigned int len = res->f8;
 
-    CleanInvalidateCacheRange(var0, var1);
+    CleanInvalidateCacheRange(data, len);
 
     switch (arg2) {
     case 1:
-        if (arg0->unknown_4_) {
+        if (res->f4) {
             MemoryMapMainObjExtendedPalette();
-            LoadToMainObjExtendedPalette(var0, arg1, var1);
+            LoadToMainObjExtendedPalette(data, arg1, len);
             MemoryUnmapMainObjExtendedPalette();
         } else {
-            LoadToMainObjStandardPalette(var0, arg1, var1);
+            LoadToMainObjStandardPalette(data, arg1, len);
         }
         break;
     case 2:
-        if (arg0->unknown_4_) {
+        if (res->f4) {
             MemoryMapSubObjExtendedPalette();
-            LoadToSubObjExtendedPalette(var0, arg1, var1);
+            LoadToSubObjExtendedPalette(data, arg1, len);
             MemoryUnmapSubObjExtendedPalette();
         } else {
-            LoadToSubObjStandardPalette(var0, arg1, var1);
+            LoadToSubObjStandardPalette(data, arg1, len);
         }
         break;
     case 0:
         MemoryMapTexturePalette();
-        LoadToTexturePalette(var0, arg1, var1);
+        LoadToTexturePalette(data, arg1, len);
         MemoryUnmapTexturePalette();
         break;
     }
 
-    arg3->unknown_0_ = arg0->unknown_0_;
-    arg3->unknown_4_ = arg0->unknown_4_;
-    func_020b035c((char*)arg3, arg2, arg1);
+    out->f0 = res->f0;
+    out->f4 = res->f4;
+    func_020b035c((char*)out, arg2, arg1);
 }

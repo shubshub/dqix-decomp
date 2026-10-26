@@ -9,7 +9,7 @@
 
 
 struct Struct_02108cec {
-    unsigned char unknown_0_[0xa];
+    unsigned char pad0[0xa];
     unsigned short unknown_a_;
     unsigned short unknown_c_;
     void* unknown_10_;
@@ -18,33 +18,33 @@ struct Struct_02108cec {
 extern struct Struct_02108cec data_02108cec;
 
 // USA: func_0206c010
-extern "C" ARM int func_0206c010(Script::Parameter* arg0, int arg1) {
-    struct Struct_0206bf2c* var0;
-    Script::Parameter* var1;
-    int var2;
+extern "C" ARM int func_0206c010(Script::Parameter* params, int count) {
+    struct Struct_0206bf2c* rec;
+    Script::Parameter* p;
+    int id;
 
     data_02108cec.unknown_a_ = data_02108cec.unknown_a_ + 1;
-    var2 = arg0[0].ToInt();
-    if (var2 != data_02108cec.unknown_c_) {
+    id = params[0].ToInt();
+    if (id != data_02108cec.unknown_c_) {
         return 1;
     }
-    var0 = (struct Struct_0206bf2c*)((SafeAllocator*)data_02108cec.unknown_14_)->Allocate(0x78);
-    if (var0 == 0) {
+    rec = (struct Struct_0206bf2c*)((SafeAllocator*)data_02108cec.unknown_14_)->Allocate(0x78);
+    if (rec == 0) {
         return 0;
     }
-    func_0206bf2c(var0);
-    var0->unknown_2_ = (unsigned short)var2;
-    var0->unknown_0_ = (unsigned char)arg0[1].ToInt();
-    if (arg1 < 3) {
-        func_0206dd68(data_02108cec.unknown_10_, var0->unknown_0_);
+    func_0206bf2c(rec);
+    rec->field2 = (unsigned short)id;
+    rec->field0 = (unsigned char)params[1].ToInt();
+    if (count < 3) {
+        func_0206dd68(data_02108cec.unknown_10_, rec->field0);
         return 1;
     }
-    var1 = arg0[2].ToVec3fix((Vector3fix*)var0->unknown_10_);
-    var0->unknown_1c_ = (unsigned short)(int)(4096.0f * var1->ToFloat());
-    if (arg1 > 6) {
-        var0->unknown_1e_ = (unsigned char)var1[1].ToInt();
+    p = params[2].ToVec3fix((Vector3fix*)rec->pad10);
+    rec->field1c = (unsigned short)(int)(4096.0f * p->ToFloat());
+    if (count > 6) {
+        rec->unknown_1e_ = (unsigned char)p[1].ToInt();
     }
-    var0->unknown_44_ = data_02108cec.unknown_a_;
-    func_0206db48(data_02108cec.unknown_10_, var0);
+    rec->field44 = data_02108cec.unknown_a_;
+    func_0206db48(data_02108cec.unknown_10_, rec);
     return 1;
 }

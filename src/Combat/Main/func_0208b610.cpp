@@ -6,12 +6,12 @@
 #define func_0208b610 func_0208bf04
 #endif
 
-void RenderConfig_SetObjectRotation(void* rotation);
+extern "C" void RenderConfig_SetObjectRotation(void* rotation);
 fix32_t fix32cos(int x);
 fix32_t fix32sin(int x);
-extern "C" void func_0208b548(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, unsigned int arg7);
-extern "C" ARM void func_0208b588(unsigned int arg0, unsigned int arg1, unsigned int arg2,
-                                  unsigned int arg3, unsigned int arg4, unsigned int arg5);
+extern "C" void func_0208b548(int a, int b, int c, int d, int e, int f, int g, unsigned int h);
+extern "C" ARM void func_0208b588(unsigned int a0, unsigned int a1, unsigned int a2,
+                                  unsigned int a3, unsigned int a4, unsigned int a5);
 
 // USA: func_0208b610
 extern "C" ARM void func_0208b610(Vector3fix v, unsigned short p, int a, int b, int c, short d) {
@@ -30,7 +30,7 @@ extern "C" ARM void func_0208b610(Vector3fix v, unsigned short p, int a, int b, 
     func_0208b548(0, 0, 1, 1, 0, 0, 0, 0);
     func_0208b588(0, 0, 3, 0, 0, 0);
     *(volatile unsigned int*)0x04000500 = 1;
-    *(volatile unsigned int*)0x04000480 = arg1;
+    *(volatile unsigned int*)0x04000480 = p;
     *(volatile unsigned int*)0x0400048c = 0x08000800;
     *(volatile unsigned int*)0x0400048c = 0x00000800;
     *(volatile unsigned int*)0x0400048c = 0xf8000800;

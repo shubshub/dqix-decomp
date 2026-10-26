@@ -8,35 +8,35 @@ enum { Enum_020dc214_1744 = 0x6d0 };
 #endif
 
 
-extern "C" void* func_02012fe4(void);
-struct Struct_02022d78;
-extern "C" void func_02022d78(struct Struct_02022d78*, int);
-extern "C" int func_0201b588(int);
+extern "C" void* Zone3D_GetInstance(void);
+struct Obj02022d78;
+extern "C" void MapDisplay_SetMode(struct Obj02022d78*, int);
+extern "C" int ZoneId_IsGrotto(int);
 
 // USA: func_020dc214
-extern "C" ARM void func_020dc214(int arg0) {
-    int var0 = (int)GetGameResources();
-    void* var1 = *(void**)(var0 + 0x3000 + Enum_020dc214_1744);
-    unsigned short var2 = *(unsigned short*)func_02012fe4();
-    struct Struct_02022d78* var3 = (struct Struct_02022d78*)var1;
-    if (arg0 == 1) {
-        func_02022d78(var3, 1);
+extern "C" ARM void func_020dc214(int mode) {
+    int base = (int)GetGameResources();
+    void* raw = *(void**)(base + 0x3000 + Enum_020dc214_1744);
+    unsigned short id = *(unsigned short*)Zone3D_GetInstance();
+    struct Obj02022d78* obj = (struct Obj02022d78*)raw;
+    if (mode == 1) {
+        MapDisplay_SetMode(obj, 1);
         return;
     }
-    if (arg0 == 2) {
-        func_02022d78(var3, 4);
+    if (mode == 2) {
+        MapDisplay_SetMode(obj, 4);
         return;
     }
-    if (arg0 != 0) {
+    if (mode != 0) {
         return;
     }
-    if (func_0201b588(var2)) {
-        func_02022d78(var3, 3);
+    if (ZoneId_IsGrotto(id)) {
+        MapDisplay_SetMode(obj, 3);
         return;
     }
-    if (var2 == 0x2710 || var2 == 0x2774) {
-        func_02022d78(var3, 4);
+    if (id == 0x2710 || id == 0x2774) {
+        MapDisplay_SetMode(obj, 4);
     } else {
-        func_02022d78(var3, 0);
+        MapDisplay_SetMode(obj, 0);
     }
 }

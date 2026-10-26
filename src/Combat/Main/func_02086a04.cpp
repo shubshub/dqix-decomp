@@ -3,41 +3,41 @@
 extern "C" void* func_02086868(void*, void*);
 
 struct Struct_02086a04_2 {
-    signed char unknown_0_0_ : 6;
-    char unknown_1_[0x23c - 1];
+    signed char id : 6;
+    char rest[0x23c - 1];
 };
 
 struct Struct_02086a04 {
-    char unknown_0_[0xf80];
-    struct Struct_02086a04_2 unknown_f80_[13];
-    unsigned char unknown_2c8c_;
+    char pad0[0xf80];
+    struct Struct_02086a04_2 elems[13];
+    unsigned char count;
 };
 
 // USA: func_02086a04
-extern "C" ARM int func_02086a04(struct Struct_02086a04* arg0, int arg1) {
-    if (arg1 < 0) return 0;
-    int var0 = 0;
-    unsigned char var1;
-    for (var1 = 0; var1 < arg0->unknown_2c8c_; var1++) {
-        struct Struct_02086a04_2* var2 = &arg0->unknown_f80_[var1];
-        if (arg1 == var2->unknown_0_0_) {
-            var2->unknown_0_0_ = -1;
-            arg0->unknown_2c8c_--;
-            var0 = 1;
+extern "C" ARM int func_02086a04(struct Struct_02086a04* c, int id) {
+    if (id < 0) return 0;
+    int found = 0;
+    unsigned char i;
+    for (i = 0; i < c->count; i++) {
+        struct Struct_02086a04_2* e = &c->elems[i];
+        if (id == e->id) {
+            e->id = -1;
+            c->count--;
+            found = 1;
             break;
         }
     }
-    if (var0) {
-        unsigned char var3;
-        for (var3 = 0; var3 < arg0->unknown_2c8c_; var3++) {
-            struct Struct_02086a04_2* var4 = &arg0->unknown_f80_[var3];
-            if (var4->unknown_0_0_ < 0) {
-                int var5 = var3 + 1;
-                struct Struct_02086a04_2* var6 = &arg0->unknown_f80_[var5];
-                func_02086868(var4, var6);
-                var6->unknown_0_0_ = -1;
+    if (found) {
+        unsigned char j;
+        for (j = 0; j < c->count; j++) {
+            struct Struct_02086a04_2* e = &c->elems[j];
+            if (e->id < 0) {
+                int next = j + 1;
+                struct Struct_02086a04_2* var6 = &c->elems[next];
+                func_02086868(e, var6);
+                var6->id = -1;
             }
         }
     }
-    return var0;
+    return found;
 }

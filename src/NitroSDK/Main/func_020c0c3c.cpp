@@ -8,26 +8,26 @@
 #endif
 
 struct Struct_020e93fc {
-    unsigned int unknown_0_[7];
+    unsigned int words[7];
 };
 extern Struct_020e93fc data_020e93fc;
 
 struct Struct_020c089c;
-extern "C" void func_020c089c(struct Struct_020c089c* arg0);
+extern "C" void func_020c089c(struct Struct_020c089c* ctx);
 struct Struct_020c08ec;
-extern "C" void func_020c08ec(struct Struct_020c08ec* arg0, const unsigned char* arg1, unsigned int arg2);
+extern "C" void func_020c08ec(struct Struct_020c08ec* ctx, const unsigned char* src, unsigned int len);
 extern "C" void func_020c0a40(void);
-extern "C" void func_020c0cd0(void* arg0, void* arg1, void* arg2, void* arg3, void* arg4, Struct_020e93fc* arg5);
+extern "C" void func_020c0cd0(void* a, void* b, void* c, void* d, void* e, Struct_020e93fc* desc);
 
 // USA: func_020c0c3c
-extern "C" ARM void func_020c0c3c(void* arg0, void* arg1, void* arg2, void* arg3, void* arg4) {
+extern "C" ARM void func_020c0c3c(void* a, void* b, void* c, void* d, void* e) {
     unsigned char var0[0x14];
-    Struct_020e93fc var1 = data_020e93fc;
+    Struct_020e93fc desc = data_020e93fc;
     unsigned char var2[0x68];
-    var1.unknown_0_[2] = (unsigned int)var2;
-    var1.unknown_0_[3] = (unsigned int)var0;
-    var1.unknown_0_[4] = (unsigned int)func_020c089c;
-    var1.unknown_0_[5] = (unsigned int)func_020c08ec;
-    var1.unknown_0_[6] = (unsigned int)func_020c0a40;
-    func_020c0cd0(arg0, arg1, arg2, arg3, arg4, &var1);
+    desc.words[2] = (unsigned int)var2;
+    desc.words[3] = (unsigned int)var0;
+    desc.words[4] = (unsigned int)func_020c089c;
+    desc.words[5] = (unsigned int)func_020c08ec;
+    desc.words[6] = (unsigned int)func_020c0a40;
+    func_020c0cd0(a, b, c, d, e, &desc);
 }

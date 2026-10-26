@@ -8,10 +8,10 @@
 
 
 // USA: func_ov000_021677d8
-extern "C" ARM void* func_ov000_021677d8(void* arg0, int arg1) {
-    if (arg1 >= 0) {
-        if (arg1 < 4) {
-            return (char*)arg0 + REGION_OFFSET_0 + arg1 * 0x10;
+extern "C" ARM void* func_ov000_021677d8(void* work, int idx) {
+    if (idx >= 0) {
+        if (idx < 4) {
+            return (char*)work + REGION_OFFSET_0 + idx * 0x10;
         }
     }
     return (void*)0;

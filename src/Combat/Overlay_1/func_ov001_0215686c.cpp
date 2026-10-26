@@ -9,16 +9,16 @@
 
 
 struct Struct_ov001_0215686c {
-    char unknown_0_[0xd2];
-    short unknown_d2_;
+    char pad[0xd2];
+    short v;
 };
 
 struct Struct_ov001_0215686c_2 {
-    char unknown_0_[0xa];
-    unsigned short unknown_a_;
+    char pad0[0xa];
+    unsigned short fa;
     char unknown_c_[0x16 - 0xc];
     unsigned short unknown_16_;
-    char unknown_18_[0x50 - 0x18];
+    char pad18[0x50 - 0x18];
     unsigned short unknown_50_;
 #if defined(jpn)
     char unknown_52_[0xcb - 0x52];
@@ -29,34 +29,34 @@ struct Struct_ov001_0215686c_2 {
     char unknown_d0_[0x104 - 0xd0];
     unsigned char unknown_104_;
     char unknown_105_[4];
-    unsigned char unknown_109_;
+    unsigned char f109;
     char unknown_10a_[0x120 - 0x10a];
-    Struct_ov001_0215686c* unknown_120_;
+    Struct_ov001_0215686c* q;
 };
 
 struct Struct_ov001_0215686c_3 {
 #if defined(jpn)
-    char unknown_0_[0x524];
+    char pad[0x524];
 #else
-    char unknown1_0_[0x734];
+    char pad[0x734];
 #endif
-    Struct_ov001_0215686c_2* unknown_734_;
+    Struct_ov001_0215686c_2* o;
 };
 
 struct Struct_ov001_0215686c_4 {
-    char unknown_0_[0x2c];
+    char pad[0x2c];
     unsigned char* unknown_2c_;
 };
 
 extern "C" int GXx_GetMasterBrightness_(volatile unsigned short* p);
 extern "C" void* LinkSession_GetInstance(void);
-void* GlobalFlags_GetInstance(void);
-void FlagWord_SetBits(unsigned int* p, unsigned int mask);
-void OrGlobalFlag0x40_020dc2bc();
-void Background_Init(struct BackgroundGraphics* obj);
+extern "C" void* GlobalFlags_GetInstance(void);
+extern "C" void FlagWord_SetBits(unsigned int* p, unsigned int mask);
+extern "C" void func_020dc2bc();
+extern "C" void Background_Init(struct BackgroundGraphics* obj);
 
-static inline unsigned int inline_ov001_0215686c(Struct_ov001_0215686c_2* arg0) {
-    return arg0->unknown_a_;
+static inline unsigned int inline_ov001_0215686c(Struct_ov001_0215686c_2* o) {
+    return o->fa;
 }
 
 // USA: func_ov001_0215686c
@@ -65,9 +65,9 @@ extern "C" ARM void func_ov001_0215686c(void) {
     char buf[0x20];
 
     int var2 = (*(unsigned short*)0x4000304 & 0x8000) >> 15;
-    int var3 = 1;
+    int flag = 1;
     if (var2 == 1) {
-        var3 = 0;
+        flag = 0;
     }
 
     GameResources* res = GetGameResources();
@@ -76,45 +76,45 @@ extern "C" ARM void func_ov001_0215686c(void) {
         axis = GXx_GetMasterBrightness_((volatile unsigned short*)0x0400006c);
     }
 
-    if (var5 != -0x10 && var5 != 0x10) {
+    if (axis != -0x10 && axis != 0x10) {
         return;
     }
-    if (var3 == 0) {
+    if (flag == 0) {
         return;
     }
 
-    Obj0215686c* o = ((struct Holder0215686c*)((char*)res + 0x3000))->o;
-    Q0215686c* q = o->q;
+    Struct_ov001_0215686c_2* o = ((struct Struct_ov001_0215686c_3*)((char*)res + 0x3000))->o;
+    Struct_ov001_0215686c* q = o->q;
     LinkSession_GetInstance();
 
-    if (!(var6->unknown_50_ & 0x20)) {
-        if (TestFlags00(var4, 0x1000) == 0) {
+    if (!(o->unknown_50_ & 0x20)) {
+        if (TestFlags00(res, 0x1000) == 0) {
             goto cont;
         }
     }
-    if (var6->unknown_50_ & 0x100) {
+    if (o->unknown_50_ & 0x100) {
         goto cont;
     }
-    if ((var6->unknown_50_ & 2) && var7 != 0) {
-        if (var7->unknown_d2_ < 0) {
+    if ((o->unknown_50_ & 2) && q != 0) {
+        if (q->v < 0) {
             goto cont;
         }
     }
-    if (var6->unknown_a_ != 5) {
+    if (o->fa != 5) {
         return;
     }
 cont:
-    if (var6->unknown_16_ == 0xc69a || var6->unknown_16_ == 0xc9e1) {
+    if (o->unknown_16_ == 0xc69a || o->unknown_16_ == 0xc9e1) {
         return;
     }
-    if (var6->unknown_16_ == 1 && var6->unknown_cf_ == 2) {
-        if (var6->unknown_109_ != 0) {
+    if (o->unknown_16_ == 1 && o->unknown_cf_ == 2) {
+        if (o->f109 != 0) {
             return;
         }
     }
 
     FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 1);
-    OrGlobalFlag0x40_020dc2bc();
+    func_020dc2bc();
 
     volatile unsigned int* var8 = (volatile unsigned int*)0x4001000;
     volatile unsigned short* var9 = (volatile unsigned short*)0x4001000;
@@ -133,31 +133,31 @@ cont:
     Background_Init(&list);
     list.subScreen_ = 3;
 
-    unsigned char* var10 = ((struct Struct_ov001_0215686c_4*)var4)->unknown_2c_;
-    CleanInvalidateCacheRange(var10 + 0xc, 0x20);
-    LoadToSubBGStandardPalette(var10 + 0xc, 0, 0x20);
-    CleanCacheRange(var10 + 0xc, 0x20);
+    unsigned char* p = ((struct Struct_ov001_0215686c_4*)res)->unknown_2c_;
+    CleanInvalidateCacheRange(p + 0xc, 0x20);
+    LoadToSubBGStandardPalette(p + 0xc, 0, 0x20);
+    CleanCacheRange(p + 0xc, 0x20);
 
-    memset(var1, 0xff, 0x20);
-    if (var5 == -0x10) {
-        memset(var1, 0x11, 0x20);
+    memset(buf, 0xff, 0x20);
+    if (axis == -0x10) {
+        memset(buf, 0x11, 0x20);
     }
-    CleanInvalidateCacheRange(var1, 0x20);
-    LoadToSubBG3CharacterData(var1, 0x6000, 0x20);
-    CleanCacheRange(var1, 0x20);
+    CleanInvalidateCacheRange(buf, 0x20);
+    LoadToSubBG3CharacterData(buf, 0x6000, 0x20);
+    CleanCacheRange(buf, 0x20);
 
     unsigned short* var11 = (unsigned short*)GetSubBG3ScreenBase();
-    for (unsigned short var12 = 0; var12 < 0x300; var12++) {
+    for (unsigned short i = 0; i < 0x300; i++) {
         *var11++ = 0x300;
     }
 
-    var6->unknown_104_ = 1;
+    o->unknown_104_ = 1;
 
-    unsigned int var13;
-    int var14 = (var7 == 0 || (var7 != 0 && var7->unknown_d2_ < 0)) ? 1 : 0;
-    var13 = inline_ov001_0215686c(var6);
-    if (var13 >= 3 && var14 != 0) {
-        SetSubBrightness(var4, 0, 0);
-        var6->unknown_109_ = 1;
+    unsigned int fa;
+    int t = (q == 0 || (q != 0 && q->v < 0)) ? 1 : 0;
+    fa = inline_ov001_0215686c(o);
+    if (fa >= 3 && t != 0) {
+        SetSubBrightness(res, 0, 0);
+        o->f109 = 1;
     }
 }

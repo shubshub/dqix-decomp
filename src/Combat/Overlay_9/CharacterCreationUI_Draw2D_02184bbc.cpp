@@ -5,9 +5,9 @@ struct Cont0205d1e0;
 struct Cont0205d228;
 struct Cont0205d274;
 
-void Window_ClearLayers(Cont0205d1e0*);
-void Window_DrawPanes(Cont0205d228*);
-void Window_FlushLayers(Cont0205d274*);
+extern "C" void Window_ClearLayers(Cont0205d1e0*);
+extern "C" void Window_DrawPanes(Cont0205d228*);
+extern "C" void Window_FlushLayers(Cont0205d274*);
 
 extern "C" void CharacterCreationUI_DrawTabLayers(CharacterCreationUI* self);
 extern "C" void CharacterCreationUI_PlaceSprites(CharacterCreationUI* self);

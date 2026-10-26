@@ -10,29 +10,29 @@ struct Foo0207df50;
 struct Words021e60c4;
 struct ItemTable;
 
-void VramState_Rewind(struct Foo0207df50* state);
-void VramState_Restore(char* state);
-void VramState_Save(char* state);
-void Object3D_SetRotation(void* object, struct Words021e60c4* rotation);
-void CharacterModel_GetPartModels(void* vocation, short* models, short* appearance);
+extern "C" void VramState_Rewind(struct Foo0207df50* state);
+extern "C" void VramState_Restore(char* state);
+extern "C" void VramState_Save(char* state);
+extern "C" void Object3D_SetRotation(void* object, struct Words021e60c4* rotation);
+extern "C" void CharacterModel_GetPartModels(void* vocation, short* models, short* appearance);
 extern "C" void __clear(void* buffer, unsigned long size);
 
 struct ItemRecord
 {
-    void* unknown_0_;
-    int unknown_4_;
-    unsigned int unknown_8_0_ : 4;
-    unsigned int unknown_8_4_ : 5;
+    void* model_;
+    int unk_4;
+    unsigned int category_ : 4;
+    unsigned int type_ : 5;
     unsigned int unknown_9_1_ : 3;
 };
 
-ItemRecord* ItemTable_Find(struct ItemTable* itemTable, int itemId);
+extern "C" ItemRecord* ItemTable_Find(struct ItemTable* itemTable, int itemId);
 
 struct CharacterModelRotation
 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    int x;
+    int y;
+    int z;
 };
 
 extern "C" void CharacterModel_ApplyColors(CharacterModel* self);
@@ -44,23 +44,23 @@ extern "C" const char CharacterModel_standAnimation[];
 // Overlay 23, originally func_ov023_021e5020 (USA/EUR 0x021e5020, JPN 0x021e5204)
 extern "C" ARM void CharacterModel_Update(CharacterModel* self)
 {
-    void* var0;
-    unsigned int var1;
+    void* file;
+    unsigned int size;
 
-    if (arg0->unknown_c12_)
+    if (self->loading_)
     {
-        BackgroundLoader* var2 = BackgroundLoader::GetInstance();
-        arg0->unknown_c12_ = 0;
-        for (int var3 = 0; var3 < 10; var3++)
+        BackgroundLoader* loader = BackgroundLoader::GetInstance();
+        self->loading_ = 0;
+        for (int i = 0; i < 10; i++)
         {
-            if (arg0->unknown_bf4_[var3] > -1)
+            if (self->tasks_[i] > -1)
             {
-                if (var2->GetTaskStatus(arg0->unknown_bf4_[var3]))
+                if (loader->GetTaskStatus(self->tasks_[i]))
                 {
-                    arg0->unknown_0_[var3].Destroy();
-                    arg0->unknown_6b8_[var3].Reset();
-                    var2->GetLoadedFileByID(arg0->unknown_bf4_[var3], &var0, &var1);
-                    if (var1 != 0)
+                    self->parts_[i].Destroy();
+                    self->allocators_[i].Reset();
+                    loader->GetLoadedFileByID(self->tasks_[i], &file, &size);
+                    if (size != 0)
                     {
                         VramState_Rewind((Foo0207df50*)&self->vramStates_[i]);
                         VramState_Restore((char*)&self->vramStates_[i]);
@@ -69,66 +69,66 @@ extern "C" ARM void CharacterModel_Update(CharacterModel* self)
                         if (i == CharacterModelPart_HairTexture && self->parts_[CharacterModelPart_Hair].pModel_ != NULL)
                             self->parts_[CharacterModelPart_Hair].pModel_->ApplyTexturesFromModel(self->parts_[i].pModel_);
                     }
-                    var2->RemoveTask(arg0->unknown_bf4_[var3]);
-                    arg0->unknown_bf4_[var3] = -1;
+                    loader->RemoveTask(self->tasks_[i]);
+                    self->tasks_[i] = -1;
                 }
                 else
                 {
-                    arg0->unknown_c12_ = 1;
+                    self->loading_ = 1;
                 }
             }
         }
 
-        short var4 = arg0->unknown_bf4_[10];
-        if (var4 > -1)
+        short task = self->tasks_[10];
+        if (task > -1)
         {
-            if (var2->GetTaskStatus(var4))
+            if (loader->GetTaskStatus(task))
             {
-                var2->GetLoadedFileByID(var4, &var0, &var1);
-                if (var1 != 0)
+                loader->GetLoadedFileByID(task, &file, &size);
+                if (size != 0)
                 {
                     loader->GetLoadedFileByID(task, &file, &size);
                     if (size != 0)
                         self->parts_[CharacterModelPart_Body].LoadType0AnimationFromFileInMemory(0, &self->animationAllocator_, file, size);
                 }
-                var2->RemoveTask(var4);
-                arg0->unknown_bf4_[10] = -1;
+                loader->RemoveTask(task);
+                self->tasks_[10] = -1;
             }
             else
             {
-                arg0->unknown_c12_ = 1;
+                self->loading_ = 1;
             }
         }
 
-        var4 = arg0->unknown_bf4_[11];
-        if (var4 > -1)
+        task = self->tasks_[11];
+        if (task > -1)
         {
-            if (var2->GetTaskStatus(var4))
+            if (loader->GetTaskStatus(task))
             {
-                var2->GetLoadedFileByID(var4, &var0, &var1);
-                if (var1 != 0)
+                loader->GetLoadedFileByID(task, &file, &size);
+                if (size != 0)
                 {
                     loader->GetLoadedFileByID(task, &file, &size);
                     if (size != 0)
                         self->parts_[CharacterModelPart_Body].LoadType0AnimationPackageFromBCFGScript(&self->animationAllocator_, file, size);
                 }
-                var2->RemoveTask(var4);
-                arg0->unknown_bf4_[11] = -1;
+                loader->RemoveTask(task);
+                self->tasks_[11] = -1;
             }
             else
             {
-                arg0->unknown_c12_ = 1;
+                self->loading_ = 1;
             }
         }
 
-        if (!arg0->unknown_c12_ && !arg0->unknown_c1e_)
+        if (!self->loading_ && !self->colored_)
         {
             CharacterModel_ApplyColors(self);
             self->colored_ = 1;
             self->loading_ = 1;
         }
 
-        if (!arg0->unknown_c12_)
+        if (!self->loading_)
         {
             PartyMemberAppearance* appearance = &self->member_->appearance_;
             if (self->bodyChanged_)
@@ -161,7 +161,7 @@ extern "C" ARM void CharacterModel_Update(CharacterModel* self)
             if (weapon != NULL && weapon->type_ == 6)
                 self->holdsWithArms_ = 1;
             else
-                arg0->unknown_c10_ = 0;
+                self->holdsWithArms_ = 0;
         }
     }
 }

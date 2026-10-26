@@ -11,7 +11,7 @@ enum { PartyMember_trailWriteIndex = 0x1cb, PartyMember_trailReadIndex = 0x1cc, 
 #endif
 
 // Main, originally ClearBytesAndZeroBlock02039d24 (USA 0x02039d24, EUR 0x02039d34, JPN 0x0203977c)
-ARM void GameObject_ResetTrail(unsigned char* partyMember) {
+extern "C" ARM void GameObject_ResetTrail(unsigned char* partyMember) {
     partyMember[PartyMember_trailWriteIndex] = 0;
     partyMember[PartyMember_trailReadIndex] = 0;
     partyMember[PartyMember_trailStarted] = 0;

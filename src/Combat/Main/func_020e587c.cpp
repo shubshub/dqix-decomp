@@ -1,33 +1,33 @@
 #include <globaldefs.h>
 
 struct Struct_020e5750 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
+    int field0;
+    int field4;
+    int lo;
+    int hi;
+    int field10;
 };
 
 struct Struct_020e5750_2 {
-    struct Struct_020e5750* unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    struct Struct_020e5750* base;
+    int capacity;
+    int count;
 };
 
 // USA: func_020e587c
-extern "C" ARM void func_020e587c(struct Struct_020e5750_2* arg0, struct Struct_020e5750* arg1) {
-    struct Struct_020e5750* var0;
-    if (arg1 == NULL) {
+extern "C" ARM void func_020e587c(struct Struct_020e5750_2* list, struct Struct_020e5750* entry) {
+    struct Struct_020e5750* dst;
+    if (entry == NULL) {
         return;
     }
-    if (arg0->unknown_4_ <= arg0->unknown_8_) {
+    if (list->capacity <= list->count) {
         return;
     }
-    var0 = &arg0->unknown_0_[arg0->unknown_8_];
-    var0->unknown_0_ = arg1->unknown_0_;
-    var0->unknown_4_ = arg1->unknown_4_;
-    var0->unknown_8_ = arg1->unknown_8_;
-    var0->unknown_c_ = arg1->unknown_c_;
-    var0->unknown_10_ = arg1->unknown_10_;
-    arg0->unknown_8_++;
+    dst = &list->base[list->count];
+    dst->field0 = entry->field0;
+    dst->field4 = entry->field4;
+    dst->lo = entry->lo;
+    dst->hi = entry->hi;
+    dst->field10 = entry->field10;
+    list->count++;
 }

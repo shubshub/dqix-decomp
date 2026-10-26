@@ -9,59 +9,59 @@ enum { Enum_ov006_0215a384_12 = 0xc, Enum_ov006_0215a384_332 = 0x14c };
 #include <Memory/SafeAllocator.h>
 #include <Filesystem/BackgroundLoader.h>
 
-struct Struct_0208358c_2 {
-    void* unknown_0_;
-    char unknown_4_[0x1c];
+struct Record020836e4 {
+    void* model_;
+    char unk_4[0x1c];
 };
 
 struct Struct_ov006_02157a60_2;
 struct Struct_02071d60;
 
 struct Struct_ov006_02156f04 {
-    Struct_0208358c_2 unknown_0_;
-    char unknown_20_[0x50];
-    short unknown_70_;
+    Record020836e4 entry_;
+    char unk_20[0x50];
+    short item_;
 };
 
 struct Struct_ov006_021537d0 {
-    short unknown_0_;
-    short unknown_2_;
-    short unknown_4_[3];
-    char unknown_a_[0xa];
+    short id_;
+    short item_;
+    short ingredients_[3];
+    char unk_a[0xa];
     short unknown_14_;
 };
 
 struct Struct_ov006_0215ffda {
-    short unknown_0_[4];
+    short items_[4];
 };
 
 struct Struct_ov006_02154614;
 
 struct Struct_ov006_02157a60 {
-    char unknown_0_[Enum_ov006_0215a384_12];
-    SafeAllocator* unknown_c_;
-    Struct_ov006_02154614* unknown_10_;
-    char unknown_14_[0x20];
+    char unk_0[Enum_ov006_0215a384_12];
+    SafeAllocator* allocators_;
+    Struct_ov006_02154614* pot_;
+    char unk_14[0x20];
     Struct_ov006_021537d0* unknown_34_;
     char unknown_38_[Enum_ov006_0215a384_332-Enum_ov006_0215a384_12-0x2c];
-    char unknown_14c_[0x17c-Enum_ov006_0215a384_332];
-    Struct_ov006_02156f04 unknown_17c_[4];
+    char table_[0x17c-Enum_ov006_0215a384_332];
+    Struct_ov006_02156f04 results_[4];
     char unknown_34c_[0x8];
-    int unknown_354_;
+    int task_;
     char unknown_358_[0x20];
     short unknown_378_[3];
 };
 
-void InitObj_02157c78(Obj02157c78* ingredient);
-void ItemRecord_Copy(Record020836e4* destination, Record020836e4* source);
-Recipe* FindEntryByKey02071d60(List02071d60* table, int id);
-void InitAndDispatch020deef4(int items, int file, int size, short* ids, short count);
-extern "C" void func_ov006_02156f04(AlchemyPot* pot, PotIngredient* ingredients);
+extern "C" void func_ov006_02157c78(Struct_ov006_02157a60_2* ingredient);
+extern "C" void ItemRecord_Copy(Record020836e4* destination, Record020836e4* source);
+extern "C" Struct_ov006_021537d0* func_02071d60(Struct_02071d60* table, int id);
+extern "C" void func_020deef4(int items, int file, int size, short* ids, short count);
+extern "C" void func_ov006_02156f04(Struct_ov006_02154614* arg0, Struct_ov006_02156f04* ingredients);
 
 extern "C" const Struct_ov006_0215ffda data_ov006_0215ffda;
 
 // USA: func_ov006_0215a384
-extern "C" ARM unsigned char func_ov006_0215a384(AlchemyMenu* self, int great) {
+extern "C" ARM unsigned char func_ov006_0215a384(Struct_ov006_02157a60* self, int arg1) {
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     if (loader->GetTaskStatus(self->task_)) {
         void* data;
@@ -69,48 +69,48 @@ extern "C" ARM unsigned char func_ov006_0215a384(AlchemyMenu* self, int great) {
         loader->GetLoadedFileByID(self->task_, &data, &size);
         if (data != 0) {
             self->allocators_[8].Reset();
-            ResultItems ids = data_ov006_0215ffda;
+            Struct_ov006_0215ffda ids = data_ov006_0215ffda;
             Record020836e4 copies[4];
             unsigned char i;
             for (i = 0; i < 4; i++) {
-                InitObj_02157c78((Obj02157c78*)&self->results_[i]);
+                func_ov006_02157c78((Struct_ov006_02157a60_2*)&self->results_[i]);
                 ItemRecord_Copy(&copies[i], &self->results_[i].entry_);
             }
-            Struct_ov006_021537d0* var6 = arg0->unknown_34_;
+            Struct_ov006_021537d0* var6 = self->unknown_34_;
             if (var6 != 0) {
                 if (arg1)
-                    var6 = func_02071d60((Struct_02071d60*)arg0->unknown_14c_, var6->unknown_14_);
-                short var7 = var6->unknown_2_;
-                arg0->unknown_17c_[0].unknown_70_ = var7;
-                var3.unknown_0_[0] = var7;
+                    var6 = func_02071d60((Struct_02071d60*)self->table_, var6->unknown_14_);
+                short item = var6->item_;
+                self->results_[0].item_ = item;
+                ids.items_[0] = item;
             }
-            short var8 = arg0->unknown_378_[0];
-            arg0->unknown_17c_[1].unknown_70_ = var8;
-            var3.unknown_0_[1] = var8;
-            short var9 = arg0->unknown_378_[1];
-            arg0->unknown_17c_[2].unknown_70_ = var9;
-            var3.unknown_0_[2] = var9;
-            short var10 = arg0->unknown_378_[2];
-            arg0->unknown_17c_[3].unknown_70_ = var10;
-            var3.unknown_0_[3] = var10;
-            if (arg0->unknown_34_ != 0) {
-                if (var3.unknown_0_[1] < 0) {
-                    short var11 = arg0->unknown_34_->unknown_4_[0];
-                    arg0->unknown_17c_[1].unknown_70_ = var11;
-                    var3.unknown_0_[1] = var11;
+            short var8 = self->unknown_378_[0];
+            self->results_[1].item_ = var8;
+            ids.items_[1] = var8;
+            short var9 = self->unknown_378_[1];
+            self->results_[2].item_ = var9;
+            ids.items_[2] = var9;
+            short var10 = self->unknown_378_[2];
+            self->results_[3].item_ = var10;
+            ids.items_[3] = var10;
+            if (self->unknown_34_ != 0) {
+                if (ids.items_[1] < 0) {
+                    short ingredient = self->unknown_34_->ingredients_[0];
+                    self->results_[1].item_ = ingredient;
+                    ids.items_[1] = ingredient;
                 }
-                if (var3.unknown_0_[2] < 0) {
-                    short var12 = arg0->unknown_34_->unknown_4_[1];
-                    arg0->unknown_17c_[2].unknown_70_ = var12;
-                    var3.unknown_0_[2] = var12;
+                if (ids.items_[2] < 0) {
+                    short ingredient = self->unknown_34_->ingredients_[1];
+                    self->results_[2].item_ = ingredient;
+                    ids.items_[2] = ingredient;
                 }
-                if (var3.unknown_0_[3] < 0) {
-                    short var13 = arg0->unknown_34_->unknown_4_[2];
-                    arg0->unknown_17c_[3].unknown_70_ = var13;
-                    var3.unknown_0_[3] = var13;
+                if (ids.items_[3] < 0) {
+                    short ingredient = self->unknown_34_->ingredients_[2];
+                    self->results_[3].item_ = ingredient;
+                    ids.items_[3] = ingredient;
                 }
             }
-            InitAndDispatch020deef4((int)copies, (int)data, size, ids.items_, 4);
+            func_020deef4((int)copies, (int)data, size, ids.items_, 4);
             if (ids.items_[1] == ids.items_[2] && ids.items_[2] > 0)
                 ItemRecord_Copy(&copies[2], &copies[1]);
             if (ids.items_[1] == ids.items_[3] && ids.items_[3] > 0)
@@ -121,10 +121,10 @@ extern "C" ARM unsigned char func_ov006_0215a384(AlchemyMenu* self, int great) {
                 ItemRecord_Copy(&self->results_[i].entry_, &copies[i]);
             func_ov006_02156f04(self->pot_, self->results_);
         }
-        var0->RemoveTask(arg0->unknown_354_);
-        arg0->unknown_354_ = -1;
+        loader->RemoveTask(self->task_);
+        self->task_ = -1;
     }
-    if (arg0->unknown_354_ == -1)
+    if (self->task_ == -1)
         return 1;
     return 0;
 }

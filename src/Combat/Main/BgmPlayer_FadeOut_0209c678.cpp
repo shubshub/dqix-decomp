@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-void SoundPlayer_StopSeqOnHandle(void*, void*, int);
+extern "C" void SoundPlayer_StopSeqOnHandle(void*, void*, int);
 
 struct Actor0209c678 {
     unsigned char pad0[0xb0];
@@ -15,7 +15,7 @@ struct Actor0209c678 {
 };
 
 // Main, originally DispatchContextByState0209c678 (USA 0x0209c678, EUR 0x0209c688, JPN 0x0209e3f0)
-ARM void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg) {
+extern "C" ARM void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg) {
     if (actor->f2) return;
     if (actor->state == 1) {
         SoundPlayer_StopSeqOnHandle(actor, &actor->fieldBC, arg);

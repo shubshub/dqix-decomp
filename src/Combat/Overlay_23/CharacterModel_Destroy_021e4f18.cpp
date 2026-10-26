@@ -6,7 +6,7 @@
 extern "C" void CharacterModel_CancelLoads(void* model);
 
 // Overlay 23, originally DestroyTenAndOne_021e4f18 (USA/EUR 0x021e4f18, JPN 0x021e50fc)
-ARM void CharacterModel_Destroy(void* obj) {
+extern "C" ARM void CharacterModel_Destroy(void* obj) {
     CharacterModel* model = (CharacterModel*)obj;
     CharacterModel_CancelLoads(model);
     for (int i = 0; i < 10; i++) {

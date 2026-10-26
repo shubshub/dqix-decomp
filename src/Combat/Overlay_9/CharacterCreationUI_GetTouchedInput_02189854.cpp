@@ -34,8 +34,8 @@ enum CreationButton
 // A touch on nothing: not a button, a tab icon or a slot. CharacterCreationUI_HandleInput ignores it.
 
 struct GridCursor;
-int GridCursor_GetCount(void*);
-int GridCursor_GetSelectedIndex(GridCursor*);
+extern "C" int GridCursor_GetCount(void*);
+extern "C" int GridCursor_GetSelectedIndex(GridCursor*);
 
 extern "C" {
     void GridCursor_SetSelectedIndex(void*, int);
@@ -75,8 +75,8 @@ extern "C" {
                 int maxX = x + width;
                 if (touchX >= x && touchX <= maxX) {
                     int y = layout->y + stepY * row;
-                    int maxY = y + height;
-                    if (touchY >= y && touchY <= maxY) {
+                    int var16 = y + height;
+                    if (touchY >= y && touchY <= var16) {
                         slot = column + row * columns;
                         self->cursorX = x;
                         self->cursorY = y;

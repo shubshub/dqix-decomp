@@ -3,17 +3,17 @@
 #include "GameState/GameState.h"
 
 
-struct Struct_0208e7d0 {
-    char unknown_0_[0xc];
-    short* unknown_c_;
+struct Obj0208e7d0 {
+    char pad0[0xc];
+    short* table;
 };
 
 extern "C" void* Scenario_GetInstance(void);
-int GameState_GetStoryChapter(char* obj);
+extern "C" int GameState_GetStoryChapter(char* obj);
 
 // USA: func_0208e7d0
-extern "C" ARM int func_0208e7d0(struct Struct_0208e7d0* arg0) {
-    if (arg0->unknown_c_ == 0) {
+extern "C" ARM int func_0208e7d0(struct Obj0208e7d0* obj) {
+    if (obj->table == 0) {
         return 0;
     }
     int count = 8;
@@ -22,7 +22,7 @@ extern "C" ARM int func_0208e7d0(struct Struct_0208e7d0* arg0) {
     if (GameState_GetStoryChapter((char*)bs) >= 0x13) {
         count = 0x10;
     }
-    struct Random* var2 = GetBTRandom();
-    int var3 = NextRandomMax(var2, var0);
-    return arg0->unknown_c_[var3];
+    struct Random* rng = GetBTRandom();
+    int idx = NextRandomMax(rng, count);
+    return obj->table[idx];
 }

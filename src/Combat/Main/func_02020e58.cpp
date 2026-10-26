@@ -4,88 +4,83 @@
 
 struct Struct_020534ac;
 
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(Struct_02020cb8_4* arg0);
+struct PacRecord;
+extern "C" int Pac_CountFiles(PacRecord* entry);
 
-struct Struct_02020aec;
-extern "C" void* func_020467f0(Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
+extern "C" void* Pac_GetFile(PacRecord* rec, int index, void** out, int* out44);
 
-struct Struct_02020cb8;
-extern "C" void func_0204af64(Struct_02020cb8* arg0);
+struct BackgroundGraphics;
+extern "C" void Background_Init(BackgroundGraphics* obj);
 
-extern "C" void func_0204b11c(unsigned char* arg0, int arg1);
+extern "C" void Background_SetMapSize(unsigned char* obj, int value);
 
-extern "C" void func_0204b5b4(void*, int);
+extern "C" void Background_SetPriority(void*, int);
 
-struct Struct_02020cb8_5;
-extern "C" int func_0204b5e8(Struct_02020cb8_5* arg0, int arg1, int arg2);
+extern "C" int Background_SetScroll(BackgroundGraphics* obj, int a, int b);
 
-extern "C" void func_0204b2e0(void* arg0, char* arg1);
+extern "C" void Background_FlushFile(void* obj, char* str);
 
-struct Struct_02020cb8_6;
-extern "C" void func_0204b3a0(Struct_02020cb8_6* arg0, char* arg1);
+extern "C" void Background_UploadFile(BackgroundGraphics* self, char* str);
 
-struct Struct_02020cb8_2;
-extern "C" void func_0204b0e8(Struct_02020cb8_2* arg0, void* arg1);
+extern "C" void Background_UploadMap(BackgroundGraphics* obj, void* buf);
 
-struct Struct_02020cb8_3;
-extern "C" void func_0204afb4(Struct_02020cb8_3* arg0);
+extern "C" void Background_Destroy(BackgroundGraphics* obj);
 
 // USA: func_02020e58
-extern "C" ARM void func_02020e58(void* arg0, Type_02020aec arg1) {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    void* var1 = 0;
+extern "C" ARM void func_02020e58(void* self, MapDisplayTaskHandle handle) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    void* recListHead = 0;
     unsigned int var2 = 0;
-    int var3 = var0->GetTaskStatus(
+    int r = loader->GetTaskStatus(
 #if defined(jpn)
-        arg1
+        handle
 #else
-        *arg1
+        *handle
 #endif
 );
-    if (var3 == -1) {
+    if (r == -1) {
         *(unsigned int*)0x04001000 = (*(unsigned int*)0x04001000 & ~0x1f00) | 0x200;
-        ((Struct_02020554*)arg0)->unknown_768_ = 0;
+        ((MapDisplay*)self)->field768 = 0;
     } else {
-        void* var4;
-        void* var5[3];
-        int var6[3];
-        Struct_02020cb8 var7;
+        void* dummyPtr;
+        void* arrayC[3];
+        int arrayB[3];
+        BackgroundGraphics s;
 
-        var0->GetLoadedFileByID(
+        loader->GetLoadedFileByID(
 #if defined(jpn)
-        arg1
+        handle
 #else
-        *arg1
+        *handle
 #endif
-, &var1, &var2);
-        int var8 = func_02046900((Struct_02020cb8_4*)var1);
-        for (int var9 = 0; var9 < var8; var9++) {
-            var5[var9] = func_020467f0((Struct_02020aec*)var1, var9, &var4, &var6[var9]);
+, &recListHead, &var2);
+        int count = Pac_CountFiles((PacRecord*)recListHead);
+        for (int i = 0; i < count; i++) {
+            arrayC[i] = Pac_GetFile((PacRecord*)recListHead, i, &dummyPtr, &arrayB[i]);
         }
-        func_0204af64((Struct_02020cb8*)&var7);
-        var7.unknown_1c_0_ = 1;
-        var7.unknown_1c_4_ = 0;
-        func_0204b5b4(&var7, 2);
-        func_0204b11c((unsigned char*)&var7, 0);
-        func_0204b5e8((Struct_02020cb8_5*)&var7, 0, 0);
-        for (int var10 = 0; var10 < var8; var10++) {
-            func_0204b2e0(&var7, (char*)var5[var10]);
-            func_0204b3a0((Struct_02020cb8_6*)&var7, (char*)var5[var10]);
+        Background_Init((BackgroundGraphics*)&s);
+        s.subScreen_ = 1;
+        s.bgNumber_ = 0;
+        Background_SetPriority(&s, 2);
+        Background_SetMapSize((unsigned char*)&s, 0);
+        Background_SetScroll((BackgroundGraphics*)&s, 0, 0);
+        for (int i = 0; i < count; i++) {
+            Background_FlushFile(&s, (char*)arrayC[i]);
+            Background_UploadFile((BackgroundGraphics*)&s, (char*)arrayC[i]);
         }
-        func_0204b0e8((Struct_02020cb8_2*)&var7, 0);
-        func_0204afb4((Struct_02020cb8_3*)&var7);
-        ((Struct_02020554*)arg0)->unknown_55c_ = 1;
+        Background_UploadMap((BackgroundGraphics*)&s, 0);
+        Background_Destroy((BackgroundGraphics*)&s);
+        ((MapDisplay*)self)->forwardingPending = 1;
     }
     BackgroundLoader* var11 = BackgroundLoader::GetInstance();
     var11->RemoveTask(
 #if defined(jpn)
-        arg1
+        handle
 #else
-        *arg1
+        *handle
 #endif
 );
 #if !defined(jpn)
-    *arg1 = -1;
+    *handle = -1;
 #endif
 }

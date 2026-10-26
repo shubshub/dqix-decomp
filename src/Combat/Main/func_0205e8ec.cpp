@@ -1,26 +1,26 @@
 #include <globaldefs.h>
 
-extern "C" void func_0203aa80(void* arg0, int arg1);
+extern "C" void SoundPlayer_RestoreHeapState(void* obj, int arg1);
 extern "C" void func_0205e944(void*, int);
 extern "C" void func_020bbd9c(void);
 
-struct Struct_0205e8ec {
-    char unknown_0_[0xb8];
-    int unknown_b8_;
+struct Obj_0205e8ec {
+    char pad0[0xb8];
+    int fb8;
     short unknown_bc_;
-    char unknown_be_[0xc0 - 0xbe];
-    int unknown_c0_;
-    short unknown_c4_;
+    char pad1[0xc0 - 0xbe];
+    int fc0;
+    short fc4;
 };
 
 // USA: func_0205e8ec
-extern "C" ARM void func_0205e8ec(struct Struct_0205e8ec* arg0) {
-    if (arg0->unknown_b8_ != 0) {
-        func_0203aa80(arg0, arg0->unknown_b8_);
-        arg0->unknown_c0_ = arg0->unknown_b8_;
-        arg0->unknown_bc_ = -1;
-        arg0->unknown_c4_ = -1;
+extern "C" ARM void func_0205e8ec(struct Obj_0205e8ec* a) {
+    if (a->fb8 != 0) {
+        SoundPlayer_RestoreHeapState(a, a->fb8);
+        a->fc0 = a->fb8;
+        a->unknown_bc_ = -1;
+        a->fc4 = -1;
     }
-    func_0205e944(arg0, 0x7f);
+    func_0205e944(a, 0x7f);
     func_020bbd9c();
 }

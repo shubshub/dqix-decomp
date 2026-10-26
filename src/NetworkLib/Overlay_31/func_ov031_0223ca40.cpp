@@ -6,11 +6,11 @@ struct Struct_ov031_0223ca40_2 {
 };
 
 struct Struct_ov031_0223ca40 {
-    char unknown_0_[0x14];
-    Struct_ov031_0223ca40_2* unknown_14_;
+    char padding[0x14];
+    Struct_ov031_0223ca40_2* dispatch;
 };
 
 // USA: func_ov031_0223ca40
-extern "C" ARM void func_ov031_0223ca40(void* arg0, int arg1) {
-    ((Struct_ov031_0223ca40*)arg0)->unknown_14_->unknown_4_(arg0, arg1);
+extern "C" ARM void func_ov031_0223ca40(void* obj, int unused) {
+    ((Struct_ov031_0223ca40*)obj)->dispatch->unknown_4_(obj, unused);
 }

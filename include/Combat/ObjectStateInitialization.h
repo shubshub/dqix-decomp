@@ -2,57 +2,57 @@
 
 #include "World/Object3D.h"
 
-struct Struct_02032fb8 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
+struct Struct02032fb8 {
+    unsigned short x;
+    unsigned short y;
+    unsigned short z;
+    unsigned short w;
 };
 
-struct Struct_02032e58 {
-    Object3D unknown_0_;
-    unsigned short unknown_ac_;
-    unsigned short unknown_ae_;
-    unsigned short unknown_b0_;
-    unsigned short unknown_b2_;
-    unsigned short unknown_b4_;
-    unsigned short unknown_b6_;
-    unsigned short unknown_b8_;
-    unsigned short unknown_ba_;
-    unsigned short unknown_bc_;
-    unsigned char unknown_be_;
-    unsigned char unknown_bf_;
-    unsigned char unknown_c0_;
-    unsigned char unknown_c1_0_ : 2;
-    unsigned char unknown_c1_2_ : 1;
-    unsigned char unknown_c1_3_ : 1;
-    unsigned char unknown_c1_4_ : 4;
-    unsigned char unknown_c2_0_ : 4;
-    unsigned char unknown_c2_4_ : 1;
-    unsigned char unknown_c2_5_ : 1;
-    unsigned char unknown_c2_6_ : 1;
-    unsigned char unknown_c2_7_ : 1;
-    unsigned char unknown_c3_;
-    unsigned short unknown_c4_0_ : 15;
-    unsigned short unknown_c5_7_ : 1;
-    unsigned short unknown_c6_;
+struct ObjectStatePrefix {
+    Object3D object;
+    unsigned short fieldAc;
+    unsigned short fieldAe;
+    unsigned short fieldB0;
+    unsigned short fieldB2;
+    unsigned short fieldB4;
+    unsigned short fieldB6;
+    unsigned short fieldB8;
+    unsigned short fieldBa;
+    unsigned short fieldBc;
+    unsigned char fieldBe;
+    unsigned char fieldBf;
+    unsigned char fieldC0;
+    unsigned char fieldC1Low : 2;
+    unsigned char fieldC1Bit2 : 1;
+    unsigned char fieldC1Bit3 : 1;
+    unsigned char fieldC1High : 4;
+    unsigned char fieldC2Low : 4;
+    unsigned char fieldC2Bit4 : 1;
+    unsigned char fieldC2Bit5 : 1;
+    unsigned char fieldC2Bit6 : 1;
+    unsigned char fieldC2Bit7 : 1;
+    unsigned char fieldC3;
+    unsigned short fieldC4Low : 15;
+    unsigned short fieldC4High : 1;
+    unsigned short fieldC6;
     unsigned char unknown_c8_[0x18];
-    unsigned char unknown_e0_0_ : 1;
-    unsigned char unknown_e0_1_ : 1;
-    unsigned char unknown_e0_2_ : 1;
-    unsigned char unknown_e0_3_ : 1;
-    unsigned char unknown_e0_4_ : 1;
-    unsigned char unknown_e0_5_ : 1;
+    unsigned char fieldE0Bit0 : 1;
+    unsigned char fieldE0Bit1 : 1;
+    unsigned char fieldE0Bit2 : 1;
+    unsigned char fieldE0Bit3 : 1;
+    unsigned char fieldE0Bit4 : 1;
+    unsigned char fieldE0Bit5 : 1;
     unsigned char unknown_e0_6_ : 1;
     unsigned char unknown_e0_7_ : 1;
-    unsigned char unknown_e1_[0x33];
-    Struct_02032fb8 unknown_114_;
-    Struct_02032fb8 unknown_11c_;
-    unsigned int unknown_124_;
-    unsigned int unknown_128_;
-    unsigned short unknown_12c_;
+    unsigned char unknownE1[0x33];
+    Struct02032fb8 firstHalfwords;
+    Struct02032fb8 secondHalfwords;
+    unsigned int field124;
+    unsigned int field128;
+    unsigned short field12c;
 };
 
 
-void ClearFourHalfwords(Struct02032fb8 *value);
+extern "C" void func_02032fb8(Struct02032fb8 *value);
 extern "C" void GameObject_Initialize(void *receiver);

@@ -2,11 +2,11 @@
 #include "NitroSDK/ProcessorContext.h"
 
 bool IsContextInactive(ProcessorContext *context);
-extern "C" void func_020c7e0c(void *arg0, int arg1, int arg2);
+extern "C" void func_020c7e0c(void *a, int b, int c);
 
 struct Struct_ov031_02291f24_2 {
-	int unknown_0_;
-	int unknown_4_;
+	int unk0;
+	int field4;
 };
 
 extern ProcessorContext data_ov031_02291f80;
@@ -19,8 +19,8 @@ extern "C" ARM void func_ov031_02245938(void) {
 		return;
 	}
 	if (IsContextInactive(&data_ov031_02291f80) == 0) {
-		if (data_ov031_02291f24.unknown_4_ == 0) {
-			data_ov031_02291f24.unknown_4_ = 1;
+		if (data_ov031_02291f24.field4 == 0) {
+			data_ov031_02291f24.field4 = 1;
 			func_020c7e0c(&data_ov031_02291f60, 0, 0);
 		}
 	}

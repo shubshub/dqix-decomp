@@ -34,13 +34,13 @@ extern "C" ARM void func_ov031_0222ad40(void) {
 	}
 	func_ov031_0223cbbc(0, 0x15);
 
-	unsigned char var0 = data_ov031_02290c7c;
-	if (var0 == 0) {
+	unsigned char b = data_ov031_02290c7c;
+	if (b == 0) {
 		func_ov031_022274d0(0, 1);
 		func_ov031_022274c0((int)func_ov031_0222905c);
 		return;
 	}
-	if (var0 == 2) {
+	if (b == 2) {
 		func_ov031_022274d0(0, 1);
 		func_ov031_022274c0((int)func_ov031_0222a35c);
 		return;

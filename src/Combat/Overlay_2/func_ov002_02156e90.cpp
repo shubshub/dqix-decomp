@@ -8,17 +8,17 @@
 #define RG(u, j) (u)
 #endif
 
-struct Struct_0205d0e0_2;
-struct Struct_0205d6a0;
+struct Struct0205d888;
+struct Entry_0205d6a0;
 struct Struct_0205d81c;
-struct Struct_ov002_02156e90 {
-    char unknown_0_[0xc4];
-    unsigned char unknown_c4_;
+struct Elem0205d888 {
+    char pad[0xc4];
+    unsigned char key;
 };
-struct Elem0205d888 *Window_GetTopPane(struct Struct0205d888 *s);
-void *FindElementByC40205d81c(struct Struct_0205d81c *s, int key);
-void Window_ClosePane(struct Entry_0205d6a0 *e, int a);
-void Window_SetPanePalette(struct Struct_0205d81c *s, int a, int b);
+extern "C" struct Elem0205d888 *Window_GetTopPane(struct Struct0205d888 *s);
+extern "C" void *func_0205d81c(struct Struct_0205d81c *s, int key);
+extern "C" void Window_ClosePane(struct Entry_0205d6a0 *e, int a);
+extern "C" void Window_SetPanePalette(struct Struct_0205d81c *s, int a, int b);
 extern "C" void func_ov002_02161cf0(void *base);
 extern "C" void func_ov002_0215b9a4(void *base, int a, int b);
 extern "C" const unsigned char data_ov002_0216c99d[];
@@ -36,11 +36,11 @@ extern "C" ARM void func_ov002_02156e90(char *base) {
                 count = 2;
                 break;
             }
-            if (var3 >= RG(0x2c, 0x2f) && var3 <= RG(0x2f, 0x32)) {
-                var0 = 0;
-                for (unsigned char var5 = RG(0x2c, 0x2f); var5 <= RG(0x2f, 0x32); var5++) {
-                    if (func_0205d81c((struct Struct_0205d81c *) (arg0 + RG(0xec8, 0xe20)), var5) != NULL) {
-                        var0++;
+            if (k >= RG(0x2c, 0x2f) && k <= RG(0x2f, 0x32)) {
+                count = 0;
+                for (unsigned char j = RG(0x2c, 0x2f); j <= RG(0x2f, 0x32); j++) {
+                    if (func_0205d81c((struct Struct_0205d81c *) (base + RG(0xec8, 0xe20)), j) != NULL) {
+                        count++;
                     }
                 }
                 break;
@@ -58,10 +58,10 @@ extern "C" ARM void func_ov002_02156e90(char *base) {
         unsigned char t = data_ov002_0216c99d[i * 2];
         if (t == e->key) {
             unsigned char k = data_ov002_0216c99e[i * 2];
-            FindElementByC40205d81c((struct Struct_0205d81c *) (base + RG(0xec8, 0xe20)), k);
+            func_0205d81c((struct Struct_0205d81c *) (base + RG(0xec8, 0xe20)), k);
             Window_SetPanePalette((struct Struct_0205d81c *) (base + RG(0xec8, 0xe20)), k, 0);
             break;
         }
     }
-    func_ov002_0215b9a4(arg0, *(int *) (arg0 + 0x1000 + RG(0xbb8, 0xa80)) & 0xff, 0);
+    func_ov002_0215b9a4(base, *(int *) (base + 0x1000 + RG(0xbb8, 0xa80)) & 0xff, 0);
 }

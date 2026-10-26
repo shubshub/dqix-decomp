@@ -14,11 +14,11 @@ struct Sprite {
 
 enum { kMapDisplaySpriteContextOffset = 0x94, kMapDisplaySpritesOffset = 0xe8 };
 
-void SpriteContext_SetSpritePalette(int spriteContext, void* sprite, int palette);
+extern "C" void SpriteContext_SetSpritePalette(int spriteContext, void* sprite, int palette);
 extern "C" void SpriteContext_DrawSprite(void* context, void* sprite);
 
 // Main, originally SetElementFields0202756c (USA 0x0202756c, EUR 0x0202757c, JPN 0x02026ed0)
-ARM void MapDisplay_DrawSprite(void* display, int x, int y, int spriteIndex,
+extern "C" ARM void MapDisplay_DrawSprite(void* display, int x, int y, int spriteIndex,
         unsigned char oamSlot, unsigned char priority, unsigned short palette, unsigned char matrixIndex, int scaleX, int scaleY) {
     struct Sprite* sprite = (struct Sprite*)((char*)display + kMapDisplaySpritesOffset + spriteIndex * 0x28);
     sprite->position[0] = x;

@@ -3,7 +3,7 @@
 #pragma define_section initcode ".init" RX
 
 struct SafeAllocator;
-extern "C" void func_020dbc48(struct SafeAllocator* arg0);
+extern "C" void func_020dbc48(struct SafeAllocator* obj);
 
 extern struct SafeAllocator data_0214e4c8;
 

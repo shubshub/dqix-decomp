@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-extern "C" int func_02003ddc(int arg0);
-extern "C" void func_0200159c(int arg0);
+extern "C" int func_02003ddc(int a);
+extern "C" void func_0200159c(int a);
 
 extern char data_020f2e60[];
 

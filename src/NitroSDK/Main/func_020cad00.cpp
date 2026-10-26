@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-extern "C" void func_020c9bfc(unsigned char arg0);
+extern "C" void func_020c9bfc(unsigned char value);
 void ResetDMAChannel(int arg);
 
 // USA: func_020cad00

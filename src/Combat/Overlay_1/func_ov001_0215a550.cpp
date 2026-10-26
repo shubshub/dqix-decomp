@@ -6,15 +6,15 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void* func_ov001_02159f94(int arg0);
+extern "C" void* func_ov001_02159f94(int a);
 
 // USA: func_ov001_0215a550
-extern "C" ARM void func_ov001_0215a550(int arg0, char* arg1, int arg2, int arg3) {
-    void* var0 = func_ov001_02159f94(arg0);
-    if (var0 == NULL) return;
-    *(int*)var0 = 10;
-    strcpy((char*)var0 + 0x1c, arg1);
-    *(int*)((char*)var0 + 0x10) = arg2;
-    *(int*)((char*)var0 + 0x14) = arg3;
-    *(int*)((char*)var0 + 0x18) = 0;
+extern "C" ARM void func_ov001_0215a550(int a, char* name, int b, int c) {
+    void* node = func_ov001_02159f94(a);
+    if (node == NULL) return;
+    *(int*)node = 10;
+    strcpy((char*)node + 0x1c, name);
+    *(int*)((char*)node + 0x10) = b;
+    *(int*)((char*)node + 0x14) = c;
+    *(int*)((char*)node + 0x18) = 0;
 }

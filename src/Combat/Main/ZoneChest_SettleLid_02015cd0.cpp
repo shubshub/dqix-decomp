@@ -30,8 +30,8 @@ extern "C" ARM int ZoneChest_SettleLid(ChestRecord02015cd0* chest) {
             chest->lidAngle = FIX32_MULTIPLY(coefficient, square) + ZoneChestLid_Lifted;
             chest->counter = chest->counter + 1;
         } else {
-            int totalDuration = 0x17fe8;
-            if ((float)counter <= (float)totalDuration / 4096.0f) {
+            int var4 = 0x17fe8;
+            if ((float)counter <= (float)var4 / 4096.0f) {
                 int elapsed = (int)(4096.0f * ((float)counter - (float)firstDuration / 4096.0f));
                 int remaining = 0x1000 - fix32_Divide(elapsed, 0x17fe8);
                 int coefficient = fix32_Divide(0xc90f, 0x17fe8);

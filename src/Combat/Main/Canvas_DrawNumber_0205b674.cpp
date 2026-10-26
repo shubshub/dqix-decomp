@@ -36,21 +36,21 @@ extern "C" ARM void Canvas_DrawNumber(S_b20c* destination, short x, short y, int
 
 struct Obj0205b674 { int field0; int field4; };
 
-int FormatAbsIntToString02042658(void* obj, int value);
+extern "C" int func_02042658(void* obj, int value);
 extern "C" void __clear(void* buf, int n);
 extern "C" int sprintf(void* dst, void* fmt, int val);
 extern "C" void GlyphDestination_DrawText(struct Obj0205b674* a, int b, int c, void* buf, int d, int e);
 extern char data_020f0518;
 
-// USA: func_0205b674
-ARM void Canvas_DrawNumber(struct Obj0205b674* obj, short posX, int param2, int param3,
-                                              unsigned char param4, unsigned char param5, unsigned char param6, unsigned char param7) {
+// USA: Canvas_DrawNumber
+extern "C" ARM void Canvas_DrawNumber(struct Obj0205b674* obj, short posX, int param2, int param3,
+                                              unsigned char param4, unsigned char arg5, unsigned char arg6, unsigned char param7) {
     if (obj->field0 != 0 && obj->field4 != 0) {
         int value = param3;
         while ((value = value / 10) != 0) {}
-        int r0val = FormatAbsIntToString02042658((void*)param7, param3);
-        if (param6 == 1) {
-            posX = (short)(posX + (short)((param5 << 3) - r0val));
+        int var1 = func_02042658((void*)param7, param3);
+        if (arg6 == 1) {
+            posX = (short)(posX + (short)((arg5 << 3) - var1));
         }
         char buf[0xa];
         __clear(buf, 0xa);

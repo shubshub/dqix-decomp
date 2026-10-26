@@ -2,47 +2,47 @@
 #include "Memory/SafeAllocator.h"
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8;
+struct Variant02030b0c;
 struct Struct_0201d530;
-extern "C" void func_ov000_02169b78(void* arg0);
+extern "C" void func_ov000_02169b78(void* p);
 
 struct Struct_ov000_02184264_6 {
-    char unknown_0_[0x8];
-    SafeAllocator* unknown_8_;
+    char pad0[0x8];
+    SafeAllocator* alloc;
 };
 extern struct Struct_ov000_02184264_6 data_ov000_02184264;
 
 // USA: func_ov000_0216a364
-extern "C" ARM int func_ov000_0216a364(char* arg0, int arg1) {
-    char* var0 = (char*)data_ov000_02184264.unknown_8_->Allocate(0x18);
-    *(int*)(var0 + 0x0) = 0xc;
-    int var1 = ((Script::Parameter*)((struct Struct_0201c1c8*)arg0))->ToInt();
-    *(short*)(var0 + 0x8) = (short)var1;
-    *(unsigned char*)(var0 + 0xa) = 0;
-    *(int*)(var0 + 0xc) = 0;
-    *(int*)(var0 + 0x10) = 0;
-    *(int*)(var0 + 0x14) = 0;
+extern "C" ARM int func_ov000_0216a364(char* obj, int count) {
+    char* p = (char*)data_ov000_02184264.alloc->Allocate(0x18);
+    *(int*)(p + 0x0) = 0xc;
+    int val0 = ((Script::Parameter*)((struct Variant02030b0c*)obj))->ToInt();
+    *(short*)(p + 0x8) = (short)val0;
+    *(unsigned char*)(p + 0xa) = 0;
+    *(int*)(p + 0xc) = 0;
+    *(int*)(p + 0x10) = 0;
+    *(int*)(p + 0x14) = 0;
 
-    arg0 += 8;
-    if (*(unsigned short*)(var0 + 0x8) == 5 || *(unsigned short*)(var0 + 0x8) == 6) {
-        *(int*)(var0 + 0x14) = 0x3fe66666;
+    obj += 8;
+    if (*(unsigned short*)(p + 0x8) == 5 || *(unsigned short*)(p + 0x8) == 6) {
+        *(int*)(p + 0x14) = 0x3fe66666;
     }
 
-    if (arg1 >= 2) {
-        int var2 = ((Script::Parameter*)((struct Struct_0201c1c8*)arg0))->ToInt();
-        *(unsigned char*)(var0 + 0xa) = (unsigned char)var2;
-        arg0 += 8;
+    if (count >= 2) {
+        int val1 = ((Script::Parameter*)((struct Variant02030b0c*)obj))->ToInt();
+        *(unsigned char*)(p + 0xa) = (unsigned char)val1;
+        obj += 8;
     }
 
-    if (arg1 >= 3) {
-        float var3 = ((Script::Parameter*)((struct Struct_0201d530*)arg0))->ToFloat();
-        *(float*)(var0 + 0xc) = var3;
-        float var4 = ((Script::Parameter*)((struct Struct_0201d530*)(arg0 + 8)))->ToFloat();
-        *(float*)(var0 + 0x10) = var4;
-        float var5 = ((Script::Parameter*)((struct Struct_0201d530*)(arg0 + 0x10)))->ToFloat();
-        *(float*)(var0 + 0x14) = var5;
+    if (count >= 3) {
+        float f0 = ((Script::Parameter*)((struct Struct_0201d530*)obj))->ToFloat();
+        *(float*)(p + 0xc) = f0;
+        float f1 = ((Script::Parameter*)((struct Struct_0201d530*)(obj + 8)))->ToFloat();
+        *(float*)(p + 0x10) = f1;
+        float f2 = ((Script::Parameter*)((struct Struct_0201d530*)(obj + 0x10)))->ToFloat();
+        *(float*)(p + 0x14) = f2;
     }
 
-    func_ov000_02169b78(var0);
+    func_ov000_02169b78(p);
     return 1;
 }

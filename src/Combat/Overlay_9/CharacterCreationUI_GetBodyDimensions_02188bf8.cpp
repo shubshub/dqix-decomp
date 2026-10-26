@@ -9,7 +9,7 @@ extern BodyDimensions CharacterCreationUI_bodyDimensions[][5];
 #endif
 
 // Overlay 9, originally func_ov009_02188bf8 (USA/EUR 0x02188bf8, JPN 0x021899b0)
-ARM void CharacterCreationUI_GetBodyDimensions(unsigned char* storage, int bodyType, short* width, short* height) {
+extern "C" ARM void CharacterCreationUI_GetBodyDimensions(unsigned char* storage, int bodyType, short* width, short* height) {
     CharacterCreationUI* self = (CharacterCreationUI*)storage;
 #if defined(jpn)
     if (self->sex == 0) {

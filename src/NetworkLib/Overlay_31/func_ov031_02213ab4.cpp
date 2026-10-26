@@ -2,17 +2,17 @@
 #define func_020ca408 func_020cbed4
 #endif
 
-struct Entry { unsigned char unknown_0_, unknown_1_, unknown_2_; unsigned char unknown_3_; };
+struct Entry { unsigned char unused, id, level; unsigned char flags; };
 extern "C" void func_020ca408(const void*, void*, unsigned);
 // USA: func_ov031_02213ab4
-extern "C" void func_ov031_02213ab4(int arg0, void* arg1, int arg2, unsigned char* arg3) {
- Entry* var0=(Entry*)(arg3+0x444);
- Entry* var1=var0+arg0;
- int var2=((unsigned short*)arg1)[1];
- unsigned char* var3=arg3+0x470+arg0*0xc0;
- unsigned int var4;
- if(var2&2) var4=(unsigned char)(var2>>2);
- else var4=(unsigned char)((var2>>2)+25);
- if((unsigned char)var4>var1->unknown_2_) { var1->unknown_2_=var4; var1->unknown_3_=(var1->unknown_3_ & ~0x7f) | (arg2 & 0x7f); }
- func_020ca408(arg1,var3,0xc0);
+extern "C" void func_ov031_02213ab4(int index, void* record, int flags, unsigned char* state) {
+ Entry* base=(Entry*)(state+0x444);
+ Entry* e=base+index;
+ int v=((unsigned short*)record)[1];
+ unsigned char* dest=state+0x470+index*0xc0;
+ unsigned int level;
+ if(v&2) level=(unsigned char)(v>>2);
+ else level=(unsigned char)((v>>2)+25);
+ if((unsigned char)level>e->level) { e->level=level; e->flags=(e->flags & ~0x7f) | (flags & 0x7f); }
+ func_020ca408(record,dest,0xc0);
 }

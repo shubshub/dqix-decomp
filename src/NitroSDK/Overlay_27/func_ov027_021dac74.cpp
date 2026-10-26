@@ -6,28 +6,28 @@
 #pragma optimize_for_size off
 
 // USA: func_ov027_021dac74
-extern "C" ARM CBool func_ov027_021dac74(const char* arg0, void* arg1, int arg2)
+extern "C" ARM CBool func_ov027_021dac74(const char* path, void* dst, int large)
 {
-    unsigned int var0 = arg2 ? 0x200 : 0x20;
-    char* var1 = arg2 ? (char*)arg1 + 0x20 : (char*)arg1;
+    unsigned int capacity = large ? 0x200 : 0x20;
+    char* var1 = large ? (char*)dst + 0x20 : (char*)dst;
 
-    if (arg0 == NULL)
+    if (path == NULL)
         return false;
 
-    NitroVM var2;
-    NitroVM_Initialize(&var2);
+    NitroVM vm;
+    NitroVM_Initialize(&vm);
 
-    if (!NitroVM_PrepareReadFileByPath(&var2, arg0))
+    if (!NitroVM_PrepareReadFileByPath(&vm, path))
         return false;
 
-    unsigned int var3 = var2.fileInfo.unknown_8_ - var2.fileInfo.unknown_4_;
-    if (var0 != var3)
+    unsigned int size = vm.fileInfo.endOffset - vm.fileInfo.startOffset;
+    if (capacity != size)
     {
-        NitroVM_FinishRead(&var2);
+        NitroVM_FinishRead(&vm);
         return false;
     }
 
-    NitroVM_ReadSync(&var2, var1, var0);
-    NitroVM_FinishRead(&var2);
+    NitroVM_ReadSync(&vm, var1, capacity);
+    NitroVM_FinishRead(&vm);
     return true;
 }

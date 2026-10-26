@@ -9,7 +9,7 @@
 #endif
 
 // USA: func_ov000_0216872c
-extern "C" ARM void func_ov000_0216872c(void* arg0, int arg1, int arg2) {
-    *(unsigned char*)((char*)arg0 + REGION_OFFSET_0) = (unsigned char)arg1;
-    *(unsigned char*)((char*)arg0 + REGION_OFFSET_1) = (unsigned char)arg2;
+extern "C" ARM void func_ov000_0216872c(void* obj, int a, int b) {
+    *(unsigned char*)((char*)obj + REGION_OFFSET_0) = (unsigned char)a;
+    *(unsigned char*)((char*)obj + REGION_OFFSET_1) = (unsigned char)b;
 }

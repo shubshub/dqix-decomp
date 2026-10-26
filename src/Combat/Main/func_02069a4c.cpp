@@ -1,39 +1,39 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" int func_020696bc(int arg0, int* arg1, int arg2);
-extern "C" int func_020421a0(void);
+extern "C" int func_020696bc(int p1, int* out, int count);
+extern "C" int MessageSystem_GetInstance(void);
 
-struct Struct_02069a4c { void* unknown_0_; };
+struct Struct_02069a4c { void* dst; };
 
-struct Struct_02069a4c_2 {
-    char unknown_0_[0x194e];
+struct Table02069a4c {
+    char pad0[0x194e];
     signed char unknown_194e_[4];
-    signed char unknown_1952_[4];
-    signed char unknown_1956_;
+    signed char slotB[4];
+    signed char counter;
 };
 
 // USA: func_02069a4c
-extern "C" ARM int func_02069a4c(struct Struct_02069a4c* arg0, int arg1) {
-    int var0[3];
-    struct Struct_02069a4c_2* var1;
-    int var2, var3;
+extern "C" ARM int func_02069a4c(struct Struct_02069a4c* ctx, int p1) {
+    int buf[3];
+    struct Table02069a4c* t;
+    int a, b;
 
-    func_020696bc(arg1, &var0[1], 2);
+    func_020696bc(p1, &buf[1], 2);
 
-    var1 = (struct Struct_02069a4c_2*)func_020421a0();
-    var3 = var0[2];
+    t = (struct Table02069a4c*)MessageSystem_GetInstance();
+    b = buf[2];
 
-    var1->unknown_1956_ = var1->unknown_1956_ % 4;
-    var2 = var0[1];
-    var1->unknown_194e_[var1->unknown_1956_] = (signed char)var2;
-    var1->unknown_1952_[var1->unknown_1956_] = (signed char)var3;
-    var1->unknown_1956_ = var1->unknown_1956_ + 1;
+    t->counter = t->counter % 4;
+    a = buf[1];
+    t->unknown_194e_[t->counter] = (signed char)a;
+    t->slotB[t->counter] = (signed char)b;
+    t->counter = t->counter + 1;
 
     {
-        void* var4 = arg0->unknown_0_;
-        *(unsigned short*)&var0[0] = 0xff1c;
-        memcpy(var4, &var0[0], 2);
+        void* d = ctx->dst;
+        *(unsigned short*)&buf[0] = 0xff1c;
+        memcpy(d, &buf[0], 2);
     }
 
     return 2;

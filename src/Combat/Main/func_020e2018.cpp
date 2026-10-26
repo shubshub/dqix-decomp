@@ -1,29 +1,29 @@
 #include <globaldefs.h>
-struct Struct_020e1568 { int unknown_0_, unknown_4_; unsigned char unknown_8_, unknown_9_, unknown_a_, unknown_b_; };
-struct Struct_020200c0_3 { int unknown_0_; short unknown_4_, unknown_6_, unknown_8_, unknown_a_; };
-struct Struct_020200c0_4 { int unknown_0_, unknown_4_; unsigned char unknown_8_; };
-struct Struct_020e2018 { int unknown_0_; char unknown_4_[6]; unsigned char unknown_a_, unknown_b_; };
+struct Struct_020e1568 { int pointer, value; unsigned char x, y, width, height; };
+struct Struct02020520 { int pointer; short x, y, width, height; };
+struct S_b20c { int pointer, layout; unsigned char mode; };
+struct Struct_020e2018 { int pointer; char unknown4[6]; unsigned char width, height; };
 struct Struct_020e2018_2 {
-    char unknown_0_[8];
-    Struct_020e2018* unknown_8_;
-    char unknown_c_[0x24-0xc];
-    Struct_020e1568 unknown_24_;
-    int unknown_30_, unknown_34_;
+    char unknown0[8];
+    Struct_020e2018* image;
+    char unknownC[0x24-0xc];
+    Struct_020e1568 clipping;
+    int offset, stride;
     char unknown_38_[2];
-    unsigned char unknown_3a_, unknown_3b_;
+    unsigned char width, height;
 };
-struct Owner020e2018 { int buffer; Panel020e2018* panel; };
-void ClearZeroStruct_020e1568(ZeroStruct*);
-void GlyphDestinationRect_Clear(Struct02020520*);
-void GlyphDestination_Clear(S_b20c*);
-void GlyphDestination_SetPixels(void*, int);
-void GlyphDestination_SetRects(void*, int, unsigned char);
+struct Struct_020e2018_3 { int buffer; Struct_020e2018_2* panel; };
+extern "C" void func_020e1568(Struct_020e1568*);
+extern "C" void GlyphDestinationRect_Clear(Struct02020520*);
+extern "C" void GlyphDestination_Clear(S_b20c*);
+extern "C" void GlyphDestination_SetPixels(void*, int);
+extern "C" void GlyphDestination_SetRects(void*, int, unsigned char);
 extern "C" void Canvas_FillRect(S_b20c*, int, int, int, int, int);
 // USA: func_020e2018
-extern "C" ARM void func_020e2018(Owner020e2018* owner) {
-    Panel020e2018* panel = owner->panel;
-    Image020e2018* image = panel->image;
-    ClearZeroStruct_020e1568(&panel->clipping);
+extern "C" ARM void func_020e2018(Struct_020e2018_3* owner) {
+    Struct_020e2018_2* panel = owner->panel;
+    Struct_020e2018* image = panel->image;
+    func_020e1568(&panel->clipping);
     panel->clipping.pointer = image->pointer;
     panel->clipping.value = 0;
     panel->clipping.x = 0;

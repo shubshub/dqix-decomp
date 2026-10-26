@@ -2,16 +2,16 @@
 #include "Memory/SafeAllocator.h"
 
 struct Struct_0207ed1c {
-    void* unknown_0_;   // 0x0
-    short unknown_4_;       // 0x4
-    short unknown_6_;     // 0x6
+    void* entries;   // 0x0
+    short idx;       // 0x4
+    short count;     // 0x6
 };
 
 // USA: func_0207efdc
-extern "C" ARM void func_0207efdc(struct Struct_0207ed1c* arg0, SafeAllocator* arg1, int arg2) {
-    if (arg1 == NULL) return;
-    if (arg2 < 0) return;
-    arg0->unknown_4_ = 0;
-    arg0->unknown_6_ = arg2;
-    arg0->unknown_0_ = arg1->Allocate(arg2 * 0x18);
+extern "C" ARM void func_0207efdc(struct Struct_0207ed1c* obj, SafeAllocator* alloc, int count) {
+    if (alloc == NULL) return;
+    if (count < 0) return;
+    obj->idx = 0;
+    obj->count = count;
+    obj->entries = alloc->Allocate(count * 0x18);
 }

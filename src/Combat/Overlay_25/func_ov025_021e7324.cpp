@@ -1,40 +1,40 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_ov000_021820bc(void* arg0, int arg1, int arg2, int arg3);
+extern "C" int func_ov000_021820bc(void* obj, int unused, int index, int arg);
 struct Struct_ov001_0215cdf8;
 struct Struct_ov001_0215cd50;
 struct Object3D;
 
 struct Struct_ov025_021e7324 {
-    char unknown_0_[8];
-    unsigned char unknown_8_;
-    unsigned char unknown_9_;
-    char unknown_a_[2];
-    char* unknown_c_;
+    char pad[8];
+    unsigned char idx1;
+    unsigned char idx2;
+    char pad2[2];
+    char* label;
 };
 
 struct Struct_ov025_021e7324_2 {
-    int unknown_0_;
-    char unknown_4_[0x2c];
+    int id;
+    char pad[0x2c];
 };
 
 // USA: func_ov025_021e7324
-extern "C" ARM int func_ov025_021e7324(struct Struct_ov025_021e7324* arg0, int arg1, int arg2, void* arg3) {
-    struct Struct_ov025_021e7324_2 var0;
-    struct Struct_ov025_021e7324_2 var1;
-    int var2 = func_ov000_021820bc(arg3, arg1, arg0->unknown_8_, (int)&var0.unknown_0_);
-    int var3 = func_ov000_021820bc(arg3, arg1, arg0->unknown_9_, (int)&var1.unknown_0_);
-    if (!var2 || !var3) {
+extern "C" ARM int func_ov025_021e7324(struct Struct_ov025_021e7324* a, int b, int unused, void* obj) {
+    struct Struct_ov025_021e7324_2 out1;
+    struct Struct_ov025_021e7324_2 out2;
+    int var2 = func_ov000_021820bc(obj, b, a->idx1, (int)&out1.id);
+    int found2 = func_ov000_021820bc(obj, b, a->idx2, (int)&out2.id);
+    if (!var2 || !found2) {
         return 1;
     }
-    GameState* var4 = GameState::GetInstance();
-    GameObject* var5 = var4->GetGameObjectByIndex(var0.unknown_0_);
-    GameObject* var6 = var4->GetGameObjectByIndex(var1.unknown_0_);
-    if (!var5 || !var6) {
+    GameState* bs = GameState::GetInstance();
+    GameObject* c1 = bs->GetGameObjectByIndex(out1.id);
+    GameObject* c2 = bs->GetGameObjectByIndex(out2.id);
+    if (!c1 || !c2) {
         return 1;
     }
-    ((Object3D*)((struct Struct_ov001_0215cdf8*)var5))->Detach();
-    ((Object3D*)((struct Struct_ov001_0215cd50*)var5))->Attach(&var6->obj3D_, arg0->unknown_c_);
+    ((Object3D*)((struct Struct_ov001_0215cdf8*)c1))->Detach();
+    ((Object3D*)((struct Struct_ov001_0215cd50*)c1))->Attach(&c2->obj3D_, a->label);
     return 1;
 }

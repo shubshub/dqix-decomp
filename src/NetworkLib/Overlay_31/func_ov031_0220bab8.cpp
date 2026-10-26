@@ -1,25 +1,25 @@
 #include <globaldefs.h>
 
 // USA: func_ov031_0220bab8
-extern "C" ARM void func_ov031_0220bab8(unsigned char *arg0, unsigned char *arg1, int arg2) {
-    int var0 = 0;
-    unsigned char var1 = arg0[0];
-    unsigned char var2 = arg0[1];
-    unsigned char *var3 = arg0 + 2;
+extern "C" ARM void func_ov031_0220bab8(unsigned char *state, unsigned char *data, int len) {
+    int k = 0;
+    unsigned char i = state[0];
+    unsigned char j = state[1];
+    unsigned char *s = state + 2;
 
-    if (arg2 > 0) {
+    if (len > 0) {
         do {
-            var1 = var1 + 1;
-            unsigned char var4 = var3[var1];
-            var2 = var2 + var4;
-            unsigned char var5 = var3[var2];
-            var3[var1] = var5;
-            var3[var2] = var4;
-            arg1[var0] ^= var3[(unsigned char)(var4 + var5)];
-            var0 = var0 + 1;
-        } while (var0 < arg2);
+            i = i + 1;
+            unsigned char var4 = s[i];
+            j = j + var4;
+            unsigned char var5 = s[j];
+            s[i] = var5;
+            s[j] = var4;
+            data[k] ^= s[(unsigned char)(var4 + var5)];
+            k = k + 1;
+        } while (k < len);
     }
 
-    arg0[0] = var1;
-    arg0[1] = var2;
+    state[0] = i;
+    state[1] = j;
 }

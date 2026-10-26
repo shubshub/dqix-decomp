@@ -8,12 +8,12 @@ struct GameObjectTimerBits {
 };
 
 struct GameObjectFields : Object3D {
-    char pad_ac[0xe];
+    char unknown_ac_[0xe];
     short shakeAmplitude;
     unsigned short shakeTimeLeft;
-    char pad_be[6];
+    char unknown_be_[6];
     struct GameObjectTimerBits timerBits;
-    char pad_c6[0x5e];
+    char unknown_c6_[0x5e];
     int fallY;
 };
 

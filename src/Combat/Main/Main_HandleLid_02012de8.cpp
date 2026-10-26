@@ -6,15 +6,15 @@
 
 struct FlagWord02046708 { unsigned int flags; };
 
-void* GlobalFlags_GetInstance(void);
+extern "C" void* GlobalFlags_GetInstance(void);
 extern "C" void* LinkSession_GetInstance(void);
-int LinkSession_IsActive(int* obj);
-int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
-int NNS_SndSetMasterVolume(int a);
+extern "C" int LinkSession_IsActive(int* obj);
+extern "C" int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
+extern "C" int NNS_SndSetMasterVolume(int a);
 extern "C" int EnterSleepMode(int a, int b, int c);
-int SetLcdPower(int a);
-void CancelActionIfHeadIdMatches_02199e98(void* obj);
-int IsLcdPowerOn(void);
+extern "C" int SetLcdPower(int a);
+extern "C" void func_ov017_02199e98(void* obj);
+extern "C" int IsLcdPowerOn(void);
 
 // EnterSleepMode's wake triggers (it names PM_TRIGGER_CARD 0x8 itself): the lid opening, or the game card coming out
 enum { PM_TRIGGER_COVER_OPEN = 0x4, PM_TRIGGER_CARD = 0x8 };
@@ -52,7 +52,7 @@ extern "C" ARM void Main_HandleLid(void) {
         {
             int resources = (int)GameState::GetInstance()->GetResources();
             if (resources == 0) return;
-            CancelActionIfHeadIdMatches_02199e98((void*)resources);
+            func_ov017_02199e98((void*)resources);
         }
         return;
     }

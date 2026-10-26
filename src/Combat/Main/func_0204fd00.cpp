@@ -1,121 +1,121 @@
 #include <globaldefs.h>
 
 struct Struct_0204fd00_2 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
+    char pad0[0x1c];
+    unsigned char screen : 4;
+    unsigned char bg : 4;
 };
 
 struct Struct_0204fd00 {
-    Struct_0204fd00* unknown_0_;
-    Struct_0204fd00_2* unknown_4_;
-    char unknown_8_[0xa8 - 0x8];
-    short unknown_a8_;
-    short unknown_aa_;
-    short unknown_ac_;
-    short unknown_ae_;
+    Struct_0204fd00* next;
+    Struct_0204fd00_2* layer;
+    char pad08[0xa8 - 0x8];
+    short width;
+    short height;
+    short x;
+    short y;
     char unknown_b0_[0xc5 - 0xb0];
-    unsigned char unknown_c5_;
+    unsigned char flags;
 };
 
-extern "C" int func_0204ea28(short arg0, short arg1, short arg2, short arg3, short arg4, short arg5);
+extern "C" int func_0204ea28(short x, short y, short minX, short arg3, short maxX, short arg5);
 
 // USA: func_0204fd00
-extern "C" ARM int func_0204fd00(Struct_0204fd00* arg0, int arg1) {
-    int var0;
-    short var1;
+extern "C" ARM int func_0204fd00(Struct_0204fd00* window, int mask) {
+    int result;
+    short top;
     short var2;
     short var3;
     short var4;
     short var5;
-    short var6;
-    short var7;
-    short var8;
-    unsigned char var9;
-    Struct_0204fd00* var10;
-    var10 = arg0->unknown_0_;
-    if (var10 == NULL) {
+    short left;
+    short right;
+    short bottom;
+    unsigned char screen;
+    Struct_0204fd00* other;
+    other = window->next;
+    if (other == NULL) {
         return 0;
     }
-    var6 = arg0->unknown_ac_;
-    var1 = arg0->unknown_ae_;
-    var7 = var6 + arg0->unknown_a8_;
-    var8 = var1 + arg0->unknown_aa_;
-    var9 = 0;
-    var0 = 0;
-    if (arg0->unknown_4_ != NULL) {
-        var9 = arg0->unknown_4_->unknown_1c_0_;
+    left = window->x;
+    top = window->y;
+    right = left + window->width;
+    bottom = top + window->height;
+    screen = 0;
+    result = 0;
+    if (window->layer != NULL) {
+        screen = window->layer->screen;
     }
-    while (var10 != NULL) {
-        if (var10->unknown_4_ != NULL && arg0->unknown_4_ != NULL && var9 != var10->unknown_4_->unknown_1c_0_) {
-            var10 = var10->unknown_0_;
+    while (other != NULL) {
+        if (other->layer != NULL && window->layer != NULL && screen != other->layer->screen) {
+            other = other->next;
             continue;
         }
-        if (var10->unknown_c5_ & 0x20) {
-            var10 = var10->unknown_0_;
+        if (other->flags & 0x20) {
+            other = other->next;
             continue;
         }
-        if ((var10->unknown_c5_ & 4) && (var10->unknown_c5_ & 0x10)) {
-            var10 = var10->unknown_0_;
+        if ((other->flags & 4) && (other->flags & 0x10)) {
+            other = other->next;
             continue;
         }
-        var2 = var10->unknown_ac_;
-        var3 = var10->unknown_ae_;
-        var4 = var2 + var10->unknown_a8_;
-        var5 = var3 + var10->unknown_aa_;
-        if (arg1 & 1) {
-            if (func_0204ea28(var6, var1, var2, var3, var4, var5)) {
-                if (var6 != var2 || var1 != var3) {
-                    var0 = 5;
-                    if (var6 == var2) {
-                        var0 = 1;
-                    } else if (var1 == var3) {
-                        var0 = 2;
+        var2 = other->x;
+        var3 = other->y;
+        var4 = var2 + other->width;
+        var5 = var3 + other->height;
+        if (mask & 1) {
+            if (func_0204ea28(left, top, var2, var3, var4, var5)) {
+                if (left != var2 || top != var3) {
+                    result = 5;
+                    if (left == var2) {
+                        result = 1;
+                    } else if (top == var3) {
+                        result = 2;
                     }
                     break;
                 }
             }
         }
-        if (arg1 & 2) {
-            if (func_0204ea28(var7 - 1, var1, var2, var3, var4, var5)) {
-                if (var7 != var4 || var1 != var3) {
-                    var0 = 5;
-                    if (var7 == var4) {
-                        var0 = 3;
-                    } else if (var1 == var3) {
-                        var0 = 2;
+        if (mask & 2) {
+            if (func_0204ea28(right - 1, top, var2, var3, var4, var5)) {
+                if (right != var4 || top != var3) {
+                    result = 5;
+                    if (right == var4) {
+                        result = 3;
+                    } else if (top == var3) {
+                        result = 2;
                     }
                     break;
                 }
             }
         }
-        if (arg1 & 4) {
-            if (func_0204ea28(var6, var8 - 1, var2, var3, var4, var5)) {
-                if (var6 != var2 || var8 != var5) {
-                    var0 = 5;
-                    if (var6 == var2) {
-                        var0 = 1;
-                    } else if (var8 == var5) {
-                        var0 = 4;
+        if (mask & 4) {
+            if (func_0204ea28(left, bottom - 1, var2, var3, var4, var5)) {
+                if (left != var2 || bottom != var5) {
+                    result = 5;
+                    if (left == var2) {
+                        result = 1;
+                    } else if (bottom == var5) {
+                        result = 4;
                     }
                     break;
                 }
             }
         }
-        if (arg1 & 8) {
-            if (func_0204ea28(var7 - 1, var8 - 1, var2, var3, var4, var5)) {
-                if (var7 != var4 || var8 != var5) {
-                    var0 = 5;
-                    if (var7 == var4) {
-                        var0 = 3;
-                    } else if (var8 == var5) {
-                        var0 = 4;
+        if (mask & 8) {
+            if (func_0204ea28(right - 1, bottom - 1, var2, var3, var4, var5)) {
+                if (right != var4 || bottom != var5) {
+                    result = 5;
+                    if (right == var4) {
+                        result = 3;
+                    } else if (bottom == var5) {
+                        result = 4;
                     }
                     break;
                 }
             }
         }
-        var10 = var10->unknown_0_;
+        other = other->next;
     }
-    return var0;
+    return result;
 }

@@ -55,9 +55,9 @@ struct Struct_ov023_021f64a8 {
     virtual void inline_ov023_021f64a8_15();
     virtual void inline_ov023_021f64a8_17();
     virtual void inline_ov023_021f64a8_18();
-    virtual void inline_ov023_021f64a8_19(void* arg0);
+    virtual void inline_ov023_021f64a8_19(void* arg);
     virtual void inline_ov023_021f64a8_20();
-    virtual void inline_ov023_021f64a8_21(void* arg0);
+    virtual void inline_ov023_021f64a8_21(void* arg);
 };
 
 extern "C" void* func_ov011_021849c8(void*);
@@ -65,12 +65,12 @@ extern "C" struct Struct_ov023_021f64a8* func_ov023_021f6880(void*, int);
 extern "C" int func_ov023_021f6f10(void);
 
 // USA: func_ov023_021f64a8
-extern "C" ARM void func_ov023_021f64a8(void* arg0, int arg1, void* arg2, void* arg3) {
-    void* var0 = func_ov011_021849c8(arg0);
-    struct Struct_ov023_021f64a8* var1 = func_ov023_021f6880(var0, arg1);
-    if (!var1) return;
-    int var2 = func_ov023_021f6f10();
-    if (var2 != 0xf) return;
-    var1->inline_ov023_021f64a8_21(arg2);
-    var1->inline_ov023_021f64a8_19(arg3);
+extern "C" ARM void func_ov023_021f64a8(void* obj, int id, void* arg2, void* arg3) {
+    void* sub = func_ov011_021849c8(obj);
+    struct Struct_ov023_021f64a8* node = func_ov023_021f6880(sub, id);
+    if (!node) return;
+    int state = func_ov023_021f6f10();
+    if (state != 0xf) return;
+    node->inline_ov023_021f64a8_21(arg2);
+    node->inline_ov023_021f64a8_19(arg3);
 }

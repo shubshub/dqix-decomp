@@ -14,6 +14,6 @@ struct Owner_1e80c {
 };
 
 // Main, originally GetThreeWordsAt0x70_0201e80c (USA 0x0201e80c, EUR 0x0201e81c, JPN 0x0201e598)
-ARM struct ThreeWords_1e80c ZoneFeatures_GetDefaultPosition(struct Owner_1e80c* features) {
+extern "C" ARM struct ThreeWords_1e80c ZoneFeatures_GetDefaultPosition(struct Owner_1e80c* features) {
     return features->defaultPosition;
 }

@@ -14,28 +14,28 @@ enum { Enum_020897b4_2384 = 0x8b8 };
 enum { Enum_020897b4_2384 = 0x950 };
 #endif
 
-struct Struct_02013fb4;
-struct Struct_02086f24_6 { void* unknown_0_; };
+struct StreamHeader;
+struct Ctx0209a8b4 { void* field0; };
 
 extern char data_020f1019[];
 extern char data_020f102e[];
 extern unsigned char g_fileLoadBuffer[0x30000];
 
-int GetFieldAt0x150_02053c6c(unsigned char* obj);
-void* ResourceScriptEntry_Init(void* obj);
-int InitAndRunScript0208274c(void* spellTable, StreamHeader* script, int size, int arg3);
+extern "C" int func_02053c6c(unsigned char* obj);
+extern "C" void* ResourceScriptEntry_Init(void* obj);
+extern "C" int func_0208274c(void* spellTable, StreamHeader* script, int size, int arg3);
 extern "C" void PartyMember_ApplyLevelStats(void* dst, void* src, void* tail);
 extern "C" void PartyMember_RecalculateStats(void* model, int arg);
-void SetBitsFromIndexList02083b8c(unsigned char* obj, unsigned char* learnedSpells, unsigned int count);
-void ClearField00209a804(int* field);
-void SetupAndRunBufferedScript0209a8b4(Ctx0209a8b4* spellTable, SafeAllocator* spellAllocator, StreamHeader* buffer, int length);
+extern "C" void func_02083b8c(unsigned char* obj, unsigned char* learnedSpells, unsigned int count);
+extern "C" void func_0209a804(int* field);
+extern "C" void func_0209a8b4(Ctx0209a8b4* spellTable, SafeAllocator* arg1, StreamHeader* buffer, int length);
 extern "C" int func_0209aa54(void* holder, unsigned char* path, unsigned char* out, int threshold);
-void EnqueueEventTag176_021ce614(unsigned char combatantId, unsigned char level, unsigned char vocation);
+extern "C" void func_ov017_021ce614(unsigned char combatantId, unsigned char level, unsigned char vocation);
 
 struct Struct_020897b4 {
-    unsigned char unknown_0_[0x138];
-    unsigned int unknown_138_[13];
-    unsigned short unknown_16c_[13];
+    unsigned char unknown0[0x138];
+    unsigned int experience[13];
+    unsigned short levels[13];
     unsigned char unknown_186_[0x564 - 0x186];
     unsigned short unknown_564_;
     unsigned char unknown_566_[Enum_020897b4_2384 - 0x566];
@@ -44,29 +44,29 @@ struct Struct_020897b4 {
 };
 
 struct Struct_020897b4_2 {
-    unsigned int unknown_0_;
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
+    unsigned int flags;
+    unsigned short hp;
+    unsigned short mp;
 };
 
 struct Struct_020897b4_3 {
-    unsigned char unknown_0_[0x130];
+    unsigned char unknown0[0x130];
     Struct_020897b4_2* unknown_130_;
 };
 
 // USA: func_020897b4
-extern "C" ARM void func_020897b4(unsigned char arg0, unsigned char arg1, int arg2, unsigned char arg3,
-                                 unsigned char arg4, void* arg5, unsigned int arg6, void* arg7, unsigned int arg8) {
-    char var0[0x50];
-    Struct_0201099c_2 var1;
-    char var2[0x600];
+extern "C" ARM void func_020897b4(unsigned char combatantId, unsigned char level, int vocation, unsigned char arg3,
+                                 unsigned char arg4, void* levelScript, unsigned int arg6, void* spellScript, unsigned int arg8) {
+    char path[0x50];
+    ResourceScriptEntry entry;
+    char heap[0x600];
     SafeAllocator var3;
-    unsigned char var4[0x14];
-    unsigned int var5;
-    Struct_02086f24_6 var6;
+    unsigned char learnedSpells[0x14];
+    unsigned int size;
+    Ctx0209a8b4 spellTable;
 
-    GameObject* var7 = func_0200ff1c(GameState::GetInstance(), arg0);
-    if (var7 == 0) {
+    GameObject* combatant = func_0200ff1c(GameState::GetInstance(), combatantId);
+    if (combatant == 0) {
         return;
     }
     BackgroundLoader::AddLockGlobal();
@@ -78,47 +78,47 @@ extern "C" ARM void func_020897b4(unsigned char arg0, unsigned char arg1, int ar
             return;
         }
         levelScript = &g_fileLoadBuffer;
-        levelScriptSize = size;
+        arg6 = size;
     }
 
     ResourceScriptEntry_Init(&entry);
-    InitAndRunScript0208274c(&entry, (StreamHeader*)levelScript, levelScriptSize, level);
+    func_0208274c(&entry, (StreamHeader*)levelScript, arg6, level);
 
     ResourceScriptEntry* const levelData = &entry;
-    VocationRecord* record = reinterpret_cast<VocationRecord*>(GetFieldAt0x150_02053c6c((unsigned char*)combatant));
-    record->unlockedVocations |= 1 << vocation;
-    record->currentVocation = vocation;
+    Struct_020897b4* record = reinterpret_cast<Struct_020897b4*>(func_02053c6c((unsigned char*)combatant));
+    record->unknown_954_ |= 1 << vocation;
+    record->unknown_950_ = vocation;
     record->levels[vocation] = level;
     record->experience[vocation] = levelData->initial.value0;
-    record->unknown564 = levelData->initial.value4High;
+    record->unknown_564_ = levelData->initial.value4High;
     PartyMember_ApplyLevelStats(record, levelData, entry.variants);
 
-    if (restoreHpMp != 0) {
+    if (arg4 != 0) {
         PartyMember_RecalculateStats(record, 0);
-        CombatantRestorationView* actor = reinterpret_cast<CombatantRestorationView*>(combatant);
-        actor->restoration->hp = combatant->baseStats_->primaryStats.maxHP;
-        actor->restoration->mp = combatant->baseStats_->primaryStats.maxMP;
+        Struct_020897b4_3* actor = reinterpret_cast<Struct_020897b4_3*>(combatant);
+        actor->unknown_130_->hp = combatant->baseStats_->primaryStats.maxHP;
+        actor->unknown_130_->mp = combatant->baseStats_->primaryStats.maxMP;
     }
 
     if (spellScript == 0) {
         if (LoadFileIntoMemory(data_020f102e, &g_fileLoadBuffer, &size) != 0) {
             spellScript = &g_fileLoadBuffer;
-            spellScriptSize = size;
+            arg8 = size;
         }
     }
 
-    if (arg7 != 0) {
+    if (spellScript != 0) {
         var3.ResetAllocatorPointer();
-        var3.CreateTypeA(var2, 0x600);
-        func_0209a804((int*)&var6);
-        func_0209a8b4(&var6, &var3, (Struct_02013fb4*)arg7, arg8);
-        unsigned int var11 = func_0209aa54(&var6, (unsigned char*)var7, var4, 0);
-        func_02083b8c(reinterpret_cast<unsigned char*>(var9), var4, var11);
+        var3.CreateTypeA(heap, 0x600);
+        func_0209a804((int*)&spellTable);
+        func_0209a8b4(&spellTable, &var3, (StreamHeader*)spellScript, arg8);
+        unsigned int count = func_0209aa54(&spellTable, (unsigned char*)combatant, learnedSpells, 0);
+        func_02083b8c(reinterpret_cast<unsigned char*>(record), learnedSpells, count);
         var3.Destroy();
     }
 
     if (arg3 != 0) {
-        func_ov017_021ce614(arg0, arg1, arg4);
+        func_ov017_021ce614(combatantId, level, arg4);
     }
 
     BackgroundLoader::RemoveLockGlobal();

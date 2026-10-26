@@ -1,12 +1,13 @@
 #include <globaldefs.h>
 
+// The GameObject's flag byte (+0x1ce, jpn +0x1c2). Bit 8's setter is not identified.
 #if defined(jpn)
-enum { Enum_02039dbc_462 = 0x1c2 };
+enum { kActorFlagsOffset = 0x1c2 };
 #else
-enum { Enum_02039dbc_462 = 0x1ce };
+enum { kActorFlagsOffset = 0x1ce };
 #endif
 
 // USA: func_02039dbc
-extern "C" ARM void func_02039dbc(unsigned char* arg0) {
-    arg0[Enum_02039dbc_462] &= ~8;
+extern "C" ARM void func_02039dbc(unsigned char* actor) {
+    actor[kActorFlagsOffset] &= ~8;
 }

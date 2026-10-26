@@ -11,11 +11,10 @@ struct Obj02026b3c;
 extern "C" void MapDisplay_SetRedChestZone(struct Obj02026b3c* obj, unsigned int index, unsigned short id, const char* name);
 #endif
 
-void MapDisplay_ClearRedChests(char* obj);
-void MapDisplay_AllocateRedChestZones(struct Obj02026b0c* p, int n);
+extern "C" void MapDisplay_ClearRedChests(char* obj);
+extern "C" void MapDisplay_AllocateRedChestZones(struct Obj02026b0c* p, int n);
 #if !defined(jpn)
-extern "C" void _Z26MapDisplay_SetRedChestZoneP11Obj02026b3cjsPKc(Obj02026b3c*, unsigned int, unsigned short, const char*);
-#define MapDisplay_SetRedChestZone _Z26MapDisplay_SetRedChestZoneP11Obj02026b3cjsPKc
+extern "C" void MapDisplay_SetRedChestZone(Obj02026b3c*, unsigned int, unsigned short, const char*);
 #endif
 
 // Main, originally func_0201f8d0 (USA 0x0201f8d0, EUR 0x0201f8e0, JPN 0x0201f65c)

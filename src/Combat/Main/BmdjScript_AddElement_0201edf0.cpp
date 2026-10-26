@@ -19,17 +19,17 @@ struct Element0201f214 {
 
 struct List0201f214;
 
-void BmdjScriptState_AddElement(struct List0201f214*, struct Element0201f214*);
+extern "C" void BmdjScriptState_AddElement(struct List0201f214*, struct Element0201f214*);
 
 // data_020fdc40, the BMDJ script's context while BmdjScriptState_RunScript runs it
 struct Alloc0201edf0;
-struct Container0201edf0 {
+struct Struct_020fdc40_5 {
     int currentResource;
     struct Alloc0201edf0* allocator;
     struct List0201f214* state;
     char pad[16];
 };
-extern struct Container0201edf0 data_020fdc40;
+extern struct Struct_020fdc40_5 data_020fdc40;
 
 // Main, originally func_0201edf0 (USA 0x0201edf0, EUR 0x0201ee00, JPN 0x0201eb7c)
 extern "C" ARM int BmdjScript_AddElement(Script::Parameter* params, int numParams) {

@@ -14,10 +14,10 @@ struct Struct_ov014_02184f78 {
 };
 
 struct Struct_ov000_0217ab8c {
-    char unknown_0_[REGION_MENU_LEADING_SIZE];
-    void* unknown_2c_;
+    char unk_0[REGION_MENU_LEADING_SIZE];
+    void* backgrounds_;
     char unknown_30_[6];
-    short unknown_36_;
+    short cursor_;
     unsigned char unknown_38_;
     char unknown_39_;
     unsigned char unknown_3a_;
@@ -25,32 +25,32 @@ struct Struct_ov000_0217ab8c {
 };
 
 struct Struct_020974b0 {
-    char unknown_0_[0x10];
+    char unk_0[0x10];
 };
 
 struct Struct_ov014_02186bc8 {
-    char unknown_0_[0xa4];
-    Struct_020974b0 unknown_a4_;
+    char unk_0[0xa4];
+    Struct_020974b0 list_;
     void* unknown_b4_;
-    Struct_ov014_02184f78* unknown_b8_;
+    Struct_ov014_02184f78* entries_;
     Struct_ov014_02184f78* unknown_bc_;
-    Struct_ov000_0217ab8c* unknown_c0_;
-    void* unknown_c4_;
-    void* unknown_c8_;
-    void* unknown_cc_;
-    short* unknown_d0_;
+    Struct_ov000_0217ab8c* menu_;
+    void* backgrounds_;
+    void* canvases_;
+    void* canvasBuffer_;
+    short* cursor_;
     void* unknown_d4_;
-    void* unknown_d8_;
+    void* animations_;
     void* unknown_dc_;
-    char unknown_e0_[0x18];
-    char unknown_f8_[0x54];
+    char textTable_[0x18];
+    char spriteRenderer_[0x54];
     char unknown_14c_[0xc];
     unsigned short unknown_158_;
     unsigned char unknown_15a_;
     char unknown_15b_;
     int unknown_15c_;
     int unknown_160_;
-    int unknown_164_;
+    int ticks_;
     int unknown_168_;
     int unknown_16c_;
     short unknown_170_;
@@ -68,72 +68,72 @@ struct Struct_ov014_02186bc8 {
     short unknown_182_[8];
 };
 
-struct Obj2081;
+struct Struct_0207fdcc_2;
 struct SePlayer;
-struct Obj0208203c;
+struct Struct_02081f20_2;
 
-short FindMappedMemberId02080468(void* obj, int id);
-void ResetWithSub0208203c(Obj0208203c*);
-void CallFunc0204c804OnMatchingKey_0207fdcc(Obj2081*, int);
-int CheckFlagAndPointInElement_02186ff0(char*);
-void SePlayer_Play(SePlayer*, int, int);
+extern "C" short func_02080468(void* obj, int id);
+extern "C" void func_0208203c(Struct_02081f20_2*);
+extern "C" void func_0207fdcc(Struct_0207fdcc_2*, int);
+extern "C" int func_ov014_02186ff0(char*);
+extern "C" void SePlayer_Play(SePlayer*, int, int);
 
 extern "C" {
-Struct_ov014_02184f78* func_020974b0(Struct_020974b0* arg0, int arg1, int, bool arg3, int, short* arg5);
-void func_ov014_02188330(Struct_ov014_02186bc8* arg0);
-void func_020813ec(Struct_ov000_0217ab8c* arg0, short arg1);
-bool func_ov014_02186f10(Struct_ov014_02186bc8* arg0);
+Struct_ov014_02184f78* func_020974b0(Struct_020974b0* list, int arg1, int, bool arg3, int, short* outCount);
+void func_ov014_02188330(Struct_ov014_02186bc8* self);
+void func_020813ec(Struct_ov000_0217ab8c* menu, short group);
+bool func_ov014_02186f10(Struct_ov014_02186bc8* self);
 }
 
 extern char g_sePlayer[];
 
 // USA: func_ov014_02187c04
-extern "C" ARM void func_ov014_02187c04(Struct_ov014_02186bc8* arg0)
+extern "C" ARM void func_ov014_02187c04(Struct_ov014_02186bc8* self)
 {
-    if (arg0->unknown_17b_ == 0)
+    if (self->unknown_17b_ == 0)
     {
-        if (!(arg0->unknown_17e_ & 0x10))
+        if (!(self->unknown_17e_ & 0x10))
         {
-            short var0 = 0;
-            arg0->unknown_b8_ = func_020974b0(&arg0->unknown_a4_, arg0->unknown_17d_, -1, (arg0->unknown_17e_ & 8) != 0, 0x10, &var0);
-            arg0->unknown_bc_ = arg0->unknown_b8_;
-            func_ov014_02188330(arg0);
-            arg0->unknown_170_ = 1;
-            if (arg0->unknown_172_ < 0)
-                arg0->unknown_172_ = func_02080468(arg0->unknown_c0_, arg0->unknown_170_);
-            arg0->unknown_c0_->unknown_36_ = arg0->unknown_172_;
-            func_020813ec(arg0->unknown_c0_, arg0->unknown_170_);
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_14c_);
-            arg0->unknown_d0_ = NULL;
-            arg0->unknown_17b_++;
+            short count = 0;
+            self->entries_ = func_020974b0(&self->list_, self->unknown_17d_, -1, (self->unknown_17e_ & 8) != 0, 0x10, &count);
+            self->unknown_bc_ = self->entries_;
+            func_ov014_02188330(self);
+            self->unknown_170_ = 1;
+            if (self->unknown_172_ < 0)
+                self->unknown_172_ = func_02080468(self->menu_, self->unknown_170_);
+            self->menu_->cursor_ = self->unknown_172_;
+            func_020813ec(self->menu_, self->unknown_170_);
+            func_0208203c((Struct_02081f20_2*)self->unknown_14c_);
+            self->cursor_ = NULL;
+            self->unknown_17b_++;
         }
     }
-    else if (arg0->unknown_17b_ == 1)
+    else if (self->unknown_17b_ == 1)
     {
-        arg0->unknown_d0_ = &arg0->unknown_172_;
-        if (func_ov014_02186f10(arg0))
+        self->cursor_ = &self->unknown_172_;
+        if (func_ov014_02186f10(self))
         {
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
-            ResetWithSub0208203c((Obj0208203c*)self->repeat_);
+            func_0208203c((Struct_02081f20_2*)self->unknown_14c_);
             switch (*self->cursor_)
             {
             case 8:
-                arg0->unknown_17e_ |= 0x10;
-                arg0->unknown_17a_ = 4;
-                arg0->unknown_17b_ = 0;
+                self->unknown_17e_ |= 0x10;
+                self->unknown_17a_ = 4;
+                self->unknown_17b_ = 0;
                 break;
             case 9:
-                arg0->unknown_17a_ = 3;
-                arg0->unknown_17b_ = 0;
+                self->unknown_17a_ = 3;
+                self->unknown_17b_ = 0;
                 break;
             }
-            func_0207fdcc((Struct_0207fdcc_2*)arg0->unknown_c0_, arg0->unknown_170_);
-            arg0->unknown_d0_ = NULL;
+            func_0207fdcc((Struct_0207fdcc_2*)self->menu_, self->unknown_170_);
+            self->cursor_ = NULL;
         }
-        else if (func_ov014_02186ff0((char*)arg0) || g_keyManager.TestKeysPressed(0x800))
+        else if (func_ov014_02186ff0((char*)self) || g_keyManager.TestKeysPressed(0x800))
         {
-            arg0->unknown_17a_ = 5;
-            arg0->unknown_17b_ = 0;
+            self->unknown_17a_ = 5;
+            self->unknown_17b_ = 0;
         }
     }
 }

@@ -2,46 +2,46 @@
 #include "Filesystem/BackgroundLoader.h"
 
 struct Struct_020da244_2 {
-    unsigned char unknown_0_[8];
-    int unknown_8_;
+    unsigned char pad0[8];
+    int field8;
 };
 
 struct Struct_020da244 {
-    void* unknown_0_;
-    int unknown_4_;
-    unsigned char unknown_8_[0xc - 0x8];
-    unsigned char unknown_c_;
+    void* f0;
+    int f4;
+    unsigned char pad8[0xc - 0x8];
+    unsigned char fc;
     unsigned char unknown_d_;
-    unsigned char unknown_e_;
-    unsigned char unknown_f_;
-    unsigned char unknown_10_[0x14 - 0x10];
-    Struct_020da244_2 unknown_14_[4];
+    unsigned char fe;
+    unsigned char ff;
+    unsigned char pad10[0x14 - 0x10];
+    Struct_020da244_2 slots[4];
 };
 
-extern "C" void func_020dabd0(void* arg0);
-extern "C" void func_020da2e4(unsigned char* arg0);
+extern "C" void func_020dabd0(void* ctx);
+extern "C" void func_020da2e4(unsigned char* entry);
 
 // USA: func_020da244
-extern "C" ARM void func_020da244(Struct_020da244* arg0) {
-    func_020dabd0(arg0);
-    Struct_020da244_2* var0 = arg0->unknown_14_;
+extern "C" ARM void func_020da244(Struct_020da244* sb) {
+    func_020dabd0(sb);
+    Struct_020da244_2* entry = sb->slots;
     int var1 = (int)BackgroundLoader::GetInstance();
     if (var1 != 0) {
-        for (unsigned char var2 = 0; var2 < 4; var2++, var0++) {
-            if (var0->unknown_8_ != -1) {
-                ((BackgroundLoader*)(var1))->RemoveTask((int)(var0->unknown_8_ != -1));
-                func_020da2e4((unsigned char*)var0);
+        for (unsigned char i = 0; i < 4; i++, entry++) {
+            if (entry->field8 != -1) {
+                ((BackgroundLoader*)(var1))->RemoveTask((int)(entry->field8 != -1));
+                func_020da2e4((unsigned char*)entry);
             }
         }
     }
-    if (arg0->unknown_0_ != 0) {
-        ((SafeAllocator*)arg0->unknown_0_)->Destroy();
-        ((SafeAllocator*)arg0->unknown_0_)->ResetAllocatorPointer();
+    if (sb->f0 != 0) {
+        ((SafeAllocator*)sb->f0)->Destroy();
+        ((SafeAllocator*)sb->f0)->ResetAllocatorPointer();
     }
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0;
-    arg0->unknown_c_ = 0;
-    arg0->unknown_d_ = 0;
-    arg0->unknown_e_ = 0;
-    arg0->unknown_f_ = 0;
+    sb->f0 = 0;
+    sb->f4 = 0;
+    sb->fc = 0;
+    sb->unknown_d_ = 0;
+    sb->fe = 0;
+    sb->ff = 0;
 }

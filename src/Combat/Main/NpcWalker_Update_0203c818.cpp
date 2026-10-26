@@ -2,10 +2,10 @@
 #include "NitroSDK/Matrix.h"
 
 struct State0203f20c;
-void UpdateStride0x14Value(State0203f20c*);
+extern "C" void func_0203f20c(State0203f20c*);
 extern "C" void NpcWalker_UpdateTalkAnimation(void* walker, void* camera);
 struct MoverObj0203c960;
-void NpcWalker_MoveTowardTarget(MoverObj0203c960*);
+extern "C" void NpcWalker_MoveTowardTarget(MoverObj0203c960*);
 int fix32ReduceAngle0To2Pi(int angle);
 
 // An NpcWalker
@@ -18,20 +18,20 @@ struct Obj0203c818 {
     int facing;              // NpcWalker_SetFacing
     int angularSpeed;        // per movement tick
     Vector3fix previousPosition;
-    char pad78[0x88 - 0x78];
+    char unknown_78_[0x88 - 0x78];
     int idleTicks;           // ticks since it last walked
 };
 
 enum {
     kWalking = 1,        // walking to its target (NpcWalker_WalkTo)
     kTurning = 2,        // angle has not reached facing yet
-    kTalkPose = 0x10,    // SetCombatFlags0x5c, when talked to
-    kTalkReturn = 0x20   // SetCombatFlags0x5c, when the talk ends
+    kTalkPose = 0x10,    // func_0203cedc, when talked to
+    kTalkReturn = 0x20   // func_0203cedc, when the talk ends
 };
 
 // Main, originally func_0203c818 (USA 0x0203c818, EUR 0x0203c828, JPN 0x0203cd50)
 extern "C" ARM void NpcWalker_Update(Obj0203c818* walker, void* camera, int elapsedTicks, int movementTicks) {
-    UpdateStride0x14Value((State0203f20c*)walker);
+    func_0203f20c((State0203f20c*)walker);
 
     if ((walker->flags & kTalkPose) || (walker->flags & kTalkReturn)) {
         NpcWalker_UpdateTalkAnimation(walker, camera);

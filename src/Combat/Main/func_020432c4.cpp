@@ -2,9 +2,9 @@
 #include "Graphics/VRAMStaging.h"
 
 struct Struct_0204166c;
-extern "C" void func_020416c0(struct Struct_0204166c* arg0);
+extern "C" void func_020416c0(struct Struct_0204166c* s);
 
-extern "C" void func_020439b0(void* arg0, int arg1);
+extern "C" void func_020439b0(void* self, int flag);
 
 #if defined(jpn)
 extern int data_0210773c;
@@ -21,46 +21,46 @@ extern int data_021077fc;
 extern int data_020e7af8;
 
 struct Struct_020432c4 {
-    char unknown_0_[0x68];
-    unsigned int unknown_68_0_ : 16;
+    char pad0[0x68];
+    unsigned int field68 : 16;
 };
 
 // USA: func_020432c4
-extern "C" ARM void func_020432c4(char* arg0) {
-    struct Struct_020432c4* var0 = *(struct Struct_020432c4**)(arg0 + (
+extern "C" ARM void func_020432c4(char* obj) {
+    struct Struct_020432c4* ptrField = *(struct Struct_020432c4**)(obj + (
 #if defined(jpn)
 0x1c4c
 #else
 0x1e28
 #endif
 ));
-    int var1;
+    int i;
 
-    if (var0 != 0) {
-        data_021077fc = var0->unknown_68_0_ << 3;
+    if (ptrField != 0) {
+        data_021077fc = ptrField->field68 << 3;
     }
 
     StageMemoryToVRAM(VRAMSubregion_TexturePalette, &data_020e7af8, data_021077fc, 0x20, true, true);
 
-    for (var1 = 0; var1 < 0x80; var1++) {
+    for (i = 0; i < 0x80; i++) {
 #if defined(jpn)
-        func_02041bbc(arg0 + 0x888 + var1 * 0x1c);
-        *(unsigned char*)(arg0 + var1 + 0x1688) = 0;
+        func_02041bbc(obj + 0x888 + i * 0x1c);
+        *(unsigned char*)(obj + i + 0x1688) = 0;
 #else
-        func_020416c0((struct Struct_0204166c*)(arg0 + 0x9b8 + var1 * 0x1c));
-        *(unsigned char*)(arg0 + var1 + 0x17b8) = 0;
+        func_020416c0((struct Struct_0204166c*)(obj + 0x9b8 + i * 0x1c));
+        *(unsigned char*)(obj + i + 0x17b8) = 0;
 #endif
     }
 
 #if defined(jpn)
-    if (*(void**)(arg0 + 0x1c4c)) {
-        *(unsigned char*)(arg0 + 0x1789) = 0;
-        unsigned short* var2 = *(unsigned short**)(data_020efd90 + 0x64);
-        for (int var3 = 0; var3 < 14; var3++, var2++) {
-            func_02046530(arg0, var2, func_02043014(12, var2), 12);
-            *(unsigned char*)(arg0 + 0x1688 + var3) = 1;
+    if (*(void**)(obj + 0x1c4c)) {
+        *(unsigned char*)(obj + 0x1789) = 0;
+        unsigned short* entry = *(unsigned short**)(data_020efd90 + 0x64);
+        for (int j = 0; j < 14; j++, entry++) {
+            func_02046530(obj, entry, func_02043014(12, entry), 12);
+            *(unsigned char*)(obj + 0x1688 + j) = 1;
         }
     }
 #endif
-    func_020439b0(arg0, 0);
+    func_020439b0(obj, 0);
 }

@@ -4,9 +4,9 @@ struct DispatchObj020a0dec {
     int selector;
 };
 
-int Vec3Ease_IsRunning(int*);
-void Vec3Ease_Step(struct DispatchObj020a0dec*);
-void Camera_TurnTarget(void*, int);
+extern "C" int Vec3Ease_IsRunning(int*);
+extern "C" void Vec3Ease_Step(struct DispatchObj020a0dec*);
+extern "C" void Camera_TurnTarget(void*, int);
 int fix32ReduceAngle0To2Pi(int);
 
 // The camera (include/Graphics/Camera.h) with the animation fields its padding still hides:

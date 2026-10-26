@@ -9,7 +9,7 @@ extern "C" void G3_MultMtx43(const fix32_t* matrix);
 extern "C" ARM void G3_RotateY(int angle) {
     Matrix4x3 rotation;
 
-    if (arg0 == 0) {
+    if (angle == 0) {
         return;
     }
 

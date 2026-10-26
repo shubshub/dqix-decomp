@@ -1,32 +1,32 @@
 #include <globaldefs.h>
 
 struct Struct_ov024_021f6a1c;
-extern "C" void func_ov024_021f6a1c(struct Struct_ov024_021f6a1c* arg0, void* arg1);
+extern "C" void func_ov024_021f6a1c(struct Struct_ov024_021f6a1c* obj, void* src);
 
-struct Struct_ov024_021fd104 { unsigned int unknown_0_[3]; };
+struct Struct_ov024_021fd104 { unsigned int v[3]; };
 struct Struct_ov024_021fd104_2 {
-    float unknown_0_;
-    unsigned char unknown_4_;
-    unsigned char unknown_5_;
-    unsigned char unknown_6_;
+    float value;
+    unsigned char id;
+    unsigned char pad5;
+    unsigned char pad6;
     unsigned char unknown_7_;
-    unsigned char unknown_8_;
-    unsigned char unknown_9_, unknown_a_, unknown_b_;
+    unsigned char code;
+    unsigned char unknown_9_, pad10, unknown_b_;
 };
 union Struct_ov024_021fd104_3 {
-    Struct_ov024_021fd104 unknown_0_;
-    Struct_ov024_021fd104_2 unknown1_0_;
+    Struct_ov024_021fd104 raw;
+    Struct_ov024_021fd104_2 f;
 };
 
 // USA: func_ov024_021fd104
-extern "C" ARM void func_ov024_021fd104(char* arg0, unsigned char arg1) {
-    union Struct_ov024_021fd104_3 var0;
-    var0.unknown_0_ = *(Struct_ov024_021fd104*)(arg0 + 0x65c);
-    short var1 = *(short*)(*(char**)(arg0 + 0x64c) + 0x32);
-    float var2 = (float)var1;
-    var0.unknown1_0_.unknown_4_ = arg1;
-    var0.unknown1_0_.unknown_7_ = 0x64;
-    var0.unknown1_0_.unknown_8_ = 7;
-    var0.unknown1_0_.unknown_0_ = var2;
-    func_ov024_021f6a1c(*(struct Struct_ov024_021f6a1c**)(arg0 + 0x658), &var0);
+extern "C" ARM void func_ov024_021fd104(char* self, unsigned char id) {
+    union Struct_ov024_021fd104_3 e;
+    e.raw = *(Struct_ov024_021fd104*)(self + 0x65c);
+    short s = *(short*)(*(char**)(self + 0x64c) + 0x32);
+    float v = (float)s;
+    e.f.id = id;
+    e.f.unknown_7_ = 0x64;
+    e.f.code = 7;
+    e.f.value = v;
+    func_ov024_021f6a1c(*(struct Struct_ov024_021f6a1c**)(self + 0x658), &e);
 }

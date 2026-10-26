@@ -3,12 +3,12 @@
 extern unsigned char* data_ov031_02290d20;
 
 // USA: func_ov031_0223ab18
-extern "C" ARM void func_ov031_0223ab18(unsigned char* arg0, unsigned char* arg1) {
-    *arg0 = data_ov031_02290d20[0xa90];
+extern "C" ARM void func_ov031_0223ab18(unsigned char* out0, unsigned char* out1) {
+    *out0 = data_ov031_02290d20[0xa90];
     if (data_ov031_02290d20[0xa90] != data_ov031_02290d20[0xa91]) {
-        *arg1 = 1;
+        *out1 = 1;
     } else {
-        *arg1 = 0;
+        *out1 = 0;
     }
     data_ov031_02290d20[0xa91] = data_ov031_02290d20[0xa90];
 }

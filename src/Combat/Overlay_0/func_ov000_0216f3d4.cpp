@@ -7,58 +7,58 @@ extern "C" float func_02049fec(char*);
 struct Struct_02049f50;
 extern "C" void func_02049f50(Struct_02049f50*,int,int);
 extern "C" { int func_ov000_02153e40(void*,short*,int,int); int func_02049fc0(void*); }
-struct Struct_ov000_0215b278 { char unknown_0_[0x20]; unsigned short unknown_20_; char unknown_22_[0xe]; Struct_ov000_0215b278* unknown_30_; };
-struct Struct_ov000_0215440c_6 { char unknown_0_[0xe]; short unknown_e_[4]; unsigned char unknown_16_,unknown_17_; char unknown_18_[8]; Struct_ov000_0215440c_6* unknown_20_; };
-struct Struct_ov000_021537b8 { char unknown_0_[0x10]; Struct_ov000_0215b278* unknown_10_; Struct_ov000_0215440c_6* unknown_14_; };
-struct Struct_ov000_0216df00 { char unknown_0_[4]; Vector3i unknown_4_; char unknown_10_[0x21c-0x10]; void* unknown_21c_; unsigned char unknown_220_,unknown_221_; char unknown_222_[2]; int unknown_224_; char unknown_228_[0x260-0x228]; unsigned char unknown_260_,unknown_261_,unknown_262_,unknown_263_; char unknown_264_[0x278-0x264]; unsigned char unknown_278_; char unknown_279_[3]; Struct_ov000_021537b8* unknown_27c_; };
-inline int inline_ov000_0216f3d4(int arg0) { return (int)(((long long)arg0*arg0+0x800)>>12); }
+struct Struct_ov000_0215b278 { char p0[0x20]; unsigned short id; char p1[0xe]; Struct_ov000_0215b278* next; };
+struct Struct_ov000_0215440c_6 { char p0[0xe]; short ids[4]; unsigned char unknown_16_,count; char p1[8]; Struct_ov000_0215440c_6* next; };
+struct Struct_ov000_021537b8 { char p0[0x10]; Struct_ov000_0215b278* nodes; Struct_ov000_0215440c_6* groups; };
+struct Camera { char p0[4]; Vector3i position; char p1[0x21c-0x10]; void* list; unsigned char mode,unknown_221_; char p2[2]; int index; char p3[0x260-0x228]; unsigned char active,state,first,second; char p4[0x278-0x264]; unsigned char enabled; char p5[3]; Struct_ov000_021537b8* work; };
+inline int inline_ov000_0216f3d4(int a) { return (int)(((long long)a*a+0x800)>>12); }
 // USA: func_ov000_0216f3d4
-extern "C" ARM void func_ov000_0216f3d4(Struct_ov000_0216df00* arg0) {
-    if(!arg0->unknown_21c_ || !arg0->unknown_278_) return;
-    short var0[12];
-    int var1=func_ov000_02153e40(arg0->unknown_21c_,var0,12,0);
-    GameState* var2=GameState::GetInstance();
-    int var3=180;
-    if(arg0->unknown_221_) { var3=0; arg0->unknown_221_=0; }
-    short* var4=var0;
-    for(int var5=0;var5<var1;var5++,var4++) {
-        GameObject* var6=var2->GetCombatantByIndex(*var4);
-        if(!var6 || !var6->obj3D_.IsVisible() || var6->obj3D_.GetInheritedAlpha()<=0) continue;
-        Vector3i var7(arg0->unknown_4_);
-        int var8=var6->obj3D_.GetRadius()/2;
-        int var9=var8+0x2000;
-        int var10=var8+0x2b33;
+extern "C" ARM void func_ov000_0216f3d4(Camera* self) {
+    if(!self->list || !self->enabled) return;
+    short ids[12];
+    int count=func_ov000_02153e40(self->list,ids,12,0);
+    GameState* gs=GameState::GetInstance();
+    int duration=180;
+    if(self->unknown_221_) { duration=0; self->unknown_221_=0; }
+    short* id=ids;
+    for(int i=0;i<count;i++,id++) {
+        GameObject* unit=gs->GetCombatantByIndex(*id);
+        if(!unit || !unit->obj3D_.IsVisible() || unit->obj3D_.GetInheritedAlpha()<=0) continue;
+        Vector3i camera(self->position);
+        int radius=unit->obj3D_.GetRadius()/2;
+        int var9=radius+0x2000;
+        int var10=radius+0x2b33;
         var9=inline_ov000_0216f3d4(var9); var10=inline_ov000_0216f3d4(var10);
-        Vector3i var11(var7),var12(var6->obj3D_.position_),var13;
-        var12.y+=var6->obj3D_.GetHeight()/2;
-        Vector3fix_Subtract(&var12,&var11,&var13);
-        int var14=Vector3fix_InnerProduct(&var13,&var13);
-        int var15=arg0->unknown_224_==*var4;
-        if(func_ov000_02160130() && (arg0->unknown_260_ || arg0->unknown_27c_) && !var15) {
-            Struct_ov000_021537b8* var16=arg0->unknown_27c_;
-            if(var16) {
-                Struct_ov000_0215b278* var17=var16->unknown_10_;
-                while(var17) { if(var17->unknown_20_==*var4) { var15=1; break; } var17=var17->unknown_30_; }
-                if(!var15) {
-                    Struct_ov000_0215440c_6* var18=var16->unknown_14_;
-                    while(var18) {
-                        short* var19=var18->unknown_e_;
-                        for(int var20=0;var20<var18->unknown_17_;var19++,var20++) { if(*var19==*var4) { var15=1; break; } }
-                        if(var15) break;
-                        var18=var18->unknown_20_;
+        Vector3i origin(camera),position(unit->obj3D_.position_),delta;
+        position.y+=unit->obj3D_.GetHeight()/2;
+        Vector3fix_Subtract(&position,&origin,&delta);
+        int distance=Vector3fix_InnerProduct(&delta,&delta);
+        int selected=self->index==*id;
+        if(func_ov000_02160130() && (self->active || self->work) && !selected) {
+            Struct_ov000_021537b8* work=self->work;
+            if(work) {
+                Struct_ov000_0215b278* n=work->nodes;
+                while(n) { if(n->id==*id) { selected=1; break; } n=n->next; }
+                if(!selected) {
+                    Struct_ov000_0215440c_6* g=work->groups;
+                    while(g) {
+                        short* entry=g->ids;
+                        for(int j=0;j<g->count;entry++,j++) { if(*entry==*id) { selected=1; break; } }
+                        if(selected) break;
+                        g=g->next;
                     }
                 }
-            } else if(arg0->unknown_260_) {
-                if(arg0->unknown_262_==*var4 || arg0->unknown_263_==*var4) var15=1;
+            } else if(self->active) {
+                if(self->first==*id || self->second==*id) selected=1;
             }
         }
-        if(var14<=var9 && !var15) {
-            if((!func_02049fc0(var6) && var6->obj3D_.GetOwnAlpha()>0) || (func_02049fc0(var6) && func_02049fec((char*)var6)>0.0f))
-                func_02049f50((Struct_02049f50*)var6,0,var3);
+        if(distance<=var9 && !selected) {
+            if((!func_02049fc0(unit) && unit->obj3D_.GetOwnAlpha()>0) || (func_02049fc0(unit) && func_02049fec((char*)unit)>0.0f))
+                func_02049f50((Struct_02049f50*)unit,0,duration);
         } else {
-            if(var14>=var10 || var3==0 || var15) {
-                if(var3==0 || (!func_02049fc0(var6) && var6->obj3D_.GetOwnAlpha()<31) || (func_02049fc0(var6) && func_02049fec((char*)var6)<31.0f))
-                    func_02049f50((Struct_02049f50*)var6,31,var3);
+            if(distance>=var10 || duration==0 || selected) {
+                if(duration==0 || (!func_02049fc0(unit) && unit->obj3D_.GetOwnAlpha()<31) || (func_02049fc0(unit) && func_02049fec((char*)unit)<31.0f))
+                    func_02049f50((Struct_02049f50*)unit,31,duration);
             }
         }
     }

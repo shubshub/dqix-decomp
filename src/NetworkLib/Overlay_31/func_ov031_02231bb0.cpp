@@ -16,8 +16,8 @@ extern "C" ARM void func_ov031_02231bb0(void) {
     data_ov031_02290cb8 = 0;
     func_ov031_02231c0c();
     func_ov031_022239f4();
-    int var0 = 0x37;
-    func_ov031_0222336c(var0, var0 - 0x38, 0);
+    int a = 0x37;
+    func_ov031_0222336c(a, a - 0x38, 0);
     func_ov031_02223518((void*)2);
     func_ov031_022235a0(0x24);
     func_ov031_02222b0c(0);

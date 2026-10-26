@@ -1,5 +1,5 @@
 // Preview model scale per sex and body type (fx32, 0x1000 = 1.0): width (x and z) and height (y).
-// Originally data_ov009_0218aa70 (USA/EUR 0x0218aa70; jpn has the values in a switch).
+// Originally CharacterCreationUI_bodyDimensions (USA/EUR 0x0218aa70; jpn has the values in a switch).
 typedef struct BodyDimensions {
     short width, height;
 } BodyDimensions;

@@ -4,7 +4,7 @@
 
 
 // Main, originally ResetHandleState020dfe88 (USA 0x020dfe88, EUR 0x020dfe98, JPN 0x020e1a5c)
-ARM int KeyTable_EndLoad(struct Struct020dfc40* table) {
+extern "C" ARM int KeyTable_EndLoad(struct Struct020dfc40* table) {
     int src = (int)BackgroundLoader::GetInstance();
     if (table->loadTask >= 0) {
         ((BackgroundLoader*)(src))->RemoveTask((int)(table->loadTask));

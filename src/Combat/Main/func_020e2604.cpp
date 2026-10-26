@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 
 struct Struct_020e1e24;
-extern "C" void func_020e1e24(struct Struct_020e1e24* arg0, unsigned short* arg1, unsigned short* arg2, int arg3);
+extern "C" void func_020e1e24(struct Struct_020e1e24* obj, unsigned short* outX, unsigned short* outY, int index);
 
 struct Struct_020e2604 {
-    char unknown_0_[0x10];
-    struct Struct_020e1e24* unknown_10_;
-    char unknown_14_;
-    char unknown_15_[3];
-    short unknown_18_;
-    short unknown_1a_;
+    char pad0[0x10];
+    struct Struct_020e1e24* outer;
+    char index;
+    char pad1[3];
+    short x;
+    short y;
 };
 
 // USA: func_020e2604
-extern "C" ARM void func_020e2604(struct Struct_020e2604* arg0) {
-    func_020e1e24(arg0->unknown_10_, (unsigned short*)&arg0->unknown_18_, (unsigned short*)&arg0->unknown_1a_, arg0->unknown_14_);
-    arg0->unknown_18_ -= 0x10;
-    arg0->unknown_1a_ -= 2;
+extern "C" ARM void func_020e2604(struct Struct_020e2604* self) {
+    func_020e1e24(self->outer, (unsigned short*)&self->x, (unsigned short*)&self->y, self->index);
+    self->x -= 0x10;
+    self->y -= 2;
 }

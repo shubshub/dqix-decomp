@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov004_02154618(void* arg0);
-extern "C" void* func_ov004_02153944(void* arg0, int arg1);
-extern "C" void func_ov023_021f809c(void* arg0, void* arg1);
+extern "C" void func_ov004_02154618(void* obj);
+extern "C" void* func_ov004_02153944(void* a, int key);
+extern "C" void func_ov023_021f809c(void* obj, void* param2);
 
 // USA: func_ov004_02154718
-extern "C" ARM void* func_ov004_02154718(void* arg0) {
-    void* var0;
-    func_ov004_02154618(arg0);
-    var0 = func_ov004_02153944(arg0, 0x37);
-    if (var0) {
-        func_ov023_021f809c(var0, arg0);
+extern "C" ARM void* func_ov004_02154718(void* obj) {
+    void* node;
+    func_ov004_02154618(obj);
+    node = func_ov004_02153944(obj, 0x37);
+    if (node) {
+        func_ov023_021f809c(node, obj);
     }
     return 0;
 }

@@ -10,8 +10,8 @@
 
 extern "C"
 {
-    int _ZN6Zone3D13func_02014900EPKvjPN12ZoneFeatures13Opcode64EntryE(Zone3D* arg0, const void* arg1, unsigned int arg2, Struct_020134e0::Struct_020146fc* arg3);
-    int func_02014a24(Zone3D* arg0, void* arg1);
+    int _ZN6Zone3D15ProcessBMDJFileEPKvjPN12ZoneFeatures13Opcode64EntryE(Zone3D* zone, const void* src, unsigned int size, ZoneFeatures::Opcode64Entry* entry);
+    int Zone3D_SetUpScriptNode(Zone3D* zone, void* node);
 }
 
 extern char data_020ef13a[];
@@ -20,90 +20,94 @@ extern char data_020ef13a[];
 #endif
 extern char data_020ef199[];
 
+// data_020ef13a is "ARC" (the archive's name for NarcHandle), data_020ef199 ".bmdj"
+
 // KEEP-NAME
-// USA: func_020146fc
-// USA: _ZN6Zone3D13func_020146fcEv
-ARM int Zone3D::func_020146fc()
+// USA: UnpackMapAMDJ
+// USA: _ZN6Zone3D13UnpackMapAMDJEv
+// Main, originally Zone3D::UnpackMapAMDJ_020146fc (USA 0x020146fc, EUR 0x0201470c, JPN 0x020144c8)
+ARM int Zone3D::UnpackMapAMDJ()
 {
     if (mapAMDJLoadHandle_ < 0)
         return 1;
 
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
-    if (var0->GetTaskStatus(mapAMDJLoadHandle_) == 0)
+    if (loader->GetTaskStatus(mapAMDJLoadHandle_) == 0)
         return 0;
 
-    if (var0->GetDetailedTaskStatus(mapAMDJLoadHandle_) != BackgroundLoader::TaskStatus_Complete)
+    if (loader->GetDetailedTaskStatus(mapAMDJLoadHandle_) != BackgroundLoader::TaskStatus_Complete)
     {
-        var0->RemoveTask(mapAMDJLoadHandle_);
+        loader->RemoveTask(mapAMDJLoadHandle_);
         mapAMDJLoadHandle_ = -1;
         return 1;
     }
 
-    void* var1;
-    unsigned int var2;
-    var0->GetLoadedFileByID(mapAMDJLoadHandle_, &var1, &var2);
+    void* archiveData;
+    unsigned int archiveLength;
+    loader->GetLoadedFileByID(mapAMDJLoadHandle_, &archiveData, &archiveLength);
 
-    NarcHandle var3;
-    if (var3.Initialize(data_020ef13a, (const unsigned char*)var1))
+    NarcHandle narc;
+    if (narc.Initialize(data_020ef13a, (const unsigned char*)archiveData))
     {
-        NitroVM var4;
-        unsigned int var5 = 0;
-        NitroVM_Initialize(&var4);
+        NitroVM vm;
+        unsigned int fileID = 0;
+        NitroVM_Initialize(&vm);
 
-        while (PrepareReadFileInNARCByID(&var4, &var3, var5))
+        while (PrepareReadFileInNARCByID(&vm, &narc, fileID))
         {
-            char var6[0x50];
-            NitroVM_WriteOutFilePath(&var4, var6, sizeof(var6));
-            const char* var7 = strrchr(var6, '.');
-            if (var7 == NULL)
+            char innerFilePath[0x50];
+            NitroVM_WriteOutFilePath(&vm, innerFilePath, sizeof(innerFilePath));
+            const char* extension = strrchr(innerFilePath, '.');
+            if (extension == NULL)
             {
-                NitroVM_FinishRead(&var4);
-                var5++;
+                NitroVM_FinishRead(&vm);
+                fileID++;
                 continue;
             }
 
-            unsigned int var8 = var4.fileInfo.unknown_8_ - var4.fileInfo.unknown_4_;
-            NitroVM_FinishRead(&var4);
-            const void* var9 = var3.GetFileByIndex(var5);
+            unsigned int innerFileLength = vm.fileInfo.endOffset - vm.fileInfo.startOffset;
+            NitroVM_FinishRead(&vm);
+            const void* innerFile = narc.GetFileByIndex(fileID);
 
-            if (strcmp(data_020ef199, var7) == 0)
+            if (strcmp(data_020ef199, extension) == 0)
             {
-                Struct_020134e0* var10 = &substruct_6c_;
-                int var11 = var10->unknown_4_;
-                for (int var12 = 0; var12 < var11; var12++)
+                ZoneFeatures* features = &substruct_6c_;
+                int var11 = features->arraySize64_;
+                for (int i = 0; i < var11; i++)
                 {
-                    Struct_020134e0::Struct_020146fc* var13 = var10->func_0201e2d8(var12);
-                    if (strstr(var6, var13->unknown_10_) != NULL)
-                        _ZN6Zone3D13func_02014900EPKvjPN12ZoneFeatures13Opcode64EntryE(this, var9, var8, var13);
+                    ZoneFeatures::Opcode64Entry* entry = features->GetOpcode64Entry(i);
+                    if (strstr(innerFilePath, entry->string_10) != NULL)
+                        _ZN6Zone3D15ProcessBMDJFileEPKvjPN12ZoneFeatures13Opcode64EntryE(this, innerFile, innerFileLength, entry);
                 }
             }
-            var5++;
+            fileID++;
         }
 
-        Struct_02013454* var14 = firstBMDJStruct_41c_;
-        while (var14 != NULL)
+        BmdjScriptNode* node = firstBMDJStruct_41c_;
+        while (node != NULL)
         {
-            func_02014a24(this, var14);
+            Zone3D_SetUpScriptNode(this, node);
             if (unknown_42c_ == 2)
                 break;
-            var14 = var14->unknown_54_;
+            node = node->next;
         }
 
-        var3.Destroy();
+        narc.Destroy();
     }
 
-    var0->RemoveTask(mapAMDJLoadHandle_);
+    loader->RemoveTask(mapAMDJLoadHandle_);
     mapAMDJLoadHandle_ = -1;
 
+    // unknown_42c_ counts the AMDJ parts QueueLoadMapAMDJ has queued for the two-part zones (10000, 10100)
     if (unknown_42c_ == 1)
     {
-        func_020145a8();
+        QueueLoadMapAMDJ();
         return 0;
     }
 
-    if (this->substruct_c_.unknown_a_[0] != 0)
-        atmosphericEffects_.LoadArchive(this->substruct_c_.unknown_a_);
+    if (this->substruct_c_.buffer2[0] != 0)
+        atmosphericEffects_.LoadArchive(this->substruct_c_.buffer2);
 
     return 1;
 }

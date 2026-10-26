@@ -1,29 +1,29 @@
 #include <globaldefs.h>
 
-extern "C" unsigned int strlen(const char* arg0);
-extern "C" char* strcpy(char* arg0, const char* arg1);
-extern "C" int strcmp(const char* arg0, const char* arg1);
-extern "C" int func_02005a94(const char* arg0);
-extern "C" int func_020cf25c(void* arg0, void* arg1);
-extern "C" long long func_020cf990(int arg0, unsigned char* arg1);
+extern "C" unsigned int strlen(const char* s);
+extern "C" char* strcpy(char* dst, const char* src);
+extern "C" int strcmp(const char* a, const char* b);
+extern "C" int func_02005a94(const char* s);
+extern "C" int func_020cf25c(void* date, void* time);
+extern "C" long long func_020cf990(int date, unsigned char* time);
 
 struct Struct_ov031_0221a218 {
-    unsigned int unknown_0_;
-    unsigned int unknown_4_;
-    unsigned int unknown_8_;
+    unsigned int year;
+    unsigned int month;
+    unsigned int day;
     unsigned int unknown_c_;
 };
 
 struct Struct_ov031_0221a218_2 {
     unsigned int unknown_0_;
     unsigned int unknown_4_;
-    unsigned int unknown_8_;
+    unsigned int second;
 };
 
 struct Struct_ov031_0224e688 {
     int unknown_0_;
     long long unknown_8_;
-    long long unknown_10_;
+    long long offset;
 };
 
 extern char data_ov031_0224a224[];
@@ -32,79 +32,79 @@ extern Struct_ov031_0224e688 data_ov031_0224e688;
 extern int data_020f3390;
 
 // USA: func_ov031_0221a218
-extern "C" ARM int func_ov031_0221a218(const char* arg0) {
-    Struct_ov031_0221a218 var0;
-    Struct_ov031_0221a218_2 var1;
-    char var2[32];
+extern "C" ARM int func_ov031_0221a218(const char* str) {
+    Struct_ov031_0221a218 date;
+    Struct_ov031_0221a218_2 time;
+    char buf[32];
     long long var3;
     long long var4;
-    int var5;
+    int i;
 
-    if (strlen(arg0) != strlen(data_ov031_0224a224) || arg0[7] != ' ' || arg0[11] != ' ' || arg0[16] != ' '
-        || arg0[19] != ':' || arg0[22] != ':' || arg0[25] != ' ') {
+    if (strlen(str) != strlen(data_ov031_0224a224) || str[7] != ' ' || str[11] != ' ' || str[16] != ' '
+        || str[19] != ':' || str[22] != ':' || str[25] != ' ') {
         goto fail;
     }
-    if (func_020cf25c(&var0, &var1) != 0) {
+    if (func_020cf25c(&date, &time) != 0) {
         goto fail;
     }
-    var3 = func_020cf990((unsigned int)&var0, (unsigned char*)&var1);
+    var3 = func_020cf990((unsigned int)&date, (unsigned char*)&time);
     if (var3 == -1) {
         goto fail;
     }
 
-    strcpy(var2, arg0);
-    var2[7] = 0;
-    var2[11] = 0;
-    var2[16] = 0;
-    var2[19] = 0;
-    var2[22] = 0;
-    var2[25] = 0;
+    strcpy(buf, str);
+    buf[7] = 0;
+    buf[11] = 0;
+    buf[16] = 0;
+    buf[19] = 0;
+    buf[22] = 0;
+    buf[25] = 0;
 
     data_020f3390 = 0;
-    var0.unknown_0_ = func_02005a94(&var2[12]);
+    date.year = func_02005a94(&buf[12]);
     if (data_020f3390 == 0x22) {
         goto fail;
     }
-    var0.unknown_0_ -= 2000;
+    date.year -= 2000;
 
-    var0.unknown_4_ = 13;
-    var5 = 0;
+    date.month = 13;
+    i = 0;
     do {
-        if (strcmp(data_ov031_0224a1f4[var5], &var2[8]) == 0) {
-            var0.unknown_4_ = var5 + 1;
+        if (strcmp(data_ov031_0224a1f4[i], &buf[8]) == 0) {
+            date.month = i + 1;
             break;
         }
-    } while (++var5 < 12);
-    if (var0.unknown_4_ > 12) {
+    } while (++i < 12);
+    if (date.month > 12) {
         goto fail;
     }
 
     data_020f3390 = 0;
-    var0.unknown_8_ = func_02005a94(&var2[5]);
+    date.day = func_02005a94(&buf[5]);
     if (data_020f3390 == 0x22) {
         goto fail;
     }
     data_020f3390 = 0;
-    var1.unknown_0_ = func_02005a94(&var2[17]);
+    time.unknown_0_ = func_02005a94(&buf[17]);
     if (data_020f3390 == 0x22) {
         goto fail;
     }
     data_020f3390 = 0;
-    var1.unknown_4_ = func_02005a94(&var2[20]);
+    time.unknown_4_ = func_02005a94(&buf[20]);
     if (data_020f3390 == 0x22) {
         goto fail;
     }
     data_020f3390 = 0;
-    var1.unknown_8_ = func_02005a94(&var2[23]);
+    time.second = func_02005a94(&buf[23]);
     if (data_020f3390 == 0x22) {
         goto fail;
     }
 
-    var4 = func_020cf990((int)&var0, (unsigned char*)&var1);
+    var4 = func_020cf990((int)&date, (unsigned char*)&time);
     if (var4 == -1) {
         goto fail;
     }
-    data_ov031_0224e688.unknown_10_ = var3 - var4;
+    data_ov031_0224e688.offset = var3 - var4;
     data_ov031_0224e688.unknown_8_ = var3;
     data_ov031_0224e688.unknown_0_ = 1;
     return 1;

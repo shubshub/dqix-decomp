@@ -9,8 +9,8 @@ extern unsigned char data_ov031_02290cc8[3];
 
 // USA: func_ov031_022336ac
 extern "C" ARM void func_ov031_022336ac(void) {
-	int var0 = func_ov031_02222e0c();
-	switch (var0) {
+	int field = func_ov031_02222e0c();
+	switch (field) {
 	case 0:
 		func_ov031_02236878(7);
 		break;

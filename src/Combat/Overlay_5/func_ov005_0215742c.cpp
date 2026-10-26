@@ -19,47 +19,47 @@
 struct SePlayer;
 struct GridCursor;
 
-struct Struct_ov005_02153954 {
-    char unknown_0_[R(0x196c, 0x19f4)];
-    char unknown_19f4_[0x3db8 - 0x19f4];
-    unsigned char unknown_3db8_;
+struct EquipmentMenu {
+    char unk_0[R(0x196c, 0x19f4)];
+    char cursor_[0x3db8 - 0x19f4];
+    unsigned char state_;
     unsigned char unknown_3db9_;
-    unsigned char unknown_3dba_;
-    signed char unknown_3dbb_;
-    unsigned char unknown_3dbc_;
-    signed char unknown_3dbd_;
+    unsigned char step_;
+    signed char slot_;
+    unsigned char kind_;
+    signed char page_;
     unsigned char unknown_3dbe_;
     signed char unknown_3dbf_;
     signed char unknown_3dc0_;
     char unknown_3dc1_[0x3dcc - 0x3dc1];
-    unsigned int unknown_3dcc_;
+    unsigned int flags_;
 };
 
 extern int g_sePlayer;
 
 extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
-void SePlayer_Play(SePlayer* obj, int a, int b);
-int CheckFlag30Or401_02157190(void* self);
+extern "C" void SePlayer_Play(SePlayer* obj, int a, int b);
+extern "C" int func_ov005_02157190(void* self);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
-int GridCursor_GetSelectedIndex(GridCursor* s);
+extern "C" int GridCursor_GetSelectedIndex(GridCursor* s);
 extern "C" int func_ov005_02158560(EquipmentMenu* self, unsigned char kind, int silent);
 extern "C" void func_ov005_021555c0(EquipmentMenu* self);
 
 // USA: func_ov005_0215742c
-extern "C" ARM void func_ov005_0215742c(Struct_ov005_02153954* arg0) {
+extern "C" ARM void func_ov005_0215742c(EquipmentMenu* self) {
     if (g_keyManager.TestKeysPressed(0x80)) {
-        func_ov005_0215792c(arg0, 3);
-        arg0->unknown_3dbb_ = arg0->unknown_3dbc_;
+        func_ov005_0215792c(self, 3);
+        self->slot_ = self->kind_;
         if (g_keyManager.TestKeysPressed(0x80))
             SePlayer_Play((SePlayer*)&g_sePlayer, 2, 0);
-        else if (CheckFlag30Or401_02157190(self))
+        else if (func_ov005_02157190(self))
             SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
         func_ov005_021579ec(self, self->state_, self->slot_);
         return;
     }
     if (!func_ov005_02158560(self, GridCursor_GetSelectedIndex((GridCursor*)self->cursor_), 0))
         return;
-    arg0->unknown_3dcc_ |= 0x100;
-    func_ov005_021579ec(arg0, arg0->unknown_3db8_, arg0->unknown_3dbc_);
-    func_ov005_021555c0(arg0);
+    self->flags_ |= 0x100;
+    func_ov005_021579ec(self, self->state_, self->kind_);
+    func_ov005_021555c0(self);
 }

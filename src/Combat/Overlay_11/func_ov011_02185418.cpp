@@ -5,54 +5,54 @@
 #endif
 #include <globaldefs.h>
 
-struct Struct_ov011_02184c30 {
-    int unknown_0_;
-    union { int unknown_0_; float unknown1_0_; } unknown_4_;
+struct TaggedNumber02184c30 {
+    int type;
+    union { int i; float f; } value;
 };
 
 struct Struct_ov011_02185418 {
-    Struct_ov011_02184c30 unknown_0_;
-    Struct_ov011_02184c30 unknown_8_;
-    Struct_ov011_02184c30 unknown_10_;
-    Struct_ov011_02184c30 unknown_18_;
-    Struct_ov011_02184c30 unknown_20_;
-    Struct_ov011_02184c30 unknown_28_;
-    Struct_ov011_02184c30 unknown_30_;
-    Struct_ov011_02184c30 unknown_38_;
-    Struct_ov011_02184c30 unknown_40_;
+    TaggedNumber02184c30 f0;
+    TaggedNumber02184c30 f8;
+    TaggedNumber02184c30 f10;
+    TaggedNumber02184c30 f18;
+    TaggedNumber02184c30 f20;
+    TaggedNumber02184c30 f28;
+    TaggedNumber02184c30 unknown_30_;
+    TaggedNumber02184c30 unknown_38_;
+    TaggedNumber02184c30 f40;
 };
 
-extern "C" int func_ov011_02184c30(struct Struct_ov011_02184c30* arg0);
+extern "C" int func_ov011_02184c30(struct TaggedNumber02184c30* v);
 extern "C" ARM void* func_ov017_021b2164(void);
-extern "C" ARM void* func_ov011_021849c8(void* arg0);
-extern "C" ARM void* func_ov023_021f6880(void* arg0, int arg1);
-extern "C" ARM int func_ov023_021f6f10(void* arg0);
-extern "C" ARM void func_ov023_021f7eb8(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9);
+extern "C" ARM void* func_ov011_021849c8(void* ctx);
+extern "C" ARM void* func_ov023_021f6880(void* obj, int v);
+extern "C" ARM int func_ov023_021f6f10(void* self);
+extern "C" ARM void func_ov023_021f7eb8(void* node, void* a, int buf, int mode, int a5, int a6, int a7, int a8, int a9, int arg9);
 
-struct Struct_ov004_0216b7bc { char unknown_0_[0x1c8]; int unknown_1c8_; };
-extern "C" ARM void func_ov011_02184ad8(struct Struct_ov004_0216b7bc* arg0);
+struct Struct_ov004_0216b7bc { char pad[0x1c8]; int unknown_1c8_; };
+extern "C" ARM void func_ov011_02184ad8(struct Struct_ov004_0216b7bc* obj);
 
 // USA: func_ov011_02185418
-extern "C" ARM int func_ov011_02185418(struct Struct_ov011_02185418* arg0) {
-    int var0;
-    int var1 = func_ov011_02184c30(&arg0->unknown_0_);
-    var0 = func_ov011_02184c30(&arg0->unknown_8_);
-    short var2 = (short)func_ov011_02184c30(&arg0->unknown_10_);
-    short var3 = (short)func_ov011_02184c30(&arg0->unknown_18_);
-    short var4 = (short)func_ov011_02184c30(&arg0->unknown_20_);
-    short var5 = (short)func_ov011_02184c30(&arg0->unknown_28_);
-    unsigned char var6 = (unsigned char)func_ov011_02184c30(&arg0->unknown_30_);
-    unsigned char var7 = (unsigned char)func_ov011_02184c30(&arg0->unknown_38_);
-    int var8 = func_ov011_02184c30(&arg0->unknown_40_) != 0;
+extern "C" ARM int func_ov011_02185418(struct Struct_ov011_02185418* obj) {
+    int val1;
+    int val0 = func_ov011_02184c30(&obj->f0);
+    val1 = func_ov011_02184c30(&obj->f8);
+    short val2 = (short)func_ov011_02184c30(&obj->f10);
+    short val3 = (short)func_ov011_02184c30(&obj->f18);
+    short var4 = (short)func_ov011_02184c30(&obj->f20);
+    short var5 = (short)func_ov011_02184c30(&obj->f28);
+    unsigned char val6 = (unsigned char)func_ov011_02184c30(&obj->unknown_30_);
+    unsigned char var7 = (unsigned char)func_ov011_02184c30(&obj->unknown_38_);
+    int flag = func_ov011_02184c30(&obj->f40) != 0;
 
-    void* var9 = func_ov017_021b2164();
-    void* var10 = func_ov011_021849c8(var9);
-    void* var11 = func_ov023_021f6880(var10, var1);
-    if (var11 == 0) return 0;
+    void* x = func_ov017_021b2164();
+    void* list = func_ov011_021849c8(x);
+    void* node = func_ov023_021f6880(list, val0);
+    if (node == 0) return 0;
 
-    if (func_ov023_021f6f10(var11) != 6) return 0;
+    if (func_ov023_021f6f10(node) != 6) return 0;
 
-    func_ov023_021f7eb8(var11, var9, var0, var2, var3, var4, var5, var6, var7, var8);
-    func_ov011_02184ad8((struct Struct_ov004_0216b7bc*)var9);
+    func_ov023_021f7eb8(node, x, val1, val2, val3, var4, var5, val6, var7, flag);
+    func_ov011_02184ad8((struct Struct_ov004_0216b7bc*)x);
     return 1;
 }

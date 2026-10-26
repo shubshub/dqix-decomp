@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 
 // One CachedTextTable entry
-struct Entry0xc6b8 {
+struct Struct_0203c6b8 {
     char unk0[0x24];
     unsigned char references;
-    char unk25[3];
+    char unknown_25_[3];
 };
 
 // The CachedTextTable
 struct RefArray0xc6b8 {
     int drawingBuffer;
-    struct Entry0xc6b8 entries[32];
+    struct Struct_0203c6b8 entries[32];
     char pad[0xE];
     unsigned short allocatedEntries;
 };
 
 // Main, originally IncrementEntryCount0x24_0203c6b8 (USA 0x0203c6b8, EUR 0x0203c6c8; JPN not identified)
-ARM void CachedTextTable_AddReference(struct RefArray0xc6b8* table, short index) {
-    struct Entry0xc6b8* entry;
+extern "C" ARM void CachedTextTable_AddReference(struct RefArray0xc6b8* table, short index) {
+    struct Struct_0203c6b8* entry;
     unsigned char references;
     if (index < 0) {
         return;

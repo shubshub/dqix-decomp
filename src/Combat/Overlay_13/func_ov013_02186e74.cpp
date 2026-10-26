@@ -11,26 +11,26 @@
 #include "Memory/SafeAllocator.h"
 
 struct Struct_ov002_021682c0 {
-	SafeAllocator* unknown_0_;
+	SafeAllocator* arr;
 };
 
 extern int data_ov013_02187dd8[R(4,5)];
 
 // USA: func_ov013_02186e74
-extern "C" ARM void func_ov013_02186e74(struct Struct_ov002_021682c0* arg0, SafeAllocator* arg1) {
-	unsigned char var0;
+extern "C" ARM void func_ov013_02186e74(struct Struct_ov002_021682c0* obj, SafeAllocator* allocator) {
+	unsigned char i;
 
-	if (arg1 == NULL) return;
+	if (allocator == NULL) return;
 
-	arg0->unknown_0_ = (SafeAllocator*)arg1->Allocate(R(0x50,0x64));
+	obj->arr = (SafeAllocator*)allocator->Allocate(R(0x50,0x64));
 
-	for (var0 = 0; var0 < R(4,5); var0++) {
-		SafeAllocator* var1 = (SafeAllocator*)((char*)arg0->unknown_0_ + var0 * 0x14);
-		int var2;
-		void* var3;
-		var1->ResetAllocatorPointer();
-		var2 = data_ov013_02187dd8[var0];
-		var3 = arg1->Allocate(var2);
-		var1->CreateTypeA(var3, var2);
+	for (i = 0; i < R(4,5); i++) {
+		SafeAllocator* base = (SafeAllocator*)((char*)obj->arr + i * 0x14);
+		int sz;
+		void* ptr;
+		base->ResetAllocatorPointer();
+		sz = data_ov013_02187dd8[i];
+		ptr = allocator->Allocate(sz);
+		base->CreateTypeA(ptr, sz);
 	}
 }

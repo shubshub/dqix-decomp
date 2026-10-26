@@ -11,24 +11,24 @@
 
 #include "std_library_functions.h"
 
-extern "C" int func_020421a0();
-struct Struct_ov000_021735d0_3;
-struct Struct_ov000_021735d0_2;
-extern "C" struct Struct_ov000_021735d0_2* func_ov000_0217f8c0(struct Struct_ov000_021735d0_3* arg0);
-extern "C" void func_ov000_02178d28(void* arg0, void* arg1);
-extern "C" void func_ov000_02178f28(void* arg0, void* arg1, void* arg2);
+extern "C" int MessageSystem_GetInstance();
+struct Struct0217f8c0;
+struct TableEntry0217f8c0;
+extern "C" struct TableEntry0217f8c0* func_ov000_0217f8c0(struct Struct0217f8c0* s);
+extern "C" void func_ov000_02178d28(void* obj, void* entry);
+extern "C" void func_ov000_02178f28(void* obj, void* entry, void* buf);
 
-struct Struct_0205d5d0;
+struct StructA0205d5d0;
 // USA: func_ov000_02178cbc
-extern "C" ARM int func_ov000_02178cbc(void* arg0, int, int) {
-	void* var0 = func_ov000_0217f8c0((struct Struct_ov000_021735d0_3*)arg0);
-	func_ov000_02178d28(arg0, var0);
-	void* var1 = *(void**)(func_020421a0() + REGION_OFFSET_0);
-	memset(var1, 0, REGION_OFFSET_1);
-	func_ov000_02178f28(arg0, var0, var1);
+extern "C" ARM int func_ov000_02178cbc(void* obj, int, int) {
+	void* entry = func_ov000_0217f8c0((struct Struct0217f8c0*)obj);
+	func_ov000_02178d28(obj, entry);
+	void* buf = *(void**)(MessageSystem_GetInstance() + REGION_OFFSET_0);
+	memset(buf, 0, REGION_OFFSET_1);
+	func_ov000_02178f28(obj, entry, buf);
 #if defined(jpn)
-	return func_0205d5d0((Struct_0205d5d0*)((char*)arg0 + 0x188), 0xf, (int)var1, 1);
+	return Window_SetPaneText((StructA0205d5d0*)((char*)obj + 0x188), 0xf, (int)buf, 1);
 #else
-	return func_0205d5d0((Struct_0205d5d0*)((char*)arg0 + 0x188), 0xf, (int)var1, 1, 0);
+	return Window_SetPaneText((StructA0205d5d0*)((char*)obj + 0x188), 0xf, (int)buf, 1, 0);
 #endif
 }

@@ -21,7 +21,7 @@ struct CachedTextEntry {
 #endif
 
 // Main, originally InitStruct0203be8c (USA 0x0203be8c, EUR 0x0203be9c, JPN 0x0203b8e4)
-ARM void CachedTextEntry_Clear(char* rawEntry) {
+extern "C" ARM void CachedTextEntry_Clear(char* rawEntry) {
     CachedTextEntry* entry = (CachedTextEntry*)rawEntry;
 #if defined(jpn)
     entry->advanceX = -1;

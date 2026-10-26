@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov031_022393e4(int arg0);
+extern "C" void func_ov031_022393e4(int v);
 extern "C" void func_ov031_02239368(int);
 extern "C" int func_ov031_02239550(void);
 
-struct Struct_ov031_02239518 { short unknown_0_; unsigned short unknown_2_; };
+struct Struct_ov031_02239518 { short pad0; unsigned short tag; };
 
 // USA: func_ov031_02239518
-extern "C" ARM void func_ov031_02239518(Struct_ov031_02239518* arg0) {
-    unsigned short var0 = arg0->unknown_2_;
-    if (var0 != 0) {
-        func_ov031_022393e4(var0);
+extern "C" ARM void func_ov031_02239518(Struct_ov031_02239518* info) {
+    unsigned short tag = info->tag;
+    if (tag != 0) {
+        func_ov031_022393e4(tag);
         func_ov031_02239368(9);
         return;
     }

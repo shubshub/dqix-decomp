@@ -5,22 +5,22 @@ enum { Enum_020444e0_56 = 4 };
 enum { Enum_020444e0_56 = 0x38 };
 #endif
 
-struct Struct_020444e0 { char unknown_0_[Enum_020444e0_56]; void* unknown_38_; };
+struct Obj020444e0 { char pad[Enum_020444e0_56]; void* field38; };
 
-extern "C" int func_020e1f1c(void* arg0);
-extern "C" void func_02066cf0(void* arg0, int arg1);
-extern "C" void func_020e23f4(void* arg0);
-extern "C" int func_020e2478(int* arg0);
+extern "C" int func_020e1f1c(void* p);
+extern "C" void func_02066cf0(void* obj, int flag);
+extern "C" void func_020e23f4(void* p);
+extern "C" int func_020e2478(int* obj);
 
 // USA: func_020444e0
-extern "C" ARM void func_020444e0(struct Struct_020444e0* arg0) {
-    void* var0 = arg0->unknown_38_;
-    if (var0 != NULL) {
-        if (func_020e1f1c(var0) == 0) return;
-        func_02066cf0(arg0, 0);
-        func_020e23f4(arg0->unknown_38_);
-        func_020e2478((int*)arg0->unknown_38_);
+extern "C" ARM void func_020444e0(struct Obj020444e0* obj) {
+    void* field38 = obj->field38;
+    if (field38 != NULL) {
+        if (func_020e1f1c(field38) == 0) return;
+        func_02066cf0(obj, 0);
+        func_020e23f4(obj->field38);
+        func_020e2478((int*)obj->field38);
     } else {
-        func_02066cf0(arg0, 0);
+        func_02066cf0(obj, 0);
     }
 }

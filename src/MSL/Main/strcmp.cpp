@@ -5,86 +5,86 @@
 // Vectorised like strcpy once both pointers share an alignment, but the word loop
 // only tests (w + 0xfefefeff) & 0x80808080 without the & ~w term, so a byte whose
 // value is >= 0x80 also looks like a terminator and drops back to the byte compare.
-extern "C" ARM int strcmp(const char* arg0, const char* arg1) {
-    unsigned int var0;
-    unsigned int var1;
-    int var2;
+extern "C" ARM int strcmp(const char* lhs, const char* rhs) {
+    unsigned int a;
+    unsigned int b;
+    int d;
 
-    var0 = *(const unsigned char*)arg0;
-    var1 = *(const unsigned char*)arg1;
-    var2 = (int)var0 - (int)var1;
-    if (var2 != 0) {
-        return var2;
+    a = *(const unsigned char*)lhs;
+    b = *(const unsigned char*)rhs;
+    d = (int)a - (int)b;
+    if (d != 0) {
+        return d;
     }
 
-    unsigned int var3 = (unsigned int)arg0 & 3;
-    unsigned int var4 = (unsigned int)arg1 & 3;
+    unsigned int var3 = (unsigned int)lhs & 3;
+    unsigned int var4 = (unsigned int)rhs & 3;
     if (var4 == var3) {
         if (var3 != 0) {
-            if (var0 == 0) {
+            if (a == 0) {
                 return 0;
             }
-            unsigned int var5 = 3 - var3;
-            if (var5 != 0) {
+            unsigned int k = 3 - var3;
+            if (k != 0) {
                 do {
-                    var0 = *(const unsigned char*)++arg0;
-                    var1 = *(const unsigned char*)++arg1;
-                    var2 = (int)var0 - (int)var1;
-                    if (var2 != 0) {
-                        return var2;
+                    a = *(const unsigned char*)++lhs;
+                    b = *(const unsigned char*)++rhs;
+                    d = (int)a - (int)b;
+                    if (d != 0) {
+                        return d;
                     }
-                    if (var0 == 0) {
+                    if (a == 0) {
                         return 0;
                     }
-                } while (--var5);
+                } while (--k);
             }
-            arg0++;
-            arg1++;
+            lhs++;
+            rhs++;
         }
 
-        var0 = *(const unsigned int*)arg0;
-        unsigned int var6 = var0 + 0xfefefeffu;
-        unsigned int var7 = ~var0;
-        var6 &= var7;
-        unsigned int var8 = *(const unsigned int*)arg1;
-        if ((var6 & 0x80808080u) == 0) {
-            if (var0 == var8) {
+        a = *(const unsigned int*)lhs;
+        unsigned int t = a + 0xfefefeffu;
+        unsigned int var7 = ~a;
+        t &= var7;
+        unsigned int v = *(const unsigned int*)rhs;
+        if ((t & 0x80808080u) == 0) {
+            if (a == v) {
                 do {
-                    arg0 += 4;
-                    arg1 += 4;
-                    var0 = *(const unsigned int*)arg0;
-                    var8 = *(const unsigned int*)arg1;
-                    var6 = var0 + 0xfefefeffu;
-                    if ((var6 & 0x80808080u) != 0) {
+                    lhs += 4;
+                    rhs += 4;
+                    a = *(const unsigned int*)lhs;
+                    v = *(const unsigned int*)rhs;
+                    t = a + 0xfefefeffu;
+                    if ((t & 0x80808080u) != 0) {
                         goto reload;
                     }
-                } while (var0 == var8);
+                } while (a == v);
             }
-            arg0 -= 1;
-            arg1 -= 1;
+            lhs -= 1;
+            rhs -= 1;
             goto tail;
         }
 
     reload:
-        var0 = *(const unsigned char*)arg0;
-        var1 = *(const unsigned char*)arg1;
-        var2 = (int)var0 - (int)var1;
-        if (var2 != 0) {
-            return var2;
+        a = *(const unsigned char*)lhs;
+        b = *(const unsigned char*)rhs;
+        d = (int)a - (int)b;
+        if (d != 0) {
+            return d;
         }
     }
 
 tail:
-    if (var0 == 0) {
+    if (a == 0) {
         return 0;
     }
     do {
-        var0 = *(const unsigned char*)++arg0;
-        var1 = *(const unsigned char*)++arg1;
-        var2 = (int)var0 - (int)var1;
-        if (var2 != 0) {
-            return var2;
+        a = *(const unsigned char*)++lhs;
+        b = *(const unsigned char*)++rhs;
+        d = (int)a - (int)b;
+        if (d != 0) {
+            return d;
         }
-    } while (var0 != 0);
+    } while (a != 0);
     return 0;
 }

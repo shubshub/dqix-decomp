@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 #include "Util/Random.h"
 
-extern "C" int func_ov000_0215eb1c(struct Random* arg0, short* arg1, int arg2, int arg3);
-extern "C" int func_ov024_021edcc8(void* arg0, int arg1);
-extern "C" int func_ov024_021ed890(struct Random** arg0, int* arg1, short* arg2);
+extern "C" int func_ov000_0215eb1c(struct Random* arg0, short* buf, int count, int flag);
+extern "C" int func_ov024_021edcc8(void* obj, int id);
+extern "C" int func_ov024_021ed890(struct Random** arg0, int* arg1, short* table);
 
-struct Struct_ov024_021f2f78 { int unknown_0_; };
-struct Struct_ov024_021fed5c { short unknown_0_[8]; };
+struct Struct_ov024_021f2f78 { int field0; };
+struct Struct_ov024_021fed5c { short v[8]; };
 extern struct Struct_ov024_021fed5c data_ov024_021fed5c;
 
 // USA: func_ov024_021f2f78
-extern "C" ARM int func_ov024_021f2f78(struct Struct_ov024_021f2f78* arg0, int arg1, int arg2, int* arg3, short* arg4) {
-    struct Struct_ov024_021fed5c var0 = data_ov024_021fed5c;
-    int var1 = func_ov000_0215eb1c((struct Random*)arg0->unknown_0_, var0.unknown_0_, 8, 1);
-    if (var1 <= 0) return 0;
-    *arg3 = 0;
-    for (int var2 = 0; var2 < var1; var2++) {
-        if (!func_ov024_021edcc8(arg0, var0.unknown_0_[var2])) continue;
-        int var3 = *arg3;
-        *arg3 = var3 + 1;
-        arg4[var3] = var0.unknown_0_[var2];
+extern "C" ARM int func_ov024_021f2f78(struct Struct_ov024_021f2f78* obj, int unused1, int arg2, int* outCount, short* arg4) {
+    struct Struct_ov024_021fed5c buf = data_ov024_021fed5c;
+    int count = func_ov000_0215eb1c((struct Random*)obj->field0, buf.v, 8, 1);
+    if (count <= 0) return 0;
+    *outCount = 0;
+    for (int i = 0; i < count; i++) {
+        if (!func_ov024_021edcc8(obj, buf.v[i])) continue;
+        int n = *outCount;
+        *outCount = n + 1;
+        arg4[n] = buf.v[i];
     }
-    if (*arg3 <= 0) return 0;
-    func_ov024_021ed890((struct Random**)arg0, arg3, arg4);
+    if (*outCount <= 0) return 0;
+    func_ov024_021ed890((struct Random**)obj, outCount, arg4);
     return 1;
 }

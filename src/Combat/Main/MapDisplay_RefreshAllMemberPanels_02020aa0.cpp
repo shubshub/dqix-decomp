@@ -7,7 +7,7 @@ extern "C" void func_020dc7e8(int preset, int partyIndex);
 extern "C" void MapDisplay_RefreshMemberPanel(int partyIndex, void* panelSprite);
 
 // Main, originally InitFourEntrySlots02020aa0 (USA 0x02020aa0, EUR 0x02020ab0, JPN 0x020206c4)
-ARM void MapDisplay_RefreshAllMemberPanels(void* mapDisplay) {
+extern "C" ARM void MapDisplay_RefreshAllMemberPanels(void* mapDisplay) {
     char partyIndex;
     func_020dc7e8(6, -1);
     func_020dc7e8(7, -1);

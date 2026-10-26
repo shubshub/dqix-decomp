@@ -8,21 +8,21 @@
 
 struct Struct_ov027_021dc680_2 {
 	unsigned char unknown_0_;
-	unsigned char unknown_1_;
-	unsigned short unknown_2_[10];
+	unsigned char nameLength;
+	unsigned short name[10];
 };
 
 struct Struct_ov027_021dc680_3 {
-	unsigned char unknown_0_[8];
+	unsigned char pad0[8];
 	unsigned int unknown_8_;
-	unsigned short unknown_c_;
+	unsigned short tgid;
 	unsigned short unknown_e_;
 	unsigned short unknown_10_;
 	unsigned short unknown_12_;
 	unsigned short unknown_14_;
 	unsigned short unknown_16_;
 	unsigned short unknown_18_;
-	unsigned char unknown_1a_[0x500 - 0x1a];
+	unsigned char pad1a[0x500 - 0x1a];
 	unsigned short unknown_500_;
 	unsigned short unknown_502_;
 	unsigned char* unknown_504_;
@@ -41,8 +41,8 @@ struct Struct_ov027_021dc680_3 {
 };
 
 struct Struct_ov027_021dc680 {
-	unsigned char unknown_0_[0x400];
-	unsigned char unknown_400_[0x1300 - 0x400];
+	unsigned char pad0[0x400];
+	unsigned char buf[0x1300 - 0x400];
 	Struct_ov027_021dc680_2 unknown_1300_;
 	unsigned short unknown_1316_;
 	int unknown_1318_;
@@ -53,7 +53,7 @@ struct Struct_ov027_021dc680 {
 struct Struct_ov027_021e33e0_6 {
 	unsigned short unknown_0_;
 	unsigned char* unknown_4_;
-	Struct_ov027_021dc680_3* unknown_8_;
+	Struct_ov027_021dc680_3* param;
 	Struct_ov027_021dc680* unknown_c_;
 };
 
@@ -64,22 +64,22 @@ unsigned short data_ov027_021dd8f2 = 0xffff;
 unsigned short data_ov027_021dd8f0 = 40;
 unsigned short data_ov027_021dd8ee = 40;
 
-static inline void inline_ov027_021dc680(Struct_ov027_021dc680_3* arg0, const Struct_ov027_021dc680_2* arg1) {
+static inline void inline_ov027_021dc680(Struct_ov027_021dc680_3* param, const Struct_ov027_021dc680_2* arg1) {
 	static const wchar_t* gameName = L"multiboot";
-	int var0;
+	int i;
 	{
-		unsigned short* var1 = arg0->unknown_530_;
-		for (var0 = 0; var0 < arg1->unknown_1_; var0++) {
-			*var1++ = arg1->unknown_2_[var0];
+		unsigned short* dst = param->unknown_530_;
+		for (i = 0; i < arg1->nameLength; i++) {
+			*dst++ = arg1->name[i];
 		}
 	}
 	{
-		unsigned short* var2 = arg0->unknown_538_;
-		for (var0 = 0; var0 < 16; var0++) {
-			unsigned short var3 = *gameName;
-			if (var3 == 0) break;
+		unsigned short* dst = param->unknown_538_;
+		for (i = 0; i < 16; i++) {
+			unsigned short c = *gameName;
+			if (c == 0) break;
 			gameName++;
-			*var2++ = var3;
+			*dst++ = c;
 		}
 	}
 }
@@ -87,58 +87,58 @@ static inline void inline_ov027_021dc680(Struct_ov027_021dc680_3* arg0, const St
 int data_ov027_021dd8f8 = 1;
 
 extern "C" unsigned short func_020d4dd4(void);
-extern "C" void func_020ca3ec(int arg0, void* arg1, unsigned int arg2);
-extern "C" void func_020ca390(int arg0, void* arg1, unsigned int arg2);
+extern "C" void func_020ca3ec(int val, void* dst, unsigned int size);
+extern "C" void func_020ca390(int val, void* dst, unsigned int size);
 extern "C" unsigned int func_ov027_021dc618(void);
 
 // USA: func_ov027_021dc680
-extern "C" ARM int func_ov027_021dc680(void* arg0, const Struct_ov027_021dc680_2* arg1, unsigned int arg2, unsigned int arg3, unsigned int arg4) {
-	Struct_ov027_021dc680_3* var0;
+extern "C" ARM int func_ov027_021dc680(void* work, const Struct_ov027_021dc680_2* arg1, unsigned int arg2, unsigned int tgid, unsigned int arg4) {
+	Struct_ov027_021dc680_3* param;
 	Struct_ov027_021dc680* var1;
-	int var2;
+	int enabled;
 
 	if (data_ov027_021e33e0.unknown_c_ != 0 && data_ov027_021e33e0.unknown_c_->unknown_1316_ != 0) {
 		return 2;
 	}
-	var0 = (Struct_ov027_021dc680_3*)(((unsigned int)arg0 + 31) & ~31);
-	var1 = (Struct_ov027_021dc680*)(((unsigned int)var0 + sizeof(Struct_ov027_021dc680_3) + 31) & ~31);
-	if (arg3 == 0x10000) {
-		arg3 = func_020d4dd4();
+	param = (Struct_ov027_021dc680_3*)(((unsigned int)work + 31) & ~31);
+	var1 = (Struct_ov027_021dc680*)(((unsigned int)param + sizeof(Struct_ov027_021dc680_3) + 31) & ~31);
+	if (tgid == 0x10000) {
+		tgid = func_020d4dd4();
 	}
-	var2 = DisableIRQInterrupts();
+	enabled = DisableIRQInterrupts();
 	data_ov027_021dd8f2 = 0xffff;
 	data_ov027_021dd8ec = 5;
 	data_ov027_021dd8ee = 40;
 	data_ov027_021dd8f0 = 40;
 	data_ov027_021dd8f8 = 1;
 	data_ov027_021e33e0.unknown_0_ = arg4;
-	data_ov027_021e33e0.unknown_8_ = var0;
+	data_ov027_021e33e0.param = param;
 	data_ov027_021e33e0.unknown_c_ = var1;
-	func_020ca3ec(0, var0, sizeof(Struct_ov027_021dc680_3));
+	func_020ca3ec(0, param, sizeof(Struct_ov027_021dc680_3));
 	func_020ca390(0, var1, sizeof(Struct_ov027_021dc680));
-	inline_ov027_021dc680(var0, arg1);
+	inline_ov027_021dc680(param, arg1);
 	VectorizedInvertedMemcpy(arg1, &var1->unknown_1300_, sizeof(Struct_ov027_021dc680_2));
-	if (arg1->unknown_1_ < 10) {
-		var1->unknown_1300_.unknown_2_[arg1->unknown_1_] = 0;
+	if (arg1->nameLength < 10) {
+		var1->unknown_1300_.name[arg1->nameLength] = 0;
 	}
-	var0->unknown_500_ = 0x100;
-	var0->unknown_502_ = 8;
-	var0->unknown_518_ = 0;
-	var0->unknown_51a_ = 0;
-	var0->unknown_52c_ = 1;
-	var0->unknown_504_ = var1->unknown_400_;
-	var0->unknown_e_ = 0;
-	var0->unknown_12_ = 0;
-	var0->unknown_16_ = 1;
-	var0->unknown_14_ = 0;
-	var0->unknown_8_ = arg2;
-	var0->unknown_c_ = arg3;
-	var0->unknown_18_ = func_ov027_021dc618() + 200;
-	var0->unknown_10_ = 15;
-	var0->unknown_50c_ = 0;
-	var0->unknown_50d_ = 0;
+	param->unknown_500_ = 0x100;
+	param->unknown_502_ = 8;
+	param->unknown_518_ = 0;
+	param->unknown_51a_ = 0;
+	param->unknown_52c_ = 1;
+	param->unknown_504_ = var1->buf;
+	param->unknown_e_ = 0;
+	param->unknown_12_ = 0;
+	param->unknown_16_ = 1;
+	param->unknown_14_ = 0;
+	param->unknown_8_ = arg2;
+	param->tgid = tgid;
+	param->unknown_18_ = func_ov027_021dc618() + 200;
+	param->unknown_10_ = 15;
+	param->unknown_50c_ = 0;
+	param->unknown_50d_ = 0;
 	var1->unknown_1316_ = 1;
 	var1->unknown_131c_ = 0;
-	SetIRQInterruptState(var2);
+	SetIRQInterruptState(enabled);
 	return 0;
 }

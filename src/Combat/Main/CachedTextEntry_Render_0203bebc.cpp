@@ -18,13 +18,13 @@ struct S_b20c {
     unsigned char rectCount;
 };
 
-void GlyphDestination_Clear(struct S_b20c* destination);
-void GlyphDestination_SetPixels(void* destination, int pixels);
-void GlyphDestination_SetRects(void* destination, int rects, unsigned char rectCount);
-void* MessageSystem_GetInstance(void);
-FontCharacter* Font_GetCharacter(int index, int font);
-int Font_GetKerning(int previousCharacter, int character, int font);
-int Font_GetFallbackWidth(int font);
+extern "C" void GlyphDestination_Clear(struct S_b20c* destination);
+extern "C" void GlyphDestination_SetPixels(void* destination, int pixels);
+extern "C" void GlyphDestination_SetRects(void* destination, int rects, unsigned char rectCount);
+extern "C" void* MessageSystem_GetInstance(void);
+extern "C" FontCharacter* Font_GetCharacter(int index, int font);
+extern "C" int Font_GetKerning(int previousCharacter, int character, int font);
+extern "C" int Font_GetFallbackWidth(int font);
 void CleanInvalidateCacheRange(const void* p, unsigned int len);
 extern "C" void LoadToSubObjVRAM(const void* data, unsigned int offset, unsigned int length);
 extern "C" int GlyphDestination_DrawCharacter(void* destination, void* character, short x, int y, unsigned char color, unsigned char font);
@@ -48,18 +48,18 @@ struct CachedTextTable0203bebc {
     CachedTextEntry0203bebc entries[96];
     int engine;
     char* bitmapStorage;
-    unsigned int paletteControl;
+    unsigned int unknown_60c_;
     unsigned short nextOamEntry;
     unsigned short allocatedEntries;
     unsigned char workBuffer[256];
 };
 
-struct GlyphTileOffsets0203bebc {
+struct Struct_020e8200 {
     unsigned int offsets[8];
 };
 
 extern CachedTextTable0203bebc* data_02105244;
-extern const GlyphTileOffsets0203bebc data_020e8200;
+extern const Struct_020e8200 data_020e8200;
 extern "C" void __clear(void*, int);
 
 enum { kFontPixelSize = 10 };  // the 10-pixel font
@@ -120,17 +120,17 @@ extern "C" ARM void CachedTextEntry_Render(void* rawEntry, void* encodedText, vo
     entry->advanceX = characterAdvance;
     FontGlyphTable* font = Font_GetGlyphTable(kFontPixelSize);
     if (font == NULL) return;
-    int height = font->glyphHeight;
-    unsigned char raster[256];
-    __clear(raster, 256);
+    int height = font->unknown_3_;
+    unsigned char var3[256];
+    __clear(var3, 256);
     for (unsigned char glyph = 0; glyph < 3; ++glyph) {
         unsigned char bit = 0;
-        const unsigned char* bitmap = reinterpret_cast<const unsigned char*>(glyphs[glyph]);
-        if (bitmap == NULL) continue;
-        unsigned char* row = raster + glyph * 5;
+        const unsigned char* var6 = reinterpret_cast<const unsigned char*>(glyphs[glyph]);
+        if (var6 == NULL) continue;
+        unsigned char* row = var3 + glyph * 5;
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < 10; ++x) {
-                if (*bitmap & (1 << bit)) {
+                if (*var6 & (1 << bit)) {
                     if (x & 1) {
                         row[x >> 1] = (row[x >> 1] & 0xf) | 0xf0;
                     } else {
@@ -141,27 +141,27 @@ extern "C" ARM void CachedTextEntry_Render(void* rawEntry, void* encodedText, vo
                 ++bit;
                 if (bit >= 8) {
                     bit = 0;
-                    ++bitmap;
+                    ++var6;
                 }
             }
             row += 16;
         }
     }
 
-    unsigned int rowOffset;
-    unsigned int outputOffset;
+    unsigned int var10;
+    unsigned int var11;
     unsigned int tile;
-    unsigned int tileRow;
+    unsigned int var13;
     unsigned char* const work = data_02105244->workBuffer;
     memset(work, 0, 256);
-    GlyphTileOffsets0203bebc offsets = data_020e8200;
-    outputOffset = 0;
+    Struct_020e8200 offsets = data_020e8200;
+    var11 = 0;
     for (tile = 0; tile < 8; ++tile) {
-        rowOffset = 0;
-        for (tileRow = 0; tileRow < 8; ++tileRow) {
-            memcpy(work + outputOffset, raster + offsets.offsets[tile] + rowOffset, 4);
-            rowOffset += 16;
-            outputOffset += 4;
+        var10 = 0;
+        for (var13 = 0; var13 < 8; ++var13) {
+            memcpy(work + var11, var3 + offsets.offsets[tile] + var10, 4);
+            var10 += 16;
+            var11 += 4;
         }
     }
     CleanInvalidateCacheRange(work, 256);

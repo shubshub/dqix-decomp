@@ -1,36 +1,36 @@
 #include <globaldefs.h>
 #include "NitroSDK/Memory.h"
 
-extern "C" void func_020d0040(int arg0);
+extern "C" void func_020d0040(int mode);
 extern "C" int func_020d06d4();
-extern "C" void func_020d0050(int arg0);
-extern "C" void func_020758a4(void* arg0);
+extern "C" void func_020d0050(int value);
+extern "C" void func_020758a4(void* obj);
 int GetCardReadManagerSharedStatus();
 extern "C" int func_020d0834();
-extern "C" void func_020d05ec(const void* arg0, int arg1, unsigned int arg2, void (*arg3)(void*), int arg4, int arg5, int arg6, int arg7, int arg8);
+extern "C" void func_020d05ec(const void* src, int offset, unsigned int length, void (*proc)(void*), int a4, int a5, int a6, int a7, int a8);
 
 struct Struct_02108dfc {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned short unknown_2_;
-    void* unknown_4_;
+    unsigned char flag;
+    unsigned char pad1;
+    unsigned short value;
+    void* base;
 };
 
 extern struct Struct_02108dfc data_02108dfc;
 extern unsigned char data_020f0dc8;
 
 // USA: func_02075acc
-extern "C" ARM int func_02075acc(int arg0, void* arg1, unsigned int arg2, int arg3) {
-    int var0;
+extern "C" ARM int func_02075acc(int offset, void* src, unsigned int length, int arg3) {
+    int result;
     int var1;
     int var2;
     int var3;
 
-    if (data_02108dfc.unknown_4_ != 0) {
-        if (arg0 >= 0x8000) {
-            arg0 -= 0x8000;
+    if (data_02108dfc.base != 0) {
+        if (offset >= 0x8000) {
+            offset -= 0x8000;
         }
-        VectorizedInvertedMemcpy(arg1, (void*)((unsigned char*)data_02108dfc.unknown_4_ + arg0), arg2);
+        VectorizedInvertedMemcpy(src, (void*)((unsigned char*)data_02108dfc.base + offset), length);
         return 1;
     }
 
@@ -38,37 +38,37 @@ extern "C" ARM int func_02075acc(int arg0, void* arg1, unsigned int arg2, int ar
         return 0;
     }
 
-    data_02108dfc.unknown_0_ = 0;
-    var0 = 1;
-    func_020d0040((int)data_02108dfc.unknown_2_);
+    data_02108dfc.flag = 0;
+    result = 1;
+    func_020d0040((int)data_02108dfc.value);
 
     var1 = (func_020d06d4() & 0xff) == 1;
     if (var1) {
-        func_020d05ec(arg1, arg0, arg2, func_020758a4, 0, 1, 8, 10, 2);
+        func_020d05ec(src, offset, length, func_020758a4, 0, 1, 8, 10, 2);
     } else {
         var2 = (func_020d06d4() & 0xff) == 2;
         if (var2) {
-            func_020d05ec(arg1, arg0, arg2, func_020758a4, 0, 1, 7, 10, 2);
+            func_020d05ec(src, offset, length, func_020758a4, 0, 1, 7, 10, 2);
         } else {
             var3 = (func_020d06d4() & 0xff) == 3;
             if (var3) {
-                func_020d05ec(arg1, arg0, arg2, func_020758a4, 0, 1, 8, 10, 2);
+                func_020d05ec(src, offset, length, func_020758a4, 0, 1, 8, 10, 2);
             }
         }
     }
 
     if (arg3 != 0) {
         if (GetCardReadManagerSharedStatus() != 0) {
-            var0 = 0;
+            result = 0;
         }
     } else {
         func_020d0834();
         if (GetCardReadManagerSharedStatus() != 0) {
-            var0 = 0;
+            result = 0;
         }
-        func_020d0050((int)data_02108dfc.unknown_2_);
-        data_02108dfc.unknown_0_ = 1;
+        func_020d0050((int)data_02108dfc.value);
+        data_02108dfc.flag = 1;
     }
 
-    return var0;
+    return result;
 }

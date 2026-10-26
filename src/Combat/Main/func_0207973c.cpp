@@ -2,23 +2,23 @@
 
 #include "GameState/GameState.h"
 
-struct Struct_0202b2f0;
+struct SearchStruct;
 
-extern "C" void* func_0202ae18(void);
+extern "C" void* LinkSession_GetInstance(void);
 
-extern "C" int func_0202c1c0(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" void func_02079710(unsigned char* arg0, int arg1, int arg2);
+extern "C" int LinkSession_IsSlotMember(struct SearchStruct* obj, int value);
+extern "C" GameObject* func_0200ff58(GameState* battleStruct, int combatantId);
+extern "C" void func_02079710(unsigned char* obj, int bit, int cond);
 
 // USA: func_0207973c
-extern "C" ARM int func_0207973c(unsigned char* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    struct Struct_0202b2f0* var1 = (struct Struct_0202b2f0*)func_0202ae18();
-    int var2;
-    for (var2 = 0; var2 < 4; var2++) {
-        if (!func_0202c1c0(var1, var2) || func_0200ff58(var0, var2) != 0) {
-            func_02079710(arg0, var2, 1);
+extern "C" ARM int func_0207973c(unsigned char* obj) {
+    GameState* battleStruct = GameState::GetInstance();
+    struct SearchStruct* search = (struct SearchStruct*)LinkSession_GetInstance();
+    int i;
+    for (i = 0; i < 4; i++) {
+        if (!LinkSession_IsSlotMember(search, i) || func_0200ff58(battleStruct, i) != 0) {
+            func_02079710(obj, i, 1);
         }
     }
-    return (arg0[0x17e] & 0xf) == 0xf ? 1 : 0;
+    return (obj[0x17e] & 0xf) == 0xf ? 1 : 0;
 }

@@ -4,38 +4,38 @@ struct Struct_ov031_022407e4;
 struct Struct_ov031_022407f8;
 
 struct Struct_ov031_0224185c_7 {
-    Struct_ov031_0224185c_7* unknown_0_;
-    signed char unknown_4_[0x200];
+    Struct_ov031_0224185c_7* next;
+    signed char data[0x200];
 };
 
 struct Struct_ov031_0224185c_3 {
     volatile int unknown_0_;
     volatile int unknown_4_;
-    int unknown_8_;
+    int ok;
     int unknown_c_;
-    char unknown_10_[0x1c - 0x10];
-    Struct_ov031_0224185c_7* unknown_1c_;
-    signed char unknown_20_[0x400];
+    char pad10[0x1c - 0x10];
+    Struct_ov031_0224185c_7* blocks;
+    signed char hdr[0x400];
 };
 
 struct Struct_ov031_0224185c_4 {
-    Struct_ov031_0224185c_4* unknown_0_;
-    Struct_ov031_0224185c_4* unknown_4_;
-    char* unknown_8_;
-    char* unknown_c_;
+    Struct_ov031_0224185c_4* prev;
+    Struct_ov031_0224185c_4* next;
+    char* name;
+    char* value;
 };
 
 struct Struct_ov031_0224185c_5 {
-    Struct_ov031_0224185c_5* unknown_0_;
-    Struct_ov031_0224185c_5* unknown_4_;
-    char* unknown_8_;
-    char* unknown_c_;
+    Struct_ov031_0224185c_5* prev;
+    Struct_ov031_0224185c_5* next;
+    char* name;
+    char* value;
     int unknown_10_;
     int unknown_14_;
 };
 
 struct Struct_ov031_0224185c_6 {
-    int unknown_0_;
+    int unk0;
     int unknown_4_;
     int unknown_8_;
     int unknown_c_;
@@ -49,61 +49,61 @@ struct Struct_ov031_0224185c_6 {
     void* unknown_2c_;
     Struct_ov031_0224185c_3* unknown_30_;
     Struct_ov031_0224185c_4* unknown_34_;
-    Struct_ov031_0224185c_5* unknown_38_;
-    void (*unknown_3c_)(int, Struct_ov031_0224185c_3*, void*);
-    int unknown_40_;
+    Struct_ov031_0224185c_5* params;
+    void (*callback)(int, Struct_ov031_0224185c_3*, void*);
+    int method;
     char unknown_44_[0x16];
 };
 
 struct Struct_ov031_0224185c {
-    void* unknown_0_;
-    void* unknown_4_;
-    int unknown_8_;
-    Struct_ov031_0224185c_6* unknown_c_;
+    void* prev;
+    void* next;
+    int id;
+    Struct_ov031_0224185c_6* req;
     int unknown_10_;
 };
 
 struct Struct_ov031_0224185c_2 {
     int unknown_0_;
-    short unknown_4_;
+    short events;
     short unknown_6_;
 };
 
-struct Struct_ov031_022919bc_3 { int unknown_0_; int unknown_4_; };
+struct Struct_ov031_022919bc_3 { int head; int tail; };
 
 extern "C" void* func_ov031_02240310(void);
 extern "C" Struct_ov031_0224185c* func_ov031_022402e0(void);
 extern "C" void func_ov031_02240324(void);
 extern "C" int func_ov031_022403d8(void);
-extern "C" int func_ov031_022413b8(void* arg0, int arg1);
+extern "C" int func_ov031_022413b8(void* unused, int id);
 extern "C" void func_ov031_02241318(void);
-extern "C" int func_ov031_022407e4(Struct_ov031_022407e4* arg0, unsigned int arg1);
-extern "C" int func_ov031_022407f8(Struct_ov031_022407f8* arg0, int arg1, int arg2, int arg3);
+extern "C" int func_ov031_022407e4(Struct_ov031_022407e4* obj, unsigned int val);
+extern "C" int func_ov031_022407f8(Struct_ov031_022407f8* obj, int b, int c, int d);
 
-extern "C" int func_ov031_02240fc8(Struct_ov031_0224185c_6* arg0);
-extern "C" int func_ov031_0220783c(Struct_ov031_0224185c_2* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov031_0224175c(int arg0, void** arg1);
-extern "C" int func_ov031_02241338(Struct_ov031_0224185c_6* arg0);
-extern "C" int func_ov031_02241404(Struct_ov031_0224185c_6* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov031_02241720(void* arg0);
-extern "C" int func_ov031_022415a8(const char* arg0);
-extern "C" int func_ov031_022415e0(Struct_ov031_0224185c_6* arg0, int arg1, int* arg2, const char* arg3, int arg4);
-extern "C" Struct_ov031_0224185c_4* func_ov031_0223ff38(Struct_ov031_0224185c_4** arg0);
-extern "C" int func_ov031_02242b5c(const char* arg0);
-extern "C" int func_ov031_02242dd4(signed char* arg0, int arg1);
-extern "C" int func_ov031_02242bc4(signed char* arg0, int arg1);
-extern "C" int func_ov031_022414cc(Struct_ov031_0224185c_6* arg0, int arg1, char* arg2, int arg3, int arg4);
-extern "C" int func_ov031_02241480(Struct_ov031_0224185c_6* arg0, int arg1, void* arg2, int arg3, int arg4);
-extern "C" int func_ov031_022406f8(Struct_ov031_0224185c_3* arg0, char* arg1, int arg2, int arg3);
-extern "C" int func_ov031_02241540(const char* arg0, const char* arg1, int arg2);
-extern "C" int func_ov031_02242d3c(char* arg0, int arg1);
-extern "C" int func_ov031_022404e8(Struct_ov031_0224185c_3* arg0, int arg1, int arg2, int* arg3);
-extern "C" int func_ov031_022410d8(Struct_ov031_0224185c_3* arg0, const char* arg1, int* arg2);
-extern "C" int func_ov031_02240628(Struct_ov031_0224185c_3* arg0, int arg1, int arg2, const char* arg3, int arg4);
-extern "C" int func_ov031_02241694(Struct_ov031_0224185c_6* arg0, int arg1);
-extern "C" int func_ov031_02242c54(char* arg0, int arg1);
-extern "C" int func_ov031_02240820(Struct_ov031_0224185c_6* arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" int func_ov031_02240e70(Struct_ov031_0224185c_6* arg0);
+extern "C" int func_ov031_02240fc8(Struct_ov031_0224185c_6* req);
+extern "C" int func_ov031_0220783c(Struct_ov031_0224185c_2* arg0, int n, int arg2, int flags);
+extern "C" void func_ov031_0224175c(int arg0, void** ctx);
+extern "C" int func_ov031_02241338(Struct_ov031_0224185c_6* req);
+extern "C" int func_ov031_02241404(Struct_ov031_0224185c_6* req, int arg1, int addr, int arg3);
+extern "C" void func_ov031_02241720(void* ctx);
+extern "C" int func_ov031_022415a8(const char* s);
+extern "C" int func_ov031_022415e0(Struct_ov031_0224185c_6* req, int arg1, int* pos, const char* buf, int count);
+extern "C" Struct_ov031_0224185c_4* func_ov031_0223ff38(Struct_ov031_0224185c_4** list);
+extern "C" int func_ov031_02242b5c(const char* s);
+extern "C" int func_ov031_02242dd4(signed char* out, int n);
+extern "C" int func_ov031_02242bc4(signed char* out, int c);
+extern "C" int func_ov031_022414cc(Struct_ov031_0224185c_6* req, int arg1, char* buf, int count, int flags);
+extern "C" int func_ov031_02241480(Struct_ov031_0224185c_6* req, int arg1, void* buf, int count, int flags);
+extern "C" int func_ov031_022406f8(Struct_ov031_0224185c_3* arg0, char* dst, int start, int len);
+extern "C" int func_ov031_02241540(const char* a, const char* b, int n);
+extern "C" int func_ov031_02242d3c(char* str, int maxLen);
+extern "C" int func_ov031_022404e8(Struct_ov031_0224185c_3* arg0, int start, int end, int* arg3);
+extern "C" int func_ov031_022410d8(Struct_ov031_0224185c_3* arg0, const char* name, int* arg2);
+extern "C" int func_ov031_02240628(Struct_ov031_0224185c_3* arg0, int start, int end, const char* word, int arg4);
+extern "C" int func_ov031_02241694(Struct_ov031_0224185c_6* req, int arg1);
+extern "C" int func_ov031_02242c54(char* str, int len);
+extern "C" int func_ov031_02240820(Struct_ov031_0224185c_6* req, int arg1, int pos, int count, int flags);
+extern "C" int func_ov031_02240e70(Struct_ov031_0224185c_6* req);
 extern "C" void func_ov031_022417fc(void);
 
 extern Struct_ov031_022919bc_3 data_ov031_022919bc;
@@ -144,7 +144,7 @@ static inline Struct_ov031_0224185c_7* inline_ov031_0224185c(void) {
 
 #define HTTP_SEND(str, len)                                                 \
     do {                                                                    \
-        int sent = func_ov031_022415e0(var20, var17, &var2, (str), (len));      \
+        int sent = func_ov031_022415e0(req, var17, &pos, (str), (len));      \
         if (sent < 0) goto done;                                            \
         if (sent != 0) break;                                               \
         goto retry;                                                         \
@@ -152,37 +152,37 @@ static inline Struct_ov031_0224185c_7* inline_ov031_0224185c(void) {
 
 // USA: func_ov031_0224185c
 extern "C" ARM void func_ov031_0224185c(void) {
-    signed char var0[12];
-    void* var1;
-    int var2;
-    int var3;
+    signed char buf[12];
+    void* ctx;
+    int pos;
+    int tmp;
     int var4;
     Struct_ov031_0224185c_2 var5;
     char var6[3];
     Struct_ov031_0224185c* var7;
-    int var8;
+    int addr;
     int var9;
     int var10;
     int var11;
     int var12;
     int var13;
     int var14;
-    int var15;
-    int var16;
+    int same;
+    int len;
     int var17;
-    int var18;
+    int total;
     int var19;
-    Struct_ov031_0224185c_6* var20;
-    int var21;
+    Struct_ov031_0224185c_6* req;
+    int id;
     Struct_ov031_0224185c_3* var22;
     int var23;
-    int var24;
-    int var25;
+    int n;
+    int i;
 
     var17 = -1;
-    var1 = 0;
-    data_ov031_022919bc.unknown_0_ = 0;
-    data_ov031_022919bc.unknown_4_ = 0;
+    ctx = 0;
+    data_ov031_022919bc.head = 0;
+    data_ov031_022919bc.tail = 0;
     var11 = 0;
     var9 = -1;
     var10 = -1;
@@ -192,34 +192,34 @@ extern "C" ARM void func_ov031_0224185c(void) {
         func_ov031_02240310();
         var7 = func_ov031_022402e0();
         if (var7 == 0) {
-            var21 = -1;
+            id = -1;
         } else {
-            var21 = var7->unknown_8_;
-            var20 = var7->unknown_c_;
+            id = var7->id;
+            req = var7->req;
             data_ov031_02290fcc = var7;
         }
         func_ov031_02240324();
-        if (var21 < 0) {
+        if (id < 0) {
             func_ov031_022403d8();
             continue;
         }
-        var22 = var20->unknown_30_;
-        if (var20->unknown_4_ != 0) goto done;
-        var8 = func_ov031_02240fc8(var20);
-        if (var8 == 0) {
+        var22 = req->unknown_30_;
+        if (req->unknown_4_ != 0) goto done;
+        addr = func_ov031_02240fc8(req);
+        if (addr == 0) {
             var13 = 4;
             goto done;
         }
-        var15 = 0;
-        if (var8 == var9 && var20->unknown_28_ == var10 && var20->unknown_8_ == var12) var15 = 1;
-        var10 = var20->unknown_28_;
-        var12 = var20->unknown_8_;
-        var9 = var8;
-        var14 = var14 & var15;
+        same = 0;
+        if (addr == var9 && req->unknown_28_ == var10 && req->unknown_8_ == var12) same = 1;
+        var10 = req->unknown_28_;
+        var12 = req->unknown_8_;
+        var9 = addr;
+        var14 = var14 & same;
     retry:
         var13 = 0;
         if (var17 >= 0) {
-            var5.unknown_4_ = 9;
+            var5.events = 9;
             var5.unknown_0_ = var17;
             if (func_ov031_0220783c(&var5, 1, 0xcc8d, 0) <= 0) {
                 var14 = 0;
@@ -229,50 +229,50 @@ extern "C" ARM void func_ov031_0224185c(void) {
         }
         if (var14 == 0) {
             if (var17 >= 0) {
-                if (func_ov031_022413b8(var20, var17) < 0) var13 = 10;
-                func_ov031_0224175c(var17, &var1);
+                if (func_ov031_022413b8(req, var17) < 0) var13 = 10;
+                func_ov031_0224175c(var17, &ctx);
                 var17 = -1;
                 if (var13 != 0) goto done;
             }
-            var17 = func_ov031_02241338(var20);
+            var17 = func_ov031_02241338(req);
             if (var17 < 0) {
                 var13 = 3;
                 goto done;
             }
-            if (var20->unknown_8_ != 0) {
-                var1 = var20->unknown_20_;
-                var20->unknown_20_ = 0;
+            if (req->unknown_8_ != 0) {
+                ctx = req->unknown_20_;
+                req->unknown_20_ = 0;
             }
             func_ov031_02240310();
             data_ov031_02290fcc->unknown_10_ = var17;
             func_ov031_02240324();
-            if (var20->unknown_4_ != 0) goto done;
-            if (func_ov031_02241404(var20, var17, var8, var20->unknown_28_) >= 0) {
+            if (req->unknown_4_ != 0) goto done;
+            if (func_ov031_02241404(req, var17, addr, req->unknown_28_) >= 0) {
                 var14 = 1;
             } else {
                 var14 = 0;
             }
         } else {
-            if (var20->unknown_8_ != 0) {
-                func_ov031_02241720(var20->unknown_20_);
-                var20->unknown_20_ = 0;
+            if (req->unknown_8_ != 0) {
+                func_ov031_02241720(req->unknown_20_);
+                req->unknown_20_ = 0;
             }
             func_ov031_02241318();
             func_ov031_02240310();
             data_ov031_02290fcc->unknown_10_ = var17;
             func_ov031_02240324();
         }
-        if (var20->unknown_4_ != 0) goto done;
+        if (req->unknown_4_ != 0) goto done;
         if (var14 == 0) {
             var13 = 5;
             goto done;
         }
-        var2 = 0;
+        pos = 0;
         var14 = 0;
-        var16 = func_ov031_022415a8(var20->unknown_24_);
+        len = func_ov031_022415a8(req->unknown_24_);
         var13 = 10;
 
-        switch (var20->unknown_40_) {
+        switch (req->method) {
         case 0:
             HTTP_SEND(data_ov031_0224c794, 4);
             break;
@@ -283,166 +283,166 @@ extern "C" ARM void func_ov031_0224185c(void) {
             HTTP_SEND(data_ov031_0224c7a4, 5);
             break;
         }
-        if (var16 > var20->unknown_10_) {
-            var24 = var16 - var20->unknown_10_;
-            if (var24 != 0) HTTP_SEND(var20->unknown_24_ + var20->unknown_10_, var24);
+        if (len > req->unknown_10_) {
+            n = len - req->unknown_10_;
+            if (n != 0) HTTP_SEND(req->unknown_24_ + req->unknown_10_, n);
         } else {
             HTTP_SEND(data_ov031_0224c7ac, 1);
         }
         HTTP_SEND(data_ov031_0224c7b0, 11);
 
-        var3 = var20->unknown_8_ != 0 ? 8 : 7;
+        tmp = req->unknown_8_ != 0 ? 8 : 7;
         HTTP_SEND(data_ov031_0224c7bc, 6);
-        var24 = var20->unknown_c_ - var3;
-        if (var24 != 0) HTTP_SEND(var20->unknown_24_ + var3, var24);
+        n = req->unknown_c_ - tmp;
+        if (n != 0) HTTP_SEND(req->unknown_24_ + tmp, n);
         HTTP_SEND(data_ov031_0224c7c4, 2);
 
         {
-            Struct_ov031_0224185c_4* var26 = func_ov031_0223ff38(&var20->unknown_34_);
-            while (var26 != 0) {
-                var24 = func_ov031_022415a8(var26->unknown_8_);
-                if (var24 != 0) HTTP_SEND(var26->unknown_8_, var24);
+            Struct_ov031_0224185c_4* h = func_ov031_0223ff38(&req->unknown_34_);
+            while (h != 0) {
+                n = func_ov031_022415a8(h->name);
+                if (n != 0) HTTP_SEND(h->name, n);
                 HTTP_SEND(data_ov031_0224c7c8, 2);
-                var24 = func_ov031_022415a8(var26->unknown_c_);
-                if (var24 != 0) HTTP_SEND(var26->unknown_c_, var24);
+                n = func_ov031_022415a8(h->value);
+                if (n != 0) HTTP_SEND(h->value, n);
                 HTTP_SEND(data_ov031_0224c7c4, 2);
-                data_ov031_02290fc8(var26);
-                var26 = func_ov031_0223ff38(&var20->unknown_34_);
+                data_ov031_02290fc8(h);
+                h = func_ov031_0223ff38(&req->unknown_34_);
             }
         }
 
-        if (var20->unknown_40_ == 1) {
-            Struct_ov031_0224185c_5* var27;
-            Struct_ov031_0224185c_5* var28;
-            var18 = 0;
-            var27 = var20->unknown_38_;
+        if (req->method == 1) {
+            Struct_ov031_0224185c_5* list;
+            Struct_ov031_0224185c_5* p;
+            total = 0;
+            list = req->params;
             var11 = 0;
-            var28 = var27;
-            while (var28 != 0) {
-                if (var28->unknown_14_ != 0) {
+            p = list;
+            while (p != 0) {
+                if (p->unknown_14_ != 0) {
                     var11 = 1;
                     break;
                 }
-                if (var28 == var27->unknown_0_) break;
-                var28 = var28->unknown_4_;
+                if (p == list->prev) break;
+                p = p->next;
             }
             if (var11 != 0) {
-                while (var27 != 0) {
-                    var18 += 0x16;
-                    var18 += func_ov031_022415a8(var27->unknown_8_) + 0x29;
-                    if (var27->unknown_14_ != 0) var18 += 0x4b;
-                    var18 += 2;
-                    var18 += var27->unknown_10_;
-                    var18 += 2;
-                    if (var27 == var20->unknown_38_->unknown_0_) break;
-                    var27 = var27->unknown_4_;
+                while (list != 0) {
+                    total += 0x16;
+                    total += func_ov031_022415a8(list->name) + 0x29;
+                    if (list->unknown_14_ != 0) total += 0x4b;
+                    total += 2;
+                    total += list->unknown_10_;
+                    total += 2;
+                    if (list == req->params->prev) break;
+                    list = list->next;
                 }
-                var18 += 0x18;
+                total += 0x18;
                 HTTP_SEND(data_ov031_0224c7cc, 0x2c);
-                HTTP_SEND(var20->unknown_44_ + 2, 0x12);
+                HTTP_SEND(req->unknown_44_ + 2, 0x12);
                 HTTP_SEND(data_ov031_0224c7c4, 2);
             } else {
-                while (var27 != 0) {
-                    var18 = var18 + func_ov031_02242b5c(var27->unknown_8_) + 1;
-                    var18 += func_ov031_02242b5c(var27->unknown_c_);
-                    if (var27 == var20->unknown_38_->unknown_0_) break;
-                    var27 = var27->unknown_4_;
-                    var18++;
+                while (list != 0) {
+                    total = total + func_ov031_02242b5c(list->name) + 1;
+                    total += func_ov031_02242b5c(list->value);
+                    if (list == req->params->prev) break;
+                    list = list->next;
+                    total++;
                 }
                 HTTP_SEND(data_ov031_0224c7fc, 0x31);
             }
             HTTP_SEND(data_ov031_0224c830, 0x10);
-            var3 = func_ov031_02242dd4(var0, var18);
-            if (var3 != 0) HTTP_SEND((char*)var0, var3);
+            tmp = func_ov031_02242dd4(buf, total);
+            if (tmp != 0) HTTP_SEND((char*)buf, tmp);
             HTTP_SEND(data_ov031_0224c7c4, 2);
         }
         HTTP_SEND(data_ov031_0224c7c4, 2);
 
-        if (var20->unknown_40_ == 1) {
+        if (req->method == 1) {
             if (var11 != 0) {
-                Struct_ov031_0224185c_5* var29 = var20->unknown_38_;
-                while (var29 != 0) {
-                    HTTP_SEND(var20->unknown_44_, 0x14);
+                Struct_ov031_0224185c_5* p = req->params;
+                while (p != 0) {
+                    HTTP_SEND(req->unknown_44_, 0x14);
                     HTTP_SEND(data_ov031_0224c7c4, 2);
                     HTTP_SEND(data_ov031_022494d8, 0x26);
-                    var24 = func_ov031_022415a8(var29->unknown_8_);
-                    if (var24 != 0) HTTP_SEND(var29->unknown_8_, var24);
+                    n = func_ov031_022415a8(p->name);
+                    if (n != 0) HTTP_SEND(p->name, n);
                     HTTP_SEND(data_ov031_0224c844, 3);
-                    if (var29->unknown_14_ != 0) HTTP_SEND(data_ov031_02249500, 0x4b);
+                    if (p->unknown_14_ != 0) HTTP_SEND(data_ov031_02249500, 0x4b);
                     HTTP_SEND(data_ov031_0224c7c4, 2);
-                    if (var29->unknown_10_ != 0) HTTP_SEND(var29->unknown_c_, var29->unknown_10_);
+                    if (p->unknown_10_ != 0) HTTP_SEND(p->value, p->unknown_10_);
                     HTTP_SEND(data_ov031_0224c7c4, 2);
-                    if (var29 == var20->unknown_38_->unknown_0_) break;
-                    var29 = var29->unknown_4_;
+                    if (p == req->params->prev) break;
+                    p = p->next;
                 }
-                HTTP_SEND(var20->unknown_44_, 0x14);
+                HTTP_SEND(req->unknown_44_, 0x14);
                 HTTP_SEND(data_ov031_0224c848, 4);
             } else {
-                Struct_ov031_0224185c_5* var30 = var20->unknown_38_;
-                while (var30 != 0) {
-                    for (var25 = 0; var30->unknown_8_[var25] != 0; var25++) {
-                        var3 = func_ov031_02242bc4(var0, var30->unknown_8_[var25]);
-                        if (var3 != 0) HTTP_SEND((char*)var0, var3);
+                Struct_ov031_0224185c_5* q = req->params;
+                while (q != 0) {
+                    for (i = 0; q->name[i] != 0; i++) {
+                        tmp = func_ov031_02242bc4(buf, q->name[i]);
+                        if (tmp != 0) HTTP_SEND((char*)buf, tmp);
                     }
                     HTTP_SEND(data_ov031_0224c850, 1);
-                    for (var25 = 0; var30->unknown_c_[var25] != 0; var25++) {
-                        var3 = func_ov031_02242bc4(var0, var30->unknown_c_[var25]);
-                        if (var3 != 0) HTTP_SEND((char*)var0, var3);
+                    for (i = 0; q->value[i] != 0; i++) {
+                        tmp = func_ov031_02242bc4(buf, q->value[i]);
+                        if (tmp != 0) HTTP_SEND((char*)buf, tmp);
                     }
-                    if (var30 == var20->unknown_38_->unknown_0_) break;
+                    if (q == req->params->prev) break;
                     HTTP_SEND(data_ov031_0224c854, 1);
-                    var30 = var30->unknown_4_;
+                    q = q->next;
                 }
             }
         }
-        if (var2 > 0) {
-            int var31 = func_ov031_022414cc(var20, var17, data_ov031_02291a04, var2, 0);
+        if (pos > 0) {
+            int var31 = func_ov031_022414cc(req, var17, data_ov031_02291a04, pos, 0);
             if (var31 < 0) goto done;
             if (var31 == 0) goto retry;
         }
 
         var22->unknown_0_ = 0;
-        var0[0] = 0;
-        var0[1] = 0;
-        var0[2] = 0;
-        var0[3] = 0;
+        buf[0] = 0;
+        buf[1] = 0;
+        buf[2] = 0;
+        buf[3] = 0;
         {
-            Struct_ov031_0224185c_7* var32 = var22->unknown_1c_;
+            Struct_ov031_0224185c_7* blk = var22->blocks;
             var13 = 7;
-            var2 = 0;
+            pos = 0;
             for (;;) {
                 int var33;
-                if (var20->unknown_4_ != 0) goto done;
-                if (var2 < 0x400) {
-                    var33 = func_ov031_02241480(var20, var17, var22->unknown_20_ + var2, 1, 0);
-                    var0[var2 & 3] = var22->unknown_20_[var2];
+                if (req->unknown_4_ != 0) goto done;
+                if (pos < 0x400) {
+                    var33 = func_ov031_02241480(req, var17, var22->hdr + pos, 1, 0);
+                    buf[pos & 3] = var22->hdr[pos];
                 } else {
-                    int var34 = var2 & 0x1ff;
-                    if (var34 == 0) {
-                        if (var32 != 0) {
-                            var32->unknown_0_ = inline_ov031_0224185c();
-                            var32 = var32->unknown_0_;
+                    int off = pos & 0x1ff;
+                    if (off == 0) {
+                        if (blk != 0) {
+                            blk->next = inline_ov031_0224185c();
+                            blk = blk->next;
                         } else {
-                            var32 = inline_ov031_0224185c();
-                            var22->unknown_1c_ = var32;
+                            blk = inline_ov031_0224185c();
+                            var22->blocks = blk;
                         }
-                        if (var32 == 0) {
+                        if (blk == 0) {
                             var13 = 1;
                             goto done;
                         }
-                        var32->unknown_0_ = 0;
+                        blk->next = 0;
                     }
-                    var33 = func_ov031_02241480(var20, var17, var32->unknown_4_ + var34, 1, 0);
-                    var0[var2 & 3] = var32->unknown_4_[var34];
+                    var33 = func_ov031_02241480(req, var17, blk->data + off, 1, 0);
+                    buf[pos & 3] = blk->data[off];
                 }
                 if (var33 <= 0) {
                     var13 = 10;
                     goto done;
                 }
-                var2 += var33;
-                if (var0[(var2 - 4) & 3] == '\r' && var0[(var2 - 3) & 3] == '\n' &&
-                    var0[(var2 - 2) & 3] == '\r' && var0[(var2 - 1) & 3] == '\n') {
-                    var22->unknown_0_ = var2;
+                pos += var33;
+                if (buf[(pos - 4) & 3] == '\r' && buf[(pos - 3) & 3] == '\n' &&
+                    buf[(pos - 2) & 3] == '\r' && buf[(pos - 1) & 3] == '\n') {
+                    var22->unknown_0_ = pos;
                     break;
                 }
             }
@@ -454,25 +454,25 @@ extern "C" ARM void func_ov031_0224185c(void) {
         if (func_ov031_02242d3c(data_ov031_02291a0d, 3) < 0) goto done;
         if (func_ov031_022404e8(var22, 0xc, var22->unknown_0_, &var4) < 0) goto done;
 
-        var16 = func_ov031_022410d8(var22, data_ov031_0224c860, &var3);
-        if (var16 == 0) {
+        len = func_ov031_022410d8(var22, data_ov031_0224c860, &tmp);
+        if (len == 0) {
             var13 = 0;
             goto done;
         }
-        if (var16 > 0x400) goto done;
-        if (var16 > 0) {
-            if (func_ov031_022406f8(var22, data_ov031_02291a04, var3, var16) == 0) goto done;
-            var16 = func_ov031_02242d3c(data_ov031_02291a04, var16);
-            if (var16 < 0) goto done;
-            var20->unknown_14_ = var16;
+        if (len > 0x400) goto done;
+        if (len > 0) {
+            if (func_ov031_022406f8(var22, data_ov031_02291a04, tmp, len) == 0) goto done;
+            len = func_ov031_02242d3c(data_ov031_02291a04, len);
+            if (len < 0) goto done;
+            req->unknown_14_ = len;
         } else {
-            var20->unknown_14_ = -1;
+            req->unknown_14_ = -1;
         }
 
-        var24 = func_ov031_022410d8(var22, data_ov031_0224c870, &var3);
-        var14 = var24;
-        if (var24 == 0) goto done;
-        if (var24 < 0) {
+        n = func_ov031_022410d8(var22, data_ov031_0224c870, &tmp);
+        var14 = n;
+        if (n == 0) goto done;
+        if (n < 0) {
             var6[0] = data_ov031_02291a04[5];
             var6[1] = data_ov031_02291a04[7];
             var6[2] = 0;
@@ -481,36 +481,36 @@ extern "C" ARM void func_ov031_0224185c(void) {
             } else {
                 var14 = 0;
             }
-        } else if (var24 > 0x400) {
+        } else if (n > 0x400) {
             var14 = 0;
         } else {
-            if (func_ov031_02240628(var22, var3, var3 + var14, data_ov031_0224c87c, 0) == 0) {
+            if (func_ov031_02240628(var22, tmp, tmp + var14, data_ov031_0224c87c, 0) == 0) {
                 var14 = 1;
             } else {
                 var14 = 0;
             }
         }
 
-        var24 = func_ov031_022410d8(var22, data_ov031_0224c888, &var3);
-        if (var24 == 0) goto done;
-        if (var24 > 0x400) {
+        n = func_ov031_022410d8(var22, data_ov031_0224c888, &tmp);
+        if (n == 0) goto done;
+        if (n > 0x400) {
             var19 = 0;
-        } else if (var24 > 0) {
-            var19 = func_ov031_02240628(var22, var3, var3 + var24, data_ov031_0224c89c, ';') == 0;
+        } else if (n > 0) {
+            var19 = func_ov031_02240628(var22, tmp, tmp + n, data_ov031_0224c89c, ';') == 0;
         } else {
             var19 = 0;
         }
-        if (var20->unknown_40_ == 2) goto done;
+        if (req->method == 2) goto done;
 
-        if (var16 >= 0) {
-            while (var16 > 0 && func_ov031_022407e4((Struct_ov031_022407e4*)var22, var22->unknown_4_) == 0) {
-                int var35 = func_ov031_02240820(var20, var17, var22->unknown_4_, var16, 0);
+        if (len >= 0) {
+            while (len > 0 && func_ov031_022407e4((Struct_ov031_022407e4*)var22, var22->unknown_4_) == 0) {
+                int var35 = func_ov031_02240820(req, var17, var22->unknown_4_, len, 0);
                 if (var35 < 0) goto done;
                 if (var35 == 0) break;
-                var16 -= var35;
+                len -= var35;
                 var22->unknown_4_ += var35;
             }
-            if (var16 != 0) {
+            if (len != 0) {
                 var13 = func_ov031_022407e4((Struct_ov031_022407e4*)var22, var22->unknown_4_) != 0 ? 6 : 10;
                 goto done;
             }
@@ -520,50 +520,50 @@ extern "C" ARM void func_ov031_0224185c(void) {
         var13 = 10;
         if (var19 != 0) {
             for (;;) {
-                signed char var36;
-                var0[0] = 0;
-                var0[1] = 0;
-                var2 = 0;
+                signed char c;
+                buf[0] = 0;
+                buf[1] = 0;
+                pos = 0;
                 do {
-                    if (func_ov031_02241480(var20, var17, data_ov031_02291a04 + var2, 1, 0) < 0) goto done;
-                    var36 = data_ov031_02291a04[var2];
-                    var0[var2 & 1] = var36;
-                    if (var36 == ';' || (var36 == 0xa && var0[(var2 - 1) & 1] == 0xd)) {
-                        if (var36 == 0xa) {
-                            var3 = var2 - 1;
+                    if (func_ov031_02241480(req, var17, data_ov031_02291a04 + pos, 1, 0) < 0) goto done;
+                    c = data_ov031_02291a04[pos];
+                    buf[pos & 1] = c;
+                    if (c == ';' || (c == 0xa && buf[(pos - 1) & 1] == 0xd)) {
+                        if (c == 0xa) {
+                            tmp = pos - 1;
                         } else {
-                            var3 = var2;
-                            if (func_ov031_02241694(var20, var17) <= 0) goto done;
+                            tmp = pos;
+                            if (func_ov031_02241694(req, var17) <= 0) goto done;
                         }
-                        if (var3 == 0) goto done;
-                        var23 = func_ov031_02242c54(data_ov031_02291a04, var3);
+                        if (tmp == 0) goto done;
+                        var23 = func_ov031_02242c54(data_ov031_02291a04, tmp);
                         if (var23 >= 0) break;
                         goto done;
                     }
-                    var2++;
-                } while (var2 < 0x400);
-                if (var2 == 0x400) {
+                    pos++;
+                } while (pos < 0x400);
+                if (pos == 0x400) {
                     var13 = 7;
                     goto done;
                 }
                 if (var23 <= 0) break;
                 while (var23 > 0) {
-                    int var37 = func_ov031_02240820(var20, var17, var22->unknown_4_, var23, 0);
+                    int var37 = func_ov031_02240820(req, var17, var22->unknown_4_, var23, 0);
                     if (var37 <= 0) goto done;
                     var22->unknown_4_ += var37;
                     var23 -= var37;
                     if (var23 == 0) {
-                        if (func_ov031_02241480(var20, var17, data_ov031_02291a04, 1, 0) <= 0) goto done;
-                        if (func_ov031_02241480(var20, var17, data_ov031_02291a04, 1, 0) <= 0) goto done;
+                        if (func_ov031_02241480(req, var17, data_ov031_02291a04, 1, 0) <= 0) goto done;
+                        if (func_ov031_02241480(req, var17, data_ov031_02291a04, 1, 0) <= 0) goto done;
                     }
                 }
             }
-            func_ov031_02241694(var20, var17);
+            func_ov031_02241694(req, var17);
             var13 = 0;
             goto done;
         }
         while (func_ov031_022407e4((Struct_ov031_022407e4*)var22, var22->unknown_4_) == 0) {
-            int var38 = func_ov031_022407f8((Struct_ov031_022407f8*)var20, var17, var22->unknown_4_, 0);
+            int var38 = func_ov031_022407f8((Struct_ov031_022407f8*)req, var17, var22->unknown_4_, 0);
             if (var38 < 0) goto done;
             if (var38 == 0) {
                 var13 = 0;
@@ -571,7 +571,7 @@ extern "C" ARM void func_ov031_0224185c(void) {
             }
             var22->unknown_4_ += var38;
             if (func_ov031_022407e4((Struct_ov031_022407e4*)var22, var22->unknown_4_) != 0) {
-                var38 = func_ov031_02241480(var20, var17, data_ov031_02291a04, 1, 0);
+                var38 = func_ov031_02241480(req, var17, data_ov031_02291a04, 1, 0);
                 if (var38 < 0) goto done;
                 if (var38 != 0) {
                     var13 = 6;
@@ -584,31 +584,31 @@ extern "C" ARM void func_ov031_0224185c(void) {
         data_ov031_02290fc8(data_ov031_02290fcc);
         data_ov031_02290fcc = 0;
         func_ov031_02240324();
-        if (var20->unknown_4_ != 0) var13 = 8;
+        if (req->unknown_4_ != 0) var13 = 8;
         if (var17 >= 0) {
             if (var14 == 0 || var13 != 0) {
-                if (func_ov031_022413b8(var20, var17) < 0) var13 = 10;
-                func_ov031_0224175c(var17, &var1);
+                if (func_ov031_022413b8(req, var17) < 0) var13 = 10;
+                func_ov031_0224175c(var17, &ctx);
                 var17 = -1;
                 var14 = 0;
             }
         }
         if (var13 == 0) {
-            var22->unknown_8_ = 1;
+            var22->ok = 1;
         } else {
-            var22->unknown_8_ = 0;
+            var22->ok = 0;
             data_ov031_02290fc0 = var13;
         }
         {
-            void* var39 = var20->unknown_2c_;
-            void (*var40)(int, Struct_ov031_0224185c_3*, void*) = var20->unknown_3c_;
-            func_ov031_02240e70(var20);
-            var40(var13, var22, var39);
+            void* var39 = req->unknown_2c_;
+            void (*cb)(int, Struct_ov031_0224185c_3*, void*) = req->callback;
+            func_ov031_02240e70(req);
+            cb(var13, var22, var39);
         }
     }
     if (var17 >= 0) {
-        func_ov031_022413b8(var20, var17);
-        func_ov031_0224175c(var17, &var1);
+        func_ov031_022413b8(req, var17);
+        func_ov031_0224175c(var17, &ctx);
     }
     func_ov031_022417fc();
 }

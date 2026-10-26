@@ -2,13 +2,13 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "Combat/MapDisplay.h"
 
-struct Obj02026780;
+struct Struct_02026780;
 extern "C" int func_02026780(MapDisplay* context, void* archive, unsigned int archiveSize);
 
 extern const char data_020ef6d7[];
 
 // Main, originally HandleQueuedEntry02026694 (USA 0x02026694, EUR 0x020266a4, JPN 0x02025ff8)
-ARM void MapDisplay_LoadRedChests(MapDisplay* context) {
+extern "C" ARM void MapDisplay_LoadRedChests(MapDisplay* context) {
     if (context->field9b8 == 0) return;
 
     BackgroundLoader* loader = BackgroundLoader::GetInstance();

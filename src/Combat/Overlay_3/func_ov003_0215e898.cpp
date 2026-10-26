@@ -1,34 +1,34 @@
 #include <globaldefs.h>
 
 struct Struct_ov003_0215e898_2 {
-    unsigned char unknown_0_;
-    signed char unknown_1_;
-    signed char unknown_2_;
-    signed char unknown_3_;
-    int unknown_4_;
+    unsigned char b0;
+    signed char b1;
+    signed char b2;
+    signed char b3;
+    int w4;
 };
 
 struct Struct_ov003_0215e898 {
-    char unknown_0_[8];
-    struct Struct_ov003_0215e898_2* unknown_8_;
-    short unknown_c_;
-    short unknown_e_;
+    char unk0[8];
+    struct Struct_ov003_0215e898_2* arr;
+    short capacity;
+    short count;
 };
 
 // USA: func_ov003_0215e898
-extern "C" ARM void func_ov003_0215e898(struct Struct_ov003_0215e898* arg0, struct Struct_ov003_0215e898_2* arg1) {
-    struct Struct_ov003_0215e898_2* var0;
-    if (arg0->unknown_8_ == 0) {
+extern "C" ARM void func_ov003_0215e898(struct Struct_ov003_0215e898* o, struct Struct_ov003_0215e898_2* e) {
+    struct Struct_ov003_0215e898_2* dst;
+    if (o->arr == 0) {
         return;
     }
-    if (arg0->unknown_c_ <= arg0->unknown_e_) {
+    if (o->capacity <= o->count) {
         return;
     }
-    var0 = &arg0->unknown_8_[arg0->unknown_e_];
-    var0->unknown_0_ = arg1->unknown_0_;
-    var0->unknown_1_ = arg1->unknown_1_;
-    var0->unknown_2_ = arg1->unknown_2_;
-    var0->unknown_3_ = arg1->unknown_3_;
-    var0->unknown_4_ = arg1->unknown_4_;
-    arg0->unknown_e_ = arg0->unknown_e_ + 1;
+    dst = &o->arr[o->count];
+    dst->b0 = e->b0;
+    dst->b1 = e->b1;
+    dst->b2 = e->b2;
+    dst->b3 = e->b3;
+    dst->w4 = e->w4;
+    o->count = o->count + 1;
 }

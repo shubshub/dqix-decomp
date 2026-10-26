@@ -9,14 +9,14 @@
 #include "Grotto/Main/GrottoStruct.h"
 #include "Grotto/Main/DetailedTreasureMapData.h"
 
-extern "C" void* func_0200fd0c(GameState* arg0);
-extern "C" void* func_02012fe4(void);
-extern "C" int func_0201b588(int arg0);
-extern "C" int func_0201b5d8(int arg0);
+extern "C" void* GameState_GetZoneTransition(GameState* battleStruct);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" int ZoneId_IsGrotto(int id);
+extern "C" int ZoneId_IsGrottoBossFloor(int x);
 
 struct Struct_0208f944 {
     char unknown_0_[IS_JPN ? 0x280 : 0x260];
-    unsigned char unknown_260_;
+    unsigned char f260;
     char unknown_261_;
     unsigned char unknown_262_;
     char unknown_263_[5];
@@ -26,8 +26,8 @@ struct Struct_0208f944 {
     unsigned short unknown_274_;
 };
 
-struct Struct_0208f944_2 {
-    unsigned short unknown_0_;
+struct State0208f944 {
+    unsigned short h0;
     char unknown_2_[5];
     unsigned char unknown_7_;
     char unknown_8_[2];
@@ -40,44 +40,44 @@ struct Struct_0208f944_2 {
 };
 
 // USA: func_0208f944
-extern "C" ARM void func_0208f944(struct Struct_0208f944* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    struct Struct_0208f944_2* var1 = (struct Struct_0208f944_2*)func_0200fd0c(var0);
-    struct GrottoStruct* var2 = var0->GetGrottoStruct();
-    void* var3 = func_02012fe4();
-    int var4 = var1->unknown_0_;
-    int var5 = *(unsigned short*)var3;
+extern "C" ARM void func_0208f944(struct Struct_0208f944* obj) {
+    GameState* battle = GameState::GetInstance();
+    struct State0208f944* state = (struct State0208f944*)GameState_GetZoneTransition(battle);
+    struct GrottoStruct* grotto = battle->GetGrottoStruct();
+    void* misc = Zone3D_GetInstance();
+    int a = state->h0;
+    int b = *(unsigned short*)misc;
 
-    if (arg0->unknown_262_ != 0 && var4 != 0xc3b5) {
-        var1->unknown_0_ = arg0->unknown_274_;
-        var1->unknown_7_ = 1;
-        var1->unknown_1c_ = 0x3244;
-        var1->unknown_10_ = arg0->unknown_268_;
-        var1->unknown_14_ = arg0->unknown_26c_;
-        var1->unknown_18_ = arg0->unknown_270_;
-        var1->unknown_a_ = 0;
-        var4 = arg0->unknown_274_;
+    if (obj->unknown_262_ != 0 && a != 0xc3b5) {
+        state->h0 = obj->unknown_274_;
+        state->unknown_7_ = 1;
+        state->unknown_1c_ = 0x3244;
+        state->unknown_10_ = obj->unknown_268_;
+        state->unknown_14_ = obj->unknown_26c_;
+        state->unknown_18_ = obj->unknown_270_;
+        state->unknown_a_ = 0;
+        a = obj->unknown_274_;
     }
 
-    arg0->unknown_262_ = 0;
+    obj->unknown_262_ = 0;
 
-    if (!func_0201b588(var4)) {
-        if (func_0201b588(var5)) {
-            if (var4 < 0x7530 || var4 > 0x9c3f) {
-                ((DetailedTreasureMapData*)arg0)->Clear();
+    if (!ZoneId_IsGrotto(a)) {
+        if (ZoneId_IsGrotto(b)) {
+            if (a < 0x7530 || a > 0x9c3f) {
+                ((DetailedTreasureMapData*)obj)->Clear();
             }
         }
     }
 
-    if (func_0201b588(var4) && !func_0201b588(var5)) {
-        signed char var6 = var2->unknown_8;
+    if (ZoneId_IsGrotto(a) && !ZoneId_IsGrotto(b)) {
+        signed char var6 = grotto->unknown_8;
         if (var6 != -1) {
-            if (!func_0201b5d8(var4)) {
-                int var7 = var4 % 20;
-                var1->unknown_0_ = (unsigned short)((var7 + 0x1c40 + 0x8000) + var6 * 20);
+            if (!ZoneId_IsGrottoBossFloor(a)) {
+                int rem = a % 20;
+                state->h0 = (unsigned short)((rem + 0x1c40 + 0x8000) + var6 * 20);
             }
         }
     }
 
-    arg0->unknown_260_ = 0;
+    obj->f260 = 0;
 }

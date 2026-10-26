@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 
 struct Struct_ov006_02153e54 {
-    short unknown_0_;
-    unsigned short unknown_2_;
+    short f0;
+    unsigned short f2;
 };
 
 // USA: func_ov006_02153e54
-extern "C" ARM void func_ov006_02153e54(struct Struct_ov006_02153e54* arg0) {
-    arg0->unknown_0_ = -1;
-    arg0->unknown_2_ &= ~1;
-    arg0->unknown_2_ &= ~2;
-    arg0->unknown_2_ &= 0xffff0003;
+extern "C" ARM void func_ov006_02153e54(struct Struct_ov006_02153e54* s) {
+    s->f0 = -1;
+    s->f2 &= ~1;
+    s->f2 &= ~2;
+    s->f2 &= 0xffff0003;
 }

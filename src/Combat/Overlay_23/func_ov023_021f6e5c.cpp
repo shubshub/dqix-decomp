@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
 // USA: func_ov023_021f6e5c
-extern "C" ARM int func_ov023_021f6e5c(void* arg0, int arg1) {
-    int var0;
-    for (var0 = 0; var0 < 0x10; var0++) {
-        if ((*(unsigned short*)((char*)arg0 + arg1 * 2 + 0x2c) & (1 << var0)) == 0) {
-            return var0;
+extern "C" ARM int func_ov023_021f6e5c(void* obj, int idx) {
+    int i;
+    for (i = 0; i < 0x10; i++) {
+        if ((*(unsigned short*)((char*)obj + idx * 2 + 0x2c) & (1 << i)) == 0) {
+            return i;
         }
     }
     return -1;

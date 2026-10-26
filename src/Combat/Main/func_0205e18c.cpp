@@ -1,30 +1,30 @@
 #include <globaldefs.h>
 
 struct Struct_0205e18c_2 {
-    char unknown_0_[0x18];
-    struct Struct_0205e18c_2* unknown_18_;
+    char pad[0x18];
+    struct Struct_0205e18c_2* next;
 };
 struct Struct_0205e18c {
-    struct Struct_0205e18c_2* unknown_0_;
-    struct Struct_0205e18c_2* unknown_4_;
-    int unknown_8_;
+    struct Struct_0205e18c_2* head;
+    struct Struct_0205e18c_2* tail;
+    int count;
 };
 
-extern "C" void func_020d8654(void);
-extern "C" void func_020d8694(void);
+extern "C" void VCountIrq_PushDisable(void);
+extern "C" void VCountIrq_PopDisable(void);
 
 // USA: func_0205e18c
-extern "C" ARM void func_0205e18c(struct Struct_0205e18c* arg0, struct Struct_0205e18c_2* arg1) {
-    func_020d8654();
-    if (arg0->unknown_0_ != NULL) {
-        arg0->unknown_4_->unknown_18_ = arg1;
-        arg0->unknown_4_ = arg1;
+extern "C" ARM void func_0205e18c(struct Struct_0205e18c* list, struct Struct_0205e18c_2* node) {
+    VCountIrq_PushDisable();
+    if (list->head != NULL) {
+        list->tail->next = node;
+        list->tail = node;
     } else {
-        arg0->unknown_0_ = arg1;
-        arg0->unknown_4_ = arg1;
-        arg0->unknown_0_->unknown_18_ = NULL;
+        list->head = node;
+        list->tail = node;
+        list->head->next = NULL;
     }
-    arg0->unknown_8_++;
-    arg0->unknown_4_->unknown_18_ = NULL;
-    func_020d8694();
+    list->count++;
+    list->tail->next = NULL;
+    VCountIrq_PopDisable();
 }

@@ -3,21 +3,21 @@
 #include "NitroSDK/Interrupts.h"
 
 struct Struct_ov031_0223db7c {
-    Struct_ov031_0223db7c* unknown_0_;
-    Struct_ov031_0223db7c* unknown_4_;
+    Struct_ov031_0223db7c* previous;
+    Struct_ov031_0223db7c* next;
 };
 
 struct Struct_ov031_0223db7c_2 {
-    Struct_ov031_0223db7c unknown_0_;
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    Struct_ov031_0223db7c node;
+    unsigned short offset;
+    unsigned short length;
 };
 
 struct Struct_ov031_0223db7c_3 {
-    Struct_ov031_0223db7c_2 unknown_0_[32];
-    Struct_ov031_0223db7c_2 unknown_180_;
-    Struct_ov031_0223db7c_2 unknown_18c_;
-    void* unknown_198_;
+    Struct_ov031_0223db7c_2 entries[32];
+    Struct_ov031_0223db7c_2 first;
+    Struct_ov031_0223db7c_2 last;
+    void* list;
     void* unknown_19c_;
 };
 
@@ -30,58 +30,58 @@ extern "C" void* func_ov031_0223bfa0(void*);
 extern "C" void func_ov031_0223d8d8(void*, void*);
 extern "C" void HaltSystem();
 
-static inline Struct_ov031_0223db7c_3* inline_ov031_0223db7c(int arg0) {
-    Struct_ov031_0223db7c_3* var0 = data_ov031_02290d64->unknown_0_;
-    var0 += arg0;
-    return var0;
+static inline Struct_ov031_0223db7c_3* inline_ov031_0223db7c(int index) {
+    Struct_ov031_0223db7c_3* pool = data_ov031_02290d64->unknown_0_;
+    pool += index;
+    return pool;
 }
 
 // USA: func_ov031_0223db7c
-extern "C" ARM void* func_ov031_0223db7c(int arg0, int arg1, unsigned char arg2, int* arg3) {
-    Struct_ov031_0223db7c_2* var0 = static_cast<Struct_ov031_0223db7c_2*>(func_ov031_0223bfa0(inline_ov031_0223db7c(arg0)->unknown_19c_));
-    Struct_ov031_0223db7c_2* var1;
+extern "C" ARM void* func_ov031_0223db7c(int arg0, int size, unsigned char forward, int* offset) {
+    Struct_ov031_0223db7c_2* entry = static_cast<Struct_ov031_0223db7c_2*>(func_ov031_0223bfa0(inline_ov031_0223db7c(arg0)->unknown_19c_));
+    Struct_ov031_0223db7c_2* cursor;
     Struct_ov031_0223db7c_2* var2;
     unsigned long var3;
-    int var4;
-    int var5 = ((arg1 + 3) & ~3) >> 2;
-    var0->unknown_a_ = var5;
+    int start;
+    int var5 = ((size + 3) & ~3) >> 2;
+    entry->length = var5;
     var3 = DisableSpecificInterrupts(1);
-    if (arg2) {
-        var1 = &inline_ov031_0223db7c(arg0)->unknown_180_;
-        if (var1 != &inline_ov031_0223db7c(arg0)->unknown_18c_) {
+    if (forward) {
+        cursor = &inline_ov031_0223db7c(arg0)->first;
+        if (cursor != &inline_ov031_0223db7c(arg0)->last) {
             do {
-                var2 = (Struct_ov031_0223db7c_2*)var1->unknown_0_.unknown_4_;
-                var4 = var1->unknown_8_ + var1->unknown_a_;
-                if (var4 + var5 <= var2->unknown_8_) {
-                    var0->unknown_8_ = var4;
-                    func_ov031_0223d8d8(var2, var0);
+                var2 = (Struct_ov031_0223db7c_2*)cursor->node.next;
+                start = cursor->offset + cursor->length;
+                if (start + var5 <= var2->offset) {
+                    entry->offset = start;
+                    func_ov031_0223d8d8(var2, entry);
                     break;
                 }
-                var1 = var2;
-            } while (var1 != &data_ov031_02290d64->unknown_0_[arg0].unknown_18c_);
+                cursor = var2;
+            } while (cursor != &data_ov031_02290d64->unknown_0_[arg0].last);
         }
-        if (cursor == &data_ov031_02290d64->pools[poolIndex].last) {
+        if (cursor == &data_ov031_02290d64->unknown_0_[arg0].last) {
             HaltSystem();
         }
     } else {
-        var1 = &inline_ov031_0223db7c(arg0)->unknown_18c_;
-        if (var1 != &inline_ov031_0223db7c(arg0)->unknown_180_) {
+        cursor = &inline_ov031_0223db7c(arg0)->last;
+        if (cursor != &inline_ov031_0223db7c(arg0)->first) {
             do {
-                var2 = (Struct_ov031_0223db7c_2*)var1->unknown_0_.unknown_0_;
-                var4 = var1->unknown_8_ - var5;
-                if (var4 >= var2->unknown_8_ + var2->unknown_a_) {
-                    var0->unknown_8_ = var4;
-                    func_ov031_0223d8d8(var1, var0);
+                var2 = (Struct_ov031_0223db7c_2*)cursor->node.previous;
+                start = cursor->offset - var5;
+                if (start >= var2->offset + var2->length) {
+                    entry->offset = start;
+                    func_ov031_0223d8d8(cursor, entry);
                     break;
                 }
-                var1 = var2;
-            } while (var1 != &data_ov031_02290d64->unknown_0_[arg0].unknown_180_);
+                cursor = var2;
+            } while (cursor != &data_ov031_02290d64->unknown_0_[arg0].first);
         }
-        if (cursor == &data_ov031_02290d64->pools[poolIndex].first) {
+        if (cursor == &data_ov031_02290d64->unknown_0_[arg0].first) {
             HaltSystem();
         }
     }
-    *arg3 = var0->unknown_8_;
+    *offset = entry->offset;
     EnableSpecificInterrupts(var3);
-    return var0;
+    return entry;
 }

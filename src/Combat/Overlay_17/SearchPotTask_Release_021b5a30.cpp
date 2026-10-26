@@ -5,11 +5,11 @@
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 
-void GameResources_ReleaseSpecialItemEffect(unsigned char* obj);
-void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
-void GameObject_EnableControl(void* obj);
-int GameState_GetFollowCamera(char* obj);
-void FollowCamera_EnableFollow(void* obj);
+extern "C" void GameResources_ReleaseSpecialItemEffect(unsigned char* obj);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" void GameObject_EnableControl(void* obj);
+extern "C" int GameState_GetFollowCamera(char* obj);
+extern "C" void FollowCamera_EnableFollow(void* obj);
 
 extern int g_mainAllocator;
 

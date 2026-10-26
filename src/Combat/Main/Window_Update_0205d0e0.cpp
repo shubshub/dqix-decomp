@@ -22,17 +22,17 @@ struct Struct_0205d81c {
 };
 
 struct Struct0205d888;
-void* Window_GetTopPane(struct Struct0205d888* p);
+extern "C" void* Window_GetTopPane(struct Struct0205d888* p);
 
 extern "C" int Window_HandleInput(void* selfPtr, int p1);
-unsigned int Window_GetPage(unsigned char* obj);
-void WindowPane_SetIndicatorPage(unsigned char* obj, unsigned char value);
-unsigned int Window_GetPageCount(unsigned char* obj);
-void WindowPane_SetIndicatorPageCount(unsigned char* obj, int val);
+extern "C" unsigned int Window_GetPage(unsigned char* obj);
+extern "C" void WindowPane_SetIndicatorPage(unsigned char* obj, unsigned char value);
+extern "C" unsigned int Window_GetPageCount(unsigned char* obj);
+extern "C" void WindowPane_SetIndicatorPageCount(unsigned char* obj, int val);
 extern "C" void WindowPane_Update(void* entry, int arg);
-struct WindowPane* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+extern "C" struct WindowPane* func_0205d81c(struct Struct_0205d81c* s, int key);
 struct Obj0204ffc0;
-void ProcessRefAndDispatch0204ffc0(struct Obj0204ffc0* a, int b);
+extern "C" void func_0204ffc0(struct Obj0204ffc0* a, int b);
 
 // Main, originally func_0205d0e0 (USA 0x0205d0e0, EUR 0x0205d0f0, JPN 0x0205e410)
 extern "C" ARM int Window_Update(void* windowPtr, int ticks) {
@@ -61,9 +61,9 @@ extern "C" ARM int Window_Update(void* windowPtr, int ticks) {
     }
 
     if (window->pendingClose != 0xff) {
-        pane = FindElementByC40205d81c(window, window->pendingClose);
+        pane = func_0205d81c(window, window->pendingClose);
         if (pane != 0) {
-            ProcessRefAndDispatch0204ffc0((struct Obj0204ffc0*)pane, -1);
+            func_0204ffc0((struct Obj0204ffc0*)pane, -1);
         }
         window->pendingClose = 0xff;
     }

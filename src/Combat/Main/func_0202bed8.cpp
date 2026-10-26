@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 #include "Combat/SearchEntry.h"
 
-struct Struct_0202b2f0;
-extern "C" int func_0202c1c0(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" unsigned short func_0202df58(void);
+struct SearchStruct;
+extern "C" int LinkSession_IsSlotMember(struct SearchStruct* obj, int value);
+extern "C" unsigned short WH_GetCurrentAid(void);
 
 // USA: func_0202bed8
-extern "C" ARM int func_0202bed8(struct Struct_0202b2f0* arg0, int arg1) {
-    void* var0;
-    if (!func_0202c1c0(arg0, arg1)) {
+extern "C" ARM int func_0202bed8(struct SearchStruct* obj, int value) {
+    void* entry;
+    if (!LinkSession_IsSlotMember(obj, value)) {
         return 0;
     }
-    if (arg1 == *(signed char*)((char*)arg0 + func_0202df58() + 0x1000 + 0x38)) {
-        var0 = (char*)arg0 + 0x7c0;
+    if (value == *(signed char*)((char*)obj + WH_GetCurrentAid() + 0x1000 + 0x38)) {
+        entry = (char*)obj + 0x7c0;
     } else {
-        var0 = func_0202c178(arg0, arg1);
+        entry = LinkSession_GetReceivedRecord(obj, value);
     }
-    if (var0 == NULL) {
+    if (entry == NULL) {
         return 0;
     }
-    return (((unsigned int)*(unsigned short*)((char*)var0 + 0x2) << 0x11) >> 31) != 0;
+    return (((unsigned int)*(unsigned short*)((char*)entry + 0x2) << 0x11) >> 31) != 0;
 }

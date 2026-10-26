@@ -4,21 +4,21 @@
 struct Struct_020546c8;
 struct Struct_02055ed0_3
 {
-    unsigned char unknown_0_[0x148];
-    Struct_02055ed0_3* unknown_148_;
+    unsigned char padding[0x148];
+    Struct_02055ed0_3* next;
 };
 struct Struct_02055c30;
 
 struct Struct_02057334_2
 {
     unsigned char unknown_0_[4];
-    unsigned int unknown_4_;
-    unsigned int unknown_8_;
-    unsigned char unknown_c_;
+    unsigned int frame;
+    unsigned int endFrame;
+    unsigned char repeat;
     unsigned char unknown_d_[0x23];
-    Struct_020546c8* unknown_30_;
-    Struct_02055ed0_3* unknown_34_;
-    unsigned char unknown_38_;
+    Struct_020546c8* resource;
+    Struct_02055ed0_3* head;
+    unsigned char flags;
     unsigned char unknown_39_[0x13];
     float unknown_4c_[4];
     unsigned char unknown_5c_[8];
@@ -33,18 +33,18 @@ struct Struct_02057334_2
     unsigned char unknown_bc_[0x5c];
     float unknown_118_[4];
     float unknown_128_[3];
-    float unknown_134_[3];
-    float unknown_140_[3];
-    float unknown_14c_;
-    int unknown_150_;
+    float rotation[3];
+    float scale[3];
+    float duration;
+    int delay;
     unsigned int unknown_154_;
-    float unknown_158_[3];
-    float unknown_164_[3];
+    float extra[3];
+    float vector[3];
 };
 
 struct Struct_02057334
 {
-    unsigned char unknown_0_[6];
+    unsigned char padding[6];
     unsigned char unknown_6_;
 };
 
@@ -60,85 +60,85 @@ extern "C" void func_02059720(Struct_02055ed0_3*);
 extern "C" void func_02055f5c(Struct_02057334_2*, int, int);
 
 // USA: func_02057334
-extern "C" ARM int func_02057334(Struct_02057334_2* arg0)
+extern "C" ARM int func_02057334(Struct_02057334_2* self)
 {
-    int var0 = 0;
+    int steps = 0;
     int var1 = 0;
-    int var2 = GameState::GetInstance()->GetTickCount();
-    if (!func_02057854(arg0))
+    int ticks = GameState::GetInstance()->GetTickCount();
+    if (!func_02057854(self))
     {
-        if (arg0->unknown_4_ > arg0->unknown_8_ && arg0->unknown_38_)
+        if (self->frame > self->endFrame && self->flags)
         {
-            Struct_02055ed0_3* var3 = arg0->unknown_34_;
-            while (var3)
+            Struct_02055ed0_3* child = self->head;
+            while (child)
             {
-                func_02058c88(var3);
-                var3 = var3->unknown_148_;
+                func_02058c88(child);
+                child = child->next;
             }
         }
-        else if (arg0->unknown_4_ > arg0->unknown_8_ && !arg0->unknown_38_)
+        else if (self->frame > self->endFrame && !self->flags)
         {
             var1 = 1;
         }
-        if (arg0->unknown_4_ > arg0->unknown_8_ && arg0->unknown_c_)
+        if (self->frame > self->endFrame && self->repeat)
         {
-            func_02056d80(arg0);
+            func_02056d80(self);
             var1 = 1;
         }
         if (!var1)
         {
-            if (arg0->unknown_4_ > arg0->unknown_154_)
+            if (self->frame > self->unknown_154_)
             {
-                arg0->unknown_150_ -= var2;
-                if (arg0->unknown_150_ < 0)
+                self->delay -= ticks;
+                if (self->delay < 0)
                 {
-                    int var4 = ((Struct_02057334*)func_020550c0(arg0->unknown_30_))->unknown_6_;
-                    arg0->unknown_150_ = var4;
-                    if (var2 < var4 + 1)
+                    int var4 = ((Struct_02057334*)func_020550c0(self->resource))->unknown_6_;
+                    self->delay = var4;
+                    if (ticks < var4 + 1)
                     {
-                        var0 = 1;
+                        steps = 1;
                     }
                     else
                     {
-                        var0 = var2 / (var4 + 1);
+                        steps = ticks / (var4 + 1);
                     }
                 }
             }
-            arg0->unknown_118_[0] += arg0->unknown_4c_[0] * (float)var2;
-            arg0->unknown_118_[1] += arg0->unknown_4c_[1] * (float)var2;
-            arg0->unknown_118_[2] += arg0->unknown_4c_[2] * (float)var2;
-            arg0->unknown_118_[3] += arg0->unknown_4c_[3] * (float)var2;
-            for (int var5 = 0; var5 < 3; var5++)
+            self->unknown_118_[0] += self->unknown_4c_[0] * (float)ticks;
+            self->unknown_118_[1] += self->unknown_4c_[1] * (float)ticks;
+            self->unknown_118_[2] += self->unknown_4c_[2] * (float)ticks;
+            self->unknown_118_[3] += self->unknown_4c_[3] * (float)ticks;
+            for (int i = 0; i < 3; i++)
             {
-                arg0->unknown_128_[var5] += (float)var2 * arg0->unknown_64_[var5];
-                arg0->unknown_134_[var5] += (float)var2 * arg0->unknown_70_[var5];
-                arg0->unknown_140_[var5] += (float)var2 * arg0->unknown_7c_[var5];
-                arg0->unknown_158_[var5] += (float)var2 * arg0->unknown_a4_[var5];
-                arg0->unknown_164_[var5] += (float)var2 * arg0->unknown_b0_[var5];
+                self->unknown_128_[i] += (float)ticks * self->unknown_64_[i];
+                self->rotation[i] += (float)ticks * self->unknown_70_[i];
+                self->scale[i] += (float)ticks * self->unknown_7c_[i];
+                self->extra[i] += (float)ticks * self->unknown_a4_[i];
+                self->vector[i] += (float)ticks * self->unknown_b0_[i];
             }
-            arg0->unknown_14c_ += arg0->unknown_9c_ * (float)var2;
-            func_020557a4(arg0);
-            func_020559cc(arg0);
-            func_02055c30((Struct_02055c30*)arg0);
-            func_02055ccc(arg0);
+            self->duration += self->unknown_9c_ * (float)ticks;
+            func_020557a4(self);
+            func_020559cc(self);
+            func_02055c30((Struct_02055c30*)self);
+            func_02055ccc(self);
         }
     }
-    if (!func_02057854(arg0) || !arg0->unknown_38_)
+    if (!func_02057854(self) || !self->flags)
     {
-        Struct_02055ed0_3* var6 = arg0->unknown_34_;
-        while (var6)
+        Struct_02055ed0_3* child = self->head;
+        while (child)
         {
-            func_02059720(var6);
-            var6 = var6->unknown_148_;
+            func_02059720(child);
+            child = child->next;
         }
     }
-    if (var0)
+    if (steps)
     {
-        func_02055f5c(arg0, var2, var0);
+        func_02055f5c(self, ticks, steps);
     }
-    if (!func_02057854(arg0))
+    if (!func_02057854(self))
     {
-        arg0->unknown_4_ += var2;
+        self->frame += ticks;
     }
-    return var0 != 0;
+    return steps != 0;
 }

@@ -2,25 +2,25 @@
 #include "World/Object3D.h"
 
 struct Struct_02055558 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    char unknown_14_[0xc0 - 0x14];
+    int field0;
+    int field4;
+    int field8;
+    int fieldc;
+    int field10;
+    char sub14[0xc0 - 0x14];
     char unknown_c0_[4];
 };
 
-extern "C" void func_02054f80(void* arg0);
+extern "C" void func_02054f80(void* obj);
 
 // USA: func_02055558
-extern "C" ARM int func_02055558(struct Struct_02055558* arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-    ((Object3D*)&arg0->unknown_14_)->Initialize();
-    func_02054f80(&arg0->unknown_c0_);
-    arg0->unknown_0_ = arg1;
-    arg0->unknown_4_ = arg2;
-    arg0->unknown_8_ = arg5;
-    arg0->unknown_c_ = arg3;
-    arg0->unknown_10_ = arg4;
+extern "C" ARM int func_02055558(struct Struct_02055558* obj, int a2, int a3, int a4, int a5, int a6) {
+    ((Object3D*)&obj->sub14)->Initialize();
+    func_02054f80(&obj->unknown_c0_);
+    obj->field0 = a2;
+    obj->field4 = a3;
+    obj->field8 = a6;
+    obj->fieldc = a4;
+    obj->field10 = a5;
     return 1;
 }

@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
 struct Struct_ov004_021546c0 {
-	short unknown_0_;
-	short unknown_2_;
-	unsigned char unknown_4_;
-	unsigned char unknown_5_;
+	short id;
+	short id2;
+	unsigned char field4;
+	unsigned char field5;
 };
 
 // USA: func_ov004_021546c0
-extern "C" ARM void func_ov004_021546c0(Struct_ov004_021546c0* arg0, int arg1, int arg2, unsigned char* arg3, unsigned char* arg4) {
-	unsigned char var0;
-	for (var0 = 0; var0 < 20; var0++) {
-		Struct_ov004_021546c0* var1 = &arg0[var0];
-		short var2 = var1->unknown_0_;
-		if (var2 == arg1 && var1->unknown_2_ == arg2) {
-			*arg3 = var1->unknown_4_;
-			*arg4 = var1->unknown_5_;
+extern "C" ARM void func_ov004_021546c0(Struct_ov004_021546c0* arr, int key1, int key2, unsigned char* out1, unsigned char* out2) {
+	unsigned char i;
+	for (i = 0; i < 20; i++) {
+		Struct_ov004_021546c0* e = &arr[i];
+		short v = e->id;
+		if (v == key1 && e->id2 == key2) {
+			*out1 = e->field4;
+			*out2 = e->field5;
 			return;
 		}
 	}

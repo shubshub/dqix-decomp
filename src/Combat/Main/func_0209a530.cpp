@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 
 struct Struct_0209a104_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    int unknown_4_;
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    unsigned short f0;
+    unsigned short f2;
+    int f4;
+    unsigned short f8;
+    unsigned short fa;
 };
 
 // USA: func_0209a530
-extern "C" ARM void func_0209a530(struct Struct_0209a104_2* arg0, struct Struct_0209a104_2* arg1) {
-    arg0->unknown_0_ = arg1->unknown_0_;
-    arg0->unknown_2_ = arg1->unknown_2_;
-    arg0->unknown_4_ = arg1->unknown_4_;
-    arg0->unknown_8_ = arg1->unknown_8_;
-    arg0->unknown_a_ = arg1->unknown_a_;
+extern "C" ARM void func_0209a530(struct Struct_0209a104_2* dst, struct Struct_0209a104_2* src) {
+    dst->f0 = src->f0;
+    dst->f2 = src->f2;
+    dst->f4 = src->f4;
+    dst->f8 = src->f8;
+    dst->fa = src->fa;
 }

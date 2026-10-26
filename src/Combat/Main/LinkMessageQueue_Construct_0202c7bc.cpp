@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Struct0205e16c;
-ARM void LinkMessageList_Clear(struct Struct0205e16c* p);
+extern "C" ARM void LinkMessageList_Clear(struct Struct0205e16c* p);
 extern "C" void LinkMessageQueue_Reset(void* queue);
 
 // One message node of the link message queue (data_02100044), func_0205e57c's Node0205e57c.
@@ -20,7 +20,7 @@ enum {
 };
 
 // Main, originally ResetBattleArray0202c7bc (USA 0x0202c7bc, EUR 0x0202c7cc, JPN 0x0202c32c)
-ARM void* LinkMessageQueue_Construct(void* queue) {
+extern "C" ARM void* LinkMessageQueue_Construct(void* queue) {
     struct MessageNode_0202c7bc* node = (struct MessageNode_0202c7bc*)queue;
     struct MessageNode_0202c7bc* end = (struct MessageNode_0202c7bc*)((char*)queue + kFreeListOffset);
     do {

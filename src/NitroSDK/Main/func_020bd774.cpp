@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
-struct Struct_020bd774_2 { int unknown_0_; int unknown_4_; int unknown_8_; int unknown_c_; };
-struct Struct_020bd774_3 { int unknown_0_; int unknown_4_; int unknown_8_; struct Struct_020bd774_2 unknown_c_[1]; };
-struct Struct_020bd774 { char unknown_0_[0x84]; struct Struct_020bd774_3* unknown_84_; };
+struct Struct_020bd774_2 { int f0; int f4; int f8; int fc; };
+struct Struct_020bd774_3 { int unknown_0_; int unknown_4_; int count; struct Struct_020bd774_2 entries[1]; };
+struct Struct_020bd774 { char unknown_0_[0x84]; struct Struct_020bd774_3* list; };
 extern struct Struct_020bd774* data_02110370;
 
 // USA: func_020bd774
-extern "C" ARM int func_020bd774(unsigned int arg0) {
-    struct Struct_020bd774_3* var0 = data_02110370->unknown_84_;
-    if (arg0 >= (unsigned int)var0->unknown_8_) return 0;
-    return var0->unknown_c_[arg0].unknown_0_;
+extern "C" ARM int func_020bd774(unsigned int index) {
+    struct Struct_020bd774_3* list = data_02110370->list;
+    if (index >= (unsigned int)list->count) return 0;
+    return list->entries[index].f0;
 }

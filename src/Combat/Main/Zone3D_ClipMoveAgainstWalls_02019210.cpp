@@ -11,44 +11,44 @@ extern "C" ARM Vector3fix Zone3D_ClipMoveAgainstWalls(Zone3D* zone, const Vector
     Vector3fix_Add(position, offset, &destination);
     Vector3fix_Length(offset);
 
-    Struct_02018fbc var1;
-    if (var0.x < arg1->x) {
-        var1.unknown_0_.x = arg1->x;
-        var1.unknown_c_.x = var0.x;
+    Bounds3D probe;
+    if (destination.x < position->x) {
+        probe.maximum.x = position->x;
+        probe.minimum.x = destination.x;
     } else {
-        var1.unknown_0_.x = var0.x;
-        var1.unknown_c_.x = arg1->x;
+        probe.maximum.x = destination.x;
+        probe.minimum.x = position->x;
     }
-    if (var0.y < arg1->y) {
-        var1.unknown_0_.y = arg1->y;
-        var1.unknown_c_.y = var0.y;
+    if (destination.y < position->y) {
+        probe.maximum.y = position->y;
+        probe.minimum.y = destination.y;
     } else {
-        var1.unknown_0_.y = var0.y;
-        var1.unknown_c_.y = arg1->y;
+        probe.maximum.y = destination.y;
+        probe.minimum.y = position->y;
     }
-    if (var0.z < arg1->z) {
-        var1.unknown_0_.z = arg1->z;
-        var1.unknown_c_.z = var0.z;
+    if (destination.z < position->z) {
+        probe.maximum.z = position->z;
+        probe.minimum.z = destination.z;
     } else {
-        var1.unknown_0_.z = var0.z;
-        var1.unknown_c_.z = arg1->z;
+        probe.maximum.z = destination.z;
+        probe.minimum.z = position->z;
     }
 
-    Vector3fix var2 = *arg1;
-    Vector3fix var3;
-    Vector3fix_Add(arg1, arg2, &var3);
-    if (arg3 > 0) {
-        Vector3fix var4;
-        Vector3fix_Normalize(&var3, &var4);
-        Vector3fix var5;
-        Vector3fixMultiplyScalar(&var4, arg3, &var5);
-        Vector3fix_Add(&var3, &var5, &var3);
+    Vector3fix from = *position;
+    Vector3fix to;
+    Vector3fix_Add(position, offset, &to);
+    if (radius > 0) {
+        Vector3fix direction;
+        Vector3fix_Normalize(&to, &direction);
+        Vector3fix margin;
+        Vector3fixMultiplyScalar(&direction, radius, &margin);
+        Vector3fix_Add(&to, &margin, &to);
     }
 
-    int var6;
-    if (arg0->isInMainGrottoFloor_23b8_) {
-        var6 = (int)(((float)(arg1->x + 0x4000) / 4096.0f) / 8.0f)
-             + ((int)(((float)(arg1->z + 0x4000) / 4096.0f) / 8.0f) << 4);
+    int cell;
+    if (zone->isInMainGrottoFloor_23b8_) {
+        cell = (int)(((float)(position->x + 0x4000) / 4096.0f) / 8.0f)
+             + ((int)(((float)(position->z + 0x4000) / 4096.0f) / 8.0f) << 4);
     }
 
     for (int i = 0; i < zone->terrainElementCount_; i++) {
@@ -80,5 +80,5 @@ extern "C" ARM Vector3fix Zone3D_ClipMoveAgainstWalls(Zone3D* zone, const Vector
             }
         }
     }
-    return var0;
+    return destination;
 }

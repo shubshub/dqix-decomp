@@ -1,4 +1,7 @@
 #include <globaldefs.h>
+#if defined(jpn)
+#define func_02043110 func_02043884
+#endif
 
 extern "C" void __clear(void* buf, int size);
 extern "C" int Font_EncodeText(void* text, void* encoded, int font);
@@ -41,7 +44,7 @@ struct CachedTextTable0203c5a8 {
     CachedTextEntry0203c5a8 entries[96];
     int engine;
     char* bitmapStorage;
-    unsigned int paletteControl;
+    unsigned int unknown_60c_;
     unsigned short nextOamEntry;
     unsigned short allocatedEntries;
 };
@@ -99,7 +102,7 @@ extern "C" ARM void CachedTextTable_FindOrAddText(void* table, void* text, short
 
         short index;
         int checked = 0;
-        bool needsAllocation = true;
+        bool var10 = true;
         for (index = 0; index < 95; index += 2) {
             CachedTextEntry0203c5a8* entry = &cache->entries[index];
             CachedTextEntry0203c5a8* next = &cache->entries[index + 1];
@@ -111,13 +114,13 @@ extern "C" ARM void CachedTextTable_FindOrAddText(void* table, void* text, short
                 ++entry->references;
                 ++next->references;
                 slots[position / 3] = index;
-                needsAllocation = false;
+                var10 = false;
                 break;
             }
             if (cache->allocatedEntries == ++checked) break;
         }
 
-        if (needsAllocation) {
+        if (var10) {
             for (index = 0; index < 95; ++index) {
                 CachedTextEntry0203c5a8* entry = &cache->entries[index];
                 CachedTextEntry0203c5a8* next = &cache->entries[index + 1];

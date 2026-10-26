@@ -4,40 +4,40 @@
 
 struct Struct_02097054_6;
 struct Struct_02097054_5;
-extern "C" struct Struct_02097054_6* func_02097224(struct Struct_02097054_5* arg0, int arg1);
+extern "C" struct Struct_02097054_6* func_02097224(struct Struct_02097054_5* c, int key);
 
 extern const char data_ov014_021895c8[];
 extern const char data_ov014_021895ce[];
 
 // USA: func_ov014_02184e3c
-extern "C" ARM void func_ov014_02184e3c(unsigned char* arg0) {
-    unsigned char* var0 = *(unsigned char**)(arg0 + 0x40);
-    if (var0 == NULL || *(int*)(var0 + 0xc) == 0 || *(unsigned char**)(arg0 + 0x48) == NULL) {
+extern "C" ARM void func_ov014_02184e3c(unsigned char* obj) {
+    unsigned char* a = *(unsigned char**)(obj + 0x40);
+    if (a == NULL || *(int*)(a + 0xc) == 0 || *(unsigned char**)(obj + 0x48) == NULL) {
         return;
     }
-    unsigned char* var1 = *(unsigned char**)(arg0 + 0x48);
-    unsigned char* var2 = (unsigned char*)func_02097224((Struct_02097054_5*)(arg0 + 0xc), *(short*)(var1 + 0xc));
-    if (var2 == NULL) return;
+    unsigned char* c = *(unsigned char**)(obj + 0x48);
+    unsigned char* r4 = (unsigned char*)func_02097224((Struct_02097054_5*)(obj + 0xc), *(short*)(c + 0xc));
+    if (r4 == NULL) return;
 
-    var0 = *(unsigned char**)(arg0 + 0x40);
-    char* var3 = *(char**)(var0 + 0x14);
-    if (var3 != NULL && strcmp(data_ov014_021895c8, var3) != 0 && strcmp(data_ov014_021895ce, var3) != 0) {
+    a = *(unsigned char**)(obj + 0x40);
+    char* s = *(char**)(a + 0x14);
+    if (s != NULL && strcmp(data_ov014_021895c8, s) != 0 && strcmp(data_ov014_021895ce, s) != 0) {
         return;
     }
 
-    int var4 = *(int*)(arg0 + 0x74) + 1;
-    *(int*)(arg0 + 0x74) = var4;
-    if ((int)*(unsigned char*)(var2 + 0xc) <= var4) {
-        *(int*)(arg0 + 0x74) = 0;
-        if (*(unsigned char*)(var2 + 0xc) > 1) {
-            *(int*)(arg0 + 0x74) = 1;
+    int cnt = *(int*)(obj + 0x74) + 1;
+    *(int*)(obj + 0x74) = cnt;
+    if ((int)*(unsigned char*)(r4 + 0xc) <= cnt) {
+        *(int*)(obj + 0x74) = 0;
+        if (*(unsigned char*)(r4 + 0xc) > 1) {
+            *(int*)(obj + 0x74) = 1;
         }
     }
 
-    unsigned char** var5 = *(unsigned char***)(var2 + 0x2c);
-    unsigned char* var6 = var5[*(int*)(arg0 + 0x74)];
-    if (var6 == NULL || *(signed char*)var6 == 0) return;
+    unsigned char** arr = *(unsigned char***)(r4 + 0x2c);
+    unsigned char* e = arr[*(int*)(obj + 0x74)];
+    if (e == NULL || *(signed char*)e == 0) return;
 
-    var0 = *(unsigned char**)(arg0 + 0x40);
-    ((Object3D*)var0)->MaybeSetRegularAnimation((char const*)var6, 0);
+    a = *(unsigned char**)(obj + 0x40);
+    ((Object3D*)a)->SetAnimationByName((char const*)e, 0);
 }

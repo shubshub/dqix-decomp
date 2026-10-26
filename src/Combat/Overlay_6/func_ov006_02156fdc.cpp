@@ -9,47 +9,47 @@ enum { Enum_ov006_02156fdc_2196 = 0x894 };
 #include "Filesystem/BackgroundLoader.h"
 
 struct Struct_ov006_02156e54_2 {
-    char unknown_0_[0x70];
+    char unk_0[0x70];
 };
 
-extern "C" void func_02076080(Struct_ov006_02156e54_2* arg0, SafeAllocator* arg1, void* arg2, unsigned int arg3);
+extern "C" void func_02076080(Struct_ov006_02156e54_2* graphics, SafeAllocator* allocator, void* file, unsigned int size);
 
 struct Struct_ov006_02156e54 {
-    Struct_ov006_02156e54_2 unknown_0_;
-    int unknown_70_;
-    short unknown_74_;
-    short unknown_76_;
-    short unknown_78_;
-    unsigned char unknown_7a_;
+    Struct_ov006_02156e54_2 graphics_;
+    int task_;
+    short item_;
+    short x_;
+    short y_;
+    unsigned char loading_;
 };
 
 struct Struct_ov006_02154614 {
-    char unknown_0_[Enum_ov006_02156fdc_2196];
-    Struct_ov006_02156e54 unknown_894_[4];
+    char unk_0[Enum_ov006_02156fdc_2196];
+    Struct_ov006_02156e54 ingredients_[4];
     SafeAllocator unknown_a84_[4];
 };
 
 // USA: func_ov006_02156fdc
-extern "C" ARM void func_ov006_02156fdc(Struct_ov006_02154614* arg0) {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    Struct_ov006_02156e54* var1 = arg0->unknown_894_;
-    for (unsigned char var2 = 0; var2 < 4; var2++) {
-        if (var1->unknown_7a_) {
-            if (var0->GetTaskStatus(var1->unknown_70_)) {
-                void* var3;
-                unsigned int var4;
-                var0->GetLoadedFileByID(var1->unknown_70_, &var3, &var4);
-                if (var3 != 0) {
-                    arg0->unknown_a84_[var2].Reset();
-                    func_02076080(&var1->unknown_0_, &arg0->unknown_a84_[var2], var3, var4);
+extern "C" ARM void func_ov006_02156fdc(Struct_ov006_02154614* self) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    Struct_ov006_02156e54* ingredient = self->ingredients_;
+    for (unsigned char i = 0; i < 4; i++) {
+        if (ingredient->loading_) {
+            if (loader->GetTaskStatus(ingredient->task_)) {
+                void* data;
+                unsigned int size;
+                loader->GetLoadedFileByID(ingredient->task_, &data, &size);
+                if (data != 0) {
+                    self->unknown_a84_[i].Reset();
+                    func_02076080(&ingredient->graphics_, &self->unknown_a84_[i], data, size);
                 }
-                var0->RemoveTask(var1->unknown_70_);
-                var1->unknown_70_ = -1;
-                var1->unknown_7a_ = 0;
+                loader->RemoveTask(ingredient->task_);
+                ingredient->task_ = -1;
+                ingredient->loading_ = 0;
             }
-            var1->unknown_76_ = 0x6f;
-            var1->unknown_78_ = -0x1a;
+            ingredient->x_ = 0x6f;
+            ingredient->y_ = -0x1a;
         }
-        var1++;
+        ingredient++;
     }
 }

@@ -4,101 +4,96 @@
 
 struct Struct_020534ac;
 
-struct Struct_02020cb8_4;
-extern "C" int func_02046900(struct Struct_02020cb8_4* arg0);
+struct PacRecord;
+extern "C" int Pac_CountFiles(struct PacRecord* entry);
 
-struct Struct_02020aec;
-extern "C" void* func_020467f0(struct Struct_02020aec* arg0, int arg1, void** arg2, int* arg3);
+extern "C" void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 
-struct Struct_02020cb8;
-extern "C" void func_0204af64(struct Struct_02020cb8* arg0);
+struct BackgroundGraphics;
+extern "C" void Background_Init(struct BackgroundGraphics* obj);
 
-extern "C" void func_0204b11c(unsigned char* arg0, int arg1);
+extern "C" void Background_SetMapSize(unsigned char* obj, int value);
 
-extern "C" void func_0204b5b4(void*, int);
+extern "C" void Background_SetPriority(void*, int);
 
-struct Struct_02020cb8_5;
-extern "C" int func_0204b5e8(struct Struct_02020cb8_5* arg0, int arg1, int arg2);
+extern "C" int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
 
-extern "C" void func_0204b2e0(void* arg0, char* arg1);
+extern "C" void Background_FlushFile(void* obj, char* str);
 
-struct Struct_02020cb8_6;
-extern "C" void func_0204b3a0(struct Struct_02020cb8_6* arg0, char* arg1);
+extern "C" void Background_UploadFile(struct BackgroundGraphics* self, char* str);
 
-struct Struct_02020cb8_7;
-extern "C" void func_0204acb0(struct Struct_02020cb8_7* arg0);
-extern "C" void func_0204ad88(void* arg0, void* arg1);
-extern "C" int func_0204a5f8(int arg0, int arg1);
-typedef void (*Type_02020cb8)(void*, int, int);
-extern "C" void func_0204adb4(unsigned char* arg0, Type_02020cb8 arg1, unsigned char* arg2);
-extern "C" void func_0204acd0(struct Struct_02020cb8_7* arg0);
+struct BackgroundScreen;
+extern "C" void ClearRecordFields(struct BackgroundScreen* rec);
+extern "C" void BackgroundScreen_Flush(void* a, void* b);
+extern "C" int func_0204a5f8(int a, int b);
+typedef void (*Callback0204adb4)(void*, int, int);
+extern "C" void BackgroundScreen_Upload(unsigned char* dst, Callback0204adb4 callback, unsigned char* src);
+extern "C" void Forward0204acd0(struct BackgroundScreen* rec);
 
-struct Struct_02020cb8_2;
-extern "C" void func_0204b0e8(struct Struct_02020cb8_2* arg0, void* arg1);
+extern "C" void Background_UploadMap(struct BackgroundGraphics* obj, void* buf);
 
-struct Struct_02020cb8_3;
-extern "C" void func_0204afb4(struct Struct_02020cb8_3* arg0);
+extern "C" void Background_Destroy(struct BackgroundGraphics* obj);
 
 // USA: func_02020cb8
-extern "C" ARM void func_02020cb8(void* arg0, Type_02020aec arg1) {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    void* var1 = 0;
+extern "C" ARM void func_02020cb8(void* self, MapDisplayTaskHandle handle) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    void* recListHead = 0;
     unsigned int var2 = 0;
-    void* var3;
-    void* var4[3];
-    int var5[3];
-    Struct_02020cb8 var6;
-    unsigned char var7[0x10];
+    void* dummyPtr;
+    void* arrayC[3];
+    int arrayB[3];
+    BackgroundGraphics s;
+    unsigned char struct2[0x10];
 
-    var0->GetLoadedFileByID(
+    loader->GetLoadedFileByID(
 #if defined(jpn)
-        arg1
+        handle
 #else
-        *arg1
+        *handle
 #endif
-, &var1, &var2);
-    int var8 = func_02046900((struct Struct_02020cb8_4*)var1);
-    for (int var9 = 0; var9 < var8; var9++) {
-        var4[var9] = func_020467f0((struct Struct_02020aec*)var1, var9, &var3, &var5[var9]);
+, &recListHead, &var2);
+    int count = Pac_CountFiles((struct PacRecord*)recListHead);
+    for (int i = 0; i < count; i++) {
+        arrayC[i] = Pac_GetFile((struct PacRecord*)recListHead, i, &dummyPtr, &arrayB[i]);
     }
 
-    func_0204af64((struct Struct_02020cb8*)&var6);
-    var6.unknown_1c_0_ = 1;
-    var6.unknown_1c_4_ = 1;
-    func_0204b5b4(&var6, 3);
-    func_0204b11c((unsigned char*)&var6, 0);
-    func_0204b5e8((struct Struct_02020cb8_5*)&var6, 0, 0);
+    Background_Init((struct BackgroundGraphics*)&s);
+    s.subScreen_ = 1;
+    s.bgNumber_ = 1;
+    Background_SetPriority(&s, 3);
+    Background_SetMapSize((unsigned char*)&s, 0);
+    Background_SetScroll((struct BackgroundGraphics*)&s, 0, 0);
 
-    var6.unknown_0_ = 0x6000;
-    var6.unknown_e_ = 0xfffe;
-    unsigned short* var10 = (unsigned short*)((char*)var4[2] + 0x10);
-    for (int var11 = 0; var11 < 0x300; var11++) {
-        var10[var11] = var10[var11] + 0x300;
+    s.characterOffset_ = 0x6000;
+    s.paletteMask_ = 0xfffe;
+    unsigned short* tbl = (unsigned short*)((char*)arrayC[2] + 0x10);
+    for (int i = 0; i < 0x300; i++) {
+        tbl[i] = tbl[i] + 0x300;
     }
 
-    for (int var12 = 0; var12 < 2; var12++) {
-        func_0204b2e0(&var6, (char*)var4[var12]);
-        func_0204b3a0((struct Struct_02020cb8_6*)&var6, (char*)var4[var12]);
+    for (int i = 0; i < 2; i++) {
+        Background_FlushFile(&s, (char*)arrayC[i]);
+        Background_UploadFile((struct BackgroundGraphics*)&s, (char*)arrayC[i]);
     }
 
-    func_0204acb0((struct Struct_02020cb8_7*)var7);
-    func_0204ad88(var7, var4[2]);
-    Type_02020cb8 var13 = (Type_02020cb8)func_0204a5f8(1, 1);
-    func_0204adb4(var7, var13, (unsigned char*)var4[2]);
-    func_0204acd0((struct Struct_02020cb8_7*)var7);
+    ClearRecordFields((struct BackgroundScreen*)struct2);
+    BackgroundScreen_Flush(struct2, arrayC[2]);
+    Callback0204adb4 fn = (Callback0204adb4)func_0204a5f8(1, 1);
+    BackgroundScreen_Upload(struct2, fn, (unsigned char*)arrayC[2]);
+    Forward0204acd0((struct BackgroundScreen*)struct2);
 
-    func_0204b0e8((struct Struct_02020cb8_2*)&var6, 0);
-    func_0204afb4((struct Struct_02020cb8_3*)&var6);
+    Background_UploadMap((struct BackgroundGraphics*)&s, 0);
+    Background_Destroy((struct BackgroundGraphics*)&s);
 
     BackgroundLoader* var14 = BackgroundLoader::GetInstance();
     var14->RemoveTask(
 #if defined(jpn)
-        arg1
+        handle
 #else
-        *arg1
+        *handle
 #endif
 );
 #if !defined(jpn)
-    *arg1 = -1;
+    *handle = -1;
 #endif
 }

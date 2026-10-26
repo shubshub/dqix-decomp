@@ -2,7 +2,7 @@
 #include "NitroSDK/ProcessorContext.h"
 
 extern "C" int func_ov031_02210ef8(void);
-extern "C" void func_ov031_0221038c(int arg0);
+extern "C" void func_ov031_0221038c(int state);
 extern void* data_ov031_0224e588;
 
 // USA: func_ov031_022102c8

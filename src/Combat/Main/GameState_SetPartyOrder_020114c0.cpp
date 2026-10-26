@@ -2,7 +2,7 @@
 #include "std_library_functions.h"
 
 // Main, originally CopyInRegion0x571d_020114c0 (USA 0x020114c0, EUR 0x020114d0, JPN 0x02011230)
-ARM void GameState_SetPartyOrder(char* gameState, int count, void* objectIndices) {
+extern "C" ARM void GameState_SetPartyOrder(char* gameState, int count, void* objectIndices) {
 #if defined(jpn)
     memcpy(gameState + 0x54bd, objectIndices, count);
 #else

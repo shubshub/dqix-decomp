@@ -8,7 +8,7 @@ static const int kBufferOffset = 0x44b8;
 #endif
 
 // USA: func_ov017_021972cc
-extern "C" ARM void func_ov017_021972cc(char* arg0) {
-    memset(arg0 + kBufferOffset, 0, 8);
-    *(unsigned char*)(arg0 + kBufferOffset + 8) = 0;
+extern "C" ARM void func_ov017_021972cc(char* p) {
+    memset(p + kBufferOffset, 0, 8);
+    *(unsigned char*)(p + kBufferOffset + 8) = 0;
 }

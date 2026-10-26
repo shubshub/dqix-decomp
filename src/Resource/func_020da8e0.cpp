@@ -10,10 +10,10 @@ struct Struct_020da8e0 {
     char unknown_0_[8];
     int unknown_8_;
     char unknown_c_;
-    unsigned char unknown_d_;
+    unsigned char flags;
     unsigned char unknown_e_;
     char unknown_f_[5];
-    Struct_020da8e0_2 unknown_14_[4];
+    Struct_020da8e0_2 slots[4];
 };
 extern "C" {
 void func_020daa58(void*, void*, int, int);
@@ -23,40 +23,40 @@ void func_020da2e4(void*);
 
 extern "C" ARM int func_020da8e0(void* arg0)
 {
-    Struct_020da8e0* var0 = (Struct_020da8e0*)arg0;
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    if (!var1)
+    Struct_020da8e0* state = (Struct_020da8e0*)arg0;
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (!loader)
         return 0;
-    Struct_020da8e0_2* var2 = var0->unknown_14_;
+    Struct_020da8e0_2* slot = state->slots;
     int var3 = 1;
-    for (unsigned char var4 = 0; var4 < 4; ++var4, ++var2) {
-        int var5 = var2->unknown_8_;
+    for (unsigned char index = 0; index < 4; ++index, ++slot) {
+        int var5 = slot->unknown_8_;
         if (var5 != -1) {
-            if (var1->GetTaskStatus(var5) == 0) {
+            if (loader->GetTaskStatus(var5) == 0) {
                 var3 = 0;
             } else {
-                unsigned int var6 = 0;
-                void* var7 = NULL;
-                var1->GetLoadedFileByID(var5, &var7, &var6);
-                switch (var0->unknown_e_) {
+                unsigned int length = 0;
+                void* data = NULL;
+                loader->GetLoadedFileByID(var5, &data, &length);
+                switch (state->unknown_e_) {
                 case 1:
-                    func_020daa58(var0, var7, 3100, 3110);
+                    func_020daa58(state, data, 3100, 3110);
                     break;
                 case 2:
-                    func_020daa58(var0, var7, 3200, 3210);
+                    func_020daa58(state, data, 3200, 3210);
                     break;
                 case 3:
-                    func_020dab68(var0, var7, var6);
+                    func_020dab68(state, data, length);
                     break;
                 }
-                var0->unknown_8_ = var2->unknown_0_;
-                var0->unknown_d_ |= 4;
-                var1->RemoveTask(var5);
-                func_020da2e4(var2);
+                state->unknown_8_ = slot->unknown_0_;
+                state->flags |= 4;
+                loader->RemoveTask(var5);
+                func_020da2e4(slot);
             }
         }
     }
     if (var3)
-        var0->unknown_d_ &= ~1;
+        state->flags &= ~1;
     return 1;
 }

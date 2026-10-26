@@ -1,28 +1,28 @@
 #include <globaldefs.h>
 #include "Memory/SafeAllocator.h"
 
-struct Struct_0204693c;
-extern "C" void func_0204693c(struct Struct_0204693c* arg0);
+struct ByteHeader0204693c;
+extern "C" void func_0204693c(struct ByteHeader0204693c* p);
 
 // USA: func_ov017_021c0760
-extern "C" ARM void func_ov017_021c0760(unsigned char* arg0, unsigned char arg1) {
-	func_0204693c((struct Struct_0204693c*)arg0);
-	arg0[0] = 0x29;
-	arg0[0xbc] = arg1;
-	*(int*)(arg0 + 0x20) = 0;
-	arg0[0x24] = 0;
-	*(int*)(arg0 + 0x1c) = 0;
-	((SafeAllocator*)(arg0 + 0x8))->ResetAllocatorPointer();
-	if (arg0[0xbc] == 0) {
+extern "C" ARM void func_ov017_021c0760(unsigned char* obj, unsigned char flag) {
+	func_0204693c((struct ByteHeader0204693c*)obj);
+	obj[0] = 0x29;
+	obj[0xbc] = flag;
+	*(int*)(obj + 0x20) = 0;
+	obj[0x24] = 0;
+	*(int*)(obj + 0x1c) = 0;
+	((SafeAllocator*)(obj + 0x8))->ResetAllocatorPointer();
+	if (obj[0xbc] == 0) {
 		return;
 	}
-	arg0[0x25] = 0;
-	arg0[0x26] = 0;
-	*(short*)(arg0 + 0x28) = -1;
-	*(short*)(arg0 + 0x2a) = -1;
-	*(short*)(arg0 + 0xa8) = 0;
-	*(int*)(arg0 + 0xac) = 0;
-	*(int*)(arg0 + 0xb0) = 0;
-	*(int*)(arg0 + 0xb4) = 0;
-	*(int*)(arg0 + 0xb8) = 0;
+	obj[0x25] = 0;
+	obj[0x26] = 0;
+	*(short*)(obj + 0x28) = -1;
+	*(short*)(obj + 0x2a) = -1;
+	*(short*)(obj + 0xa8) = 0;
+	*(int*)(obj + 0xac) = 0;
+	*(int*)(obj + 0xb0) = 0;
+	*(int*)(obj + 0xb4) = 0;
+	*(int*)(obj + 0xb8) = 0;
 }

@@ -10,14 +10,14 @@
 
 
 struct Struct_ov003_0217ef24;
-extern "C" void func_ov003_0217ef24(struct Struct_ov003_0217ef24* arg0);
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
+extern "C" void func_ov003_0217ef24(struct Struct_ov003_0217ef24* p);
+struct TailList020469b4;
+struct TailNode020469b4;
+extern "C" void func_020469b4(struct TailList020469b4* list, struct TailNode020469b4* node);
 
 // USA: func_ov017_0218d77c
-extern "C" ARM void func_ov017_0218d77c(char* arg0, int arg1) {
-	func_ov003_0217ef24(*(struct Struct_ov003_0217ef24**)(arg0 + REGION_FIELD_0));
-	*(int*)((char*)(*(void**)(arg0 + REGION_FIELD_0)) + 0x8) = arg1;
-	func_020469b4(*(struct Struct_0201bdac_2**)(arg0 + REGION_FIELD_1), *(struct Struct_0201bdac**)(arg0 + REGION_FIELD_0));
+extern "C" ARM void func_ov017_0218d77c(char* self, int value) {
+	func_ov003_0217ef24(*(struct Struct_ov003_0217ef24**)(self + REGION_FIELD_0));
+	*(int*)((char*)(*(void**)(self + REGION_FIELD_0)) + 0x8) = value;
+	func_020469b4(*(struct TailList020469b4**)(self + REGION_FIELD_1), *(struct TailNode020469b4**)(self + REGION_FIELD_0));
 }

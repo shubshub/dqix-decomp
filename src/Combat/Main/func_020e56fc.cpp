@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
-extern "C" void func_020e53bc(void* arg0, int arg1, void* arg2, void* arg3);
+extern "C" void func_020e53bc(void* a, int b, void* c, void* d);
 struct Struct_020e5204;
 extern "C" void func_020e5204(void*, struct Struct_020e5204*);
 
 // USA: func_020e56fc
-extern "C" ARM int func_020e56fc(void* arg0, int arg1, int arg2) {
-    int var0;
-    if (arg1 == 0 || arg2 == 0) return 0;
-    func_020e53bc(arg0, arg1, &var0, (void*)func_020e5204);
+extern "C" ARM int func_020e56fc(void* a0, int a1, int a2) {
+    int local;
+    if (a1 == 0 || a2 == 0) return 0;
+    func_020e53bc(a0, a1, &local, (void*)func_020e5204);
     return 1;
 }

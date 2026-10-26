@@ -2,12 +2,12 @@
 #include "std_library_functions.h"
 
 struct Header020dffb8;
-int KeyTable_GetEntriesSize(Header020dffb8* obj);
+extern "C" int KeyTable_GetEntriesSize(Header020dffb8* obj);
 
 struct Container020dffc8;
 struct Element020dffc8;
 typedef int (*ElementCallback020dffc8)(Container020dffc8*, Element020dffc8*);
-int KeyTable_ForEachEntry(Container020dffc8* self, ElementCallback020dffc8 cb);
+extern "C" int KeyTable_ForEachEntry(Container020dffc8* self, ElementCallback020dffc8 cb);
 
 struct List020e0280 {
     unsigned int field0;

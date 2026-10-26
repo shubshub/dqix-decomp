@@ -3,22 +3,22 @@
 class SafeAllocator;
 
 struct Struct_0208d550 {
-    void* unknown_0_;
-    short unknown_4_;
-    short unknown_6_;
+    void* entries;
+    short count;
+    short capacity;
     const short* unknown_8_;
     short unknown_c_;
-    unsigned short unknown_e_;
+    unsigned short flags;
 };
 
 struct Struct_02108fc0 {
-    SafeAllocator* unknown_0_;
-    Struct_0208d550* unknown_4_;
+    SafeAllocator* allocator;
+    Struct_0208d550* header;
 };
 
 extern Struct_02108fc0 data_02108fc0;
 
-extern "C" void func_0208d860(Struct_0208d550* arg0, SafeAllocator* arg1,
-                                           const void* arg2, unsigned int arg3,
+extern "C" void func_0208d860(Struct_0208d550* header, SafeAllocator* allocator,
+                                           const void* bytecode, unsigned int length,
                                            const short* arg4, short arg5,
-                                           unsigned short arg6);
+                                           unsigned short flags);

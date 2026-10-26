@@ -9,6 +9,6 @@ struct Flags02033fcc {
 enum { GameObjectFlagsE0_Paused = 0x4 };
 
 // Main, originally SetFlag0x4At0xe0 (USA 0x02033fcc, EUR 0x02033fdc, JPN 0x02033b04)
-ARM void GameObject_PauseMovement(struct Flags02033fcc* object) {
+extern "C" ARM void GameObject_PauseMovement(struct Flags02033fcc* object) {
     object->flagsE0 |= GameObjectFlagsE0_Paused;
 }

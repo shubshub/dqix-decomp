@@ -5,48 +5,48 @@
 #endif
 #include <globaldefs.h>
 
-struct Struct_ov005_02153954 {
-    char unknown_0_[R(0x3d30, 0x3db8)];
-    unsigned char unknown_3db8_;
+struct EquipmentMenu {
+    char unk_0[R(0x3d30, 0x3db8)];
+    unsigned char state_;
     unsigned char unknown_3db9_;
-    unsigned char unknown_3dba_;
-    signed char unknown_3dbb_;
-    unsigned char unknown_3dbc_;
-    signed char unknown_3dbd_;
+    unsigned char step_;
+    signed char slot_;
+    unsigned char kind_;
+    signed char page_;
     unsigned char unknown_3dbe_;
     signed char unknown_3dbf_;
     signed char unknown_3dc0_;
     char unknown_3dc1_[0x3dcc - 0x3dc1];
-    unsigned int unknown_3dcc_;
+    unsigned int flags_;
     char unknown_3dd0_[0x3df0 - 0x3dd0];
     signed char unknown_3df0_;
     signed char unknown_3df1_;
     signed char unknown_3df2_;
 };
 
-extern "C" void func_ov005_021571d0(Struct_ov005_02153954* arg0);
+extern "C" void func_ov005_021571d0(EquipmentMenu* self);
 
 // USA: func_ov005_0215792c
-extern "C" ARM void func_ov005_0215792c(Struct_ov005_02153954* arg0, unsigned char arg1) {
-    arg0->unknown_3db9_ = arg0->unknown_3db8_;
-    arg0->unknown_3db8_ = arg1;
-    arg0->unknown_3dba_ = 0;
-    if (arg0->unknown_3db8_ == 0) {
-        arg0->unknown_3dbe_ = arg0->unknown_3dbc_;
-        arg0->unknown_3dcc_ |= 0x400;
+extern "C" ARM void func_ov005_0215792c(EquipmentMenu* self, unsigned char state) {
+    self->unknown_3db9_ = self->state_;
+    self->state_ = state;
+    self->step_ = 0;
+    if (self->state_ == 0) {
+        self->unknown_3dbe_ = self->kind_;
+        self->flags_ |= 0x400;
     } else {
-        arg0->unknown_3dcc_ &= ~0x400;
+        self->flags_ &= ~0x400;
     }
-    if (arg0->unknown_3db8_ == 0 && arg0->unknown_3db9_ == 1) {
-        arg0->unknown_3df0_ = 3;
-        arg0->unknown_3df1_ = 30;
-        arg0->unknown_3df2_ = 30;
-        arg0->unknown_3dcc_ &= ~0x1000;
-        arg0->unknown_3dcc_ &= ~0x2000;
-    } else if (arg0->unknown_3db9_ == 3) {
-        arg0->unknown_3df0_ = 0;
-        arg0->unknown_3dcc_ &= ~0x1000;
+    if (self->state_ == 0 && self->unknown_3db9_ == 1) {
+        self->unknown_3df0_ = 3;
+        self->unknown_3df1_ = 30;
+        self->unknown_3df2_ = 30;
+        self->flags_ &= ~0x1000;
+        self->flags_ &= ~0x2000;
+    } else if (self->unknown_3db9_ == 3) {
+        self->unknown_3df0_ = 0;
+        self->flags_ &= ~0x1000;
     }
-    if (arg0->unknown_3db8_ != 5 && arg0->unknown_3db8_ != 1 && arg0->unknown_3db8_ != 7)
-        func_ov005_021571d0(arg0);
+    if (self->state_ != 5 && self->state_ != 1 && self->state_ != 7)
+        func_ov005_021571d0(self);
 }

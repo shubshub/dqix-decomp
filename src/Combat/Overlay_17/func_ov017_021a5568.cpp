@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
-struct Struct_0204693c;
-extern "C" void func_0204693c(Struct_0204693c* arg0);
+struct ByteHeader0204693c;
+extern "C" void func_0204693c(ByteHeader0204693c* p);
 
 struct Struct_ov017_021a5568 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[7];
-    int unknown_8_;
-    unsigned char unknown_c_[0x14];
-    unsigned char unknown_20_;
+    unsigned char byte0;
+    unsigned char pad0[7];
+    int f8;
+    unsigned char pad1[0x14];
+    unsigned char f20;
     unsigned char unknown_21_;
-    short unknown_22_;
+    short f22;
 };
 
 extern int data_ov017_021d83ac;
 
 // USA: func_ov017_021a5568
-extern "C" ARM void func_ov017_021a5568(Struct_ov017_021a5568* arg0) {
-    func_0204693c((Struct_0204693c*)arg0);
-    arg0->unknown_0_ = 0xc;
-    arg0->unknown_8_ = 0;
+extern "C" ARM void func_ov017_021a5568(Struct_ov017_021a5568* p) {
+    func_0204693c((ByteHeader0204693c*)p);
+    p->byte0 = 0xc;
+    p->f8 = 0;
     data_ov017_021d83ac = 0;
-    arg0->unknown_20_ = 0;
-    arg0->unknown_21_ = 0;
-    arg0->unknown_22_ = -1;
+    p->f20 = 0;
+    p->unknown_21_ = 0;
+    p->f22 = -1;
 }

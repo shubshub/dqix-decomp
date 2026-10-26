@@ -1,28 +1,28 @@
 #include <globaldefs.h>
 
 struct Struct_0209a104_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    int unknown_4_;
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    unsigned short f0;
+    unsigned short f2;
+    int f4;
+    unsigned short f8;
+    unsigned short fa;
 };
 
-extern "C" void func_0209a530(struct Struct_0209a104_2* arg0, struct Struct_0209a104_2* arg1);
+extern "C" void func_0209a530(struct Struct_0209a104_2* dst, struct Struct_0209a104_2* src);
 
 struct Struct_0209a4f0 {
-    struct Struct_0209a104_2* unknown_0_;
-    int unknown_4_;
+    struct Struct_0209a104_2* items;
+    int count;
 };
 
 // USA: func_0209a4f0
-extern "C" ARM void func_0209a4f0(struct Struct_0209a4f0* arg0, struct Struct_0209a104_2* arg1) {
-    struct Struct_0209a104_2* var0;
-    int var1;
-    var0 = arg0->unknown_0_;
-    if (var0 == NULL) return;
-    var1 = arg0->unknown_4_;
-    if (var1 >= 0x11f) return;
-    arg0->unknown_4_ = var1 + 1;
-    func_0209a530(&arg0->unknown_0_[var1], arg1);
+extern "C" ARM void func_0209a4f0(struct Struct_0209a4f0* list, struct Struct_0209a104_2* src) {
+    struct Struct_0209a104_2* items;
+    int count;
+    items = list->items;
+    if (items == NULL) return;
+    count = list->count;
+    if (count >= 0x11f) return;
+    list->count = count + 1;
+    func_0209a530(&list->items[count], src);
 }

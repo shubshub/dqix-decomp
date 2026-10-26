@@ -2,30 +2,30 @@
 
 struct Struct_020a1180_2 {
     unsigned int unknown_0_;
-    unsigned int unknown_4_;
-    unsigned int unknown_8_;
+    unsigned int w1;
+    unsigned int w2;
 };
 
 struct Struct_020a1568 {
-    struct Struct_020a1180_2* unknown_0_;
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
+    struct Struct_020a1180_2* base;
+    unsigned short capacity;
+    unsigned short count;
 };
 
 // USA: func_020a1568
-extern "C" ARM void func_020a1568(struct Struct_020a1568* arg0, struct Struct_020a1180_2* arg1) {
-    unsigned short var0;
-    struct Struct_020a1180_2* var1;
-    if (arg1 == NULL) {
+extern "C" ARM void func_020a1568(struct Struct_020a1568* arr, struct Struct_020a1180_2* src) {
+    unsigned short count;
+    struct Struct_020a1180_2* dst;
+    if (src == NULL) {
         return;
     }
-    var0 = arg0->unknown_6_;
-    if (arg0->unknown_4_ <= var0) {
+    count = arr->count;
+    if (arr->capacity <= count) {
         return;
     }
-    var1 = &arg0->unknown_0_[var0];
-    var1->unknown_0_ = arg1->unknown_0_;
-    var1->unknown_4_ = arg1->unknown_4_;
-    var1->unknown_8_ = arg1->unknown_8_;
-    arg0->unknown_6_++;
+    dst = &arr->base[count];
+    dst->unknown_0_ = src->unknown_0_;
+    dst->w1 = src->w1;
+    dst->w2 = src->w2;
+    arr->count++;
 }

@@ -5,40 +5,40 @@
 extern "C" void func_ov000_02169b78(void*);
 
 struct Struct_ov000_02184264_2 {
-    unsigned char unknown_0_[8];
-    SafeAllocator* unknown_8_;
+    unsigned char pad[8];
+    SafeAllocator* alloc;
 };
 extern struct Struct_ov000_02184264_2 data_ov000_02184264;
 
-struct Struct_0201c1c8 { int unknown_0_; int unknown_4_; };
+struct Variant02030b0c { int tag; int u; };
 
 struct Struct_ov000_0216c85c {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    unsigned short unknown_c_;
-    unsigned char unknown_e_;
+    int tag;
+    int unused;
+    int value;
+    unsigned short id;
+    unsigned char flag;
 };
 
 // USA: func_ov000_0216c85c
-extern "C" ARM int func_ov000_0216c85c(struct Struct_0201c1c8* arg0, int arg1) {
-    struct Struct_ov000_0216c85c* var0 = (struct Struct_ov000_0216c85c*)data_ov000_02184264.unknown_8_->Allocate(sizeof(struct Struct_ov000_0216c85c));
-    if (var0 == NULL) {
+extern "C" ARM int func_ov000_0216c85c(struct Variant02030b0c* v, int count) {
+    struct Struct_ov000_0216c85c* node = (struct Struct_ov000_0216c85c*)data_ov000_02184264.alloc->Allocate(sizeof(struct Struct_ov000_0216c85c));
+    if (node == NULL) {
         return 0;
     }
-    unsigned short var1;
-    int var2;
-    unsigned char var3;
-    var2 = ((Script::Parameter*)&arg0[0])->ToInt();
-    var1 = ((Script::Parameter*)&arg0[1])->ToInt();
-    var3 = 0;
-    if (arg1 >= 3) {
-        var3 = ((Script::Parameter*)&arg0[2])->ToInt();
+    unsigned short id;
+    int value;
+    unsigned char flag;
+    value = ((Script::Parameter*)&v[0])->ToInt();
+    id = ((Script::Parameter*)&v[1])->ToInt();
+    flag = 0;
+    if (count >= 3) {
+        flag = ((Script::Parameter*)&v[2])->ToInt();
     }
-    var0->unknown_8_ = var2;
-    var0->unknown_c_ = var1 - 0x1a;
-    var0->unknown_e_ = var3;
-    var0->unknown_0_ = 0x73;
-    func_ov000_02169b78(var0);
+    node->value = value;
+    node->id = id - 0x1a;
+    node->flag = flag;
+    node->tag = 0x73;
+    func_ov000_02169b78(node);
     return 1;
 }

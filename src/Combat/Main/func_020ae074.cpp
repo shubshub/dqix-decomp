@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_020ae074 : Object3D {
+struct HeightShiftedObject : Object3D {
     short unknown_ac_, unknown_ae_;
     char unknown_b0_[0x150 - 0xb0];
     int unknown_150_;
@@ -13,36 +13,36 @@ struct Struct_020ae074 : Object3D {
 };
 struct Fields020407b4;
 extern "C" void GameObject_Draw(HeightShiftedObject*, int, int);
-void StoreVec3AtField0x50_0203db34(unsigned char*, int, int, int);
-void SetupObjFieldsAndResetRenderFlags020ae20c(void*, Fields020407b4*, int*, int);
+extern "C" void func_0203db34(unsigned char*, int, int, int);
+extern "C" void func_020ae20c(void*, Fields020407b4*, int*, int);
 
 // USA: func_020ae074
 extern "C" ARM void func_020ae074(HeightShiftedObject* self) {
     GameState* game = GameState::GetInstance();
     Vector3fix position = self->position_;
-    position.y += self->heightOffset_;
+    position.y += self->unknown_150_;
     self->position_ = position;
     GameObject_Draw(self, 1, 0);
     GameObject* object = game->GetGameObjectByIndex(0xcb);
     if (object) {
-        self->firstPosition_.y += self->heightOffset_;
-        object->obj3D_.position_ = self->firstPosition_;
-        StoreVec3AtField0x50_0203db34((unsigned char*)object, 0, self->firstHeading_, 0);
+        self->unknown_164_.y += self->unknown_150_;
+        object->obj3D_.position_ = self->unknown_164_;
+        func_0203db34((unsigned char*)object, 0, self->unknown_170_, 0);
         object->obj3D_.Draw(true);
-        self->firstPosition_.y -= self->heightOffset_;
-        self->secondPosition_.y += self->heightOffset_;
-        object->obj3D_.position_ = self->secondPosition_;
-        StoreVec3AtField0x50_0203db34((unsigned char*)object, 0, self->secondHeading_, 0);
+        self->unknown_164_.y -= self->unknown_150_;
+        self->unknown_174_.y += self->unknown_150_;
+        object->obj3D_.position_ = self->unknown_174_;
+        func_0203db34((unsigned char*)object, 0, self->unknown_180_, 0);
         object->obj3D_.Draw(true);
-        self->secondPosition_.y -= self->heightOffset_;
+        self->unknown_174_.y -= self->unknown_150_;
     }
-    GameObject* var3 = var0->GetGameObjectByIndex(0xcc);
-    Vector3fix var4 = arg0->position_;
-    func_020ae20c(arg0, (Struct_02040774_2*)var3, &var4.x, arg0->unknown_ae_);
-    GameObject* var5 = var0->GetGameObjectByIndex(0xcd);
-    func_020ae20c(arg0, (Struct_02040774_2*)var5, &arg0->unknown_164_.x, arg0->unknown_170_);
-    func_020ae20c(arg0, (Struct_02040774_2*)var5, &arg0->unknown_174_.x, arg0->unknown_180_);
-    var1 = arg0->position_;
-    var1.y -= arg0->unknown_150_;
-    arg0->position_ = var1;
+    GameObject* var3 = game->GetGameObjectByIndex(0xcc);
+    Vector3fix var4 = self->position_;
+    func_020ae20c(self, (Fields020407b4*)var3, &var4.x, self->unknown_ae_);
+    GameObject* var5 = game->GetGameObjectByIndex(0xcd);
+    func_020ae20c(self, (Fields020407b4*)var5, &self->unknown_164_.x, self->unknown_170_);
+    func_020ae20c(self, (Fields020407b4*)var5, &self->unknown_174_.x, self->unknown_180_);
+    position = self->position_;
+    position.y -= self->unknown_150_;
+    self->position_ = position;
 }

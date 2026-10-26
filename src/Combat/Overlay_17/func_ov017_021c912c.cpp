@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 
 extern int data_ov017_021d8498;
-extern "C" void func_ov017_021d451c(void* arg0, void* arg1);
-extern "C" void func_ov017_021d45e0(void* arg0, void* arg1);
+extern "C" void func_ov017_021d451c(void* a, void* b);
+extern "C" void func_ov017_021d45e0(void* a, void* b);
 
-struct Struct_ov017_021c912c { unsigned char unknown_0_0_ : 2; unsigned char unknown_0_2_ : 6; };
-struct Struct_ov017_021c912c_2 { unsigned char unknown_0_[4]; Struct_ov017_021c912c unknown_4_; };
+struct Struct_ov017_021c912c { unsigned char unknown_0_0_ : 2; unsigned char rest : 6; };
+struct Struct_ov017_021c912c_2 { unsigned char pad[4]; Struct_ov017_021c912c field4; };
 
 // USA: func_ov017_021c912c
-extern "C" ARM void func_ov017_021c912c(void* arg0, Struct_ov017_021c912c_2* arg1) {
-    void* var0 = &data_ov017_021d8498;
-    unsigned int var1 = arg1->unknown_4_.unknown_0_0_;
-    if (var1 == 0) {
-        func_ov017_021d451c(var0, (char*)arg1 + 6);
+extern "C" ARM void func_ov017_021c912c(void* unused, Struct_ov017_021c912c_2* obj) {
+    void* base = &data_ov017_021d8498;
+    unsigned int sub = obj->field4.unknown_0_0_;
+    if (sub == 0) {
+        func_ov017_021d451c(base, (char*)obj + 6);
         return;
     }
-    if (var1 != 1) return;
-    func_ov017_021d45e0(var0, (char*)arg1 + 6);
+    if (sub != 1) return;
+    func_ov017_021d45e0(base, (char*)obj + 6);
 }

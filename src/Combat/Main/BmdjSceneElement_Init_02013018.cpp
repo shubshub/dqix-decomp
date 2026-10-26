@@ -41,7 +41,7 @@ struct InitTarget02013018 {
 enum { kNoId = 0xffff, kFix32One = 0x1000 };
 
 // Main, originally Init02013018 (USA 0x02013018, EUR 0x02013028, JPN 0x02012de0)
-ARM void BmdjSceneElement_Init(struct InitTarget02013018 *element) {
+extern "C" ARM void BmdjSceneElement_Init(struct InitTarget02013018 *element) {
     element->id = kNoId;
     element->flags = 0;
     element->state = 0x1f;

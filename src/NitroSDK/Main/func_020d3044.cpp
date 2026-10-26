@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 
 // USA: func_020d3044
-extern "C" ARM int func_020d3044(const unsigned char* arg0, const unsigned char* arg1, int arg2) {
-    int var0;
-    if (arg2 != 0) {
-        var0 = 0;
-        if (var0 < arg2) {
+extern "C" ARM int func_020d3044(const unsigned char* a, const unsigned char* b, int n) {
+    int i;
+    if (n != 0) {
+        i = 0;
+        if (i < n) {
             do {
-                unsigned char var1 = arg0[var0];
-                unsigned char var2 = arg1[var0];
-                if (var1 != var2) return var1 - var2;
-                var0++;
-            } while (var0 < arg2);
+                unsigned char var1 = a[i];
+                unsigned char cb = b[i];
+                if (var1 != cb) return var1 - cb;
+                i++;
+            } while (i < n);
         }
     }
     return 0;

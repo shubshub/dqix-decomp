@@ -1,32 +1,32 @@
 #include <globaldefs.h>
 
 struct Struct_020db3a8;
-extern "C" int func_020db3a8(Struct_020db3a8* arg0);
-extern "C" int func_020de13c(unsigned char* arg0);
-extern "C" int func_020de148(unsigned char* arg0);
-extern "C" void func_020ddea0(void* arg0, unsigned short arg1, unsigned char arg2, void* arg3, unsigned char arg4, int arg5);
+extern "C" int func_020db3a8(Struct_020db3a8* s);
+extern "C" int func_020de13c(unsigned char* obj);
+extern "C" int func_020de148(unsigned char* obj);
+extern "C" void func_020ddea0(void* elem, unsigned short arg1, unsigned char idx, void* p, unsigned char field3c, int val);
 
 struct Struct_020db5ec {
-    unsigned char unknown_0_[0x3c];
-    unsigned char unknown_3c_;
-    unsigned char unknown_3d_[0x6e - 0x3c - 1];
+    unsigned char pad1[0x3c];
+    unsigned char field3c;
+    unsigned char pad2[0x6e - 0x3c - 1];
     unsigned short unknown_6e_;
-    unsigned char unknown_70_[3][0x28];
+    unsigned char arr[3][0x28];
 };
 
 // USA: func_020db768
-extern "C" ARM void func_020db768(Struct_020db5ec* arg0, void* arg1) {
-    arg0->unknown_6e_ = (arg0->unknown_6e_ + 1) % 0xbe;
-    for (int var0 = 0; var0 < 3; var0++) {
-        unsigned char* var1 = arg0->unknown_70_[var0];
-        void* var2 = arg1;
-        if (func_020de13c(var1)) {
-            var2 = (char*)arg1 + 4;
-        } else if (func_020de148(var1)) {
-            var2 = (char*)arg1 + 8;
+extern "C" ARM void func_020db768(Struct_020db5ec* s, void* other) {
+    s->unknown_6e_ = (s->unknown_6e_ + 1) % 0xbe;
+    for (int i = 0; i < 3; i++) {
+        unsigned char* elem = s->arr[i];
+        void* p = other;
+        if (func_020de13c(elem)) {
+            p = (char*)other + 4;
+        } else if (func_020de148(elem)) {
+            p = (char*)other + 8;
         }
-        int var3 = 0xf;
-        if (func_020db3a8((Struct_020db3a8*)arg0)) var3 = 0xe;
-        func_020ddea0(var1, arg0->unknown_6e_, (unsigned char)(var0 * 4 + 4), var2, arg0->unknown_3c_, var3);
+        int val = 0xf;
+        if (func_020db3a8((Struct_020db3a8*)s)) val = 0xe;
+        func_020ddea0(elem, s->unknown_6e_, (unsigned char)(i * 4 + 4), p, s->field3c, val);
     }
 }

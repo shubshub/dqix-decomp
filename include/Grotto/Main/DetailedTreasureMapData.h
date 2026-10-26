@@ -4,7 +4,7 @@
 #include "TreasureMapMetadata.h"
 
 #ifdef jpn
-void RemoveFurigana(const char* arg0, char* arg1);
+void RemoveFurigana(const char* src, char* dst);
 #endif
 
 bool IsMonsterIDLegacyBoss(unsigned short id);

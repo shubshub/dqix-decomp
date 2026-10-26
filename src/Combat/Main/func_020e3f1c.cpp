@@ -9,150 +9,150 @@
 #include "Resource/Brightness.h"
 #include "Resource/GameResources.h"
 
-struct Struct_ov009_0218aa28 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+struct Vec3 {
+    int x;
+    int y;
+    int z;
 };
 
-struct Struct_020e3f1c_5 {
+struct Zone02012fe4 {
 #if defined(jpn)
-    char unknown_0_[0x240c];
+    char pad[0x240c];
 #else
-    char unknown1_0_[0x23ec];
+    char pad[0x23ec];
 #endif
-    ActiveGrottoClass unknown_23ec_;
+    ActiveGrottoClass activeGrotto;
 };
 
 struct Struct_020e3f1c_6 {
-    unsigned char unknown_0_0_ : 2;
-    unsigned char unknown_0_2_ : 6;
+    unsigned char mode : 2;
+    unsigned char rest : 6;
 };
 
 struct Struct_020e3f1c_7 {
 #if defined(jpn)
-    const char* unknown_0_;
-    char unknown_4_[0x10 - 0x4];
+    const char* name;
+    char pad4[0x10 - 0x4];
 #else
-    char unknown1_0_[0x10];
+    char pad[0x10];
 #endif
-    unsigned short unknown_10_;
+    unsigned short id;
 };
 
-struct Struct_020e3f1c_8 {
-    char unknown_0_[0x44];
-    struct Struct_ov009_0218aa28 unknown_44_;
+struct Actor020e3f1c {
+    char pad0[0x44];
+    struct Vec3 position;
     char unknown_50_[0xb2 - 0x50];
     short unknown_b2_;
     char unknown_b4_[0xc1 - 0xb4];
     struct Struct_020e3f1c_6 unknown_c1_;
     char unknown_c2_[0x134 - 0xc2];
-    char* unknown_134_;
+    char* name;
     char unknown_138_[0x17d - 0x138];
     unsigned char unknown_17d_;
     char unknown_17e_[0x180 - 0x17e];
-    struct Struct_020e3f1c_7* unknown_180_;
+    struct Struct_020e3f1c_7* info;
 };
 
-struct Struct_020e3f1c {
-    char unknown_0_[0xf78];
-    unsigned char unknown_f78_[4];
-    unsigned char unknown_f7c_;
+struct PartyOrder020e3f1c {
+    char pad[0xf78];
+    unsigned char order[4];
+    unsigned char count;
 };
 
-struct Struct_020e3f1c_2 {
-    char unknown_0_[0x10];
-    struct Struct_ov009_0218aa28 unknown_10_;
+struct Camera020e3f1c {
+    char pad[0x10];
+    struct Vec3 target;
 };
 
-struct Struct_020e3f1c_3 {
+struct Display020e3f1c {
 #if defined(jpn)
-    char unknown_0_[0x868];
-    int unknown_998_;
-    int unknown_99c_;
+    char pad0[0x868];
+    int busy;
+    int active;
     char unknown_870_[0x17e2 - 0x870];
 #else
-    char unknown1_0_[0x998];
-    int unknown_998_;
-    int unknown_99c_;
+    char pad0[0x998];
+    int busy;
+    int active;
     char unknown_9a0_[0x19b2 - 0x9a0];
 #endif
-    unsigned char unknown_19b2_;
+    unsigned char visible;
 };
 
 struct Struct_020e3f1c_4 {
-    char unknown_0_[0x8];
-    unsigned short unknown_8_;
-    unsigned char unknown_a_;
+    char pad0[0x8];
+    unsigned short monsterIndex;
+    unsigned char state;
     char unknown_b_;
-    short unknown_c_;
+    short taskId;
     unsigned char unknown_e_;
 };
 
-struct Obj02076b58;
+struct Struct_02076a8c_2;
 struct Bytes02033b88;
 struct Obj020397cc;
-struct Struct020338d4;
+struct Struct_020338d4;
 struct GlobalObj0202e6a8;
 struct Camera;
-struct Obj0202ea4c;
+struct Struct_0202ea4c;
 struct Obj020d7aa0;
 struct Obj02046574;
 struct Container020e0310;
 
-struct Display020e3f1c* MessageSystem_GetInstance();
+extern "C" struct Display020e3f1c* MessageSystem_GetInstance();
 extern "C" struct Zone02012fe4* Zone3D_GetInstance();
-int GameState_GetFollowCamera(char* obj);
+extern "C" int GameState_GetFollowCamera(char* obj);
 extern "C" int func_ov017_021959b4();
-void StartBattleTimerSequence020e4524(char* obj);
+extern "C" void func_020e4524(char* obj);
 extern "C" void FieldTask_EndGrottoBossIntro(void* obj);
-void TickActorAndDispatchPhase02076b58(struct Obj02076b58* actor);
-void* GlobalFlags_GetInstance();
-void FlagWord_SetBits(unsigned int* word, unsigned int mask);
-void GameObject_ForceMotionState(struct Bytes02033b88* obj, int value);
+extern "C" void func_02076b58(struct Struct_02076a8c_2* actor);
+extern "C" void* GlobalFlags_GetInstance();
+extern "C" void FlagWord_SetBits(unsigned int* word, unsigned int mask);
+extern "C" void GameObject_ForceMotionState(struct Bytes02033b88* obj, int value);
 extern "C" void GameObject_UpdatePartyMember(GameObject* obj);
-void GameObject_DisableControl(struct Obj020397cc* obj, int arg);
+extern "C" void GameObject_DisableControl(struct Obj020397cc* obj, int arg);
 extern "C" void func_020531f0(GameObject* obj);
-void ClearIntAt0x23c_020a27b8(unsigned char* obj);
-int GameObject_GetLinePosition(void* obj);
-void AimAndSetVecY020338d4(struct Struct020338d4* self, struct Vec3* target);
-void GameObject_ResetTrail(unsigned char* obj);
-void ComputeAndDispatch020338b0(unsigned char* obj, int target);
-void Camera_SetOrbitYaw(struct GlobalObj0202e6a8* obj, int value);
-int Camera_GetOrbitDistance(void* obj);
-void Camera_SetPosition(struct Camera* obj, int x, int y, int z);
-void ComputeAngleHeightDistance0202ea4c(struct Obj0202ea4c* obj);
+extern "C" void func_020a27b8(unsigned char* obj);
+extern "C" int GameObject_GetLinePosition(void* obj);
+extern "C" void func_020338d4(struct Struct_020338d4* self, struct Vec3* target);
+extern "C" void GameObject_ResetTrail(unsigned char* obj);
+extern "C" void func_020338b0(unsigned char* obj, int target);
+extern "C" void Camera_SetOrbitYaw(struct GlobalObj0202e6a8* obj, int value);
+extern "C" int Camera_GetOrbitDistance(void* obj);
+extern "C" void Camera_SetPosition(struct Camera* obj, int x, int y, int z);
+extern "C" void func_0202ea4c(struct Struct_0202ea4c* obj);
 extern "C" void Camera_Update(struct Camera020e3f1c* camera);
-struct Obj020d7aa0* TextQueue_GetInstance();
-void TextQueue_Reset(struct Obj020d7aa0* obj);
+extern "C" struct Obj020d7aa0* TextQueue_GetInstance();
+extern "C" void TextQueue_Reset(struct Obj020d7aa0* obj);
 extern "C" void func_ov017_021c3e18(int arg);
 extern "C" int sprintf(char* buf, const char* fmt, ...);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void* KeyTable_Construct(void* p);
-void KeyTable_Reset(struct Struct020dfc40* p);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void* KeyTable_Construct(void* p);
+extern "C" void KeyTable_Reset(struct Struct020dfc40* p);
 extern "C" void KeyTable_Load(void* dest, void* allocator, void* fileData, unsigned int size);
-int KeyTable_Get(struct Container020e0310* c, int key);
-void AllocatorUnion_Free(AllocatorUnion* alloc, void* ptr);
-void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* name);
+extern "C" int KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* ptr);
+extern "C" void MessageSystem_SetStringArgument(struct Obj02046574* obj, int index, char* name);
 #if defined(jpn)
-extern "C" void func_0204500c(void* arg0, void* arg1, int arg2);
+extern "C" void func_0204500c(void* global, void* entry, int a);
 #else
-extern "C" void func_0204500c(void* arg0, void* arg1, int arg2, int arg3);
+extern "C" void func_0204500c(void* global, void* entry, int a, int b);
 #endif
 extern "C" void MessageSystem_Stop(void* global);
 
 extern AllocatorUnion g_mainAllocator;
 #if defined(jpn)
 struct Struct_020727d8 {
-    void* unknown_0_;
-    void* unknown_4_;
+    void* unk_0;
+    void* unk_4;
 };
-struct Struct_02072a68_2;
+struct TableA68;
 #include "Filesystem/FileIO.h"
-int STD_CompareString(const char* a, const char* b);
-void ResetListHeader020727d8(struct List020727d8* list);
+extern "C" int STD_CompareString(const char* a, const char* b);
+extern "C" void func_020727d8(struct Struct_020727d8* list);
 extern "C" void func_020728ac(void* list, void* alloc, void* buffer, int length, int a4, int a5, int a6);
-void* FindEntryByKey_02072a68(struct TableA68* table, int key);
+extern "C" void* func_02072a68(struct TableA68* table, int key);
 extern const char data_020f2e30[];
 extern const char data_020f2e3b[];
 extern const char data_020f2e4d[];
@@ -161,12 +161,12 @@ extern const char data_020f2cd4[];
 extern const char data_020f2ce4[];
 #endif
 
-static inline int inline_02061c04_5(int arg0, int arg1) {
-    return (int)(((long long)arg0 * arg1 + 0x800) >> 12);
+static inline int FxMul(int a, int b) {
+    return (int)(((long long)a * b + 0x800) >> 12);
 }
 
 // USA: func_020e3f1c
-extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
+extern "C" ARM void func_020e3f1c(struct Struct_020e3f1c_4* intro) {
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     GameState* gs = GameState::GetInstance();
     struct Display020e3f1c* display = MessageSystem_GetInstance();
@@ -177,18 +177,18 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
     GameResources* res = GetGameResources();
 
     if (func_ov017_021959b4()) {
-        func_020e4524((char*)arg0);
+        func_020e4524((char*)intro);
         return;
     }
 
-    short var8 = -1;
-    if (var4 != NULL) {
-        DetailedTreasureMapData* var9 = var4->GetDetailedData();
-        if (var9 != NULL) {
-            if (var9->mapType_ == 1) {
-                var8 = var9->regular_.bossMonsterID_;
-            } else if (var9->mapType_ == 2) {
-                var8 = var9->legacy_.bossMonsterID_;
+    short bossId = -1;
+    if (grotto != NULL) {
+        DetailedTreasureMapData* map = grotto->GetDetailedData();
+        if (map != NULL) {
+            if (map->mapType_ == 1) {
+                bossId = map->regular_.bossMonsterID_;
+            } else if (map->mapType_ == 2) {
+                bossId = map->legacy_.bossMonsterID_;
             }
         }
     }
@@ -198,7 +198,7 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
         FieldTask_EndGrottoBossIntro(intro);
         return;
     }
-    TickActorAndDispatchPhase02076b58((struct Obj02076b58*)monster);
+    func_02076b58((struct Struct_02076a8c_2*)monster);
     FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 2);
 
     int i;
@@ -207,8 +207,8 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
         if (member != NULL) {
             member->obj3D_.EnableFlag(0x1000000);
             member->obj3D_.DisableFlag(0x1020);
-            ((struct Actor020e3f1c*)member)->flagsC1.mode |= 2;
-            if (((struct Actor020e3f1c*)member)->fb2 > 0) {
+            ((struct Actor020e3f1c*)member)->unknown_c1_.mode |= 2;
+            if (((struct Actor020e3f1c*)member)->unknown_b2_ > 0) {
                 GameObject_ForceMotionState((struct Bytes02033b88*)member, 1);
             } else {
                 GameObject_ForceMotionState((struct Bytes02033b88*)member, 0);
@@ -220,28 +220,28 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
     if (intro->state == 0) {
         if (leader != NULL) {
             GameObject_DisableControl((struct Obj020397cc*)leader, 1);
-            leader->fb2 = 0;
+            leader->unknown_b2_ = 0;
         }
-        for (int var13 = 0; var13 < 4; var13++) {
-            GameObject* var14 = var1->GetPartyMemberByIndex(var13);
-            if (var14 != NULL) {
-                func_020531f0(var14);
+        for (int j = 0; j < 4; j++) {
+            GameObject* member = gs->GetPartyMemberByIndex(j);
+            if (member != NULL) {
+                func_020531f0(member);
             }
         }
-        func_020a27b8((unsigned char*)var5);
-        SetMainBrightness(var7, -16, 0x1e);
+        func_020a27b8((unsigned char*)camera);
+        SetMainBrightness(res, -16, 0x1e);
 #if defined(jpn)
         if (STD_CompareString(monster->info->name, data_020f2e30) == 0) {
 #else
-        if (var10->unknown_180_->unknown_10_ == 0x133) {
+        if (monster->info->id == 0x133) {
 #endif
-            arg0->unknown_e_ = 2;
-        } else if (var10->unknown_17d_ & 4) {
-            arg0->unknown_e_ = 1;
+            intro->unknown_e_ = 2;
+        } else if (monster->unknown_17d_ & 4) {
+            intro->unknown_e_ = 1;
         }
-        arg0->unknown_a_ = 1;
-    } else if (arg0->unknown_a_ == 1) {
-        if (IsMainBrightnessTransitionActive(var7)) {
+        intro->state = 1;
+    } else if (intro->state == 1) {
+        if (IsMainBrightnessTransitionActive(res)) {
             return;
         }
         struct Vec3 pos = monster->position;
@@ -255,48 +255,48 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
                 member->position.x = pos.x;
                 member->position.y = pos.y;
                 member->position.z = pos.z + 0x3000;
-                AimAndSetVecY020338d4((struct Struct020338d4*)member, &monster->position);
+                func_020338d4((struct Struct_020338d4*)member, &monster->position);
                 GameObject_ResetTrail((unsigned char*)member);
             }
         }
-        ComputeAndDispatch020338b0((unsigned char*)monster, (int)&leader->position);
+        func_020338b0((unsigned char*)monster, (int)&leader->position);
         Camera_SetOrbitYaw((struct GlobalObj0202e6a8*)camera, 0);
         int dist = Camera_GetOrbitDistance(camera);
         struct Vec3 target = camera->target;
-        if (intro->cameraMode == 1) {
+        if (intro->unknown_e_ == 1) {
             int dz = FxMul(dist, 0xddb);
             int dy = FxMul(dist, 0x599);
             Camera_SetPosition((struct Camera*)camera, target.x, target.y + dy, target.z + dz);
-            ComputeAngleHeightDistance0202ea4c((struct Obj0202ea4c*)camera);
-        } else if (intro->cameraMode == 2) {
+            func_0202ea4c((struct Struct_0202ea4c*)camera);
+        } else if (intro->unknown_e_ == 2) {
             Camera_SetPosition((struct Camera*)camera, target.x, target.y + 0x2000, target.z + 0xd800);
-            ComputeAngleHeightDistance0202ea4c((struct Obj0202ea4c*)camera);
+            func_0202ea4c((struct Struct_0202ea4c*)camera);
         }
         Camera_Update(camera);
         TextQueue_Reset(TextQueue_GetInstance());
-        BlankFunction02094b34(mgr, 0x74, 0x20e, 0, 0);
+        func_02094b34(mgr, 0x74, 0x20e, 0, 0);
         func_ov017_021c3e18(0);
-        arg0->unknown_a_ = 2;
-    } else if (arg0->unknown_a_ == 2) {
-        SetMainBrightness(var7, 0, 0x3c);
-        arg0->unknown_a_ = 3;
-    } else if (arg0->unknown_a_ == 3) {
-        if (IsMainBrightnessTransitionActive(var7)) {
+        intro->state = 2;
+    } else if (intro->state == 2) {
+        SetMainBrightness(res, 0, 0x3c);
+        intro->state = 3;
+    } else if (intro->state == 3) {
+        if (IsMainBrightnessTransitionActive(res)) {
             return;
         }
-        if (!func_02094b4c(var3)) {
+        if (!func_02094b4c(mgr)) {
             return;
         }
 #if defined(jpn)
-        arg0->unknown_c_ = var0->QueueLoadFile(data_020f2e3b, NULL);
+        intro->taskId = loader->QueueLoadFile(data_020f2e3b, NULL);
 #else
-        char var23[16];
-        sprintf(var23, data_020f2cd4, var8);
-        arg0->unknown_c_ = var0->QueueLoadFileInGP2(data_020f2ce4, var23, NULL);
+        char fileName[16];
+        sprintf(fileName, data_020f2cd4, bossId);
+        intro->taskId = loader->QueueLoadFileInGP2(data_020f2ce4, fileName, NULL);
 #endif
-        arg0->unknown_a_ = 4;
-    } else if (arg0->unknown_a_ == 4) {
-        if (!var0->GetTaskStatus(arg0->unknown_c_)) {
+        intro->state = 4;
+    } else if (intro->state == 4) {
+        if (!loader->GetTaskStatus(intro->taskId)) {
             return;
         }
         if (loader->GetDetailedTaskStatus(intro->taskId) != 2) {
@@ -311,11 +311,11 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
             return;
         }
 #if defined(jpn)
-        char var26[16];
-        sprintf(var26, data_020f2e4d, var8);
-        const void* var27 = NULL;
-        unsigned int var28 = 0;
-        if (!GetFileInNarc(var24, var26, &var27, &var28, 0)) {
+        char name[16];
+        sprintf(name, data_020f2e4d, bossId);
+        const void* ptr = NULL;
+        unsigned int len = 0;
+        if (!GetFileInNarc(fileData, name, &ptr, &len, 0)) {
             return;
         }
         void* buf = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x400);
@@ -323,15 +323,15 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
             FieldTask_EndGrottoBossIntro(intro);
             return;
         }
-        SafeAllocator var31;
-        var31.ResetAllocatorPointer();
-        var31.CreateTypeA(var30, 0x400);
-        struct Struct_020727d8 var29;
-        func_020727d8(&var29);
-        func_020728ac(&var29, &var31, (void*)var27, var28, 0, 0, 0);
-        var0->RemoveTask(arg0->unknown_c_);
-        arg0->unknown_c_ = -1;
-        void* var33 = func_02072a68((struct Struct_02072a68_2*)&var29, var8);
+        SafeAllocator alloc;
+        alloc.ResetAllocatorPointer();
+        alloc.CreateTypeA(buf, 0x400);
+        struct Struct_020727d8 list;
+        func_020727d8(&list);
+        func_020728ac(&list, &alloc, (void*)ptr, len, 0, 0, 0);
+        loader->RemoveTask(intro->taskId);
+        intro->taskId = -1;
+        void* entry = func_02072a68((struct TableA68*)&list, bossId);
 #else
         void* buf = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x500);
         if (buf == NULL) {
@@ -359,9 +359,9 @@ extern "C" ARM void func_020e3f1c(struct BattleIntro020e3f1c* intro) {
         display->active = 1;
         MessageSystem_SetStringArgument((struct Obj02046574*)display, 0, leader->name);
 #if defined(jpn)
-        func_0204500c(var2, var33, 0);
+        func_0204500c(display, entry, 0);
 #else
-        func_0204500c(var2, var33, 0, 0xe3);
+        func_0204500c(display, entry, 0, 0xe3);
 #endif
         display->busy = 1;
         alloc.Destroy();

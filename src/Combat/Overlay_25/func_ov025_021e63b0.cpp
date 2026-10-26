@@ -3,41 +3,41 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "Resource/GameResources.h"
 
-struct Struct_ov025_021e63b0_2 { unsigned char unknown_0_[0x20]; unsigned short unknown_20_; };
-struct Struct_ov025_021e63b0_3 { unsigned char unknown_0_[0x10]; Struct_ov025_021e63b0_2* unknown_10_; };
+struct Struct_ov025_021e63b0_2 { unsigned char padding0[0x20]; unsigned short id; };
+struct Struct_ov025_021e63b0_3 { unsigned char padding0[0x10]; Struct_ov025_021e63b0_2* head; };
 struct Struct_ov025_021ef988_23 {
 #if defined(jpn)
-    unsigned char unknown_0_[4];
-    char* unknown_c_;
+    unsigned char padding0[4];
+    char* context;
     unsigned char unknown_8_[4];
-    unsigned int unknown_1c_;
+    unsigned int flags;
     unsigned char unknown_10_[0x10];
 #else
-    unsigned char unknown1_0_[0xc];
-    char* unknown_c_;
+    unsigned char padding0[0xc];
+    char* context;
     unsigned char unknown1_10_[0xc];
-    unsigned int unknown_1c_;
+    unsigned int flags;
 #endif
-    int unknown_20_;
-    int unknown_24_;
-    int unknown_28_;
+    int state;
+    int field24;
+    int task;
 };
 struct Struct_ov025_021ef9a8;
 struct Struct_02054000;
 struct Struct_ov025_021e267c_2;
 struct Struct_ov025_021e267c_3 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned short unknown_2_;
-    unsigned int unknown_4_;
-    Struct_ov025_021e267c_3* unknown_8_;
+    unsigned char kind;
+    unsigned char field1;
+    unsigned short id;
+    unsigned int field4;
+    Struct_ov025_021e267c_3* next;
 };
 #if defined(jpn)
-struct Struct_ov025_021e63b0_4 { unsigned char unknown_0_[0x71c6]; unsigned short unknown_6fd6_; };
+struct Struct_ov025_021e63b0_4 { unsigned char padding0[0x71c6]; unsigned short source; };
 #else
-struct Struct_ov025_021e63b0_4 { unsigned char unknown_0_[0x6fd6]; unsigned short unknown_6fd6_; };
+struct Struct_ov025_021e63b0_4 { unsigned char padding0[0x6fd6]; unsigned short source; };
 #endif
-struct Struct_ov025_021e63b0 { unsigned char unknown_0_[0x14]; unsigned int unknown_14_; };
+struct Struct_ov025_021e63b0 { unsigned char padding0[0x14]; unsigned int flags; };
 extern Struct_ov025_021ef988_23 data_ov025_021ef988;
 extern Struct_ov025_021ef9a8 data_ov025_021ef9a8;
 extern char data_ov025_021ef809[];
@@ -45,93 +45,93 @@ extern char data_ov025_021ef791[];
 extern "C" void func_ov025_021e3158(Struct_ov025_021ef9a8*);
 extern "C" void* func_02054000(Struct_02054000*);
 extern "C" void func_02072e94(char*, int, int, void*, int);
-int SetFlagAndDispatch_021e2628(int, int);
-SafeAllocator* GetArrayEntry_021e8a54_021e8a54(char*);
-char* GetArrayEntry_021e8a64_021e8a64(char*);
-void PushLogNode021e8bac(Obj021e8bac*, Node021e8bac*);
-void VramState_Restore(char*);
-void VramState_Save(char*);
-void RegisterCombatantSlot_0200fd38(GameState*, int, GameObject*);
-CloneWork* GetActiveCombatWork_ov000_02160130();
+extern "C" int func_ov025_021e2628(int, int);
+extern "C" SafeAllocator* func_ov025_021e8a54(char*);
+extern "C" char* func_ov025_021e8a64(char*);
+extern "C" void func_ov025_021e8bac(Struct_ov025_021e267c_2*, Struct_ov025_021e267c_3*);
+extern "C" void VramState_Restore(char*);
+extern "C" void VramState_Save(char*);
+extern "C" void func_0200fd38(GameState*, int, GameObject*);
+extern "C" Struct_ov025_021e63b0_4* func_ov000_02160130();
 extern "C" void func_ov017_02191aac(GameResources*, int, int, int);
 
 // USA: func_ov025_021e63b0
-extern "C" ARM int func_ov025_021e63b0(void* arg0, Struct_ov025_021e63b0_3* arg1) {
-    GameState* var0 = GameState::GetInstance();
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    if (data_ov025_021ef988.unknown_20_ == 0) {
-        if (!arg1->unknown_10_) return 1;
-        int var2 = arg1->unknown_10_->unknown_20_;
-        GameObject* var3 = func_0200ff1c(var0, var2);
-        if (!var3) {
+extern "C" ARM int func_ov025_021e63b0(void* unused, Struct_ov025_021e63b0_3* targets) {
+    GameState* game = GameState::GetInstance();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (data_ov025_021ef988.state == 0) {
+        if (!targets->head) return 1;
+        int id = targets->head->id;
+        GameObject* source = func_0200ff1c(game, id);
+        if (!source) {
             func_ov025_021e3158(&data_ov025_021ef9a8);
             return 1;
         }
-        void* var4 = func_02054000((Struct_02054000*)var3);
-        if (!var4) {
+        void* model = func_02054000((Struct_02054000*)source);
+        if (!model) {
             func_ov025_021e3158(&data_ov025_021ef9a8);
             return 1;
         }
-        char var5[0x50];
-        func_02072e94(var5, var2, 8, var4, 0);
-        char* var6 = strrchr(var5, '.');
-        if (var6) sprintf(var6, data_ov025_021ef809);
-        if (!(data_ov025_021ef988.unknown_1c_ & 0x2000)) {
-            var1->AddFence();
-            data_ov025_021ef988.unknown_1c_ |= 0x2000;
+        char path[0x50];
+        func_02072e94(path, id, 8, model, 0);
+        char* extension = strrchr(path, '.');
+        if (extension) sprintf(extension, data_ov025_021ef809);
+        if (!(data_ov025_021ef988.flags & 0x2000)) {
+            loader->AddFence();
+            data_ov025_021ef988.flags |= 0x2000;
         }
-        data_ov025_021ef988.unknown_28_ = func_ov025_021e2628((int)data_ov025_021ef791, (int)var5);
-        data_ov025_021ef988.unknown_20_++;
-    } else if (data_ov025_021ef988.unknown_20_ == 1) {
-        int var7 = data_ov025_021ef988.unknown_28_;
-        if (!var1->GetTaskStatus(var7)) return 0;
-        if (var1->GetDetailedTaskStatus(var7) != 2) {
-            var1->RemoveTask(var7);
+        data_ov025_021ef988.task = func_ov025_021e2628((int)data_ov025_021ef791, (int)path);
+        data_ov025_021ef988.state++;
+    } else if (data_ov025_021ef988.state == 1) {
+        int task = data_ov025_021ef988.task;
+        if (!loader->GetTaskStatus(task)) return 0;
+        if (loader->GetDetailedTaskStatus(task) != 2) {
+            loader->RemoveTask(task);
             func_ov025_021e3158(&data_ov025_021ef9a8);
             return 1;
         }
-        unsigned int var8;
-        void* var9;
-        var1->GetLoadedFileByID(var7, &var9, &var8);
-        SafeAllocator* var10 = func_ov025_021e8a54(data_ov025_021ef988.unknown_c_);
-        char* var11 = func_ov025_021e8a64(data_ov025_021ef988.unknown_c_);
-        Object3D* var12 = (Object3D*)var10->Allocate(sizeof(Object3D));
+        unsigned int size;
+        void* file;
+        loader->GetLoadedFileByID(task, &file, &size);
+        SafeAllocator* allocator = func_ov025_021e8a54(data_ov025_021ef988.context);
+        char* tables = func_ov025_021e8a64(data_ov025_021ef988.context);
+        Object3D* var12 = (Object3D*)allocator->Allocate(sizeof(Object3D));
         if (!var12) {
-            var1->RemoveTask(var7);
+            loader->RemoveTask(task);
             func_ov025_021e3158(&data_ov025_021ef9a8);
             return 1;
         }
-        Struct_ov025_021e267c_3* var13 = (Struct_ov025_021e267c_3*)var10->Allocate(sizeof(Struct_ov025_021e267c_3));
-        if (!var13) {
-            var1->RemoveTask(var7);
+        Struct_ov025_021e267c_3* node = (Struct_ov025_021e267c_3*)allocator->Allocate(sizeof(Struct_ov025_021e267c_3));
+        if (!node) {
+            loader->RemoveTask(task);
             func_ov025_021e3158(&data_ov025_021ef9a8);
             return 1;
         }
         node->kind = 4;
         node->id = 0xc8;
-        PushLogNode021e8bac((Obj021e8bac*)data_ov025_021ef988.context, node);
-        clone->Initialize();
+        func_ov025_021e8bac((Struct_ov025_021e267c_2*)data_ov025_021ef988.context, node);
+        var12->Initialize();
         VramState_Restore(tables);
-        clone->SetModelFromFileCopy(allocator, file, size, Model3D::TextureStagingMode_Normal);
+        var12->SetModelFromFileCopy(allocator, file, size, Model3D::TextureStagingMode_Normal);
         VramState_Save(tables);
-        RegisterCombatantSlot_0200fd38(game, 0xc8, (GameObject*)clone);
-        clone->MakeHidden();
-        int sourceId = targets->head->id;
-        CloneWork* work = GetActiveCombatWork_ov000_02160130();
-        if (work) work->source = sourceId;
-        GameObject* source = GetCombatantWithFlag0x100_0200ff1c(game, sourceId);
+        func_0200fd38(game, 0xc8, (GameObject*)var12);
+        var12->MakeHidden();
+        int var14 = targets->head->id;
+        Struct_ov025_021e63b0_4* work = func_ov000_02160130();
+        if (work) work->source = var14;
+        GameObject* source = func_0200ff1c(game, var14);
         if (source) {
-            clone->position_ = source->obj3D_.position_;
-            clone->rotation_ = source->obj3D_.rotation_;
-            clone->SetScale(&source->obj3D_.GetScale());
-            clone->unknown_2_ = sourceId;
-            if (((CloneStats*)source->currentStats_)->flags & 0x8000000) {
+            var12->position_ = source->obj3D_.position_;
+            var12->rotation_ = source->obj3D_.rotation_;
+            var12->SetScale(&source->obj3D_.GetScale());
+            var12->unknown_2_ = var14;
+            if (((Struct_ov025_021e63b0*)source->currentStats_)->flags & 0x8000000) {
                 GameResources* resources = GetGameResources();
-                clone->SetAlphaScaleFactor(0);
-                func_ov017_02191aac(resources, 1, sourceId, 2);
+                var12->SetAlphaScaleFactor(0);
+                func_ov017_02191aac(resources, 1, var14, 2);
             }
         }
-        var1->RemoveTask(var7);
+        loader->RemoveTask(task);
         func_ov025_021e3158(&data_ov025_021ef9a8);
         return 1;
     }

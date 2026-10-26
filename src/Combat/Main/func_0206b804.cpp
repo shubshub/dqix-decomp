@@ -10,15 +10,15 @@ extern const signed char data_020e7e10[];
 extern const signed char data_020e7e1c[];
 
 // USA: func_0206b804
-extern "C" ARM void func_0206b804(char* arg0, int* arg1, int* arg2) {
-    *arg2 = 0;
-    *arg1 = 0;
-    if (*(unsigned char*)(arg0 + Enum_0206b804_6592) != 0) {
-        int var0;
-        *(unsigned char*)(arg0 + Enum_0206b804_6605) = 1;
-        *(int*)(arg0 + Enum_0206b804_64) = 0;
-        var0 = *(unsigned char*)(arg0 + Enum_0206b804_6493) & 3;
-        *arg1 = data_020e7e10[var0];
-        *arg2 = data_020e7e1c[var0];
+extern "C" ARM void func_0206b804(char* obj, int* out1, int* out2) {
+    *out2 = 0;
+    *out1 = 0;
+    if (*(unsigned char*)(obj + Enum_0206b804_6592) != 0) {
+        int idx;
+        *(unsigned char*)(obj + Enum_0206b804_6605) = 1;
+        *(int*)(obj + Enum_0206b804_64) = 0;
+        idx = *(unsigned char*)(obj + Enum_0206b804_6493) & 3;
+        *out1 = data_020e7e10[idx];
+        *out2 = data_020e7e1c[idx];
     }
 }

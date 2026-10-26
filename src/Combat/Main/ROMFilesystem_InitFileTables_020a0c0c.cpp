@@ -3,9 +3,9 @@
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
 struct Struct02012dd0;
-unsigned int AllocatorUnion_GetMaxPossibleAllocation(struct Struct02012dd0* self);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" unsigned int AllocatorUnion_GetMaxPossibleAllocation(struct Struct02012dd0* self);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 unsigned int LoadROMFilesystemFileTables(void* where, unsigned int capacity);
 void CacheMainFileAccessors();
 
@@ -27,19 +27,19 @@ extern "C" ARM void ROMFilesystem_InitFileTables() {
     if (size + 0x10 > max)
         return;
 
-    var2 = BackgroundLoader::GetInstance();
-    if (var2 != NULL)
-        var2->AddLock();
+    loader = BackgroundLoader::GetInstance();
+    if (loader != NULL)
+        loader->AddLock();
 
     tmp = AllocatorUnion_AllocateRounded(&g_mainAllocator, max - (size + 0x10));
     data_02109d90 = AllocatorUnion_AllocateRounded(&g_mainAllocator, size);
     AllocatorUnion_Free(&g_mainAllocator, tmp);
 
     if (data_02109d90 != NULL)
-        LoadROMFilesystemFileTables(data_02109d90, var3);
+        LoadROMFilesystemFileTables(data_02109d90, size);
 
-    if (var2 != NULL)
-        var2->RemoveLock();
+    if (loader != NULL)
+        loader->RemoveLock();
 
     CacheMainFileAccessors();
 }

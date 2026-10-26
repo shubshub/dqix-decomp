@@ -20,7 +20,7 @@ struct Struct0215efb8 {
 };
 
 // Overlay 3, originally InitStruct0215efb8 (USA/EUR 0x0215efb8; JPN not identified)
-ARM void Keyboard_Init(Struct0215efb8* keyboard) {
+extern "C" ARM void Keyboard_Init(Struct0215efb8* keyboard) {
     keyboard->key_ = 0;
     keyboard->layout_ = 0;
     keyboard->text_ = 0;

@@ -12,7 +12,7 @@ struct ResetStruct_39ee8 {
 };
 
 // Main, originally ResetFields39ee8_02039ee8 (USA 0x02039ee8, EUR 0x02039ef8, JPN 0x02039940)
-ARM void NumberPopup_Clear(struct ResetStruct_39ee8* popup) {
+extern "C" ARM void NumberPopup_Clear(struct ResetStruct_39ee8* popup) {
     popup->value = 0;
     popup->timer = 0;
     popup->digitCount = 0;

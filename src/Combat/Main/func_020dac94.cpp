@@ -11,94 +11,94 @@ enum { Enum_020dac94_228 = 0xe4 };
 #include "Resource/Brightness.h"
 
 extern "C" void func_020a0cc4(unsigned int);
-extern "C" void func_020a0c0c(void);
+extern "C" void ROMFilesystem_InitFileTables(void);
 extern "C" int func_ov003_0217ce3c(void*);
 extern "C" int func_ov017_021959b4(void);
 extern "C" int func_ov003_0217daf0(void*);
 extern "C" void func_ov003_0217cd24(void*, void*);
 extern "C" void func_020dae08(void*);
 
-struct Struct_02114e20;
-extern "C" unsigned int func_02012dd0(struct Struct_02114e20* arg0);
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern AllocatorUnion data_02114e20;
+struct Struct02012dd0;
+extern "C" unsigned int AllocatorUnion_GetMaxPossibleAllocation(struct Struct02012dd0* self);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern AllocatorUnion g_mainAllocator;
 
-extern "C" void func_020a28b0(unsigned char* arg0, int arg1);
-extern "C" int func_020100f8(char* arg0);
-extern "C" void func_020a27b8(unsigned char* arg0);
-extern "C" void func_020a27ac(void* arg0);
-extern "C" void func_020397c0(void* arg0);
-extern "C" void func_020a1df8(int arg0);
-extern "C" void func_020daeb0(void* arg0);
+extern "C" void func_020a28b0(unsigned char* obj, int mask);
+extern "C" int GameState_GetFollowCamera(char* obj);
+extern "C" void func_020a27b8(unsigned char* obj);
+extern "C" void func_020a27ac(void* obj);
+extern "C" void GameObject_EnableControl(void* obj);
+extern "C" void func_020a1df8(int id);
+extern "C" void func_020daeb0(void* obj);
 
-struct Struct_02018300_3;
-extern "C" void func_020397cc(struct Struct_02018300_3* arg0, int arg1);
+struct Obj020397cc;
+extern "C" void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
 
 struct Struct_020dac94 {
-    char unknown_0_;
-    unsigned char unknown_1_;
-    char unknown_2_[0xa];
+    char pad0;
+    unsigned char flag1;
+    char pad2[0xa];
     void* unknown_c_;
-    int unknown_10_;
-    SafeAllocator unknown_14_;
+    int state;
+    SafeAllocator allocator;
 };
 
 // USA: func_020dac94
-extern "C" ARM void func_020dac94(void* arg0, void*) {
-    struct Struct_020dac94* var0 = (struct Struct_020dac94*)arg0;
-    GameState* var1 = GameState::GetInstance();
-    int var2 = var0->unknown_10_;
-    if (var2 == 0) {
+extern "C" ARM void func_020dac94(void* objIn, void*) {
+    struct Struct_020dac94* obj = (struct Struct_020dac94*)objIn;
+    GameState* battle = GameState::GetInstance();
+    int state = obj->state;
+    if (state == 0) {
         SetFlags04(GetGameResources(), 0xc0);
-        unsigned int var3 = func_02012dd0((struct Struct_02114e20*)&data_02114e20);
-        if (var3 < 0x6000) {
+        unsigned int max = AllocatorUnion_GetMaxPossibleAllocation((struct Struct02012dd0*)&g_mainAllocator);
+        if (max < 0x6000) {
             func_020a0cc4(0x6000);
         }
-        void* var4 = func_02012d88(&data_02114e20, 0x6000);
-        if (var4 == NULL) {
-            func_020a0c0c();
-            var0->unknown_1_ = 1;
+        void* buf = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x6000);
+        if (buf == NULL) {
+            ROMFilesystem_InitFileTables();
+            obj->flag1 = 1;
             return;
         }
-        var0->unknown_14_.CreateTypeA(var4, 0x6000);
-        var0->unknown_14_.Reset();
-        void* var5 = var0->unknown_14_.Allocate(Enum_020dac94_228);
-        var0->unknown_c_ = var5;
-        if (var5 == NULL) {
-            func_020a0c0c();
-            var0->unknown_1_ = 1;
+        obj->allocator.CreateTypeA(buf, 0x6000);
+        obj->allocator.Reset();
+        void* mem = obj->allocator.Allocate(Enum_020dac94_228);
+        obj->unknown_c_ = mem;
+        if (mem == NULL) {
+            ROMFilesystem_InitFileTables();
+            obj->flag1 = 1;
             return;
         }
         func_020a1df8(3);
-        func_ov003_0217daf0(var0->unknown_c_);
-        func_ov003_0217cd24(var0->unknown_c_, &var0->unknown_14_);
-        GameObject* var6 = var1->GetUnknownGameObject();
-        func_020397cc((struct Struct_02018300_3*)var6, 1);
-        int var7 = func_020100f8((char*)var1);
-        func_020a27b8((unsigned char*)var7);
-        var0->unknown_10_ = 1;
+        func_ov003_0217daf0(obj->unknown_c_);
+        func_ov003_0217cd24(obj->unknown_c_, &obj->allocator);
+        GameObject* c = battle->GetLeader();
+        GameObject_DisableControl((struct Obj020397cc*)c, 1);
+        int flagResult = GameState_GetFollowCamera((char*)battle);
+        func_020a27b8((unsigned char*)flagResult);
+        obj->state = 1;
         return;
     }
-    if (var2 == 1) {
-        void* var8 = var0->unknown_c_;
-        if (func_ov003_0217ce3c(var8) == 0) {
-            var0->unknown_10_ = 2;
+    if (state == 1) {
+        void* v = obj->unknown_c_;
+        if (func_ov003_0217ce3c(v) == 0) {
+            obj->state = 2;
         }
         if (func_ov017_021959b4() != 0) {
-            func_020daeb0(arg0);
-            var0->unknown_10_ = 3;
+            func_020daeb0(objIn);
+            obj->state = 3;
         }
         return;
     }
-    if (var2 != 2) {
+    if (state != 2) {
         return;
     }
-    func_020dae08(arg0);
-    GameObject* var9 = var1->GetUnknownGameObject();
-    func_020397c0(var9);
-    int var10 = func_020100f8((char*)var1);
-    func_020a27ac((void*)var10);
-    func_020a28b0((unsigned char*)var10, 2);
+    func_020dae08(objIn);
+    GameObject* c = battle->GetLeader();
+    GameObject_EnableControl(c);
+    int flagResult = GameState_GetFollowCamera((char*)battle);
+    func_020a27ac((void*)flagResult);
+    func_020a28b0((unsigned char*)flagResult, 2);
     ClearFlags04(GetGameResources(), 0xc0);
-    var0->unknown_10_ = -1;
+    obj->state = -1;
 }

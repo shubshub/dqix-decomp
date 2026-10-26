@@ -1,52 +1,52 @@
 #include <globaldefs.h>
 
 struct Struct_ov023_021e170c_2 {
-    int unknown_0_;
-    int unknown_4_;
-    short unknown_8_;
-    unsigned short unknown_a_;
-    unsigned short unknown_c_;
-    unsigned char unknown_e_0_ : 1;
+    int a;
+    int b;
+    short c;
+    unsigned short d;
+    unsigned short e;
+    unsigned char bit0 : 1;
     unsigned char unknown_e_1_ : 1;
-    unsigned char unknown_e_2_ : 6;
-    unsigned char unknown_f_;
+    unsigned char rest : 6;
+    unsigned char f;
 };
 
 struct Struct_ov023_021e170c {
-    char unknown_0_[4];
-    struct Struct_ov023_021e170c_2* unknown_4_;
-    short unknown_8_;
-    short unknown_a_;
+    char pad0[4];
+    struct Struct_ov023_021e170c_2* entries;
+    short count;
+    short capacity;
 };
 
 // USA: func_ov023_021e170c
-extern "C" ARM struct Struct_ov023_021e170c_2* func_ov023_021e170c(struct Struct_ov023_021e170c* arg0, int arg1, int arg2, int arg3) {
-    unsigned short var0 = 0xffff;
-    struct Struct_ov023_021e170c_2* var1;
-    struct Struct_ov023_021e170c_2* var2 = 0;
-    struct Struct_ov023_021e170c_2* var3 = arg0->unknown_4_;
-    short var4 = arg0->unknown_8_;
-    for (short var5 = 0; var5 < var4; var5++) {
-        var1 = &var3[var5];
-        if (var1->unknown_e_0_) continue;
-        if (var0 < var1->unknown_c_) continue;
-        if (!var1->unknown_e_1_) continue;
-        if (arg1 == 0) {
-            int var6 = var1->unknown_e_2_ <= 7;
-            if (!var6) continue;
-        } else if (arg2 >= 0 && arg3 >= 0) {
-            if (var1->unknown_f_ != arg3) continue;
-            if (!(var1->unknown_e_2_ == arg2)) continue;
-        } else if (arg2 >= 0) {
-            if (var1->unknown_e_2_ != arg2) continue;
-        } else if (arg3 >= 0) {
-            if (var1->unknown_f_ != arg3) continue;
+extern "C" ARM struct Struct_ov023_021e170c_2* func_ov023_021e170c(struct Struct_ov023_021e170c* list, int mode, int type, int variant) {
+    unsigned short threshold = 0xffff;
+    struct Struct_ov023_021e170c_2* e;
+    struct Struct_ov023_021e170c_2* best = 0;
+    struct Struct_ov023_021e170c_2* entries = list->entries;
+    short count = list->count;
+    for (short i = 0; i < count; i++) {
+        e = &entries[i];
+        if (e->bit0) continue;
+        if (threshold < e->e) continue;
+        if (!e->unknown_e_1_) continue;
+        if (mode == 0) {
+            int ok = e->rest <= 7;
+            if (!ok) continue;
+        } else if (type >= 0 && variant >= 0) {
+            if (e->f != variant) continue;
+            if (!(e->rest == type)) continue;
+        } else if (type >= 0) {
+            if (e->rest != type) continue;
+        } else if (variant >= 0) {
+            if (e->f != variant) continue;
         }
-        var0 = var1->unknown_c_;
-        var2 = var1;
+        threshold = e->e;
+        best = e;
     }
-    if (var2) {
-        var2->unknown_e_0_ = 1;
+    if (best) {
+        best->bit0 = 1;
     }
-    return var2;
+    return best;
 }

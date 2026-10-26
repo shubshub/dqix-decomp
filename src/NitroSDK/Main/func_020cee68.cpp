@@ -3,31 +3,31 @@
 
 struct Struct_0210cfdc {
     char unknown_0_[8];
-    struct Struct_0210cfdc* unknown_8_;
+    struct Struct_0210cfdc* next;
 };
 
 struct Struct_020cee68 {
-    struct Struct_0210cfdc* unknown_0_;
+    struct Struct_0210cfdc* head;
 };
 
 // USA: func_020cee68
-extern "C" ARM void func_020cee68(struct Struct_020cee68* arg0, struct Struct_0210cfdc* arg1) {
-    struct Struct_0210cfdc* var0;
-    struct Struct_0210cfdc* var1;
-    if (arg0 == 0) return;
-    var0 = arg0->unknown_0_;
-    if (var0 == 0) {
-        arg1->unknown_8_ = 0;
-        arg0->unknown_0_ = arg1;
+extern "C" ARM void func_020cee68(struct Struct_020cee68* list, struct Struct_0210cfdc* node) {
+    struct Struct_0210cfdc* cur;
+    struct Struct_0210cfdc* next;
+    if (list == 0) return;
+    cur = list->head;
+    if (cur == 0) {
+        node->next = 0;
+        list->head = node;
         return;
     }
-    var1 = var0->unknown_8_;
-    if (var1 != 0) {
+    next = cur->next;
+    if (next != 0) {
         do {
-            var0 = var1;
-            var1 = var1->unknown_8_;
-        } while (var1 != 0);
+            cur = next;
+            next = next->next;
+        } while (next != 0);
     }
-    arg1->unknown_8_ = var1;
-    var0->unknown_8_ = arg1;
+    node->next = next;
+    cur->next = node;
 }

@@ -23,9 +23,9 @@ CBool NitroVM_PrepareRead(NitroVM* vm, NitroHandle* handle,
     unsigned int start, unsigned int end, unsigned int fileID)
 {
     vm->linkedHandle = handle;
-    vm->args_SetFilePointers.unknown_8_ = fileID;
-    vm->args_SetFilePointers.unknown_0_ = start;
-    vm->args_SetFilePointers.unknown_4_ = end;
+    vm->args_SetFilePointers.fileID = fileID;
+    vm->args_SetFilePointers.startOffset = start;
+    vm->args_SetFilePointers.endOffset = end;
 
     // Operand 7 copies capacity into base_a,
     // start into base_b and base_d, end into base_c.
@@ -154,22 +154,22 @@ CBool NitroVM_Seek(NitroVM* vm, int offset, int whence)
     switch (whence)
     {
     case 0: // SEEK_SET
-        offset += vm->fileInfo.unknown_4_;
+        offset += vm->fileInfo.startOffset;
         break;
     case 1: // SEEK_CUR
         offset += vm->fileInfo.unknown_c_;
         break;
     case 2: // SEEK_END
-        offset += vm->fileInfo.unknown_8_;
+        offset += vm->fileInfo.endOffset;
         break;
     default:
         return false;
     }
         
-    if (offset < vm->fileInfo.unknown_4_)
-        offset = vm->fileInfo.unknown_4_;
-    if (offset > vm->fileInfo.unknown_8_)
-        offset = vm->fileInfo.unknown_8_;
+    if (offset < vm->fileInfo.startOffset)
+        offset = vm->fileInfo.startOffset;
+    if (offset > vm->fileInfo.endOffset)
+        offset = vm->fileInfo.endOffset;
 
     vm->fileInfo.unknown_c_ = offset;
     return true;

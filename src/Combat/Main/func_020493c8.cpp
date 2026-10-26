@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 // USA: func_020493c8
-extern "C" ARM int func_020493c8(unsigned char* arg0) {
-    unsigned char* var0 = *(unsigned char**)(arg0 + 0x13c);
-    return var0 != 0 ? var0[0x1d] : 0xff;
+extern "C" ARM int func_020493c8(unsigned char* obj) {
+    unsigned char* p = *(unsigned char**)(obj + 0x13c);
+    return p != 0 ? p[0x1d] : 0xff;
 }

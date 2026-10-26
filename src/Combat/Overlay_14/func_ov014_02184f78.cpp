@@ -4,19 +4,19 @@
 struct Struct_ov014_02184f78 {
     Struct_ov014_02184f78* unknown_0_;
     const char* unknown_4_;
-    const char* unknown_8_;
+    const char* name_;
     short unknown_c_;
     char unknown_e_[4];
     signed char unknown_12_;
     unsigned char unknown_13_0_ : 1;
     unsigned char unknown_13_1_ : 1;
     unsigned char unknown_13_2_ : 6;
-    char unknown_14_[6];
+    char unk_14[6];
     short unknown_1a_;
-    char unknown_1c_[4];
+    char unk_1c[4];
 };
 
-struct Struct_020a95a4_5 {
+struct MonsterRecord {
     unsigned int unknown_0_0_ : 10;
     unsigned int unknown_1_2_ : 1;
     unsigned int unknown_1_3_ : 7;
@@ -25,31 +25,31 @@ struct Struct_020a95a4_5 {
 };
 
 struct Struct_ov014_021845ec {
-    char unknown_0_[0x20];
+    char unk_0[0x20];
 };
 
 struct Struct_ov014_02184dcc {
-    char unknown_0_[0x1c];
+    char unk_0[0x1c];
     Struct_ov014_021845ec unknown_1c_;
-    char unknown_3c_[0x48 - 0x3c];
+    char unk_3c[0x48 - 0x3c];
     Struct_ov014_02184f78* unknown_48_;
     Struct_ov014_02184f78* unknown_4c_;
-    Struct_020a95a4_5* unknown_50_;
-    Struct_020a95a4_5* unknown_54_;
-    void* unknown_58_;
-    void* unknown_5c_;
+    MonsterRecord* unknown_50_;
+    MonsterRecord* unknown_54_;
+    void* layout_;
+    void* texts_;
     char* unknown_60_[2];
-    char* unknown_68_;
+    char* description_;
     int unknown_6c_;
     int unknown_70_;
     int unknown_74_;
     int unknown_78_;
-    unsigned char unknown_7c_;
+    unsigned char state_;
     unsigned char unknown_7d_;
     unsigned char unknown_7e_;
     unsigned char unknown_7f_;
-    unsigned char unknown_80_;
-    unsigned char unknown_81_;
+    unsigned char page_;
+    unsigned char flags_;
     unsigned char unknown_82_0_ : 1;
     unsigned char unknown_82_1_ : 1;
     unsigned char unknown_82_2_ : 1;
@@ -62,53 +62,53 @@ struct Struct_ov014_02184dcc {
     unsigned char unknown_94_;
 };
 
-extern "C" bool func_ov014_02188d10(Struct_ov014_021845ec* arg0);
+extern "C" bool func_ov014_02188d10(Struct_ov014_021845ec* s);
 
 // USA: func_ov014_02184f78
-extern "C" ARM void func_ov014_02184f78(Struct_ov014_02184dcc* arg0, Struct_ov014_02184f78* arg1, Struct_020a95a4_5* arg2, bool arg3) {
-    if (arg0->unknown_7c_ == 0)
+extern "C" ARM void func_ov014_02184f78(Struct_ov014_02184dcc* self, Struct_ov014_02184f78* monster, MonsterRecord* record, bool arg3) {
+    if (self->state_ == 0)
         return;
-    if (arg1 == NULL || arg2 == NULL) {
-        arg0->unknown_48_ = arg1;
+    if (monster == NULL || record == NULL) {
+        self->unknown_48_ = monster;
         return;
     }
 
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    if (arg0->unknown_6c_ >= 0) {
-        var0->RemoveTask(arg0->unknown_6c_);
-        arg0->unknown_6c_ = -1;
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (self->unknown_6c_ >= 0) {
+        loader->RemoveTask(self->unknown_6c_);
+        self->unknown_6c_ = -1;
     }
-    for (int var1 = 0; var1 < 5; var1++) {
-        short var2 = arg0->unknown_86_[var1];
+    for (int i = 0; i < 5; i++) {
+        short var2 = self->unknown_86_[i];
         if (var2 >= 0) {
             BackgroundLoader::GetInstance()->RemoveTask(var2);
-            arg0->unknown_86_[var1] = -1;
+            self->unknown_86_[i] = -1;
         }
     }
-    func_ov014_02188d10(&arg0->unknown_1c_);
-    arg0->unknown_7f_ = 0;
-    arg0->unknown_80_ = 0;
-    arg0->unknown_48_ = arg1;
-    arg0->unknown_50_ = arg2;
-    arg0->unknown_60_[0][0] = '\0';
-    arg0->unknown_60_[1][0] = '\0';
-    arg0->unknown_68_[0] = '\0';
-    arg0->unknown_81_ |= 1;
-    arg0->unknown_81_ &= ~8;
-    arg0->unknown_82_2_ = arg3;
-    if (!arg0->unknown_48_->unknown_13_1_) {
-        arg0->unknown_81_ &= ~1;
-        arg0->unknown_81_ |= 0x10;
-        arg0->unknown_81_ &= ~4;
-        arg0->unknown_93_ = false;
+    func_ov014_02188d10(&self->unknown_1c_);
+    self->unknown_7f_ = 0;
+    self->page_ = 0;
+    self->unknown_48_ = monster;
+    self->unknown_50_ = record;
+    self->unknown_60_[0][0] = '\0';
+    self->unknown_60_[1][0] = '\0';
+    self->description_[0] = '\0';
+    self->flags_ |= 1;
+    self->flags_ &= ~8;
+    self->unknown_82_2_ = arg3;
+    if (!self->unknown_48_->unknown_13_1_) {
+        self->flags_ &= ~1;
+        self->flags_ |= 0x10;
+        self->flags_ &= ~4;
+        self->unknown_93_ = false;
         return;
     }
 
-    arg0->unknown_81_ &= ~0x10;
-    if (arg0->unknown_70_ >= 0) {
-        var0->RemoveTask(arg0->unknown_70_);
-        arg0->unknown_70_ = -1;
+    self->flags_ &= ~0x10;
+    if (self->unknown_70_ >= 0) {
+        loader->RemoveTask(self->unknown_70_);
+        self->unknown_70_ = -1;
     }
-    arg0->unknown_7e_ = 0;
-    arg0->unknown_93_ = true;
+    self->unknown_7e_ = 0;
+    self->unknown_93_ = true;
 }

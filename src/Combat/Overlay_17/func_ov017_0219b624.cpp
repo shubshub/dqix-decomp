@@ -5,8 +5,8 @@
 #include "Memory/SafeAllocator.h"
 #include "World/Zone3D.h"
 
-struct Struct_0203d028;
-struct Struct_02000c9c_8;
+struct Foo0207df50;
+struct Struct0200fb08;
 #if defined(jpn)
 enum { Enum_ov017_0219b624_1276 = 0x4ac };
 #define data_ov017_021d656c data_ov017_021d69bc
@@ -17,20 +17,20 @@ enum { Enum_ov017_0219b624_1276 = 0x4ac };
 #else
 enum { Enum_ov017_0219b624_1276 = 0x4fc };
 #endif
-struct ResourceFile0219b624 { int index; const char* name; };
-extern const ResourceFile0219b624 data_ov017_021d656c[];
+struct Struct_ov017_021d656c { int index; const char* name; };
+extern const Struct_ov017_021d656c data_ov017_021d656c[];
 extern int g_fileLoadBuffer __attribute__((aligned(4)));
 void* LoadFileIntoMemory(const char*, void*, unsigned int*);
 bool GetFileInNarc(const void*, const char*, const void**, unsigned int*, unsigned int);
 extern const char data_ov017_021d7504[], data_ov017_021d7510[], data_ov017_021d751b[];
 extern const char data_ov017_021d751f[], data_ov017_021d7526[], data_ov017_021d7530[], data_ov017_021d753a[];
 extern const char data_ov017_021d7544[], data_ov017_021d7555[], data_ov017_021d7567[];
-void VramState_Rewind(Foo0207df50*);
-void VramState_Restore(char*);
-void VramState_Save(char*);
-int GameState_GetLanguage(Struct0200fb08*);
-void* GetData02109020_0208e9e8();
-void InitFourNamedSubStructs_02096604(char*, int);
+extern "C" void VramState_Rewind(Foo0207df50*);
+extern "C" void VramState_Restore(char*);
+extern "C" void VramState_Save(char*);
+extern "C" int GameState_GetLanguage(Struct0200fb08*);
+extern "C" void* func_0208e9e8();
+extern "C" void func_02096604(char*, int);
 extern "C" {
 Zone3D* Zone3D_GetInstance();
 void Zone3D_LoadChestModels(Zone3D*, SafeAllocator*, void*, unsigned int);
@@ -43,17 +43,17 @@ int sprintf(char*, const char*, ...);
 }
 
 // USA: func_ov017_0219b624
-extern "C" ARM void func_ov017_0219b624(GameResources* arg0) {
-    Struct_02012fa4* var0;
-    Zone3D* var1;
-    SafeAllocator* var2;
+extern "C" ARM void func_ov017_0219b624(GameResources* self) {
+    Foo02048004* sprites;
+    Zone3D* globals;
+    SafeAllocator* allocator;
 #if !defined(jpn)
-    GameState* var3 = GameState::GetInstance();
+    GameState* game = GameState::GetInstance();
 #endif
     globals = Zone3D_GetInstance();
     BackgroundLoader::GetInstance();
     allocator = &self->allocator_array_38[5];
-    Foo0207df50* pairs = reinterpret_cast<Foo0207df50*>(reinterpret_cast<char*>(self) + PairTablesOffset);
+    Foo0207df50* pairs = reinterpret_cast<Foo0207df50*>(reinterpret_cast<char*>(self) + Enum_ov017_0219b624_1276);
     allocator->Reset();
     VramState_Rewind(pairs);
     BackgroundLoader::AddLockGlobal();
@@ -104,7 +104,7 @@ extern "C" ARM void func_ov017_0219b624(GameResources* arg0) {
         SprSprite_Init(&(*reinterpret_cast<Foo02048004*>(self->unknown_35a8)));
         SprSprite_Parse(&(*reinterpret_cast<Foo02048004*>(self->unknown_35a8)), file, allocator);
     }
-    var7.Destroy();
+    archive.Destroy();
     func_02057924();
     unsigned int size;
     if (GetFileInNarc(&g_fileLoadBuffer, data_ov017_021d7567, &file, &size, 0)) {
@@ -117,11 +117,11 @@ extern "C" ARM void func_ov017_0219b624(GameResources* arg0) {
             info.allocator = allocator;
             info.unk_10 = 1;
             object->LoadFromCHRArchive(&info);
-            func_0208f36c(GetData02109020_0208e9e8(), object);
+            func_0208f36c(func_0208e9e8(), object);
         }
     }
     BackgroundLoader::RemoveLockGlobal();
-    InitFourNamedSubStructs_02096604(static_cast<char*>(self->unknown_ptr_4328), (int)allocator);
+    func_02096604(static_cast<char*>(self->unknown_ptr_4328), (int)allocator);
     VramState_Save((char*)pairs);
     globals->lootableTemplates_[0] = &self->substruct_array_2b90[5];
     globals->lootableTemplates_[1] = &self->substruct_array_2b90[6];

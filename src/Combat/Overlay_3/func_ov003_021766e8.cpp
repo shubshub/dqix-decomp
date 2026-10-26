@@ -14,33 +14,33 @@ enum { Enum_ov003_021766e8_2208 = 0x8a0 };
 struct Struct_020e28dc;
 struct Struct_0207fdcc_2;
 
-extern "C" int func_020e28dc(struct Struct_020e28dc* arg0);
-extern "C" int func_020e2984(struct Struct_020e28dc* arg0);
-extern "C" int func_02080d54(struct Struct_0207fdcc_2* arg0, int arg1, int arg2, int arg3);
+extern "C" int func_020e28dc(struct Struct_020e28dc* o);
+extern "C" int func_020e2984(struct Struct_020e28dc* window);
+extern "C" int func_02080d54(struct Struct_0207fdcc_2* obj, int key, int px, int arg3);
 
 struct Struct_ov003_021766e8 {
-    struct Struct_020e28dc* unknown_0_;
-    char unknown_4_[Enum_ov003_021766e8_2204 - 0x4];
+    struct Struct_020e28dc* ptr0;
+    char pad0[Enum_ov003_021766e8_2204 - 0x4];
     struct Struct_0207fdcc_2* unknown_89c_;
-    char unknown_8a0_[Enum_ov003_021766e8_4094 - Enum_ov003_021766e8_2208];
+    char pad1[Enum_ov003_021766e8_4094 - Enum_ov003_021766e8_2208];
     short unknown_ffe_;
 };
 
 // USA: func_ov003_021766e8
-extern "C" ARM int func_ov003_021766e8(struct Struct_ov003_021766e8* arg0) {
-    int var0 = 0;
-    if (g_keyManager.TestKeysPressed(2)) var0 = 1;
+extern "C" ARM int func_ov003_021766e8(struct Struct_ov003_021766e8* self) {
+    int flag = 0;
+    if (g_keyManager.TestKeysPressed(2)) flag = 1;
 
-    if (arg0->unknown_0_ != NULL && func_020e28dc(arg0->unknown_0_)) {
-        if (func_020e2984(arg0->unknown_0_)) {
-            var0 = 1;
+    if (self->ptr0 != NULL && func_020e28dc(self->ptr0)) {
+        if (func_020e2984(self->ptr0)) {
+            flag = 1;
         }
     } else if (g_touchInput.pressed_ != 0) {
-        int var1, var2;
-        g_touchInput.GetTouchPoint(&var1, &var2);
-        if (!func_02080d54(arg0->unknown_89c_, arg0->unknown_ffe_, (short)var1, (short)var2)) {
-            var0 = 1;
+        int a, b;
+        g_touchInput.GetTouchPoint(&a, &b);
+        if (!func_02080d54(self->unknown_89c_, self->unknown_ffe_, (short)a, (short)b)) {
+            flag = 1;
         }
     }
-    return var0;
+    return flag;
 }

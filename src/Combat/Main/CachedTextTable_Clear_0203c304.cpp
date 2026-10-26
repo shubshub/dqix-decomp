@@ -29,10 +29,10 @@ enum {
     kEngineSub = 1  // texts go to the sub screen's OBJ VRAM and palette
 };
 
-void CachedTextEntry_Clear(char* entry);
+extern "C" void CachedTextEntry_Clear(char* entry);
 
 // Main, originally ResetBattleState0203c304 (USA 0x0203c304, EUR 0x0203c314, JPN 0x0203c464)
-ARM void CachedTextTable_Clear(char* table) {
+extern "C" ARM void CachedTextTable_Clear(char* table) {
     int i;
     for (i = 0; i < kEntryCount; i++) {
         CachedTextEntry_Clear(table + kEntries + i * kEntrySize);

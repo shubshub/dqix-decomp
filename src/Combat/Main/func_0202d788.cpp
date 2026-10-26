@@ -7,27 +7,27 @@ extern "C" int func_020d6b34(int, short, short, unsigned short, unsigned short);
 extern "C" void func_0202d840();
 
 // USA: func_0202d788
-extern "C" ARM int func_0202d788(unsigned short arg0) {
-    int var0;
-    unsigned short var1;
+extern "C" ARM int func_0202d788(unsigned short slot) {
+    int mask;
+    unsigned short idx;
 
-    var0 = func_020d4aa8();
-    if (var0 == 0x8000) {
+    mask = func_020d4aa8();
+    if (mask == 0x8000) {
         func_0202c848(3);
         *(int*)(&data_021015a0 + 0x10) = 9;
         return 3;
     }
-    if (var0 == 0) {
+    if (mask == 0) {
         func_0202c848(0x16);
         *(int*)(&data_021015a0 + 0x10) = 9;
         return 0x18;
     }
-    var1 = arg0;
-    while (!(var0 & (1 << (var1 - 1)))) {
-        var1 = var1 + 1;
-        if (var1 > 0x10) {
+    idx = slot;
+    while (!(mask & (1 << (idx - 1)))) {
+        idx = idx + 1;
+        if (idx > 0x10) {
             return 0x18;
         }
     }
-    return (unsigned short)func_020d6b34((int)&func_0202d840, 3, 0x11, var1, 0x1e);
+    return (unsigned short)func_020d6b34((int)&func_0202d840, 3, 0x11, idx, 0x1e);
 }

@@ -3,10 +3,10 @@
 
 // USA: func_ov001_02156858
 extern "C" ARM int func_ov001_02156858(void*) {
-	char* var0 = (char*)GetGameResources();
+	char* p = (char*)GetGameResources();
 #if defined(jpn)
-	return *(unsigned char*)(var0 + 0x40c2);
+	return *(unsigned char*)(p + 0x40c2);
 #else
-	return *(unsigned char*)(var0 + 0x42e2);
+	return *(unsigned char*)(p + 0x42e2);
 #endif
 }

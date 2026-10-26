@@ -1,31 +1,31 @@
 #include <globaldefs.h>
 
 struct Struct_02053dd0_2 {
-    char unknown_0_[0x14];
-    int unknown_14_;
+    char unk[0x14];
+    int flags;
 };
 
 struct Struct_02053dd0_3 {
-    char unknown_0_[0x8];
-    int unknown_8_;
+    char unk[0x8];
+    int count;
 };
 
 struct Struct_02053dd0 {
-    char unknown_0_[0x138];
-    struct Struct_02053dd0_2* unknown_138_;
+    char unk[0x138];
+    struct Struct_02053dd0_2* flagObj;
 #if defined(jpn)
-    char unknown_13c_[0x54];
+    char unk2[0x54];
 #else
-    char unknown1_13c_[0x60];
+    char unk2[0x60];
 #endif
-    struct Struct_02053dd0_3* unknown_19c_;
+    struct Struct_02053dd0_3* counter;
 };
 
 // USA: func_02053dd0
-extern "C" ARM void func_02053dd0(struct Struct_02053dd0* arg0) {
-    struct Struct_02053dd0_3* var0 = arg0->unknown_19c_;
-    if (var0 == 0 || (arg0->unknown_138_->unknown_14_ & 1) != 0) {
+extern "C" ARM void func_02053dd0(struct Struct_02053dd0* obj) {
+    struct Struct_02053dd0_3* counter = obj->counter;
+    if (counter == 0 || (obj->flagObj->flags & 1) != 0) {
         return;
     }
-    var0->unknown_8_++;
+    counter->count++;
 }

@@ -7,25 +7,25 @@ enum { Enum_02085b88_2288 = 0x8f0 };
 
 #include "GameState/GameState.h"
 
-extern "C" int func_0201137c(char* arg0, int arg1);
+extern "C" int func_0201137c(char* base, int id);
 
 // USA: func_02085b88
-extern "C" ARM int func_02085b88(unsigned char* arg0) {
-    GameState* var0;
-    int var1;
-    if (*(short*)(arg0 + 0x2cc) <= 0) {
+extern "C" ARM int func_02085b88(unsigned char* actor) {
+    GameState* bs;
+    int total;
+    if (*(short*)(actor + 0x2cc) <= 0) {
         return 0;
     }
-    var0 = GameState::GetInstance();
-    var1 = 0;
-    if (arg0[Enum_02085b88_2288] & 4) {
-        var1 += func_0201137c((char*)var0, 0x22);
+    bs = GameState::GetInstance();
+    total = 0;
+    if (actor[Enum_02085b88_2288] & 4) {
+        total += func_0201137c((char*)bs, 0x22);
     }
-    if (arg0[Enum_02085b88_2288] & 0x10) {
-        var1 += func_0201137c((char*)var0, 0x24);
+    if (actor[Enum_02085b88_2288] & 0x10) {
+        total += func_0201137c((char*)bs, 0x24);
     }
-    if (arg0[Enum_02085b88_2288] & 0x40) {
-        var1 += func_0201137c((char*)var0, 0x26);
+    if (actor[Enum_02085b88_2288] & 0x40) {
+        total += func_0201137c((char*)bs, 0x26);
     }
-    return var1;
+    return total;
 }

@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 
-extern "C" void func_0202c848(int arg0);
+extern "C" void func_0202c848(int arg);
 extern char data_021015a0;
 extern "C" int func_0202d180(void);
 extern "C" int func_0202d224(void);
 
 struct Struct_0202d108 {
-    char unknown_0_[2];
-    unsigned short unknown_2_;
+    char pad0[2];
+    unsigned short field2;
 };
 
 // USA: func_0202d108
-extern "C" ARM void func_0202d108(struct Struct_0202d108* arg0) {
-    unsigned short var0 = arg0->unknown_2_;
-    if (var0 != 0) {
-        func_0202c848(var0);
+extern "C" ARM void func_0202d108(struct Struct_0202d108* p) {
+    unsigned short v = p->field2;
+    if (v != 0) {
+        func_0202c848(v);
         return;
     }
     *(int*)(&data_021015a0 + 0x10) = 1;
@@ -23,15 +23,15 @@ extern "C" ARM void func_0202d108(struct Struct_0202d108* arg0) {
     }
     *(unsigned short*)(&data_021015a0 + 0x4) = 0;
     if (*(int*)(&data_021015a0 + 0x30) != 0) {
-        int var1 = func_0202d180();
-        if (var1 == 0) {
+        int r = func_0202d180();
+        if (r == 0) {
             *(int*)(&data_021015a0 + 0x10) = 9;
         }
         return;
     }
     {
-        int var2 = func_0202d224();
-        if (var2 == 0) {
+        int r = func_0202d224();
+        if (r == 0) {
             *(int*)(&data_021015a0 + 0x10) = 9;
         }
     }

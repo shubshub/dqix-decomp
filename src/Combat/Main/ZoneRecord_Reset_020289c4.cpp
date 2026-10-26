@@ -10,13 +10,13 @@ struct InitStruct;
 struct ResetObject0209af34Struct;
 struct ZeroWordAndByte0206ee60Struct;
 
-ARM void NodeGraph_Reset(struct InitStruct* graph);
-ARM void ClearHalfword0x18_0209bffc(void* obj);
-ARM void ClearBuffer0209bc84(void* obj);
-ARM void ResetObject0209af34(struct ResetObject0209af34Struct* obj);
-ARM void* Clear12Bytes0206efc4(void* obj);
-ARM void ZeroWordAndByte0206ee60(struct ZeroWordAndByte0206ee60Struct* s);
-ARM void Clear12Bytes020a8e88(void* p);
+extern "C" ARM void NodeGraph_Reset(struct InitStruct* graph);
+extern "C" ARM void func_0209bffc(void* obj);
+extern "C" ARM void func_0209bc84(void* obj);
+extern "C" ARM void func_0209af34(struct ResetObject0209af34Struct* obj);
+extern "C" ARM void* func_0206efc4(void* obj);
+extern "C" ARM void func_0206ee60(struct ZeroWordAndByte0206ee60Struct* s);
+extern "C" ARM void func_020a8e88(void* p);
 
 // A ZoneRecord (ZoneRecords_GetInstance's array of 4)
 struct BigRecord020289c4 {
@@ -35,7 +35,7 @@ struct BigRecord020289c4 {
 enum { kGraphOffset = 0x18 };
 
 // Main, originally InitializeSubObjectsAndFields020289c4 (USA 0x020289c4, EUR 0x020289d4, JPN 0x0202821c)
-ARM void ZoneRecord_Reset(struct BigRecord020289c4* record) {
+extern "C" ARM void ZoneRecord_Reset(struct BigRecord020289c4* record) {
     record->inUse = 0;
     record->unknown3 = 0;
     record->zoneId = 0;
@@ -46,10 +46,10 @@ ARM void ZoneRecord_Reset(struct BigRecord020289c4* record) {
     record->openedDoors = 0;
     record->unknownD = -1;
     NodeGraph_Reset((struct InitStruct*)((char*)record + SUBOBJECT_OFFSET(kGraphOffset)));
-    ClearHalfword0x18_0209bffc((char*)record + SUBOBJECT_OFFSET(0x44));
-    ClearBuffer0209bc84((char*)record + SUBOBJECT_OFFSET(0x60));
-    ResetObject0209af34((struct ResetObject0209af34Struct*)((char*)record + SUBOBJECT_OFFSET(0x124)));
-    Clear12Bytes0206efc4((char*)record + SUBOBJECT_OFFSET(0x2f8));
-    ZeroWordAndByte0206ee60((struct ZeroWordAndByte0206ee60Struct*)((char*)record + SUBOBJECT_OFFSET(0x304)));
-    Clear12Bytes020a8e88((char*)record + SUBOBJECT_OFFSET(0x30c));
+    func_0209bffc((char*)record + SUBOBJECT_OFFSET(0x44));
+    func_0209bc84((char*)record + SUBOBJECT_OFFSET(0x60));
+    func_0209af34((struct ResetObject0209af34Struct*)((char*)record + SUBOBJECT_OFFSET(0x124)));
+    func_0206efc4((char*)record + SUBOBJECT_OFFSET(0x2f8));
+    func_0206ee60((struct ZeroWordAndByte0206ee60Struct*)((char*)record + SUBOBJECT_OFFSET(0x304)));
+    func_020a8e88((char*)record + SUBOBJECT_OFFSET(0x30c));
 }

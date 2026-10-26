@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
+extern "C" GameObject* func_0200ff58(GameState* battleStruct, int combatantId);
 
 // USA: func_02010038
-extern "C" ARM int func_02010038(GameState* arg0, unsigned char* arg1) {
-    int var0;
-    int var1;
-    if (arg1 == NULL) {
+extern "C" ARM int func_02010038(GameState* battleStruct, unsigned char* out) {
+    int i;
+    int count;
+    if (out == NULL) {
         return 0;
     }
-    var0 = 0;
-    arg1[0] = 0;
-    var1 = 1;
-    for (; var0 < 4; var0++) {
-        if (func_0200ff58(arg0, var0) != NULL) {
-            arg1[var1] = var0;
-            var1++;
+    i = 0;
+    out[0] = 0;
+    count = 1;
+    for (; i < 4; i++) {
+        if (func_0200ff58(battleStruct, i) != NULL) {
+            out[count] = i;
+            count++;
         }
     }
-    return var1;
+    return count;
 }

@@ -5,11 +5,11 @@ extern "C" void* func_ov031_0223b61c(char* path, unsigned int* outSize, int alig
 extern "C" void NNS_SndInit(void*);
 extern "C" void func_020bd368(void*, int);
 extern "C" void NNS_SndArcPlayerSetup(int);
-void NNS_SndHandleInit(int* field);
-void SetEntryByte_020bbf34(int index, int value);
-void SetEntryHalfword_020bbf4c(int index, int value);
-void SetTableEntryPointer_020bbf6c(int index, void* value);
-void* CallWithZeroExtra_0223e218(void* a, void* b, void* c, int d);
+extern "C" void NNS_SndHandleInit(int* field);
+extern "C" void func_020bbf34(int index, int value);
+extern "C" void func_020bbf4c(int index, int value);
+extern "C" void func_020bbf6c(int index, void* value);
+extern "C" void* func_ov031_0223e218(void* a, void* b, void* c, int d);
 extern "C" void func_ov031_02236900(void);
 
 extern void* data_ov031_02290d00;
@@ -29,14 +29,14 @@ extern "C" ARM void func_ov031_0223677c(void) {
 
 	NNS_SndHandleInit((int*)((char*)data_ov031_02290d00 + 0x94));
 
-	int var2 = 0;
+	int i = 0;
 	do {
-		func_020bbf34(var2, 0x7f);
-		func_020bbf4c(var2, 1);
-		func_020bbf6c(var2, 0);
-		var2++;
-	} while (var2 < 0x20);
+		func_020bbf34(i, 0x7f);
+		func_020bbf4c(i, 1);
+		func_020bbf6c(i, 0);
+		i++;
+	} while (i < 0x20);
 
-	void* var3 = func_ov031_0223e218((void*)0, (void*)func_ov031_02236900, (void*)0, 0xc8);
-	*(void**)((char*)data_ov031_02290d00 + 0x9c) = var3;
+	void* result = func_ov031_0223e218((void*)0, (void*)func_ov031_02236900, (void*)0, 0xc8);
+	*(void**)((char*)data_ov031_02290d00 + 0x9c) = result;
 }

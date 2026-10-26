@@ -10,27 +10,27 @@
 
 #include "GameState/GameState.h"
 
-extern "C" void* func_ov000_02161318(void* arg0, int arg1);
-extern "C" GameObject* func_0200ff1c(GameState* arg0, int arg1);
-extern "C" int func_02053c6c(unsigned char* arg0);
+extern "C" void* func_ov000_02161318(void* obj, int index);
+extern "C" GameObject* func_0200ff1c(GameState* battleStruct, int combatantId);
+extern "C" int func_02053c6c(unsigned char* obj);
 
 // USA: func_ov000_02175fc8
-extern "C" ARM void func_ov000_02175fc8(void* arg0) {
-    char* var0;
-    int var1;
-    for (var1 = 0; var1 < 4; var1++) {
-        var0 = (char*)func_ov000_02161318(arg0, var1);
-        if (var0 == NULL) continue;
-        GameState* var2 = GameState::GetInstance();
-        GameObject* var3 = func_0200ff1c(var2, *(int*)(var0 + 0x4c));
-        if (var3 == NULL) continue;
-        int* var4 = *(int**)((char*)var3 + 0x130);
-        if (*var4 & 4) {
-            *(int*)(var0 + 0x28) |= 4;
+extern "C" ARM void func_ov000_02175fc8(void* obj) {
+    char* e;
+    int i;
+    for (i = 0; i < 4; i++) {
+        e = (char*)func_ov000_02161318(obj, i);
+        if (e == NULL) continue;
+        GameState* bs = GameState::GetInstance();
+        GameObject* c = func_0200ff1c(bs, *(int*)(e + 0x4c));
+        if (c == NULL) continue;
+        int* p = *(int**)((char*)c + 0x130);
+        if (*p & 4) {
+            *(int*)(e + 0x28) |= 4;
         }
-        int var5 = func_02053c6c((unsigned char*)var3);
+        int var5 = func_02053c6c((unsigned char*)c);
         if (var5 != 0) {
-            *(unsigned char*)(var0 + REGION_OFFSET_1) = (unsigned char)*(int*)(var5 + REGION_OFFSET_0);
+            *(unsigned char*)(e + REGION_OFFSET_1) = (unsigned char)*(int*)(var5 + REGION_OFFSET_0);
         }
     }
 }

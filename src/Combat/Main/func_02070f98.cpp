@@ -1,19 +1,19 @@
 #include <globaldefs.h>
 
 struct Struct_02070f98 {
-    unsigned char unknown_0_[0x84];
+    unsigned char data[0x84];
 };
 
 struct Struct_02070f98_2 {
-    unsigned int unknown_0_0_ : 12;
-    unsigned int unknown_1_4_ : 20;
-    struct Struct_02070f98* unknown_4_;
+    unsigned int count : 12;
+    unsigned int pad : 20;
+    struct Struct_02070f98* base;
 };
 
 // USA: func_02070f98
-extern "C" ARM struct Struct_02070f98* func_02070f98(struct Struct_02070f98_2* arg0, int arg1) {
-    if (arg1 < 0 || arg1 >= (int)arg0->unknown_0_0_ || arg0->unknown_4_ == NULL) {
+extern "C" ARM struct Struct_02070f98* func_02070f98(struct Struct_02070f98_2* list, int index) {
+    if (index < 0 || index >= (int)list->count || list->base == NULL) {
         return NULL;
     }
-    return &arg0->unknown_4_[arg1];
+    return &list->base[index];
 }

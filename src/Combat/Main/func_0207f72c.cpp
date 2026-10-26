@@ -1,36 +1,36 @@
 #include <globaldefs.h>
 
 struct Struct_0207f524 {
-    void* unknown_0_;
-    short unknown_4_;
+    void* entries;
+    short count;
 };
 
 struct Struct_0207f72c;
 
 union Struct_0207f72c_2 {
-    short unknown_0_;
-    struct Struct_0207f72c* unknown1_0_;
+    short id;
+    struct Struct_0207f72c* ptr;
 };
 
 struct Struct_0207f72c {
-    char unknown_0_[0x18];
+    char pad[0x18];
     union Struct_0207f72c_2 unknown_18_[4];
 };
 
-extern "C" void* func_0207f700(unsigned char* arg0, short arg1);
-extern "C" struct Struct_0207f72c* func_0207f6ac(struct Struct_0207f524* arg0, int arg1);
+extern "C" void* func_0207f700(unsigned char* obj, short index);
+extern "C" struct Struct_0207f72c* func_0207f6ac(struct Struct_0207f524* list, int id);
 
 // USA: func_0207f72c
-extern "C" ARM void func_0207f72c(struct Struct_0207f524* arg0) {
-    short var0 = arg0->unknown_4_;
-    short var1;
-    for (var1 = 0; var1 < var0; var1++) {
-        struct Struct_0207f72c* var2 = (struct Struct_0207f72c*)func_0207f700((unsigned char*)arg0, var1);
-        if (var2 != NULL) {
-            var2->unknown_18_[0].unknown1_0_ = func_0207f6ac(arg0, var2->unknown_18_[0].unknown_0_);
-            var2->unknown_18_[1].unknown1_0_ = func_0207f6ac(arg0, var2->unknown_18_[1].unknown_0_);
-            var2->unknown_18_[2].unknown1_0_ = func_0207f6ac(arg0, var2->unknown_18_[2].unknown_0_);
-            var2->unknown_18_[3].unknown1_0_ = func_0207f6ac(arg0, var2->unknown_18_[3].unknown_0_);
+extern "C" ARM void func_0207f72c(struct Struct_0207f524* list) {
+    short count = list->count;
+    short i;
+    for (i = 0; i < count; i++) {
+        struct Struct_0207f72c* e = (struct Struct_0207f72c*)func_0207f700((unsigned char*)list, i);
+        if (e != NULL) {
+            e->unknown_18_[0].ptr = func_0207f6ac(list, e->unknown_18_[0].id);
+            e->unknown_18_[1].ptr = func_0207f6ac(list, e->unknown_18_[1].id);
+            e->unknown_18_[2].ptr = func_0207f6ac(list, e->unknown_18_[2].id);
+            e->unknown_18_[3].ptr = func_0207f6ac(list, e->unknown_18_[3].id);
         }
     }
 }

@@ -4,10 +4,10 @@
 #include "NitroSDK/Matrix.h"
 #include "NitroSDK/HWRegisters.h"
 
-void G3X_Reset();
+extern "C" void G3X_Reset();
 extern "C" void G3X_ResetMtxStack();
-void G3i_LookAt_(int, int, int, int, void*);
-void G3i_OrthoW_(int, int, int, int, int, int, int, int, void*);
+extern "C" void G3i_LookAt_(int, int, int, int, void*);
+extern "C" void G3i_OrthoW_(int, int, int, int, int, int, int, int, void*);
 extern "C" int ZoneChest_UpdateOpening(Zone3D*, int);
 extern const Vector3fix Zone3D_chestIconViewTarget;
 extern const Vector3fix Zone3D_chestIconViewUp;

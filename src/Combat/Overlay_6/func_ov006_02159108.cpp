@@ -7,34 +7,34 @@
 #include <globaldefs.h>
 
 struct Struct_ov006_02159108 {
-	unsigned char unknown_0_[R(0x40, 0x48)];
+	unsigned char pad0[R(0x40, 0x48)];
 	short** unknown_48_;
 	unsigned char** unknown_4c_;
 	unsigned short* unknown_50_;
-	unsigned char unknown_54_[0x372 - R(0x4c, 0x54)];
-	unsigned short unknown_372_[3];
-	short unknown_378_[3];
-	unsigned char unknown_37e_[0x38c - 0x37e];
-	unsigned char unknown_38c_[3];
+	unsigned char pad1[0x372 - R(0x4c, 0x54)];
+	unsigned short fieldA[3];
+	short fieldB[3];
+	unsigned char pad2[0x38c - 0x37e];
+	unsigned char fieldC[3];
 };
 
 // USA: func_ov006_02159108
-extern "C" ARM void func_ov006_02159108(struct Struct_ov006_02159108* arg0, int arg1, int arg2, int arg3) {
-	short* var0 = arg0->unknown_48_[arg1];
-	unsigned char* var1 = arg0->unknown_4c_[arg1];
-	unsigned short var2 = arg0->unknown_50_[arg1];
-	unsigned short var3;
-	unsigned char var4;
-	for (var3 = 0; var3 < var2; var3++) {
-		if (arg2 == var0[var3]) {
-			var1[var3] -= arg3;
+extern "C" ARM void func_ov006_02159108(struct Struct_ov006_02159108* obj, int idx1, int val2, int val3) {
+	short* arrA = obj->unknown_48_[idx1];
+	unsigned char* arrB = obj->unknown_4c_[idx1];
+	unsigned short count = obj->unknown_50_[idx1];
+	unsigned short i;
+	unsigned char j;
+	for (i = 0; i < count; i++) {
+		if (val2 == arrA[i]) {
+			arrB[i] -= val3;
 		}
 	}
-	for (var4 = 0; var4 < 3; var4++) {
-		if (arg0->unknown_378_[var4] <= 0) {
-			arg0->unknown_372_[var4] = arg1;
-			arg0->unknown_378_[var4] = arg2;
-			arg0->unknown_38c_[var4] = arg3;
+	for (j = 0; j < 3; j++) {
+		if (obj->fieldB[j] <= 0) {
+			obj->fieldA[j] = idx1;
+			obj->fieldB[j] = val2;
+			obj->fieldC[j] = val3;
 			return;
 		}
 	}

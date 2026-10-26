@@ -6,59 +6,59 @@
 #include "World/ZoneLootableRecord.h"
 #include "Resource/Brightness.h"
 
-struct Struct_02015438;
-struct Struct_0201730c;
-struct Struct_02015ef4_2;
-struct Struct_0203402c;
-struct Struct_0203a46c;
-struct Struct_02017098_3;
-struct Struct_0202c1a4;
-struct Struct_02015ef4;
+struct HeadNode02046b24;
+struct Obj0204724C;
+struct StructAt020473c8;
+struct BitField0203402c;
+struct Vec3Target0203a46c;
+struct Struct020478bc;
+struct SearchStruct0202c1a4;
+struct Vec3copy0202ec84;
 
-struct Struct_ov017_0219ad84 { unsigned short unknown_0_; };
-struct Struct_ov017_0219ad84_2 {
+struct Zone0219ad84 { unsigned short id; };
+struct Controller0219ad84 {
 #if defined(jpn)
-    char unknown_0_[0x868];
+    char pad0[0x868];
 #else
-    char unknown1_0_[0x998];
+    char pad0[0x998];
 #endif
-    unsigned int unknown_998_;
+    unsigned int busy;
 };
-struct Struct_ov017_0219ad84_3 { char unknown_0_[2]; unsigned char unknown_2_; };
+struct Window0219ad84 { char pad0[2]; unsigned char open; };
 struct Struct_ov017_0219ad84_4 {
-    Object3D unknown_0_;
+    Object3D obj3D;
 #if defined(jpn)
     char unknown_ac_[0x1a6 - 0xac];
 #else
     char unknown1_ac_[0x1b2 - 0xac];
 #endif
-    unsigned short unknown_1b2_;
+    unsigned short field1b2;
 };
 
 extern "C" Zone0219ad84* Zone3D_GetInstance();
-Controller0219ad84* MessageSystem_GetInstance();
-int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
-void AdvanceStreamRecord0204724c(Obj0204724C*);
-void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
-unsigned char GameObject_IsClimbingLadder(char*);
-int GameObject_IsSinking(BitField0203402c*);
-void SprSprite_SetPosition(Vec3Target0203a46c*, int, int, int);
-void RecomputeField0x7c(Struct020478bc*, int);
+extern "C" Controller0219ad84* MessageSystem_GetInstance();
+extern "C" int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
+extern "C" void func_0204724c(Obj0204724C*);
+extern "C" void func_020473c8(StructAt020473c8*, int);
+extern "C" unsigned char GameObject_IsClimbingLadder(char*);
+extern "C" int GameObject_IsSinking(BitField0203402c*);
+extern "C" void SprSprite_SetPosition(Vec3Target0203a46c*, int, int, int);
+extern "C" void func_020478bc(Struct020478bc*, int);
 extern "C" void SprSprite_DrawGroup(Foo02048004*, int, int);
-int GameObject_IsGesturing(signed char*);
-int FieldTaskQueue_IsEmpty(void**);
+extern "C" int GameObject_IsGesturing(signed char*);
+extern "C" int FieldTaskQueue_IsEmpty(void**);
 extern "C" SearchStruct0202c1a4* LinkSession_GetInstance();
-int LinkSession_IsActive(int*);
-int LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
-void* GameState_GetZoneTransition(GameState*);
-void Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
-int HasFlagBit_0218d4ec(void*, int);
+extern "C" int LinkSession_IsActive(int*);
+extern "C" int LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
+extern "C" void* GameState_GetZoneTransition(GameState*);
+extern "C" void Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
+extern "C" int func_ov017_0218d4ec(void*, int);
 
-static inline Struct_02012fa4* inline_ov017_0219ad84(GameResources* arg0) {
-    return *(Struct_02012fa4**)&arg0->unknown_35a8[0x88];
+static inline Foo02048004* inline_ov017_0219ad84(GameResources* res) {
+    return *(Foo02048004**)&res->unknown_35a8[0x88];
 }
-static inline unsigned char inline_ov017_0219ad84_2(void* arg0) {
-    return ((Struct_ov017_0219ad84_3*)arg0)->unknown_2_;
+static inline unsigned char WindowOpen(void* window) {
+    return ((Window0219ad84*)window)->open;
 }
 
 // USA: func_ov017_0219ad84
@@ -74,15 +74,15 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* self) {
     if (!actor) return;
 
     if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)self->fieldTaskQueue_) == 4) {
-        if (CurrentSprite(self) == NULL || !CurrentSprite(self)->bit0) return;
+        if (inline_ov017_0219ad84(self) == NULL || !inline_ov017_0219ad84(self)->bit0) return;
         GXFIFO_MATRIX_PUSH = 0;
-        if (inline_ov017_0219ad84(arg0) != &arg0->substruct_array_2b90[12] &&
-            inline_ov017_0219ad84(arg0) != &arg0->substruct_array_2b90[13] &&
-            inline_ov017_0219ad84(arg0) != &arg0->substruct_array_2b90[14]) {
-            func_0204724c((Struct_0201730c*)inline_ov017_0219ad84(arg0));
-            func_020473c8((Struct_02015ef4_2*)inline_ov017_0219ad84(arg0), 1);
+        if (inline_ov017_0219ad84(self) != &self->substruct_array_2b90[12] &&
+            inline_ov017_0219ad84(self) != &self->substruct_array_2b90[13] &&
+            inline_ov017_0219ad84(self) != &self->substruct_array_2b90[14]) {
+            func_0204724c((Obj0204724C*)inline_ov017_0219ad84(self));
+            func_020473c8((StructAt020473c8*)inline_ov017_0219ad84(self), 1);
         } else {
-            func_020473c8((Struct_02015ef4_2*)inline_ov017_0219ad84(arg0), 1);
+            func_020473c8((StructAt020473c8*)inline_ov017_0219ad84(self), 1);
         }
         GXFIFO_MATRIX_POP = 1;
         return;
@@ -114,7 +114,7 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* self) {
     if (busy | check | WindowOpen(field)) idle = 0;
     if (idle) {
         SprSprite_SetPosition((Vec3Target0203a46c*)&self->substruct_array_2b90[0], self->fieldButtonX[0] << 12, self->fieldButtonY[0] << 12, -0x1000);
-        RecomputeField0x7c((Struct020478bc*)&self->substruct_array_2b90[0], 1);
+        func_020478bc((Struct020478bc*)&self->substruct_array_2b90[0], 1);
         GXFIFO_MATRIX_PUSH = 0;
         SprSprite_DrawGroup(&self->substruct_array_2b90[0], 0, 1);
         GXFIFO_MATRIX_POP = 1;
@@ -129,8 +129,8 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* self) {
             int selection = self->interactionSelection.spriteIndex;
             Foo02048004* sprites = self->substruct_array_2b90;
             GXFIFO_MATRIX_PUSH = 0;
-            func_0204724c((Struct_0201730c*)&var11[var10]);
-            func_020473c8((Struct_02015ef4_2*)&var11[var10], 1);
+            func_0204724c((Obj0204724C*)&sprites[selection]);
+            func_020473c8((StructAt020473c8*)&sprites[selection], 1);
             GXFIFO_MATRIX_POP = 1;
         }
     }
@@ -142,7 +142,7 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* self) {
     int drawn = 0;
     for (int i = 0; i < 4; i++) {
         if (i == current) continue;
-        Combatant0219ad84* member = (Combatant0219ad84*)GetCombatantWithFlag0x100_0200ff1c(game, i);
+        Struct_ov017_0219ad84_4* member = (Struct_ov017_0219ad84_4*)func_0200ff1c(game, i);
         if (!member) continue;
         if (!member->obj3D.IsVisible()) continue;
         if (!member->obj3D.GetInheritedAlpha()) continue;
@@ -160,28 +160,28 @@ extern "C" ARM void func_ov017_0219ad84(GameResources* self) {
         if (member->obj3D.GetFlag(0x400)) {
             Foo02048004* marker = &self->unknown_3520;
             SprSprite_SetPosition((Vec3Target0203a46c*)marker, x << 12, y << 12, -0xa000);
-            RecomputeField0x7c((Struct020478bc*)marker, 1);
-            AdvanceStreamRecord0204724c((Obj0204724C*)marker);
+            func_020478bc((Struct020478bc*)marker, 1);
+            func_0204724c((Obj0204724C*)marker);
             GXFIFO_MATRIX_PUSH = 0;
-            func_020473c8((Struct_02015ef4_2*)var23, 1);
-            var14++;
+            func_020473c8((StructAt020473c8*)marker, 1);
+            drawn++;
             GXFIFO_MATRIX_POP = 1;
             if (drawn >= 3) break;
         } else if (member->field1b2) {
             Foo02048004* marker = (Foo02048004*)self->unknown_35a8;
             SprSprite_SetPosition((Vec3Target0203a46c*)marker, x << 12, y << 12, -0xa000);
             GXFIFO_MATRIX_PUSH = 0;
-            func_0204724c((Struct_0201730c*)var24);
-            func_020473c8((Struct_02015ef4_2*)var24, 1);
-            var14++;
+            func_0204724c((Obj0204724C*)marker);
+            func_020473c8((StructAt020473c8*)marker, 1);
+            drawn++;
             GXFIFO_MATRIX_POP = 1;
             if (drawn >= 3) break;
-        } else if (HasFlagBit_0218d4ec(self, member->obj3D.actorIndex_)) {
+        } else if (func_ov017_0218d4ec(self, member->obj3D.actorIndex_)) {
             Foo02048004* marker = &self->substruct_array_2b90[17];
             SprSprite_SetPosition((Vec3Target0203a46c*)marker, x << 12, y << 12, -0xa000);
             GXFIFO_MATRIX_PUSH = 0;
-            func_0204724c((Struct_0201730c*)var25);
-            func_020473c8((Struct_02015ef4_2*)var25, 1);
+            func_0204724c((Obj0204724C*)marker);
+            func_020473c8((StructAt020473c8*)marker, 1);
             GXFIFO_MATRIX_POP = 1;
         }
     }

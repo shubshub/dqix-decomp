@@ -3,62 +3,62 @@
 #include "Memory/SafeAllocator.h"
 
 struct Struct_020de714_3;
-extern "C" int func_020de7a4(Struct_020de714_3* arg0);
+extern "C" int func_020de7a4(Struct_020de714_3* obj);
 
 struct Struct_020de714;
 struct Struct_020de7d0;
 typedef void (*Type_020de714)(Struct_020de714*, Struct_020de7d0*);
-extern "C" int func_020de7d0(Struct_020de714* arg0, Type_020de714 arg1);
+extern "C" int func_020de7d0(Struct_020de714* c, Type_020de714 cb);
 
 struct Struct_020de5b0;
-extern "C" int func_020de5b0(Struct_020de5b0* arg0);
+extern "C" int func_020de5b0(Struct_020de5b0* c);
 
-extern "C" ARM int func_020de574(void* arg0, void* arg1);
+extern "C" ARM int func_020de574(void* table, void* cursor);
 
 struct Struct_020de888 {
-    unsigned int unknown_0_0_ : 31;
-    unsigned int unknown_3_7_ : 1;
+    unsigned int count : 31;
+    unsigned int flag : 1;
 };
 
 struct Struct_020de888_2 {
-    char unknown_0_[8];
+    char pad0[8];
     union {
-        unsigned int unknown_0_;
-        struct Struct_020de888 unknown1_0_;
-    } unknown_8_;
+        unsigned int raw;
+        struct Struct_020de888 bits;
+    } f8;
     void* unknown_c_;
     void* unknown_10_;
 };
 
 // USA: func_020de888
-extern "C" ARM int func_020de888(Struct_020de888_2* arg0, SafeAllocator* arg1, void* arg2, void* arg3) {
-    int var0;
-    unsigned int var1;
-    Type_020de714 var2;
+extern "C" ARM int func_020de888(Struct_020de888_2* self, SafeAllocator* allocator, void* file, void* arg3) {
+    int offset;
+    unsigned int count;
+    Type_020de714 cb;
 
-    if (arg1 == 0 || arg2 == 0 || arg3 == 0) {
+    if (allocator == 0 || file == 0 || arg3 == 0) {
         return 0;
     }
-    if (arg1 != 0 && arg2 != 0) {
-        memcpy(arg0, arg2, 0xc);
-        var0 = func_020de7a4((Struct_020de714_3*)arg0);
-        var1 = arg0->unknown_8_.unknown1_0_.unknown_0_0_;
-        if (var0 != 0)
-            arg0->unknown_c_ = arg1->Allocate(var0);
+    if (allocator != 0 && file != 0) {
+        memcpy(self, file, 0xc);
+        offset = func_020de7a4((Struct_020de714_3*)self);
+        count = self->f8.bits.count;
+        if (offset != 0)
+            self->unknown_c_ = allocator->Allocate(offset);
         else
-            arg0->unknown_c_ = 0;
-        arg0->unknown_10_ = (var1 != 0) ? arg1->Allocate(var1) : 0;
-        if (arg0->unknown_c_ != 0) {
-            memcpy(arg0->unknown_c_, (char*)arg2 + 0xc, var0);
+            self->unknown_c_ = 0;
+        self->unknown_10_ = (count != 0) ? allocator->Allocate(count) : 0;
+        if (self->unknown_c_ != 0) {
+            memcpy(self->unknown_c_, (char*)file + 0xc, offset);
         }
-        if (arg0->unknown_10_ != 0) {
-            memcpy(arg0->unknown_10_, (char*)arg2 + (func_020de7a4((Struct_020de714_3*)arg0) + 0xc), var1);
+        if (self->unknown_10_ != 0) {
+            memcpy(self->unknown_10_, (char*)file + (func_020de7a4((Struct_020de714_3*)self) + 0xc), count);
         }
-        var2 = (Type_020de714)func_020de574;
-        if (var2 != 0) {
-            func_020de7d0((Struct_020de714*)arg0, var2);
+        cb = (Type_020de714)func_020de574;
+        if (cb != 0) {
+            func_020de7d0((Struct_020de714*)self, cb);
         }
-        arg0->unknown_8_.unknown_0_ = (arg0->unknown_8_.unknown_0_ & ~0x80000000u) | 0x80000000u;
+        self->f8.raw = (self->f8.raw & ~0x80000000u) | 0x80000000u;
     }
-    return func_020de5b0((Struct_020de5b0*)arg0);
+    return func_020de5b0((Struct_020de5b0*)self);
 }

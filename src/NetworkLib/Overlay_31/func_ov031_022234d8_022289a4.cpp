@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-extern "C" ARM void func_ov031_022234d8(int arg0, void* arg1);
+extern "C" ARM void func_ov031_022234d8(int a0, void* cb);
 extern "C" extern int LoadToMainBG2ScreenData(int arg0, int arg1, unsigned int arg2);
 
 extern int data_ov031_0224b884;

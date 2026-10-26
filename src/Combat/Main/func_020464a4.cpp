@@ -2,8 +2,8 @@
 #include "std_library_functions.h"
 
 // USA: func_020464a4
-extern "C" ARM void func_020464a4(char* arg0, char* arg1, int arg2) {
-    if (arg0 == NULL || arg1 == NULL) return;
-    strncpy(arg1, arg0, arg2 - 1);
-    arg1[arg2 - 1] = 0;
+extern "C" ARM void func_020464a4(char* src, char* dst, int size) {
+    if (src == NULL || dst == NULL) return;
+    strncpy(dst, src, size - 1);
+    dst[size - 1] = 0;
 }

@@ -3,12 +3,12 @@
 #include "NitroSDK/Memory.h"
 
 // USA: func_020ac734
-extern "C" ARM int func_020ac734(void* arg0) {
-    GameState* var0 = GameState::GetInstance();
+extern "C" ARM int func_020ac734(void* arg) {
+    GameState* bs = GameState::GetInstance();
 #if defined(jpn)
-    VectorizedInvertedMemcpy(arg0, (char*)var0 + 0x62b4, 0xad6);
+    VectorizedInvertedMemcpy(arg, (char*)bs + 0x62b4, 0xad6);
 #else
-    VectorizedInvertedMemcpy(arg0, (char*)var0 + 0x64f4, 0xad6);
+    VectorizedInvertedMemcpy(arg, (char*)bs + 0x64f4, 0xad6);
 #endif
     return 1;
 }

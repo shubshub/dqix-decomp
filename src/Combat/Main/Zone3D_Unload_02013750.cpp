@@ -10,11 +10,11 @@
 #include "World/ZoneFeatures.h"
 #include "World/Zone3D.h"
 
-void ItemTable_Init(void* obj);
-void Zone3D_ResetLootIcons(char* base);
+extern "C" void ItemTable_Init(void* obj);
+extern "C" void Zone3D_ResetLootIcons(char* base);
 
 // The SafeAllocator at Zone3D +0x2730 (jpn +0x2770), inside the header's unk_2730; Zone3D_Reset resets its pointer
-struct AllocAt0x2730_02013750 {
+struct Struct_02013750_3 {
     char pad[(IS_JPN ? 0x770 : 0x730) + 0x2000];
     SafeAllocator alloc;
 };
@@ -22,7 +22,7 @@ struct AllocAt0x2730_02013750 {
 #pragma optimize_for_size off
 
 // Main, originally ResetBigStruct02013750 (USA 0x02013750, EUR 0x02013760, JPN 0x02013518)
-ARM void Zone3D_Unload(void* obj, int destroyAllocators) {
+extern "C" ARM void Zone3D_Unload(void* obj, int destroyAllocators) {
     Zone3D* zone = (Zone3D*)obj;
     zone->textureImageMemory_ = 0;
     zone->texturePaletteMemory_ = 0;
@@ -52,7 +52,7 @@ ARM void Zone3D_Unload(void* obj, int destroyAllocators) {
     if (!destroyAllocators) {
         return;
     }
-    AllocAt0x2730_02013750* b = (AllocAt0x2730_02013750*)obj;
+    Struct_02013750_3* b = (Struct_02013750_3*)obj;
     if (b->alloc.GetSignedAllocator() != NULL) {
         b->alloc.Destroy();
         b->alloc.ResetAllocatorPointer();

@@ -2,13 +2,13 @@
 #include "std_library_functions.h"
 
 struct Struct_ov023_021d9988 {
-	char unknown_0_[0x124];
-	char unknown_124_[4];
+	char pad[0x124];
+	char buf[4];
 	unsigned char unknown_128_;
 };
 
 // USA: func_ov023_021d9988
-extern "C" ARM void func_ov023_021d9988(struct Struct_ov023_021d9988 *arg0, void *arg1, unsigned int arg2) {
-	memcpy(arg0->unknown_124_, arg1, arg2);
-	arg0->unknown_128_ = (unsigned char)arg2;
+extern "C" ARM void func_ov023_021d9988(struct Struct_ov023_021d9988 *obj, void *src, unsigned int len) {
+	memcpy(obj->buf, src, len);
+	obj->unknown_128_ = (unsigned char)len;
 }

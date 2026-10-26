@@ -1,55 +1,55 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void func_0201a108(void* arg0, unsigned char* arg1, int arg2);
+extern "C" void func_0201a108(void* obj, unsigned char* p, int mode);
 
 // USA: func_02019f6c
-extern "C" ARM void func_02019f6c(void* arg0, unsigned char* arg1, int arg2) {
-    unsigned char var0[9];
-    int var1;
-    memcpy(var0, arg1, 9);
+extern "C" ARM void func_02019f6c(void* obj, unsigned char* buf, int mode) {
+    unsigned char tmp[9];
+    int i;
+    memcpy(tmp, buf, 9);
 
-    switch (arg2) {
+    switch (mode) {
     case 1:
-        arg1[0] = var0[2];
-        arg1[1] = var0[5];
-        arg1[2] = var0[8];
-        arg1[3] = var0[1];
-        arg1[4] = var0[4];
-        arg1[5] = var0[7];
-        arg1[6] = var0[0];
-        arg1[7] = var0[3];
-        arg1[8] = var0[6];
-        for (var1 = 0; var1 < 9; var1++) {
-            func_0201a108(arg0, arg1 + var1, 1);
+        buf[0] = tmp[2];
+        buf[1] = tmp[5];
+        buf[2] = tmp[8];
+        buf[3] = tmp[1];
+        buf[4] = tmp[4];
+        buf[5] = tmp[7];
+        buf[6] = tmp[0];
+        buf[7] = tmp[3];
+        buf[8] = tmp[6];
+        for (i = 0; i < 9; i++) {
+            func_0201a108(obj, buf + i, 1);
         }
         break;
     case 2:
-        arg1[0] = var0[8];
-        arg1[1] = var0[7];
-        arg1[2] = var0[6];
-        arg1[3] = var0[5];
-        arg1[4] = var0[4];
-        arg1[5] = var0[3];
-        arg1[6] = var0[2];
-        arg1[7] = var0[1];
-        arg1[8] = var0[0];
-        for (var1 = 0; var1 < 9; var1++) {
-            func_0201a108(arg0, arg1 + var1, 2);
+        buf[0] = tmp[8];
+        buf[1] = tmp[7];
+        buf[2] = tmp[6];
+        buf[3] = tmp[5];
+        buf[4] = tmp[4];
+        buf[5] = tmp[3];
+        buf[6] = tmp[2];
+        buf[7] = tmp[1];
+        buf[8] = tmp[0];
+        for (i = 0; i < 9; i++) {
+            func_0201a108(obj, buf + i, 2);
         }
         break;
     case 3:
-        arg1[0] = var0[6];
-        arg1[1] = var0[3];
-        arg1[2] = var0[0];
-        arg1[3] = var0[7];
-        arg1[4] = var0[4];
-        arg1[5] = var0[1];
-        arg1[6] = var0[8];
-        arg1[7] = var0[5];
-        arg1[8] = var0[2];
-        for (var1 = 0; var1 < 9; var1++) {
-            func_0201a108(arg0, arg1 + var1, 3);
+        buf[0] = tmp[6];
+        buf[1] = tmp[3];
+        buf[2] = tmp[0];
+        buf[3] = tmp[7];
+        buf[4] = tmp[4];
+        buf[5] = tmp[1];
+        buf[6] = tmp[8];
+        buf[7] = tmp[5];
+        buf[8] = tmp[2];
+        for (i = 0; i < 9; i++) {
+            func_0201a108(obj, buf + i, 3);
         }
         break;
     }

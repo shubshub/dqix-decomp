@@ -3,26 +3,26 @@
 
 struct Struct_ov003_0216201c {
 #if defined(jpn)
-    char unknown_0_[0x2a];
+    char pad0[0x2a];
 #else
-    char unknown1_0_[0x36];
+    char pad0[0x36];
 #endif
-    short unknown_36_;
+    short sel;
 };
 
-struct Struct_ov003_02154af4_3 {
+struct Scene {
 #if defined(jpn)
-    char unknown_0_[0x1f0];
+    char pad0[0x1f0];
     char unknown_308_[0x20c - 0x1f0];
-    Struct_ov003_0216201c *unknown_324_;
+    Struct_ov003_0216201c *entries;
     char unknown_210_[0x28c - 0x210];
 #else
-    char unknown1_0_[0x308];
+    char pad0[0x308];
     char unknown_308_[0x324 - 0x308];
-    Struct_ov003_0216201c *unknown_324_;
+    Struct_ov003_0216201c *entries;
     char unknown_328_[0x464 - 0x328];
 #endif
-    unsigned int unknown_464_;
+    unsigned int flags;
     char unknown_468_[0x470 - 0x468];
     short *unknown_470_;
     short unknown_474_;
@@ -38,13 +38,13 @@ struct Struct_ov003_02154af4_3 {
     signed char unknown_49f_;
     char unknown_4a0_[0x4a3 - 0x4a0];
     unsigned char unknown_4a3_;
-    unsigned char unknown_4a4_;
+    unsigned char state;
 };
 
 struct Struct_ov003_0216253c {
-    signed char unknown_0_0_ : 6;
-    char unknown_1_[0x13f - 1];
-    unsigned char unknown_13f_0_ : 3;
+    signed char v : 6;
+    char pad1[0x13f - 1];
+    unsigned char m : 3;
 };
 
 #if defined(jpn)
@@ -54,149 +54,149 @@ struct Struct_ov003_0216253c {
 #endif
 
 extern int g_sePlayer;
-struct StatusOwner02081198;
-void SetEntryNibbleByShortId(StatusOwner02081198*, int, int);
-struct StatusOwner02081164;
-void SetEntryFlag0x2ByShortId(StatusOwner02081164*, int, int);
+struct Struct_02081198;
+extern "C" void func_02081198(Struct_02081198*, int, int);
+struct Struct_02081164;
+extern "C" void func_02081164(Struct_02081164*, int, int);
 extern "C" void func_020813ec(void *, int);
-struct Obj0208203c;
-void ResetWithSub0208203c(Obj0208203c*);
-int FindMappedMemberId02080468(void *, int);
+struct Struct_02081f20_2;
+extern "C" void func_0208203c(Struct_02081f20_2*);
+extern "C" int func_02080468(void *, int);
 struct SePlayer;
-void SePlayer_Play(SePlayer *, int, int);
-struct Cont0207fe44;
-void CallFunc0204c804OverAllElems(Cont0207fe44*);
-Elem * GetElementAtIndex_02160bd0_02160bd0(void*, int);
+extern "C" void SePlayer_Play(SePlayer *, int, int);
+struct Struct_0207fe44;
+extern "C" void func_0207fe44(Struct_0207fe44*);
+extern "C" Struct_ov003_0216253c * func_ov003_02160bd0(void*, int);
 extern "C" int func_ov003_02160a68(Scene *);
 extern "C" int func_ov003_02160854(Scene *);
 extern "C" void func_ov003_021612c0(Scene *);
 extern "C" int func_ov003_02161344(Scene *);
-void SetOrClearFlag40_02166f80(void*, int, int);
+extern "C" void func_ov003_02166f80(void*, int, int);
 extern "C" void func_ov003_02166220(Scene *);
 extern "C" void func_ov003_02166184(Scene *);
 extern "C" void func_ov003_021668fc(Scene *);
 
 // USA: func_ov003_02163484
-extern "C" ARM void func_ov003_02163484(Struct_ov003_02154af4_3 *arg0) {
-    unsigned char var0 = arg0->unknown_4a4_;
-    Struct_ov003_0216201c *var1    = arg0->unknown_324_;
+extern "C" ARM void func_ov003_02163484(Scene *self) {
+    unsigned char state = self->state;
+    Struct_ov003_0216201c *entries    = self->entries;
 
-    if (var0 == 0) {
-        arg0->unknown_480_ = -1;
-        arg0->unknown_488_ = 6;
-        arg0->unknown_474_ = -1;
-        if (arg0->unknown_494_ < 0) {
-            arg0->unknown_494_ = func_02080468(var1, arg0->unknown_488_);
+    if (state == 0) {
+        self->unknown_480_ = -1;
+        self->unknown_488_ = 6;
+        self->unknown_474_ = -1;
+        if (self->unknown_494_ < 0) {
+            self->unknown_494_ = func_02080468(entries, self->unknown_488_);
         }
-        var1->unknown_36_ = arg0->unknown_494_;
-        func_02081198((Struct_02081198*)var1, 0x18, 1);
-        func_02081164((Struct_02081164*)var1, 0x18, 1);
-        func_020813ec(var1, 0x18);
-        func_ov003_02166f80(arg0, arg0->unknown_488_, 0);
-        func_ov003_02166220(arg0);
-        func_0208203c((Struct_02081f20_2*)arg0->unknown_308_);
-        arg0->unknown_470_ = 0;
-        arg0->unknown_464_ |= 0x780000;
-        if (arg0->unknown_464_ & 1) {
-            *(unsigned int *) ((int) arg0 + REGION_OFF_464) |= 0x800000;
+        entries->sel = self->unknown_494_;
+        func_02081198((Struct_02081198*)entries, 0x18, 1);
+        func_02081164((Struct_02081164*)entries, 0x18, 1);
+        func_020813ec(entries, 0x18);
+        func_ov003_02166f80(self, self->unknown_488_, 0);
+        func_ov003_02166220(self);
+        func_0208203c((Struct_02081f20_2*)self->unknown_308_);
+        self->unknown_470_ = 0;
+        self->flags |= 0x780000;
+        if (self->flags & 1) {
+            *(unsigned int *) ((int) self + REGION_OFF_464) |= 0x800000;
         }
-        arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
-    } else if (var0 == 1) {
-        arg0->unknown_470_ = &arg0->unknown_494_;
-        arg0->unknown_464_ |= 1;
-        func_ov003_02166184(arg0);
-        if (arg0->unknown_464_ & 0x1000000) {
-            arg0->unknown_464_ |= 0x780000;
-            if (arg0->unknown_464_ & 1) {
-                *(unsigned int *) ((int) arg0 + REGION_OFF_464) |= 0x800000;
+        self->state = self->state + 1;
+    } else if (state == 1) {
+        self->unknown_470_ = &self->unknown_494_;
+        self->flags |= 1;
+        func_ov003_02166184(self);
+        if (self->flags & 0x1000000) {
+            self->flags |= 0x780000;
+            if (self->flags & 1) {
+                *(unsigned int *) ((int) self + REGION_OFF_464) |= 0x800000;
             }
         }
-        if (func_ov003_02160854(arg0) != 0) {
-            int var2 = arg0->unknown_494_ - func_02080468(var1, arg0->unknown_488_);
-            var2 += arg0->unknown_49f_ * 4;
-            Struct_ov003_0216253c *var3 = func_ov003_02160bd0(arg0, var2);
-            if (var3 == 0) {
+        if (func_ov003_02160854(self) != 0) {
+            int idx = self->unknown_494_ - func_02080468(entries, self->unknown_488_);
+            idx += self->unknown_49f_ * 4;
+            Struct_ov003_0216253c *elem = func_ov003_02160bd0(self, idx);
+            if (elem == 0) {
                 return;
             }
-            if (var3->unknown_0_0_ < 0) {
+            if (elem->v < 0) {
                 return;
             }
             SePlayer_Play((SePlayer *) &g_sePlayer, 1, 0);
-            ResetWithSub0208203c((Obj0208203c*)self->sub308);
-            self->p470 = 0;
+            func_0208203c((Struct_02081f20_2*)self->unknown_308_);
+            self->unknown_470_ = 0;
             int m      = elem->m;
             if (m == 3) {
-                SetOrClearFlag40_02166f80(self, self->h488, 1);
-                self->h484  = 0x58;
+                func_ov003_02166f80(self, self->unknown_488_, 1);
+                self->unknown_484_  = 0x58;
                 self->state = 0;
             } else if (m == 2 || m == 1 || m == 4) {
-                SetOrClearFlag40_02166f80(self, self->h488, 1);
-                self->h484  = 0x57;
+                func_ov003_02166f80(self, self->unknown_488_, 1);
+                self->unknown_484_  = 0x57;
                 self->state = 0;
             } else {
-                arg0->unknown_480_ = var3->unknown_0_0_;
-                func_ov003_02166f80(arg0, arg0->unknown_488_, 1);
-                arg0->unknown_484_  = 0x19;
-                arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
-                arg0->unknown_464_ |= 0x20;
+                self->unknown_480_ = elem->v;
+                func_ov003_02166f80(self, self->unknown_488_, 1);
+                self->unknown_484_  = 0x19;
+                self->state = self->state + 1;
+                self->flags |= 0x20;
             }
-        } else if (func_ov003_02160a68(arg0) != 0) {
-            func_0208203c((Struct_02081f20_2*)arg0->unknown_308_);
-            arg0->unknown_470_ = 0;
-            func_0207fe44((Struct_0207fe44*)var1);
-            arg0->unknown_464_ |= 0x80000;
-            arg0->unknown_484_  = 2;
-            arg0->unknown_4a3_  = 1;
-            arg0->unknown_4a4_ = 0;
+        } else if (func_ov003_02160a68(self) != 0) {
+            func_0208203c((Struct_02081f20_2*)self->unknown_308_);
+            self->unknown_470_ = 0;
+            func_0207fe44((Struct_0207fe44*)entries);
+            self->flags |= 0x80000;
+            self->unknown_484_  = 2;
+            self->unknown_4a3_  = 1;
+            self->state = 0;
         }
-    } else if (var0 == 2) {
-        func_ov003_021612c0(arg0);
-        arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
-    } else if (var0 == 3) {
-        int var5 = func_ov003_02161344(arg0);
-        if (var5 != -1) {
-            if (var5 == 1) {
-                arg0->unknown_484_  = 0x1a;
-                arg0->unknown_4a4_ = arg0->unknown_4a4_ + 1;
-                arg0->unknown_464_ |= 0x20;
+    } else if (state == 2) {
+        func_ov003_021612c0(self);
+        self->state = self->state + 1;
+    } else if (state == 3) {
+        int r = func_ov003_02161344(self);
+        if (r != -1) {
+            if (r == 1) {
+                self->unknown_484_  = 0x1a;
+                self->state = self->state + 1;
+                self->flags |= 0x20;
             }
         } else {
-            func_0207fe44((Struct_0207fe44*)var1);
-            arg0->unknown_484_  = 0x1c;
-            arg0->unknown_486_  = 2;
-            arg0->unknown_4a3_  = 1;
-            arg0->unknown_4a4_ = 0;
-            arg0->unknown_464_ |= 0x80000;
-            arg0->unknown_4a4_ = 0;
+            func_0207fe44((Struct_0207fe44*)entries);
+            self->unknown_484_  = 0x1c;
+            self->unknown_486_  = 2;
+            self->unknown_4a3_  = 1;
+            self->state = 0;
+            self->flags |= 0x80000;
+            self->state = 0;
         }
-    } else if (var0 == 4) {
-        func_0207fe44((Struct_0207fe44*)var1);
-        arg0->unknown_464_ |= 0x80000;
-        arg0->unknown_484_  = 2;
-        arg0->unknown_4a3_  = 1;
-        arg0->unknown_4a4_ = 0;
-        func_ov003_021668fc(arg0);
-    } else if (var0 == 5) {
-        func_0207fe44((Struct_0207fe44*)var1);
-        arg0->unknown_464_ |= 0x80000;
-        arg0->unknown_484_  = 2;
-        arg0->unknown_4a3_  = 1;
-        arg0->unknown_4a4_ = 0;
-    } else if (var0 == 100) {
-        func_ov003_021612c0(arg0);
-        arg0->unknown_4a4_ = 0x65;
-    } else if (var0 == 101) {
-        int var6 = func_ov003_02161344(arg0);
-        if (var6 != -1) {
-            if (var6 == 1) {
-                arg0->unknown_484_  = 0x18;
-                arg0->unknown_4a4_ = 0;
+    } else if (state == 4) {
+        func_0207fe44((Struct_0207fe44*)entries);
+        self->flags |= 0x80000;
+        self->unknown_484_  = 2;
+        self->unknown_4a3_  = 1;
+        self->state = 0;
+        func_ov003_021668fc(self);
+    } else if (state == 5) {
+        func_0207fe44((Struct_0207fe44*)entries);
+        self->flags |= 0x80000;
+        self->unknown_484_  = 2;
+        self->unknown_4a3_  = 1;
+        self->state = 0;
+    } else if (state == 100) {
+        func_ov003_021612c0(self);
+        self->state = 0x65;
+    } else if (state == 101) {
+        int r = func_ov003_02161344(self);
+        if (r != -1) {
+            if (r == 1) {
+                self->unknown_484_  = 0x18;
+                self->state = 0;
             }
         } else {
-            arg0->unknown_484_  = 0x1c;
-            arg0->unknown_486_  = 2;
-            arg0->unknown_4a3_  = 1;
-            arg0->unknown_4a4_ = 0;
+            self->unknown_484_  = 0x1c;
+            self->unknown_486_  = 2;
+            self->unknown_4a3_  = 1;
+            self->state = 0;
         }
     }
 }

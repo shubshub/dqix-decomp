@@ -15,38 +15,38 @@ struct StoreStruct;
 struct Struct0218d618;
 struct SePlayer;
 struct ItemTable;
-struct LootEventInfo { char pad0[0x30]; unsigned short containerId; };
-struct LootEvent {
+struct Struct_ov017_021bf9a0 { char pad0[0x30]; unsigned short containerId; };
+struct Struct_ov017_021bf9a0_2 {
     char pad0[8]; unsigned short timer; short fieldA;
-    LootEventInfo* info; Foo02048004* display; short taskId;
+    Struct_ov017_021bf9a0* info; Foo02048004* display; short taskId;
     char pad16[0x28 - 0x16]; Vector3fix position; SafeAllocator allocator;
     unsigned char special;
 };
 #if defined(jpn)
-struct Struct_ov017_021bf9a0_3 { char unknown_0_[0x2794]; char unknown_2754_[4]; };
+struct PersistentLootState { char pad0[0x2794]; char containerData[4]; };
 #else
-struct Struct_ov017_021bf9a0_3 { char unknown_0_[0x2754]; char unknown_2754_[4]; };
+struct PersistentLootState { char pad0[0x2754]; char containerData[4]; };
 #endif
-StoreStruct* MessageSystem_GetInstance();
+extern "C" StoreStruct* MessageSystem_GetInstance();
 extern "C" PersistentLootState* Zone3D_GetInstance();
 extern "C" unsigned char* Scenario_GetInstance();
-int GameResources_IsSpecialItemEffectLoaded(Struct0218d618*);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
-void SprSprite_Unload(Foo02048004*);
-void VramState_CopyCurrentTo(State0207dfc8*, State0207dfc8*);
-void VramState_Restore(char*);
-void VramState_Save(char*);
-void SprSprite_LoadFile(void*, int, int, int);
-int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" int GameResources_IsSpecialItemEffectLoaded(Struct0218d618*);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
+extern "C" void SprSprite_Unload(Foo02048004*);
+extern "C" void VramState_CopyCurrentTo(State0207dfc8*, State0207dfc8*);
+extern "C" void VramState_Restore(char*);
+extern "C" void VramState_Save(char*);
+extern "C" void SprSprite_LoadFile(void*, int, int, int);
+extern "C" int Scenario_TestFlag(int, unsigned char*, int);
 extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
 extern "C" void func_ov017_021cdb00(int, int, int, int);
 extern "C" void __clear(void*, int);
-void* ItemTable_Construct(void*);
-void InitStruct0207cbe8(char*);
+extern "C" void* ItemTable_Construct(void*);
+extern "C" void func_0207cbe8(char*);
 extern "C" int func_0207d538(void*, int, int, char*, int);
-void* TextQueue_GetInstance();
+extern "C" void* TextQueue_GetInstance();
 extern "C" void GameResources_PlaySpecialItemEffect(GameResources*, Vector3fix*, int);
-void SePlayer_Play(SePlayer*, int, int);
+extern "C" void SePlayer_Play(SePlayer*, int, int);
 extern AllocatorUnion g_mainAllocator;
 extern SePlayer g_sePlayer;
 
@@ -55,12 +55,12 @@ static inline char& GetResourceStateBuffer(GameResources* resources, int offset)
 }
 
 // USA: func_ov017_021bf9a0
-extern "C" ARM int func_ov017_021bf9a0(LootEvent* self) {
+extern "C" ARM int func_ov017_021bf9a0(Struct_ov017_021bf9a0_2* self) {
     unsigned int delta = GameState::GetInstance()->GetEffectiveDeltaTime();
     if (delta < self->timer) { self->timer -= delta; return 3; }
     self->timer = 0;
     MessageSystem_GetInstance();
-    LootEventInfo* info = self->info;
+    Struct_ov017_021bf9a0* info = self->info;
     Zone3D_GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     LootableContainerManager* manager = LootableContainerManager::GetMainInstance();
@@ -84,13 +84,13 @@ extern "C" ARM int func_ov017_021bf9a0(LootEvent* self) {
                 SprSprite_LoadFile(self->display, (int)file, length, (int)&self->allocator);
                 VramState_Save((char*)&saved);
             }
-            var2->RemoveTask(arg0->unknown_14_);
-            arg0->unknown_14_ = -1;
+            loader->RemoveTask(self->taskId);
+            self->taskId = -1;
         } else return 3;
     }
     self->timer = 300;
-    unsigned short listPosition = 0;
-    LootableContainerManager::Container* container = manager->GetContainerByID(info->containerId, &listPosition);
+    unsigned short var9 = 0;
+    LootableContainerManager::Container* container = manager->GetContainerByID(info->containerId, &var9);
     if (container) {
         int id = container->uniqueID;
         int flagIndex = id + 0x79e;
@@ -102,8 +102,8 @@ extern "C" ARM int func_ov017_021bf9a0(LootEvent* self) {
             LootTextContext context;
             context.allocator.ResetAllocatorPointer();
             ItemTable_Construct(context.itemTable);
-            InitStruct0207cbe8((char*)&context);
-            InitStruct0207cbe8((char*)&context);
+            func_0207cbe8((char*)&context);
+            func_0207cbe8((char*)&context);
             context.containerItems = (ItemTable*)state->containerData;
             if (func_0207d538(&context, container->lootType, container->itemIDOrRank, text, 1)) {
 #if defined(jpn)

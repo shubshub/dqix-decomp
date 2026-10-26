@@ -1,31 +1,31 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void* func_020a171c(void* arg0, int arg1, void* arg2);
+extern "C" void* func_020a171c(void* obj, int type, void* arg);
 
 struct Struct_020a1698 {
-    unsigned int unknown_0_;
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
+    unsigned int unk0;
+    unsigned short unk4;
+    unsigned short pad6;
     void* unknown_8_;
-    unsigned char* unknown_c_;
-    unsigned char unknown_10_;
+    unsigned char* unkc;
+    unsigned char unk10;
 };
 
 // USA: func_020a1698
-extern "C" ARM void func_020a1698(Struct_020a1698* arg0, void* arg1) {
-    arg0->unknown_8_ = NULL;
-    memset(arg0->unknown_c_, 0, (arg0->unknown_4_ - 1) / 8 + 1);
+extern "C" ARM void func_020a1698(Struct_020a1698* obj, void* arg1) {
+    obj->unknown_8_ = NULL;
+    memset(obj->unkc, 0, (obj->unk4 - 1) / 8 + 1);
 
-    int var0 = 2;
-    arg0->unknown_8_ = func_020a171c(arg0, var0, arg1);
-    void* var1 = arg0->unknown_8_;
-    if (var1 != NULL) {
-        while (var1 != NULL) {
-            void* var2 = func_020a171c(arg0, var0, arg1);
-            *(void**)((char*)var1 + 8) = var2;
-            var1 = var2;
+    int type = 2;
+    obj->unknown_8_ = func_020a171c(obj, type, arg1);
+    void* node = obj->unknown_8_;
+    if (node != NULL) {
+        while (node != NULL) {
+            void* next = func_020a171c(obj, type, arg1);
+            *(void**)((char*)node + 8) = next;
+            node = next;
         }
     }
-    arg0->unknown_10_ = 2;
+    obj->unk10 = 2;
 }

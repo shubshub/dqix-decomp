@@ -5,23 +5,23 @@ enum { Enum_0207fcb8_44 = 0x20 };
 enum { Enum_0207fcb8_44 = 0x2c };
 #endif
 
-struct Struct_0204b010;
+struct BackgroundGraphics;
 
-extern "C" void func_0204b010(struct Struct_0204b010* arg0, void* arg1);
+extern "C" void Background_ClearMap(struct BackgroundGraphics* obj, void* p);
 
 struct Struct_0207fcb8 {
-    char unknown_0_[Enum_0207fcb8_44];
-    char* unknown_2c_;
+    char pad0[Enum_0207fcb8_44];
+    char* entries;
     char unknown_30_[8];
-    unsigned char unknown_38_;
+    unsigned char count;
 };
 
 // USA: func_0207fcb8
-extern "C" ARM void func_0207fcb8(struct Struct_0207fcb8* arg0) {
-    unsigned char var0;
-    if (arg0->unknown_2c_ != NULL) {
-        for (var0 = 0; var0 < arg0->unknown_38_; var0++) {
-            func_0204b010((struct Struct_0204b010*)(arg0->unknown_2c_ + var0 * 0x20), NULL);
+extern "C" ARM void func_0207fcb8(struct Struct_0207fcb8* obj) {
+    unsigned char i;
+    if (obj->entries != NULL) {
+        for (i = 0; i < obj->count; i++) {
+            Background_ClearMap((struct BackgroundGraphics*)(obj->entries + i * 0x20), NULL);
         }
     }
 }

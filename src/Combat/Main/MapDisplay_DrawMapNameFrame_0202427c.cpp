@@ -2,9 +2,9 @@
 #include "World/Zone3D.h"
 
 extern "C" void *Zone3D_GetInstance(void);
-int ZoneId_IsGrotto(int zoneId);
-int STD_GetStringLength(const char *text);
-void MapDisplay_DrawSprite(void *receiver, int x, int y, int spriteIndex, unsigned char oamSlot, unsigned char priority,
+extern "C" int ZoneId_IsGrotto(int zoneId);
+extern "C" int STD_GetStringLength(const char *text);
+extern "C" void MapDisplay_DrawSprite(void *receiver, int x, int y, int spriteIndex, unsigned char oamSlot, unsigned char priority,
                               unsigned short palette, unsigned char matrixIndex, int scaleX, int scaleY);
 
 // MapDisplay offsets (header: field5a8, scriptNameWidth, and records[25]'s object count)

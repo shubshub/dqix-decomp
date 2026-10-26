@@ -12,5 +12,5 @@ extern "C" ARM void func_ov031_0223fae8(void* destination) {
     for (int i = 0; i < 6; i++) {
         func_ov031_0223fc7c(encoded + i * 2, bytes[i], 2);
     }
-    func_ov031_0223e454(arg0, var1, 12);
+    func_ov031_0223e454(destination, encoded, 12);
 }

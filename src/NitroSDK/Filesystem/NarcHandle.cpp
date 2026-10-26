@@ -104,7 +104,7 @@ const void* GetFileFromNARCInMemory(const char* filename)
         // after running the previous function, base_B holds offset of file from file data,
         // and machine.linkedHandle should point to a NitroHandle that is actually
         // an initial segment of a NarcHandle, so the cast is valid
-        addr = (const unsigned char*)((NarcHandle*)machine.linkedHandle)->pFileDataStart + machine.fileInfo.unknown_4_;
+        addr = (const unsigned char*)((NarcHandle*)machine.linkedHandle)->pFileDataStart + machine.fileInfo.startOffset;
         NitroVM_FinishRead(&machine);
     }
     return addr;

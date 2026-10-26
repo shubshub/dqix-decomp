@@ -8,69 +8,69 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "Memory/SafeAllocator.h"
 
-struct Struct_02012de8;
-extern "C" void* func_020d6c00(void);
-extern "C" int func_02046708(struct Struct_02012de8* arg0, unsigned int arg1);
+struct FlagWord02046708;
+extern "C" void* GlobalFlags_GetInstance(void);
+extern "C" int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 
 struct Struct_020534ac_2;
 
 struct Struct_020534ac;
 
-struct Struct_0203d028;
-extern "C" void func_0207df50(struct Struct_0203d028* arg0);
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
+struct Foo0207df50;
+extern "C" void VramState_Rewind(struct Foo0207df50* p);
+extern "C" void VramState_Restore(char* obj);
+extern "C" void VramState_Save(char* obj);
 
-extern "C" void func_0204719c(void);
-extern "C" void func_02047b40(void* arg0, int arg1, void* arg2);
-extern "C" void func_0205308c(void* arg0, int arg1);
+extern "C" void SprSprite_Init(void);
+extern "C" void SprSprite_Parse(void* a, int b, void* c);
+extern "C" void func_0205308c(void* ctx, int val);
 
 // USA: func_020534ac
-extern "C" ARM void func_020534ac(char* arg0) {
-    int var0;
-    char* var1;
-    char* var2;
-    void* var3;
-    void* var4;
-    int var5;
-    int var6;
+extern "C" ARM void func_020534ac(char* ctx) {
+    int base;
+    char* blockA;
+    char* blockB;
+    void* obj;
+    void* allocated;
+    int out1;
+    int out2;
 
-    if (func_02046708((struct Struct_02012de8*)func_020d6c00(), 2)) {
+    if (FlagWord_TestBits((struct FlagWord02046708*)GlobalFlags_GetInstance(), 2)) {
         return;
     }
-    if (*(unsigned char*)(arg0 + (IS_JPN ? 0x179 : 0x185)) == 0) {
+    if (*(unsigned char*)(ctx + (IS_JPN ? 0x179 : 0x185)) == 0) {
         return;
     }
 
-    var3 = (void*)(int)BackgroundLoader::GetInstance();
+    obj = (void*)(int)BackgroundLoader::GetInstance();
 
-    if (((BackgroundLoader*)((struct Struct_020534ac_2*)var3))->GetDetailedTaskStatus((int)(*(int*)(arg0 + (IS_JPN ? 0x188 : 0x194)))) == 2) {
-        ((BackgroundLoader*)((struct Struct_020534ac*)var3))->GetLoadedFileByID((int)(*(int*)(arg0 + (IS_JPN ? 0x188 : 0x194))), (void**)(&var5), (unsigned int*)(&var6));
-        if (var5 != 0) {
-            var0 = *(int*)(arg0 + (IS_JPN ? 0x148 : 0x154));
-            var1 = (char*)(var0 + 0x168);
-            var2 = (char*)(var0 + 0x154);
-            func_0207df50((struct Struct_0203d028*)(var1 + 0x400));
-            func_0207df90(var1 + 0x400);
-            var4 = ((SafeAllocator*)(var2 + 0x400))->Allocate(0x88);
-            *(void**)(arg0 + (IS_JPN ? 0x184 : 0x190)) = var4;
-            if (var4 != NULL) {
-                func_0204719c();
-                *(unsigned char*)((char*)(*(void**)(arg0 + (IS_JPN ? 0x184 : 0x190))) + 0x84) |= 4;
-                func_02047b40(*(void**)(arg0 + (IS_JPN ? 0x184 : 0x190)), var5, var2 + 0x400);
+    if (((BackgroundLoader*)((struct Struct_020534ac_2*)obj))->GetDetailedTaskStatus((int)(*(int*)(ctx + (IS_JPN ? 0x188 : 0x194)))) == 2) {
+        ((BackgroundLoader*)((struct Struct_020534ac*)obj))->GetLoadedFileByID((int)(*(int*)(ctx + (IS_JPN ? 0x188 : 0x194))), (void**)(&out1), (unsigned int*)(&out2));
+        if (out1 != 0) {
+            base = *(int*)(ctx + (IS_JPN ? 0x148 : 0x154));
+            blockA = (char*)(base + 0x168);
+            blockB = (char*)(base + 0x154);
+            VramState_Rewind((struct Foo0207df50*)(blockA + 0x400));
+            VramState_Restore(blockA + 0x400);
+            allocated = ((SafeAllocator*)(blockB + 0x400))->Allocate(0x88);
+            *(void**)(ctx + (IS_JPN ? 0x184 : 0x190)) = allocated;
+            if (allocated != NULL) {
+                SprSprite_Init();
+                *(unsigned char*)((char*)(*(void**)(ctx + (IS_JPN ? 0x184 : 0x190))) + 0x84) |= 4;
+                SprSprite_Parse(*(void**)(ctx + (IS_JPN ? 0x184 : 0x190)), out1, blockB + 0x400);
             }
-            func_0207dfac(var1 + 0x400);
+            VramState_Save(blockA + 0x400);
         }
     }
 
-    ((BackgroundLoader*)(var3))->RemoveTask((int)(*(int*)(arg0 + (IS_JPN ? 0x188 : 0x194))));
-    *(int*)(arg0 + (IS_JPN ? 0x188 : 0x194)) = -1;
-    *(unsigned char*)(arg0 + (IS_JPN ? 0x179 : 0x185)) = 0;
+    ((BackgroundLoader*)(obj))->RemoveTask((int)(*(int*)(ctx + (IS_JPN ? 0x188 : 0x194))));
+    *(int*)(ctx + (IS_JPN ? 0x188 : 0x194)) = -1;
+    *(unsigned char*)(ctx + (IS_JPN ? 0x179 : 0x185)) = 0;
 
-    if (*(unsigned char*)(arg0 + (IS_JPN ? 0x17a : 0x186)) != 0) {
-        signed char var7 = *(signed char*)(arg0 + (IS_JPN ? 0x171 : 0x17d));
-        char* var8 = arg0 + (var7 + 1);
-        func_0205308c(arg0, *(signed char*)(var8 + 0x100 + (IS_JPN ? 0x6c : 0x78)));
-        *(unsigned char*)(arg0 + (IS_JPN ? 0x17a : 0x186)) = 0;
+    if (*(unsigned char*)(ctx + (IS_JPN ? 0x17a : 0x186)) != 0) {
+        signed char idx = *(signed char*)(ctx + (IS_JPN ? 0x171 : 0x17d));
+        char* p = ctx + (idx + 1);
+        func_0205308c(ctx, *(signed char*)(p + 0x100 + (IS_JPN ? 0x6c : 0x78)));
+        *(unsigned char*)(ctx + (IS_JPN ? 0x17a : 0x186)) = 0;
     }
 }

@@ -3,13 +3,13 @@
 #include "std_library_functions.h"
 #include "Graphics/VRAMStaging.h"
 
-extern "C" int func_020bb588(unsigned int arg0, int arg1, int arg2);
+extern "C" int NNS_GfdAllocFrmTexVram(unsigned int size, int a, int b);
 
 struct Struct_02047b40_4 {
-    unsigned char unknown_0_[0x84];
-    unsigned char unknown_84_0_ : 1;
+    unsigned char pad[0x84];
+    unsigned char bit0 : 1;
     unsigned char unknown_84_1_ : 1;
-    unsigned char unknown_84_2_ : 1;
+    unsigned char bit2 : 1;
     unsigned char unknown_84_3_ : 1;
     unsigned char unknown_84_4_ : 1;
     unsigned char unknown_84_5_ : 1;
@@ -18,18 +18,18 @@ struct Struct_02047b40_4 {
 };
 
 // USA: func_02047ed4
-extern "C" ARM void func_02047ed4(struct Struct_02047b40_4* arg0, int* arg1, void* arg2, unsigned int arg3, SafeAllocator* arg4) {
-    int var0 = func_020bb588(arg3, 0, 0);
-    unsigned int var1 = ((unsigned int)var0 << 16) >> 13;
+extern "C" ARM void func_02047ed4(struct Struct_02047b40_4* obj, int* outSize, void* buf, unsigned int size, SafeAllocator* allocator) {
+    int bits = NNS_GfdAllocFrmTexVram(size, 0, 0);
+    unsigned int computedSize = ((unsigned int)bits << 16) >> 13;
     bool var2 = true;
-    if (arg0->unknown_84_2_ && arg4 != NULL) {
-        void* var3 = arg4->Allocate(arg3);
+    if (obj->bit2 && allocator != NULL) {
+        void* var3 = allocator->Allocate(size);
         if (var3 != NULL) {
-            memcpy(var3, arg2, arg3);
-            arg2 = var3;
+            memcpy(var3, buf, size);
+            buf = var3;
             var2 = false;
         }
     }
-    StageMemoryToVRAM(VRAMSubregion_TextureImage, arg2, var1, arg3, false, var2);
-    *arg1 = (int)var1;
+    StageMemoryToVRAM(VRAMSubregion_TextureImage, buf, computedSize, size, false, var2);
+    *outSize = (int)computedSize;
 }

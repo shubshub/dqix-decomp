@@ -8,6 +8,6 @@
 
 
 // USA: func_ov000_02163338
-extern "C" ARM void func_ov000_02163338(unsigned char* arg0, unsigned char arg1) {
-    *(arg0 + 0x5000 + REGION_OFFSET_0) = arg1;
+extern "C" ARM void func_ov000_02163338(unsigned char* obj, unsigned char val) {
+    *(obj + 0x5000 + REGION_OFFSET_0) = val;
 }

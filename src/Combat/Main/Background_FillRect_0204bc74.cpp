@@ -32,10 +32,10 @@ extern "C" ARM void Background_FillRect(struct BackgroundGraphics *layer, unsign
     if (palette != BackgroundPalette_Keep) {
         palette = palette << 12;
     } else {
-        arg6 = 0;
+        palette = 0;
     }
-    arg1 = arg1 & 0xfff;
-    arg1 |= arg6;
+    tile = tile & 0xfff;
+    tile |= palette;
 
     short j = 0;
     short i;

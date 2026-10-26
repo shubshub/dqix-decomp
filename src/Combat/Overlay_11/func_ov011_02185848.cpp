@@ -5,33 +5,33 @@
 #endif
 #include <globaldefs.h>
 
-struct Struct_ov011_02184c30 {
-    int unknown_0_;
-    union { int unknown_0_; float unknown1_0_; } unknown_4_;
+struct TaggedNumber02184c30 {
+    int type;
+    union { int i; float f; } value;
 };
 
-extern "C" int func_ov011_02184c30(struct Struct_ov011_02184c30* arg0);
+extern "C" int func_ov011_02184c30(struct TaggedNumber02184c30* v);
 extern "C" ARM void* func_ov017_021b2164(void);
-extern "C" ARM void* func_ov011_021849c8(void* arg0);
-extern "C" ARM void* func_ov023_021f6880(void* arg0, int arg1);
-extern "C" ARM int func_ov023_021f6f10(void* arg0);
+extern "C" ARM void* func_ov011_021849c8(void* ctx);
+extern "C" ARM void* func_ov023_021f6880(void* list, int id);
+extern "C" ARM int func_ov023_021f6f10(void* obj);
 
 struct Struct_ov004_02153e20;
-extern "C" int func_ov023_021f9b30(struct Struct_ov004_02153e20* arg0, unsigned short arg1, unsigned int arg2, unsigned int arg3);
+extern "C" int func_ov023_021f9b30(struct Struct_ov004_02153e20* self, unsigned short val, unsigned int x, unsigned int y);
 
 // USA: func_ov011_02185848
-extern "C" ARM int func_ov011_02185848(struct Struct_ov011_02184c30* arg0, int arg1) {
-    int var0 = func_ov011_02184c30(&arg0[0]);
-    int var1 = func_ov011_02184c30(&arg0[1]);
-    int var2 = func_ov011_02184c30(&arg0[2]);
-    int var3 = func_ov011_02184c30(&arg0[3]);
-    void* var4 = func_ov011_021849c8(func_ov017_021b2164());
-    void* var5 = func_ov023_021f6880(var4, var0);
-    void* var6 = func_ov023_021f6880(var4, var1);
-    if (var5 == 0 || var6 == 0)
+extern "C" ARM int func_ov011_02185848(struct TaggedNumber02184c30* params, int count) {
+    int id = func_ov011_02184c30(&params[0]);
+    int id2 = func_ov011_02184c30(&params[1]);
+    int unk2 = func_ov011_02184c30(&params[2]);
+    int var3 = func_ov011_02184c30(&params[3]);
+    void* objects = func_ov011_021849c8(func_ov017_021b2164());
+    void* object = func_ov023_021f6880(objects, id);
+    void* var6 = func_ov023_021f6880(objects, id2);
+    if (object == 0 || var6 == 0)
         return 0;
-    if (func_ov023_021f6f10(var5) != 7)
+    if (func_ov023_021f6f10(object) != 7)
         return 0;
 
-    return func_ov023_021f9b30((struct Struct_ov004_02153e20*)var5, var1,(unsigned short)var3, (unsigned short)var2) ? 1 : 0;
+    return func_ov023_021f9b30((struct Struct_ov004_02153e20*)object, id2,(unsigned short)var3, (unsigned short)unk2) ? 1 : 0;
 }

@@ -17,7 +17,7 @@ struct
 {
     unsigned short unknown_0_;
     char unknown_2_[2];
-    TouchScreenCallback unknown_4_;
+    TouchScreenCallback callback;
     // this isn't used anywhere but is written to.
     // maybe other functions used it but were removed by the linker?
     TouchScreenSample unknown_8_;
@@ -69,20 +69,20 @@ static inline void GetTouchScreenSampleFromArm7(TouchScreenSample* dst)
     {
         struct
         {
-            unsigned int unknown_0_0_ : 12;
-            unsigned int unknown_1_4_ : 12;
-            unsigned int unknown_3_0_ : 1;
+            unsigned int x : 12;
+            unsigned int y : 12;
+            unsigned int pressed : 1;
             unsigned int unknown_3_1_ : 2;
         };
-        unsigned short unknown_0_[2];
+        unsigned short words[2];
     } arm7data;
 
-    arm7data.unknown_0_[0] = ARM7_TOUCHDATAA;
-    arm7data.unknown_0_[1] = ARM7_TOUCHDATAB;
+    arm7data.words[0] = ARM7_TOUCHDATAA;
+    arm7data.words[1] = ARM7_TOUCHDATAB;
 
-    dst->x = arm7data.unknown_0_0_;
-    dst->y = arm7data.unknown_1_4_;
-    dst->isHeld = (unsigned char)arm7data.unknown_3_0_;
+    dst->x = arm7data.x;
+    dst->y = arm7data.y;
+    dst->isHeld = (unsigned char)arm7data.pressed;
     dst->missingCoordFlags = (unsigned char)arm7data.unknown_3_1_;
 }
 
@@ -94,8 +94,8 @@ void TouchScreenIPCCommandReceiveProc(unsigned int a, unsigned int b, unsigned i
     if (c != 0)
     {
         s_touchData.unknown_38_ |= 1 << arg2WordUpper;
-        if (s_touchData.unknown_4_ != NULL)
-            s_touchData.unknown_4_(arg2WordUpper, 4, 0);
+        if (s_touchData.callback != NULL)
+            s_touchData.callback(arg2WordUpper, 4, 0);
         return;
     }
 
@@ -107,8 +107,8 @@ void TouchScreenIPCCommandReceiveProc(unsigned int a, unsigned int b, unsigned i
 
         GetTouchScreenSampleFromArm7(&s_touchData.unknown_14_[s_touchData.unknown_10_]);
 
-        if (s_touchData.unknown_4_ != NULL)
-            s_touchData.unknown_4_(arg2WordUpper, 0, s_touchData.unknown_10_);
+        if (s_touchData.callback != NULL)
+            s_touchData.callback(arg2WordUpper, 0, s_touchData.unknown_10_);
         return;
     }
 
@@ -134,8 +134,8 @@ void TouchScreenIPCCommandReceiveProc(unsigned int a, unsigned int b, unsigned i
         }
 
         s_touchData.unknown_3a_ &= ~(1 << arg2WordUpper);
-        if (s_touchData.unknown_4_ != NULL)
-            s_touchData.unknown_4_(arg2WordUpper, 0, 0);
+        if (s_touchData.callback != NULL)
+            s_touchData.callback(arg2WordUpper, 0, 0);
         break;
     case 4:
         callbackArg2 = 3;
@@ -150,8 +150,8 @@ void TouchScreenIPCCommandReceiveProc(unsigned int a, unsigned int b, unsigned i
         s_touchData.unknown_38_ |= 1 << arg2WordUpper;
         s_touchData.unknown_3a_ &= ~(1 << arg2WordUpper);
 
-        if (s_touchData.unknown_4_ != NULL)
-            s_touchData.unknown_4_(arg2WordUpper, callbackArg2, 0);
+        if (s_touchData.callback != NULL)
+            s_touchData.callback(arg2WordUpper, callbackArg2, 0);
         break;
     case 1:
     default:
@@ -168,7 +168,7 @@ void InitializeTouchSystem()
     s_touchData.unknown_0_ = true;
     InitializeInterProcessorCommunication();
     s_touchData.unknown_10_ = 0;
-    s_touchData.unknown_4_ = 0;
+    s_touchData.callback = 0;
     s_touchData.unknown_14_ = 0;
     s_touchData.unknown_36_ = 0;
     s_touchData.unknown_34_ = false;
@@ -250,7 +250,7 @@ void SaveTouchScreenCalibration(TouchScreenCalibration* tsc)
 void SetTouchScreenCallback(TouchScreenCallback callback)
 {
     int priorState = DisableIRQInterrupts();
-    s_touchData.unknown_4_ = callback;
+    s_touchData.callback = callback;
     SetIRQInterruptState(priorState);
 }
 
@@ -278,8 +278,8 @@ void EnableTouchScreen(int arg1, int arg2, TouchScreenSample* sampleBuffer, int 
     {
         SetIRQInterruptState(priorState);
         s_touchData.unknown_38_ |= 2;
-        if (s_touchData.unknown_4_ != NULL)
-            s_touchData.unknown_4_(1, 4, 0);
+        if (s_touchData.callback != NULL)
+            s_touchData.callback(1, 4, 0);
         return;
     }
 
@@ -302,8 +302,8 @@ void DisableTouchScreen()
     {
         SetIRQInterruptState(priorState);
         s_touchData.unknown_38_ |= 4;
-        if (s_touchData.unknown_4_ != NULL)
-            s_touchData.unknown_4_(2, 4, 0);
+        if (s_touchData.callback != NULL)
+            s_touchData.callback(2, 4, 0);
         return;
     }
 

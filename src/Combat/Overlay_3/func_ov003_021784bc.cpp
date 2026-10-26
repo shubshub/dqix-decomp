@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
-struct Struct_0207cf30_3 { short* unknown_0_; signed char* unknown_4_; short unknown_8_; };
-extern "C" signed char func_020a0b3c(struct Struct_0207cf30_3* arg0, int arg1);
-extern "C" int func_02086d20(unsigned char* arg0);
-extern "C" int func_0207c7a0(void* arg0, int arg1, int arg2);
+struct KeyMap020a0b3c { short* keys; signed char* values; short count; };
+extern "C" signed char func_020a0b3c(struct KeyMap020a0b3c* map, int key);
+extern "C" int func_02086d20(unsigned char* p);
+extern "C" int func_0207c7a0(void* p, int e, int c);
 
 // USA: func_ov003_021784bc
-extern "C" ARM int func_ov003_021784bc(void* arg0, int arg1, unsigned int arg2, int arg3) {
-    int var0 = 0;
-    unsigned int var1 = (arg2 >= 8 && arg2 <= 9);
-    if (var1) {
-        void* var2 = arg0;
-        if (arg2 == 9) {
-            var2 = (char*)arg0 + 0x204 + 0xc00;
+extern "C" ARM int func_ov003_021784bc(void* self, int key, unsigned int kind, int d) {
+    int result = 0;
+    unsigned int inRange = (kind >= 8 && kind <= 9);
+    if (inRange) {
+        void* ptr = self;
+        if (kind == 9) {
+            ptr = (char*)self + 0x204 + 0xc00;
         }
-        signed char var3 = func_020a0b3c((struct Struct_0207cf30_3*)var2, arg1);
-        int var4 = func_02086d20((unsigned char*)arg0);
-        var0 = (arg3 * 8 + 0x63) - (var3 + var4);
+        signed char val1 = func_020a0b3c((struct KeyMap020a0b3c*)ptr, key);
+        int val2 = func_02086d20((unsigned char*)self);
+        result = (d * 8 + 0x63) - (val1 + val2);
     } else {
-        unsigned int var5 = (arg2 <= 7);
+        unsigned int var5 = (kind <= 7);
         if (var5) {
-            var0 = 0x63 - func_0207c7a0((char*)arg0 + 0x1d4, arg1, 9);
+            result = 0x63 - func_0207c7a0((char*)self + 0x1d4, key, 9);
         }
     }
-    return var0;
+    return result;
 }

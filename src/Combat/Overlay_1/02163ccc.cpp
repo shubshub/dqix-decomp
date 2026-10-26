@@ -3,65 +3,65 @@
 #include "World/Object3D.h"
 #include "Resource/GameResources.h"
 
-extern "C" int func_ov017_021d60f4(void* arg0);
-extern "C" void func_ov017_021b621c(void* arg0, SafeAllocator* arg1, void* arg2);
+extern "C" int func_ov017_021d60f4(void* a);
+extern "C" void func_ov017_021b621c(void* node, SafeAllocator* allocator, void* obj);
 extern SafeAllocator* data_ov001_021658b8[8];
 
-struct Struct_020469f8;
-struct Struct_020469f8_2;
-extern "C" void func_020469f8(struct Struct_020469f8* arg0, struct Struct_020469f8_2* arg1);
+struct HeadList020469f8;
+struct HeadNode020469f8;
+extern "C" void func_020469f8(struct HeadList020469f8* list, struct HeadNode020469f8* node);
 
-struct Struct_ov001_02163ccc { int unknown_0_; int unknown_4_; int unknown_8_; unsigned char* unknown_c_; };
-struct Struct_ov001_02165880 { char unknown_0_[4]; Struct_ov001_02163ccc* unknown_4_; };
+struct Struct_ov001_02163ccc { int type; int val; int pad2; unsigned char* child; };
+struct Struct_ov001_02165880 { char pad0[4]; Struct_ov001_02163ccc* table; };
 extern struct Struct_ov001_02165880 data_ov001_02165880;
 
 // USA: func_ov001_02163ccc
-extern "C" ARM int func_ov001_02163ccc(char* arg0, int arg1) {
-    SafeAllocator* var0;
-    char* var1;
-    int var2;
-    unsigned char* var3;
-    char* var4;
-    char* var5;
-    int var6;
+extern "C" ARM int func_ov001_02163ccc(char* self, int mode) {
+    SafeAllocator* allocator;
+    char* base;
+    int slot;
+    unsigned char* obj;
+    char* list;
+    char* node;
+    int idx;
 
-    var0 = data_ov001_021658b8[0];
-    var1 = (char*)GetGameResources();
+    allocator = data_ov001_021658b8[0];
+    base = (char*)GetGameResources();
 #if defined(jpn)
-    var4 = *(char**)(var1 + 0x3000 + 0x4ec);
-    var5 = *(char**)(var1 + 0x3000 + 0x93c);
+    list = *(char**)(base + 0x3000 + 0x4ec);
+    node = *(char**)(base + 0x3000 + 0x93c);
 #else
-    var4 = *(char**)(var1 + 0x3000 + 0x6fc);
-    var5 = *(char**)(var1 + 0x3000 + 0xb5c);
+    list = *(char**)(base + 0x3000 + 0x6fc);
+    node = *(char**)(base + 0x3000 + 0xb5c);
 #endif
 
-    if (arg1 < 1) {
-        func_ov017_021b621c(var5, var0, 0);
-        func_020469f8((struct Struct_020469f8*)var4, (struct Struct_020469f8_2*)var5);
+    if (mode < 1) {
+        func_ov017_021b621c(node, allocator, 0);
+        func_020469f8((struct HeadList020469f8*)list, (struct HeadNode020469f8*)node);
     } else {
-        var6 = func_ov017_021d60f4(arg0);
-        var2 = -1;
-        if (arg1 >= 2) {
-            var2 = func_ov017_021d60f4(arg0 + 0x8);
+        idx = func_ov017_021d60f4(self);
+        slot = -1;
+        if (mode >= 2) {
+            slot = func_ov017_021d60f4(self + 0x8);
         }
-        var3 = 0;
-        if (var6 > 0) {
-            if (data_ov001_02165880.unknown_4_[var6].unknown_0_ == 1) {
-                var3 = data_ov001_02165880.unknown_4_[var6].unknown_c_;
+        obj = 0;
+        if (idx > 0) {
+            if (data_ov001_02165880.table[idx].type == 1) {
+                obj = data_ov001_02165880.table[idx].child;
             }
-            if (var3 == 0) return 0;
-            ((Object3D*)var3)->MakeVisible();
-            ((Object3D*)var3)->EnableFlag(0x40000000);
+            if (obj == 0) return 0;
+            ((Object3D*)obj)->MakeVisible();
+            ((Object3D*)obj)->EnableFlag(0x40000000);
         }
-        func_ov017_021b621c(var5, var0, var3);
-        *(short*)(var5 + 0xfe) = (short)var2;
-        func_020469f8((struct Struct_020469f8*)var4, (struct Struct_020469f8_2*)var5);
+        func_ov017_021b621c(node, allocator, obj);
+        *(short*)(node + 0xfe) = (short)slot;
+        func_020469f8((struct HeadList020469f8*)list, (struct HeadNode020469f8*)node);
     }
-    var5[8] = 0;
+    node[8] = 0;
 #if defined(jpn)
-    (*(char**)(var1 + 0x3000 + 0x524))[0x96] = 1;
+    (*(char**)(base + 0x3000 + 0x524))[0x96] = 1;
 #else
-    (*(char**)(var1 + 0x3000 + 0x734))[0x9a] = 1;
+    (*(char**)(base + 0x3000 + 0x734))[0x9a] = 1;
 #endif
     return 1;
 }

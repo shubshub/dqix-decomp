@@ -7,6 +7,6 @@
 #endif
 
 // USA: func_ov000_02161264
-extern "C" ARM int func_ov000_02161264(void* arg0) {
-    return *(int*)((char*)arg0 + REGION_OFFSET_0) & 0x400;
+extern "C" ARM int func_ov000_02161264(void* work) {
+    return *(int*)((char*)work + REGION_OFFSET_0) & 0x400;
 }

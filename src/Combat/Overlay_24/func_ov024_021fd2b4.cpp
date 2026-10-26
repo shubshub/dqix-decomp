@@ -1,33 +1,33 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void func_ov024_021fd088(void* arg0, float arg1, int arg2);
+extern "C" void func_ov024_021fd088(void* obj, float arg1, int a2);
 struct Struct_ov024_021fd1bc;
-extern "C" void func_ov024_021fe6b4(struct Struct_ov024_021fd1bc* arg0, int arg1);
+extern "C" void func_ov024_021fe6b4(struct Struct_ov024_021fd1bc* obj, int val);
 
-struct Struct_ov024_021fd2b4 { unsigned int unknown_0_0_ : 7; unsigned int unknown_0_7_ : 7; };
-struct Struct_ov024_021fd2b4_2 { char unknown_0_[0x14]; struct Struct_ov024_021fd2b4 unknown_14_; char unknown_18_[0x1a]; short unknown_32_; };
+struct Struct_ov024_021fd2b4 { unsigned int lo : 7; unsigned int val : 7; };
+struct Struct_ov024_021fd2b4_2 { char pad[0x14]; struct Struct_ov024_021fd2b4 bits; char pad2[0x1a]; short field32; };
 
 struct Struct_ov024_021fd2b4_3 {
-	char unknown_0_[0x64c];
+	char pad0[0x64c];
 	struct Struct_ov024_021fd2b4_2* unknown_64c_;
-	char unknown_650_[0x668 - 0x64c - 4];
+	char pad2[0x668 - 0x64c - 4];
 	GameObject* unknown_668_;
 };
 
 // USA: func_ov024_021fd2b4
-extern "C" ARM void func_ov024_021fd2b4(struct Struct_ov024_021fd2b4_3* arg0) {
-	struct ModifiableCombatStats* var0 = arg0->unknown_668_->currentStats_;
-	if (var0->attackBuff <= -2) return;
-	short var1;
-	unsigned char var2 = *(unsigned char*)((char*)var0 + 0x4f);
+extern "C" ARM void func_ov024_021fd2b4(struct Struct_ov024_021fd2b4_3* obj) {
+	struct ModifiableCombatStats* stats = obj->unknown_668_->currentStats_;
+	if (stats->attackBuff <= -2) return;
+	short field32;
+	unsigned char var2 = *(unsigned char*)((char*)stats + 0x4f);
 	if (var2 == 0) return;
-	struct Struct_ov024_021fd2b4_2* var3 = arg0->unknown_64c_;
-	var1 = var3->unknown_32_;
-	float var4 = (float)var3->unknown_14_.unknown_0_7_;
+	struct Struct_ov024_021fd2b4_2* state = obj->unknown_64c_;
+	field32 = state->field32;
+	float var4 = (float)state->bits.val;
 	float var5 = var4 * ((float)var2 / 100.0f);
 	if (var5 > 100.0f) var5 = 100.0f;
-	if (var1 >= 0) return;
-	func_ov024_021fe6b4((struct Struct_ov024_021fd1bc*)arg0, 0xd);
-	func_ov024_021fd088(arg0, var5, 0x11);
+	if (field32 >= 0) return;
+	func_ov024_021fe6b4((struct Struct_ov024_021fd1bc*)obj, 0xd);
+	func_ov024_021fd088(obj, var5, 0x11);
 }

@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 // USA: func_02076988
-extern "C" ARM void func_02076988(int* arg0, int arg1, int arg2) {
-    arg0[10] = arg1;
-    arg0[11] = arg2;
+extern "C" ARM void func_02076988(int* obj, int a, int b) {
+    obj[10] = a;
+    obj[11] = b;
 }

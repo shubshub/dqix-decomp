@@ -13,8 +13,8 @@ enum { Enum_0208ea10_23770 = 0x5cda, Enum_0208ea10_23772 = 0x5cdc };
 struct Struct_0208e9f4;
 extern "C" void func_0208e9f4(struct Struct_0208e9f4*);
 
-void SetByte0x5cdaAndClearField0xa_020120d4(unsigned char* obj, unsigned char value);
-extern "C" void func_0208ec04(struct Struct0208e9f4*);
+extern "C" void func_020120d4(unsigned char* obj, unsigned char value);
+extern "C" void func_0208ec04(struct Struct_0208e9f4*);
 extern "C" void* LootPointList_GetInstance(void);
 extern "C" int rand(void);
 
@@ -33,47 +33,47 @@ struct Struct_0208ea10_3 {
     unsigned int unknown_1_1_ : 4;
     unsigned int unknown_1_5_ : 4;
     unsigned int unknown_2_1_ : 8;
-    unsigned int unknown_3_1_ : 4;
-    unsigned int unknown_3_5_ : 2;
-    unsigned int unknown_3_7_ : 1;
+    unsigned int type4 : 4;
+    unsigned int kind : 2;
+    unsigned int flag : 1;
 };
 
 struct Struct_0208ea10 {
     union {
-        unsigned int unknown_0_;
-        struct Struct_0208ea10_3 unknown1_0_;
-    } unknown_0_;
+        unsigned int raw;
+        struct Struct_0208ea10_3 b;
+    } u;
 };
 
 // USA: func_0208ea10
-extern "C" ARM void func_0208ea10(void* arg0, int arg1) {
+extern "C" ARM void func_0208ea10(void* p0, int a1) {
     char var0[0x430];
     char var1[0x430];
-    char var2[0x40];
-    unsigned int var3;
-    unsigned int var4;
-    const void* var5;
+    char name[0x40];
+    unsigned int fileLen;
+    unsigned int size;
+    const void* ptr;
 
-    unsigned char* var6 = (unsigned char*)GameState::GetInstance();
+    unsigned char* gs = (unsigned char*)GameState::GetInstance();
 
-    if (var6[Enum_0208ea10_23770] == 8) {
-        func_0208e9f4((struct Struct_0208e9f4*)arg0);
-        func_020120d4(var6, rand() % 8);
+    if (gs[Enum_0208ea10_23770] == 8) {
+        func_0208e9f4((struct Struct_0208e9f4*)p0);
+        func_020120d4(gs, rand() % 8);
     } else {
-        func_0208ec04((struct Struct_0208e9f4*)arg0);
+        func_0208ec04((struct Struct_0208e9f4*)p0);
         return;
     }
 
     BackgroundLoader::AddLockGlobal();
-    __clear(var2, 0x40);
-    var3 = 0;
+    __clear(name, 0x40);
+    fileLen = 0;
 
     if (LoadFileIntoMemory(data_020f1330, g_fileLoadBuffer, &fileLen) != 0) {
         if (GetFileInNarc(g_fileLoadBuffer, data_020f134a, &ptr, &size, 0) != 0) {
-            ((Script*)((struct ResetStruct0208ea10*)scriptFirst))->Initialize();
-            ((Script*)((struct ResetStruct0208ea10*)scriptFirst))->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1308);
-            ((Script*)((struct ResetStruct0208ea10*)scriptFirst))->Load(ptr, size);
-            ((Script*)((struct ResetStruct0208ea10*)scriptFirst))->Execute();
+            ((Script*)((struct Struct_0208ea10_2*)var0))->Initialize();
+            ((Script*)((struct Struct_0208ea10_2*)var0))->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1308);
+            ((Script*)((struct Struct_0208ea10_2*)var0))->Load(ptr, size);
+            ((Script*)((struct Struct_0208ea10_2*)var0))->Execute();
             ((unsigned char*)LootPointList_GetInstance())[0xa] = 1;
         }
 
@@ -82,23 +82,23 @@ extern "C" ARM void func_0208ea10(void* arg0, int arg1) {
             sprintf(name, data_020f1356, i);
             fileLen = 0;
             if (GetFileInNarc(g_fileLoadBuffer, name, &ptr, &size, 0) != 0) {
-                ((Script*)((struct ResetStruct0208ea10*)scriptLoop))->Initialize();
-                ((Script*)((struct ResetStruct0208ea10*)scriptLoop))->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1308);
-                ((Script*)((struct ResetStruct0208ea10*)scriptLoop))->Load(ptr, size);
-                ((Script*)((struct ResetStruct0208ea10*)scriptLoop))->Execute();
+                ((Script*)((struct Struct_0208ea10_2*)var1))->Initialize();
+                ((Script*)((struct Struct_0208ea10_2*)var1))->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1308);
+                ((Script*)((struct Struct_0208ea10_2*)var1))->Load(ptr, size);
+                ((Script*)((struct Struct_0208ea10_2*)var1))->Execute();
             }
         }
 
-        int var8;
-        for (var8 = 0; var8 < 2; var8++) {
-            struct Struct_0208ea10* var9 = &((struct Struct_0208ea10*)(var6 + Enum_0208ea10_23772))[var8 + 0x62];
-            var9->unknown_0_.unknown1_0_.unknown_3_7_ = 1;
-            var9->unknown_0_.unknown1_0_.unknown_3_1_ = 2;
-            var9->unknown_0_.unknown1_0_.unknown_1_1_ = 1;
-            var9->unknown_0_.unknown1_0_.unknown_1_5_ = 1;
-            var9->unknown_0_.unknown1_0_.unknown_3_5_ = 1;
-            var9->unknown_0_.unknown1_0_.unknown_0_0_ = 0;
-            var9->unknown_0_.unknown_0_ &= 0xfe01ffff;
+        int j;
+        for (j = 0; j < 2; j++) {
+            struct Struct_0208ea10* e = &((struct Struct_0208ea10*)(gs + Enum_0208ea10_23772))[j + 0x62];
+            e->u.b.flag = 1;
+            e->u.b.type4 = 2;
+            e->u.b.unknown_1_1_ = 1;
+            e->u.b.unknown_1_5_ = 1;
+            e->u.b.kind = 1;
+            e->u.b.unknown_0_0_ = 0;
+            e->u.raw &= 0xfe01ffff;
         }
     }
 

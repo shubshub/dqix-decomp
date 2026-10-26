@@ -9,25 +9,25 @@ enum { Enum_ov005_02156e1c_15600 = 0x3cf0 };
 #include <NitroSDK/Matrix.h>
 #include <std_library_functions.h>
 
-struct Struct_0203a46c;
+struct Vec3Target0203a46c;
 
-struct Struct_ov005_02155d6c_2 {
-    char unknown_0_[0x1c];
-    Vector3fix unknown_1c_;
-    char unknown_28_[0x88 - 0x28];
+struct MenuModel {
+    char unk_0[0x1c];
+    Vector3fix position_;
+    char unk_28[0x88 - 0x28];
 };
 
-struct Struct_ov005_02153954 {
-    char unknown_0_[Enum_ov005_02156e1c_15600];
-    Struct_ov005_02155d6c_2 unknown_3cf0_;
-    short unknown_3d78_;
+struct EquipmentMenu {
+    char unk_0[Enum_ov005_02156e1c_15600];
+    MenuModel dragModel_;
+    short dragged_;
 };
 
-void SprSprite_SetPosition(Vec3Target0203a46c* obj, int x, int y, int z);
+extern "C" void SprSprite_SetPosition(Vec3Target0203a46c* obj, int x, int y, int z);
 
 // USA: func_ov005_02156e1c
-extern "C" ARM void func_ov005_02156e1c(Struct_ov005_02153954* arg0, int arg1, int arg2) {
-    if (arg0->unknown_3d78_ < 0)
+extern "C" ARM void func_ov005_02156e1c(EquipmentMenu* self, int x, int y) {
+    if (self->dragged_ < 0)
         return;
     Vector3fix position = self->dragModel_.position_;
     int curX = position.x >> 12;

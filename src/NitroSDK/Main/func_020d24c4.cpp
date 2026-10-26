@@ -2,7 +2,7 @@
 #include <NitroSDK/Interrupts.h>
 
 struct Struct_01ff8300_3 {
-    Struct_01ff8300_3* unknown_0_;
+    Struct_01ff8300_3* next;
 };
 
 struct Struct_02112780_4 {
@@ -24,17 +24,17 @@ extern unsigned char data_02112a60[0x1800];
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 int SendCommandToArm7(int command, int data, bool error);
 extern "C" void func_020d2880();
-extern "C" void* func_020d22f4(unsigned long arg0);
+extern "C" void* func_020d22f4(unsigned long flags);
 
 // USA: func_020d24c4
-extern "C" ARM int func_020d24c4(unsigned long arg0) {
+extern "C" ARM int func_020d24c4(unsigned long flags) {
     int var0 = DisableIRQInterrupts();
     if (data_02112780.unknown_8_ == NULL) {
         SetIRQInterruptState(var0);
         return true;
     }
     if (data_02112780.unknown_1c_ >= 8) {
-        if (!(arg0 & 1)) {
+        if (!(flags & 1)) {
             SetIRQInterruptState(var0);
             return false;
         }
@@ -48,7 +48,7 @@ extern "C" ARM int func_020d24c4(unsigned long arg0) {
     }
     CleanInvalidateCacheRange(data_02112a60, sizeof(data_02112a60));
     if (SendCommandToArm7(7, (int)data_02112780.unknown_8_, false) < 0) {
-        if (!(arg0 & 1)) {
+        if (!(flags & 1)) {
             SetIRQInterruptState(var0);
             return false;
         }
@@ -73,7 +73,7 @@ extern "C" ARM int func_020d24c4(unsigned long arg0) {
     data_02112780.unknown_1c_++;
     data_02112780.unknown_20_++;
     SetIRQInterruptState(var0);
-    if (arg0 & 2)
+    if (flags & 2)
         func_020d2880();
     return true;
 }

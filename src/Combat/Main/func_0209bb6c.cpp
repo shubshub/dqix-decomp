@@ -1,53 +1,53 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8;
+struct Variant02030b0c;
 
-struct Struct_0209bb6c_2 { char unknown_0_[0xc0]; int unknown_c0_; };
+struct Struct_0209bb6c_2 { char pad[0xc0]; int count; };
 struct Struct_0209bb6c {
-    struct Struct_0209bb6c_2* unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
+    struct Struct_0209bb6c_2* field0;
+    int field4;
+    int field8;
+    int fieldc;
+    int field10;
+    int field14;
 };
 extern struct Struct_0209bb6c* data_02109bb0;
 
 // USA: func_0209bb6c
-extern "C" ARM int func_0209bb6c(struct Struct_0201c1c8* arg0, int arg1) {
-    int var0, var1, var2, var3;
+extern "C" ARM int func_0209bb6c(struct Variant02030b0c* obj, int count) {
+    int a, b, c, d;
 
-    data_02109bb0->unknown_14_ = 0;
-    if (data_02109bb0->unknown_10_ == 0) return 1;
+    data_02109bb0->field14 = 0;
+    if (data_02109bb0->field10 == 0) return 1;
     {
-        int var4 = ((Script::Parameter*)arg0)->ToInt();
-        if (var4 != data_02109bb0->unknown_4_) return 1;
+        int val = ((Script::Parameter*)obj)->ToInt();
+        if (val != data_02109bb0->field4) return 1;
     }
 
-    var0 = 0;
-    var1 = 0;
-    var2 = 0;
-    var3 = 0;
-    if (arg1 > 1) {
-        var0 = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 8)))->ToInt();
-        var1 = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 0x10)))->ToInt();
-        var2 = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 0x18)))->ToInt();
-        var3 = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 0x20)))->ToInt();
+    a = 0;
+    b = 0;
+    c = 0;
+    d = 0;
+    if (count > 1) {
+        a = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 8)))->ToInt();
+        b = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 0x10)))->ToInt();
+        c = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 0x18)))->ToInt();
+        d = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 0x20)))->ToInt();
     }
 
     {
-        int var5 = var0 * 100 + var1;
-        int var6 = var2 * 100 + var3;
-        int var7 = data_02109bb0->unknown_8_ * 100 + data_02109bb0->unknown_c_;
+        int var5 = a * 100 + b;
+        int var6 = c * 100 + d;
+        int var7 = data_02109bb0->field8 * 100 + data_02109bb0->fieldc;
 
-        if (var0 == 0 && var1 == 0 && var2 == 0 && var3 == 0) {
-            data_02109bb0->unknown_14_ = 1;
-            data_02109bb0->unknown_0_->unknown_c0_ = 0;
+        if (a == 0 && b == 0 && c == 0 && d == 0) {
+            data_02109bb0->field14 = 1;
+            data_02109bb0->field0->count = 0;
         } else if (var5 <= var7 && var7 <= var6) {
-            data_02109bb0->unknown_14_ = 1;
-            data_02109bb0->unknown_10_ = 0;
-            data_02109bb0->unknown_0_->unknown_c0_ = 0;
+            data_02109bb0->field14 = 1;
+            data_02109bb0->field10 = 0;
+            data_02109bb0->field0->count = 0;
         }
     }
     return 1;

@@ -7,16 +7,16 @@ enum { Enum_ov025_021e6010_12 = 0xc };
 #endif
 
 struct Struct_ov025_021ef988_18 {
-    char unknown_0_[Enum_ov025_021e6010_12];
-    unsigned char* unknown_c_;
+    char pad0[Enum_ov025_021e6010_12];
+    unsigned char* inner;
 };
 
 extern struct Struct_ov025_021ef988_18 data_ov025_021ef988;
 
-struct Struct_ov025_021e6010 { char unknown_0_[8]; unsigned short unknown_8_; };
+struct Struct_ov025_021e6010 { char pad[8]; unsigned short field_8; };
 
 // USA: func_ov025_021e6010
-extern "C" ARM int func_ov025_021e6010(struct Struct_ov025_021e6010* arg0) {
-    *(unsigned short*)(data_ov025_021ef988.unknown_c_ + 0x21c) = arg0->unknown_8_;
+extern "C" ARM int func_ov025_021e6010(struct Struct_ov025_021e6010* p) {
+    *(unsigned short*)(data_ov025_021ef988.inner + 0x21c) = p->field_8;
     return 1;
 }

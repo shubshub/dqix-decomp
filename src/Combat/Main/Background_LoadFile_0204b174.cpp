@@ -6,12 +6,12 @@
 extern "C" void __clear(void* buf, int len);
 extern "C" int memcmp(void* a, void* b, int n);
 
-struct Struct_0204a848;
-struct Struct_0204acdc;
-struct Struct_0204aa64;
+struct Rec0204a848;
+struct Rec0204acdc;
+struct Obj0204aa64;
 
-int DeserializeAndDispatch(Rec0204a848* dst, BackgroundLoadFunction cb, unsigned char* src, void* extra);
-int DeserializeAndAllocate(Rec0204acdc* dst, void* unused, unsigned char* src, SafeAllocator* alloc);
+extern "C" int func_0204a848(Rec0204a848* dst, BackgroundLoadFunction cb, unsigned char* src, void* extra);
+extern "C" int func_0204acdc(Rec0204acdc* dst, void* unused, unsigned char* src, SafeAllocator* alloc);
 extern "C" int Background_LoadPalette(Obj0204aa64* obj, BackgroundLoadFunction cb, unsigned char* src, void* src2);
 
 // Main, originally func_0204b174 (USA 0x0204b174, EUR 0x0204b184, JPN 0x0204bf94)
@@ -27,7 +27,7 @@ extern "C" ARM int Background_LoadFile(struct BackgroundGraphics* layer, char* f
 
     if (memcmp(tag, Background_charTag, 4) == 0) {
         BackgroundLoadFunction load = Background_loadCharacterFunctions[layer->subScreen_][layer->bgNumber_];
-        return DeserializeAndDispatch((Rec0204a848*)layer, load, (unsigned char*)file, (void*)allocator);
+        return func_0204a848((Rec0204a848*)layer, load, (unsigned char*)file, (void*)allocator);
     }
 
     if (memcmp(tag, Background_paltTag, 4) == 0) {
@@ -40,7 +40,7 @@ extern "C" ARM int Background_LoadFile(struct BackgroundGraphics* layer, char* f
             if (layer->screenCapacity_ <= layer->screenCount_) {
                 return 1;
             }
-            int result = DeserializeAndAllocate((Rec0204acdc*)&layer->screens_[layer->screenCount_],
+            int result = func_0204acdc((Rec0204acdc*)&layer->screens_[layer->screenCount_],
                                            (void*)Background_loadScreenFunctions[layer->subScreen_][layer->bgNumber_],
                                            (unsigned char*)file, allocator);
             if (result != 0) {

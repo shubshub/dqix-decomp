@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
 struct Struct_020d76fc {
-    unsigned char unknown_0_[0xa24];
-    unsigned short unknown_a24_;
-    unsigned short unknown_a26_;
+    unsigned char pad[0xa24];
+    unsigned short src;
+    unsigned short dst;
 };
 
 // USA: func_020d76fc
-extern "C" ARM void func_020d76fc(struct Struct_020d76fc* arg0) {
-    arg0->unknown_a26_ |= (unsigned short)(arg0->unknown_a24_ & 0xf);
+extern "C" ARM void func_020d76fc(struct Struct_020d76fc* s) {
+    s->dst |= (unsigned short)(s->src & 0xf);
 }

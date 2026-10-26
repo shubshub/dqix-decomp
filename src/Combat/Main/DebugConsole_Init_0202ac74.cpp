@@ -23,7 +23,7 @@ enum { kScreenBytes = 32 * 24 * sizeof(unsigned short) };
 // Each glyph goes to the tile whose index is the ASCII code of the same character, the code func_0202ad4c
 // writes into the screen map.
 // Main, originally InitPaletteTables0202ac74 (USA 0x0202ac74, EUR 0x0202ac84, JPN 0x0202a82c)
-ARM void DebugConsole_Init() {
+extern "C" ARM void DebugConsole_Init() {
     DebugConsole_LoadGlyphTiles(&data_020ef788, 2, '(');
     DebugConsole_LoadGlyphTiles(&data_020ef78b, 12, '0');
     DebugConsole_LoadGlyphTiles(&data_020ef78e, 1, '=');

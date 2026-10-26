@@ -3,74 +3,74 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "std_library_functions.h"
 #include "Resource/Brightness.h"
-struct Struct_02032e58;
+struct ObjectStatePrefix;
 
-struct Struct_02048150;
+struct ArrayContainsByteStruct;
 struct Struct_ov000_02163a7c;
-struct Struct_02010088;
-struct Struct_02010604;
-struct Struct_0205d6a0 { char unknown_0_[4]; };
+struct S_10088;
+struct Bytes02033b88;
+struct Entry_0205d6a0 { char storage[4]; };
 struct Struct_ov023_021d9988;
-struct Struct_02072a68_2 { char unknown_0_[4]; };
+struct TableA68 { char storage[4]; };
 struct Struct_ov023_021eeaac_2 {
-    int unknown_0_, unknown_4_; char unknown_8_[9]; signed char unknown_11_;
-    unsigned char unknown_12_[4]; char unknown_16_[2]; int unknown_18_;
+    int state, task; char pad8[9]; signed char member;
+    unsigned char loaded[4]; char pad16[2]; int actorId;
 #if defined(jpn)
-    char unknown_1c_[0x118-0x1c]; char unknown_118_[0x2498-0x118]; unsigned char unknown_2788_;
+    char unknown_1c_[0x118-0x1c]; char entries[0x2498-0x118]; unsigned char count;
 #else
-    char unknown1_1c_[0x118-0x1c]; char unknown_118_[0x2788-0x118]; unsigned char unknown_2788_;
+    char unknown1_1c_[0x118-0x1c]; char entries[0x2788-0x118]; unsigned char count;
 #endif
 
     char unknown_2789_[4]; unsigned char unknown_278d_;
 };
-struct Struct_ov023_021f03a0 { unsigned char unknown_0_, unknown_1_, unknown_2_, unknown_3_; int unknown_4_; };
-struct Struct_ov003_02162f40 { char unknown_0_[0x25]; unsigned char unknown_25_; };
-struct Struct_ov023_021f03a0_2 { char unknown_0_[0x11b]; unsigned char unknown_11b_; char unknown_11c_[2]; unsigned char unknown_11e_; char unknown_11f_; void* unknown_120_; };
-struct Struct_ov023_021f0a5c_3 { char unknown_0_[0x54]; };
+struct Struct_ov023_021f03a0 { unsigned char id, unknown_1_, type, flag; int experience; };
+struct BattleInfo { char pad0[0x25]; unsigned char unknown_25_; };
+struct Struct_ov023_021f03a0_2 { char pad0[0x11b]; unsigned char state; char unknown_11c_[2]; unsigned char count; char unknown_11f_; void* entries; };
+struct LoadedEntry { char storage[0x54]; };
 struct Struct_ov000_02160da0 {
-    char unknown_0_[0x30]; SafeAllocator unknown_30_;
+    char pad0[0x30]; SafeAllocator allocator;
 #if defined(jpn)
-    char unknown_44_[0x218-0x30-sizeof(SafeAllocator)]; void* unknown_29c_; Struct_ov003_02162f40* unknown_2a0_;
+    char unknown_44_[0x218-0x30-sizeof(SafeAllocator)]; void* battle; BattleInfo* info;
 #else
-    char unknown1_44_[0x29c-0x30-sizeof(SafeAllocator)]; void* unknown_29c_; Struct_ov003_02162f40* unknown_2a0_;
+    char unknown1_44_[0x29c-0x30-sizeof(SafeAllocator)]; void* battle; BattleInfo* info;
 #endif
 
 #if defined(jpn)
-    char unknown_220_[0xb94-0x220]; char unknown_c18_[4]; char unknown_b98_[0xe28-0xb98]; int unknown_eac_;
+    char unknown_220_[0xb94-0x220]; char unknown_c18_[4]; char unknown_b98_[0xe28-0xb98]; int state;
 #else
-    char unknown_2a4_[0xc18-0x2a4]; char unknown_c18_[4]; char unknown_c1c_[0xeac-0xc1c]; int unknown_eac_;
+    char unknown_2a4_[0xc18-0x2a4]; char unknown_c18_[4]; char unknown_c1c_[0xeac-0xc1c]; int state;
 #endif
 
 #if defined(jpn)
-    char unknown_e2c_[0x371c-0xe2c]; char unknown_3760_[0x38a4-0x371c]; Struct_0205d6a0 unknown_38e8_;
+    char unknown_e2c_[0x371c-0xe2c]; char entry[0x38a4-0x371c]; Entry_0205d6a0 entries;
 #else
-    char unknown_eb0_[0x3760-0xeb0]; char unknown_3760_[0x38e8-0x3760]; Struct_0205d6a0 unknown_38e8_;
+    char unknown_eb0_[0x3760-0xeb0]; char entry[0x38e8-0x3760]; Entry_0205d6a0 entries;
 #endif
 
 #if defined(jpn)
-    char unknown_38a8_[0x5778-0x38a8]; Struct_ov023_021f03a0_2* unknown_5588_;
+    char unknown_38a8_[0x5778-0x38a8]; Struct_ov023_021f03a0_2* result;
 #else
-    char unknown_38ec_[0x5588-0x38ec]; Struct_ov023_021f03a0_2* unknown_5588_;
+    char unknown_38ec_[0x5588-0x38ec]; Struct_ov023_021f03a0_2* result;
 #endif
 
 #if defined(jpn)
-    char unknown_577c_[0x5948-0x577c]; int unknown_5758_[4]; int unknown_5768_; unsigned char unknown_576c_;
+    char unknown_577c_[0x5948-0x577c]; int experience[4]; int unknown_5768_; unsigned char unknown_576c_;
 #else
-    char unknown_558c_[0x5758-0x558c]; int unknown_5758_[4]; int unknown_5768_; unsigned char unknown_576c_;
+    char unknown_558c_[0x5758-0x558c]; int experience[4]; int unknown_5768_; unsigned char unknown_576c_;
 #endif
 
 #if defined(jpn)
-    char unknown_595d_[3]; Struct_ov023_021f0a5c_3 unknown_5770_[4]; char unknown_5ab0_[0x5af4-0x5ab0]; Struct_02072a68_2 unknown_5904_;
+    char unknown_595d_[3]; LoadedEntry loaded[4]; char unknown_5ab0_[0x5af4-0x5ab0]; TableA68 strings;
 #else
-    char unknown_576d_[3]; Struct_ov023_021f0a5c_3 unknown_5770_[4]; char unknown_58c0_[0x5904-0x58c0]; Struct_02072a68_2 unknown_5904_;
+    char unknown_576d_[3]; LoadedEntry loaded[4]; char unknown_58c0_[0x5904-0x58c0]; TableA68 strings;
 #endif
 
 };
-struct Struct_02092e0c {
+struct MessageController {
 #if defined(jpn)
-    char unknown_0_[0x10]; void* unknown_10_; char unknown_14_[0x868-0x14]; int unknown_998_;
+    char pad0[0x10]; void* actor; char unknown_14_[0x868-0x14]; int unknown_998_;
 #else
-    char unknown1_0_[0x10]; void* unknown1_10_; char unknown1_14_[0x998-0x14]; int unknown_998_;
+    char pad0[0x10]; void* actor; char unknown1_14_[0x998-0x14]; int unknown_998_;
 #endif
 
 #if defined(jpn)
@@ -80,101 +80,101 @@ struct Struct_02092e0c {
 #endif
 
 #if defined(jpn)
-    char unknown_17e0_[2]; unsigned char unknown_19b2_; char unknown_17e3_[0x17fb-0x17e3]; unsigned char unknown_19ca_;
+    char unknown_17e0_[2]; unsigned char unknown_19b2_; char unknown_17e3_[0x17fb-0x17e3]; unsigned char field19ca;
 #else
-    char unknown_19b0_[2]; unsigned char unknown_19b2_; char unknown_19b3_[0x19ca-0x19b3]; unsigned char unknown_19ca_;
+    char unknown_19b0_[2]; unsigned char unknown_19b2_; char unknown_19b3_[0x19ca-0x19b3]; unsigned char field19ca;
 #endif
 
 };
-struct ActorFlags { char pad0[0xc1]; unsigned char fieldc1; unsigned char low : 4; unsigned char visible : 1; unsigned char high : 3; };
-extern "C" Reset_021eefac* _ZZ17GetGlobal021ffefcvE1s;
-MessageController* MessageSystem_GetInstance();
+struct Struct_020391ac { char pad0[0xc1]; unsigned char unknown_c1_; unsigned char low : 4; unsigned char visible : 1; unsigned char high : 3; };
+extern "C" Struct_ov023_021eeaac_2* _ZZ21inline_ov023_021f4c04vE1s;
+extern "C" MessageController* MessageSystem_GetInstance();
 extern "C" void* LinkSession_GetInstance();
-int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
-void ScaleOrResetCombatants_021ed988(char*, int);
-extern "C" void func_ov000_02163b90(BattleWork*, int);
-extern "C" void func_ov000_021626a0(BattleWork*, int, int);
-void ApplyField41ToGatheredCombatants02163a7c(GatherObj02163a7c*);
-extern "C" void func_ov000_021639b4(BattleWork*);
-void RunFlagPassAndSetMode02167dd8_02167dd8(unsigned char*);
+extern "C" int func_02086ef0(ArrayContainsByteStruct*, int);
+extern "C" void func_ov023_021ed988(char*, int);
+extern "C" void func_ov000_02163b90(Struct_ov000_02160da0*, int);
+extern "C" void func_ov000_021626a0(Struct_ov000_02160da0*, int, int);
+extern "C" void func_ov000_02163a7c(Struct_ov000_02163a7c*);
+extern "C" void func_ov000_021639b4(Struct_ov000_02160da0*);
+extern "C" void func_ov000_02167dd8(unsigned char*);
 extern "C" int func_ov000_02153e40(void*, short*, int, int);
 extern "C" void func_02048cf0(GameObject*, int);
 extern "C" void func_ov000_0216e3c4(void*);
-unsigned char* GetField02163524(void*);
-int TestBitAt0x34_020a35e0(unsigned char*, unsigned char);
-void ResetCombatantSlot020d7334(unsigned char*, int);
-int IsFlag10088Set_02010088(S_10088*);
-void GameObject_ForceMotionState(Bytes02033b88*, int);
-void GameObject_UnfreezeAnimation(ObjectStatePrefix*);
-GameObject* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
-GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState*, int);
-GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState*, int);
-void Window_ClosePane(Entry_0205d6a0*, int);
-void SetCombatWorkFlags0x55f4_ov000_02160fa8(void*, int);
-extern "C" void func_ov023_021d8a40(BattleEntry*);
-void CopyEntryFields_021d8cb4(void*, void*);
-void CopyAndStoreLen_021d9988(Obj021d9988*, void*, unsigned int);
+extern "C" unsigned char* func_ov000_02163524(void*);
+extern "C" int func_020a35e0(unsigned char*, unsigned char);
+extern "C" void func_020d7334(unsigned char*, int);
+extern "C" int func_02010088(S_10088*);
+extern "C" void GameObject_ForceMotionState(Bytes02033b88*, int);
+extern "C" void GameObject_UnfreezeAnimation(ObjectStatePrefix*);
+extern "C" GameObject* func_0200fea4(GameState*, int);
+extern "C" GameObject* func_0200ff1c(GameState*, int);
+extern "C" GameObject* func_0200ff58(GameState*, int);
+extern "C" void Window_ClosePane(Entry_0205d6a0*, int);
+extern "C" void func_ov000_02160fa8(void*, int);
+extern "C" void func_ov023_021d8a40(Struct_ov023_021f03a0_2*);
+extern "C" void func_ov023_021d8cb4(void*, void*);
+extern "C" void func_ov023_021d9988(Struct_ov023_021d9988*, void*, unsigned int);
 extern "C" void func_02046380(MessageController*);
-extern "C" void func_ov023_021d8ddc(BattleEntry*, int*);
-int GameState_GetPartyOrderEntry(void*, unsigned int);
-void NameText_InitFromPartyMember(void*, int);
-char* FindEntryByKey_02072a68(TableA68*, int);
+extern "C" void func_ov023_021d8ddc(Struct_ov023_021f03a0_2*, int*);
+extern "C" int GameState_GetPartyOrderEntry(void*, unsigned int);
+extern "C" void NameText_InitFromPartyMember(void*, int);
+extern "C" char* func_02072a68(TableA68*, int);
 #if !defined(jpn)
-extern "C" void func_0204500c(Struct_02092e0c*, char*, int, int);
+extern "C" void func_0204500c(MessageController*, char*, int, int);
 #endif
-BattleResultEntry* FindByByteAt118_021f0360(void*, int);
+extern "C" Struct_ov023_021f03a0* func_ov023_021f0360(void*, int);
 extern "C" int ResourceScriptEntry_LoadLevel(LoadedEntry*, void*, unsigned int, unsigned char, int);
-extern "C" int func_ov023_021f4438(BattleWork*);
+extern "C" int func_ov023_021f4438(Struct_ov000_02160da0*);
 extern "C" int func_ov023_021f4fc8();
 extern "C" void func_ov023_021eefac(Struct_ov023_021eeaac_2*);
 
 #if defined(jpn)
-extern "C" void func_0204500c(Struct_02092e0c*,char*,int);
+extern "C" void func_0204500c(MessageController*,char*,int);
 #endif
 // USA: func_ov023_021f03a0
-extern "C" ARM int func_ov023_021f03a0(Struct_ov000_02160da0* arg0) {
-    int var0;
-    char var1[256];
+extern "C" ARM int func_ov023_021f03a0(Struct_ov000_02160da0* work) {
+    int i;
+    char text[256];
 #if defined(jpn)
 
 #else
-    char var2[12];
+    char actorName[12];
 #endif
 
     char filename[40];
     short ids[12];
     GameState* game = GameState::GetInstance();
-    Reset_021eefac* state = _ZZ17GetGlobal021ffefcvE1s;
+    Struct_ov023_021eeaac_2* state = _ZZ21inline_ov023_021f4c04vE1s;
     MessageController* messages = MessageSystem_GetInstance();
     LinkSession_GetInstance();
     GameResources* resources = GetGameResources();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
-    ArrayContainsByte_02086ef0((ArrayContainsByteStruct*)GameState_GetParty(game), state->actorId);
+    func_02086ef0((ArrayContainsByteStruct*)GameState_GetParty(game), state->actorId);
     if (state->state == 0) {
-        if (work->levelUp) ScaleOrResetCombatants_021ed988((char*)work, 0);
+        if (work->unknown_576c_) func_ov023_021ed988((char*)work, 0);
         func_ov000_02163b90(work, 1);
         func_ov000_021626a0(work, 4, 0);
-        ApplyField41ToGatheredCombatants02163a7c((GatherObj02163a7c*)work);
+        func_ov000_02163a7c((Struct_ov000_02163a7c*)work);
         func_ov000_021639b4(work);
         ClearFlags04(resources, 0x400);
-        RunFlagPassAndSetMode02167dd8_02167dd8((unsigned char*)work);
+        func_ov000_02167dd8((unsigned char*)work);
         void* battle = work->battle;
         int count;
-        GameState* combatGame = GameState::GetInstance();
+        GameState* var12 = GameState::GetInstance();
         count = func_ov000_02153e40(battle, ids, 12, 0);
         for (i = 0; i < count; i++) {
-            GameObject* actor = combatGame->GetCombatantByIndex(ids[i]);
+            GameObject* actor = var12->GetCombatantByIndex(ids[i]);
             if (actor) func_02048cf0(actor, 0);
         }
-        func_ov000_0216e3c4(work->cameraTask);
-        unsigned char* field = GetField02163524(work);
-        GameState* partyGame = GameState::GetInstance();
+        func_ov000_0216e3c4(work->unknown_c18_);
+        unsigned char* field = func_ov000_02163524(work);
+        GameState* var15 = GameState::GetInstance();
         for (int i = 0; i < 4; i++) {
-            if (TestBitAt0x34_020a35e0((unsigned char*)work->info, i)) {
-                if (field) ResetCombatantSlot020d7334(field, i);
-                GameObject* actor = partyGame->GetCombatantByIndex(i);
-                if (actor && !IsFlag10088Set_02010088((S_10088*)actor)) {
-                    ((ActorFlags*)actor)->fieldc1 &= ~0xf0;
+            if (func_020a35e0((unsigned char*)work->info, i)) {
+                if (field) func_020d7334(field, i);
+                GameObject* actor = var15->GetCombatantByIndex(i);
+                if (actor && !func_02010088((S_10088*)actor)) {
+                    ((Struct_020391ac*)actor)->unknown_c1_ &= ~0xf0;
                     GameObject_ForceMotionState((Bytes02033b88*)actor, 0);
                     actor->obj3D_.SkipAnimationTransition();
                     GameObject_UnfreezeAnimation((ObjectStatePrefix*)actor);
@@ -182,38 +182,38 @@ extern "C" ARM int func_ov023_021f03a0(Struct_ov000_02160da0* arg0) {
                 }
             }
         }
-        for (int var18 = 0; var18 < 8; var18++) {
-            GameObject* var19 = func_0200fea4(var15, var18 + 0xc0);
-            if (var19 && ((Struct_020391ac*)var19)->unknown_c2_4_) var19->obj3D_.MakeVisible();
+        for (int i = 0; i < 8; i++) {
+            GameObject* actor = func_0200fea4(var15, i + 0xc0);
+            if (actor && ((Struct_020391ac*)actor)->visible) actor->obj3D_.MakeVisible();
         }
         Window_ClosePane(&work->entries, 1);
-        SetCombatWorkFlags0x55f4_ov000_02160fa8(work, 0x40000);
+        func_ov000_02160fa8(work, 0x40000);
         work->allocator.Reset();
-        work->result = (BattleEntry*)work->allocator.Allocate(0x12c);
+        work->result = (Struct_ov023_021f03a0_2*)work->allocator.Allocate(0x12c);
         func_ov023_021d8a40(work->result);
-        CopyEntryFields_021d8cb4(work->result, work->entry);
-        Reset_021eefac* global = _ZZ17GetGlobal021ffefcvE1s;
-        unsigned char countEntries = global->count;
-        BattleEntry* result = work->result;
+        func_ov023_021d8cb4(work->result, work->entry);
+        Struct_ov023_021eeaac_2* global = _ZZ21inline_ov023_021f4c04vE1s;
+        unsigned char var21 = global->count;
+        Struct_ov023_021f03a0_2* result = work->result;
         result->entries = global->entries;
-        result->count = countEntries;
-        CopyAndStoreLen_021d9988((Obj021d9988*)work->result, _ZZ17GetGlobal021ffefcvE1s->copyData, _ZZ17GetGlobal021ffefcvE1s->copyLength);
+        result->count = var21;
+        func_ov023_021d9988((Struct_ov023_021d9988*)work->result, _ZZ21inline_ov023_021f4c04vE1s->unknown_2789_, _ZZ21inline_ov023_021f4c04vE1s->unknown_278d_);
         state->state++;
     } else if (state->state == 1) {
         if (work->result->state != 0xff) goto done;
 #if defined(jpn)
 
 #else
-        func_02046380(var7);
+        func_02046380(messages);
 #endif
 
         func_ov023_021d8ddc(work->result, work->experience);
         BaseCombatStats* stats = 0;
-        if (work->info->legacyBoss) {
+        if (work->info->unknown_25_) {
             for (int i = 0; i < 4 && !stats; i++) {
                 int id = GameState_GetPartyOrderEntry(game, (unsigned char)i);
                 if (work->experience[id]) {
-                    GameObject* actor = GetCombatantWithFlag0x100_0200ff1c(game, id);
+                    GameObject* actor = func_0200ff1c(game, id);
 #if defined(jpn)
 
 #else
@@ -225,14 +225,14 @@ extern "C" ARM int func_ov023_021f03a0(Struct_ov000_02160da0* arg0) {
 
 #endif
 
-                    var23 = var26->baseStats_;
+                    stats = actor->baseStats_;
                 }
             }
         } else {
             for (int i = 0; i < 4; i++) {
                 int id = GameState_GetPartyOrderEntry(game, (unsigned char)i);
-                GameObject* actor = GetCombatantWithFlag0x100_0200ff1c(game, id);
-                if (actor && TestBitAt0x34_020a35e0((unsigned char*)work->info, id) && !IsFlag10088Set_02010088((S_10088*)actor)) {
+                GameObject* actor = func_0200ff1c(game, id);
+                if (actor && func_020a35e0((unsigned char*)work->info, id) && !func_02010088((S_10088*)actor)) {
 #if defined(jpn)
 
 #else
@@ -244,54 +244,54 @@ extern "C" ARM int func_ov023_021f03a0(Struct_ov000_02160da0* arg0) {
 
 #endif
 
-                    var23 = var29->baseStats_;
+                    stats = actor->baseStats_;
                     break;
                 }
             }
         }
-        int var30 = 0;
-        for (int var31 = 0; var31 < 4; var31++) if (arg0->unknown_5758_[var31]) var30++;
-        if (!var23) {
-            for (int var32 = 0; var32 < 4; var32++) {
+        int count = 0;
+        for (int i = 0; i < 4; i++) if (work->experience[i]) count++;
+        if (!stats) {
+            for (int i = 0; i < 4; i++) {
 #if defined(jpn)
-                GameObject* var33 = func_0200ff1c(var5, var32);
-                if (var33 && func_020a35e0((unsigned char*)arg0->unknown_2a0_, var32) && !func_0200ff58(var5, var32))
-                    var23 = var33->baseStats_;
+                GameObject* actor = func_0200ff1c(game, i);
+                if (actor && func_020a35e0((unsigned char*)work->info, i) && !func_0200ff58(game, i))
+                    stats = actor->baseStats_;
 #else
-                if (GetCombatantWithFlag0x100_0200ff1c(game, i) && TestBitAt0x34_020a35e0((unsigned char*)work->info, i) && !GetCombatantWithFlag0x1000_0200ff58(game, i))
+                if (func_0200ff1c(game, i) && func_020a35e0((unsigned char*)work->info, i) && !func_0200ff58(game, i))
                     NameText_InitFromPartyMember(actorName, i);
 #endif
 
             }
         }
 #if defined(jpn)
-        if (var30 > 1) sprintf(var1, func_02072a68(&arg0->unknown_5904_, 0x1a), var23);
-        else sprintf(var1, func_02072a68(&arg0->unknown_5904_, 0x19), var23);
+        if (count > 1) sprintf(text, func_02072a68(&work->strings, 0x1a), stats);
+        else sprintf(text, func_02072a68(&work->strings, 0x19), stats);
 #else
-        var7->unknown1_10_ = var2;
-        int var34 = 0x19;
-        if (var30 > 1) var34 = 0x1a;
-        sprintf(var1, func_02072a68(&arg0->unknown_5904_, var34));
+        messages->actor = actorName;
+        int messageId = 0x19;
+        if (count > 1) messageId = 0x1a;
+        sprintf(text, func_02072a68(&work->strings, messageId));
 #endif
 
-        strcat(var1, func_02072a68(&arg0->unknown_5904_, 0x22));
+        strcat(text, func_02072a68(&work->strings, 0x22));
 #if defined(jpn)
-        func_0204500c(var7, var1, 1);
+        func_0204500c(messages, text, 1);
 #else
-        func_0204500c(var7, var1, 1, 0xe3);
+        func_0204500c(messages, text, 1, 0xe3);
 #endif
 
-        var7->unknown_19b2_ = 0;
-        var7->unknown_998_ = 1;
-        var6->unknown_0_++;
-    } else if (var6->unknown_0_ == 2) {
-        Struct_ov023_021f03a0* var35 = func_ov023_021f0360(_ZZ21inline_ov023_021f4c04vE1s, var6->unknown_11_);
-        if (!var35) {
-            var6->unknown_11_++;
-            if (var6->unknown_11_ >= 4) var6->unknown_0_ = 4;
-            return arg0->unknown_eac_;
+        messages->unknown_19b2_ = 0;
+        messages->unknown_998_ = 1;
+        state->state++;
+    } else if (state->state == 2) {
+        Struct_ov023_021f03a0* entry = func_ov023_021f0360(_ZZ21inline_ov023_021f4c04vE1s, state->member);
+        if (!entry) {
+            state->member++;
+            if (state->member >= 4) state->state = 4;
+            return work->state;
         }
-        sprintf(filename, FindEntryByKey_02072a68(&work->strings, 0), entry->fileId);
+        sprintf(filename, func_02072a68(&work->strings, 0), entry->unknown_1_);
         state->task = loader->QueueLoadFile(filename, 0);
         state->state++;
     } else if (state->state == 3) {
@@ -301,30 +301,30 @@ extern "C" ARM int func_ov023_021f03a0(Struct_ov000_02160da0* arg0) {
         int member = state->member;
         loader->GetLoadedFileByID(state->task, &file, &length);
         loader->RemoveTask(state->task);
-        BattleResultEntry* entry = FindByByteAt118_021f0360(_ZZ17GetGlobal021ffefcvE1s, member);
+        Struct_ov023_021f03a0* entry = func_ov023_021f0360(_ZZ21inline_ov023_021f4c04vE1s, member);
         if (file && ResourceScriptEntry_LoadLevel(&work->loaded[member], file, length, entry->type, entry->experience)) {
             if (!entry->flag) state->loaded[member] = 1;
         }
-        var6->unknown_11_++;
-        if (var6->unknown_11_ < 4) {
-            var6->unknown_0_ = 2;
-            return arg0->unknown_eac_;
+        state->member++;
+        if (state->member < 4) {
+            state->state = 2;
+            return work->state;
         }
-        var6->unknown_0_++;
-    } else if (var6->unknown_0_ == 4) {
-        int var40 = 0;
-        for (int var41 = 0; var41 < 4; var41++) if (var6->unknown_12_[var41]) { var40 = 1; break; }
-        int var42 = func_ov023_021f4438(arg0);
-        if (!var40 && !var42 && !arg0->unknown_5768_) {
-            var7->unknown_19ae_ = 0;
-            var7->unknown_19ca_ = 0;
-            var7->unknown_19af_ = 0;
+        state->state++;
+    } else if (state->state == 4) {
+        int loaded = 0;
+        for (int i = 0; i < 4; i++) if (state->loaded[i]) { loaded = 1; break; }
+        int pending = func_ov023_021f4438(work);
+        if (!loaded && !pending && !work->unknown_5768_) {
+            messages->unknown_19ae_ = 0;
+            messages->field19ca = 0;
+            messages->unknown_19af_ = 0;
         }
         if (func_ov023_021f4fc8()) {
-            func_ov023_021eefac(var6);
+            func_ov023_021eefac(state);
             return 7;
         }
     }
 done:
-    return arg0->unknown_eac_;
+    return work->state;
 }

@@ -11,23 +11,23 @@
 #endif
 
 
-extern "C" int func_02092bcc(void* arg0, int arg1);
-extern "C" int func_02092b34(void* arg0);
-extern "C" void func_ov000_02176e3c(void* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_ov000_0217c638(void* arg0, int arg1, int arg2);
+extern "C" int func_02092bcc(void* p, int val);
+extern "C" int func_02092b34(void* p);
+extern "C" void func_ov000_02176e3c(void* obj, int zero, int val, int arg3, int arg4, int one);
+extern "C" void func_ov000_0217c638(void* obj, int arg1, int arg2);
 
 // USA: func_ov000_0217de64
-extern "C" ARM void func_ov000_0217de64(char* arg0, int arg1, int arg2) {
-    unsigned short var0 = *(unsigned short*)(arg0 + REGION_OFFSET_0);
-    *(unsigned short*)(arg0 + REGION_OFFSET_0) = var0 & ~0x100;
-    int var1 = func_02092bcc(arg0 + 0x7c, *(int*)(arg0 + 0x94c));
-    if (var1 == 0) {
+extern "C" ARM void func_ov000_0217de64(char* obj, int arg1, int arg2) {
+    unsigned short flags = *(unsigned short*)(obj + REGION_OFFSET_0);
+    *(unsigned short*)(obj + REGION_OFFSET_0) = flags & ~0x100;
+    int r = func_02092bcc(obj + 0x7c, *(int*)(obj + 0x94c));
+    if (r == 0) {
         return;
     }
-    func_02092b34(arg0 + 0x7c);
-    signed char var2 = *(signed char*)(arg0 + REGION_OFFSET_1);
-    *(unsigned char*)(arg0 + var2 + REGION_OFFSET_2) = 0;
-    *(signed char*)(arg0 + REGION_OFFSET_1) = *(signed char*)(arg0 + REGION_OFFSET_1) - 1;
-    func_ov000_02176e3c(arg0, 0, *(signed char*)(arg0 + *(signed char*)(arg0 + REGION_OFFSET_1) + REGION_OFFSET_2), arg1, arg2, 0);
-    func_ov000_0217c638(arg0, arg1, arg2);
+    func_02092b34(obj + 0x7c);
+    signed char idx1 = *(signed char*)(obj + REGION_OFFSET_1);
+    *(unsigned char*)(obj + idx1 + REGION_OFFSET_2) = 0;
+    *(signed char*)(obj + REGION_OFFSET_1) = *(signed char*)(obj + REGION_OFFSET_1) - 1;
+    func_ov000_02176e3c(obj, 0, *(signed char*)(obj + *(signed char*)(obj + REGION_OFFSET_1) + REGION_OFFSET_2), arg1, arg2, 0);
+    func_ov000_0217c638(obj, arg1, arg2);
 }

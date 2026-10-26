@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
-extern "C" void __clear(void* arg0, int arg1);
+extern "C" void __clear(void* buf, int count);
 
 struct Struct_02071da4_2 {
-    short unknown_0_;
-    short unknown_2_;
-    short unknown_4_;
+    short f0;
+    short f2;
+    short f4;
     short unknown_6_;
-    short unknown_8_;
+    short f8;
     unsigned short unknown_a_0_ : 4;
     unsigned short unknown_a_4_ : 4;
     unsigned short unknown_b_0_ : 4;
@@ -16,28 +16,28 @@ struct Struct_02071da4_2 {
 };
 
 struct Struct_02071da4 {
-    char unknown_0_[4];
-    struct Struct_02071da4_2* unknown_4_;
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    char pad0[4];
+    struct Struct_02071da4_2* entries;
+    unsigned short capacity;
+    unsigned short count;
 };
 
 // USA: func_02071da4
-extern "C" ARM struct Struct_02071da4_2* func_02071da4(struct Struct_02071da4* arg0, short* arg1, unsigned char* arg2, unsigned char* arg3) {
-    unsigned char var0;
-    unsigned char var1;
-    struct Struct_02071da4_2* var2;
-    unsigned int var3;
-    struct Struct_02071da4_2* var4;
-    unsigned short var5;
-    unsigned char var6;
+extern "C" ARM struct Struct_02071da4_2* func_02071da4(struct Struct_02071da4* list, short* arg1, unsigned char* arg2, unsigned char* out) {
+    unsigned char total;
+    unsigned char k;
+    struct Struct_02071da4_2* arr;
+    unsigned int n;
+    struct Struct_02071da4_2* e;
+    unsigned short i;
+    unsigned char cnt;
     unsigned char var7;
-    unsigned char var8;
-    unsigned char var9;
-    unsigned char var10;
-    unsigned char var11;
-    unsigned char var12[3];
-    unsigned char var13;
+    unsigned char j;
+    unsigned char diff;
+    unsigned char t;
+    unsigned char t2;
+    unsigned char buf[3];
+    unsigned char c;
     int var14;
     int var15;
     int var16;
@@ -45,44 +45,44 @@ extern "C" ARM struct Struct_02071da4_2* func_02071da4(struct Struct_02071da4* a
     if (arg1 == NULL || arg2 == NULL) {
         return NULL;
     }
-    var0 = 0;
-    for (var1 = 0; var1 < 3; var1++) {
-        if (arg1[var1] > 0) {
-            var0 = var0 + 1;
+    total = 0;
+    for (k = 0; k < 3; k++) {
+        if (arg1[k] > 0) {
+            total = total + 1;
         }
     }
 
-    var2 = arg0->unknown_4_;
-    var3 = arg0->unknown_a_;
-    for (var5 = 0; var5 < var3; var5++) {
-        var4 = &var2[var5];
-        var6 = 0;
-        var6 += (var4->unknown_4_ > 0);
-        var6 += (var4->unknown_6_ > 0);
-        var6 += (var4->unknown_8_ > 0);
-        if (var6 == var0) {
-            __clear(var12, 3);
-            for (var8 = 0; var8 < var6; var8++) {
-                short var17 = arg1[var8];
-                var13 = arg2[var8];
-                if (var17 == var4->unknown_4_) {
-                    var14 = var4->unknown_a_0_;
-                    if (var13 % var14 == 0) {
-                        var12[0] = var13 / var14;
+    arr = list->entries;
+    n = list->count;
+    for (i = 0; i < n; i++) {
+        e = &arr[i];
+        cnt = 0;
+        cnt += (e->f4 > 0);
+        cnt += (e->unknown_6_ > 0);
+        cnt += (e->f8 > 0);
+        if (cnt == total) {
+            __clear(buf, 3);
+            for (j = 0; j < cnt; j++) {
+                short v = arg1[j];
+                c = arg2[j];
+                if (v == e->f4) {
+                    var14 = e->unknown_a_0_;
+                    if (c % var14 == 0) {
+                        buf[0] = c / var14;
                     } else {
                         break;
                     }
-                } else if (var17 == var4->unknown_6_) {
-                    var15 = var4->unknown_a_4_;
-                    if (var13 % var15 == 0) {
-                        var12[1] = var13 / var15;
+                } else if (v == e->unknown_6_) {
+                    var15 = e->unknown_a_4_;
+                    if (c % var15 == 0) {
+                        buf[1] = c / var15;
                     } else {
                         break;
                     }
-                } else if (var17 == var4->unknown_8_) {
-                    var16 = var4->unknown_b_0_;
-                    if (var13 % var16 == 0) {
-                        var12[2] = var13 / var16;
+                } else if (v == e->f8) {
+                    var16 = e->unknown_b_0_;
+                    if (c % var16 == 0) {
+                        buf[2] = c / var16;
                     } else {
                         break;
                     }
@@ -92,23 +92,23 @@ extern "C" ARM struct Struct_02071da4_2* func_02071da4(struct Struct_02071da4* a
             }
 
             var7 = 0;
-            for (var10 = 0; var10 < 3; var10++) {
-                if (var12[var10] != 0) {
+            for (t = 0; t < 3; t++) {
+                if (buf[t] != 0) {
                     var7 = var7 + 1;
                 }
             }
 
-            if (var6 == var7) {
-                var9 = 0;
-                for (var11 = 1; var11 < var6; var11++) {
-                    if (var12[0] != var12[var11]) {
-                        var9 = 1;
+            if (cnt == var7) {
+                diff = 0;
+                for (t2 = 1; t2 < cnt; t2++) {
+                    if (buf[0] != buf[t2]) {
+                        diff = 1;
                         break;
                     }
                 }
-                if (var9 == 0) {
-                    *arg3 = var12[0];
-                    return var4;
+                if (diff == 0) {
+                    *out = buf[0];
+                    return e;
                 }
             }
         }

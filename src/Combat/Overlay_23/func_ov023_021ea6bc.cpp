@@ -2,9 +2,9 @@
 #include "GameState/GameState.h"
 
 #if defined(jpn)
-struct Struct_ov023_021ea6bc { char unknown_0_[0x144]; unsigned char *unknown_150_; };
+struct Struct_ov023_021ea6bc { char pad[0x144]; unsigned char *tbl; };
 #else
-struct Struct_ov023_021ea6bc { char unknown_0_[0x150]; unsigned char *unknown_150_; };
+struct Struct_ov023_021ea6bc { char pad[0x150]; unsigned char *tbl; };
 #endif
 
 extern "C" int func_ov017_021d60f4(void*);
@@ -12,15 +12,15 @@ extern "C" int func_ov023_021e8f28(int);
 extern "C" void func_ov017_021d6134(void*, int);
 
 // USA: func_ov023_021ea6bc
-extern "C" ARM int func_ov023_021ea6bc(void *arg0) {
+extern "C" ARM int func_ov023_021ea6bc(void *obj) {
 	GameState::GetInstance();
-	struct Struct_ov023_021ea6bc *var0 = (struct Struct_ov023_021ea6bc*)func_ov023_021e8f28(func_ov017_021d60f4(arg0));
-	if (!var0) return 0;
-	int var1 = 0;
-	for (int var2 = 0; var2 < 13; var2++) {
-		unsigned char *var3 = var0->unknown_150_ + (var2 & 0xff);
-		var1 += var3[0x186];
+	struct Struct_ov023_021ea6bc *p = (struct Struct_ov023_021ea6bc*)func_ov023_021e8f28(func_ov017_021d60f4(obj));
+	if (!p) return 0;
+	int sum = 0;
+	for (int i = 0; i < 13; i++) {
+		unsigned char *base = p->tbl + (i & 0xff);
+		sum += base[0x186];
 	}
-	func_ov017_021d6134((char*)arg0 + 8, var1);
+	func_ov017_021d6134((char*)obj + 8, sum);
 	return 1;
 }

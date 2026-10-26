@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 
 struct Struct_0209a654 {
-    char unknown_0_[12];
+    char pad[12];
 };
 struct Struct_0209a654_2 {
-    struct Struct_0209a654* unknown_0_;
-    int unknown_4_;
+    struct Struct_0209a654* entries;
+    int count;
 };
 
 // USA: func_0209a654
-extern "C" ARM struct Struct_0209a654* func_0209a654(struct Struct_0209a654_2* arg0, unsigned int arg1) {
-    if (arg0->unknown_4_ <= arg1) {
+extern "C" ARM struct Struct_0209a654* func_0209a654(struct Struct_0209a654_2* list, unsigned int index) {
+    if (list->count <= index) {
         return NULL;
     }
-    return &arg0->unknown_0_[arg1];
+    return &list->entries[index];
 }

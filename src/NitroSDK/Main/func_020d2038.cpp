@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-extern "C" int func_020d217c(int arg0, int arg1, int arg2, int arg3, int arg4);
+extern "C" int func_020d217c(int type, int a, int b, int c, int d);
 
 // USA: func_020d2038
-extern "C" ARM void func_020d2038(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) {
+extern "C" ARM void func_020d2038(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7, int p8, int p9) {
     func_020d217c(0xe,
-        arg0 | (arg8 << 16),
-        arg2,
-        arg5 | ((arg6 << 24) | (arg7 << 22)),
-        arg4 | (((arg3 << 26) | (arg1 << 24)) | (arg9 << 16)));
+        p0 | (p8 << 16),
+        p2,
+        p5 | ((p6 << 24) | (p7 << 22)),
+        p4 | (((p3 << 26) | (p1 << 24)) | (p9 << 16)));
 }

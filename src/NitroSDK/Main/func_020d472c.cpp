@@ -6,15 +6,15 @@ unsigned int SetIRQInterruptState(int mask);
 extern "C" void* func_020d41d8(void);
 
 // USA: func_020d472c
-extern "C" ARM int func_020d472c(void* arg0) {
-    unsigned int var0 = DisableIRQInterrupts();
-    int var1 = func_020d41e8();
-    if (var1 != 0) {
-        SetIRQInterruptState(var0);
-        return var1;
+extern "C" ARM int func_020d472c(void* param) {
+    unsigned int mask = DisableIRQInterrupts();
+    int state = func_020d41e8();
+    if (state != 0) {
+        SetIRQInterruptState(mask);
+        return state;
     }
-    void* var2 = func_020d41d8();
-    *(void**)((char*)var2 + 0xc8) = arg0;
-    SetIRQInterruptState(var0);
+    void* ctx = func_020d41d8();
+    *(void**)((char*)ctx + 0xc8) = param;
+    SetIRQInterruptState(mask);
     return 0;
 }

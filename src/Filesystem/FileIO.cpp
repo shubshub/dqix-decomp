@@ -21,13 +21,13 @@
 
 extern "C"
 {
-    bool _Z17FlagWord_TestBitsP16FlagWord02046708j(void*, unsigned int);
-    void* _Z23GlobalFlags_GetInstancev();
+    bool FlagWord_TestBits(void*, unsigned int);
+    void* GlobalFlags_GetInstance();
 
-    int _Z21GameState_GetLanguageP14Struct0200fb08(GameState*);
+    int GameState_GetLanguage(GameState*);
 
-    char* _Z22FindSubstring_020d2f88PcS_(char* searchString, const char* targetString);
-    int _Z19STD_GetStringLengthPKc(const char* str);
+    char* func_020d2f88(char* searchString, const char* targetString);
+    int STD_GetStringLength(const char* str);
 
     void LZ77UnCompReadNormalWrite8bit(const void* src, void* dst);
 }
@@ -55,7 +55,7 @@ void* LoadFileIntoMemory(const char* path, void* buffer, unsigned int* outLength
     GameState* gameState = GameState::GetInstance();
 
     char replacedPath[128] = { 0 };
-    int language = _Z21GameState_GetLanguageP14Struct0200fb08(gameState);
+    int language = GameState_GetLanguage(gameState);
     StringReplaceLanguageTag(path, replacedPath, language);
 #elif defined(jpn)
     const char* replacedPath = path;
@@ -95,7 +95,7 @@ void* LoadFileIntoNewAllocation(const char* path, SafeAllocator& alloc, unsigned
 
     char replacedPath[128] = { 0 };
 
-    int language = _Z21GameState_GetLanguageP14Struct0200fb08(gameState);
+    int language = GameState_GetLanguage(gameState);
     StringReplaceLanguageTag(path, replacedPath, language);
 #elif defined(jpn)
     const char* replacedPath = path;
@@ -145,8 +145,8 @@ bool GetFileInNarc(const void *narcBuffer, const char *targetFilePath,
             if (strcmp(currentFilePath + prefixLength, targetFilePath) == 0)
             {
                 const void* pFile = handle.GetFileByIndex(idx);
-                unsigned int endOffset = machine.fileInfo.unknown_8_;
-                unsigned int startOffset = machine.fileInfo.unknown_4_;
+                unsigned int endOffset = machine.fileInfo.endOffset;
+                unsigned int startOffset = machine.fileInfo.startOffset;
                 *pOutFilePtr = pFile;
                 *pOutFileSize = endOffset - startOffset;
                 strrchr(targetFilePath, '/');
@@ -203,8 +203,8 @@ bool GetFileInNarcPermissive(const void *narcBuffer, const char *targetFilePath,
                 if (comparison == 0)
                 {
                     const void* pFile = handle.GetFileByIndex(midpoint);
-                    unsigned int endOffset = machine.fileInfo.unknown_8_;
-                    unsigned int startOffset = machine.fileInfo.unknown_4_;
+                    unsigned int endOffset = machine.fileInfo.endOffset;
+                    unsigned int startOffset = machine.fileInfo.startOffset;
                     success = true;
                     *pOutFilePtr = pFile;
                     *pOutFileSize = endOffset - startOffset;
@@ -264,8 +264,8 @@ unsigned int FindFilesInNarcBySubstring(const void* narcBuffer, const char* subs
             if (strstr(pLoopFilename, substr))
             {
                 const void* pFile = handle.GetFileByIndex(idx);
-                unsigned int endOffset = machine.fileInfo.unknown_8_;
-                unsigned int startOffset = machine.fileInfo.unknown_4_;
+                unsigned int endOffset = machine.fileInfo.endOffset;
+                unsigned int startOffset = machine.fileInfo.startOffset;
                 pOutFilePtrs[numFound] = pFile;
                 pOutFileSizes[numFound] = endOffset - startOffset;
                 strrchr(loopFilename, '/');

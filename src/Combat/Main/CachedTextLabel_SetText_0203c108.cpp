@@ -7,16 +7,16 @@ extern "C" void CachedTextTable_FindOrAddText(void* table, void* text, short* ou
 #endif
 extern void* data_02105244;  // the CachedTextTable
 
-void CachedTextLabel_Release(char* label);
+extern "C" void CachedTextLabel_Release(char* label);
 
 struct RefArray0xc6b8;
-void CachedTextTable_AddReference(struct RefArray0xc6b8* table, short index);
+extern "C" void CachedTextTable_AddReference(struct RefArray0xc6b8* table, short index);
 
 struct RefArray0xc6fc;
 #if defined(jpn)
-void DecrementEntryCount0x24(struct RefArray0xc6fc* table, const short* indices);
+extern "C" void func_0203cbe4(struct RefArray0xc6fc* table, const short* indices);
 #else
-void DecrementEntryCount0x24_0203c6fc(struct RefArray0xc6fc* table, short index);
+extern "C" void func_0203c6fc(struct RefArray0xc6fc* table, short index);
 #endif
 
 #if defined(jpn)
@@ -38,7 +38,7 @@ struct Obj0203c108 {
 // The previous text keeps a reference while the new one is looked up, so a label set to the text it already shows
 // finds its own entry instead of rendering it again.
 // Main, originally SwapGlobalEntry0203c108 (USA 0x0203c108, EUR 0x0203c118, JPN 0x0203bc54)
-ARM void CachedTextLabel_SetText(struct Obj0203c108* label, char* format) {
+extern "C" ARM void CachedTextLabel_SetText(struct Obj0203c108* label, char* format) {
     if (data_02105244 != NULL && format != NULL && *format != 0) {
 #if defined(jpn)
         char previousSlots[kTextSlotsSize];
@@ -50,7 +50,7 @@ ARM void CachedTextLabel_SetText(struct Obj0203c108* label, char* format) {
         func_0203bf00(label, format, text, kFontPixelSize);
         *(int*)((char*)label + kCharacterAdvanceOffset) = kFontPixelSize;
         CachedTextTable_FindOrAddText(data_02105244, text, label, kFontPixelSize);
-        DecrementEntryCount0x24(static_cast<RefArray0xc6fc*>(data_02105244),
+        func_0203cbe4(static_cast<RefArray0xc6fc*>(data_02105244),
                                reinterpret_cast<const short*>(previousSlots));
 #else
         char text[0x100];
@@ -60,7 +60,7 @@ ARM void CachedTextLabel_SetText(struct Obj0203c108* label, char* format) {
         CachedTextTable_AddReference((struct RefArray0xc6b8*)data_02105244, previousIndex);
         CachedTextLabel_Release((char*)label);
         CachedTextTable_FindOrAddText(data_02105244, text, &label->entryIndex);
-        DecrementEntryCount0x24_0203c6fc((struct RefArray0xc6fc*)data_02105244, previousIndex);
+        func_0203c6fc((struct RefArray0xc6fc*)data_02105244, previousIndex);
 #endif
     }
 }

@@ -6,10 +6,10 @@
 #include "NitroSDK/DTCM.h"
 #include "NitroSDK/Interrupts.h"
 
-int Overlay_IsLoaded(unsigned int idx);
+extern "C" int Overlay_IsLoaded(unsigned int idx);
 
 // Main, originally InitOverlay17ObjAndBumpBattleCounter02012bd8 (USA 0x02012bd8, EUR 0x02012be8, JPN 0x020129a0)
-ARM void Main_HandleVBlank() {
+extern "C" ARM void Main_HandleVBlank() {
     if (Overlay_IsLoaded(OVERLAY_ID(17))) {
         GetGameResources();
         if (GetGameResources() != NULL) {

@@ -9,15 +9,15 @@ extern "C" void SDK_SYS_STACKSIZE(void);
 extern "C" void SDK_IRQ_STACKSIZE(void);
 
 // USA: func_020c8548
-extern "C" ARM unsigned int func_020c8548(unsigned int arg0) {
-    switch (arg0) {
+extern "C" ARM unsigned int func_020c8548(unsigned int mode) {
+    switch (mode) {
     case 0:
         return 0x023e0000;
     case 2: {
-        int var0 = *(int*)((char*)&data_0211155c + 4);
-        if (var0 == 0) goto ret0;
-        var0 = func_020c7dcc();
-        if ((var0 & 3) != 1) goto ret270;
+        int v = *(int*)((char*)&data_0211155c + 4);
+        if (v == 0) goto ret0;
+        v = func_020c7dcc();
+        if ((v & 3) != 1) goto ret270;
     ret0:
         return 0;
     ret270:

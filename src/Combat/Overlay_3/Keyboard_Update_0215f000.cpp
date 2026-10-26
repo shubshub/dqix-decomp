@@ -45,7 +45,7 @@ struct Keyboard {
 // A page's key grid (8 bytes: pages mask, columns, rows, cell count, key ids), built by the layout script.
 struct KeyboardPageGrid;
 
-struct KeyboardPageGrid* Keyboard_GetPageGrid(struct Keyboard* self);
+extern "C" struct KeyboardPageGrid* Keyboard_GetPageGrid(struct Keyboard* self);
 extern "C" int KeyboardPageGrid_FindKeyCell(struct KeyboardPageGrid* table, short id, signed char* col, signed char* row);
 extern "C" void Keyboard_MoveCursor(struct Keyboard* self, int dx, int dy);
 extern "C" int Keyboard_HandleKey(struct Keyboard* self);
@@ -183,5 +183,5 @@ extern "C" ARM int Keyboard_Update(struct Keyboard* keyboard, int elapsed) {
             }
         }
     }
-    return var5;
+    return result;
 }

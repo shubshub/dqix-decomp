@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov000_0216265c(void* arg0);
+extern "C" int func_ov000_0216265c(void* objRaw);
 
 // USA: func_ov017_021b8b94
-extern "C" ARM int func_ov017_021b8b94(void* arg0) {
-    void* var0 = *(void**)((char*)arg0 + 0x6ac);
-    if (var0 == NULL) {
+extern "C" ARM int func_ov017_021b8b94(void* obj) {
+    void* p = *(void**)((char*)obj + 0x6ac);
+    if (p == NULL) {
         return 0;
     }
-    return func_ov000_0216265c(var0);
+    return func_ov000_0216265c(p);
 }

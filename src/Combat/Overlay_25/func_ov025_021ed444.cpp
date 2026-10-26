@@ -3,40 +3,40 @@
 // USA: func_ov025_021ed444
 #pragma optimize_for_size off
 #pragma opt_common_subs off
-extern "C" ARM int func_ov025_021ed444(char* arg0, int arg1, int arg2, int arg3, int arg4, short arg5, unsigned short arg6) {
-    if (arg3 >= 6) return -1;
-    int var0 = -1;
-    if (arg1 != 0) {
-        unsigned char var1 = *(unsigned char*)(arg0 + 0x150);
-        if (var1 < 0x10) {
-            short var2 = *(short*)(arg0 + 0x15c);
-            int var3;
-            for (var3 = var1 - 1; var3 >= var2; var3--) {
-                int var4 = var3 + 1;
-                *(unsigned short*)(arg0 + var4 * 2) = *(unsigned short*)(arg0 + var3 * 2);
-                *(short*)(arg0 + var4 * 2 + 0x20) = *(short*)(arg0 + var3 * 2 + 0x20);
-                *(unsigned char*)(arg0 + var4 + 0xa0) = *(unsigned char*)(arg0 + var3 + 0xa0);
-                *(int*)(arg0 + var4 * 4 + 0xb0) = *(int*)(arg0 + var3 * 4 + 0xb0);
-                *(short*)(arg0 + var4 * 2 + 0x60) = *(short*)(arg0 + var3 * 2 + 0x60);
-                *(short*)(arg0 + var4 * 2 + 0x40) = *(short*)(arg0 + var3 * 2 + 0x40);
-                *(unsigned short*)(arg0 + var4 * 2 + 0x80) = *(unsigned short*)(arg0 + var3 * 2 + 0x80);
+extern "C" ARM int func_ov025_021ed444(char* obj, int id, int val2, int type, int val3, short arg5, unsigned short arg6) {
+    if (type >= 6) return -1;
+    int ret = -1;
+    if (id != 0) {
+        unsigned char count = *(unsigned char*)(obj + 0x150);
+        if (count < 0x10) {
+            short pos = *(short*)(obj + 0x15c);
+            int i;
+            for (i = count - 1; i >= pos; i--) {
+                int j = i + 1;
+                *(unsigned short*)(obj + j * 2) = *(unsigned short*)(obj + i * 2);
+                *(short*)(obj + j * 2 + 0x20) = *(short*)(obj + i * 2 + 0x20);
+                *(unsigned char*)(obj + j + 0xa0) = *(unsigned char*)(obj + i + 0xa0);
+                *(int*)(obj + j * 4 + 0xb0) = *(int*)(obj + i * 4 + 0xb0);
+                *(short*)(obj + j * 2 + 0x60) = *(short*)(obj + i * 2 + 0x60);
+                *(short*)(obj + j * 2 + 0x40) = *(short*)(obj + i * 2 + 0x40);
+                *(unsigned short*)(obj + j * 2 + 0x80) = *(unsigned short*)(obj + i * 2 + 0x80);
             }
-            *(unsigned short*)(arg0 + var2 * 2) = arg1;
-            *(short*)(arg0 + var2 * 2 + 0x20) = arg2;
-            *(unsigned char*)(arg0 + var2 + 0xa0) = arg3;
-            *(int*)(arg0 + var2 * 4 + 0xb0) = arg4;
-            if (*(short*)(arg0 + 0x152) == 0x7fff) {
-                *(short*)(arg0 + 0x152) = 0;
+            *(unsigned short*)(obj + pos * 2) = id;
+            *(short*)(obj + pos * 2 + 0x20) = val2;
+            *(unsigned char*)(obj + pos + 0xa0) = type;
+            *(int*)(obj + pos * 4 + 0xb0) = val3;
+            if (*(short*)(obj + 0x152) == 0x7fff) {
+                *(short*)(obj + 0x152) = 0;
             }
-            *(short*)(arg0 + 0x152) = *(short*)(arg0 + 0x152) + 1;
-            short var5 = *(short*)(arg0 + 0x152);
-            *(short*)(arg0 + var2 * 2 + 0x60) = var5;
-            *(short*)(arg0 + var2 * 2 + 0x40) = arg5;
-            *(unsigned short*)(arg0 + var2 * 2 + 0x80) = arg6;
-            var1 = *(unsigned char*)(arg0 + 0x150);
-            *(unsigned char*)(arg0 + 0x150) = var1 + 1;
-            var0 = var5;
+            *(short*)(obj + 0x152) = *(short*)(obj + 0x152) + 1;
+            short var5 = *(short*)(obj + 0x152);
+            *(short*)(obj + pos * 2 + 0x60) = var5;
+            *(short*)(obj + pos * 2 + 0x40) = arg5;
+            *(unsigned short*)(obj + pos * 2 + 0x80) = arg6;
+            count = *(unsigned char*)(obj + 0x150);
+            *(unsigned char*)(obj + 0x150) = count + 1;
+            ret = var5;
         }
     }
-    return var0;
+    return ret;
 }

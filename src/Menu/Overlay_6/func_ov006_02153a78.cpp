@@ -23,24 +23,24 @@ struct Struct_ov006_02153a78_2 {
     signed char unknown_1c_;
 };
 
-extern "C" ARM bool func_ov006_02153a78(Struct_ov006_02153a78_2* arg0, int arg1)
+extern "C" ARM bool func_ov006_02153a78(Struct_ov006_02153a78_2* state, int count)
 {
-    Struct_ov006_02153a78* var0 = arg0->unknown_10_;
+    Struct_ov006_02153a78* var0 = state->unknown_10_;
     if (!var0) return false;
     if (var0->unknown_4_ > 0 && var0->unknown_a_0_ != 0) {
-        if (arg0->unknown_14_ < 0) return false;
-        if (arg0->unknown_1a_ < 0) return false;
-        if (var0->unknown_a_0_ * arg1 > arg0->unknown_8_[arg0->unknown_1a_][arg0->unknown_14_]) return false;
+        if (state->unknown_14_ < 0) return false;
+        if (state->unknown_1a_ < 0) return false;
+        if (var0->unknown_a_0_ * count > state->unknown_8_[state->unknown_1a_][state->unknown_14_]) return false;
     }
     if (var0->unknown_6_ > 0 && var0->unknown_a_4_ != 0) {
-        if (arg0->unknown_16_ < 0) return false;
-        if (arg0->unknown_1b_ < 0) return false;
-        if (var0->unknown_a_4_ * arg1 > arg0->unknown_8_[arg0->unknown_1b_][arg0->unknown_16_]) return false;
+        if (state->unknown_16_ < 0) return false;
+        if (state->unknown_1b_ < 0) return false;
+        if (var0->unknown_a_4_ * count > state->unknown_8_[state->unknown_1b_][state->unknown_16_]) return false;
     }
     if (var0->unknown_8_ > 0 && var0->unknown_b_0_ != 0) {
-        if (arg0->unknown_18_ < 0) return false;
-        if (arg0->unknown_1c_ < 0) return false;
-        if (var0->unknown_b_0_ * arg1 > arg0->unknown_8_[arg0->unknown_1c_][arg0->unknown_18_]) return false;
+        if (state->unknown_18_ < 0) return false;
+        if (state->unknown_1c_ < 0) return false;
+        if (var0->unknown_b_0_ * count > state->unknown_8_[state->unknown_1c_][state->unknown_18_]) return false;
     }
     return true;
 }

@@ -3,50 +3,50 @@
 #include "Memory/SafeAllocator.h"
 
 struct Struct_020e53bc_3;
-extern "C" unsigned int func_020e544c(Struct_020e53bc_3* arg0);
+extern "C" unsigned int func_020e544c(Struct_020e53bc_3* header);
 
 struct Struct_020e53bc;
 struct Struct_020e545c;
 typedef void (*Type_020e53bc)(Struct_020e53bc*, Struct_020e545c*);
-extern "C" int func_020e545c(Struct_020e53bc* arg0, Type_020e53bc arg1);
+extern "C" int func_020e545c(Struct_020e53bc* list, Type_020e53bc callback);
 
 struct Struct_020e5204;
-extern "C" void func_020e5204(void* arg0, Struct_020e5204* arg1);
+extern "C" void func_020e5204(void* a, Struct_020e5204* b);
 
 struct Struct_020e5604 {
-    unsigned int unknown_0_;
-    void* unknown_4_;
-    void* unknown_8_;
+    unsigned int field0;
+    void* field4;
+    void* field8;
 };
 
 // USA: func_020e5604
-extern "C" ARM int func_020e5604(struct Struct_020e5604* arg0, SafeAllocator* arg1, unsigned char* arg2, int arg3) {
+extern "C" ARM int func_020e5604(struct Struct_020e5604* self, SafeAllocator* alloc, unsigned char* src, int flag) {
     unsigned int var0;
     unsigned int var1;
-    if (!(arg1 != 0 && arg2 != 0 && arg3 != 0)) {
+    if (!(alloc != 0 && src != 0 && flag != 0)) {
         return 0;
     }
-    if (!(arg1 != 0 && arg2 != 0)) {
+    if (!(alloc != 0 && src != 0)) {
         return 0;
     }
-    memcpy(arg0, arg2, 4);
-    var0 = func_020e544c((Struct_020e53bc_3*)arg0);
-    var1 = (arg0->unknown_0_ << 1) >> 13;
+    memcpy(self, src, 4);
+    var0 = func_020e544c((Struct_020e53bc_3*)self);
+    var1 = (self->field0 << 1) >> 13;
     if (var0)
-        arg0->unknown_4_ = arg1->Allocate(var0);
+        self->field4 = alloc->Allocate(var0);
     else
-        arg0->unknown_4_ = (void*)0;
-    arg0->unknown_8_ = var1 ? arg1->Allocate(var1) : (void*)0;
-    if (arg0->unknown_4_) {
-        memcpy(arg0->unknown_4_, arg2 + 4, var0);
+        self->field4 = (void*)0;
+    self->field8 = var1 ? alloc->Allocate(var1) : (void*)0;
+    if (self->field4) {
+        memcpy(self->field4, src + 4, var0);
     }
-    if (arg0->unknown_8_) {
-        memcpy(arg0->unknown_8_, arg2 + (func_020e544c((Struct_020e53bc_3*)arg0) + 4), var1);
+    if (self->field8) {
+        memcpy(self->field8, src + (func_020e544c((Struct_020e53bc_3*)self) + 4), var1);
     }
     if ((void*)func_020e5204 != 0) {
-        func_020e545c((Struct_020e53bc*)arg0,
+        func_020e545c((Struct_020e53bc*)self,
             (Type_020e53bc)func_020e5204);
     }
-    arg0->unknown_0_ = (arg0->unknown_0_ & ~0x80000000) | 0x80000000;
+    self->field0 = (self->field0 & ~0x80000000) | 0x80000000;
     return 1;
 }

@@ -4,42 +4,42 @@
 #include <std_library_functions.h>
 
 struct Struct_ov031_02244ad0 {
-    unsigned char unknown_0_0_ : 3;
+    unsigned char reserved : 3;
     unsigned char unknown_0_3_ : 1;
     unsigned char unknown_0_4_ : 1;
     unsigned char unknown_0_5_ : 3;
-    unsigned char unknown_1_;
+    unsigned char capacity;
     unsigned char unknown_2_;
 };
 struct Struct_ov031_02244ad0_2 {
-    unsigned char unknown_0_[0x7ff0];
+    unsigned char unknown_0[0x7ff0];
     Struct_ov031_02244ad0 unknown_7ff0_;
 };
 struct Struct_ov031_02244ad0_3 {
-    int unknown_0_;
+    int reserved;
     void* (*unknown_4_)(int, unsigned int);
     void (*unknown_8_)(int, void*);
-    int unknown_c_;
-    unsigned int unknown_10_[5];
+    int enabled;
+    unsigned int address[5];
     unsigned char unknown_24_[8];
     int unknown_2c_;
     int unknown_30_;
     unsigned char unknown_34_[0x58 - 0x34];
 };
 struct Struct_02245528 {
-    unsigned char unknown_0_[0x34];
-    unsigned char unknown_34_;
-    unsigned char unknown_35_;
+    unsigned char unknown_0[0x34];
+    unsigned char mode;
+    unsigned char state;
     unsigned char unknown_36_[0x391 - 0x36];
     unsigned char unknown_391_;
     unsigned char unknown_392_[0x3a8 - 0x392];
     unsigned long long unknown_3a8_;
     unsigned long long unknown_3b0_;
     unsigned char unknown_3b8_[0x3d4 - 0x3b8];
-    Struct_ov031_02244ad0_3 unknown_3d4_;
+    Struct_ov031_02244ad0_3 config;
 };
-struct Struct_ov031_022495d4 { unsigned int unknown_0_[31]; };
-struct Struct_ov031_02245fb0 { unsigned char unknown_0_[6]; };
+struct Struct_ov031_022495d4 { unsigned int words[31]; };
+struct Struct_ov031_02245fb0 { unsigned char value[6]; };
 unsigned char data_ov031_02291e04;
 extern SafeAllocator data_ov031_02291e3c;
 extern const Struct_ov031_022495d4 data_ov031_022495d4;
@@ -65,28 +65,28 @@ extern "C" void* func_ov031_02243450(int, unsigned int);
 extern "C" void func_ov031_02243484(int, void*);
 
 // USA: func_ov031_02244ad0
-extern "C" ARM void func_ov031_02244ad0(Struct_02245528* arg0) {
+extern "C" ARM void func_ov031_02244ad0(Struct_02245528* self) {
     static unsigned char initialized = 0;
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov031_02244ad0_2* var1 = (Struct_ov031_02244ad0_2*)var0;
-    switch (arg0->unknown_35_) {
+    GameState* game = GameState::GetInstance();
+    Struct_ov031_02244ad0_2* settings = (Struct_ov031_02244ad0_2*)game;
+    switch (self->state) {
     case 0:
         switch (func_ov031_0220d540()) {
         case 0:
             if (!initialized) {
-                int var2 = 22;
-                if (var1->unknown_7ff0_.unknown_0_3_) var2 = var1->unknown_7ff0_.unknown_1_;
-                func_ov031_02245858((int)data_ov031_02291e3c.Allocate(var2 * 208 + 0x230c), var2);
-                Struct_ov031_022495d4 var3 = data_ov031_022495d4;
-                memcpy(&data_ov031_02291ea8, &var3, sizeof(var3));
+                int capacity = 22;
+                if (settings->unknown_7ff0_.unknown_0_3_) capacity = settings->unknown_7ff0_.capacity;
+                func_ov031_02245858((int)data_ov031_02291e3c.Allocate(capacity * 208 + 0x230c), capacity);
+                Struct_ov031_022495d4 initial = data_ov031_022495d4;
+                memcpy(&data_ov031_02291ea8, &initial, sizeof(initial));
                 func_ov031_0224586c(1);
                 func_ov031_0224587c(&data_ov031_02291ea8);
-                if (var1->unknown_7ff0_.unknown_0_4_)
-                    arg0->unknown_3a8_ = GetCurrentTimestamp() + ((33514000ULL * (unsigned int)var1->unknown_7ff0_.unknown_2_) >> 6);
-                else arg0->unknown_3a8_ = GetCurrentTimestamp() + 2618281ULL;
+                if (settings->unknown_7ff0_.unknown_0_4_)
+                    self->unknown_3a8_ = GetCurrentTimestamp() + ((33514000ULL * (unsigned int)settings->unknown_7ff0_.unknown_2_) >> 6);
+                else self->unknown_3a8_ = GetCurrentTimestamp() + 2618281ULL;
                 Struct_ov031_02245fb0 var4 = data_ov031_0224957c;
-                func_ov031_0220f368(data_ov031_02245fb0.unknown_0_, var4.unknown_0_);
-                arg0->unknown_3b0_ = GetCurrentTimestamp();
+                func_ov031_0220f368(data_ov031_02245fb0.value, var4.value);
+                self->unknown_3b0_ = GetCurrentTimestamp();
                 initialized = 1;
             }
             break;
@@ -100,48 +100,48 @@ extern "C" ARM void func_ov031_02244ad0(Struct_02245528* arg0) {
             break;
         case 9:
             GetCurrentTimestamp();
-            arg0->unknown_35_ = 3;
+            self->state = 3;
             break;
         }
-        if (GetCurrentTimestamp() <= arg0->unknown_3a8_) return;
-        if (var1->unknown_7ff0_.unknown_0_4_ && !var1->unknown_7ff0_.unknown_2_) return;
+        if (GetCurrentTimestamp() <= self->unknown_3a8_) return;
+        if (settings->unknown_7ff0_.unknown_0_4_ && !settings->unknown_7ff0_.unknown_2_) return;
         func_ov031_02245938();
-        arg0->unknown_35_ = 5;
+        self->state = 5;
         return;
     case 3:
-        VectorizedMemset(&arg0->unknown_3d4_, 0, sizeof(arg0->unknown_3d4_));
-        arg0->unknown_3d4_.unknown_c_ = 1;
-        arg0->unknown_3d4_.unknown_4_ = func_ov031_02243450;
-        arg0->unknown_3d4_.unknown_8_ = func_ov031_02243484;
+        VectorizedMemset(&self->config, 0, sizeof(self->config));
+        self->config.enabled = 1;
+        self->config.unknown_4_ = func_ov031_02243450;
+        self->config.unknown_8_ = func_ov031_02243484;
         data_ov031_0224e1c8 = 0;
-        func_ov031_0220764c(&arg0->unknown_3d4_);
-        if (var1->unknown_7ff0_.unknown_0_4_)
-            arg0->unknown_3a8_ = GetCurrentTimestamp() + ((33514000ULL * (unsigned int)var1->unknown_7ff0_.unknown_2_) >> 6);
-        else arg0->unknown_3a8_ = GetCurrentTimestamp() + 2618281ULL;
-        arg0->unknown_35_ = 4;
+        func_ov031_0220764c(&self->config);
+        if (settings->unknown_7ff0_.unknown_0_4_)
+            self->unknown_3a8_ = GetCurrentTimestamp() + ((33514000ULL * (unsigned int)settings->unknown_7ff0_.unknown_2_) >> 6);
+        else self->unknown_3a8_ = GetCurrentTimestamp() + 2618281ULL;
+        self->state = 4;
         GetCurrentTimestamp();
         return;
     case 4:
-        if (GetCurrentTimestamp() > arg0->unknown_3a8_) {
-            if (var1->unknown_7ff0_.unknown_0_4_ && !var1->unknown_7ff0_.unknown_2_) goto checkProgress;
+        if (GetCurrentTimestamp() > self->unknown_3a8_) {
+            if (settings->unknown_7ff0_.unknown_0_4_ && !settings->unknown_7ff0_.unknown_2_) goto checkProgress;
             func_ov031_022077c0();
-            arg0->unknown_35_ = 5;
+            self->state = 5;
             return;
         }
 checkProgress:
         if (func_ov031_02207500()) {
             GetCurrentTimestamp();
-            func_ov031_02245528(arg0, 6);
+            func_ov031_02245528(self, 6);
         }
         return;
     case 5:
         func_ov031_02245938();
-        arg0->unknown_35_ = 6;
+        self->state = 6;
         return;
     case 6:
         if (!func_ov031_0220d540()) {
-            func_ov031_02245528(arg0, 0);
-            arg0->unknown_391_ = 1;
+            func_ov031_02245528(self, 0);
+            self->unknown_391_ = 1;
         }
         return;
     default:

@@ -160,15 +160,15 @@ const Script::InstructionPrefix* Script::ExecuteSingleInstruction(bool dispatch)
                 {
                 case 0: // string
                     pArgsDest->type = 0;
-                    pArgsDest->value.unknown_0_ = GetDataString(*pSourceArgs);
+                    pArgsDest->value.str = GetDataString(*pSourceArgs);
                     break;
                 case 1: // int
                     pArgsDest->type = 1;
-                    pArgsDest->value.unknown1_0_ = *pSourceArgs;
+                    pArgsDest->value.i = *pSourceArgs;
                     break;
                 case 2: // float
                     pArgsDest->type = 2;
-                    pArgsDest->value.unknown2_0_ = BitCastIntToFloat(pSourceArgs);
+                    pArgsDest->value.f = BitCastIntToFloat(pSourceArgs);
                     break;
                 default:
                     continue;
@@ -244,9 +244,9 @@ int Script::Parameter::ToInt() const
     switch (type)
     {
     case 1:
-        return value.unknown1_0_;
+        return value.i;
     case 2:
-        return (int)value.unknown2_0_;
+        return (int)value.f;
     default:
         return 0;
     }
@@ -257,9 +257,9 @@ float Script::Parameter::ToFloat() const
     switch (type)
     {
     case 1:
-        return (float)value.unknown1_0_;
+        return (float)value.i;
     case 2:
-        return value.unknown2_0_;
+        return value.f;
     }
     return 0.0f;
 }
@@ -269,7 +269,7 @@ const char* Script::Parameter::ToString() const
     switch (type)
     {
     case 0:
-        return value.unknown_0_;
+        return value.str;
     }
     return NULL;
 }

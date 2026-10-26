@@ -1,35 +1,35 @@
 #include <globaldefs.h>
 #include "World/Object3D.h"
 
-extern "C" void _ZN8Object3D14ShallowCloneToEPS_(void* arg0);
+extern "C" void _ZN8Object3D14ShallowCloneToEPS_(void* self);
 
 struct Struct_02048588 {
-    unsigned char unknown_0_[0x10];
+    unsigned char pad[0x10];
     unsigned int unknown_10_0_ : 27;
     unsigned int unknown_13_3_ : 1;
     unsigned int unknown_13_4_ : 4;
 };
 
 // USA: func_02048588
-extern "C" ARM void func_02048588(unsigned char* arg0, unsigned char* arg1) {
-    _ZN8Object3D14ShallowCloneToEPS_(arg0);
-    *(int*)(arg1 + 0x148) = *(int*)(arg0 + 0xb0);
-    *(int*)(arg1 + 0x144) = *(int*)(arg0 + 0xac);
-    int* var0 = *(int**)(arg1 + 0x13c);
-    if (var0 != 0) {
-        *var0 = *(int*)(arg0 + 0xb4);
+extern "C" ARM void func_02048588(unsigned char* self, unsigned char* dst) {
+    _ZN8Object3D14ShallowCloneToEPS_(self);
+    *(int*)(dst + 0x148) = *(int*)(self + 0xb0);
+    *(int*)(dst + 0x144) = *(int*)(self + 0xac);
+    int* target = *(int**)(dst + 0x13c);
+    if (target != 0) {
+        *target = *(int*)(self + 0xb4);
     }
-    *(int*)(arg1 + 0x134) = *(int*)(arg0 + 0xb0) + 0x2c;
-    if (((Object3D*)arg0)->GetFlags() & 0x20000000) {
-        ((Object3D*)arg1)->EnableFlag(0x20000000);
+    *(int*)(dst + 0x134) = *(int*)(self + 0xb0) + 0x2c;
+    if (((Object3D*)self)->GetFlags() & 0x20000000) {
+        ((Object3D*)dst)->EnableFlag(0x20000000);
     }
-    Struct_02048588* var1 = *(Struct_02048588**)(arg0 + 0xb0);
-    unsigned int var2 = var1->unknown_13_3_;
-    if (var2) {
-        *(arg1 + 0xc2) &= ~0x10;
+    Struct_02048588* p = *(Struct_02048588**)(self + 0xb0);
+    unsigned int bit = p->unknown_13_3_;
+    if (bit) {
+        *(dst + 0xc2) &= ~0x10;
     } else {
-        *(arg1 + 0xc2) |= 0x10;
+        *(dst + 0xc2) |= 0x10;
     }
-    void* var3 = *(void**)(arg0 + 0xac);
-    *(short*)(arg1 + 0x18e) = *(short*)((char*)var3 + 0x12);
+    void* q = *(void**)(self + 0xac);
+    *(short*)(dst + 0x18e) = *(short*)((char*)q + 0x12);
 }

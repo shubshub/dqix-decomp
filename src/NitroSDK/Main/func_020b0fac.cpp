@@ -1,34 +1,34 @@
 #include <globaldefs.h>
 
 struct Struct_020b0fac_2 {
-    void* unknown_0_;
+    void* field0;
     int (*unknown_4_)(const char** cursor);
 };
 
 struct Struct_020b0fac {
     int unknown_0_;
     int unknown_4_;
-    const char* unknown_8_;
+    const char* cursor;
 };
 
 // USA: func_020b0fac
-extern "C" ARM int func_020b0fac(struct Struct_020b0fac_2* arg0, int arg1, const char* arg2) {
-    struct Struct_020b0fac var0;
-    int* var1 = (int*)&var0;
-    var0.unknown_8_ = arg2;
+extern "C" ARM int func_020b0fac(struct Struct_020b0fac_2* obj, int width, const char* text) {
+    struct Struct_020b0fac ctx;
+    int* var1 = (int*)&ctx;
+    ctx.cursor = text;
     var1[0] = 0;
     var1[1] = 0;
 
     int var2 = 1;
-    int (*var3)(const char**) = arg0->unknown_4_;
-    int var4 = var3(&var0.unknown_8_);
-    if (var4 != 0) {
+    int (*var3)(const char**) = obj->unknown_4_;
+    int ch = var3(&ctx.cursor);
+    if (ch != 0) {
         do {
-            if (var4 == 0xa) var2++;
-            var4 = var3(&var0.unknown_8_);
-        } while (var4 != 0);
+            if (ch == 0xa) var2++;
+            ch = var3(&ctx.cursor);
+        } while (ch != 0);
     }
 
-    signed char var5 = ((signed char*)arg0->unknown_0_)[1];
-    return var2 * (arg1 + var5) - arg1;
+    signed char extra = ((signed char*)obj->field0)[1];
+    return var2 * (width + extra) - width;
 }

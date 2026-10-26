@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_02248f78 {
-    unsigned char unknown_0_[14];
+    unsigned char indices[14];
 };
 struct Struct_ov031_02249002 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_;
+    unsigned short first;
+    unsigned short second;
+    unsigned short third;
     unsigned short unknown_6_;
 };
 struct Struct_ov031_02290ca0_20 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
+    unsigned char selection;
+    unsigned char padding1;
+    unsigned char row;
     unsigned char unknown_3_;
-    unsigned short unknown_4_;
+    unsigned short offset;
     unsigned char unknown_6_[2];
-    void* unknown_8_;
+    void* layer;
 };
 extern const Struct_ov031_02248f78 data_ov031_02248f78;
 extern const Struct_ov031_02249002 data_ov031_02249002[];
@@ -26,13 +26,13 @@ extern "C" void func_ov031_02223720(int, int, int, int);
 // USA: func_ov031_022307fc
 extern "C" ARM void func_ov031_022307fc(void) {
     Struct_ov031_02248f78 var0 = data_ov031_02248f78;
-    int var1 = var0.unknown_0_[data_ov031_02290ca0.unknown_0_];
-    if (var1 >= 3) {
-        func_ov031_02223720(3, data_ov031_02249002[var1].unknown_0_,
-            data_ov031_02249002[var1].unknown_4_, data_ov031_02249002[var1].unknown_2_);
+    int index = var0.indices[data_ov031_02290ca0.selection];
+    if (index >= 3) {
+        func_ov031_02223720(3, data_ov031_02249002[index].first,
+            data_ov031_02249002[index].third, data_ov031_02249002[index].second);
         return;
     }
-    Struct_ov031_02249002 var2 = data_ov031_02249002[var1];
-    var2.unknown_2_ += data_ov031_02290ca0.unknown_2_ * 29;
-    func_ov031_02223720(1, var2.unknown_0_, var2.unknown_4_, var2.unknown_2_);
+    Struct_ov031_02249002 position = data_ov031_02249002[index];
+    position.second += data_ov031_02290ca0.row * 29;
+    func_ov031_02223720(1, position.first, position.third, position.second);
 }

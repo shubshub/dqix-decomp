@@ -5,38 +5,38 @@
 #endif
 
 struct Struct_020e1288;
-extern "C" int func_020e1288(struct Struct_020e1288* arg0);
+extern "C" int func_020e1288(struct Struct_020e1288* obj);
 
 extern VRAMSubregion data_020ee950[];
 
-struct Struct_020e23f4 { unsigned char unknown_0_0_ : 1; };
+struct Struct_020e23f4 { unsigned char bit0 : 1; };
 
 struct Struct_020e23f4_2 {
-    char unknown_0_[0x30];
+    char pad0[0x30];
     int unknown_30_;
-    int unknown_34_;
-    char unknown_38_[0x6];
+    int f34;
+    char pad1[0x6];
     unsigned char unknown_3e_;
     unsigned char unknown_3f_;
 };
 
 struct Struct_020e23f4_3 {
-    unsigned char* unknown_0_;
-    struct Struct_020e23f4_2* unknown_4_;
+    unsigned char* field0;
+    struct Struct_020e23f4_2* field4;
 };
 
 // USA: func_020e23f4
-extern "C" ARM void func_020e23f4(struct Struct_020e23f4_3* arg0) {
-    struct Struct_020e23f4_2* var0 = arg0->unknown_4_;
-    if (var0 == 0 || arg0->unknown_0_ == 0) return;
-    ((struct Struct_020e23f4*)&var0->unknown_3f_)->unknown_0_0_ = 1;
-    var0 = arg0->unknown_4_;
+extern "C" ARM void func_020e23f4(struct Struct_020e23f4_3* obj) {
+    struct Struct_020e23f4_2* var0 = obj->field4;
+    if (var0 == 0 || obj->field0 == 0) return;
+    ((struct Struct_020e23f4*)&var0->unknown_3f_)->bit0 = 1;
+    var0 = obj->field4;
     int var1 = var0->unknown_30_;
-    int var2 = func_020e1288((struct Struct_020e1288*)var0);
+    int half = func_020e1288((struct Struct_020e1288*)var0);
     StageMemoryToVRAM(
         data_020ee950[var0->unknown_3e_],
-        arg0->unknown_0_ + var1,
+        obj->field0 + var1,
         var1,
-        var0->unknown_34_ + var2,
+        var0->f34 + half,
         true, false);
 }

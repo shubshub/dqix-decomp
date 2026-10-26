@@ -13,7 +13,7 @@ extern "C" ARM int ZoneTerrain_FindWallHit(const ZoneTerrainSample* triangles, i
                                  const Vector3fix* start, const Vector3fix* end, Vector3fix* point)
 {
     int best = -1;
-    fix32_t bestHeight;
+    fix32_t var1;
     for (int index = 0; index < count; ++index) {
         const ZoneTerrainSample* triangle = &triangles[index];
         if (triangle->normal.y <= 0x800) {
@@ -25,8 +25,8 @@ extern "C" ARM int ZoneTerrain_FindWallHit(const ZoneTerrainSample* triangles, i
                 fix32_t weightedC = FIX32_MULTIPLY(triangle->vertices[2].y, weightC);
                 fix32_t sum = weightedA + weightedB;
                 fix32_t height = weightedA + weightedB + weightedC;
-                if (best < 0 || bestHeight < height) {
-                    bestHeight = height;
+                if (best < 0 || var1 < height) {
+                    var1 = height;
                     best = index;
                 }
             }
@@ -34,16 +34,16 @@ extern "C" ARM int ZoneTerrain_FindWallHit(const ZoneTerrainSample* triangles, i
     }
     if (best >= 0) {
         const ZoneTerrainSample* triangle = &triangles[best];
-        Vector4fix normalPlane;
-        Vector3fix secondEdge;
-        Vector3fix firstEdge;
+        Vector4fix var17;
+        Vector3fix var18;
+        Vector3fix var19;
         Vector4fix crossPlane;
         fix32_t parameter;
-        normalPlane.xyz = triangle->normal;
-        normalPlane.w = Vector3fix_InnerProduct(&normalPlane.xyz, &triangle->vertices[0]);
-        Vector3fix_Subtract(&triangle->vertices[1], &triangle->vertices[0], &firstEdge);
-        Vector3fix_Subtract(&triangle->vertices[2], &triangle->vertices[0], &secondEdge);
-        Vector3fix_CrossProduct(&firstEdge, &secondEdge, &crossPlane.xyz);
+        var17.xyz = triangle->normal;
+        var17.w = Vector3fix_InnerProduct(&var17.xyz, &triangle->vertices[0]);
+        Vector3fix_Subtract(&triangle->vertices[1], &triangle->vertices[0], &var19);
+        Vector3fix_Subtract(&triangle->vertices[2], &triangle->vertices[0], &var18);
+        Vector3fix_CrossProduct(&var19, &var18, &crossPlane.xyz);
         crossPlane.w = Vector3fix_InnerProduct(&crossPlane.xyz, &triangle->vertices[0]);
         if (Plane_IntersectSegment(start, end, &crossPlane, &parameter, point) == 0)
             best = -1;

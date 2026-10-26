@@ -15,7 +15,7 @@ enum { kFramePieceCount = 8, kPieceSize = 0x88 }; // kPieceSize: sizeof(Foo02048
 // Loads the window frame's pieces win0-7.spr from the archive mounted as "ARC" (WindowFrame_Load mounts
 // data/bin/icon.nsarc); the archive argument itself is not read.
 // Main, originally LoadEightEntriesFromTable_0202f310 (USA 0x0202f310, EUR 0x0202f320, JPN 0x0202ee80)
-ARM void WindowFrame_LoadPieces(char* frame, void* allocator, void* archive) {
+extern "C" ARM void WindowFrame_LoadPieces(char* frame, void* allocator, void* archive) {
     struct SpritePath path;
     char* piece;
     int i;

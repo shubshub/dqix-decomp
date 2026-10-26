@@ -7,8 +7,8 @@
 #include "NitroSDK/Graphics.h"
 
 struct Entry_0205d6a0;
-void Window_ClosePane(Entry_0205d6a0*, int);
-void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
+extern "C" void Window_ClosePane(Entry_0205d6a0*, int);
+extern "C" void CharacterCreationUI_SwitchTab(unsigned char* self, int tab);
 
 
 // CharacterCreationUI::step on the close tab.

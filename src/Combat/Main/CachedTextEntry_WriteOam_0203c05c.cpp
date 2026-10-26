@@ -22,7 +22,7 @@ enum {
 };
 
 // Main, originally BuildPackedEntries0203c05c (USA 0x0203c05c, EUR 0x0203c06c; JPN not identified)
-ARM void CachedTextEntry_WriteOam(struct Source0203c05c* entry, struct Entry0203c05c* objects,
+extern "C" ARM void CachedTextEntry_WriteOam(struct Source0203c05c* entry, struct Entry0203c05c* objects,
                                     int priority, int x, int y, int palette) {
     short tile = entry->tileIndex;
     int i;

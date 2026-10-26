@@ -5,81 +5,81 @@
 
 struct Struct_ov002_021538e4 {
     unsigned int : 8;
-    unsigned int unknown_1_0_ : 10;
+    unsigned int y : 10;
     unsigned int : 14;
     unsigned int : 10;
-    unsigned int unknown_5_2_ : 10;
-    unsigned int unknown_6_4_ : 10;
+    unsigned int d : 10;
+    unsigned int c : 10;
     unsigned int : 2;
 };
 
 struct Struct_ov002_021538e4_2 {
-    int unknown_0_;
+    int unused0;
     unsigned int : 12;
-    unsigned int unknown_5_4_ : 10;
-    unsigned int unknown_6_6_ : 10;
-    char unknown_8_[0x10 - 0x8];
-    unsigned int unknown_10_;
+    unsigned int a : 10;
+    unsigned int b : 10;
+    char pad8[0x10 - 0x8];
+    unsigned int field10;
     char unknown_14_[0x18 - 0x14];
     unsigned int : 16;
-    unsigned int unknown_1a_0_ : 2;
+    unsigned int mode : 2;
     unsigned int : 14;
 };
 
 // USA: func_ov002_021538e4
-extern "C" ARM int func_ov002_021538e4(void* arg0, struct Struct_ov002_021538e4_2* arg1, struct Struct_ov002_021538e4* arg2, int arg3) {
-    struct Random* var0 = GetBTRandom();
-    float var1 = 0.0f;
+extern "C" ARM int func_ov002_021538e4(void* unused, struct Struct_ov002_021538e4_2* p, struct Struct_ov002_021538e4* sb, int combatantId) {
+    struct Random* rng = GetBTRandom();
+    float result = 0.0f;
 
-    if (arg2 != 0) {
-    if (arg1->unknown_1a_0_ == 2) {
-        GameState* var2 = GameState::GetInstance();
-        GameObject* var3 = func_0200ff1c(var2, arg3);
-        if (var3 == 0) {
+    if (sb != 0) {
+    if (p->mode == 2) {
+        GameState* bs = GameState::GetInstance();
+        GameObject* combatant = func_0200ff1c(bs, combatantId);
+        if (combatant == 0) {
             return 0;
         }
-        if ((arg1->unknown_10_ & 0x8000) != 0) {
-            unsigned short var4 = var3->baseStats_->primaryStats.magicalMending;
-            unsigned int var5 = arg1->unknown_5_4_;
-            if (var4 <= var5) {
-                unsigned int var6 = arg2->unknown_1_0_;
-                float var7 = NextRandomFloatBetween(var0, (float)var6 * -1.0f, (float)var6);
-                unsigned int var8 = arg2->unknown_5_2_;
-                var1 = (float)var8 + var7;
+        if ((p->field10 & 0x8000) != 0) {
+            unsigned short var4 = combatant->baseStats_->primaryStats.magicalMending;
+            unsigned int a = p->a;
+            if (var4 <= a) {
+                unsigned int y = sb->y;
+                float var7 = NextRandomFloatBetween(rng, (float)y * -1.0f, (float)y);
+                unsigned int d = sb->d;
+                result = (float)d + var7;
             } else {
-                unsigned int var9 = arg1->unknown_6_6_;
-                if (var4 >= var9) {
-                    unsigned int var10 = arg2->unknown_1_0_;
-                    float var11 = NextRandomFloatBetween(var0, (float)var10 * -1.0f, (float)var10);
-                    unsigned int var12 = arg2->unknown_6_4_;
-                    var1 = (float)var12 + var11;
+                unsigned int b = p->b;
+                if (var4 >= b) {
+                    unsigned int y = sb->y;
+                    float var11 = NextRandomFloatBetween(rng, (float)y * -1.0f, (float)y);
+                    unsigned int c = sb->c;
+                    result = (float)c + var11;
                 } else {
-                    unsigned int var13 = arg2->unknown_6_4_;
-                    unsigned int var14 = arg2->unknown_5_2_;
-                    float var15 = (float)(var13 - var14) / (float)(arg1->unknown_6_6_ - var5);
-                    unsigned int var16 = (unsigned int)(int)(var15 * (float)(var4 - var5)) + var14;
+                    unsigned int c = sb->c;
+                    unsigned int d = sb->d;
+                    float t = (float)(c - d) / (float)(p->b - a);
+                    unsigned int var16 = (unsigned int)(int)(t * (float)(var4 - a)) + d;
                     float var17 = (float)var16;
-                    unsigned int var18 = arg2->unknown_1_0_;
-                    var1 = var17 + NextRandomFloatBetween(var0, (float)var18 * -1.0f, (float)var18);
+                    unsigned int y = sb->y;
+                    result = var17 + NextRandomFloatBetween(rng, (float)y * -1.0f, (float)y);
                 }
             }
         } else {
-            unsigned int var19 = arg2->unknown_5_2_;
-            unsigned int var20 = arg2->unknown_6_4_;
-            float var21 = NextRandomFloatBetween(var0, (float)var19, (float)var20);
-            unsigned int var22 = arg2->unknown_1_0_;
-            float var23 = NextRandomFloatBetween(var0, (float)var22 * -1.0f, (float)var22);
-            var1 = var21 + var23;
+            unsigned int d = sb->d;
+            unsigned int c = sb->c;
+            float r1 = NextRandomFloatBetween(rng, (float)d, (float)c);
+            unsigned int y = sb->y;
+            float r2 = NextRandomFloatBetween(rng, (float)y * -1.0f, (float)y);
+            result = r1 + r2;
         }
     } else {
-        unsigned int var24 = arg2->unknown_5_2_;
-        unsigned int var25 = arg2->unknown_6_4_;
-        float var26 = NextRandomFloatBetween(var0, (float)var24, (float)var25);
-        unsigned int var27 = arg2->unknown_1_0_;
-        float var28 = NextRandomFloatBetween(var0, (float)var27 * -1.0f, (float)var27);
-        var1 = var26 + var28;
+        unsigned int d = sb->d;
+        unsigned int c = sb->c;
+        float r1 = NextRandomFloatBetween(rng, (float)d, (float)c);
+        unsigned int y = sb->y;
+        float r2 = NextRandomFloatBetween(rng, (float)y * -1.0f, (float)y);
+        result = r1 + r2;
     }
     }
 
-    return RoundUp(var1);
+    return RoundUp(result);
 }

@@ -7,11 +7,11 @@ static const int kBufferOffset = 0x44b8;
 #endif
 
 // USA: func_ov017_02197324
-extern "C" ARM void func_ov017_02197324(unsigned char* arg0, unsigned short arg1) {
-	unsigned short* var0 = (unsigned short*)(arg0 + kBufferOffset);
-	for (int var1 = 0; var1 < 4; var1++, var0++) {
-		if (*var0 == arg1) {
-			*var0 = 0;
+extern "C" ARM void func_ov017_02197324(unsigned char* obj, unsigned short key) {
+	unsigned short* p = (unsigned short*)(obj + kBufferOffset);
+	for (int i = 0; i < 4; i++, p++) {
+		if (*p == key) {
+			*p = 0;
 			return;
 		}
 	}

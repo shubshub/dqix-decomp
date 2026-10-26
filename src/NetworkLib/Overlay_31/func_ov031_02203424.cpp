@@ -7,22 +7,22 @@ unsigned long long GetCurrentTimestamp(void);
 
 typedef int (*Type_0200f3a4_3)(void);
 struct Struct_ov031_0224c980_8 {
-	char unknown_0_[0x48];
-	Type_0200f3a4_3 unknown_48_;
+	char pad[0x48];
+	Type_0200f3a4_3 field48;
 };
 extern Struct_ov031_0224c980_8 data_ov031_0224c980;
 
 // USA: func_ov031_02203424
 extern "C" ARM void func_ov031_02203424(void) {
-	void* var0 = *(void**)((char*)data_02111304.activeContext + 0xa4);
-	if (var0 == NULL) return;
-	if (*((unsigned char*)var0 + 9) != 0) {
-		func_ov031_0220aa30(var0);
+	void* mgr = *(void**)((char*)data_02111304.activeContext + 0xa4);
+	if (mgr == NULL) return;
+	if (*((unsigned char*)mgr + 9) != 0) {
+		func_ov031_0220aa30(mgr);
 	}
-	int var1 = (int)(GetCurrentTimestamp() >> 16);
-	while (data_ov031_0224c980.unknown_48_() != 0 && *((unsigned char*)var0 + 8) != 0
-	       && (int)(GetCurrentTimestamp() >> 16) - var1 < 0x27) {
+	int start = (int)(GetCurrentTimestamp() >> 16);
+	while (data_ov031_0224c980.field48() != 0 && *((unsigned char*)mgr + 8) != 0
+	       && (int)(GetCurrentTimestamp() >> 16) - start < 0x27) {
 		func_ov031_02200264();
 	}
-	*((unsigned char*)var0 + 8) = 0;
+	*((unsigned char*)mgr + 8) = 0;
 }

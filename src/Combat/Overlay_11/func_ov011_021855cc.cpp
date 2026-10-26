@@ -2,15 +2,15 @@
 #include "Filesystem/BackgroundLoader.h"
 
 extern "C" void* func_ov017_021b2164(void);
-extern "C" int func_ov011_021849d8(void* arg0);
-extern "C" void func_ov011_021849d0(void* arg0, int arg1);
+extern "C" int func_ov011_021849d8(void* p);
+extern "C" void func_ov011_021849d0(void* p, int v);
 
 // USA: func_ov011_021855cc
 extern "C" ARM int func_ov011_021855cc(void) {
-    void* var0 = func_ov017_021b2164();
-    int var1 = func_ov011_021849d8(var0);
-    int var2 = (int)BackgroundLoader::GetInstance();
-    ((BackgroundLoader*)(var2))->RemoveTask((int)(var1));
-    func_ov011_021849d0(var0, -1);
+    void* obj = func_ov017_021b2164();
+    int val = func_ov011_021849d8(obj);
+    int f = (int)BackgroundLoader::GetInstance();
+    ((BackgroundLoader*)(f))->RemoveTask((int)(val));
+    func_ov011_021849d0(obj, -1);
     return 1;
 }

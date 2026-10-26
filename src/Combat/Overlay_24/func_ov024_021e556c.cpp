@@ -2,71 +2,71 @@
 #include "Combat/Overlay_0/GetCombatantByID.h"
 #include "GameState/GameState.h"
 
-struct Struct_02010088;
-extern "C" int func_02010088(struct Struct_02010088* arg0);
-extern "C" int func_020854e8(unsigned char* arg0);
-extern "C" short func_ov000_0215a1d4(void* arg0, int arg1, int arg2, short* arg3);
-extern "C" void func_ov000_0215acb8(void* arg0, int arg1, int arg2, int arg3);
+struct S_10088;
+extern "C" int func_02010088(struct S_10088* obj);
+extern "C" int func_020854e8(unsigned char* actor);
+extern "C" short func_ov000_0215a1d4(void* unused, int id, int delta, short* arg3);
+extern "C" void func_ov000_0215acb8(void* world, int id, int arg2, int result);
 
 struct Struct_ov024_021e556c {
     unsigned int unknown_0_0_ : 8;
-    unsigned int unknown_1_0_ : 2;
-    unsigned int unknown_1_2_ : 22;
+    unsigned int pair : 2;
+    unsigned int rest : 22;
 };
 
 struct Struct_ov024_021e556c_2 {
     unsigned int unknown_0_0_ : 5;
-    unsigned int unknown_0_5_ : 7;
-    unsigned int unknown_1_4_ : 4;
-    unsigned int unknown_2_0_ : 16;
+    unsigned int kind : 7;
+    unsigned int sub : 4;
+    unsigned int rest : 16;
 };
 
 struct Struct_ov024_021e556c_3 {
-    char unknown_0_[8];
-    struct Struct_ov024_021e556c unknown_8_;
+    char pad0[8];
+    struct Struct_ov024_021e556c f8;
     char unknown_c_[4];
-    unsigned int unknown_10_;
+    unsigned int f10;
     char unknown_14_[4];
-    struct Struct_ov024_021e556c_2 unknown_18_;
+    struct Struct_ov024_021e556c_2 f18;
 };
 
 struct Struct_ov024_021e556c_4 {
-    char unknown_0_[0x10];
-    void* unknown_10_;
+    char pad0[0x10];
+    void* world;
     char unknown_14_[0x75 - 0x14];
     unsigned char unknown_75_;
 };
 
 struct Struct_ov024_021e556c_5 {
 #if defined(jpn)
-    char unknown_0_[0x144];
+    char pad0[0x144];
 #else
-    char unknown1_0_[0x150];
+    char pad0[0x150];
 #endif
-    unsigned char* unknown_150_;
+    unsigned char* f150;
 };
 
 // USA: func_ov024_021e556c
-extern "C" ARM void func_ov024_021e556c(struct Struct_ov024_021e556c_4* arg0, int arg1, int arg2, struct Struct_ov024_021e556c_3* arg3, int arg4) {
-    GameState* var0 = GameState::GetInstance();
-    if (GetCombatantByID((int)arg0->unknown_10_, arg2) == 0) return;
-    if (!(arg3->unknown_10_ & 1)) return;
-    if (arg3->unknown_8_.unknown_1_0_ != 1) return;
-    int var1 = (arg2 >= 0 && arg2 <= 3) ? 1 : 0;
+extern "C" ARM void func_ov024_021e556c(struct Struct_ov024_021e556c_4* obj, int arg1, int targetId, struct Struct_ov024_021e556c_3* rec, int arg4) {
+    GameState* gs = GameState::GetInstance();
+    if (GetCombatantByID((int)obj->world, targetId) == 0) return;
+    if (!(rec->f10 & 1)) return;
+    if (rec->f8.pair != 1) return;
+    int var1 = (targetId >= 0 && targetId <= 3) ? 1 : 0;
     if (!var1) return;
     int var2 = (arg1 >= 0 && arg1 <= 3) ? 1 : 0;
     if (var2) return;
-    if (arg3->unknown_8_.unknown_0_0_ == 0) return;
-    if (arg3->unknown_18_.unknown_0_5_ == 1) {
+    if (rec->f8.unknown_0_0_ == 0) return;
+    if (rec->f18.kind == 1) {
         if (arg4 <= 0) return;
     }
-    if (arg3->unknown_18_.unknown_1_4_ != 2) return;
-    if (arg0->unknown_75_ == 0) return;
-    struct Struct_ov024_021e556c_5* var3 = (struct Struct_ov024_021e556c_5*)func_0200ff1c(var0, arg2);
-    if (var3 == 0) return;
-    if (func_02010088((struct Struct_02010088*)var3)) return;
-    if (!func_020854e8(var3->unknown_150_)) return;
+    if (rec->f18.sub != 2) return;
+    if (obj->unknown_75_ == 0) return;
+    struct Struct_ov024_021e556c_5* target = (struct Struct_ov024_021e556c_5*)func_0200ff1c(gs, targetId);
+    if (target == 0) return;
+    if (func_02010088((struct S_10088*)target)) return;
+    if (!func_020854e8(target->f150)) return;
     short var4 = 0;
-    short var5 = func_ov000_0215a1d4(arg0->unknown_10_, arg2, arg3->unknown_8_.unknown_0_0_, &var4);
-    func_ov000_0215acb8(arg0->unknown_10_, arg2, var4, var5);
+    short result = func_ov000_0215a1d4(obj->world, targetId, rec->f8.unknown_0_0_, &var4);
+    func_ov000_0215acb8(obj->world, targetId, var4, result);
 }

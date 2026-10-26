@@ -11,7 +11,7 @@ extern "C" void __clear(void* buf, int n);
 #define ENTRY (data_020fdc20.currentEntry)
 
 // Main, originally WarpScript_Opcode_74_0201d638 (USA 0x0201d638, EUR 0x0201d648, JPN 0x0201d3c4)
-ARM int ZoneFeaturesScript_SetEntryData(Script::Parameter* params, int numParams) {
+extern "C" ARM int ZoneFeaturesScript_SetEntryData(Script::Parameter* params, int numParams) {
     if (ENTRY == 0) return 0;
 
     void* zoneTable = GameState_GetZoneTable((void*)GameState::GetInstance());

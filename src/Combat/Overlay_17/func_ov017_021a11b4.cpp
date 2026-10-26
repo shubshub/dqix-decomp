@@ -3,16 +3,16 @@
 
 struct Struct_ov017_0218f064_6;
 struct Struct_ov017_021a11b4 {
-    short unknown_0_;
-    unsigned short unknown_2_;
+    short combatantId;
+    unsigned short slotIndex;
 };
 
 // USA: func_ov017_021a11b4
 extern "C" ARM void* func_ov017_021a11b4(Struct_ov017_0218f064_6* arg0) {
-    GameResources* var0 = (GameResources*)arg0;
-    for (int var1 = 0; var1 < 4; ++var1) {
-        Struct_ov017_021a11b4* var2 = (Struct_ov017_021a11b4*)var0->substruct_array_12c8[var1].unknown_0_;
-        if (var2->unknown_0_ < 0) return &var0->substruct_array_12c8[var1];
+    GameResources* resources = (GameResources*)arg0;
+    for (int slot = 0; slot < 4; ++slot) {
+        Struct_ov017_021a11b4* header = (Struct_ov017_021a11b4*)resources->substruct_array_12c8[slot].unknown_0;
+        if (header->combatantId < 0) return &resources->substruct_array_12c8[slot];
     }
     return NULL;
 }

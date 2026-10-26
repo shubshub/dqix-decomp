@@ -405,7 +405,7 @@ src/Combat/Overlay_3/func_ov003_0215376c.cpp:
     complete
     .text start:0x02154eec end:0x02154f54
 
-src/Combat/Overlay_2/ApplyCombatantAdjustment_0215f084.cpp:
+src/Combat/Overlay_3/func_ov003_0215dd3c.cpp:
     complete
     .text start:0x0215f084 end:0x0215f108
 
@@ -865,7 +865,7 @@ src/Combat/Overlay_3/func_ov003_0216664c.cpp:
     complete
     .text start:0x02166534 end:0x021665ac
 
-src/Combat/Overlay_2/Trans_021682c0.cpp:
+src/Combat/Overlay_3/func_ov003_02168438.cpp:
     complete
     .text start:0x021682c0 end:0x021683e8
 
@@ -1085,7 +1085,7 @@ src/Combat/Overlay_3/func_ov003_02167a5c.cpp:
     complete
     .text start:0x02167934 end:0x02167a08
 
-src/Combat/Overlay_4/DecrementKeyForCount_02167a0c.cpp:
+src/Combat/Overlay_3/func_ov003_02167b34.cpp:
     complete
     .text start:0x02167a0c end:0x02167b74
 
@@ -1383,7 +1383,7 @@ src/Combat/Overlay_3/func_ov003_02167b30.cpp:
 src/Combat/Overlay_3/func_ov003_02167c9c.cpp:
     .text start:0x02167b74 end:0x02167b78
 
-src/Combat/Overlay_4/func_ov004_02167b78.cpp:
+src/Combat/Overlay_3/func_ov003_02167ca0.cpp:
     .text start:0x02167b78 end:0x02167b7c
 
 src/Combat/Overlay_3/func_ov003_02167ca4.cpp:
@@ -1414,7 +1414,7 @@ src/Combat/Overlay_3/func_ov003_02167240.cpp:
     complete
     .text start:0x02167120 end:0x0216712c
 
-src/Combat/Overlay_3/SetupBattleEntry_0215ddc0.cpp:
+src/Combat/Overlay_3/func_ov003_0215caa4.cpp:
     complete
     .text start:0x0215ddc0 end:0x0215ddcc
 
@@ -1770,7 +1770,7 @@ src/Combat/Overlay_3/func_ov003_0216bcfc.cpp:
     complete
     .text start:0x0216b960 end:0x0216bc60
 
-src/Combat/Overlay_3/SetEntryFields_021604f4.cpp:
+src/Combat/Overlay_3/func_ov003_02160344.cpp:
     complete
     .text start:0x021604f4 end:0x02160554
 

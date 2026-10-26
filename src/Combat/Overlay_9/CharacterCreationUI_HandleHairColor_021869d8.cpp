@@ -7,9 +7,9 @@ extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI* self, 
 extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int choice);
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 #if defined(jpn)
-void CharacterCreationUI_SwitchTab(unsigned char *self, int tab);
+extern "C" void CharacterCreationUI_SwitchTab(unsigned char *self, int tab);
 #else
-ARM void CharacterCreationUI_SwitchTab(unsigned char *self, int tab);
+extern "C" ARM void CharacterCreationUI_SwitchTab(unsigned char *self, int tab);
 #endif
 
 // Overlay 9, originally func_ov009_021869d8 (USA/EUR 0x021869d8, JPN 0x02187b04)

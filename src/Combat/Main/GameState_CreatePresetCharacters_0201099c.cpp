@@ -15,26 +15,26 @@ struct PartyMemberRecord {
     unsigned char active : 1;
     unsigned char reserved : 1;
     unsigned char count : 4;
-    unsigned char ready : 1;
+    unsigned char unknown_1_4_ : 1;
     unsigned char mode : 3;
     unsigned char levels[Vocation_Count];
     unsigned char status[Vocation_Count];
     int experience[Vocation_Count];
     int vocation;
     unsigned short vocationMask;
-    char pad56[2];
+    char unknown_56_[2];
     PackedStats0218742c triples[Vocation_Count][3];
     unsigned short skillPoints;
     unsigned char flags[27];
     unsigned char learnedSpells[9];
-    unsigned char commandFlags[36];
-    unsigned char field13e;
+    unsigned char unknown_11a_[36];
+    unsigned char unknown_13e_;
     unsigned char cursor : 3;
     unsigned char capacity : 5;
     unsigned char name[12];
     PackedStats0218742c stats[5];
     PartyMemberAppearance appearance;
-    unsigned char history[0xc0];
+    unsigned char unknown_17c_[0xc0];
 };
 
 struct GameStatePartyRecords {
@@ -50,9 +50,9 @@ struct GameStatePartyRecords {
 struct PresetCharacter {
     unsigned char pad0[8];
     unsigned char female;
-    unsigned char pad9;
+    unsigned char unknown_9_;
     short defaultArms;
-    unsigned char padc[0x10];
+    unsigned char unknown_c_[0x10];
     short models[10];
     unsigned char levels[Vocation_Count];
     unsigned char vocation;
@@ -62,9 +62,9 @@ struct PresetCharacter {
 struct ResetFieldsStruct {
     PresetCharacter* entries;
     short count;
-    short f6;
+    short unknown_6_;
     short f8;
-    char pad0a[2];
+    char unknown_a_[2];
 #if defined(jpn)
     const char** maleNames;
 #else
@@ -96,12 +96,12 @@ struct PartyMemberDataStorage {
     PackedStats0218742c stats_[4];
     unsigned char pad10[0x2c];
     PartyMemberProfile profile;
-    unsigned char pad74[0x120];
+    unsigned char unknown_74_[0x120];
     Element020de650 equipment_[8];
 #if defined(jpn)
-    unsigned char pad294[0x638];
+    unsigned char unknown_294_[0x638];
 #else
-    unsigned char pad294[0x6d0];
+    unsigned char unknown1_294_[0x6d0];
 #endif
 };
 
@@ -127,33 +127,33 @@ struct Ctx0209a810 {
     int handle;
 };
 
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
-void KeyTable_Construct(void* p);
-void KeyTable_Reset(Struct020dfc40* p);
-void KeyTable_Destroy(Struct020dfc40* p);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" void KeyTable_Construct(void* p);
+extern "C" void KeyTable_Reset(Struct020dfc40* p);
+extern "C" void KeyTable_Destroy(Struct020dfc40* p);
 extern "C" void KeyTable_Load(Struct020dfc40* table, SafeAllocator* alloc, void* data, unsigned int size);
-void PresetTable_Reset(ResetFieldsStruct* s);
-void PresetTable_Destroy(ResetFieldsStruct* s);
-void PresetTable_Load(void* param0, void* param1, const char* param2);
-void* PresetTable_GetEntry(unsigned char* obj, int index);
+extern "C" void PresetTable_Reset(ResetFieldsStruct* s);
+extern "C" void PresetTable_Destroy(ResetFieldsStruct* s);
+extern "C" void PresetTable_Load(void* param0, void* param1, const char* param2);
+extern "C" void* PresetTable_GetEntry(unsigned char* obj, int index);
 extern "C" void PartyMemberRecord_Init(PartyMemberRecord* record);
-void PartyMemberRecord_SetVocation(SetFlagBitStruct* s, int n);
-char* KeyTable_Get(Container020e0310* c, int key);
+extern "C" void PartyMemberRecord_SetVocation(SetFlagBitStruct* s, int n);
+extern "C" char* KeyTable_Get(Container020e0310* c, int key);
 extern "C" void __clear(void* dst, unsigned int size);
 extern "C" int Font_EncodeText(void* a, void* b, int flag);
-void ClearField00209a804(int* p);
-void SpellTable_Load(Ctx0209a810* ctx, void* value);
-int PartyMemberRecord_GetVocation(Struct020865b0* p);
-void PartyMemberRecord_LearnSpell(SetBitArrayStruct020865b8* s, int n);
-void ItemTable_Construct(void* p);
-void ItemTable_Init(void* p);
+extern "C" void func_0209a804(int* p);
+extern "C" void SpellTable_Load(Ctx0209a810* ctx, void* value);
+extern "C" int PartyMemberRecord_GetVocation(Struct020865b0* p);
+extern "C" void PartyMemberRecord_LearnSpell(SetBitArrayStruct020865b8* s, int n);
+extern "C" void ItemTable_Construct(void* p);
+extern "C" void ItemTable_Init(void* p);
 extern "C" int func_020dea64(void* a, void* b, void* c, unsigned int d, const void* e, short f);
-void* ResourceScriptEntry_Init(void* obj);
+extern "C" void* ResourceScriptEntry_Init(void* obj);
 extern "C" void func_02082828(PartyMemberDataStorage* memberData);
 extern "C" void PartyMember_ApplyLevelStats(void* dst, void* src, void* tail);
-Element020de650* ItemTable_Find(ItemTable* c, int key);
-extern "C" void PartyMember_RecalculateStats(void* a, int arg2);
+extern "C" Element020de650* ItemTable_Find(ItemTable* c, int key);
+extern "C" void PartyMember_RecalculateStats(void* a, int arg1);
 
 extern AllocatorUnion g_mainAllocator;
 extern char data_020ef08c[];
@@ -172,7 +172,7 @@ extern const EquipmentSlotMap data_020e7618[];
 extern unsigned char data_020e7610[];
 extern const char data_020eeff3[];
 extern "C" int func_020e052c(void*, void*, const char*, void*, short, unsigned char);
-int STD_GetStringLength(const char*);
+extern "C" int STD_GetStringLength(const char*);
 #endif
 
 static inline const BodySize* GetBodySize(int index) {
@@ -304,15 +304,15 @@ extern "C" ARM void GameState_CreatePresetCharacters(GameStatePartyRecords* game
         }
         memcpy(member->name, *name, STD_GetStringLength(*name));
 #else
-        short nameBase = 20000;
+        short var22 = 20000;
         if (appearance->female_ == 1) {
-            nameBase += 1000;
+            var22 += 1000;
         }
         short nameId;
         int found;
         do {
             found = 0;
-            nameId = nameBase + NextRandomMax(rng, 101);
+            nameId = var22 + NextRandomMax(rng, 101);
             for (int k = i - 1; k >= 0; k--) {
                 if (nameId == usedNameIds.ids[k]) {
                     found = 1;
@@ -356,7 +356,7 @@ extern "C" ARM void GameState_CreatePresetCharacters(GameStatePartyRecords* game
     if (presetCount > 0) {
         PartyMemberDataStorage record;
         Ctx0209a810 spellTableContext;
-        ClearField00209a804(&spellTableContext.handle);
+        func_0209a804(&spellTableContext.handle);
         SpellTable_Load(&spellTableContext, &spellTable);
         for (int j = 0; j < gameState->memberRecordCount; j++) {
             member = &gameState->memberRecords[j];

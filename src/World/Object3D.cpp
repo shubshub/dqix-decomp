@@ -22,9 +22,9 @@ void CreateRotationZ(Matrix3x3* out, fix32_t s, fix32_t c);
 
 extern "C"
 {
-    void _Z30RenderConfig_SetObjectRotationPv(void* rotation);
+    void RenderConfig_SetObjectRotation(void* rotation);
 
-    const Matrix3x3* _Z25Camera_GetInverseRotationPv(void*);
+    const Matrix3x3* Camera_GetInverseRotation(void*);
 
     void G3_RotateX(fix32_t);
     void G3_RotateY(fix32_t);
@@ -529,7 +529,7 @@ void Object3D::PopulateRenderConfigWorld()
                 Mat3x3_Multiply(&worldRotation, &axisRotation, &worldRotation);
             }
         }
-        _Z30RenderConfig_SetObjectRotationPv(&worldRotation);
+        RenderConfig_SetObjectRotation(&worldRotation);
         Vector3fix multipliedScale;
         Vector3fix ownScale;
         ownScale.x = scale_[0];
@@ -547,7 +547,7 @@ void Object3D::PopulateRenderConfigWorld()
         RenderConfig::SetObjectPosition(&position_);
         if (flags_ & (1 << OBJECT3D_FLAG_BILLBOARD))
         {
-            const Matrix3x3* rotation = _Z25Camera_GetInverseRotationPv(GameState::GetInstance()->GetCamera());
+            const Matrix3x3* rotation = Camera_GetInverseRotation(GameState::GetInstance()->GetCamera());
             MI_Copy36B(rotation, &data_0210a010.objectRotationPosition.rotation);
             data_0210a010.flags &= ~((1 << RENDER_CONFIG_FLAG_WORLDVIEW_CACHE_VALID) | (1 << RENDER_CONFIG_FLAG_5) | (1 << RENDER_CONFIG_FLAG_2));
         }
@@ -579,7 +579,7 @@ void Object3D::PopulateRenderConfigWorld()
                     Mat3x3_Multiply(&totalRotation, &axisRotation, &totalRotation);
                 }
             }
-            _Z30RenderConfig_SetObjectRotationPv(&totalRotation);
+            RenderConfig_SetObjectRotation(&totalRotation);
         }
         Vector3fix scaling;
         scaling.x = scale_[0];
@@ -810,7 +810,7 @@ void Object3D::UpdateTrackedBones()
 
     Matrix3x3 rotationMatrix;
     Mat3x3_WriteRotationY(&rotationMatrix, sine, cosine);
-    _Z30RenderConfig_SetObjectRotationPv(&rotationMatrix);
+    RenderConfig_SetObjectRotation(&rotationMatrix);
     Vector3fix scale = { 0x1000, 0x1000, 0x1000 };
     RenderConfig::SetObjectScale(&scale);
     RenderConfig::SubmitToFifo();
@@ -1009,7 +1009,7 @@ bool Object3D::InternalLoadFromCHRArchive(ObjectArchiveLoadInfo* loadInfo)
         {
             unsigned int allocSize;
             const void* fileBytes = narc.GetFileByIndex(fileID);
-            unsigned int fileLength = machine.fileInfo.unknown_8_ - machine.fileInfo.unknown_4_;
+            unsigned int fileLength = machine.fileInfo.endOffset - machine.fileInfo.startOffset;
 
             if (loadInfo->unk_10 != 0)
             {
@@ -1067,7 +1067,7 @@ bool Object3D::InternalLoadFromCHRArchive(ObjectArchiveLoadInfo* loadInfo)
         if (fileType != -1)
         {
             fileBytes = narc.GetFileByIndex(fileID);
-            fileLength = machine.fileInfo.unknown_8_ - machine.fileInfo.unknown_4_;
+            fileLength = machine.fileInfo.endOffset - machine.fileInfo.startOffset;
             if (loadInfo->unk_10 != 0)
             {
                 void* allocation = allocator->Allocate(fileLength);
@@ -1099,7 +1099,7 @@ bool Object3D::InternalLoadFromCHRArchive(ObjectArchiveLoadInfo* loadInfo)
         else if (strstr(filename, ".bcfg"))
         {
             const void* scriptData = narc.GetFileByIndex(fileID);
-            unsigned int fileLength = machine.fileInfo.unknown_8_ - machine.fileInfo.unknown_4_;
+            unsigned int fileLength = machine.fileInfo.endOffset - machine.fileInfo.startOffset;
             animPackage->bcfgData.Reset();
             animPackage->bcfgData.LoadFromScript(allocator, scriptData, fileLength);
         }
@@ -1254,7 +1254,7 @@ bool Object3D::LoadFromCCHROrCMOTArchive(ObjectArchiveLoadInfo *loadInfo, int (*
                             if (strcmp(filename + 5, candidateName) == 0)
                             {
                                 foundFile = narc.GetFileByIndex(k);
-                                foundFileLength = machine.fileInfo.unknown_8_ - machine.fileInfo.unknown_4_;
+                                foundFileLength = machine.fileInfo.endOffset - machine.fileInfo.startOffset;
                                 foundInLookup_inner = true;
                             }
                             NitroVM_FinishRead(&machine);

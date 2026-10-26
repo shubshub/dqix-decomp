@@ -1,75 +1,75 @@
 #include <globaldefs.h>
 
 #if defined(jpn)
-enum { Enum_020e3b8c_15364 = 0x39e4, Enum_020e3b8c_14084 = 0x34f4 };
+enum { Enum_020e3b8c_15364 = 0x39e4, kListOffset = 0x34f4 };
 #else
-enum { Enum_020e3b8c_15364 = 0x3c04, Enum_020e3b8c_14084 = 0x3704 };
+enum { Enum_020e3b8c_15364 = 0x3c04, kListOffset = 0x3704 };
 #endif
 
 
-struct Struct_02046b38_2 {
-    char unknown_0_[4];
-    struct Struct_02046b38_2* unknown_4_;
+struct ListNode02046b38 {
+    char pad[4];
+    struct ListNode02046b38* next;
 };
-struct Struct_02046b38 {
-    struct Struct_02046b38_2* unknown_0_;
+struct ListHead02046b38 {
+    struct ListNode02046b38* head;
 };
-extern "C" int func_02046b38(struct Struct_02046b38* arg0, struct Struct_02046b38_2* arg1);
+extern "C" int func_02046b38(struct ListHead02046b38* list, struct ListNode02046b38* target);
 
 struct Struct_020e3b8c {
-    char unknown_0_[0x14];
-    int unknown_14_[2];
+    char pad[0x14];
+    int arr[2];
 };
-extern "C" void func_020e3ed8(struct Struct_020e3b8c* arg0);
+extern "C" void func_020e3ed8(struct Struct_020e3b8c* p);
 
-struct Struct_020e3b8c_2 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[7];
-    unsigned char unknown_8_;
-    unsigned char unknown_9_;
+struct CombatState020e3c34 {
+    unsigned char header;
+    unsigned char pad1[7];
+    unsigned char byte8;
+    unsigned char byte9;
     unsigned short unknown_a_;
     int unknown_c_;
     int unknown_10_;
     int unknown_14_[2];
     int unknown_1c_;
-    int unknown_20_;
+    int word_20;
     unsigned char unknown_24_;
 };
-extern "C" void func_020e3c34(struct Struct_020e3b8c_2* arg0);
+extern "C" void func_020e3c34(struct CombatState020e3c34* obj);
 
-struct Struct_0201bdac {
-    char unknown_0_[2];
-    unsigned char unknown_2_;
+struct TailNode020469b4 {
+    char unk0[2];
+    unsigned char inList;
     char unknown_3_;
-    struct Struct_0201bdac* unknown_4_;
+    struct TailNode020469b4* next;
 };
-struct Struct_0201bdac_2 {
-    struct Struct_0201bdac* unknown_0_;
-    struct Struct_0201bdac* unknown_4_;
+struct TailList020469b4 {
+    struct TailNode020469b4* head;
+    struct TailNode020469b4* tail;
 };
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
+extern "C" void func_020469b4(struct TailList020469b4* list, struct TailNode020469b4* node);
 
-extern "C" void func_02046a8c(void* arg0, void* arg1);
+extern "C" void func_02046a8c(void* list, void* node);
 
 // USA: func_020e3b8c
-extern "C" ARM void func_020e3b8c(char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, unsigned char arg7)
+extern "C" ARM void func_020e3b8c(char* mgr, int index, int p3, int p4, int p5, int p6, int p7, unsigned char p8)
 {
-    struct Struct_020e3b8c_2* var0 = (struct Struct_020e3b8c_2*)(arg0 + Enum_020e3b8c_15364 + arg1 * (int)sizeof(struct Struct_020e3b8c_2));
+    struct CombatState020e3c34* e = (struct CombatState020e3c34*)(mgr + Enum_020e3b8c_15364 + index * (int)sizeof(struct CombatState020e3c34));
 
-    if (func_02046b38(*(struct Struct_02046b38**)(arg0 + Enum_020e3b8c_14084), (struct Struct_02046b38_2*)var0)) {
-        func_020e3ed8((struct Struct_020e3b8c*)var0);
-        func_02046a8c(*(void**)(arg0 + Enum_020e3b8c_14084), var0);
+    if (func_02046b38(*(struct ListHead02046b38**)(mgr + kListOffset), (struct ListNode02046b38*)e)) {
+        func_020e3ed8((struct Struct_020e3b8c*)e);
+        func_02046a8c(*(void**)(mgr + kListOffset), e);
     }
 
-    func_020e3c34(var0);
+    func_020e3c34(e);
 
-    var0->unknown_9_ = (unsigned char)arg1;
-    var0->unknown_a_ = (unsigned short)arg2;
-    var0->unknown_c_ = arg3;
-    var0->unknown_8_ = (arg4 != 0) ? 1 : 0;
-    var0->unknown_20_ = arg5;
-    var0->unknown_10_ = arg6;
-    var0->unknown_24_ = arg7;
+    e->byte9 = (unsigned char)index;
+    e->unknown_a_ = (unsigned short)p3;
+    e->unknown_c_ = p4;
+    e->byte8 = (p5 != 0) ? 1 : 0;
+    e->word_20 = p6;
+    e->unknown_10_ = p7;
+    e->unknown_24_ = p8;
 
-    func_020469b4(*(struct Struct_0201bdac_2**)(arg0 + Enum_020e3b8c_14084), (struct Struct_0201bdac*)var0);
+    func_020469b4(*(struct TailList020469b4**)(mgr + kListOffset), (struct TailNode020469b4*)e);
 }

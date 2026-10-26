@@ -4,24 +4,24 @@
 
 extern "C" void* LinkSession_GetInstance(void);
 struct SearchStruct;
-int LinkSession_IsSlotLost(struct SearchStruct* s, int idx);
-void* LinkMessageQueue_GetInstance(void);
-unsigned char GameState_GetLeaderIndex(GameState* bs);
+extern "C" int LinkSession_IsSlotLost(struct SearchStruct* s, int idx);
+extern "C" void* LinkMessageQueue_GetInstance(void);
+extern "C" unsigned char GameState_GetLeaderIndex(GameState* bs);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
-struct Sub021d3f00 {
-    unsigned char fA;
-    unsigned char fB;
-    unsigned char nibLo : 4;
-    unsigned char nibHi : 4;
+struct Struct_ov017_021d3f00 {
+    unsigned char unknown_0_;
+    unsigned char unknown_1_;
+    unsigned char unknown_2_0_ : 4;
+    unsigned char unknown_2_4_ : 4;
     unsigned char fResult;
-    int fWord;
+    int unknown_4_;
 };
 
-struct Msg021d3f00 {
+struct Struct_ov017_021d3f00_2 {
     unsigned char tag;
     unsigned char pad1[3];
-    struct Sub021d3f00 sub;
+    struct Struct_ov017_021d3f00 sub;
     unsigned char pad2[8];
 };
 
@@ -33,14 +33,14 @@ extern "C" ARM void LinkMessageQueue_SendLadderClimb(SubBlock02038508* obj, unsi
     if (LinkSession_IsSlotLost((struct SearchStruct*)search, 0)) return;
     void* p = LinkMessageQueue_GetInstance();
 
-    struct Msg021d3f00 msg;
-    struct Sub021d3f00* sub = &msg.sub;
+    struct Struct_ov017_021d3f00_2 msg;
+    struct Struct_ov017_021d3f00* sub = &msg.sub;
     msg.tag = 0x3b;
-    sub->fA = obj->command;
-    sub->fB = obj->reversed;
-    sub->nibLo = b;
-    sub->nibHi = c;
-    sub->fWord = obj->unknown48;
+    sub->unknown_0_ = obj->command;
+    sub->unknown_1_ = obj->reversed;
+    sub->unknown_2_0_ = b;
+    sub->unknown_2_4_ = c;
+    sub->unknown_4_ = obj->unknown48;
     sub->fResult = GameState_GetLeaderIndex(bs);
     func_0205e330(p, &msg, 0);
 }

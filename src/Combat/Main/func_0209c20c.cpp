@@ -1,36 +1,36 @@
 #include <globaldefs.h>
-extern "C" void func_0203ad88(void*, void*, int);
+extern "C" void SoundPlayer_StopStream(void*, void*, int);
 
-struct Struct_02109bf4_4;
-extern "C" void func_0209c678(struct Struct_02109bf4_4* arg0, int arg1);
+struct Actor0209c678;
+extern "C" void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg);
 
-extern "C" void func_0203aa44(void* arg0);
-extern "C" void func_020bc078(int* arg0);
+extern "C" void SoundPlayer_UnloadAll(void* obj);
+extern "C" void NNS_SndHandleInit(int* field);
 
 extern "C" void func_020bbd9c(void);
-extern "C" void func_0209c2e0(void* arg0, int arg1, int arg2);
+extern "C" void func_0209c2e0(void* obj, int a, int b);
 
-struct Struct_02109bf4_3 {
-    char unknown_0_[0xb0];
-    int unknown_b0_;
-    int unknown_b4_;
-    short unknown_b8_;
-    short unknown_ba_;
-    void* unknown_bc_;
-    void* unknown_c0_;
+struct Actor0209c20c {
+    char pad0[0xb0];
+    int state;
+    int field_b4;
+    short field_b8;
+    short field_ba;
+    void* fieldBC;
+    void* fieldC0;
 };
 
 // USA: func_0209c20c
-extern "C" ARM void func_0209c20c(struct Struct_02109bf4_3* arg0) {
-    func_0203ad88((void*)(arg0), (void*)(0), (int)(0));
-    func_0209c678((struct Struct_02109bf4_4*)arg0, 0);
+extern "C" ARM void func_0209c20c(struct Actor0209c20c* actor) {
+    SoundPlayer_StopStream((void*)(actor), (void*)(0), (int)(0));
+    BgmPlayer_FadeOut((struct Actor0209c678*)actor, 0);
     func_020bbd9c();
-    func_0203aa44(arg0);
-    arg0->unknown_b0_ = 0;
-    arg0->unknown_b4_ = 0;
-    arg0->unknown_b8_ = -1;
-    func_020bc078((int*)&arg0->unknown_bc_);
-    arg0->unknown_ba_ = -1;
-    func_020bc078((int*)&arg0->unknown_c0_);
-    func_0209c2e0(arg0, 0x7f, 0);
+    SoundPlayer_UnloadAll(actor);
+    actor->state = 0;
+    actor->field_b4 = 0;
+    actor->field_b8 = -1;
+    NNS_SndHandleInit((int*)&actor->fieldBC);
+    actor->field_ba = -1;
+    NNS_SndHandleInit((int*)&actor->fieldC0);
+    func_0209c2e0(actor, 0x7f, 0);
 }

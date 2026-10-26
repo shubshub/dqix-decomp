@@ -1,48 +1,48 @@
 #include <globaldefs.h>
 
 struct Struct_0204166c;
-extern "C" void func_020416c0(struct Struct_0204166c* arg0);
+extern "C" void func_020416c0(struct Struct_0204166c* s);
 
 struct Struct_020462d0 {
-    char unknown_0_[8];
-    int unknown_8_;
-    char unknown_c_[0x1c - 0xc];
+    char pad0[8];
+    int field8;
+    char pad1[0x1c - 0xc];
 };
 
 // USA: func_020462d0
-extern "C" ARM void func_020462d0(char* arg0, unsigned short* arg1, int arg2) {
-    if (arg1 == 0) {
+extern "C" ARM void func_020462d0(char* obj, unsigned short* codes, int count) {
+    if (codes == 0) {
         return;
     }
-    if (arg2 < 0) {
+    if (count < 0) {
         return;
     }
 
     enum { Enum_020462d0_65281 = 0xff01 };
 
-    for (int var0 = 0; var0 < arg2; var0++) {
-        unsigned short var1 = arg1[var0];
-        arg1[var0] = Enum_020462d0_65281;
-        if (var1 == Enum_020462d0_65281) {
+    for (int i = 0; i < count; i++) {
+        unsigned short v = codes[i];
+        codes[i] = Enum_020462d0_65281;
+        if (v == Enum_020462d0_65281) {
             return;
         }
-        if ((var1 & 0xff00) == 0xff00) {
+        if ((v & 0xff00) == 0xff00) {
             continue;
         }
-        if (var1 >= 0x80) {
+        if (v >= 0x80) {
             continue;
         }
-        struct Struct_020462d0* var2 = &((struct Struct_020462d0*)(arg0 + 0x9b8))[var1];
-        if (var2->unknown_8_ < 0) {
+        struct Struct_020462d0* slot = &((struct Struct_020462d0*)(obj + 0x9b8))[v];
+        if (slot->field8 < 0) {
             continue;
         }
-        int var3 = ((unsigned char*)(arg0 + 0x17b8))[var1] - 1;
-        ((unsigned char*)(arg0 + 0x17b8))[var1] = var3;
-        if ((var3 & 0xff) != 0) {
+        int cnt = ((unsigned char*)(obj + 0x17b8))[v] - 1;
+        ((unsigned char*)(obj + 0x17b8))[v] = cnt;
+        if ((cnt & 0xff) != 0) {
             continue;
         }
-        func_020416c0((struct Struct_0204166c*)var2);
-        int* var4 = (int*)(arg0 + 0x9b4);
-        *var4 = (*var4 - 1) & 0x7f;
+        func_020416c0((struct Struct_0204166c*)slot);
+        int* counter = (int*)(obj + 0x9b4);
+        *counter = (*counter - 1) & 0x7f;
     }
 }

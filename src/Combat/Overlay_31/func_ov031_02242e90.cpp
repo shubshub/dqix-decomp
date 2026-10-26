@@ -3,25 +3,25 @@
 enum Enum_ov031_02242e90 { Enum_ov031_02242e90_0 = 0, Enum_ov031_02242e90_1 = 1 };
 
 // USA: func_ov031_02242e90
-extern "C" ARM int func_ov031_02242e90(const signed char* arg0, const signed char* arg1) {
+extern "C" ARM int func_ov031_02242e90(const signed char* first, const signed char* second) {
     int var0;
     Enum_ov031_02242e90 var1;
-    int var2;
-    int var3;
+    int left;
+    int right;
     goto compare;
 advance:
-    if (var2 == 0 || var2 == ' ') return 0;
-    ++arg0;
-    ++arg1;
+    if (left == 0 || left == ' ') return 0;
+    ++first;
+    ++second;
 compare:
-    var3 = *arg1;
+    right = *second;
     var1 = Enum_ov031_02242e90_0;
-    if (var3 >= 'A' && var3 <= 'Z') var1 = Enum_ov031_02242e90_1;
-    var2 = *arg0;
-    if (var1) var3 += 32;
+    if (right >= 'A' && right <= 'Z') var1 = Enum_ov031_02242e90_1;
+    left = *first;
+    if (var1) right += 32;
     var1 = Enum_ov031_02242e90_0;
-    if (var2 >= 'A' && var2 <= 'Z') var1 = Enum_ov031_02242e90_1;
-    var0 = var1 ? var2 + 32 : var2;
-    if (var0 == var3) goto advance;
+    if (left >= 'A' && left <= 'Z') var1 = Enum_ov031_02242e90_1;
+    var0 = var1 ? left + 32 : left;
+    if (var0 == right) goto advance;
     return -1;
 }

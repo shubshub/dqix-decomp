@@ -7,13 +7,13 @@
 #endif
 
 
-struct Struct_0203c0cc;
-extern "C" void func_0203c0f0(struct Struct_0203c0cc* arg0);
-extern "C" void func_ov000_0216fe9c(void* arg0);
+struct State0xc0cc;
+extern "C" void CachedTextLabel_Reset(struct State0xc0cc* obj);
+extern "C" void func_ov000_0216fe9c(void* obj);
 
 // USA: func_ov000_02170054
-extern "C" ARM void func_ov000_02170054(void* arg0) {
-    func_0203c0f0((struct Struct_0203c0cc*)((char*)arg0 + 0x50));
-    func_0203c0f0((struct Struct_0203c0cc*)((char*)arg0 + REGION_OFFSET_0));
-    func_ov000_0216fe9c((char*)arg0 + 0x8);
+extern "C" ARM void func_ov000_02170054(void* obj) {
+    CachedTextLabel_Reset((struct State0xc0cc*)((char*)obj + 0x50));
+    CachedTextLabel_Reset((struct State0xc0cc*)((char*)obj + REGION_OFFSET_0));
+    func_ov000_0216fe9c((char*)obj + 0x8);
 }

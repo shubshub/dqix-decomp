@@ -6,10 +6,10 @@
 extern "C" void* LinkSession_GetInstance(void);
 extern "C" int LinkSession_IsGuest(void* obj);
 extern "C" void* Scenario_GetInstance(void);
-int ZoneVisitedFlag_GetFieldZoneIndex(int x);
+extern "C" int ZoneVisitedFlag_GetFieldZoneIndex(int x);
 extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
-int ZoneId_IsGrotto(int id);
-int ZoneVisitedFlag_FindExtraZoneIndex(int key);
+extern "C" int ZoneId_IsGrotto(int id);
+extern "C" int ZoneVisitedFlag_FindExtraZoneIndex(int key);
 extern "C" int _s32_div_f(int a, int b);
 
 // The scenario's flag bits start at +0x8c
@@ -34,7 +34,7 @@ enum {
 };
 
 // Main, originally SetBitFromValueRange0201ba68 (USA 0x0201ba68, EUR 0x0201ba78, JPN 0x0201b7e0)
-ARM void Zone3D_SetVisitedFlag(void* zoneBytes) {
+extern "C" ARM void Zone3D_SetVisitedFlag(void* zoneBytes) {
     Zone3D* zone = (Zone3D*)zoneBytes;
     if (LinkSession_IsGuest(LinkSession_GetInstance()) != 0 || (unsigned char)zone->unknown_2820_ != 0) return;
 

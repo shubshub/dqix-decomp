@@ -6,20 +6,23 @@
 #endif
 #include <globaldefs.h>
 #include <Resource/GameResources.h>
+#if defined(jpn)
+#define func_02046c78 func_02047a98
+#endif
 
 struct ItemTable;
 struct DigitSprite { short data[3]; };
 struct CombatEntry { short key; signed char value; char pad[9]; int x; int y; char tail[8]; };
 struct CombatDisplay { char pad0[0xdf4]; ItemTable* container; char pad1[R(0x1f10,0x1f98)]; CombatEntry entries[24]; char pad2[0xddc]; DigitSprite digits[20]; };
-struct CombatObject { char pad[R(0x4f8,0x4fc)]; int index; };
-void* MessageSystem_GetInstance();
-void* ItemTable_Find(ItemTable*, int);
-CombatObject* GetField1c_021a193c(int*);
+struct Struct_ov005_0215acc0_2 { char pad[R(0x4f8,0x4fc)]; int index; };
+extern "C" void* MessageSystem_GetInstance();
+extern "C" void* ItemTable_Find(ItemTable*, int);
+extern "C" Struct_ov005_0215acc0_2* func_ov017_021a193c(int*);
 extern "C" int func_020dd4c4(signed char, void*);
 #if defined(jpn)
-extern "C" void func_02045f3c(void*, Struct_0201099c_23*, int, int, int, int, int, int);
+extern "C" void func_02045f3c(void*, DigitSprite*, int, int, int, int, int, int);
 #else
-extern "C" void func_02045f3c(void*, Struct_0201099c_23*, int, int, int, int, int, int, int, int);
+extern "C" void func_02045f3c(void*, DigitSprite*, int, int, int, int, int, int, int, int);
 #endif
 #define REG_GEOMETRY ((volatile unsigned int*)0x04000444)
 
@@ -35,12 +38,12 @@ extern "C" ARM void func_ov005_0215acc0(CombatDisplay* display) {
             int value = current->value;
             x = current->x >> 12;
             y = current->y >> 12;
-            int tens = current->value / 10;
-            int ones = value % 10;
+            int var7 = current->value / 10;
+            int var8 = value % 10;
             int color = 0x7fff;
             if (current->key > 0) {
                 void* entry = ItemTable_Find(display->container, (short)key);
-                if (entry && func_020dd4c4((signed char)GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2])->index, entry)) color = 0x1ce7;
+                if (entry && func_020dd4c4((signed char)func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2])->index, entry)) color = 0x1ce7;
             }
             REG_GEOMETRY[0] = 0;
             REG_GEOMETRY[0x2f] = 1;
@@ -48,14 +51,14 @@ extern "C" ARM void func_ov005_0215acc0(CombatDisplay* display) {
             REG_GEOMETRY[11] = 0;
             REG_GEOMETRY[11] = 0xffc01000;
 #if defined(jpn)
-            if (var7) func_02045f3c(var0, &arg0->unknown_3e0c_[var7 + 10], var2 + 11, var1 + 16, var9, 8, 0, 0);
+            if (var7) func_02045f3c(renderer, &display->digits[var7 + 10], x + 11, y + 16, color, 8, 0, 0);
 #else
-            if (var7) func_02045f3c(var0, &arg0->unknown_3e0c_[var7 + 10], var2 + 11, var1 + 12, var9, 8, 0, 0, 0, 17);
+            if (var7) func_02045f3c(renderer, &display->digits[var7 + 10], x + 11, y + 12, color, 8, 0, 0, 0, 17);
 #endif
 #if defined(jpn)
-            func_02045f3c(var0, &arg0->unknown_3e0c_[var8 + 10], var2 + 17, var1 + 16, var9, 8, 0, 0);
+            func_02045f3c(renderer, &display->digits[var8 + 10], x + 17, y + 16, color, 8, 0, 0);
 #else
-            func_02045f3c(var0, &arg0->unknown_3e0c_[var8 + 10], var2 + 17, var1 + 12, var9, 8, 0, 0, 0, 17);
+            func_02045f3c(renderer, &display->digits[var8 + 10], x + 17, y + 12, color, 8, 0, 0, 0, 17);
 #endif
             REG_GEOMETRY[0x30] = 0;
             REG_GEOMETRY[1] = 1;

@@ -2,20 +2,20 @@
 #include "GameState/GameState.h"
 
 // USA: func_0200ff1c
-extern "C" ARM GameObject* func_0200ff1c(GameState* arg0, int arg1) {
-    GameObject* var0;
-    if (arg1 < 0) {
+extern "C" ARM GameObject* func_0200ff1c(GameState* gameState, int index) {
+    GameObject* object;
+    if (index < 0) {
         return 0;
     }
-    if (arg1 >= 0xE9) {
+    if (index >= 0xE9) {
         return 0;
     }
-    var0 = arg0->objects_[arg1];
-    if (var0 == 0) {
+    object = gameState->objects_[index];
+    if (object == 0) {
         return 0;
     }
-    if ((var0->obj3D_.unknown_0_ & 0x100) == 0) {
-        var0 = 0;
+    if ((object->obj3D_.unknown_0_ & 0x100) == 0) {
+        object = 0;
     }
-    return var0;
+    return object;
 }

@@ -7,7 +7,7 @@
 #endif
 
 // USA: func_ov017_0218d4ec
-extern "C" ARM int func_ov017_0218d4ec(void* arg0, int arg1) {
-    unsigned char* var0 = (unsigned char*)arg0 + FIELD_OFFSET;
-    return *var0 & (1 << arg1);
+extern "C" ARM int func_ov017_0218d4ec(void* obj, int bit) {
+    unsigned char* p = (unsigned char*)obj + FIELD_OFFSET;
+    return *p & (1 << bit);
 }

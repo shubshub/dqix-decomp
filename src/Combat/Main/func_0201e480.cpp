@@ -2,17 +2,10 @@
 #include "Memory/SafeAllocator.h"
 #include "World/ZoneFeatures.h"
 
-struct Struct_0201e480 {
-    char  unknown_0_[0xc];
-    void* unknown_c_;
-    int   unknown_10_;
-    int   unknown_14_;
-};
-
-// USA: func_0201e480
-ARM void Struct_020134e0::func_0201e480(int arg0, SafeAllocator* arg1) {
-    struct Struct_0201e480* var0 = (struct Struct_0201e480*)this;
-    var0->unknown_c_ = arg1->Allocate(arg0 * 0x24);
-    var0->unknown_10_ = 0;
-    var0->unknown_14_ = arg0;
+// USA: AllocateOpcode66Entries
+// Main, originally ZoneFeatures::AllocateOpcode66Entries_0201e480 (USA 0x0201e480, EUR 0x0201e490, JPN 0x0201e20c)
+ARM void ZoneFeatures::AllocateOpcode66Entries(int count, SafeAllocator* alloc) {
+    entries66_ = (Opcode66Entry*)alloc->Allocate(count * sizeof(Opcode66Entry));
+    arraySize66_ = 0;
+    arrayCapacity66_ = count;
 }

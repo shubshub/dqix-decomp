@@ -4,66 +4,66 @@
 #include "Memory/SafeAllocator.h"
 #include "std_library_functions.h"
 
-extern "C" void* func_ov017_021d612c(void* arg0);
-extern "C" int func_ov017_021d60f4(void* arg0);
-extern "C" int func_ov001_0215ad2c(int arg0);
-extern "C" unsigned int func_ov001_0215a750(const char* arg0, void** arg1);
+extern "C" void* func_ov017_021d612c(void* obj);
+extern "C" int func_ov017_021d60f4(void* obj);
+extern "C" int func_ov001_0215ad2c(int x);
+extern "C" unsigned int func_ov001_0215a750(const char* path, void** outPtr);
 
 extern const char data_ov001_02165745[];
 extern SafeAllocator* data_ov001_021658b8[8];
 
 // USA: func_ov001_0215bb3c
-extern "C" ARM int func_ov001_0215bb3c(char* arg0, int arg1) {
-    char var0[0x50];
-    ObjectArchiveLoadInfo var1;
-    void* var2;
-    unsigned int var3;
-    GameState* var4;
-    BackgroundLoader* var5;
-    SafeAllocator* var6;
-    int var7;
-    void* var8;
-    int var9;
-    int var10;
+extern "C" ARM int func_ov001_0215bb3c(char* self, int mode) {
+    char path[0x50];
+    ObjectArchiveLoadInfo loadInfo;
+    void* fileData;
+    unsigned int fileSize;
+    GameState* gs;
+    BackgroundLoader* loader;
+    SafeAllocator* allocator;
+    int packageID;
+    void* name;
+    int id;
+    int sel;
 
-    var4 =GameState::GetInstance();
-    var5 = BackgroundLoader::GetInstance();
-    var8 = func_ov017_021d612c(arg0);
-    char* var11 = arg0 + 0x8;
-    arg0 += 0x10;
-    var9 = func_ov001_0215ad2c(func_ov017_021d60f4(var11));
+    gs =GameState::GetInstance();
+    loader = BackgroundLoader::GetInstance();
+    name = func_ov017_021d612c(self);
+    char* var11 = self + 0x8;
+    self += 0x10;
+    id = func_ov001_0215ad2c(func_ov017_021d60f4(var11));
 
-    var10 = 0;
-    if (arg1 >= 3) {
-        var10 = func_ov017_021d60f4(arg0);
-        arg0 += 0x8;
+    sel = 0;
+    if (mode >= 3) {
+        sel = func_ov017_021d60f4(self);
+        self += 0x8;
     }
-    var6 = data_ov001_021658b8[var10];
+    allocator = data_ov001_021658b8[sel];
 
-    var7 = 3;
-    if (arg1 >= 4) {
-        var7 = func_ov017_021d60f4(arg0);
+    packageID = 3;
+    if (mode >= 4) {
+        packageID = func_ov017_021d60f4(self);
     }
 
-    GameObject* var12 = var4->GetGameObjectByIndex(var9);
-    if (var12 == NULL) return 0;
+    GameObject* obj = gs->GetGameObjectByIndex(id);
+    if (obj == NULL) return 0;
 
-    sprintf(var0, data_ov001_02165745, var8);
-    int var13 = 0;
-    var5->GetLoadedFileByName(var0, &var2, &var3);
-    if (var2 == NULL) {
+    sprintf(path, data_ov001_02165745, name);
+    int locked = 0;
+    loader->GetLoadedFileByName(path, &fileData, &fileSize);
+    if (fileData == NULL) {
         BackgroundLoader::AddLockGlobal();
-        var13 = 1;
-        if (func_ov001_0215a750(var0, &var2) == 0) {
+        locked = 1;
+        if (func_ov001_0215a750(path, &fileData) == 0) {
             BackgroundLoader::RemoveLockGlobal();
             return 0;
         }
     }
 
-    AnimationPackage* var14 = var12->obj3D_.loadedAnimationPackageList_;
-    int var15 = 0;
-    if (var14 != NULL) {
-        var15 = var14->animationType;
+    AnimationPackage* package = obj->obj3D_.loadedAnimationPackageList_;
+    int type = 0;
+    if (package != NULL) {
+        type = package->animationType;
     }
 
     loadInfo.allocator = allocator;
@@ -72,13 +72,13 @@ extern "C" ARM int func_ov001_0215bb3c(char* arg0, int arg1) {
     loadInfo.unk_10 = 1;
     loadInfo.packageID = packageID;
 
-    if (var15 == 0) {
-        var12->obj3D_.LoadFromCHRArchive(&var1);
-    } else if (var15 == 1) {
-        var12->obj3D_.LoadFromCCHROrCMOTArchive(&var1, NULL);
+    if (type == 0) {
+        obj->obj3D_.LoadFromCHRArchive(&loadInfo);
+    } else if (type == 1) {
+        obj->obj3D_.LoadFromCCHROrCMOTArchive(&loadInfo, NULL);
     }
 
-    if (var13) {
+    if (locked) {
         BackgroundLoader::RemoveLockGlobal();
     }
     obj->obj3D_.SetAnimationByIndex(0, 0);

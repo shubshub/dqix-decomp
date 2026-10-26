@@ -19,7 +19,7 @@ enum {
 };
 
 // Main, originally UploadPendingPalette02028dec (USA 0x02028dec, EUR 0x02028dfc, JPN 0x0202863c)
-ARM void GlyphBitmapContext_SetUpLayer(int subScreen) {
+extern "C" ARM void GlyphBitmapContext_SetUpLayer(int subScreen) {
     if (glyphBitmapContext.buffer == NULL) {
         return;
     }

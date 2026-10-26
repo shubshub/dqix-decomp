@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 
-struct Struct_ov017_021d4b9c { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Struct_ov017_021d4b9c { int f0; int f4; int f8; };
 struct Struct_ov017_021d4b9c_2 {
-	unsigned char unknown_0_[0x28];
+	unsigned char pad0[0x28];
 	Struct_ov017_021d4b9c* unknown_28_;
-	unsigned char unknown_2c_[4];
+	unsigned char pad1[4];
 	int unknown_30_;
-	int unknown_34_;
+	int f34;
 };
 
 // USA: func_ov017_021d4b9c
-extern "C" ARM int func_ov017_021d4b9c(Struct_ov017_021d4b9c_2* arg0) {
-	arg0->unknown_28_--;
-	arg0->unknown_30_ = arg0->unknown_28_->unknown_4_;
-	arg0->unknown_34_ = arg0->unknown_28_->unknown_8_;
-	return arg0->unknown_28_->unknown_0_;
+extern "C" ARM int func_ov017_021d4b9c(Struct_ov017_021d4b9c_2* obj) {
+	obj->unknown_28_--;
+	obj->unknown_30_ = obj->unknown_28_->f4;
+	obj->f34 = obj->unknown_28_->f8;
+	return obj->unknown_28_->f0;
 }

@@ -16,81 +16,81 @@ enum { Enum_02052bfc_336 = 0x150, Enum_02052bfc_1788 = 0x6fc };
 #include "std_library_functions.h"
 #include "Resource/GameResources.h"
 
-struct Struct_02048150;
+struct ArrayContainsByteStruct;
 
 struct Struct_0201bc94_2 {
     unsigned char unknown_0_0_ : 4;
-    unsigned char unknown_0_4_ : 1;
+    unsigned char flag4 : 1;
     unsigned char unknown_0_5_ : 3;
 };
 
-struct Struct_0201bc94 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
-    Struct_0201bc94_2* unknown_8_;
+struct Struct0201bc94 {
+    unsigned short field0;
+    unsigned short field2;
+    unsigned short field4;
+    unsigned short field6;
+    Struct_0201bc94_2* field8;
 };
 
 struct Struct_02052bfc {
-    char unknown_0_[0x480];
+    char pad0[0x480];
     uint64_t unknown_480_;
-    char unknown_488_[0x56c - 0x488];
+    char pad1[0x56c - 0x488];
     unsigned char unknown_56c_;
     unsigned char unknown_56d_;
 };
 
 struct Struct_02052bfc_2 {
-    char unknown_0_[4];
-    short unknown_4_;
-    char unknown_6_[Enum_02052bfc_336 - 6];
-    Struct_02052bfc* unknown_150_;
+    char pad0[4];
+    short field4;
+    char pad1[Enum_02052bfc_336 - 6];
+    Struct_02052bfc* field150;
 };
 
-int ArrayContainsByte_02086ef0(ArrayContainsByteStruct*, int);
-void* GameState_GetParty(GameState*);
+extern "C" int func_02086ef0(ArrayContainsByteStruct*, int);
+extern "C" void* GameState_GetParty(GameState*);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" long long _ll_udiv(long long a, long long b);
-int FieldTaskQueue_IsEmpty(void** obj);
-int IsEntryEligibleAndFlagged(Struct0201bc94* obj);
-int StandardStrings_Get(int value);
-void* TextQueue_GetInstance(void);
+extern "C" int FieldTaskQueue_IsEmpty(void** obj);
+extern "C" int func_0201bc94(Struct0201bc94* obj);
+extern "C" int StandardStrings_Get(int value);
+extern "C" void* TextQueue_GetInstance(void);
 extern "C" void func_ov017_02191aac(char* obj, int mode, int idx, unsigned char mask);
-void EnqueueEventTag17_021ce014(int a, unsigned short b, unsigned short c, unsigned short d);
+extern "C" void func_ov017_021ce014(int a, unsigned short b, unsigned short c, unsigned short d);
 
 // USA: func_02052bfc
-extern "C" ARM void func_02052bfc(struct Struct_02052bfc_2* arg0) {
-    if (arg0->unknown_150_ == NULL) return;
+extern "C" ARM void func_02052bfc(struct Struct_02052bfc_2* obj) {
+    if (obj->field150 == NULL) return;
 
     GameState* gs = GameState::GetInstance();
     GameResources* ov = GetGameResources();
-    void* list = *(void**)((char*)ov + 0x3000 + kResourceWord);
+    void* list = *(void**)((char*)ov + 0x3000 + Enum_02052bfc_1788);
     ArrayContainsByteStruct* arr = (ArrayContainsByteStruct*)GameState_GetParty(gs);
     Struct0201bc94* entry = (Struct0201bc94*)Zone3D_GetInstance();
     unsigned char idx = obj->field4 & 0xff;
 
-    if (!func_02086ef0(var3, var5)) return;
-    if (arg0->unknown_150_->unknown_56c_ == 0) return;
+    if (!func_02086ef0(arr, idx)) return;
+    if (obj->field150->unknown_56c_ == 0) return;
 
-    uint64_t var6 = GetCurrentTimestamp() - arg0->unknown_150_->unknown_480_;
-    long long var7 = _ll_udiv(var6 << 6, 0x1ff6210);
+    uint64_t diff = GetCurrentTimestamp() - obj->field150->unknown_480_;
+    long long elapsed = _ll_udiv(diff << 6, 0x1ff6210);
 
     if (!FieldTaskQueue_IsEmpty((void**)list)) return;
-    if (elapsed < 0x12c && IsEntryEligibleAndFlagged(entry)) return;
+    if (elapsed < 0x12c && func_0201bc94(entry)) return;
 
     char buf[0x80];
-    obj->field150->field56c = 0;
+    obj->field150->unknown_56c_ = 0;
     if (idx == *(short*)((char*)gs->GetLeader() + 4)) {
-        if (obj->field150->field56d != 0) {
+        if (obj->field150->unknown_56d_ != 0) {
             #if defined(jpn)
-            strcpy(var8, (char*)data_020f0420[1]);
+            strcpy(buf, (char*)data_020f0420[1]);
 #else
             strcpy(buf, (char*)StandardStrings_Get(0x33));
 #endif
         }
         else {
             #if defined(jpn)
-            strcpy(var8, (char*)data_020f0420[5]);
+            strcpy(buf, (char*)data_020f0420[5]);
 #else
             strcpy(buf, (char*)StandardStrings_Get(0x32));
 #endif
@@ -101,6 +101,6 @@ extern "C" ARM void func_02052bfc(struct Struct_02052bfc_2* arg0) {
         TextQueue_Push(TextQueue_GetInstance(), buf, 0, 0, 1, 1);
 #endif
     }
-    func_ov017_02191aac((char*)var1, 0, var5, 2);
-    func_ov017_021ce014(0, 1, 0, var5);
+    func_ov017_02191aac((char*)ov, 0, idx, 2);
+    func_ov017_021ce014(0, 1, 0, idx);
 }

@@ -1,47 +1,47 @@
 #include <globaldefs.h>
 
-extern "C" int func_020becd4(void* arg0);
-extern "C" int func_0203ad88(void* arg0, void* arg1, int arg2);
-extern "C" int func_0203ad14(void* arg0, int arg1, void* arg2, int arg3);
+extern "C" int func_020becd4(void* obj);
+extern "C" int SoundPlayer_StopStream(void* obj, void* target, int arg2);
+extern "C" int func_0203ad14(void* obj, int key, void* target, int arg3);
 typedef int (*Type_0203ae4c)(void*, short, void*, int);
 
 // USA: func_0203ae4c
-extern "C" ARM void func_0203ae4c(void* arg0, int arg1, void* arg2) {
-    char* var0 = (char*)arg0;
+extern "C" ARM void func_0203ae4c(void* obj, int arg1, void* target) {
+    char* p = (char*)obj;
 
-    if (*(void**)var0 == NULL) {
+    if (*(void**)p == NULL) {
         return;
     }
 
     {
-        short var1 = *(short*)(var0 + 0xa4);
+        short var1 = *(short*)(p + 0xa4);
         if (var1 < 0) {
             return;
         }
 
         if (arg1 != 0) {
             int var2;
-            short var3;
-            int var4;
+            short savedKey;
+            int result;
 
-            if (arg2 != NULL) {
-                var2 = func_020becd4(arg2);
+            if (target != NULL) {
+                var2 = func_020becd4(target);
             } else {
-                var2 = func_020becd4(var0 + 0x9c);
+                var2 = func_020becd4(p + 0x9c);
             }
 
-            var3 = *(short*)(var0 + 0xa4);
-            var4 = func_0203ad88(arg0, arg2, 0);
-            *(int*)(var0 + 0xa8) = var4;
-            *(short*)(var0 + 0xa4) = var3;
+            savedKey = *(short*)(p + 0xa4);
+            result = SoundPlayer_StopStream(obj, target, 0);
+            *(int*)(p + 0xa8) = result;
+            *(short*)(p + 0xa4) = savedKey;
 
-            if (*(int*)(var0 + 0xa8) == var2) {
-                *(short*)(var0 + 0xa4) = -1;
+            if (*(int*)(p + 0xa8) == var2) {
+                *(short*)(p + 0xa4) = -1;
             }
         } else {
-            int var5 = *(int*)(var0 + 0xa8);
-            if (var5 != 0) {
-                ((Type_0203ae4c)func_0203ad14)(arg0, var1, arg2, var5);
+            int rec = *(int*)(p + 0xa8);
+            if (rec != 0) {
+                ((Type_0203ae4c)func_0203ad14)(obj, var1, target, rec);
             }
         }
     }

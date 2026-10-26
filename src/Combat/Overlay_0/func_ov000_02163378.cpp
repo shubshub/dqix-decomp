@@ -12,11 +12,11 @@
 
 
 // USA: func_ov000_02163378
-extern "C" ARM void func_ov000_02163378(void* arg0, int* arg1, unsigned char arg2) {
-    int var0;
-    for (var0 = 0; var0 < 4; var0++) {
-        *(int*)((char*)arg0 + var0 * 4 + 0x5000 + REGION_OFFSET_0) = arg1[var0];
+extern "C" ARM void func_ov000_02163378(void* dst, int* src, unsigned char val) {
+    int i;
+    for (i = 0; i < 4; i++) {
+        *(int*)((char*)dst + i * 4 + 0x5000 + REGION_OFFSET_0) = src[i];
     }
-    *((unsigned char*)arg0 + 0x5000 + REGION_OFFSET_1) = arg2;
-    *(int*)((char*)arg0 + 0x5000 + REGION_OFFSET_2) |= 0x4000;
+    *((unsigned char*)dst + 0x5000 + REGION_OFFSET_1) = val;
+    *(int*)((char*)dst + 0x5000 + REGION_OFFSET_2) |= 0x4000;
 }

@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 // USA: func_0205e7dc
-extern "C" ARM void func_0205e7dc(unsigned char* arg0, int arg1) {
-    unsigned char* var0 = arg0 + 0x1524;
-    var0[(unsigned)arg1 >> 3] |= 1 << (arg1 % 8);
+extern "C" ARM void func_0205e7dc(unsigned char* obj, int index) {
+    unsigned char* p = obj + 0x1524;
+    p[(unsigned)index >> 3] |= 1 << (index % 8);
 }

@@ -1,19 +1,19 @@
 #include <globaldefs.h>
 
-extern "C" int func_02005a94(char* arg0);
+extern "C" int func_02005a94(char* str);
 
 // USA: func_020696bc
-extern "C" ARM int func_020696bc(char* arg0, int* arg1, int arg2) {
-    int var0;
-    for (var0 = 0; var0 < arg2; var0++) {
-        char var1 = *arg0;
-        if (var1 != 0 && ((var1 >= '0' && var1 <= '9') || var1 == '-')) {
-            arg1[var0] = func_02005a94(arg0);
+extern "C" ARM int func_020696bc(char* str, int* out, int count) {
+    int i;
+    for (i = 0; i < count; i++) {
+        char c = *str;
+        if (c != 0 && ((c >= '0' && c <= '9') || c == '-')) {
+            out[i] = func_02005a94(str);
             for (;;) {
-                char var2 = *arg0;
-                if (var2 == 0) break;
-                if (var2 == ',' || var2 == '>') { arg0++; break; }
-                arg0++;
+                char c2 = *str;
+                if (c2 == 0) break;
+                if (c2 == ',' || c2 == '>') { str++; break; }
+                str++;
             }
         }
     }

@@ -7,28 +7,28 @@
 #include <globaldefs.h>
 
 struct Struct_ov006_02158d50 {
-    char unknown_0_[0x1c];
-    struct Struct_ov006_02158d50* unknown_1c_;
+    char pad[0x1c];
+    struct Struct_ov006_02158d50* next;
 };
 
 struct Struct_ov006_02158d50_2 {
-    char unknown_0_[R(0x24, 0x2c)];
-    struct Struct_ov006_02158d50* unknown_2c_;
+    char pad[R(0x24, 0x2c)];
+    struct Struct_ov006_02158d50* list;
 };
 
 // USA: func_ov006_02158d50
-extern "C" ARM struct Struct_ov006_02158d50* func_ov006_02158d50(struct Struct_ov006_02158d50_2* arg0, short arg1) {
-    struct Struct_ov006_02158d50* var0 = arg0->unknown_2c_;
-    struct Struct_ov006_02158d50* var1 = var0;
-    short var2 = arg1 << 4;
-    short var3 = 0;
-    while (var0) {
-        if (var3 == var2) {
-            var1 = var0;
+extern "C" ARM struct Struct_ov006_02158d50* func_ov006_02158d50(struct Struct_ov006_02158d50_2* obj, short id) {
+    struct Struct_ov006_02158d50* n = obj->list;
+    struct Struct_ov006_02158d50* result = n;
+    short target = id << 4;
+    short i = 0;
+    while (n) {
+        if (i == target) {
+            result = n;
             break;
         }
-        var3++;
-        var0 = var0->unknown_1c_;
+        i++;
+        n = n->next;
     }
-    return var1;
+    return result;
 }

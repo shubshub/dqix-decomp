@@ -9,7 +9,7 @@
 #endif
 
 // USA: func_ov023_021e4250
-extern "C" ARM unsigned char func_ov023_021e4250(char* arg0) {
-	char* var0 = *(char**)(arg0 + SUB_POINTER_OFFSET);
-	return *(unsigned char*)(var0 + *(int*)(var0 + INDEX_OFFSET) + 0x186);
+extern "C" ARM unsigned char func_ov023_021e4250(char* p) {
+	char* q = *(char**)(p + SUB_POINTER_OFFSET);
+	return *(unsigned char*)(q + *(int*)(q + INDEX_OFFSET) + 0x186);
 }

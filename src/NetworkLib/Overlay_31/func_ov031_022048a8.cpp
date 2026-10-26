@@ -3,21 +3,21 @@
 #include "NitroSDK/Timing.h"
 
 struct Struct_ov031_022048a8_3 {
-    unsigned short unknown_0_, unknown_2_, unknown_4_, unknown_6_, unknown_8_, unknown_a_;
-    unsigned char unknown_c_[48];
+    unsigned short unknown_0_, flags, unknown_4_, unknown_6_, unknown_8_, unknown_a_;
+    unsigned char data[48];
 };
 struct Struct_ov031_022048a8 {
     unsigned short unknown_0_;
-    unsigned char unknown_2_, unknown_3_;
+    unsigned char flags, status;
     unsigned char unknown_4_[2];
-    unsigned char unknown_6_[6];
+    unsigned char counts[6];
 };
 struct Struct_ov031_022048a8_2 {
-    unsigned char unknown_0_[2], unknown_2_[2];
+    unsigned char type[2], unknown_2_[2];
     unsigned char unknown_4_[4];
-    unsigned char unknown_8_[2];
+    unsigned char length[2];
 };
-struct Struct_ov031_0224c980_18 { unsigned char unknown_0_[0x48]; int (*unknown_48_)(); };
+struct Struct_ov031_0224c980_18 { unsigned char unknown0[0x48]; int (*cancelled)(); };
 extern Struct_ov031_0224c980_18 data_ov031_0224c980;
 extern "C" void func_ov031_02203a84(void*, int);
 extern "C" int func_ov031_02203b1c();
@@ -30,79 +30,79 @@ extern "C" char* func_ov031_02204878(char*);
 #define CPS_GETULONG1(p) (((unsigned long)CPS_GETUSHORT1(p) << 16) | CPS_GETUSHORT1((p) + 2))
 
 // USA: func_ov031_022048a8
-extern "C" ARM int func_ov031_022048a8(const unsigned char* arg0, unsigned int arg1, int arg2, void* arg3, unsigned int arg4) {
-    Struct_ov031_022048a8_3 var0;
-    unsigned int var1;
-    var0.unknown_0_ = (arg2 >> 8) | (arg2 << 8);
-    if (arg1 != 32) var0.unknown_2_ = 1;
-    else var0.unknown_2_ = 0x1001;
-    var0.unknown_4_ = 0x100;
-    var0.unknown_6_ = 0;
-    var0.unknown_8_ = 0;
-    var0.unknown_a_ = 0;
-    var1 = 0;
-    unsigned char var2 = *arg0++;
-    unsigned char* var3 = var0.unknown_c_;
-    unsigned char* var4 = var3 + 1;
-    int var5 = 0;
-    if (var2) do {
-        if (var2 != '.') {
-            var5 = var4 - (unsigned char*)&var0;
-            if (var5 >= 60) return -1;
-            var5 = ++var1;
-            *var4++ = var2;
+extern "C" ARM int func_ov031_022048a8(const unsigned char* name, unsigned int type, int arg2, void* output, unsigned int capacity) {
+    Struct_ov031_022048a8_3 packet;
+    unsigned int length;
+    packet.unknown_0_ = (arg2 >> 8) | (arg2 << 8);
+    if (type != 32) packet.flags = 1;
+    else packet.flags = 0x1001;
+    packet.unknown_4_ = 0x100;
+    packet.unknown_6_ = 0;
+    packet.unknown_8_ = 0;
+    packet.unknown_a_ = 0;
+    length = 0;
+    unsigned char character = *name++;
+    unsigned char* label = packet.data;
+    unsigned char* cursor = label + 1;
+    int count = 0;
+    if (character) do {
+        if (character != '.') {
+            count = cursor - (unsigned char*)&packet;
+            if (count >= 60) return -1;
+            count = ++length;
+            *cursor++ = character;
         } else {
-            *var3 = var5;
-            var3 = var4;
-            var1 = 0;
-            var5 = 0;
-            ++var4;
+            *label = count;
+            label = cursor;
+            length = 0;
+            count = 0;
+            ++cursor;
         }
-        var2 = *arg0++;
-    } while (var2);
-    *var3 = var1;
-    var4[0] = 0;
-    var4[1] = arg1 >> 8;
-    var4[2] = arg1;
-    var4[3] = 0;
-    var4[4] = 1;
-    func_ov031_02203a84(&var0, var4 + 5 - (unsigned char*)&var0);
-    int var6 = 0;
-    unsigned int var7 = GetCurrentTimestamp() >> 16;
-    while (data_ov031_0224c980.unknown_48_() && !var6 &&
-           (int)((unsigned int)(GetCurrentTimestamp() >> 16) - var7) < 15) {
+        character = *name++;
+    } while (character);
+    *label = length;
+    cursor[0] = 0;
+    cursor[1] = type >> 8;
+    cursor[2] = type;
+    cursor[3] = 0;
+    cursor[4] = 1;
+    func_ov031_02203a84(&packet, cursor + 5 - (unsigned char*)&packet);
+    int result = 0;
+    unsigned int start = GetCurrentTimestamp() >> 16;
+    while (data_ov031_0224c980.cancelled() && !result &&
+           (int)((unsigned int)(GetCurrentTimestamp() >> 16) - start) < 15) {
         if (!func_ov031_02203b1c()) func_ov031_02200264();
         else {
-            Struct_ov031_022048a8* var8 = func_ov031_0220357c(&var1);
-            if (var1 > 12 && arg2 == (unsigned short)((var8->unknown_0_ >> 8) | (var8->unknown_0_ << 8))) {
-                int var9 = var8->unknown_3_ & 15;
-                if (var9 == 3) var6 = -1;
-                else if (var9 == 0) {
-                    unsigned char* var10 = (unsigned char*)var8 + var1;
-                    char* var11 = (char*)(var8 + 1);
-                    int var12 = (unsigned short)(var8->unknown_4_[1] | (var8->unknown_4_[0] << 8));
-                    while (var12--) {
-                        var11 = func_ov031_02204878(var11) + 4;
+            Struct_ov031_022048a8* response = func_ov031_0220357c(&length);
+            if (length > 12 && arg2 == (unsigned short)((response->unknown_0_ >> 8) | (response->unknown_0_ << 8))) {
+                int status = response->status & 15;
+                if (status == 3) result = -1;
+                else if (status == 0) {
+                    unsigned char* end = (unsigned char*)response + length;
+                    char* position = (char*)(response + 1);
+                    int remaining = (unsigned short)(response->unknown_4_[1] | (response->unknown_4_[0] << 8));
+                    while (remaining--) {
+                        position = func_ov031_02204878(position) + 4;
                     }
-                    if ((unsigned char*)var11 < var10) do {
-                        Struct_ov031_022048a8_2* var13 = (Struct_ov031_022048a8_2*)func_ov031_02204878(var11);
-                        unsigned short var14 = CPS_GETUSHORT1(var13->unknown_8_);
-                        if (arg1 == CPS_GETUSHORT1(var13->unknown_0_)) {
-                            if (arg1 != 12) {
-                                var6 = CPS_GETULONG1((unsigned char*)var13 + sizeof(*var13) - 4 + var14);
-                            } else if (var14 > arg4) var6 = 2;
+                    if ((unsigned char*)position < end) do {
+                        Struct_ov031_022048a8_2* record = (Struct_ov031_022048a8_2*)func_ov031_02204878(position);
+                        unsigned short var14 = CPS_GETUSHORT1(record->length);
+                        if (type == CPS_GETUSHORT1(record->type)) {
+                            if (type != 12) {
+                                result = CPS_GETULONG1((unsigned char*)record + sizeof(*record) - 4 + var14);
+                            } else if (var14 > capacity) result = 2;
                             else {
-                                VectorizedInvertedMemcpy(var13 + 1, arg3, var14);
-                                var6 = 1;
+                                VectorizedInvertedMemcpy(record + 1, output, var14);
+                                result = 1;
                             }
                             break;
                         }
-                        var11 = (char*)var13 + (sizeof(*var13) + var14);
-                    } while ((unsigned char*)var11 < var10);
+                        position = (char*)record + (sizeof(*record) + var14);
+                    } while ((unsigned char*)position < end);
                 }
             }
-            func_ov031_02203670(var1);
+            func_ov031_02203670(length);
         }
     }
-    return var6;
+    return result;
 }

@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
 extern "C" int* LinkSession_GetInstance(void);
-int LinkSession_IsActive(int* obj);
-void MapDisplay_DrawSprite(void* obj, int p1, int p2, int idx,
+extern "C" int LinkSession_IsActive(int* obj);
+extern "C" void MapDisplay_DrawSprite(void* obj, int p1, int p2, int idx,
         unsigned char p5, unsigned char p6, unsigned short p7, unsigned char p8, int p9, int p10);
 
 // Main, originally func_0202720c (USA 0x0202720c, EUR 0x0202721c, JPN 0x02026b70)

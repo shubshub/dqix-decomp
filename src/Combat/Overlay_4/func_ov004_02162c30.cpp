@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
 
-extern "C" int func_ov004_0215f74c(int arg0, int arg1);
+extern "C" int func_ov004_0215f74c(int unused, int combatantId);
 extern "C" void func_ov004_0215fdfc(void*);
 extern "C" void func_ov004_0215eb40(void*);
 extern "C" void func_ov011_021848a0(void* obj, int val);
-void CallVTableFnAt240_021f66bc(void* a, int key, void* arg3);
+extern "C" void func_ov023_021f66bc(void* a, int key, void* arg2);
 struct SePlayer;
-void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern "C" void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern struct SePlayer g_sePlayer;
 
 extern unsigned char data_ov004_021707e8;
@@ -17,16 +17,16 @@ extern unsigned char data_ov004_02170b90;
 #define D02170b90 ((char*)&data_ov004_02170b90)
 
 // USA: func_ov004_02162c30
-extern "C" ARM int func_ov004_02162c30(void* arg0) {
+extern "C" ARM int func_ov004_02162c30(void* a) {
 #if defined(jpn)
     if (*(unsigned char*)(D021707e8 + 0xb) == 1) return 0;
 #else
     if (*(unsigned char*)(D021707e8 + 0) == 1) return 0;
 #endif
 
-    void* var0 = *(void**)(D021707e8 + 0x1c);
-    if (!func_ov004_0215f74c((int)arg0, (int)var0)) {
-        func_ov004_0215fdfc(arg0);
+    void* combatant = *(void**)(D021707e8 + 0x1c);
+    if (!func_ov004_0215f74c((int)a, (int)combatant)) {
+        func_ov004_0215fdfc(a);
         return 0;
     }
 
@@ -43,7 +43,7 @@ extern "C" ARM int func_ov004_02162c30(void* arg0) {
 #else
         *(unsigned char*)(D021707e8 + 6) = *(signed char*)(D021707e8 + 5);
 #endif
-        func_ov011_021848a0(arg0, 0x65);
+        func_ov011_021848a0(a, 0x65);
         break;
     case 1:
 #if defined(jpn)
@@ -51,7 +51,7 @@ extern "C" ARM int func_ov004_02162c30(void* arg0) {
 #else
         *(unsigned char*)(D021707e8 + 6) = *(unsigned char*)(D02170b90 + 0x23f);
 #endif
-        func_ov011_021848a0(arg0, 0x66);
+        func_ov011_021848a0(a, 0x66);
         break;
     case 2:
 #if defined(jpn)
@@ -59,8 +59,8 @@ extern "C" ARM int func_ov004_02162c30(void* arg0) {
 #else
         *(unsigned char*)(D021707e8 + 6) = *(unsigned char*)(D02170b90 + 0x47f);
 #endif
-        func_ov004_0215eb40(arg0);
-        func_ov011_021848a0(arg0, 0x67);
+        func_ov004_0215eb40(a);
+        func_ov011_021848a0(a, 0x67);
         break;
     case 3:
 #if defined(jpn)
@@ -68,7 +68,7 @@ extern "C" ARM int func_ov004_02162c30(void* arg0) {
 #else
         *(unsigned char*)(D021707e8 + 6) = 1;
 #endif
-        func_ov011_021848a0(arg0, 0x68);
+        func_ov011_021848a0(a, 0x68);
         break;
     case 4:
 #if defined(jpn)
@@ -78,7 +78,7 @@ extern "C" ARM int func_ov004_02162c30(void* arg0) {
         *(unsigned char*)(D021707e8 + 6) = *(signed char*)(D021707e8 + 9);
         *(unsigned char*)(D021707e8 + 8) = *(unsigned char*)(D021707e8 + 3);
 #endif
-        func_ov011_021848a0(arg0, 0x64);
+        func_ov011_021848a0(a, 0x64);
         break;
     }
 
@@ -93,7 +93,7 @@ extern "C" ARM int func_ov004_02162c30(void* arg0) {
 #else
     *(unsigned char*)(D021707e8 + 0) = 0;
 #endif
-    CallVTableFnAt240_021f66bc(a, 0x84, (void*)1);
+    func_ov023_021f66bc(a, 0x84, (void*)1);
     SePlayer_Play(&g_sePlayer, 1, 0);
     return 0;
 }

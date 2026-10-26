@@ -5,17 +5,17 @@ extern "C" int func_ov031_022210c4(unsigned char*, const unsigned char*, unsigne
 extern "C" void* memcpy(void*, const void*, unsigned int);
 
 // USA: func_ov031_022204ec
-extern "C" THUMB unsigned int func_ov031_022204ec(unsigned char* arg0, unsigned int arg1, unsigned char* arg2, const unsigned char* arg3) {
-    unsigned int var0;
-    unsigned int var1;
-    unsigned char* var2 = func_ov031_022201d8(arg0, &var0, &var1);
-    if (!var2) return 0;
-    if (var0 != arg1) return 0;
-    if (arg3) {
-        func_ov031_022210c4(arg2, var2, var1, arg3, 16);
-        var1 -= 8;
+extern "C" THUMB unsigned int func_ov031_022204ec(unsigned char* packet, unsigned int arg1, unsigned char* destination, const unsigned char* key) {
+    unsigned int type;
+    unsigned int length;
+    unsigned char* payload = func_ov031_022201d8(packet, &type, &length);
+    if (!payload) return 0;
+    if (type != arg1) return 0;
+    if (key) {
+        func_ov031_022210c4(destination, payload, length, key, 16);
+        length -= 8;
     } else {
-        memcpy(arg2, var2, var1);
+        memcpy(destination, payload, length);
     }
-    return var1;
+    return length;
 }

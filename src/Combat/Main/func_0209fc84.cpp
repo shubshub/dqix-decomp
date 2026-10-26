@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
 struct Struct_0209d38c {
-    char unknown_0_[4];
-    char* unknown_4_;
-    char unknown_8_[0x90];
-    int unknown_98_;
+    char pad0[4];
+    char* data;
+    char pad2[0x90];
+    int field98;
 };
 
 // USA: func_0209fc84
-extern "C" ARM int func_0209fc84(struct Struct_0209d38c* arg0, int arg1) {
-    return (arg1 == 0) ? *(unsigned char*)(arg0->unknown_4_ + 0x8e07) : arg0->unknown_98_;
+extern "C" ARM int func_0209fc84(struct Struct_0209d38c* ctx, int selector) {
+    return (selector == 0) ? *(unsigned char*)(ctx->data + 0x8e07) : ctx->field98;
 }

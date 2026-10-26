@@ -1,34 +1,34 @@
 #include <globaldefs.h>
 #if defined(jpn)
-enum { Enum_0209fd00_9196 = 0x240c };
+enum { kGrottoOffset = 0x240c };
 #else
-enum { Enum_0209fd00_9196 = 0x23ec };
+enum { kGrottoOffset = 0x23ec };
 #endif
 
 #include "Grotto/Main/ActiveGrottoClass.h"
 
-extern "C" void* func_02012fe4(void);
-extern "C" int func_0201b5d8(int arg0);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" int ZoneId_IsGrottoBossFloor(int x);
 
 struct Struct_0209fd00 {
-    char unknown_0_[4];
-    char* unknown_4_;
+    char pad0[4];
+    char* field4;
 };
 
 struct Struct_0209fd00_2 {
-    unsigned short unknown_0_;
+    unsigned short h0;
 };
 
 // USA: func_0209fd00
-extern "C" ARM int func_0209fd00(struct Struct_0209fd00* arg0) {
-    struct Struct_0209fd00_2* var0 = *(struct Struct_0209fd00_2**)(arg0->unknown_4_ + 0x8e18);
-    if (var0 == 0) return -1;
-    int var1 = var0->unknown_0_ % 20;
-    ActiveGrottoClass* var2 = (ActiveGrottoClass*)((char*)func_02012fe4() + Enum_0209fd00_9196);
-    if (var2 == 0) {
-        var1 = 0;
-    } else if (func_0201b5d8(var0->unknown_0_)) {
-        var1 = var2->GetFloorCount() + 1;
+extern "C" ARM int func_0209fd00(struct Struct_0209fd00* self) {
+    struct Struct_0209fd00_2* rec = *(struct Struct_0209fd00_2**)(self->field4 + 0x8e18);
+    if (rec == 0) return -1;
+    int result = rec->h0 % 20;
+    ActiveGrottoClass* grotto = (ActiveGrottoClass*)((char*)Zone3D_GetInstance() + kGrottoOffset);
+    if (grotto == 0) {
+        result = 0;
+    } else if (ZoneId_IsGrottoBossFloor(rec->h0)) {
+        result = grotto->GetFloorCount() + 1;
     }
-    return var1;
+    return result;
 }

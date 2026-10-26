@@ -4,20 +4,20 @@
 #define data_020f1ef8 data_020f2064
 #endif
 
-struct Struct_020f1f14_2 { unsigned char unknown_0_[0x18]; };
+struct Struct_020f1f14_2 { unsigned char pad[0x18]; };
 struct Struct_020f1ef8 {
-    unsigned char unknown_0_[8];
-    struct Struct_020f1f14_2 *unknown_8_, *unknown_c_, *unknown_10_, *unknown_14_, *unknown_18_;
+    unsigned char pad[8];
+    struct Struct_020f1f14_2 *e0, *e1, *e2, *e3, *e4;
 };
 
 extern struct Struct_020f1f14_2 data_020f1f14[];
 extern struct Struct_020f1ef8 data_020f1ef8;
 
 // USA: func_020bb444
-extern "C" ARM void func_020bb444(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    data_020f1ef8.unknown_8_ = &data_020f1f14[arg0];
-    data_020f1ef8.unknown_c_ = &data_020f1f14[arg1];
-    data_020f1ef8.unknown_10_ = &data_020f1f14[arg2];
-    data_020f1ef8.unknown_14_ = &data_020f1f14[arg3];
-    data_020f1ef8.unknown_18_ = &data_020f1f14[arg4];
+extern "C" ARM void func_020bb444(int arg0, int i1, int i2, int arg3, int arg4) {
+    data_020f1ef8.e0 = &data_020f1f14[arg0];
+    data_020f1ef8.e1 = &data_020f1f14[i1];
+    data_020f1ef8.e2 = &data_020f1f14[i2];
+    data_020f1ef8.e3 = &data_020f1f14[arg3];
+    data_020f1ef8.e4 = &data_020f1f14[arg4];
 }

@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 
 // USA: func_ov000_02182498
-extern "C" ARM void func_ov000_02182498(void* arg0, int arg1) {
-    unsigned char* var0 = (unsigned char*)arg0;
-    if (arg1 != 0) {
-        if (var0[0x6e8] != 0) {
-            var0 = var0 + 0x600;
-            if (*(short*)(var0 + 0xec) == 0) {
-                *(short*)(var0 + 0xec) = *(short*)(var0 + 0xea) + 5;
+extern "C" ARM void func_ov000_02182498(void* objRaw, int flag) {
+    unsigned char* obj = (unsigned char*)objRaw;
+    if (flag != 0) {
+        if (obj[0x6e8] != 0) {
+            obj = obj + 0x600;
+            if (*(short*)(obj + 0xec) == 0) {
+                *(short*)(obj + 0xec) = *(short*)(obj + 0xea) + 5;
             }
         }
     } else {
-        var0[0x6e8] = 0;
-        var0[0x6e9] = 0;
+        obj[0x6e8] = 0;
+        obj[0x6e9] = 0;
     }
 }

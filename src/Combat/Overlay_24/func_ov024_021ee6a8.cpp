@@ -3,41 +3,41 @@
 #include "Combat/Overlay_0/GetCombatantByID.h"
 #include "Util/Random.h"
 
-extern "C" int func_ov000_0215eb1c(int arg0, unsigned short* arg1, int arg2, int arg3);
-extern "C" int func_ov024_021eda60(GameObject* arg0);
-extern "C" float func_ov024_021db358(GameObject* arg0);
-extern "C" int func_ov024_021ed890(struct Random** arg0, int* arg1, short* arg2);
+extern "C" int func_ov000_0215eb1c(int battle, unsigned short* table, int count, int flag);
+extern "C" int func_ov024_021eda60(GameObject* combatant);
+extern "C" float func_ov024_021db358(GameObject* obj);
+extern "C" int func_ov024_021ed890(struct Random** arg0, int* arg1, short* table);
 
 extern unsigned short data_ov024_021fec9c;
 
 #pragma opt_common_subs off
 // USA: func_ov024_021ee6a8
-extern "C" ARM int func_ov024_021ee6a8(int* arg0, int arg1, int arg2, int* arg3, short* arg4) {
-    unsigned short var0[8];
-    unsigned short* var1;
-    unsigned short* var2 = var0;
-    unsigned short* var3 = &data_ov024_021fec9c;
-    int var4 = 8;
+extern "C" ARM int func_ov024_021ee6a8(int* a0, int a1, int a2, int* outCount, short* arg4) {
+    unsigned short buf[8];
+    unsigned short* p;
+    unsigned short* d = buf;
+    unsigned short* s = &data_ov024_021fec9c;
+    int n = 8;
     do {
-        unsigned short* var5 = var2++;
-        *var5 = *var3++;
-    } while (--var4);
+        unsigned short* var5 = d++;
+        *var5 = *s++;
+    } while (--n);
 
-    int var6 = func_ov000_0215eb1c(*arg0, var0, 8, 1);
-    if (var6 <= 0) return 0;
+    int count = func_ov000_0215eb1c(*a0, buf, 8, 1);
+    if (count <= 0) return 0;
 
-    var1 = var0;
-    float var7 = 0.5f;
-    *arg3 = 0;
-    for (int var8 = 0; var8 < var6; var8++) {
-        GameObject* var9 = GetCombatantByID(*arg0, *(short*)&var1[var8]);
-        if (!var9) continue;
-        if (func_ov024_021eda60(var9)) continue;
-        if (func_ov024_021db358(var9) >= var7) continue;
-        arg4[*arg3] = *(short*)&var1[var8];
-        (*arg3)++;
+    p = buf;
+    float threshold = 0.5f;
+    *outCount = 0;
+    for (int i = 0; i < count; i++) {
+        GameObject* member = GetCombatantByID(*a0, *(short*)&p[i]);
+        if (!member) continue;
+        if (func_ov024_021eda60(member)) continue;
+        if (func_ov024_021db358(member) >= threshold) continue;
+        arg4[*outCount] = *(short*)&p[i];
+        (*outCount)++;
     }
-    if (*arg3 <= 0) return 0;
-    func_ov024_021ed890((struct Random**)arg0, arg3, arg4);
+    if (*outCount <= 0) return 0;
+    func_ov024_021ed890((struct Random**)a0, outCount, arg4);
     return 1;
 }

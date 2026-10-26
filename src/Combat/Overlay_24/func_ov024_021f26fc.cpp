@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" GameObject* func_ov000_021536f8(int arg0, int arg1);
+extern "C" GameObject* func_ov000_021536f8(int unused, int id);
 struct Struct_ov024_021f26fc;
-extern "C" int func_ov024_021f273c(struct Struct_ov024_021f26fc* arg0);
+extern "C" int func_ov024_021f273c(struct Struct_ov024_021f26fc* obj);
 
-struct Struct_ov024_021f26fc_2 { int unknown_0_; };
+struct Struct_ov024_021f26fc_2 { int field0; };
 
 // USA: func_ov024_021f26fc
-extern "C" ARM int func_ov024_021f26fc(struct Struct_ov024_021f26fc_2* arg0, int arg1, int arg2, int* arg3, short* arg4) {
-	GameObject* var0 = func_ov000_021536f8(arg0->unknown_0_, arg1);
-	if (!var0) return 0;
-	int var1;
-	if (func_ov024_021f273c((struct Struct_ov024_021f26fc*)var0)) {
-		var1 = 0;
+extern "C" ARM int func_ov024_021f26fc(struct Struct_ov024_021f26fc_2* a, int id, int arg2, int* outFlag, short* arg4) {
+	GameObject* c = func_ov000_021536f8(a->field0, id);
+	if (!c) return 0;
+	int result;
+	if (func_ov024_021f273c((struct Struct_ov024_021f26fc*)c)) {
+		result = 0;
 	} else {
-		var1 = 1;
-		*arg4 = (short)arg1;
-		*arg3 = var1;
+		result = 1;
+		*arg4 = (short)id;
+		*outFlag = result;
 	}
-	return var1;
+	return result;
 }

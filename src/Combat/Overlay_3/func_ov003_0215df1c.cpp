@@ -6,13 +6,13 @@ struct BackgroundGraphics;
 
 extern "C" void* LinkSession_GetInstance(void);
 extern "C" int LinkSession_IsGuest(void* obj);
-int KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" int KeyTable_Get(struct Container020e0310* c, int key);
 extern "C" int Font_GetTextWidth(char* str, int id);
-void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
-char* MessageSystem_GetInstance(void);
-int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
+extern "C" void func_0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
+extern "C" char* MessageSystem_GetInstance(void);
+extern "C" int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
 extern "C" void memset(void* dst, int val, int size);
-void AppendEntryNames_0215e13c(char* base, char* dst, int flag);
+extern "C" void func_ov003_0215e13c(char* base, char* dst, int flag);
 #if defined(jpn)
 extern "C" void Window_OpenPane(void* window, char* buf, int a, int b, int c, int d, int e);
 #else
@@ -21,18 +21,18 @@ extern "C" void Window_OpenPane(void* a, void* b, int p2, int p3, int p4, int p5
 
 struct Struct_ov003_0215df1c {
 #if defined(jpn)
-    char unknown_0_[0x64 + 0x18];
+    char unk_0[0x64 + 0x18];
 #else
-    char unknown1_0_[0x64];
+    char unk_0[0x64];
 #endif
-    char unknown_64_[0x7c - 0x64];
-    char* unknown_7c_;
+    char messages[0x7c - 0x64];
+    char* text;
     char unknown_80_[0x98 - 0x80];
-    char unknown_98_[0x138 - 0x98];
-    short unknown_138_;
-    short unknown_13a_;
-    short unknown_13c_;
-    short unknown_13e_;
+    char window[0x138 - 0x98];
+    short width;
+    short height;
+    short x;
+    short y;
     short unknown_140_;
     short unknown_142_;
     short unknown_144_;
@@ -44,11 +44,11 @@ struct Struct_ov003_0215df1c {
     char unknown_14e_;
     unsigned char unknown_14f_;
     char unknown_150_[4];
-    char unknown_154_[2][0x20];
+    char scrollers[2][0x20];
     char unknown_194_[0x3bd - 0x194];
-    unsigned char unknown_3bd_[3];
-    unsigned char unknown_3c0_;
-    signed char unknown_3c1_;
+    unsigned char keys[3];
+    unsigned char count;
+    signed char cursor;
     char unknown_3c2_[0x3d0 - 0x3c2];
     int unknown_3d0_;
     char unknown_3d4_[0x3f2 - 0x3d4];
@@ -56,7 +56,7 @@ struct Struct_ov003_0215df1c {
 };
 
 // USA: func_ov003_0215df1c
-extern "C" ARM void func_ov003_0215df1c(struct BattleMenu_0215df1c* self) {
+extern "C" ARM void func_ov003_0215df1c(struct Struct_ov003_0215df1c* self) {
     void* ctx = LinkSession_GetInstance();
     self->count = 3;
     self->keys[0] = 0;
@@ -67,41 +67,41 @@ extern "C" ARM void func_ov003_0215df1c(struct BattleMenu_0215df1c* self) {
         self->keys[0] = 1;
         self->keys[1] = 2;
         self->keys[2] = 0xff;
-    } else if (self->field3d0 == 0) {
+    } else if (self->unknown_3d0_ == 0) {
         self->count = 2;
         self->keys[0] = 0;
         self->keys[1] = 2;
         self->keys[2] = 0xff;
     }
 
-    short var1 = (arg0->unknown_3c0_ * 14 + 0x12) / 8;
+    short height = (self->count * 14 + 0x12) / 8;
 #if defined(jpn)
-    short var5 = 7;
+    short width = 7;
 #else
-    int maxWidth = 0;
+    int var2 = 0;
     for (int i = 0; i < self->count; i++) {
         short w = Font_GetTextWidth((char*)KeyTable_Get((struct Container020e0310*)self->messages, self->keys[i]), 0);
-        if (maxWidth < w) {
-            maxWidth = w;
+        if (var2 < w) {
+            var2 = w;
         }
     }
-    short var5 = (var2 + 0x18) >> 3;
+    short width = (var2 + 0x18) >> 3;
 #endif
 
-    func_0205de24((struct Struct_0205de24_2*)arg0->unknown_98_, 0, 2);
-    arg0->unknown_138_ = var5;
-    arg0->unknown_13a_ = var1;
-    arg0->unknown_13c_ = 0x1f - var5;
-    arg0->unknown_13e_ = 2;
-    arg0->unknown_140_ = 0xc;
-    arg0->unknown_142_ = 8;
-    arg0->unknown_144_ = 0xa;
-    arg0->unknown_146_ = 0xe;
-    arg0->unknown_14f_ = 0xa;
-    arg0->unknown_149_ = 1;
-    arg0->unknown_14d_ = 1;
+    func_0205de24((struct Struct0205de24*)self->window, 0, 2);
+    self->width = width;
+    self->height = height;
+    self->x = 0x1f - width;
+    self->y = 2;
+    self->unknown_140_ = 0xc;
+    self->unknown_142_ = 8;
+    self->unknown_144_ = 0xa;
+    self->unknown_146_ = 0xe;
+    self->unknown_14f_ = 0xa;
+    self->unknown_149_ = 1;
+    self->unknown_14d_ = 1;
 
-    if (arg0->unknown_3f2_) {
+    if (self->unknown_3f2_) {
 #if defined(jpn)
         short pos = *(short*)(MessageSystem_GetInstance() + 0x7e6);
 #else
@@ -116,13 +116,13 @@ extern "C" ARM void func_ov003_0215df1c(struct BattleMenu_0215df1c* self) {
         }
     }
 
-    arg0->unknown_3c1_ = 0;
+    self->cursor = 0;
 #if defined(jpn)
-    memset(arg0->unknown_7c_, 0, 0x800);
+    memset(self->text, 0, 0x800);
 #else
-    memset(arg0->unknown_7c_, 0, 0x960);
+    memset(self->text, 0, 0x960);
 #endif
-    func_ov003_0215e13c((char*)arg0, arg0->unknown_7c_, 0);
+    func_ov003_0215e13c((char*)self, self->text, 0);
 #if defined(jpn)
     Window_OpenPane(self->window, self->text, 0, 1, 0, 1, 0);
 #else

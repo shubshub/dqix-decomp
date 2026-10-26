@@ -6,7 +6,7 @@ extern "C" int memcmp(const void* a, const void* b, unsigned int length); // mem
 extern "C" int SpriteContext_LoadCells(void* context, void* file, int size, int allocator);
 extern "C" int SpriteContext_LoadAnimations(void* context, void* file, int size, int allocator);
 struct Obj0205aaf8;
-int ValidateAndDispatchResource(Obj0205aaf8*, void*, int);
+extern "C" int func_0205aaf8(Obj0205aaf8*, void*, int);
 extern "C" int SpriteContext_LoadPalette(void* context, void* file, int size);
 
 extern char SpriteContext_ncerMagic[];
@@ -28,7 +28,7 @@ extern "C" ARM int SpriteContext_LoadFile(void* context, void* file, int size, i
             return 1;
         }
     } else if (memcmp(magic, SpriteContext_ncgrMagic, 4) == 0) {
-        if (ValidateAndDispatchResource((Obj0205aaf8*)context, file, size)) {
+        if (func_0205aaf8((Obj0205aaf8*)context, file, size)) {
             return 1;
         }
     } else if (memcmp(magic, SpriteContext_nclrMagic, 4) == 0) {

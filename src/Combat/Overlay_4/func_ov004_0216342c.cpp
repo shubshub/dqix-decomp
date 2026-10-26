@@ -5,14 +5,14 @@
 
 struct Struct_ov004_0216342c {
     TreasureMapMetadata unknown_0_[99];
-    DetailedTreasureMapData unknown_ad4_[8];
+    DetailedTreasureMapData details[8];
     unsigned char unknown_18f4_;
     unsigned char unknown_18f5_;
-    short unknown_18f6_;
-    short unknown_18f8_;
+    short page;
+    short pageCount;
     unsigned char unknown_18fa_;
     unsigned char unknown_18fb_;
-    unsigned char unknown_18fc_;
+    unsigned char mode;
     unsigned char unknown_18fd_;
     unsigned char unknown_18fe_;
     unsigned char unknown_18ff_[0x15];
@@ -20,17 +20,17 @@ struct Struct_ov004_0216342c {
 
 #if defined(jpn)
 // USA: func_ov004_0216342c
-extern "C" ARM void func_ov004_02163a20(void* arg0) {
+extern "C" ARM void func_ov004_02163a20(void* a) {
 #else
 // USA: func_ov004_0216342c
-extern "C" ARM void func_ov004_0216342c(void* arg0) {
+extern "C" ARM void func_ov004_0216342c(void* a) {
 #endif
-    GameResources* var0 = GetGameResources();
-    VectorizedMemset(arg0, 0, sizeof(Struct_ov004_0216342c));
-    Struct_ov004_0216342c* var1 = (Struct_ov004_0216342c*)arg0;
-    var1->unknown_18fa_ = ((unsigned char*)var0->unknown_41c8)[0x118];
-    var1->unknown_18fb_ = 0;
-    var1->unknown_18fc_ = 0;
-    var1->unknown_18fd_ = 0;
-    var1->unknown_18fe_ = 0;
+    GameResources* resources = GetGameResources();
+    VectorizedMemset(a, 0, sizeof(Struct_ov004_0216342c));
+    Struct_ov004_0216342c* buffer = (Struct_ov004_0216342c*)a;
+    buffer->unknown_18fa_ = ((unsigned char*)resources->unknown_41c8)[0x118];
+    buffer->unknown_18fb_ = 0;
+    buffer->mode = 0;
+    buffer->unknown_18fd_ = 0;
+    buffer->unknown_18fe_ = 0;
 }

@@ -6,41 +6,41 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void func_ov012_021893b4(void* arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov012_0218a844(void* arg0, void* arg1, int arg2);
+extern "C" void func_ov012_021893b4(void* obj, int a1, int a2, int a3);
+extern "C" void func_ov012_0218a844(void* obj, void* buf, int a2);
 #if defined(jpn)
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void Window_OpenPane(void* a, void* b, int p2, int p3, int p4, int p5, int p6);
 #else
-extern "C" void func_0205d304(void* arg0, void* arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7);
+extern "C" void Window_OpenPane(void* a, void* b, int p2, int p3, int p4, int p5, int p6, int p7);
 #endif
 
-struct Struct_ov012_0218a7a0 { char unknown_0_[LOW_REGION(0x344, 0x374)]; void* unknown_374_; };
+struct BufStruct0218a7a0 { char pad[LOW_REGION(0x344, 0x374)]; void* buf; };
 
 // USA: func_ov012_0218a7a0
 #if defined(jpn)
-extern "C" ARM void func_ov012_0218b234(char* arg0)
+extern "C" ARM void func_ov012_0218b234(char* base)
 #else
-extern "C" ARM void func_ov012_0218a7a0(char* arg0)
+extern "C" ARM void func_ov012_0218a7a0(char* base)
 #endif
  {
-    unsigned char var0 = *(unsigned char*)(arg0 + 0x1000 + LOW_REGION(0x341, 0x371));
-    func_ov012_021893b4(arg0, var0, LOW_REGION(3, 0), 1);
+    unsigned char flag = *(unsigned char*)(base + 0x1000 + LOW_REGION(0x341, 0x371));
+    func_ov012_021893b4(base, flag, LOW_REGION(3, 0), 1);
 
-    memset(((struct Struct_ov012_0218a7a0*)(arg0 + 0x1000))->unknown_374_, 0, LOW_REGION(0x800, 0x960));
+    memset(((struct BufStruct0218a7a0*)(base + 0x1000))->buf, 0, LOW_REGION(0x800, 0x960));
 
-    func_ov012_0218a844(arg0, ((struct Struct_ov012_0218a7a0*)(arg0 + 0x1000))->unknown_374_, 0);
+    func_ov012_0218a844(base, ((struct BufStruct0218a7a0*)(base + 0x1000))->buf, 0);
 
-    unsigned short var1 = *(unsigned short*)(arg0 + LOW_REGION(0x1400 + 0x1c, 0x1300 + 0xc4));
-    unsigned int var2 = ((unsigned int)var1 << 16) >> 21;
-    int var3 = var2 - 1;
+    unsigned short raw = *(unsigned short*)(base + LOW_REGION(0x1400 + 0x1c, 0x1300 + 0xc4));
+    unsigned int t = ((unsigned int)raw << 16) >> 21;
+    int var3 = t - 1;
 #if defined(jpn)
     if ((var3 / 16) > 0)
-        func_0205d304(arg0 + 0x90, ((struct Struct_ov012_0218a7a0*)(arg0 + 0x1000))->unknown_374_, 0, 0, 1, 1, 0);
+        Window_OpenPane(base + 0x90, ((struct BufStruct0218a7a0*)(base + 0x1000))->buf, 0, 0, 1, 1, 0);
     else
-        func_0205d304(arg0 + 0x90, ((struct Struct_ov012_0218a7a0*)(arg0 + 0x1000))->unknown_374_, 0, 0, 0, 1, 0);
+        Window_OpenPane(base + 0x90, ((struct BufStruct0218a7a0*)(base + 0x1000))->buf, 0, 0, 0, 1, 0);
 #else
-    int var4 = ((var3 / 16) > 0) ? 1 : 0;
+    int flag2 = ((var3 / 16) > 0) ? 1 : 0;
 
-    func_0205d304(arg0 + 0xac, ((struct Struct_ov012_0218a7a0*)(arg0 + 0x1000))->unknown_374_, 0, 0, var4, 1, 0, 0);
+    Window_OpenPane(base + 0xac, ((struct BufStruct0218a7a0*)(base + 0x1000))->buf, 0, 0, flag2, 1, 0, 0);
 #endif
 }

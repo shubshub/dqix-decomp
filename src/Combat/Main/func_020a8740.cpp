@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 #include "World/Zone3D.h"
 
-extern "C" void* func_02012fe4(void);
-extern "C" void func_ov017_021d1874(unsigned char arg0, unsigned char arg1, unsigned char arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void* Zone3D_GetInstance(void);
+extern "C" void func_ov017_021d1874(unsigned char a, unsigned char b, unsigned char c, int d, int e, int f, int g);
 
 // USA: func_020a8740
 extern "C" ARM void func_020a8740(void) {
-    Zone3D* var0 = (Zone3D*)func_02012fe4();
-    int var1 = 0;
+    Zone3D* zone = (Zone3D*)Zone3D_GetInstance();
+    int i = 0;
     for (;;) {
-        Struct_020134e0::Struct_02018300* var2 = func_0201e664(&var0->substruct_6c_, var1);
-        var1++;
-        if (!var2) return;
-        if (var2->unknown_4_ != 0xc) continue;
-        unsigned char* var3 = (unsigned char*)&var2->unknown_2c_.unknown7_0_;
-        unsigned short var4 = var0->unknown_4_;
-        if (!var3) return;
-        if (var4 == 0x1130 && var3[0] == 1) {
-            func_ov017_021d1874(var3[0], var3[1], var3[2], 2, 0, 0, 0);
+        ZoneFeatures::Opcode6aEntry* entry = ZoneFeatures_GetEntry(&zone->substruct_6c_, i);
+        i++;
+        if (!entry) return;
+        if (entry->maybeType != 0xc) continue;
+        unsigned char* sub = (unsigned char*)&entry->unk_2c.type12;
+        unsigned short field = zone->unknown_4_;
+        if (!sub) return;
+        if (field == 0x1130 && sub[0] == 1) {
+            func_ov017_021d1874(sub[0], sub[1], sub[2], 2, 0, 0, 0);
         }
     }
 }

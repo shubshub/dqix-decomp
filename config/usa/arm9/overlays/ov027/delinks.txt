@@ -24,11 +24,11 @@ src/NitroSDK/Overlay_27/func_ov027_021d96c4.cpp:
     complete
     .text start:0x021d96c4 end:0x021d9704
 
-src/Combat/Overlay_30/func_ov030_021d8a40.cpp:
+src/NitroSDK/Overlay_27/func_ov027_021d8a40.cpp:
     complete
     .text start:0x021d8a40 end:0x021d8a68
 
-src/Combat/Overlay_28/ResetStateAndCounters_021d8c20.cpp:
+src/NitroSDK/Overlay_27/func_ov027_021d8c20.cpp:
     complete
     .text start:0x021d8c20 end:0x021d8c6c
 
@@ -124,7 +124,7 @@ src/NitroSDK/Overlay_27/func_ov027_021dcc8c.cpp:
     complete
     .text start:0x021dcc8c end:0x021dcd20
 
-src/NitroSDK/Overlay_27/Trans_021dcd20.cpp:
+src/NitroSDK/Overlay_27/func_ov027_021dcd20.cpp:
     complete
     .text start:0x021dcd20 end:0x021dcd5c
 
@@ -192,7 +192,7 @@ src/NitroSDK/Overlay_27/func_ov027_021d9e04.cpp:
     complete
     .text start:0x021d9e04 end:0x021d9e1c
 
-src/Combat/Overlay_23/FormatAndDispatchValue_021db3c0.cpp:
+src/NitroSDK/Overlay_27/func_ov027_021db3c0.cpp:
     complete
     .text start:0x021db3c0 end:0x021db430
 
@@ -200,7 +200,7 @@ src/NitroSDK/Overlay_27/func_ov027_021dca40.cpp:
     complete
     .text start:0x021dca40 end:0x021dcc24
 
-src/NitroSDK/Overlay_27/InsertSlotEntry_021dd118.cpp:
+src/NitroSDK/Overlay_27/func_ov027_021dd118.cpp:
     complete
     .text start:0x021dd118 end:0x021dd180
 
@@ -244,7 +244,7 @@ src/NitroSDK/Overlay_27/func_ov027_021d9dd8.cpp:
     complete
     .text start:0x021d9dd8 end:0x021d9de8
 
-src/NitroSDK/Overlay_27/ValidateAndFillSourceDesc_021da690.cpp:
+src/NitroSDK/Overlay_27/func_ov027_021da690.cpp:
     complete
     .text start:0x021da690 end:0x021da808
 
@@ -252,7 +252,7 @@ src/NitroSDK/Overlay_27/func_ov027_021da314.cpp:
     complete
     .text start:0x021da314 end:0x021da38c
 
-src/NitroSDK/Overlay_27/DispatchCombatMessage_021d8c94.cpp:
+src/NitroSDK/Overlay_27/func_ov027_021d8c94.cpp:
     complete
     .text start:0x021d8c94 end:0x021d9134
 
@@ -288,11 +288,11 @@ src/NitroSDK/Overlay_27/func_ov027_021dd7d8.cpp:
     complete
     .text start:0x021dd7d8 end:0x021dd864
 
-src/NitroSDK/Overlay_27/ComputeChecksumMod20_021dc618.cpp:
+src/NitroSDK/Overlay_27/func_ov027_021dc618.cpp:
     complete
     .text start:0x021dc618 end:0x021dc680
 
-src/NitroSDK/Overlay_27/InitEntryFromDescriptor_021dab84.cpp:
+src/NitroSDK/Overlay_27/func_ov027_021dab84.cpp:
     complete
     .text start:0x021dab84 end:0x021dac74
 

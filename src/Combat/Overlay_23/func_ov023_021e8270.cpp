@@ -3,45 +3,45 @@
 #include "GameState/GameState.h"
 
 struct Struct_0205d81c;
-void* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
+extern "C" void* func_0205d81c(struct Struct_0205d81c* s, int key);
 extern "C" int func_02050064(void* obj);
 extern "C" void* __clear(void* dst, int count);
 extern "C" int Font_EncodeText(void* src, void* dst, int flag);
-int STD_GetStringLength(const char* s);
+extern "C" int STD_GetStringLength(const char* s);
 extern "C" void func_ov023_021e709c(void* ctx, void* arr, int index);
-void* GetTableEntry0204a5e4(int a, int b);
+extern "C" void* func_0204a5e4(int a, int b);
 void CleanInvalidateCacheRange(void const*, unsigned int);
 void CleanCacheRange(void const*, unsigned int);
 
 struct Struct_ov023_021ffa44 {
-    int unknown_0_;
-    void (*unknown_4_)(void*, void*, unsigned);
+    int flags;
+    void (*fn)(void*, void*, unsigned);
 };
 extern struct Struct_ov023_021ffa44 data_ov023_021ffa44;
 
 struct Struct_ov023_021e8270 {
-    unsigned char unknown_0_0_ : 4;
-    unsigned char unknown_0_4_ : 4;
+    unsigned char lo : 4;
+    unsigned char hi : 4;
 };
 
 // USA: func_ov023_021e8270
-extern "C" ARM void func_ov023_021e8270(char* arg0) {
-    char* var0 = *(char**)(arg0 + 0x600);
-    void* var1 = func_0205d81c((struct Struct_0205d81c*)(arg0 + 0x78), 0xd);
-    if (var1 == 0) return;
+extern "C" ARM void func_ov023_021e8270(char* obj) {
+    char* src = *(char**)(obj + 0x600);
+    void* elem = func_0205d81c((struct Struct_0205d81c*)(obj + 0x78), 0xd);
+    if (elem == 0) return;
 
-    char* var2 = *(char**)((char*)var1 + 0x8);
-    int var3 = *(int*)((char*)var1 + 0xa0);
-    unsigned int var4 = *(unsigned int*)((char*)var1 + 0xa4);
-    char* var5 = (char*)func_02050064(var1);
-    void* var6 = *(void**)((char*)var1 + 0x4);
-    memcpy(var2, var5 + var3, var4);
+    char* dst = *(char**)((char*)elem + 0x8);
+    int off = *(int*)((char*)elem + 0xa0);
+    unsigned int size = *(unsigned int*)((char*)elem + 0xa4);
+    char* base2 = (char*)func_02050064(elem);
+    void* field4 = *(void**)((char*)elem + 0x4);
+    memcpy(dst, base2 + off, size);
 
-    char* var7 = (char*)GameState::GetInstance() + 0x29c + 0x5400;
+    char* battle = (char*)GameState::GetInstance() + 0x29c + 0x5400;
 
-    char var8[0x43a];
-    __clear(var8, 0x3a);
-    __clear(var8 + 0x3a, 0x400);
+    char buf[0x43a];
+    __clear(buf, 0x3a);
+    __clear(buf + 0x3a, 0x400);
 
     int len;
     if (src != 0) {
@@ -51,16 +51,16 @@ extern "C" ARM void func_ov023_021e8270(char* arg0) {
         memcpy(buf, battle + 8, len);
     }
 
-    func_ov023_021e709c(var1, var8, var9 - 1);
-    func_ov023_021e709c(var1, var8, var9);
-    func_ov023_021e709c(var1, var8, var9 + 1);
+    func_ov023_021e709c(elem, buf, len - 1);
+    func_ov023_021e709c(elem, buf, len);
+    func_ov023_021e709c(elem, buf, len + 1);
 
-    if (!(data_ov023_021ffa44.unknown_0_ & 1)) {
-        struct Struct_ov023_021e8270* var10 = (struct Struct_ov023_021e8270*)((char*)var6 + 0x1c);
-        data_ov023_021ffa44.unknown_4_ = (void(*)(void*, void*, unsigned))func_0204a5e4(var10->unknown_0_0_, var10->unknown_0_4_);
-        data_ov023_021ffa44.unknown_0_ |= 1;
+    if (!(data_ov023_021ffa44.flags & 1)) {
+        struct Struct_ov023_021e8270* var10 = (struct Struct_ov023_021e8270*)((char*)field4 + 0x1c);
+        data_ov023_021ffa44.fn = (void(*)(void*, void*, unsigned))func_0204a5e4(var10->lo, var10->hi);
+        data_ov023_021ffa44.flags |= 1;
     }
-    CleanInvalidateCacheRange(var2, var4);
-    data_ov023_021ffa44.unknown_4_(var2, (void*)var3, var4);
-    CleanCacheRange(var2, var4);
+    CleanInvalidateCacheRange(dst, size);
+    data_ov023_021ffa44.fn(dst, (void*)off, size);
+    CleanCacheRange(dst, size);
 }

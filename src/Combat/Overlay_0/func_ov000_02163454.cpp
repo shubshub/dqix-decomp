@@ -11,8 +11,8 @@
 #endif
 
 // USA: func_ov000_02163454
-extern "C" ARM void func_ov000_02163454(void* arg0) {
-    *(unsigned short*)((char*)arg0 + REGION_OFFSET_0) = 0;
-    *(unsigned short*)((char*)arg0 + REGION_OFFSET_1) = 0;
-    *(unsigned short*)((char*)arg0 + REGION_OFFSET_2) = 0;
+extern "C" ARM void func_ov000_02163454(void* obj) {
+    *(unsigned short*)((char*)obj + REGION_OFFSET_0) = 0;
+    *(unsigned short*)((char*)obj + REGION_OFFSET_1) = 0;
+    *(unsigned short*)((char*)obj + REGION_OFFSET_2) = 0;
 }

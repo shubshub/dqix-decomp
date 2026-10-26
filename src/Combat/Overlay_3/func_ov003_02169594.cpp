@@ -17,53 +17,53 @@ enum { Enum_ov003_02169594_405 = 0x195 };
 struct GridCursor;
 struct Struct_0205bcdc;
 
-void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
-void GridCursor_SetCount(struct GridCursor* s, int val);
-void GridCursor_SelectIfValid(struct Struct_0205bcdc* s, int index);
+extern "C" void GridCursor_SetDimensions(struct GridCursor* s, int a, int b, int mode);
+extern "C" void GridCursor_SetCount(struct GridCursor* s, int val);
+extern "C" void GridCursor_SelectIfValid(struct Struct_0205bcdc* s, int index);
 extern "C" void GridCursor_SetSelectedIndex(void* s, int n);
 
 struct Struct_ov003_02169594 {
-    int unknown_0_;
-    int unknown_4_;
-    char unknown_8_[0x3c - 0x8];
-    unsigned char unknown_3c_;
+    int field0;
+    int field4;
+    char pad8[0x3c - 0x8];
+    unsigned char field3c;
     char unknown_3d_[0x50 - 0x3d];
 };
 
 struct Struct_ov003_02169594_2 {
-    char unknown_0_[Enum_ov003_02169594_232];
-    struct Struct_ov003_02169594 unknown_e8_[2];
+    char pad0[Enum_ov003_02169594_232];
+    struct Struct_ov003_02169594 grids[2];
     char unknown_188_[Enum_ov003_02169594_404 - Enum_ov003_02169594_392];
-    unsigned char unknown_194_;
+    unsigned char layout;
     char unknown_195_[Enum_ov003_02169594_1261 - Enum_ov003_02169594_405];
     signed char unknown_4ed_;
     signed char unknown_4ee_;
 };
 
-static inline struct Struct_ov003_02169594* inline_ov003_02169594(struct Struct_ov003_02169594_2* arg0, int arg1) { return &arg0->unknown_e8_[arg1]; }
+static inline struct Struct_ov003_02169594* GetGrid(struct Struct_ov003_02169594_2* ctx, int i) { return &ctx->grids[i]; }
 
 // USA: func_ov003_02169594
-extern "C" ARM void func_ov003_02169594(struct Struct_ov003_02169594_2* arg0) {
-    int var0;
-    int var1;
-    int var2;
-    int var3;
-    int var4;
+extern "C" ARM void func_ov003_02169594(struct Struct_ov003_02169594_2* self) {
+    int cols;
+    int rows;
+    int count;
+    int field4;
+    int index;
 
-    switch (arg0->unknown_194_) {
+    switch (self->layout) {
     case 1:
-        var0 = 1;
-        var1 = 3;
-        var2 = 3;
-        var3 = 1;
-        var4 = arg0->unknown_4ed_;
+        cols = 1;
+        rows = 3;
+        count = 3;
+        field4 = 1;
+        index = self->unknown_4ed_;
         break;
     case 2:
-        var4 = arg0->unknown_4ee_;
-        var0 = 4;
-        var1 = 1;
-        var2 = 4;
-        var3 = 1;
+        index = self->unknown_4ee_;
+        cols = 4;
+        rows = 1;
+        count = 4;
+        field4 = 1;
         break;
     }
 
@@ -75,6 +75,6 @@ extern "C" ARM void func_ov003_02169594(struct Struct_ov003_02169594_2* arg0) {
     GetGrid(self, 1)->field4 = field4;
     GridCursor_SelectIfValid((struct Struct_0205bcdc*)GetGrid(self, 0), index);
     GridCursor_SetSelectedIndex(GetGrid(self, 1), index);
-    struct Grid02169594* grid = GetGrid(self, 1);
+    struct Struct_ov003_02169594* grid = GetGrid(self, 1);
     grid->field3c = 0;
 }

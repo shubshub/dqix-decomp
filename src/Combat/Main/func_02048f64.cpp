@@ -9,150 +9,150 @@ struct Struct_02048e2c_2 {
     unsigned char unknown_1d_;
     unsigned char unknown_1e_;
     unsigned char unknown_1f_;
-    unsigned int unknown_20_;
-    unsigned char unknown_24_[0x10];
-    unsigned char unknown_34_;
+    unsigned int flags;
+    unsigned char cells[0x10];
+    unsigned char cellCount;
     char unknown_35_[0x3];
-    int unknown_38_;
+    int progress;
     short unknown_3c_;
-    char unknown_3e_[0x2];
+    char unknown3e[0x2];
     int unknown_40_[3];
 };
 
 struct Struct_02048e2c {
     char unknown_0_[0x44];
-    Vector3i unknown_44_;
-    char unknown_50_[0x6e];
+    Vector3i position;
+    char unknown50[0x6e];
     unsigned char unknown_be_;
     char unknown_bf_[0x7d];
-    Struct_02048e2c_2* unknown_13c_;
+    Struct_02048e2c_2* path;
 };
 
-int GetSubstructByte0x56_02049ee8(unsigned char*);
-struct Obj020494c0;
-void DispatchTargetByte020494c0(Obj020494c0*);
+extern "C" int func_02049ee8(unsigned char*);
+struct Struct_02048f64_2;
+extern "C" void func_020494c0(Struct_02048f64_2*);
 struct Foo02033b58;
-void GameObject_StoreMotionState(Foo02033b58*, unsigned char);
+extern "C" void GameObject_StoreMotionState(Foo02033b58*, unsigned char);
 struct Obj02033b68;
-void GameObject_SetMotionState(Obj02033b68*, int);
-struct Obj02049520;
-void ClearSubFieldsAndFlag02049520(Obj02049520*);
-struct Obj02049a74;
-void ApplyFlag0x4IfEligible02049a74(Obj02049a74*);
-struct Obj02048c90;
-void ResetInnerState02048c90(Obj02048c90*);
-void SetSubstructByte0x1c_02049390(unsigned char*, unsigned char);
+extern "C" void GameObject_SetMotionState(Obj02033b68*, int);
+struct Struct_02048f64_3;
+extern "C" void func_02049520(Struct_02048f64_3*);
+struct Struct_02048f64;
+extern "C" void func_02049a74(Struct_02048f64*);
+struct Struct_02048c90;
+extern "C" void func_02048c90(Struct_02048c90*);
+extern "C" void func_02049390(unsigned char*, unsigned char);
 struct Bytes02033b88;
-void GameObject_ForceMotionState(Bytes02033b88*, int);
+extern "C" void GameObject_ForceMotionState(Bytes02033b88*, int);
 struct Obj02033834;
-void GameObject_SetFacing(Obj02033834*, int);
+extern "C" void GameObject_SetFacing(Obj02033834*, int);
 extern "C" Vector3i func_ov025_021ee488(Vector3i* points, int count, int progress);
 
-static inline Struct_02048cf0 inline_02048e2c_2(const int& arg0) {
-    return func_ov000_0216f74c(const_cast<int*>(&arg0));
+static inline Struct_02048cf0 inline_02048e2c_2(const int& cell) {
+    return func_ov000_0216f74c(const_cast<int*>(&cell));
 }
 
 // USA: func_02048f64
-extern "C" ARM void func_02048f64(Struct_02048e2c* arg0) {
-    if (!(arg0->unknown_13c_->unknown_20_ & 0x10)) {
+extern "C" ARM void func_02048f64(Struct_02048e2c* actor) {
+    if (!(actor->path->flags & 0x10)) {
         return;
     }
-    fix32_t var0;
-    GameState* var1            = GameState::GetInstance();
-    Struct_02048e2c_2* var2 = arg0->unknown_13c_;
-    int var3                = var2->unknown_34_;
-    unsigned char* var4     = var2->unknown_24_;
-    if (var3 == 0) {
-        var2->unknown_20_ &= ~0x10;
+    fix32_t step;
+    GameState* gs            = GameState::GetInstance();
+    Struct_02048e2c_2* path = actor->path;
+    int count                = path->cellCount;
+    unsigned char* cells     = path->cells;
+    if (count == 0) {
+        path->flags &= ~0x10;
         return;
     }
-    var0             = FIX32_MULTIPLY((short)var1->GetAnimationDeltaTime(), 0xcc);
-    fix32_t var5 = var2->unknown_38_;
-    if (var5 < 0) {
-        var2->unknown_38_ = var5 + var0;
+    step             = FIX32_MULTIPLY((short)gs->GetAnimationDeltaTime(), 0xcc);
+    fix32_t progress = path->progress;
+    if (progress < 0) {
+        path->progress = progress + step;
         return;
     }
 
-    Vector3i var6[16];
-    int var7;
-    for (var7 = 0; var7 < var3; var7++) {
-        Struct_02048cf0 var8 = inline_02048e2c_2(var4[var7]);
-        var6[var7].x       = var8.unknown_0_;
-        var6[var7].y       = 0xcc;
-        var6[var7].z       = var8.unknown_4_;
+    Vector3i points[16];
+    int i;
+    for (i = 0; i < count; i++) {
+        Struct_02048cf0 pos = inline_02048e2c_2(cells[i]);
+        points[i].x       = pos.x;
+        points[i].y       = 0xcc;
+        points[i].z       = pos.y;
     }
-    int var9  = var2->unknown_40_[2];
-    int var10  = var2->unknown_40_[0];
-    var6[0].x = var10;
-    var6[0].y = 0xcc;
-    var6[0].z = var9;
+    int var9  = path->unknown_40_[2];
+    int startX  = path->unknown_40_[0];
+    points[0].x = startX;
+    points[0].y = 0xcc;
+    points[0].z = var9;
 
-    int var11 = var3;
-    if (var2->unknown_1f_ != 0xff) {
-        Struct_02048cf0 var12 = inline_02048e2c_2(var2->unknown_1f_);
-        var6[var3].x   = var12.unknown_0_;
-        var6[var3].y   = 0xcc;
-        var6[var3].z   = var12.unknown_4_;
-        var11                 = var3 + 1;
+    int n = count;
+    if (path->unknown_1f_ != 0xff) {
+        Struct_02048cf0 pos = inline_02048e2c_2(path->unknown_1f_);
+        points[count].x   = pos.x;
+        points[count].y   = 0xcc;
+        points[count].z   = pos.y;
+        n                 = count + 1;
     }
-    if (var11 < 4) {
-        int var13 = var11 - 1;
-        for (int var14 = var11; var14 < 4; var14++) {
-            var6[var14] = var6[var13];
+    if (n < 4) {
+        int last = n - 1;
+        for (int j = n; j < 4; j++) {
+            points[j] = points[last];
         }
-        var11 = 4;
+        n = 4;
     }
 
-    int var15       = (int)((float)var2->unknown_38_ / 4096.0f);
-    Vector3i var16    = var6[var15];
-    Vector3i var17    = var6[var15 + 1];
-    fix32_t var18 = fix32_Divide(0x3000, Vector3fix_Distance(&var16, &var17));
-    fix32_t var19   = FIX32_MULTIPLY(var18, var0);
-    int var20  = var3 - 1;
-    if (var2->unknown_3c_ < 0x1000) {
-        var2->unknown_3c_ += 0xcc;
+    int var15       = (int)((float)path->progress / 4096.0f);
+    Vector3i a    = points[var15];
+    Vector3i b    = points[var15 + 1];
+    fix32_t inverse = fix32_Divide(0x3000, Vector3fix_Distance(&a, &b));
+    fix32_t speed   = FIX32_MULTIPLY(inverse, step);
+    int lastIndex  = count - 1;
+    if (path->unknown_3c_ < 0x1000) {
+        path->unknown_3c_ += 0xcc;
     }
-    fix32_t var21   = FIX32_MULTIPLY(var19, var2->unknown_3c_);
+    fix32_t advance   = FIX32_MULTIPLY(speed, path->unknown_3c_);
     int var22    = 1;
-    fix32_t var23 = FIX32_MULTIPLY((var20 << 12) - var5, 0x333);
-    if (var23 < var21) {
-        var21 = var23;
-        if (func_02049ee8((unsigned char*)arg0)) {
-            if (arg0->unknown_be_ != 0) {
-                func_020494c0((Struct_02048f64_2*)arg0);
+    fix32_t remaining = FIX32_MULTIPLY((lastIndex << 12) - progress, 0x333);
+    if (remaining < advance) {
+        advance = remaining;
+        if (func_02049ee8((unsigned char*)actor)) {
+            if (actor->unknown_be_ != 0) {
+                func_020494c0((Struct_02048f64_2*)actor);
             }
             GameObject_StoreMotionState((Foo02033b58*)actor, 0);
-            keepFacing = 0;
+            var22 = 0;
         }
-    } else if (GetSubstructByte0x56_02049ee8((unsigned char*)actor)) {
+    } else if (func_02049ee8((unsigned char*)actor)) {
         GameObject_SetMotionState((Obj02033b68*)actor, 1);
     }
 
-    short var24 = var21 * 12;
+    short var24 = advance * 12;
     if (var24 < 0xc00) {
         var24 = 0xc00;
     } else if (var24 > 0x1400) {
         var24 = 0x1400;
     }
-    ((Object3D*)arg0)->SetAnimationPlaybackSpeed(var24, 0);
-    var2->unknown_38_ = var5 + var21;
+    ((Object3D*)actor)->SetAnimationPlaybackSpeed(var24, 0);
+    path->progress = progress + advance;
 
-    Vector3i var25;
-    if (var23 > 4) {
-        var25 = func_ov025_021ee488(var6, var11, var5 + var21);
+    Vector3i target;
+    if (remaining > 4) {
+        target = func_ov025_021ee488(points, n, progress + advance);
     } else {
-        var25 = var6[var20];
-        if (func_02049ee8((unsigned char*)arg0) && (arg0->unknown_13c_->unknown_20_ & 0x40)) {
-            func_02049520((Struct_02048f64_3*)arg0);
-            func_02049a74((Struct_02048f64*)arg0);
+        target = points[lastIndex];
+        if (func_02049ee8((unsigned char*)actor) && (actor->path->flags & 0x40)) {
+            func_02049520((Struct_02048f64_3*)actor);
+            func_02049a74((Struct_02048f64*)actor);
         }
-        ResetInnerState02048c90((Obj02048c90*)actor);
+        func_02048c90((Struct_02048c90*)actor);
         ((Object3D*)actor)->SetAnimationPlaybackSpeed(0x1000, 500);
-        SetSubstructByte0x1c_02049390((unsigned char*)actor, path->cell1d);
-        if (GetSubstructByte0x56_02049ee8((unsigned char*)actor) && actor->unknownBe == 1) {
+        func_02049390((unsigned char*)actor, path->unknown_1d_);
+        if (func_02049ee8((unsigned char*)actor) && actor->unknown_be_ == 1) {
             GameObject_ForceMotionState((Bytes02033b88*)actor, 0);
         }
-        func_020494c0((Struct_02048f64_2*)arg0);
+        func_020494c0((Struct_02048f64_2*)actor);
         var22 = 0;
     }
 
@@ -162,7 +162,7 @@ extern "C" ARM void func_02048f64(Struct_02048e2c* arg0) {
     Vector3fix_Normalize(&delta, &delta);
     fix32_t angle   = fix32ReduceAngle0To2Pi(fix32_Atan2(delta.x, delta.z));
     actor->position = target;
-    if (keepFacing) {
+    if (var22) {
         GameObject_SetFacing((Obj02033834*)actor, angle);
     }
 }

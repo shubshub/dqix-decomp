@@ -1,26 +1,26 @@
 #include <globaldefs.h>
 
-int STD_GetStringLength(const char* s);
+extern "C" int STD_GetStringLength(const char* s);
 extern "C" int memcmp(void* a, void* b, int n);
 extern "C" int func_02005a94(void* p);
 
 extern char* data_020f0afc[];
 
 struct Struct_0206f550 {
-    unsigned char unknown_0_[4];
-    int unknown_4_;
+    unsigned char ids[4];
+    int count;
     short unknown_8_[4];
 };
 
 // USA: func_0206f550
-extern "C" ARM int func_0206f550(struct Struct_0206f550* arg0, char* arg1, char* arg2) {
-    unsigned char* var0 = (unsigned char*)arg1;
-    int var1;
-    char* var2;
-    int var3;
-    unsigned char var4;
-    unsigned char var5;
-    char** var6;
+extern "C" ARM int func_0206f550(struct Struct_0206f550* s, char* in, char* out) {
+    unsigned char* p = (unsigned char*)in;
+    int found;
+    char* tag;
+    int len;
+    unsigned char i;
+    unsigned char c;
+    char** tab;
 
     if (in == 0) return 0;
     if (out == 0) return 0;
@@ -37,40 +37,40 @@ extern "C" ARM int func_0206f550(struct Struct_0206f550* arg0, char* arg1, char*
                     if (memcmp(p, tag, len) == 0) {
                         if (i == 4 || (unsigned char)(i + 0xff) <= 1) {
                             p += len;
-                            s->vals[s->count] = (short)func_02005a94(p);
+                            s->unknown_8_[s->count] = (short)func_02005a94(p);
                         }
-                        var1 = 1;
-                        arg0->unknown_0_[arg0->unknown_4_] = var4;
-                        arg0->unknown_4_++;
+                        found = 1;
+                        s->ids[s->count] = i;
+                        s->count++;
                         break;
                     }
-                    var4++;
+                    i++;
                 }
             }
-            if (var1) {
-                while ((var5 = *var0) != '>') {
-                    if (var5 == 0) return arg0->unknown_4_;
-                    var0++;
+            if (found) {
+                while ((c = *p) != '>') {
+                    if (c == 0) return s->count;
+                    p++;
                 }
-                var0++;
+                p++;
             } else {
-                while ((var5 = *var0) != '>') {
-                    *arg2 = var5;
-                    var5 = *var0;
-                    if (var5 == 0) return arg0->unknown_4_;
-                    var0++;
-                    arg2++;
+                while ((c = *p) != '>') {
+                    *out = c;
+                    c = *p;
+                    if (c == 0) return s->count;
+                    p++;
+                    out++;
                 }
-                *arg2++ = var5;
-                var0++;
+                *out++ = c;
+                p++;
             }
         } else {
-            if ((var5 >= 0x81 && var5 <= 0x9f) || (var5 >= 0xe0 && var5 <= 0xea)) {
-                *arg2++ = var5;
-                var0++;
+            if ((c >= 0x81 && c <= 0x9f) || (c >= 0xe0 && c <= 0xea)) {
+                *out++ = c;
+                p++;
             }
-            *arg2++ = *var0++;
+            *out++ = *p++;
         }
     }
-    return arg0->unknown_4_;
+    return s->count;
 }

@@ -1,26 +1,26 @@
 #if defined(jpn)
-enum { Enum_ov017_021a0630_632 = 0x68, Enum_ov017_021a0630_2768 = 0x8c0, Enum_ov017_021a0630_716 = 0x27c, Enum_ov017_021a0630_680 = 0x98, Enum_ov017_021a0630_668 = 0x24c, Enum_ov017_021a0630_780 = 0x2bc };
+enum { RegionOffset278 = 0x68, RegionOffsetad0 = 0x8c0, RegionOffset2cc = 0x27c, RegionOffset2a8 = 0x98, RegionOffset29c = 0x24c, RegionOffset30c = 0x2bc };
 #else
-enum { Enum_ov017_021a0630_632 = 0x278, Enum_ov017_021a0630_2768 = 0xad0, Enum_ov017_021a0630_716 = 0x2cc, Enum_ov017_021a0630_680 = 0x2a8, Enum_ov017_021a0630_668 = 0x29c, Enum_ov017_021a0630_780 = 0x30c };
+enum { RegionOffset278 = 0x278, RegionOffsetad0 = 0xad0, RegionOffset2cc = 0x2cc, RegionOffset2a8 = 0x2a8, RegionOffset29c = 0x29c, RegionOffset30c = 0x30c };
 #endif
 
 #include <globaldefs.h>
 #include "NitroSDK/Memory/AllocatorUnion.h"
 #include "Memory/SafeAllocator.h"
 
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void NNS_GfdSetFrmTexVramState(int* out);
-void NNS_GfdSetFrmPlttVramState(int* src);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void NNS_GfdSetFrmTexVramState(int* out);
+extern "C" void NNS_GfdSetFrmPlttVramState(int* src);
 extern "C" void VramState_Reserve(void* p, int a, int b);
 
 extern AllocatorUnion g_mainAllocator;
 
-struct Struct_ov017_021d66c8 { int unknown_0_; int unknown_4_; };
-struct Struct_ov017_021d66cc { int unknown_0_; int unknown_4_; };
+struct Struct_ov017_021d66c8 { int index; int pad4; };
+struct Struct_ov017_021d66cc { int size; int pad4; };
 extern Struct_ov017_021d66c8 data_ov017_021d66c8[];
 extern Struct_ov017_021d66cc data_ov017_021d66cc[];
 
-struct Struct_ov017_021d6800 { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Struct_ov017_021d6800 { int v; int pad4; int pad8; };
 extern Struct_ov017_021d6800 data_ov017_021d6818[];
 extern Struct_ov017_021d6800 data_ov017_021d6820[];
 extern Struct_ov017_021d6800 data_ov017_021d681c[];

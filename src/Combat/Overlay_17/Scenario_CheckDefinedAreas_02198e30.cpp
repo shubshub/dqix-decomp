@@ -1,46 +1,46 @@
 #include <globaldefs.h>
 
 #if defined(jpn)
-enum { Enum_ov017_02198e30_17478 = 0x4196 };
+enum { kRegionalFieldOffset = 0x4196 };
 #else
-enum { Enum_ov017_02198e30_17478 = 0x4446 };
+enum { kRegionalFieldOffset = 0x4446 };
 #endif
 #include "GameState/GameState.h"
 
 
 struct Struct_ov017_02198e30 {
-    unsigned short unknown_0_;
-    short unknown_2_;
-    char unknown_4_[0x10 - 4];
-    unsigned int unknown_10_;
-    char unknown_14_[0x2c - 0x14];
-    struct Struct_ov017_02198e30* unknown_2c_;
+    unsigned short id;
+    short param;
+    char area[0x10 - 4];
+    unsigned int flags;
+    char pos[0x2c - 0x14];
+    struct Struct_ov017_02198e30* next;
 };
 
-struct Struct_ov017_02198e30_2 {
-    char unknown_0_[0x491];
-    signed char unknown_491_;
-    char unknown_492_[0x494 - 0x492];
-    struct Struct_ov017_02198e30* unknown_494_;
+struct ZoneMgr02198e30 {
+    char pad0[0x491];
+    signed char activeId;
+    char pad1[0x494 - 0x492];
+    struct Struct_ov017_02198e30* head;
 };
 
 struct Struct_ov017_02198e30_3 {
-    char unknown_0_[4];
-    int unknown_4_;
-    char unknown_8_[0x30 - 8];
+    char pad0[4];
+    int id;
+    char pad1[0x30 - 8];
     int unknown_30_;
 };
 
 extern "C" struct ZoneMgr02198e30* Scenario_GetInstance(void);
 extern "C" int Bounds3D_ContainsPointRotated(Vector3fix* pos, void* nodePos, int param, void* area, unsigned int flags);
-int Scenario_RunTrigger(void* a, int mode, void* c);
+extern "C" int Scenario_RunTrigger(void* a, int mode, void* c);
 extern "C" void EventQuery_RunQueuedCommands(void* p);
 
 // Overlay 17, originally func_ov017_02198e30 (USA/EUR 0x02198e30, JPN 0x021999e0)
 extern "C" ARM void Scenario_CheckDefinedAreas(unsigned char* self) {
     GameState* gs = GameState::GetInstance();
     struct ZoneMgr02198e30* mgr = Scenario_GetInstance();
-    struct ZoneNode02198e30* node = mgr->head;
+    struct Struct_ov017_02198e30* node = mgr->head;
     GameObject* obj = gs->GetLeader();
 
     for (; node != 0; node = node->next) {
@@ -49,30 +49,30 @@ extern "C" ARM void Scenario_CheckDefinedAreas(unsigned char* self) {
         }
     }
 
-    signed char var4 = var1->unknown_491_;
+    signed char cur = mgr->activeId;
 
     if (node == 0) {
         if (cur > -1) {
-            struct LookupBuf02198e30 c1;
+            struct Struct_ov017_02198e30_3 c1;
             c1.id = cur;
             if (Scenario_RunTrigger(mgr, 5, &c1)) {
                 EventQuery_RunQueuedCommands(&c1);
             }
-            var1->unknown_491_ = -1;
+            mgr->activeId = -1;
         }
         return;
     }
 
-    if (var2->unknown_0_ == var4) return;
+    if (node->id == cur) return;
 
-    struct LookupBuf02198e30 c2;
+    struct Struct_ov017_02198e30_3 c2;
     if (cur > -1) {
         c2.id = cur;
         if (Scenario_RunTrigger(mgr, 5, &c2)) {
             EventQuery_RunQueuedCommands(&c2);
         }
-        var6.unknown_4_ = -1;
-        var6.unknown_30_ = 0;
+        c2.id = -1;
+        c2.unknown_30_ = 0;
     }
 
     self[kRegionalFieldOffset] = node->id;

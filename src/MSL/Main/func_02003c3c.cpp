@@ -2,17 +2,17 @@
 #include "std_library_functions.h"
 
 struct Struct_02003c3c {
-    char* unknown_0_;
-    unsigned int unknown_4_;
-    unsigned int unknown_8_;
+    char* base;
+    unsigned int capacity;
+    unsigned int count;
 };
 
 // USA: func_02003c3c
-extern "C" ARM int func_02003c3c(struct Struct_02003c3c* arg0, void* arg1, unsigned int arg2) {
-    if (arg0->unknown_8_ + arg2 > arg0->unknown_4_) {
-        arg2 = arg0->unknown_4_ - arg0->unknown_8_;
+extern "C" ARM int func_02003c3c(struct Struct_02003c3c* obj, void* src, unsigned int len) {
+    if (obj->count + len > obj->capacity) {
+        len = obj->capacity - obj->count;
     }
-    memcpy(arg0->unknown_0_ + arg0->unknown_8_, arg1, arg2);
-    arg0->unknown_8_ += arg2;
+    memcpy(obj->base + obj->count, src, len);
+    obj->count += len;
     return 1;
 }

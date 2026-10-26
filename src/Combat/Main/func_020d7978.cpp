@@ -3,17 +3,17 @@
 #include "Resource/GameResources.h"
 
 struct SePlayer;
-struct S021b2ba0;
+struct Struct_0206f81c_2;
 struct TailList020469b4;
 struct TailNode020469b4;
 struct SafeAllocator;
 
-void SePlayer_Play(SePlayer* obj, int a, int b);
-void InitObjState_021b2174(unsigned char* obj);
-void SetNameChecked_021b2ba0(S021b2ba0* obj, char* name);
-void SetFields30And34_021b2bd0(void* obj, int handler, int overlayId);
-void AppendNodeToTail(TailList020469b4* list, TailNode020469b4* node);
-void CopyGlobalBlockAndDispatch_02165df4(SafeAllocator* allocator, void* arg);
+extern "C" void SePlayer_Play(SePlayer* obj, int a, int b);
+extern "C" void func_ov017_021b2174(unsigned char* obj);
+extern "C" void func_ov017_021b2ba0(Struct_0206f81c_2* obj, char* name);
+extern "C" void func_ov017_021b2bd0(void* obj, int handler, int arg2);
+extern "C" void func_020469b4(TailList020469b4* list, TailNode020469b4* node);
+extern "C" void func_ov004_02165df4(SafeAllocator* allocator, void* arg);
 extern char g_sePlayer;
 extern char data_020f2334;
 
@@ -24,8 +24,8 @@ extern "C" ARM void func_020d7978() {
     TailList020469b4* list;
     unsigned char* obj = static_cast<unsigned char*>(res->fieldTasks_[20]);
     list = (TailList020469b4*)res->fieldTaskQueue_;
-    InitObjState_021b2174(obj);
-    SetNameChecked_021b2ba0((S021b2ba0*)obj, &data_020f2334);
-    SetFields30And34_021b2bd0(obj, (int)CopyGlobalBlockAndDispatch_02165df4, OVERLAY_ID(4));
-    AppendNodeToTail(list, (TailNode020469b4*)obj);
+    func_ov017_021b2174(obj);
+    func_ov017_021b2ba0((Struct_0206f81c_2*)obj, &data_020f2334);
+    func_ov017_021b2bd0(obj, (int)func_ov004_02165df4, OVERLAY_ID(4));
+    func_020469b4(list, (TailNode020469b4*)obj);
 }

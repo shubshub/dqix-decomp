@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_022350bc_2 {
-	unsigned short unknown_0_;
-	unsigned short unknown_2_;
+	unsigned short a;
+	unsigned short b;
 };
 
 // USA: func_ov031_0223cb10
-extern "C" ARM void func_ov031_0223cb10(unsigned short arg0, unsigned short arg1, Struct_ov031_022350bc_2* arg2) {
-	arg2->unknown_0_ = arg0;
-	arg2->unknown_2_ = arg1;
+extern "C" ARM void func_ov031_0223cb10(unsigned short a, unsigned short b, Struct_ov031_022350bc_2* out) {
+	out->a = a;
+	out->b = b;
 }

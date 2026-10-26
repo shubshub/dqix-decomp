@@ -8,28 +8,28 @@
 #endif
 
 struct Struct020d9fc8;
-void FieldTask_EndQuestCancel(struct Struct020d9fc8* p);
+extern "C" void FieldTask_EndQuestCancel(struct Struct020d9fc8* p);
 
 struct Obj020397cc;
-void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
+extern "C" void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
 
-void* GlobalFlags_GetInstance(void);
-void FlagWord_SetBits(unsigned int* word, unsigned int mask);
+extern "C" void* GlobalFlags_GetInstance(void);
+extern "C" void FlagWord_SetBits(unsigned int* word, unsigned int mask);
 
 extern const char data_020f2838[];
 
-struct Struct_020d9e44_2 {
-    unsigned char unknown_0_[8];
-    unsigned short unknown_8_;
-    unsigned char unknown_a_;
-    unsigned char unknown_b_;
-    int unknown_c_[1];
+struct Self020d9e44 {
+    unsigned char pad0[8];
+    unsigned short flags;
+    unsigned char state;
+    unsigned char pad1;
+    int tasks[1];
 };
 
-typedef void (Self020d9e44::*Handler020d9e44)();
-struct HandlerTable020d9e44 { Handler020d9e44 e[2]; };
-extern HandlerTable020d9e44 data_020ee678;
-extern Handler020d9e44 __ptmf_null;
+typedef void (Self020d9e44::*Type_02000c9c_13)();
+struct Struct_020ee678 { Type_02000c9c_13 e[2]; };
+extern Struct_020ee678 data_020ee678;
+extern Type_02000c9c_13 __ptmf_null;
 
 // Main, originally func_020d9e44 (USA 0x020d9e44, EUR 0x020d9e54, JPN 0x020db84c)
 extern "C" ARM void FieldTask_QuestCancel(Self020d9e44* self) {
@@ -44,20 +44,20 @@ extern "C" ARM void FieldTask_QuestCancel(Self020d9e44* self) {
         if (self->flags & 1) {
             self->tasks[0] = loader->QueueLoadFile(data_020f2838, NULL);
         }
-        arg0->unknown_a_++;
-    } else if (arg0->unknown_a_ == 1) {
-        int var1;
-        int var2 = 0;
-        for (var1 = 0; var1 < 1; var1++) {
-            if (arg0->unknown_c_[var1] == -1) { var2++; continue; }
-            if (var0->GetTaskStatus(arg0->unknown_c_[var1]) == 0) continue;
-            if (var0->GetDetailedTaskStatus(arg0->unknown_c_[var1]) == 2) break;
-            var0->RemoveTask(arg0->unknown_c_[var1]);
-            arg0->unknown_c_[var1] = -1;
+        self->state++;
+    } else if (self->state == 1) {
+        int i;
+        int done = 0;
+        for (i = 0; i < 1; i++) {
+            if (self->tasks[i] == -1) { done++; continue; }
+            if (loader->GetTaskStatus(self->tasks[i]) == 0) continue;
+            if (loader->GetDetailedTaskStatus(self->tasks[i]) == 2) break;
+            loader->RemoveTask(self->tasks[i]);
+            self->tasks[i] = -1;
         }
         if (done == 1) { self->state = 0; return; }
         if (i == 1) return;
-        HandlerTable020d9e44 table;
+        Struct_020ee678 table;
         table = data_020ee678;
         table.e[1] = __ptmf_null;
         (self->*table.e[i])();

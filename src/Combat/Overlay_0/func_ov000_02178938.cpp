@@ -1,63 +1,63 @@
 #include <globaldefs.h>
 #include <GameState/GameState.h>
 
-struct Struct_0201099c_3;
-struct Struct_ov000_02178938_3 { char* unknown_0_; char* unknown_4_; unsigned int unknown_8_; };
-struct Struct_020465c0 { char unknown_0_[0x20]; Struct_ov000_02178938_3* unknown_20_; };
+struct Container020e0310;
+struct Struct_ov000_02178938_3 { char* unknown_0_; char* unknown_4_; unsigned int flags; };
+struct StoreStruct { char pad[0x20]; Struct_ov000_02178938_3* name; };
 #if defined(jpn)
-struct Struct_ov000_02178938 { char unknown_0_[0xb8]; char unknown_b8_[0x20]; char unknown_d8_[0x1d94 - 0xd8]; char unknown_1d94_[8][0x38]; int unknown_1d1c_[8]; int unknown_1f74_[8]; };
+struct Struct_ov000_02178938 { char pad0[0xb8]; char messages[0x20]; char pad1[0x1d94 - 0xd8]; char unknown_1d94_[8][0x38]; int kinds[8]; int unknown_1f74_[8]; };
 #else
-struct Struct_ov000_02178938 { char unknown_0_[0xb8]; char unknown_b8_[0x20]; char unknown_d8_[0x1c44]; int unknown_1d1c_[8]; int unknown_1d3c_[8]; };
+struct Struct_ov000_02178938 { char pad0[0xb8]; char messages[0x20]; char pad1[0x1c44]; int kinds[8]; int unknown_1d3c_[8]; };
 #endif
-struct TargetSelection { char pad[0x1d]; signed char index; };
-int CountMatchingValues02175348(void*, int);
-int IsField0x118Equal2_ov000_0217542c(void*);
-StoreStruct* MessageSystem_GetInstance();
-int KeyTable_Get(Container020e0310*, int);
-void Text_AppendFrameTag(char*, int, int, int, int, int);
-void Text_AppendCursorTag(char*, int);
-void Text_Append(char*, const char*);
+struct Struct_ov000_02178938_2 { char pad[0x1d]; signed char index; };
+extern "C" int func_ov000_02175348(void*, int);
+extern "C" int func_ov000_0217542c(void*);
+extern "C" StoreStruct* MessageSystem_GetInstance();
+extern "C" int KeyTable_Get(Container020e0310*, int);
+extern "C" void Text_AppendFrameTag(char*, int, int, int, int, int);
+extern "C" void Text_AppendCursorTag(char*, int);
+extern "C" void Text_Append(char*, const char*);
 extern "C" void __clear(void*, int);
 extern "C" void func_02046380(StoreStruct*);
-void NameText_Clear(void*);
-GameObject* GetCombatantWithFlag0x400_0200fea4(GameState*, int);
-extern "C" void func_020e4ce8(NameParts*, GameObject*, int);
-void TrimTrailingLetterCode_0217aa08(char*, char*);
-extern "C" void func_020e4f18(NameParts*, NameParts*, int);
-void StoreInArray0x8b0_020465c0(StoreStruct*, int, int);
+extern "C" void NameText_Clear(void*);
+extern "C" GameObject* func_0200fea4(GameState*, int);
+extern "C" void func_020e4ce8(Struct_ov000_02178938_3*, GameObject*, int);
+extern "C" void func_ov000_0217aa08(char*, char*);
+extern "C" void func_020e4f18(Struct_ov000_02178938_3*, Struct_ov000_02178938_3*, int);
+extern "C" void func_020465c0(StoreStruct*, int, int);
 extern "C" void MessageSystem_FormatText(StoreStruct*, int, const char*, char*, int, int, int);
-void Text_AppendNTag(char*, int, const char*);
+extern "C" void Text_AppendNTag(char*, int, const char*);
 extern const char data_ov000_02184060[];
 
 #if defined(jpn)
 extern "C" void func_0203bdf4(char*, char*);
-extern "C" void _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(StoreStruct*, int, char*);
+extern "C" void MessageSystem_SetStringArgument(StoreStruct*, int, char*);
 extern "C" void func_020474a8(StoreStruct*, int, const char*, char*);
 #endif
 
 // USA: func_ov000_02178938
-extern "C" ARM void func_ov000_02178938(Struct_ov000_02178938* arg0, Struct_ov000_02178938_2* arg1, int arg2, char* arg3) {
-    if (!arg3) return;
-    int var0 = -1;
+extern "C" ARM void func_ov000_02178938(Struct_ov000_02178938* menu, Struct_ov000_02178938_2* selection, int count, char* output) {
+    if (!output) return;
+    int previous = -1;
 #if defined(jpn)
-    int var1;
-    int var2;
-    var2 = 0;
-    var1 = 0;
+    int selectedStart;
+    int appended;
+    appended = 0;
+    selectedStart = 0;
 #else
-    int var1 = 0;
-    int var2 = 0;
+    int selectedStart = 0;
+    int appended = 0;
 #endif
-    int var3 = arg1->unknown_1d_;
-    for (int var4 = 0; var4 < arg2; var4++) {
-        int var5 = arg0->unknown_1d1c_[var4];
-        if (var0 != var5) {
-            var0 = var5;
-            int var6 = func_ov000_02175348(arg0, var5);
-            if (var4 <= var3 && var3 < var4 + var6) var1 = var4;
+    int selected = selection->index;
+    for (int i = 0; i < count; i++) {
+        int kind = menu->kinds[i];
+        if (previous != kind) {
+            previous = kind;
+            int var6 = func_ov000_02175348(menu, kind);
+            if (i <= selected && selected < i + var6) selectedStart = i;
         }
     }
-    int showCursor = IsField0x118Equal2_ov000_0217542c(menu);
+    int var7 = func_ov000_0217542c(menu);
     StoreStruct* formatter = MessageSystem_GetInstance();
 #if !defined(jpn)
     GameState* game = GameState::GetInstance();
@@ -65,7 +65,7 @@ extern "C" ARM void func_ov000_02178938(Struct_ov000_02178938* arg0, Struct_ov00
     const char* format = (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0x754f);
 #endif
     previous = -1;
-    if (showCursor) {
+    if (var7) {
         Text_AppendFrameTag(output, selectedStart, 8, 5, 5, 5);
     }
     Text_AppendCursorTag(output, selectedStart);
@@ -73,59 +73,59 @@ extern "C" ARM void func_ov000_02178938(Struct_ov000_02178938* arg0, Struct_ov00
         int kind = menu->kinds[i];
         if (previous != kind) {
             previous = kind;
-            int groupSize = CountMatchingValues02175348(menu, kind);
-            if (groupSize) {
+            int var14 = func_ov000_02175348(menu, kind);
+            if (var14) {
 #if defined(jpn)
                 if (appended) Text_Append(output, (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0));
 #else
                 if (appended) Text_Append(output, separator);
 #endif
 #if defined(jpn)
-                char var15[0x20];
-                __clear(var15, sizeof(var15));
-                char var16[0x40];
-                __clear(var16, sizeof(var16));
+                char nameText[0x20];
+                __clear(nameText, sizeof(nameText));
+                char text[0x40];
+                __clear(text, sizeof(text));
 #else
-                char var16[128];
-                __clear(var16, 128);
+                char text[128];
+                __clear(text, 128);
 #endif
-                int var17 = var12;
-                if (var12 <= var3 && var3 < var12 + var14) var17 = var3;
+                int index = i;
+                if (i <= selected && selected < i + var14) index = selected;
 #if defined(jpn)
-                func_0203bdf4(arg0->unknown_1d94_[var17], var15);
-                if (var7 && var1 == var12) {
-                    char var18[0x20];
-                    __clear(var18, sizeof(var18));
-                    memcpy(var18, var15, sizeof(var18));
-                    memset(var15, 0, sizeof(var15));
-                    func_ov000_0217aa08(var18, var15);
+                func_0203bdf4(menu->unknown_1d94_[index], nameText);
+                if (var7 && selectedStart == i) {
+                    char original[0x20];
+                    __clear(original, sizeof(original));
+                    memcpy(original, nameText, sizeof(original));
+                    memset(nameText, 0, sizeof(nameText));
+                    func_ov000_0217aa08(original, nameText);
                 }
                 func_02046380(formatter);
-                _Z31MessageSystem_SetStringArgumentP11Obj02046574iPc(formatter, 0, nameText);
-                StoreInArray0x8b0_020465c0(formatter, 0, groupSize);
+                MessageSystem_SetStringArgument(formatter, 0, nameText);
+                func_020465c0(formatter, 0, var14);
                 func_020474a8(formatter, 10, (const char*)KeyTable_Get((Container020e0310*)menu->messages, 0x754f), text);
 #else
                 func_02046380(formatter);
-                NameParts name;
+                Struct_ov000_02178938_3 name;
                 NameText_Clear(&name);
-                GameObject* combatant = GetCombatantWithFlag0x400_0200fea4(game, menu->combatants[index]);
-                char singular[128];
-                char plural[128];
-                __clear(singular, 128);
-                __clear(plural, 128);
+                GameObject* combatant = func_0200fea4(game, menu->unknown_1d3c_[index]);
+                char var21[128];
+                char var22[128];
+                __clear(var21, 128);
+                __clear(var22, 128);
                 if (combatant) {
                     func_020e4ce8(&name, combatant, 1);
-                    NameParts unusedName;
-                    func_020e4ce8(&unusedName, combatant, 0);
-                    TrimTrailingLetterCode_0217aa08(name.singular, singular);
-                    TrimTrailingLetterCode_0217aa08(name.plural, plural);
-                    name.singular = singular;
-                    name.plural = plural;
-                    func_020e4f18(&unusedName, &name, 2);
+                    Struct_ov000_02178938_3 var23;
+                    func_020e4ce8(&var23, combatant, 0);
+                    func_ov000_0217aa08(name.unknown_0_, var21);
+                    func_ov000_0217aa08(name.unknown_4_, var22);
+                    name.unknown_0_ = var21;
+                    name.unknown_4_ = var22;
+                    func_020e4f18(&var23, &name, 2);
                     name.flags &= ~0x80000000;
                 }
                 formatter->name = &name;
-                StoreInArray0x8b0_020465c0(formatter, 0, groupSize);
+                func_020465c0(formatter, 0, var14);
                 MessageSystem_FormatText(formatter, 10, format, text, 256, 0, 0);
 #endif
                 Text_AppendNTag(output, i, text);

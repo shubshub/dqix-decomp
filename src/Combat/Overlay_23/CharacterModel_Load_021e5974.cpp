@@ -12,9 +12,9 @@ struct ItemTable;
 
 struct Struct_ov023_021e5974_2
 {
-    int unknown_0_;
+    int unk_0;
     unsigned int unknown_4_0_ : 12;
-    unsigned int unknown_5_4_ : 8;
+    unsigned int id_ : 8;
     unsigned int unknown_6_4_ : 12;
 };
 
@@ -22,7 +22,7 @@ struct Struct_ov023_021e5974_2
 // mangled with it).
 struct StructDE234_020de234
 {
-    PartModel_021e5974* model_;
+    Struct_ov023_021e5974_2* model_;
     int unk_4;
     int unk_8;
     int unk_c;
@@ -38,13 +38,13 @@ typedef StructDE234_020de234 ItemRecord;
 
 struct CharacterModelExtension
 {
-    char unknown_0_[8];
+    char name_[8];
 };
 
-int GameState_GetProtagonistIndex(GameState* state);
-void CharacterModel_GetPartModels(void* vocation, short* models, short* appearance);
-ItemRecord* ItemTable_Find(struct ItemTable* itemTable, int itemId);
-unsigned short ItemRecord_GetFileNumber(ItemRecord* item, int female);
+extern "C" int GameState_GetProtagonistIndex(GameState* state);
+extern "C" void CharacterModel_GetPartModels(void* vocation, short* models, short* appearance);
+extern "C" ItemRecord* ItemTable_Find(struct ItemTable* itemTable, int itemId);
+extern "C" unsigned short ItemRecord_GetFileNumber(ItemRecord* item, int female);
 extern "C" void CharacterModel_CancelLoads(CharacterModel* self);
 
 extern const int CharacterModel_bodyReloadParts[5];
@@ -67,12 +67,12 @@ enum { BareArmsItem = 8010 };
 extern "C" ARM void CharacterModel_Load(CharacterModel* self, PartyMemberData* member,
                                         int vocation, int unused, int force)
 {
-    char var0[0x80];
-    char var1[0x80];
-    short var2[10];
-    short var3;
+    char path[0x80];
+    char anim[0x80];
+    short models[10];
+    short modelId;
 
-    if (arg1 == NULL)
+    if (member == NULL)
         return;
 
     self->member_ = member;
@@ -94,8 +94,8 @@ extern "C" ARM void CharacterModel_Load(CharacterModel* self, PartyMemberData* m
     items[CharacterModelPart_Headgear] = ItemTable_Find(self->itemTable_, models[CharacterModelPart_Headgear]);
     self->angle_ = self->parts_[CharacterModelPart_Body].rotation_.y;
 
-    arg0->unknown_c13_ = 0;
-    for (int var8 = 0; var8 < 5; var8++)
+    self->bodyChanged_ = 0;
+    for (int i = 0; i < 5; i++)
     {
         int part = CharacterModel_bodyReloadParts[i];
         if (models[part] != (modelId = self->parts_[part].unknown_2_) || force != 0)
@@ -109,9 +109,9 @@ extern "C" ARM void CharacterModel_Load(CharacterModel* self, PartyMemberData* m
         }
     }
 
-    for (int var10 = 0; var10 < 10; var10++)
+    for (int i = 0; i < 10; i++)
     {
-        if (var2[var10] < 0)
+        if (models[i] < 0)
         {
             self->parts_[i].Destroy();
             self->parts_[i].unknown_2_ = -1;
@@ -122,16 +122,16 @@ extern "C" ARM void CharacterModel_Load(CharacterModel* self, PartyMemberData* m
         ItemRecord* item = ItemTable_Find(self->itemTable_, models[i]);
         if (item == NULL)
         {
-            arg0->unknown_0_[var10].Initialize();
-            arg0->unknown_0_[var10].unknown_2_ = var2[var10];
+            self->parts_[i].Initialize();
+            self->parts_[i].unknown_2_ = models[i];
             continue;
         }
-        arg0->unknown_0_[var10].Destroy();
-        arg0->unknown_6b8_[var10].Reset();
-        bool var12;
-        if (arg1 == NULL)
+        self->parts_[i].Destroy();
+        self->allocators_[i].Reset();
+        bool ok;
+        if (member == NULL)
         {
-            var12 = false;
+            ok = false;
         }
         else
         {
@@ -162,7 +162,7 @@ extern "C" ARM void CharacterModel_Load(CharacterModel* self, PartyMemberData* m
                         char hairVariant = CharacterModel_hairVariantsByHeadgear[rank];
                         if (hairVariant == 0)
                         {
-                            var12 = false;
+                            ok = false;
                             goto queue;
                         }
                         suffix[0] = hairVariant;
@@ -171,7 +171,7 @@ extern "C" ARM void CharacterModel_Load(CharacterModel* self, PartyMemberData* m
                     }
                     else
                     {
-                        var12 = false;
+                        ok = false;
                         goto queue;
                     }
                 }
@@ -188,15 +188,15 @@ extern "C" ARM void CharacterModel_Load(CharacterModel* self, PartyMemberData* m
             ok = true;
         }
     queue:
-        if (var12)
+        if (ok)
         {
             self->tasks_[i] = loader->QueueLoadFileInGP2(CharacterModel_archivePath, path, NULL);
             self->parts_[i].unknown_2_ = models[i];
         }
     }
 
-    arg0->unknown_c13_ = 1;
-    if (arg0->unknown_c13_)
+    self->bodyChanged_ = 1;
+    if (self->bodyChanged_)
     {
         ItemRecord* body = ItemTable_Find(self->itemTable_, models[CharacterModelPart_Body]);
         ItemRecord* weapon = ItemTable_Find(self->itemTable_, models[CharacterModelPart_Weapon]);
@@ -218,6 +218,6 @@ extern "C" ARM void CharacterModel_Load(CharacterModel* self, PartyMemberData* m
             self->animationAllocator_.Reset();
         }
     }
-    arg0->unknown_c12_ = 1;
-    arg0->unknown_c1e_ = 0;
+    self->loading_ = 1;
+    self->colored_ = 0;
 }

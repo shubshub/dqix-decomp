@@ -12,27 +12,27 @@ struct Struct_020e28dc;
 struct Struct_020e263c_2;
 
 extern "C" int func_ov017_021959b4(void);
-void SetFlags_021585ac_021585ac(void* p);
-int IsAnimationActive0209ca2c(void* obj);
+extern "C" void func_ov006_021585ac(void* p);
+extern "C" int func_0209ca2c(void* obj);
 extern char g_bgmPlayer[];
-extern "C" void func_ov006_021549ac(void* pot, int ticks);
-void CallFunc0204c87cOverEntries0207fc6c(struct Obj0207fc6c* obj, int arg);
+extern "C" void func_ov006_021549ac(void* arg0, int ticks);
+extern "C" void func_0207fc6c(struct Struct_0207fc6c* obj, int arg);
 extern "C" void func_ov006_0215a00c(void* self, int n);
-int CheckFlagOrByte55_02158c70();
-void CallFunc0204c804OnMatchingKey_0207fdcc(struct Obj2081* obj, int key);
+extern "C" int func_ov006_02158c70();
+extern "C" void func_0207fdcc(struct Struct_0207fdcc_2* obj, int key);
 extern "C" unsigned short func_02081f20(void* obj, int ticks);
 extern "C" int func_020800fc(void* obj, short* key, short a, unsigned short b, unsigned char c, int d);
-int ClearSublistEntriesFlag4_020804fc(void* obj, int id);
+extern "C" int func_020804fc(void* obj, int id);
 extern "C" int func_020813ec(void* obj, int id);
-int GetInnerFlagBit0020e28dc(struct Outer020e28dc* o);
-void UpdateEntryStateAndPosition(struct Ctx020e263c* c, int key);
+extern "C" int func_020e28dc(struct Struct_020e28dc* o);
+extern "C" void func_020e263c(struct Struct_020e263c_2* c, int key);
 
 typedef int (*Type_ov006_02157d7c)(void* self);
 
 struct Struct_ov006_02157d7c {
-    char unknown_0_[Enum_ov006_02157d7c_16];
-    void* unknown_10_;
-    void* unknown_14_;
+    char pad0[Enum_ov006_02157d7c_16];
+    void* pot_;
+    void* menu_;
     void* unknown_18_;
     char unknown_1c_[0x44 - 0x1c];
     short* unknown_44_;
@@ -55,94 +55,94 @@ struct Struct_ov006_02157d7c {
     unsigned char unknown_433_;
 };
 
-typedef void (Obj02157d7c::*PMF02157d7c)();
-struct HandlerTable02157d7c { PMF02157d7c e[14]; };
-extern struct HandlerTable02157d7c data_ov006_021601fc;
-extern PMF02157d7c __ptmf_null;
+typedef void (Struct_ov006_02157d7c::*Type_02015554)();
+struct Struct_ov006_021601fc { Type_02015554 e[14]; };
+extern struct Struct_ov006_021601fc data_ov006_021601fc;
+extern Type_02015554 __ptmf_null;
 extern int data_ov006_02160398;
 
 // USA: func_ov006_02157d7c
-extern "C" ARM int func_ov006_02157d7c(struct Struct_ov006_02157d7c* arg0, int arg1)
+extern "C" ARM int func_ov006_02157d7c(struct Struct_ov006_02157d7c* self, int arg)
 {
-    arg0->unknown_34c_ = arg1;
+    self->unknown_34c_ = arg;
     if (func_ov017_021959b4() != 0)
-        func_ov006_021585ac(arg0);
+        func_ov006_021585ac(self);
 
-    if ((*(unsigned short*)((char*)arg0 + 0x300 + 0x94) & 0x200) == 0)
+    if ((*(unsigned short*)((char*)self + 0x300 + 0x94) & 0x200) == 0)
     {
-        if (arg0->unknown_433_ != 0)
+        if (self->unknown_433_ != 0)
         {
-            if (arg0->unknown_44_ != 0)
-                *arg0->unknown_44_ = -1;
-            arg0->unknown_44_ = 0;
-            arg0->unknown_38f_ = 0xc;
-            arg0->unknown_390_ = 0;
-            arg0->unknown_433_ = 0;
+            if (self->unknown_44_ != 0)
+                *self->unknown_44_ = -1;
+            self->unknown_44_ = 0;
+            self->unknown_38f_ = 0xc;
+            self->unknown_390_ = 0;
+            self->unknown_433_ = 0;
         }
     }
 
-    unsigned int var0 = arg0->unknown_38f_;
-    if (((var0 <= 4) ? 1 : 0) > var0)
+    unsigned int s = self->unknown_38f_;
+    if (((s <= 4) ? 1 : 0) > s)
     {
     }
     else
     {
-        arg0->unknown_42c_ = (signed char)(((signed char*)((char*)arg0 + 0x400))[0x2c] + arg1);
-        arg0->unknown_42c_ = (signed char)(((signed char*)((char*)arg0 + 0x400))[0x2c] & 0x3f);
+        self->unknown_42c_ = (signed char)(((signed char*)((char*)self + 0x400))[0x2c] + arg);
+        self->unknown_42c_ = (signed char)(((signed char*)((char*)self + 0x400))[0x2c] & 0x3f);
     }
 
-    if (IsAnimationActive0209ca2c(g_bgmPlayer) == 0)
-        self->f42f = 0;
+    if (func_0209ca2c(g_bgmPlayer) == 0)
+        self->unknown_42f_ = 0;
 
-    func_ov006_021549ac(arg0->unknown_10_, arg1);
+    func_ov006_021549ac(self->pot_, arg);
 
-    Struct_0207fc6c* var1 = (Struct_0207fc6c*)arg0->unknown_14_;
-    if (var1 != 0)
-        func_0207fc6c(var1, arg1);
+    Struct_0207fc6c* menu = (Struct_0207fc6c*)self->menu_;
+    if (menu != 0)
+        func_0207fc6c(menu, arg);
 
-    if (*(short*)((char*)arg0 + 0x300 + 0x7e) >= 0)
+    if (*(short*)((char*)self + 0x300 + 0x7e) >= 0)
     {
-        arg0->unknown_42c_ = 0;
-        func_ov006_0215a00c(arg0, 0);
+        self->unknown_42c_ = 0;
+        func_ov006_0215a00c(self, 0);
         return 0;
     }
 
-    if (*(unsigned short*)((char*)arg0 + 0x300 + 0x94) & 0x100)
+    if (*(unsigned short*)((char*)self + 0x300 + 0x94) & 0x100)
     {
-        if (((Type_ov006_02157d7c)func_ov006_02158c70)(arg0) != 0)
+        if (((Type_ov006_02157d7c)func_ov006_02158c70)(self) != 0)
         {
-            func_0207fdcc((Struct_0207fdcc_2*)var1, 0);
-            func_0207fdcc((Struct_0207fdcc_2*)var1, 1);
-            *(unsigned short*)((char*)arg0 + 0x300 + 0x94) &= ~0x100;
+            func_0207fdcc((Struct_0207fdcc_2*)menu, 0);
+            func_0207fdcc((Struct_0207fdcc_2*)menu, 1);
+            *(unsigned short*)((char*)self + 0x300 + 0x94) &= ~0x100;
         }
         return 0;
     }
 
-    if (*(unsigned short*)((char*)arg0->unknown_10_ + Enum_ov006_02157d7c_2786) & 0x380)
+    if (*(unsigned short*)((char*)self->pot_ + Enum_ov006_02157d7c_2786) & 0x380)
     {
-        arg0->unknown_42c_ = 0;
+        self->unknown_42c_ = 0;
         return 0;
     }
 
-    if (arg0->unknown_44_ != 0)
+    if (self->unknown_44_ != 0)
     {
-        func_02081f20(arg0->unknown_9c_, arg1);
-        *(short*)((char*)arg0 + 0x300 + 0x5e) = *arg0->unknown_44_;
-        arg0->unknown_350_ = func_020800fc(var1, arg0->unknown_44_, *(short*)((char*)arg0 + 0x300 + 0x5e),
-                                   *(unsigned short*)((char*)arg0 + Enum_ov006_02157d7c_168),
-                                   *(unsigned char*)((char*)arg0 + Enum_ov006_02157d7c_168 + 2),
-                                   (*(unsigned short*)((char*)arg0 + 0x300 + 0x94) & 4) != 0);
-        *(short*)((char*)var1 + Enum_ov006_02157d7c_54) = *arg0->unknown_44_;
-        if (arg0->unknown_350_ != 0)
-            func_020804fc(var1, *(short*)((char*)arg0 + 0x300 + 0x6e));
-        if (*(short*)((char*)arg0 + 0x300 + 0x5e) != *arg0->unknown_44_)
-            func_020813ec(var1, *(short*)((char*)arg0 + 0x300 + 0x6e));
+        func_02081f20(self->unknown_9c_, arg);
+        *(short*)((char*)self + 0x300 + 0x5e) = *self->unknown_44_;
+        self->unknown_350_ = func_020800fc(menu, self->unknown_44_, *(short*)((char*)self + 0x300 + 0x5e),
+                                   *(unsigned short*)((char*)self + Enum_ov006_02157d7c_168),
+                                   *(unsigned char*)((char*)self + Enum_ov006_02157d7c_168 + 2),
+                                   (*(unsigned short*)((char*)self + 0x300 + 0x94) & 4) != 0);
+        *(short*)((char*)menu + Enum_ov006_02157d7c_54) = *self->unknown_44_;
+        if (self->unknown_350_ != 0)
+            func_020804fc(menu, *(short*)((char*)self + 0x300 + 0x6e));
+        if (*(short*)((char*)self + 0x300 + 0x5e) != *self->unknown_44_)
+            func_020813ec(menu, *(short*)((char*)self + 0x300 + 0x6e));
     }
 
-    if (arg0->unknown_18_ != 0)
+    if (self->unknown_18_ != 0)
     {
-        if (func_020e28dc((struct Struct_020e28dc*)arg0->unknown_18_) != 0)
-            func_020e263c((struct Struct_020e263c_2*)arg0->unknown_18_, arg0->unknown_34c_);
+        if (func_020e28dc((struct Struct_020e28dc*)self->unknown_18_) != 0)
+            func_020e263c((struct Struct_020e263c_2*)self->unknown_18_, self->unknown_34c_);
     }
 
     if ((data_ov006_02160398 & 1) == 0)
@@ -151,9 +151,9 @@ extern "C" ARM int func_ov006_02157d7c(struct Struct_ov006_02157d7c* arg0, int a
         data_ov006_02160398 |= 1;
     }
 
-    if (data_ov006_021601fc.unknown_0_[arg0->unknown_38f_] == 0)
+    if (data_ov006_021601fc.e[self->unknown_38f_] == 0)
         return 1;
 
-    (arg0->*data_ov006_021601fc.unknown_0_[arg0->unknown_38f_])();
+    (self->*data_ov006_021601fc.e[self->unknown_38f_])();
     return 0;
 }

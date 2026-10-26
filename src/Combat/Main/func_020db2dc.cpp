@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
-extern "C" int func_0203bd08(int arg0);
-extern "C" int func_0203be4c(int arg0);
-extern "C" int func_0203be40(int arg0);
+extern "C" int OamManager_GetInstance(int a);
+extern "C" int OamManager_GetSubOamBuffer(int obj);
+extern "C" int OamManager_GetMainOamBuffer(int obj);
 
 // USA: func_020db2dc
-extern "C" ARM int func_020db2dc(int arg0, int arg1) {
-    int var0 = func_0203bd08(arg0);
-    int var1 = func_0203be4c(var0);
-    if (arg1 != 0) return var1;
-    return func_0203be40(var0);
+extern "C" ARM int func_020db2dc(int a, int b) {
+    int obj = OamManager_GetInstance(a);
+    int v = OamManager_GetSubOamBuffer(obj);
+    if (b != 0) return v;
+    return OamManager_GetMainOamBuffer(obj);
 }

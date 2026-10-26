@@ -4,7 +4,7 @@
 void SetArm9IPCCommandHandler(int command, IPCCommandHandler handler);
 extern "C" int func_020d28f0(void);
 bool IsIPCCommandHandlerRegistered(int command, IPCSide side);
-extern "C" void func_020d27fc(int arg0, int arg1);
+extern "C" void func_020d27fc(int channel, int packed);
 extern "C" void func_020c976c(int);
 
 // USA: func_020d2820

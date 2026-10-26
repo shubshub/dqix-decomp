@@ -1,31 +1,31 @@
 #include <globaldefs.h>
 
 struct Struct_ov023_021e2c38 {
-    char unknown_0_[0xc];
-    short unknown_c_;
-    char unknown_e_[0x10 - 0xe];
+    char pad0[0xc];
+    short f0xc;
+    char pad1[0x10 - 0xe];
     short unknown_10_;
-    char unknown_12_[0x16 - 0x12];
+    char pad2[0x16 - 0x12];
     unsigned char unknown_16_;
 };
 
 extern "C" struct Struct_ov023_021e2c38* func_ov023_021db4e4(void*);
 
 // USA: func_ov023_021e2c38
-extern "C" ARM int func_ov023_021e2c38(void* arg0) {
-    int var0 = 1;
-    struct Struct_ov023_021e2c38* var1 = func_ov023_021db4e4(arg0);
+extern "C" ARM int func_ov023_021e2c38(void* obj) {
+    int result = 1;
+    struct Struct_ov023_021e2c38* entry = func_ov023_021db4e4(obj);
     int var2 = 0;
-    int var3 = var0;
-    while (var1 != 0) {
-        var0 = (var1->unknown_16_ & 1) ? var3 : var2;
-        if (var0 == 0) break;
-        while (var1->unknown_10_ > 0) {
-            var1 = func_ov023_021db4e4(arg0);
+    int var3 = result;
+    while (entry != 0) {
+        result = (entry->unknown_16_ & 1) ? var3 : var2;
+        if (result == 0) break;
+        while (entry->unknown_10_ > 0) {
+            entry = func_ov023_021db4e4(obj);
         }
-        if (var1->unknown_c_ >= 0) {
-            var1 = func_ov023_021db4e4(arg0);
+        if (entry->f0xc >= 0) {
+            entry = func_ov023_021db4e4(obj);
         }
     }
-    return var0;
+    return result;
 }

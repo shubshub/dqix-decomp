@@ -6,25 +6,25 @@ struct Obj02033710;
 struct GameObjectFields : Object3D {
     short field_ac, facing, turnSpeed;
     short speed, maximumSpeed, acceleration;
-    char paddingb8[6];
+    char unknown_b8_[6];
     unsigned char motionState, previousMotionState;
-    char paddingc0[3];
+    char unknown_c0_[3];
     unsigned char delay;
-    unsigned short flagsc4;
+    unsigned short unknown_c4_;
     short glideSpeed;
     Vector3fix glideTarget;
     Vector3fix moveTarget;
-    unsigned char reserved0 : 2;
+    unsigned char unknown_e0_0_ : 2;
     unsigned char paused : 1;
-    unsigned char reserved3 : 1;
+    unsigned char unknown_e0_3_ : 1;
     unsigned char stepTowardTarget : 1;
     unsigned char snapToTarget : 1;
     unsigned char reserved6 : 2;
 };
 struct MotionStateRow { signed char nextState; char padding1[12]; };
 extern MotionStateRow data_020ef9d0[];
-void GameObject_TurnTowardFacing(Obj02033710*);
-void GameObject_UpdateGlide(void*);
+extern "C" void GameObject_TurnTowardFacing(Obj02033710*);
+extern "C" void GameObject_UpdateGlide(void*);
 extern "C" void GameObject_UpdateMovement(GameObjectFields*);
 extern "C" void GameObject_ApplyMotionState(GameObjectFields*);
 extern "C" void GameObject_UpdateGraphNode(GameObjectFields*);
@@ -52,17 +52,17 @@ extern "C" ARM void GameObject_Update(GameObjectFields* object) {
                         object->speed += acceleration;
                         if (object->maximumSpeed < object->speed) object->speed = object->maximumSpeed;
                     } else {
-                        arg0->unknown_b2_ -= var3;
-                        if (arg0->unknown_b2_ < 0) arg0->unknown_b2_ = 0;
+                        object->speed -= acceleration;
+                        if (object->speed < 0) object->speed = 0;
                     }
-                    int var5 = arg0->unknown_b2_ * var2->GetTickCount();
-                    if (var1 < var5) var5 = var1;
-                    Vector3fix var6;
-                    Vector3fixMultiplyScalar(&var4, var5, &var6);
-                    Vector3fix var7;
-                    Vector3fix_Add(&arg0->position_, &var6, &var7);
-                    arg0->position_ = var7;
-                } else arg0->unknown_b2_ = 0;
+                    int speed = object->speed * game->GetTickCount();
+                    if (distance < speed) speed = distance;
+                    Vector3fix step;
+                    Vector3fixMultiplyScalar(&direction, speed, &step);
+                    Vector3fix position;
+                    Vector3fix_Add(&object->position_, &step, &position);
+                    object->position_ = position;
+                } else object->speed = 0;
             }
         }
         GameObject_UpdateGlide(object);
@@ -73,11 +73,11 @@ extern "C" ARM void GameObject_Update(GameObjectFields* object) {
             GameObject_ApplyMotionState(object);
         }
     }
-    int var9 = arg0->unknown_c3_;
-    if (var9) {
-        var9 -= GameState::GetInstance()->GetTickCount();
-        if (var9 < 0) var9 = 0;
-        arg0->unknown_c3_ = var9;
+    int delay = object->delay;
+    if (delay) {
+        delay -= GameState::GetInstance()->GetTickCount();
+        if (delay < 0) delay = 0;
+        object->delay = delay;
     }
     GameObject_UpdateGraphNode(object);
     object->AdvanceEffects();

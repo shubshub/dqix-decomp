@@ -2,37 +2,37 @@
 #include "GameState/GameState.h"
 
 class GameState;
-struct Struct_0201099c_3;
+struct Container020e0310;
 struct Struct_ov002_0215b8c8 {
-    char *unknown_0_;
+    char *dst;
 };
-struct Struct_020465c0;
+struct StoreStruct;
 
 extern "C" void func_ov002_02157480(void *self, int *slots);
-unsigned char *GetFieldAt0x150_02053c6c(unsigned char *c);
-const char *KeyTable_Get(Container020e0310 *tbl, int key);
+extern "C" unsigned char *func_02053c6c(unsigned char *c);
+extern "C" const char *KeyTable_Get(Container020e0310 *tbl, int key);
 extern "C" void __clear(void *buffer, unsigned long size);
-void AppendTaggedString_0215b8c8(DstHolder0215b8c8 *dst, const char *src, int n);
-void AppendFormatted02041fac(char *buf, int str, int n);
-void *MessageSystem_GetInstance();
+extern "C" void func_ov002_0215b8c8(Struct_ov002_0215b8c8 *dst, const char *src, int n);
+extern "C" void func_02041fac(char *buf, int str, int n);
+extern "C" void *MessageSystem_GetInstance();
 extern "C" void func_02046380(void *messages);
-void StoreInArray0x8b0_020465c0(StoreStruct *messages, int index, int value);
-void SetByteInRange_020465f0(unsigned char *messages, int index, unsigned char digits);
-void SetByteAtIndex_020465d8(unsigned char *messages, int index, unsigned char value);
-void AppendHeightTag_02041b00(char *buf, int h);
+extern "C" void func_020465c0(StoreStruct *messages, int index, int value);
+extern "C" void func_020465f0(unsigned char *messages, int index, unsigned char digits);
+extern "C" void func_020465d8(unsigned char *messages, int index, unsigned char value);
+extern "C" void func_02041b00(char *buf, int h);
 extern "C" void MessageSystem_FormatText(void *messages, int a, const char *format, char *output, int size, int b, int c);
-void Text_Append(char *buf, const char *str);
+extern "C" void Text_Append(char *buf, const char *str);
 
 #if defined(jpn)
 #define func_02041fac func_02042638
-extern "C" int func_02042638(char *arg0, int arg1, int arg2);
-extern "C" void func_020474a8(void *arg0, int arg1, const char *arg2, char *arg3);
+extern "C" int func_02042638(char *buf, int a, int b);
+extern "C" void func_020474a8(void *messages, int a, const char *format, char *output);
 extern char data_ov002_0216da30[];
 extern char data_ov002_0216da4a[];
 #endif
 
 // USA: func_ov002_021605d4
-extern "C" ARM void func_ov002_021605d4(char *arg0, char *arg1) {
+extern "C" ARM void func_ov002_021605d4(char *self, char *buf) {
 #if defined(jpn)
     int slots[4];
     char line[0x40];
@@ -43,16 +43,16 @@ extern "C" ARM void func_ov002_021605d4(char *arg0, char *arg1) {
     int slot = slots[idx];
     int ok   = (slot >= 0 && slot <= 3);
     if (!ok) return;
-    unsigned char *c = (unsigned char *) GetCombatantWithFlag0x100_0200ff1c(gs, slot);
+    unsigned char *c = (unsigned char *) func_0200ff1c(gs, slot);
     if (c == 0) return;
-    unsigned char *f = GetFieldAt0x150_02053c6c(c);
+    unsigned char *f = func_02053c6c(c);
     if (f == 0) return;
-    AppendFormatted02041fac(buf, (int) data_ov002_0216da30, 0x10);
+    func_02041fac(buf, (int) data_ov002_0216da30, 0x10);
     void *msg = MessageSystem_GetInstance();
     func_02046380(msg);
-    StoreInArray0x8b0_020465c0((StoreStruct *) msg, 0, *(unsigned short *) (f + 0x564));
-    SetByteInRange_020465f0((unsigned char *) msg, 0, 4);
-    SetByteAtIndex_020465d8((unsigned char *) msg, 0, 1);
+    func_020465c0((StoreStruct *) msg, 0, *(unsigned short *) (f + 0x564));
+    func_020465f0((unsigned char *) msg, 0, 4);
+    func_020465d8((unsigned char *) msg, 0, 1);
     __clear(line, sizeof(line));
     func_020474a8(msg, 8, data_ov002_0216da4a, line);
     Text_Append(buf, line);
@@ -60,7 +60,7 @@ extern "C" ARM void func_ov002_021605d4(char *arg0, char *arg1) {
     char text[0x80];
     int slots[4];
     char line[0x40];
-    DstHolder0215b8c8 holder;
+    Struct_ov002_0215b8c8 holder;
     if (buf == 0) return;
     GameState *gs = GameState::GetInstance();
     short idx     = *(short *) (self + 0x1c08);
@@ -68,22 +68,22 @@ extern "C" ARM void func_ov002_021605d4(char *arg0, char *arg1) {
     int slot = slots[idx];
     int ok   = (slot >= 0 && slot <= 3);
     if (!ok) return;
-    unsigned char *c = (unsigned char *) GetCombatantWithFlag0x100_0200ff1c(gs, slot);
+    unsigned char *c = (unsigned char *) func_0200ff1c(gs, slot);
     if (c == 0) return;
-    unsigned char *f = GetFieldAt0x150_02053c6c(c);
+    unsigned char *f = func_02053c6c(c);
     if (f == 0) return;
     const char *name = KeyTable_Get((Container020e0310 *) (self + 0x20), 0x1005);
     __clear(text, sizeof(text));
     holder.dst = text;
-    AppendTaggedString_0215b8c8(&holder, name, 0);
-    AppendFormatted02041fac(buf, (int) text, 0x10);
+    func_ov002_0215b8c8(&holder, name, 0);
+    func_02041fac(buf, (int) text, 0x10);
     void *msg = MessageSystem_GetInstance();
     func_02046380(msg);
-    StoreInArray0x8b0_020465c0((StoreStruct *) msg, 0, *(unsigned short *) (f + 0x564));
-    SetByteInRange_020465f0((unsigned char *) msg, 0, 4);
-    SetByteAtIndex_020465d8((unsigned char *) msg, 0, 1);
+    func_020465c0((StoreStruct *) msg, 0, *(unsigned short *) (f + 0x564));
+    func_020465f0((unsigned char *) msg, 0, 4);
+    func_020465d8((unsigned char *) msg, 0, 1);
     __clear(line, sizeof(line));
-    AppendHeightTag_02041b00(buf, -1);
+    func_02041b00(buf, -1);
     MessageSystem_FormatText(msg, 8, KeyTable_Get((Container020e0310 *) (self + 0x20), 0x1006), line,
                   0x100, 0, 0);
     Text_Append(buf, line);

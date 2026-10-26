@@ -12,8 +12,8 @@ extern "C" void func_ov031_022314ec(void);
 
 // USA: func_ov031_02231468
 extern "C" ARM void func_ov031_02231468(void) {
-	int var0 = func_ov031_02227bc8();
-	switch (var0) {
+	int state = func_ov031_02227bc8();
+	switch (state) {
 	case 2:
 		data_ov031_02290cac = 1;
 		func_ov031_022274c0((int)func_ov031_0223130c);

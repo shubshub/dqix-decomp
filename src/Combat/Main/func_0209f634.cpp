@@ -2,77 +2,77 @@
 #include "std_library_functions.h"
 
 struct Struct_0209f634_4 {
-    char unknown_0_[0x12];
-    short unknown_12_;
+    char field_0x0[0x12];
+    short kind;
     char unknown_14_[0x10];
-    unsigned char unknown_24_;
-    char unknown_25_[0x1b];
+    unsigned char category;
+    char field_0x25[0x1b];
 };
 
 struct Struct_0209f634 {
     union {
         struct {
-            char unknown_0_[0x5c60];
-            Struct_0209f634_4 unknown_5c60_[256];
+            char field_0x0[0x5c60];
+            Struct_0209f634_4 records[256];
         };
         struct {
             char unknown1_0_[0x8e07];
-            unsigned char unknown_8e07_;
+            unsigned char count;
         };
     };
 };
 
 struct Struct_0209f634_2 {
-    Struct_0209f634_4 unknown_0_[16];
+    Struct_0209f634_4 records[16];
     int unknown_400_;
 };
 
 struct Struct_0209f634_3 {
-    int unknown_0_;
-    Struct_0209f634* unknown_4_;
+    int field_0x0;
+    Struct_0209f634* table;
     char unknown_8_[0x90];
-    int unknown_98_;
-    Struct_0209f634_2 unknown_9c_;
+    int count;
+    Struct_0209f634_2 primary;
     Struct_0209f634_4 unknown_4a0_[16];
 };
 
 // USA: func_0209f634
-extern "C" ARM void func_0209f634(Struct_0209f634_3* arg0, int arg1, int arg2) {
-    int var0 = sizeof(Struct_0209f634_4);
-    if (arg1 == 0) {
-        int var1;
-        int var2;
-        arg0->unknown_98_ = 0;
-        var1 = arg0->unknown_4_->unknown_8e07_;
-        for (var2 = 0; var2 < var1; var2++) {
-            Struct_0209f634_4* var3 = &arg0->unknown_4_->unknown_5c60_[var2];
-            if (var3 == NULL) continue;
-            int var4 = 0;
-            if (var3->unknown_12_ >= 7 && var3->unknown_12_ <= 18) var4 = 1;
-            if (!var4 && var3->unknown_24_ == arg2) {
-                int var5 = arg0->unknown_98_++;
-                memcpy(&arg0->unknown_9c_.unknown_0_[var5], var3, var0);
+extern "C" ARM void func_0209f634(Struct_0209f634_3* context, int mode, int category) {
+    int recordSize = sizeof(Struct_0209f634_4);
+    if (mode == 0) {
+        int count;
+        int index;
+        context->count = 0;
+        count = context->table->count;
+        for (index = 0; index < count; index++) {
+            Struct_0209f634_4* record = &context->table->records[index];
+            if (record == NULL) continue;
+            int excluded = 0;
+            if (record->kind >= 7 && record->kind <= 18) excluded = 1;
+            if (!excluded && record->category == category) {
+                int destination = context->count++;
+                memcpy(&context->primary.records[destination], record, recordSize);
             }
         }
         return;
     }
-    arg0->unknown_9c_.unknown_400_ = 0;
-    memset(arg0->unknown_4a0_, 0, 0x400);
+    context->primary.unknown_400_ = 0;
+    memset(context->unknown_4a0_, 0, 0x400);
     {
-        Struct_0209f634_2* var6 = &arg0->unknown_9c_;
-        int var7;
-        for (var7 = 0; var7 < arg0->unknown_98_; var7++) {
-            Struct_0209f634_4* var8 = &var6->unknown_0_[var7];
-            int var9 = 0;
-            if (var8->unknown_12_ >= 7 && var8->unknown_12_ <= 18) var9 = 1;
-            if (!var9 && var8->unknown_24_ == arg2) {
-                int var10 = arg0->unknown_9c_.unknown_400_;
-                int var11 = var6->unknown_400_;
-                var6->unknown_400_ = var11 + 1;
-                memcpy(&arg0->unknown_4a0_[var10], var8, var0);
+        Struct_0209f634_2* primary = &context->primary;
+        int index;
+        for (index = 0; index < context->count; index++) {
+            Struct_0209f634_4* record = &primary->records[index];
+            int excluded = 0;
+            if (record->kind >= 7 && record->kind <= 18) excluded = 1;
+            if (!excluded && record->category == category) {
+                int destination = context->primary.unknown_400_;
+                int current = primary->unknown_400_;
+                primary->unknown_400_ = current + 1;
+                memcpy(&context->unknown_4a0_[destination], record, recordSize);
             }
         }
     }
-    arg0->unknown_98_ = arg0->unknown_9c_.unknown_400_;
-    memcpy(arg0->unknown_9c_.unknown_0_, arg0->unknown_4a0_, 0x400);
+    context->count = context->primary.unknown_400_;
+    memcpy(context->primary.records, context->unknown_4a0_, 0x400);
 }

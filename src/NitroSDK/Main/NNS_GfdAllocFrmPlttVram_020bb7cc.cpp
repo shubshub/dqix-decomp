@@ -3,35 +3,35 @@
 struct Struct_0210cf88_2 {
     unsigned int unknown_0_;
     unsigned int unknown_4_;
-    unsigned int unknown_8_;
+    unsigned int szByte;
 };
 extern Struct_0210cf88_2 data_0210cf88;
 
-static inline unsigned int inline_020bb7cc_3(unsigned int arg0) {
-    if (arg0 == 0) {
+static inline unsigned int inline_020bb7cc_3(unsigned int size) {
+    if (size == 0) {
         return 8;
     } else {
-        return (arg0 + 7) & ~7;
+        return (size + 7) & ~7;
     }
 }
 
-static inline unsigned int inline_020bb7cc_4(unsigned int arg0, unsigned int arg1) {
-    return ((arg1 >> 3) << 16) | (0xffff & (arg0 >> 3));
+static inline unsigned int inline_020bb7cc_4(unsigned int addr, unsigned int size) {
+    return ((size >> 3) << 16) | (0xffff & (addr >> 3));
 }
 
-static inline unsigned int inline_020bb7cc_5(unsigned int arg0, int arg1) {
-    if (arg1) {
-        return 7 & (8 - (arg0 & 7));
+static inline unsigned int inline_020bb7cc_5(unsigned int addr, int b4Pltt) {
+    if (b4Pltt) {
+        return 7 & (8 - (addr & 7));
     } else {
-        return 0xf & (0x10 - (arg0 & 0xf));
+        return 0xf & (0x10 - (addr & 0xf));
     }
 }
 
-static inline unsigned int inline_020bb7cc_6(unsigned int arg0, int arg1) {
-    if (arg1) {
-        return arg0 & 7;
+static inline unsigned int inline_020bb7cc_6(unsigned int addr, int b4Pltt) {
+    if (b4Pltt) {
+        return addr & 7;
     } else {
-        return arg0 & 0xf;
+        return addr & 0xf;
     }
 }
 
@@ -39,21 +39,21 @@ static inline unsigned int inline_020bb7cc_7(void) {
     return data_0210cf88.unknown_4_ - data_0210cf88.unknown_0_;
 }
 
-static inline int inline_020bb7cc(unsigned int arg0, int arg1, unsigned int* arg2) {
-    const unsigned int var0 = data_0210cf88.unknown_0_;
-    const unsigned int var1 = inline_020bb7cc_5(var0, arg1);
-    const unsigned int var2 = arg0 + var1;
+static inline int inline_020bb7cc(unsigned int szByte, int b4Pltt, unsigned int* arg2) {
+    const unsigned int addr = data_0210cf88.unknown_0_;
+    const unsigned int alignment = inline_020bb7cc_5(addr, b4Pltt);
+    const unsigned int var2 = szByte + alignment;
 
     if (inline_020bb7cc_7() >= var2) {
-        const unsigned int var3 = data_0210cf88.unknown_0_ + var2;
+        const unsigned int tail = data_0210cf88.unknown_0_ + var2;
 
-        if (arg1) {
-            if (var3 > 0x10000) {
+        if (b4Pltt) {
+            if (tail > 0x10000) {
                 return 0;
             }
         }
 
-        *arg2 = data_0210cf88.unknown_0_ + var1;
+        *arg2 = data_0210cf88.unknown_0_ + alignment;
         data_0210cf88.unknown_0_ += var2;
         return 1;
     } else {
@@ -61,17 +61,17 @@ static inline int inline_020bb7cc(unsigned int arg0, int arg1, unsigned int* arg
     }
 }
 
-static inline int inline_020bb7cc_2(unsigned int arg0, int arg1, unsigned int* arg2) {
-    if (data_0210cf88.unknown_4_ >= arg0) {
-        const unsigned int var0 = data_0210cf88.unknown_4_ - arg0;
-        const unsigned int var1 = inline_020bb7cc_6(var0, arg1);
-        const unsigned int var2 = arg0 + var1;
+static inline int inline_020bb7cc_2(unsigned int szByte, int b4Pltt, unsigned int* arg2) {
+    if (data_0210cf88.unknown_4_ >= szByte) {
+        const unsigned int addr = data_0210cf88.unknown_4_ - szByte;
+        const unsigned int alignment = inline_020bb7cc_6(addr, b4Pltt);
+        const unsigned int var2 = szByte + alignment;
 
         if (inline_020bb7cc_7() >= var2) {
-            const unsigned int var3 = data_0210cf88.unknown_4_;
+            const unsigned int tail = data_0210cf88.unknown_4_;
 
-            if (arg1) {
-                if (var3 > 0x10000) {
+            if (b4Pltt) {
+                if (tail > 0x10000) {
                     return 0;
                 }
             }
@@ -89,19 +89,19 @@ extern "C" ARM unsigned int NNS_GfdAllocFrmPlttVram(unsigned int szByte, int b4P
     unsigned int addr = 0;
     int result = 0;
 
-    arg0 = inline_020bb7cc_3(arg0);
-    if (arg0 >= 0x7fff8) {
+    szByte = inline_020bb7cc_3(szByte);
+    if (szByte >= 0x7fff8) {
         return 0;
     }
 
-    if (arg2 == 1) {
-        var1 = inline_020bb7cc(arg0, arg1, &var0);
+    if (bAllocFromLo == 1) {
+        result = inline_020bb7cc(szByte, b4Pltt, &addr);
     } else {
-        var1 = inline_020bb7cc_2(arg0, arg1, &var0);
+        result = inline_020bb7cc_2(szByte, b4Pltt, &addr);
     }
 
-    if (var1) {
-        return inline_020bb7cc_4(var0, arg0);
+    if (result) {
+        return inline_020bb7cc_4(addr, szByte);
     }
     return 0;
 }

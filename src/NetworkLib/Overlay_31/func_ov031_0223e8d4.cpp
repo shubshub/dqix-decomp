@@ -2,43 +2,43 @@
 
 struct Struct_ov031_02249408 {
     char unknown_0_[2];
-    char unknown_2_;
+    char separator;
     char unknown_3_;
     unsigned char unknown_4_[9];
 };
 
 struct Struct_ov031_02290e4c {
-    int unknown_0_;
-    int unknown_4_;
+    int type;
+    int area;
     char unknown_8_[10];
-    char unknown_12_[33];
-    unsigned char unknown_33_[6];
+    char ssid[33];
+    unsigned char address[6];
     unsigned char unknown_39_[3];
 };
 
 extern Struct_ov031_02249408 data_ov031_02249408;
 Struct_ov031_02290e4c data_ov031_02290e4c;
-extern "C" int func_ov031_02212274(void* arg0);
-extern "C" void func_ov031_0223fb98(char* arg0, unsigned int arg1);
-extern "C" void func_ov031_0223fb74(void* arg0, const void* arg1, unsigned int arg2);
-extern "C" int func_ov031_0223e454(unsigned char* arg0, const signed char* arg1, int arg2);
+extern "C" int func_ov031_02212274(void* object);
+extern "C" void func_ov031_0223fb98(char* destination, unsigned int value);
+extern "C" void func_ov031_0223fb74(void* destination, const void* source, unsigned int size);
+extern "C" int func_ov031_0223e454(unsigned char* destination, const signed char* source, int size);
 
 // USA: func_ov031_0223e8d4
-extern "C" ARM int func_ov031_0223e8d4(unsigned char* arg0) {
-    Struct_ov031_02249408 var0 = data_ov031_02249408;
+extern "C" ARM int func_ov031_0223e8d4(unsigned char* destination) {
+    Struct_ov031_02249408 packet = data_ov031_02249408;
     if (func_ov031_02212274(&data_ov031_02290e4c)) {
-        int var1 = data_ov031_02290e4c.unknown_0_;
-        if (var1 >= 0 && var1 < 10)
-            var0.unknown_0_[1] = var1 + '0';
-        else if (var1 >= 10 && var1 < 100)
-            func_ov031_0223fb98(var0.unknown_0_, var1);
-        if (data_ov031_02290e4c.unknown_0_ == 4 || data_ov031_02290e4c.unknown_0_ == 8) {
-            var1 = data_ov031_02290e4c.unknown_4_;
-            if (var1 >= 0 && var1 < 10)
-                var0.unknown_3_ = var1 + '0';
-            func_ov031_0223fb74(var0.unknown_4_, data_ov031_02290e4c.unknown_8_, 9);
+        int value = data_ov031_02290e4c.type;
+        if (value >= 0 && value < 10)
+            packet.unknown_0_[1] = value + '0';
+        else if (value >= 10 && value < 100)
+            func_ov031_0223fb98(packet.unknown_0_, value);
+        if (data_ov031_02290e4c.type == 4 || data_ov031_02290e4c.type == 8) {
+            value = data_ov031_02290e4c.area;
+            if (value >= 0 && value < 10)
+                packet.unknown_3_ = value + '0';
+            func_ov031_0223fb74(packet.unknown_4_, data_ov031_02290e4c.unknown_8_, 9);
         }
-        func_ov031_0223e454(arg0, (const signed char*)&var0, sizeof(var0));
+        func_ov031_0223e454(destination, (const signed char*)&packet, sizeof(packet));
         return 1;
     }
     return 0;

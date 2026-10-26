@@ -3,33 +3,40 @@
 #include "World/Zone3D.h"
 #include "std_library_functions.h"
 
-extern "C" int func_0201b5b0(int arg0);
-extern "C" int func_0201b5d8(int arg0);
+extern "C" int ZoneId_IsMainGrottoFloor(int id);
+extern "C" int ZoneId_IsGrottoBossFloor(int x);
 
+// The path formats under data_020ef116 ("data/map"): "%s/Z0%dM01.ambl" for a zone 40001-40096 (ZoneId_IsMainGrottoFloor) and
+// "%s/Z0%dM99.ambl" for one 41101-41505 (ZoneId_IsGrottoBossFloor), by grotto environment; "%s/%s.ambl" by the zone
+// table entry's map name otherwise
 extern char data_020ef106;
 extern char data_020ef116;
 extern char data_020ef11f;
 extern char data_020ef12f;
 
-// USA: func_0201403c
-ARM void Zone3D::func_0201403c() {
-    Zone3D* var0 = this;
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    char var2[0x14];
+// The range the Z0%dM01 path clamps GetActiveGrottoEnviron to (0 becomes 1, above 5 becomes 5)
+enum { kFirstGrottoEnvironment = 1, kLastGrottoEnvironment = 5 };
 
-    if (func_0201b5b0(var0->currentZoneID_)) {
-        ActiveGrottoClass* var3 = &var0->grotto_;
-        int var4 = var3->GetActiveGrottoEnviron();
-        if (var4 == 0) var4 = 1;
-        if (var4 > 5) var4 = 5;
-        sprintf(var2, &data_020ef106, &data_020ef116, var4);
-    } else if (func_0201b5d8(var0->currentZoneID_)) {
-        ActiveGrottoClass* var5 = &var0->grotto_;
-        int var6 = var5->GetActiveGrottoEnviron();
-        sprintf(var2, &data_020ef11f, &data_020ef116, var6);
+// USA: QueueLoadMapAMBL  (semantic: Format0201403c)
+// Main, originally Zone3D::LoadMapAMBL_0201403c (USA 0x0201403c, EUR 0x0201404c, JPN 0x02013e08)
+ARM void Zone3D::QueueLoadMapAMBL() {
+    Zone3D* zone = this;
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    char path[0x14];
+
+    if (ZoneId_IsMainGrottoFloor(zone->currentZoneID_)) {
+        ActiveGrottoClass* grotto = &zone->grotto_;
+        int environment = grotto->GetActiveGrottoEnviron();
+        if (environment == 0) environment = kFirstGrottoEnvironment;
+        if (environment > kLastGrottoEnvironment) environment = kLastGrottoEnvironment;
+        sprintf(path, &data_020ef106, &data_020ef116, environment);
+    } else if (ZoneId_IsGrottoBossFloor(zone->currentZoneID_)) {
+        ActiveGrottoClass* grotto = &zone->grotto_;
+        int environment = grotto->GetActiveGrottoEnviron();
+        sprintf(path, &data_020ef11f, &data_020ef116, environment);
     } else {
-        sprintf(var2, &data_020ef12f, &data_020ef116, var0->pUnknownStruct_8_->mapShortName_);
+        sprintf(path, &data_020ef12f, &data_020ef116, zone->pUnknownStruct_8_->mapShortName_);
     }
 
-    var0->mapAMBLLoadHandle_ = var1->QueueLoadFile(var2, NULL);
+    zone->mapAMBLLoadHandle_ = loader->QueueLoadFile(path, NULL);
 }

@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 unsigned long long GetCurrentTimestamp(void);
-extern "C" unsigned long long _ll_udiv(unsigned long long arg0, unsigned long long arg1);
+extern "C" unsigned long long _ll_udiv(unsigned long long a, unsigned long long b);
 
 // USA: func_ov031_02222870
 extern "C" THUMB unsigned int func_ov031_02222870(void) {

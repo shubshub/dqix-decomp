@@ -2,46 +2,46 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" int* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
-extern "C" int func_0202c508(void* arg0);
-extern "C" int func_ov017_02195760(int arg0);
-extern "C" void func_020e3778(unsigned char* arg0);
-extern "C" void func_ov017_021ced48(int arg0, unsigned char arg1);
-struct Struct_0202b2f0;
-extern "C" int func_0202c578(struct Struct_0202b2f0* arg0, int arg1);
+extern "C" int* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsActive(int* obj);
+extern "C" int LinkSession_IsHostOrSolo(void* obj);
+extern "C" int func_ov017_02195760(int obj);
+extern "C" void func_020e3778(unsigned char* p);
+extern "C" void func_ov017_021ced48(int a, unsigned char b);
+struct SearchStruct;
+extern "C" int LinkSession_IsSlotLost(struct SearchStruct* obj, int value);
 
 // USA: func_020e35a0
-extern "C" ARM void func_020e35a0(unsigned char* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = ((int)GetGameResources());
-    int* var2 = func_0202ae18();
-    if (!func_0202b7d8(var2)) return;
+extern "C" ARM void func_020e35a0(unsigned char* p) {
+    GameState* battleStruct = GameState::GetInstance();
+    int obj2 = ((int)GetGameResources());
+    int* searchObj = LinkSession_GetInstance();
+    if (!LinkSession_IsActive(searchObj)) return;
 
-    if (func_0202c508(var2)) {
-        int var3;
-        if (func_ov017_02195760(var1)) {
-            for (var3 = 0; var3 < 4; var3++) {
-                if (arg0[0] & (1 << var3)) {
-                    if (var3 == 0) {
-                        func_020e3778(arg0);
+    if (LinkSession_IsHostOrSolo(searchObj)) {
+        int i;
+        if (func_ov017_02195760(obj2)) {
+            for (i = 0; i < 4; i++) {
+                if (p[0] & (1 << i)) {
+                    if (i == 0) {
+                        func_020e3778(p);
                     } else {
-                        func_ov017_021ced48(1, (unsigned char)var3);
+                        func_ov017_021ced48(1, (unsigned char)i);
                     }
                 }
             }
-            arg0[1] |= arg0[0];
-            arg0[0] = 0;
+            p[1] |= p[0];
+            p[0] = 0;
         }
-        for (var3 = 1; var3 < 4; var3++) {
-            if (!var0->GetGameObjectByIndex(var3) || func_0202c578((struct Struct_0202b2f0*)var2, var3)) {
-                arg0[0] &= ~(1 << var3);
-                arg0[1] &= ~(1 << var3);
+        for (i = 1; i < 4; i++) {
+            if (!battleStruct->GetGameObjectByIndex(i) || LinkSession_IsSlotLost((struct SearchStruct*)searchObj, i)) {
+                p[0] &= ~(1 << i);
+                p[1] &= ~(1 << i);
             }
         }
     } else {
-        if (func_0202c578((struct Struct_0202b2f0*)var2, 0)) {
-            arg0[2] = 1;
+        if (LinkSession_IsSlotLost((struct SearchStruct*)searchObj, 0)) {
+            p[2] = 1;
         }
     }
 }

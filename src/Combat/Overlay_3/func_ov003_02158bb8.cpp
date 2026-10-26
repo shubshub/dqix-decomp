@@ -21,39 +21,39 @@ struct Struct020a9ea4;
 
 struct Struct_ov003_02158bb8_2 {
     char unknown_0_[0x10];
-    unsigned char unknown_10_;
+    unsigned char initialized;
     unsigned char unknown_11_;
-    char unknown_12_[2];
+    char pad12[2];
 };
 
-extern "C" void func_02074af4(ScreenState02158bb8* state);
+extern "C" void func_02074af4(Struct_ov003_02158bb8_2* state);
 extern "C" void WindowPane_Init(void* canvas);
-void SpriteContext_Init(char* obj);
-void Window_Init(InitTarget0205cfd4* window);
-void Background_Init(BackgroundGraphics* background);
-void KeyTable_Reset(Struct020dfc40* texts);
-void ClearStruct020a9ea4(Struct020a9ea4* p);
+extern "C" void SpriteContext_Init(char* obj);
+extern "C" void Window_Init(InitTarget0205cfd4* window);
+extern "C" void Background_Init(BackgroundGraphics* background);
+extern "C" void KeyTable_Reset(Struct020dfc40* texts);
+extern "C" void func_020a9ea4(Struct020a9ea4* p);
 
 struct Struct_ov003_02158bb8 {
     SafeAllocator unknown_0_;
     SafeAllocator unknown_14_;
-    SafeAllocator unknown_28_;
-    SafeAllocator unknown_3c_;
+    SafeAllocator alloc28;
+    SafeAllocator alloc3c;
     SafeAllocator unknown_50_;
-    char unknown_64_[0x80 - 0x64];
+    char texts[0x80 - 0x64];
     Struct_ov003_02158bb8_2 unknown_80_;
-    int unknown_94_;
-    char unknown_98_[0xec - 0x98];
-    void* unknown_ec_;
+    int layers;
+    char field_0x98[0xec - 0x98];
+    void* entries;
     void* unknown_f0_;
-    char unknown_f4_[0x1b0 - 0xf4];
-    char unknown_1b0_[2][0x20];
-    char unknown_1f0_[4][0xe0];
-    void* unknown_570_;
+    char window[0x1b0 - 0xf4];
+    char backgrounds[2][0x20];
+    char canvases[4][0xe0];
+    void* entryManager;
     char unknown_574_[0x580 - 0x574];
     unsigned char unknown_580_;
     unsigned char unknown_581_;
-    unsigned char unknown_582_;
+    unsigned char field_0x582;
     unsigned char unknown_583_;
     unsigned char unknown_584_;
     signed char unknown_585_;
@@ -86,20 +86,20 @@ struct Struct_ov003_02158bb8 {
 };
 
 // USA: func_ov003_02158bb8
-extern "C" ARM void func_ov003_02158bb8(Struct_ov003_02158bb8* arg0)
+extern "C" ARM void func_ov003_02158bb8(Struct_ov003_02158bb8* self)
 {
-    arg0->unknown_80_.unknown_10_ = 0;
-    arg0->unknown_80_.unknown_11_ = 0;
-    func_02074af4(&arg0->unknown_80_);
-    arg0->unknown_94_ = (DISPCNT & 0x1f00) >> 8;
+    self->unknown_80_.initialized = 0;
+    self->unknown_80_.unknown_11_ = 0;
+    func_02074af4(&self->unknown_80_);
+    self->layers = (DISPCNT & 0x1f00) >> 8;
     DISPCNT = (DISPCNT & ~0x1f00) | 0x100;
     SpriteContext_Init(self->field_0x98);
     self->entries = NULL;
-    self->clearTarget = NULL;
+    self->unknown_f0_ = NULL;
     self->alloc3c.ResetAllocatorPointer();
     self->alloc28.ResetAllocatorPointer();
-    self->alloc14.ResetAllocatorPointer();
-    self->alloc0.ResetAllocatorPointer();
+    self->unknown_14_.ResetAllocatorPointer();
+    self->unknown_0_.ResetAllocatorPointer();
     Window_Init((InitTarget0205cfd4*)self->window);
     for (int i = 0; i < 2; i++) {
         Background_Init((BackgroundGraphics*)self->backgrounds[i]);
@@ -108,38 +108,38 @@ extern "C" ARM void func_ov003_02158bb8(Struct_ov003_02158bb8* arg0)
         WindowPane_Init(self->canvases[i]);
     }
     KeyTable_Reset((Struct020dfc40*)self->texts);
-    self->field_0x587 = 0;
-    self->field_0x588 = 0;
-    self->field_0x580 = 0;
-    self->field_0x581 = 0;
-    self->field_0x589 = 0;
+    self->unknown_587_ = 0;
+    self->unknown_588_ = 0;
+    self->unknown_580_ = 0;
+    self->unknown_581_ = 0;
+    self->unknown_589_ = 0;
     for (int i = 0; i < 6; i++) {
-        self->field_0x58a[i] = -1;
+        self->unknown_58a_[i] = -1;
     }
-    arg0->unknown_590_ = 0;
-    for (int var3 = 0; var3 < 4; var3++) {
-        arg0->unknown_591_[var3] = 0xff;
+    self->unknown_590_ = 0;
+    for (int i = 0; i < 4; i++) {
+        self->unknown_591_[i] = 0xff;
     }
-    arg0->unknown_584_ = 0;
-    arg0->unknown_585_ = -1;
-    arg0->unknown_586_ = 0;
-    arg0->unknown_5a1_ = -1;
-    arg0->unknown_5a4_ = 0;
-    arg0->unknown_5a8_ = 0;
-    arg0->unknown_5ac_ = 0;
-    arg0->unknown_59c_ = 0;
-    arg0->unknown_582_ = 0;
-    arg0->unknown_583_ = 0;
-    arg0->unknown_59d_ = 0;
-    arg0->unknown_59e_ = 0;
-    arg0->unknown_570_ = NULL;
-    arg0->unknown_59f_ = 0;
-    arg0->unknown_5a0_ = 0;
-    arg0->unknown_5b0_ = 0;
-    arg0->unknown_5b1_ = 0;
-    arg0->unknown_5b2_ = 1;
-    arg0->unknown_5b3_ = 0;
-    arg0->unknown_5b4_ = 0;
-    func_020a9ea4((Struct_020a9ea4*)arg0->unknown_5b8_);
-    arg0->unknown_598_ = 0;
+    self->unknown_584_ = 0;
+    self->unknown_585_ = -1;
+    self->unknown_586_ = 0;
+    self->unknown_5a1_ = -1;
+    self->unknown_5a4_ = 0;
+    self->unknown_5a8_ = 0;
+    self->unknown_5ac_ = 0;
+    self->unknown_59c_ = 0;
+    self->field_0x582 = 0;
+    self->unknown_583_ = 0;
+    self->unknown_59d_ = 0;
+    self->unknown_59e_ = 0;
+    self->entryManager = NULL;
+    self->unknown_59f_ = 0;
+    self->unknown_5a0_ = 0;
+    self->unknown_5b0_ = 0;
+    self->unknown_5b1_ = 0;
+    self->unknown_5b2_ = 1;
+    self->unknown_5b3_ = 0;
+    self->unknown_5b4_ = 0;
+    func_020a9ea4((Struct020a9ea4*)self->unknown_5b8_);
+    self->unknown_598_ = 0;
 }

@@ -1,32 +1,32 @@
 #include <globaldefs.h>
 
 #if defined(jpn)
-enum { Enum_ov002_0215f4e8_7166 = 0x1ac6, Enum_ov002_0215f4e8_3036 = 0xaa4, Enum_ov002_0215f4e8_32 = 0x8 };
+enum { CursorOffset = 0x1ac6, SeparatorOffset = 0xaa4, NamesOffset = 0x8 };
 #define func_02041cc0 func_0204234c
 #else
-enum { Enum_ov002_0215f4e8_7166 = 0x1bfe, Enum_ov002_0215f4e8_3036 = 0xbdc, Enum_ov002_0215f4e8_32 = 0x20 };
+enum { CursorOffset = 0x1bfe, SeparatorOffset = 0xbdc, NamesOffset = 0x20 };
 #endif
 
 struct Container020e0310;
-int KeyTable_Get(struct Container020e0310 *c, int key);
-int Text_AppendFrameTag(char *dst, int a1, int a2, int a3, int a4, int a5);
-int Text_AppendCursorTag(char *dst, int cursor);
-const char *StandardStrings_Get(int key);
-int Text_Append(char *dst, const char *src);
+extern "C" int KeyTable_Get(struct Container020e0310 *c, int key);
+extern "C" int Text_AppendFrameTag(char *dst, int a1, int a2, int a3, int a4, int a5);
+extern "C" int Text_AppendCursorTag(char *dst, int cursor);
+extern "C" const char *StandardStrings_Get(int key);
+extern "C" int Text_Append(char *dst, const char *src);
 #if defined(jpn)
-extern "C" int func_0204234c(char *arg0, int arg1);
+extern "C" int func_0204234c(char *dst, int a);
 #else
-extern "C" int func_02041cc0(char *arg0, int arg1);
+extern "C" int func_02041cc0(char *dst, int a);
 #endif
-int AppendXYTag_02041a90(char *dst, int x, int y);
-int Text_AppendPaletteTag(char *dst, int palette);
-int Text_AppendNTag(char *dst, int n, const char *name);
+extern "C" int func_02041a90(char *dst, int x, int y);
+extern "C" int Text_AppendPaletteTag(char *dst, int palette);
+extern "C" int Text_AppendNTag(char *dst, int n, const char *name);
 extern "C" void func_ov002_02156080(void *self, short *out, short *outCount);
 extern "C" int func_ov002_02161920(void *self);
 
 // USA: func_ov002_0215f4e8
-extern "C" ARM void func_ov002_0215f4e8(unsigned char *arg0, char *arg1, int arg2) {
-    if (arg1 == NULL) return;
+extern "C" ARM void func_ov002_0215f4e8(unsigned char *base, char *dst, int flag) {
+    if (dst == NULL) return;
 
     int cursor = *(short *) (base + CursorOffset);
     if (flag) {
@@ -39,8 +39,8 @@ extern "C" ARM void func_ov002_0215f4e8(unsigned char *arg0, char *arg1, int arg
     Text_Append(dst, StandardStrings_Get(0x16));
 #endif
     Text_Append(dst, *(const char **) (base + 0x1000 + SeparatorOffset));
-    AppendLineTag02041cc0(dst, 0x18);
-    AppendXYTag_02041a90(dst, 0xc, 0x1f);
+    func_02041cc0(dst, 0x18);
+    func_02041a90(dst, 0xc, 0x1f);
 
     short count = 0;
     short list[9];

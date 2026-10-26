@@ -36,17 +36,17 @@ static const double zero = 0.0, one = 1.0, two = 2.0, two53 = 9007199254740992.0
                     ivln2_l = 1.92596299112661746887e-08;
 
 // USA: func_02005ea0
-extern "C" ARM double func_02005ea0(double arg0, double arg1) {
-    double var0, var1, var2, var3, var4, var5;
-    double var6, var7, var8, var9, var10, var11, var12, var13, var14;
-    int var15, var16, var17, var18, var19;
+extern "C" ARM double func_02005ea0(double x, double y) {
+    double z, ax, var2, var3, var4, var5;
+    double var6, var7, t2, r, s, t, u, v, w;
+    int i, j, k, var18, n;
     int var20, var21, var22, var23;
     unsigned int var24, var25;
 
-    var20 = ((int*)&arg0)[1];
-    var24 = ((int*)&arg0)[0];
-    var21 = ((int*)&arg1)[1];
-    var25 = ((int*)&arg1)[0];
+    var20 = ((int*)&x)[1];
+    var24 = ((int*)&x)[0];
+    var21 = ((int*)&y)[1];
+    var25 = ((int*)&y)[0];
     var22 = var20 & 0x7fffffff;
     var23 = var21 & 0x7fffffff;
 
@@ -56,7 +56,7 @@ extern "C" ARM double func_02005ea0(double arg0, double arg1) {
 
     if (var22 > 0x7ff00000 || ((var22 == 0x7ff00000) && (var24 != 0)) || var23 > 0x7ff00000 ||
         ((var23 == 0x7ff00000) && (var25 != 0))) {
-        return arg0 + arg1;
+        return x + y;
     }
 
     var18 = 0;
@@ -64,16 +64,16 @@ extern "C" ARM double func_02005ea0(double arg0, double arg1) {
         if (var23 >= 0x43400000) {
             var18 = 2;
         } else if (var23 >= 0x3ff00000) {
-            var17 = (var23 >> 20) - 0x3ff;
-            if (var17 > 20) {
-                var16 = var25 >> (52 - var17);
-                if ((var16 << (52 - var17)) == var25) {
-                    var18 = 2 - (var16 & 1);
+            k = (var23 >> 20) - 0x3ff;
+            if (k > 20) {
+                j = var25 >> (52 - k);
+                if ((j << (52 - k)) == var25) {
+                    var18 = 2 - (j & 1);
                 }
             } else if (var25 == 0) {
-                var16 = var23 >> (20 - var17);
-                if ((var16 << (20 - var17)) == var23) {
-                    var18 = 2 - (var16 & 1);
+                j = var23 >> (20 - k);
+                if ((j << (20 - k)) == var23) {
+                    var18 = 2 - (j & 1);
                 }
             }
         }
@@ -82,45 +82,45 @@ extern "C" ARM double func_02005ea0(double arg0, double arg1) {
     if (var25 == 0) {
         if (var23 == 0x7ff00000) {
             if (((var22 - 0x3ff00000) | var24) == 0) {
-                return arg1 - arg1;
+                return y - y;
             } else if (var22 >= 0x3ff00000) {
-                return (var21 >= 0) ? arg1 : zero;
+                return (var21 >= 0) ? y : zero;
             } else {
-                return (var21 < 0) ? -arg1 : zero;
+                return (var21 < 0) ? -y : zero;
             }
         }
         if (var23 == 0x3ff00000) {
             if (var21 < 0) {
-                return one / arg0;
+                return one / x;
             } else {
-                return arg0;
+                return x;
             }
         }
         if (var21 == 0x40000000) {
-            return arg0 * arg0;
+            return x * x;
         }
-        if (hy == 0x3fe00000) {
-            if (hx >= 0) {
+        if (var21 == 0x3fe00000) {
+            if (var20 >= 0) {
                 return sqrt(x);
             }
         }
     }
 
-    var1 = func_02008f3c(arg0);
+    ax = func_02008f3c(x);
     if (var24 == 0) {
         if (var22 == 0x7ff00000 || var22 == 0 || var22 == 0x3ff00000) {
-            var0 = var1;
+            z = ax;
             if (var21 < 0) {
-                var0 = one / var0;
+                z = one / z;
             }
             if (var20 < 0) {
                 if (((var22 - 0x3ff00000) | var18) == 0) {
-                    var0 = (var0 - var0) / (var0 - var0);
+                    z = (z - z) / (z - z);
                 } else if (var18 == 1) {
-                    var0 = -var0;
+                    z = -z;
                 }
             }
-            return var0;
+            return z;
         }
     }
 
@@ -144,124 +144,124 @@ extern "C" ARM double func_02005ea0(double arg0, double arg1) {
         if (var22 > 0x3ff00000) {
             return (var21 > 0) ? big * big : tiny * tiny;
         }
-        var11 = arg0 - 1;
-        var14 = (var11 * var11) * (0.5 - var11 * (0.3333333333333333333333 - var11 * 0.25));
-        var12 = ivln2_h * var11;
-        var13 = var11 * ivln2_l - var14 * ivln2;
-        var7 = var12 + var13;
+        t = x - 1;
+        w = (t * t) * (0.5 - t * (0.3333333333333333333333 - t * 0.25));
+        u = ivln2_h * t;
+        v = t * ivln2_l - w * ivln2;
+        var7 = u + v;
         ((int*)&var7)[0] = 0;
-        var8 = var13 - (var7 - var12);
+        t2 = v - (var7 - u);
     } else {
-        double var26, var27, var28, var29, var30;
-        var19 = 0;
+        double s2, var27, var28, var29, var30;
+        n = 0;
         if (var22 < 0x00100000) {
-            var1 *= two53;
-            var19 -= 53;
-            var22 = ((int*)&var1)[1];
+            ax *= two53;
+            n -= 53;
+            var22 = ((int*)&ax)[1];
         }
-        var19 += ((var22) >> 20) - 0x3ff;
-        var16 = var22 & 0x000fffff;
-        var22 = var16 | 0x3ff00000;
-        if (var16 <= 0x3988e) {
-            var17 = 0;
-        } else if (var16 < 0xbb67a) {
-            var17 = 1;
+        n += ((var22) >> 20) - 0x3ff;
+        j = var22 & 0x000fffff;
+        var22 = j | 0x3ff00000;
+        if (j <= 0x3988e) {
+            k = 0;
+        } else if (j < 0xbb67a) {
+            k = 1;
         } else {
-            var17 = 0;
-            var19 += 1;
+            k = 0;
+            n += 1;
             var22 -= 0x00100000;
         }
-        ((int*)&var1)[1] = var22;
+        ((int*)&ax)[1] = var22;
 
-        var12 = var1 - data_020e6acc[var17];
-        var13 = one / (var1 + data_020e6acc[var17]);
-        var10 = var12 * var13;
-        var27 = var10;
+        u = ax - data_020e6acc[k];
+        v = one / (ax + data_020e6acc[k]);
+        s = u * v;
+        var27 = s;
         ((int*)&var27)[0] = 0;
         var29 = zero;
-        ((int*)&var29)[1] = ((var22 >> 1) | 0x20000000) + 0x00080000 + (var17 << 18);
-        var30 = var1 - (var29 - data_020e6acc[var17]);
-        var28 = var13 * ((var12 - var27 * var29) - var27 * var30);
-        var26 = var10 * var10;
-        var9 = var26 * var26 * (L1 + var26 * (L2 + var26 * (L3 + var26 * (L4 + var26 * (L5 + var26 * L6)))));
-        var9 += var28 * (var27 + var10);
-        var26 = var27 * var27;
-        var29 = 3.0 + var26 + var9;
+        ((int*)&var29)[1] = ((var22 >> 1) | 0x20000000) + 0x00080000 + (k << 18);
+        var30 = ax - (var29 - data_020e6acc[k]);
+        var28 = v * ((u - var27 * var29) - var27 * var30);
+        s2 = s * s;
+        r = s2 * s2 * (L1 + s2 * (L2 + s2 * (L3 + s2 * (L4 + s2 * (L5 + s2 * L6)))));
+        r += var28 * (var27 + s);
+        s2 = var27 * var27;
+        var29 = 3.0 + s2 + r;
         ((int*)&var29)[0] = 0;
-        var30 = var9 - ((var29 - 3.0) - var26);
-        var12 = var27 * var29;
-        var13 = var28 * var29 + var30 * var10;
-        var4 = var12 + var13;
+        var30 = r - ((var29 - 3.0) - s2);
+        u = var27 * var29;
+        v = var28 * var29 + var30 * s;
+        var4 = u + v;
         ((int*)&var4)[0] = 0;
-        var5 = var13 - (var4 - var12);
+        var5 = v - (var4 - u);
         var2 = cp_h * var4;
-        var3 = cp_l * var4 + var5 * cp + data_020e6adc[var17];
-        var11 = (double)var19;
-        var7 = (((var2 + var3) + data_020e6abc[var17]) + var11);
+        var3 = cp_l * var4 + var5 * cp + data_020e6adc[k];
+        t = (double)n;
+        var7 = (((var2 + var3) + data_020e6abc[k]) + t);
         ((int*)&var7)[0] = 0;
-        var8 = var3 - (((var7 - var11) - data_020e6abc[var17]) - var2);
+        t2 = var3 - (((var7 - t) - data_020e6abc[k]) - var2);
     }
 
-    var10 = one;
+    s = one;
     if ((((var20 >> 31) + 1) | (var18 - 1)) == 0) {
-        var10 = -one;
+        s = -one;
     }
 
-    var6 = arg1;
+    var6 = y;
     ((int*)&var6)[0] = 0;
-    var5 = (arg1 - var6) * var7 + arg1 * var8;
+    var5 = (y - var6) * var7 + y * t2;
     var4 = var6 * var7;
-    var0 = var5 + var4;
-    var16 = ((int*)&var0)[1];
-    var15 = ((int*)&var0)[0];
-    if (var16 >= 0x40900000) {
-        if (((var16 - 0x40900000) | var15) != 0) {
-            return var10 * big * big;
+    z = var5 + var4;
+    j = ((int*)&z)[1];
+    i = ((int*)&z)[0];
+    if (j >= 0x40900000) {
+        if (((j - 0x40900000) | i) != 0) {
+            return s * big * big;
         } else {
-            if (var5 + ovt > var0 - var4) {
-                return var10 * big * big;
+            if (var5 + ovt > z - var4) {
+                return s * big * big;
             }
         }
-    } else if ((var16 & 0x7fffffff) >= 0x4090cc00) {
-        if (((var16 - 0xc090cc00) | var15) != 0) {
-            return var10 * tiny * tiny;
+    } else if ((j & 0x7fffffff) >= 0x4090cc00) {
+        if (((j - 0xc090cc00) | i) != 0) {
+            return s * tiny * tiny;
         } else {
-            if (var5 <= var0 - var4) {
-                return var10 * tiny * tiny;
+            if (var5 <= z - var4) {
+                return s * tiny * tiny;
             }
         }
     }
 
-    var15 = var16 & 0x7fffffff;
-    var17 = (var15 >> 20) - 0x3ff;
-    var19 = 0;
-    if (var15 > 0x3fe00000) {
-        var19 = var16 + (0x00100000 >> (var17 + 1));
-        var17 = ((var19 & 0x7fffffff) >> 20) - 0x3ff;
-        var11 = zero;
-        ((int*)&var11)[1] = (var19 & ~(0x000fffff >> var17));
-        var19 = ((var19 & 0x000fffff) | 0x00100000) >> (20 - var17);
-        if (var16 < 0) {
-            var19 = -var19;
+    i = j & 0x7fffffff;
+    k = (i >> 20) - 0x3ff;
+    n = 0;
+    if (i > 0x3fe00000) {
+        n = j + (0x00100000 >> (k + 1));
+        k = ((n & 0x7fffffff) >> 20) - 0x3ff;
+        t = zero;
+        ((int*)&t)[1] = (n & ~(0x000fffff >> k));
+        n = ((n & 0x000fffff) | 0x00100000) >> (20 - k);
+        if (j < 0) {
+            n = -n;
         }
-        var4 -= var11;
+        var4 -= t;
     }
-    var11 = var5 + var4;
-    ((int*)&var11)[0] = 0;
-    var12 = var11 * lg2_h;
-    var13 = (var5 - (var11 - var4)) * lg2 + var11 * lg2_l;
-    var0 = var12 + var13;
-    var14 = var13 - (var0 - var12);
-    var11 = var0 * var0;
-    var7 = var0 - var11 * (P1 + var11 * (P2 + var11 * (P3 + var11 * (P4 + var11 * P5))));
-    var9 = (var0 * var7) / (var7 - two) - (var14 + var0 * var14);
-    var0 = one - (var9 - var0);
-    var16 = ((int*)&var0)[1];
-    var16 += (var19 << 20);
-    if ((var16 >> 20) <= 0) {
-        var0 = func_0200aae4(var0, var19);
+    t = var5 + var4;
+    ((int*)&t)[0] = 0;
+    u = t * lg2_h;
+    v = (var5 - (t - var4)) * lg2 + t * lg2_l;
+    z = u + v;
+    w = v - (z - u);
+    t = z * z;
+    var7 = z - t * (P1 + t * (P2 + t * (P3 + t * (P4 + t * P5))));
+    r = (z * var7) / (var7 - two) - (w + z * w);
+    z = one - (r - z);
+    j = ((int*)&z)[1];
+    j += (n << 20);
+    if ((j >> 20) <= 0) {
+        z = func_0200aae4(z, n);
     } else {
-        ((int*)&var0)[1] += (var19 << 20);
+        ((int*)&z)[1] += (n << 20);
     }
-    return var10 * var0;
+    return s * z;
 }

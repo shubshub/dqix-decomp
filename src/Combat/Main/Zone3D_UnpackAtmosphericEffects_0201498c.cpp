@@ -3,7 +3,7 @@
 #include "NitroSDK/NSBXX/NSBXX.h"
 
 // Main, originally AccumulateHandleStats0201498c (USA 0x0201498c, EUR 0x0201499c, JPN 0x02014758)
-ARM int Zone3D_UnpackAtmosphericEffects(void* zoneRaw) {
+extern "C" ARM int Zone3D_UnpackAtmosphericEffects(void* zoneRaw) {
     Zone3D* zone = static_cast<Zone3D*>(zoneRaw);
     AtmosphericEffectSet* effects = &zone->atmosphericEffects_;
     if (!effects->IsArchiveLoaded())

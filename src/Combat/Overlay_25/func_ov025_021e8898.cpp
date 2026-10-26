@@ -10,9 +10,9 @@ extern "C" void* func_ov000_02160130(void);
 
 // USA: func_ov025_021e8898
 extern "C" ARM int func_ov025_021e8898(void) {
-    void* var0 = func_ov000_02160130();
-    if (var0) {
-        *((char*)var0 + Enum_ov025_021e8898_28632) = 1;
+    void* obj = func_ov000_02160130();
+    if (obj) {
+        *((char*)obj + Enum_ov025_021e8898_28632) = 1;
     }
     return 1;
 }

@@ -3,6 +3,6 @@
 extern "C" int func_ov000_02181990(int, void*);
 
 // USA: func_ov000_02181f9c
-extern "C" ARM int func_ov000_02181f9c(int arg0, int arg1, void* arg2) {
-	return func_ov000_02181990(4, arg2);
+extern "C" ARM int func_ov000_02181f9c(int a0, int a1, void* out) {
+	return func_ov000_02181990(4, out);
 }

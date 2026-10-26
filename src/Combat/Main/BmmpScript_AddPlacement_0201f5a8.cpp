@@ -19,7 +19,7 @@ struct Vec4Variant0201f5a8 {
 };
 
 // Main, originally SetDecodedIntEntry0201f5a8 (USA 0x0201f5a8, EUR 0x0201f5b8, JPN 0x0201f334)
-ARM int BmmpScript_AddPlacement(struct Vec4Variant0201f5a8* params) {
+extern "C" ARM int BmmpScript_AddPlacement(struct Vec4Variant0201f5a8* params) {
     int reserved = ((Script::Parameter*)&params->reserved)->ToInt();
     int graphicId = ((Script::Parameter*)&params->graphicId)->ToInt();
     int tileX = ((Script::Parameter*)&params->tileX)->ToInt();

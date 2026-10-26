@@ -11,7 +11,7 @@ struct ByteFlags02033f2c {
 };
 
 // Main, originally ClearFlags0x40And0x80At0xe0 (USA 0x02033f2c, EUR 0x02033f3c, JPN 0x02033a64)
-ARM void GameObject_ClearWallHit(struct ByteFlags02033f2c* object) {
+extern "C" ARM void GameObject_ClearWallHit(struct ByteFlags02033f2c* object) {
     object->flagsE0 &= ~GameObjectFlagsE0_WallHit;
     object->flagsE0 &= ~GameObjectFlagsE0_WallAttribute;
 }

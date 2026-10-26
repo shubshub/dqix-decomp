@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 
 // USA: func_ov024_021f69b4
-extern "C" ARM void* func_ov024_021f69b4(char* arg0, int arg1) {
+extern "C" ARM void* func_ov024_021f69b4(char* base, int key) {
 #if defined(jpn)
- enum {Enum_ov024_021f69b4_1096=0x488};
+ enum {regionalOffset0=0x488};
 #else
- enum {Enum_ov024_021f69b4_1096=0x448};
+ enum {regionalOffset0=0x448};
 #endif
-	int var0 = (arg1 >= 0 && arg1 <= 3) ? 1 : 0;
+	int var0 = (key >= 0 && key <= 3) ? 1 : 0;
 	if (!var0) goto notfound;
-	for (int var1 = 0; var1 < 4; var1++) {
-		int var2 = *(int*)(arg0 + var1 * Enum_ov024_021f69b4_1096 + 0x9a4);
-		if (arg1 == var2) {
-			return arg0 + 0x958 + var1 * Enum_ov024_021f69b4_1096;
+	for (int i = 0; i < 4; i++) {
+		int var2 = *(int*)(base + i * regionalOffset0 + 0x9a4);
+		if (key == var2) {
+			return base + 0x958 + i * regionalOffset0;
 		}
 	}
 notfound:

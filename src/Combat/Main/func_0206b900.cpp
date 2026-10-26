@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
-extern "C" void func_020696bc(int arg0, int* arg1, int arg2);
+extern "C" void func_020696bc(int a, int* out, int c);
 
 // USA: func_0206b900
-extern "C" ARM int func_0206b900(int arg0, int* arg1) {
-    int var0;
-    func_020696bc(arg0, &var0, 1);
-    *arg1 = *arg1 + var0;
+extern "C" ARM int func_0206b900(int input, int* target) {
+    int val;
+    func_020696bc(input, &val, 1);
+    *target = *target + val;
     return 0;
 }

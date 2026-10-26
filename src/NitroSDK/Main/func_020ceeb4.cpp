@@ -4,35 +4,35 @@ unsigned int DisableIRQInterrupts(void);
 unsigned int SetIRQInterruptState(int mask);
 
 struct Struct_020ceeb4 {
-    int unknown_0_;
-    int unknown_4_;
-    struct Struct_020ceeb4* unknown_8_;
+    int field0;
+    int field4;
+    struct Struct_020ceeb4* next;
 };
 
 // USA: func_020ceeb4
-extern "C" ARM void func_020ceeb4(struct Struct_020ceeb4** arg0, struct Struct_020ceeb4* arg1) {
-    unsigned int var0;
-    struct Struct_020ceeb4* var1;
-    struct Struct_020ceeb4* var2;
-    if (arg0 == NULL) {
+extern "C" ARM void func_020ceeb4(struct Struct_020ceeb4** head, struct Struct_020ceeb4* target) {
+    unsigned int mask;
+    struct Struct_020ceeb4* node;
+    struct Struct_020ceeb4* prev;
+    if (head == NULL) {
         return;
     }
-    var0 = DisableIRQInterrupts();
-    var1 = *arg0;
-    var2 = var1;
-    if (var1 != NULL) {
+    mask = DisableIRQInterrupts();
+    node = *head;
+    prev = node;
+    if (node != NULL) {
         do {
-            if (var1 == arg1) {
-                if (var1 == var2) {
-                    *arg0 = var1->unknown_8_;
+            if (node == target) {
+                if (node == prev) {
+                    *head = node->next;
                 } else {
-                    var2->unknown_8_ = var1->unknown_8_;
+                    prev->next = node->next;
                 }
                 break;
             }
-            var2 = var1;
-            var1 = var1->unknown_8_;
-        } while (var1 != NULL);
+            prev = node;
+            node = node->next;
+        } while (node != NULL);
     }
-    SetIRQInterruptState(var0);
+    SetIRQInterruptState(mask);
 }

@@ -1,46 +1,46 @@
 #include <globaldefs.h>
 
 struct Container020e0310;
-int KeyTable_Get(struct Container020e0310* c, int key);
-void NameText_Clear(void* buf);
-void NameText_InitFromPartyMember(void* obj, int combatantId);
-void* MessageSystem_GetInstance(void);
+extern "C" int KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" void NameText_Clear(void* buf);
+extern "C" void NameText_InitFromPartyMember(void* obj, int combatantId);
+extern "C" void* MessageSystem_GetInstance(void);
 extern "C" void func_02046380(void* g);
 extern "C" void MessageSystem_FormatText(void* a, int b, int c, void* d, int e, int f, int g);
 
 struct Struct_ov000_02171a74 {
-    char unknown_0_[4];
-    void* unknown_4_;
-    char unknown_8_[0x28 - 8];
-    int unknown_28_;
-    char unknown_2c_[0x4c - 0x2c];
-    int unknown_4c_;
+    char pad0[4];
+    void* field4;
+    char pad1[0x28 - 8];
+    int field28;
+    char pad2[0x4c - 0x2c];
+    int field4c;
 };
 
 // USA: func_ov000_02171a74
-extern "C" ARM int func_ov000_02171a74(struct Struct_ov000_02171a74* arg0
+extern "C" ARM int func_ov000_02171a74(struct Struct_ov000_02171a74* obj
 #if !defined(jpn)
-    , int arg1
+    , int param
 #endif
 ) {
 #if !defined(jpn)
-    if (arg0->unknown_4_ == 0) {
+    if (obj->field4 == 0) {
         return -1;
     }
 #endif
-    int var0 = arg0->unknown_28_;
-    int var1 = -1;
-    if (var0 & 1) {
-        var1 = 4;
-    } else if (var0 & 8) {
-        var1 = 2;
-    } else if (var0 & 0x10) {
-        var1 = 3;
-    } else if (var0 & 0x80000) {
-        var1 = 0x26;
+    int flags = obj->field28;
+    int key = -1;
+    if (flags & 1) {
+        key = 4;
+    } else if (flags & 8) {
+        key = 2;
+    } else if (flags & 0x10) {
+        key = 3;
+    } else if (flags & 0x80000) {
+        key = 0x26;
     }
 #if !defined(jpn)
-    if (var1 < 0) {
+    if (key < 0) {
         goto end;
     }
     {
@@ -58,5 +58,5 @@ extern "C" ARM int func_ov000_02171a74(struct Struct_ov000_02171a74* arg0
     }
 end:
 #endif
-    return var1;
+    return key;
 }

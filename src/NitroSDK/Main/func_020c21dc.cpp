@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Struct_020b36c0 {
-    int unknown_0_[16];
+    int _[16];
 };
 
 // KEEP-NAME: the ROM symbol here is the mangled C++ name, not a func_ tag.

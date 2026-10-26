@@ -10,14 +10,14 @@
 
 struct Struct_0205d81c;
 struct Container0205a330;
-void SpriteEntryList_SetFirstObject(Container0205a3d0*, int, int);
-void SpriteEntryList_PlayAnimation(Container0205a3d0*, int);
-SpriteEntry* SpriteEntryList_Find(Container0205a3d0*, int);
-void SpriteEntryList_SetPosition(Container0205a3d0*, int, short, short);
-void SpriteEntryList_AdvanceAnimations(Container0205a330*, int);
+extern "C" void SpriteEntryList_SetFirstObject(Container0205a3d0*, int, int);
+extern "C" void SpriteEntryList_PlayAnimation(Container0205a3d0*, int);
+extern "C" SpriteEntry* SpriteEntryList_Find(Container0205a3d0*, int);
+extern "C" void SpriteEntryList_SetPosition(Container0205a3d0*, int, short, short);
+extern "C" void SpriteEntryList_AdvanceAnimations(Container0205a330*, int);
 extern "C" void SpriteContext_DrawEntries(void*);
-WindowPane* FindElementByC40205d81c(Struct_0205d81c*, int);
-int WindowPane_IsOpen(unsigned char*);
+extern "C" WindowPane* func_0205d81c(Struct_0205d81c*, int);
+extern "C" int WindowPane_IsOpen(unsigned char*);
 
 // Overlay 23, originally func_ov023_021da9b4 (USA/EUR 0x021da9b4, JPN 0x021db240)
 extern "C" ARM void CharacterCreationUI_PlaceCursorSprites(CharacterCreationUI* self) {
@@ -37,7 +37,7 @@ extern "C" ARM void CharacterCreationUI_PlaceCursorSprites(CharacterCreationUI* 
         }
     }
     if (self->subSpriteContext == NULL) return;
-    WindowPane* pane = FindElementByC40205d81c((Struct_0205d81c*)&self->windows[CreationWindowIndex_Bottom], BottomWindow_YesNoPane);
+    WindowPane* pane = func_0205d81c((Struct_0205d81c*)&self->windows[CreationWindowIndex_Bottom], BottomWindow_YesNoPane);
     if (pane == NULL) return;
     if (!WindowPane_IsOpen((unsigned char*)pane)) return;
     short x = (short)(pane->tileX_ << 3);
@@ -55,21 +55,21 @@ extern "C" ARM void CharacterCreationUI_PlaceCursorSprites(CharacterCreationUI* 
 }
 #else
 struct Struct0200fb08;
-ARM unsigned char GameState_GetLanguage(struct Struct0200fb08* obj);
+extern "C" ARM unsigned char GameState_GetLanguage(struct Struct0200fb08* obj);
 
-void SpriteEntryList_SetFirstObject(struct Container0205a3d0* c, int key, int val);
-void SpriteEntryList_PlayAnimation(struct Container0205a3d0* c, int key);
-struct SpriteEntry* SpriteEntryList_Find(struct Container0205a3d0* c, int key);
-ARM void SpriteEntryList_SetPosition(struct Container0205a3d0* c, int key, short a, short b);
+extern "C" void SpriteEntryList_SetFirstObject(struct Container0205a3d0* c, int key, int val);
+extern "C" void SpriteEntryList_PlayAnimation(struct Container0205a3d0* c, int key);
+extern "C" struct SpriteEntry* SpriteEntryList_Find(struct Container0205a3d0* c, int key);
+extern "C" ARM void SpriteEntryList_SetPosition(struct Container0205a3d0* c, int key, short a, short b);
 
 struct Container0205a330;
-void SpriteEntryList_AdvanceAnimations(struct Container0205a330* c, int arg);
+extern "C" void SpriteEntryList_AdvanceAnimations(struct Container0205a330* c, int arg);
 
 extern "C" void SpriteContext_DrawEntries(void* obj);
 
 struct Struct_0205d81c;
-ARM struct WindowPane* FindElementByC40205d81c(struct Struct_0205d81c* s, int key);
-ARM int WindowPane_IsOpen(unsigned char* obj);
+extern "C" ARM struct WindowPane* func_0205d81c(struct Struct_0205d81c* s, int key);
+extern "C" ARM int WindowPane_IsOpen(unsigned char* obj);
 
 // Overlay 23, originally func_ov023_021da9b4 (USA/EUR 0x021da9b4, JPN 0x021db240)
 extern "C" ARM void CharacterCreationUI_PlaceCursorSprites(CharacterCreationUI* self) {
@@ -100,7 +100,7 @@ extern "C" ARM void CharacterCreationUI_PlaceCursorSprites(CharacterCreationUI* 
     if (self->subSpriteContext == 0) {
         return;
     }
-    struct WindowPane* pane = FindElementByC40205d81c((struct Struct_0205d81c*)&self->windows[CreationWindowIndex_Bottom], BottomWindow_YesNoPane);
+    struct WindowPane* pane = func_0205d81c((struct Struct_0205d81c*)&self->windows[CreationWindowIndex_Bottom], BottomWindow_YesNoPane);
     if (pane == 0) {
         return;
     }

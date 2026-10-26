@@ -1,52 +1,52 @@
 #include <globaldefs.h>
 
-struct Struct_0203c1c8 {
+struct Struct0203c1c8 {
 #if defined(jpn)
-    short unknown1_0_[10];
+    short textSlots[10];
 #endif
-    int unknown_0_;
-    int unknown_4_;
+    int x;
+    int y;
 #if defined(jpn)
-    int unknown_1c_;
-    int unknown_20_;
+    int lineHeight;
+    int characterAdvance;
 #endif
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
+    int paletteOffset;
+    int alignment;
+    int priority;
 #if defined(jpn)
-    signed int unknown_30_0_ : 16;
-    unsigned int unknown_32_0_ : 8;
-    unsigned int unknown_33_0_ : 8;
-    int unknown_34_;
+    signed int affineIndex : 16;
+    unsigned int unknown32 : 8;
+    unsigned int unknown33 : 8;
+    int affineMode;
 #else
-    short unknown_14_;
+    short entryIndex;
 #endif
 };
 
 #if defined(jpn)
-extern "C" void func_0203c1c8(Struct_0203c1c8* arg0, int arg1);
+extern "C" void CachedTextLabel_Draw(Struct0203c1c8* obj, int count);
 #define REGION_COUNT 2
 #else
-extern "C" void func_0203c1c8(Struct_0203c1c8* arg0);
+extern "C" void CachedTextLabel_Draw(Struct0203c1c8* obj);
 #define REGION_COUNT 1
 #endif
 
 // USA: func_ov000_021704d8
-extern "C" ARM void func_ov000_021704d8(Struct_0203c1c8* arg0, int* arg1, int* arg2, int* arg3) {
-    arg0->unknown_c_ = 2;
-    arg0->unknown_10_ = 1;
-    int var0;
-    for (var0 = 0; var0 < REGION_COUNT; var0++) {
-        int var1 = arg1[var0];
-        int var2 = arg2[var0];
-        arg0->unknown_0_ = var1;
-        arg0->unknown_4_ = var2;
-        arg0->unknown_8_ = arg3[var0];
+extern "C" ARM void func_ov000_021704d8(Struct0203c1c8* obj, int* arr1, int* arr2, int* arg3) {
+    obj->alignment = 2;
+    obj->priority = 1;
+    int i;
+    for (i = 0; i < REGION_COUNT; i++) {
+        int v0 = arr1[i];
+        int v4 = arr2[i];
+        obj->x = v0;
+        obj->y = v4;
+        obj->paletteOffset = arg3[i];
 #if defined(jpn)
-        func_0203c1c8(arg0, 10);
+        CachedTextLabel_Draw(obj, 10);
 #else
-        func_0203c1c8(arg0);
+        CachedTextLabel_Draw(obj);
 #endif
     }
-    arg0->unknown_8_ = 0;
+    obj->paletteOffset = 0;
 }

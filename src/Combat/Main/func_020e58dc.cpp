@@ -1,28 +1,28 @@
 #include <globaldefs.h>
 
 struct Struct_020e58dc_2 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
+    int field0;
+    int field4;
+    int lo;
+    int hi;
+    int field10;
 };
 
 struct Struct_020e58dc {
-    struct Struct_020e58dc_2* unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    struct Struct_020e58dc_2* base;
+    int field4;
+    int count;
 };
 
 // USA: func_020e58dc
-extern "C" ARM struct Struct_020e58dc_2* func_020e58dc(struct Struct_020e58dc* arg0, int arg1) {
-    struct Struct_020e58dc_2* var0 = arg0->unknown_0_;
-    int var1;
-    for (var1 = 0; var1 < arg0->unknown_8_; var1++) {
-        if (var0->unknown_8_ <= arg1 && arg1 < var0->unknown_c_) {
-            return var0;
+extern "C" ARM struct Struct_020e58dc_2* func_020e58dc(struct Struct_020e58dc* list, int key) {
+    struct Struct_020e58dc_2* entry = list->base;
+    int i;
+    for (i = 0; i < list->count; i++) {
+        if (entry->lo <= key && key < entry->hi) {
+            return entry;
         }
-        var0++;
+        entry++;
     }
     return NULL;
 }

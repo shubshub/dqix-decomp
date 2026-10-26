@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
-struct Struct_ov024_021f6820 { short unknown_0_; char unknown_2_; char unknown_3_; };
+struct Struct_ov024_021f6820 { short a; char b; char c; };
 
 // USA: func_ov024_021f6820
-extern "C" ARM void func_ov024_021f6820(struct Struct_ov024_021f6820* arg0, short arg1, char arg2, char arg3) {
-    arg0->unknown_0_ = arg1;
-    arg0->unknown_2_ = arg2;
-    arg0->unknown_3_ = arg3;
+extern "C" ARM void func_ov024_021f6820(struct Struct_ov024_021f6820* obj, short a, char b, char c) {
+    obj->a = a;
+    obj->b = b;
+    obj->c = c;
 }

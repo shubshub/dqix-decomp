@@ -15,7 +15,7 @@ extern unsigned char data_020fdcce;
 // Stores the party order (up to four member indices; more stores none) and sets each listed member's reset, so
 // MapDisplay_Update drops that panel's next statsChanged
 // Main, originally StoreByteList02026348 (USA 0x02026348, EUR 0x02026358, JPN 0x02025d1c)
-ARM void MapDisplay_SetPartyOrder(char* mapDisplay, unsigned char* memberIndices, int count) {
+extern "C" ARM void MapDisplay_SetPartyOrder(char* mapDisplay, unsigned char* memberIndices, int count) {
     int i;
     if ((unsigned int)count > 4) {
         mapDisplay[LIST_COUNT] = 0;

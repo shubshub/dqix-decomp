@@ -6,8 +6,8 @@
 #include "World/ZoneResourceTree.h"
 
 struct SePlayer;
-void SePlayer_Play(SePlayer *, int, int);
-int IsAnimationActive0209ca2c(void *);
+extern "C" void SePlayer_Play(SePlayer *, int, int);
+extern "C" int func_0209ca2c(void *);
 
 extern SePlayer g_sePlayer;
 extern char g_bgmPlayer[];
@@ -89,7 +89,7 @@ extern "C" ARM void BmdjSceneElement_Update(void *zone, void *sceneElement) {
             unsigned int deltaTime = gameState->GetEffectiveDeltaTime();
             if (deltaTime < element->delay) {
                 element->delay -= deltaTime;
-            } else if (!IsAnimationActive0209ca2c(g_bgmPlayer)) {
+            } else if (!func_0209ca2c(g_bgmPlayer)) {
                 if (element->object->SetAnimationByName(data_020ef1fe, 5))
                     SePlayer_Play(&g_sePlayer, 0x13, 0);
                 else if (element->object->SetAnimationByName(data_020ef204, 5))

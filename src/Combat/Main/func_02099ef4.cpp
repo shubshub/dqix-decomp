@@ -1,45 +1,45 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_02099ef4 { int unknown_0_; union { int unknown_0_; float unknown1_0_; } unknown_4_; };
+struct Struct_02099ef4 { int tag; union { int i; float f; } value; };
 
-struct Struct_0201c1c8;
+struct Variant02030b0c;
 
 struct Struct_0201d530;
 struct Vector3s;
 
 struct Struct_02109a54 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
+    unsigned char field0;
+    unsigned char field1;
     short unknown_2_[3];
     short unknown_8_[3];
     unsigned char unknown_e_;
-    char unknown_f_;
+    char pad;
     short unknown_10_[3];
-    short unknown_16_[3];
+    short vec3[3];
 };
 
 extern struct Struct_02109a54 data_02109a54[];
 
 // USA: func_02099ef4
-extern "C" ARM int func_02099ef4(struct Struct_02099ef4* arg0) {
-    int var0;
-    struct Struct_02109a54* var1;
-    struct Struct_02099ef4* var2;
+extern "C" ARM int func_02099ef4(struct Struct_02099ef4* p) {
+    int id;
+    struct Struct_02109a54* entry;
+    struct Struct_02099ef4* cursor;
 
-    var0 = ((Script::Parameter*)((struct Struct_0201c1c8*)arg0))->ToInt();
-    var1 = &data_02109a54[var0];
-    var1->unknown_0_ = (unsigned char)var0;
+    id = ((Script::Parameter*)((struct Variant02030b0c*)p))->ToInt();
+    entry = &data_02109a54[id];
+    entry->field0 = (unsigned char)id;
 
-    var1->unknown_1_ = (unsigned char)((Script::Parameter*)((struct Struct_0201c1c8*)(arg0 + 1)))->ToInt();
+    entry->field1 = (unsigned char)((Script::Parameter*)((struct Variant02030b0c*)(p + 1)))->ToInt();
 
-    var2 = (struct Struct_02099ef4*)(Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)(arg0 + 2)))->ToVec3fix16((Vector3s*)var1->unknown_2_);
-    var2 = (struct Struct_02099ef4*)(Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)var2))->ToVec3fix16((Vector3s*)var1->unknown_8_);
+    cursor = (struct Struct_02099ef4*)(Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)(p + 2)))->ToVec3fix16((Vector3s*)entry->unknown_2_);
+    cursor = (struct Struct_02099ef4*)(Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)cursor))->ToVec3fix16((Vector3s*)entry->unknown_8_);
 
-    var1->unknown_e_ = (unsigned char)((Script::Parameter*)((struct Struct_0201c1c8*)var2))->ToInt();
+    entry->unknown_e_ = (unsigned char)((Script::Parameter*)((struct Variant02030b0c*)cursor))->ToInt();
 
-    var2 = (struct Struct_02099ef4*)(Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)(var2 + 1)))->ToVec3fix16((Vector3s*)var1->unknown_10_);
-    (Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)var2))->ToVec3fix16((Vector3s*)var1->unknown_16_);
+    cursor = (struct Struct_02099ef4*)(Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)(cursor + 1)))->ToVec3fix16((Vector3s*)entry->unknown_10_);
+    (Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)cursor))->ToVec3fix16((Vector3s*)entry->vec3);
 
     return 1;
 }

@@ -11,7 +11,7 @@ struct BgVram {
 };
 
 // Main, originally ClearThreeRegions0203b634 (USA 0x0203b634, EUR 0x0203b644, JPN 0x0203b08c)
-ARM void BgVram_Clear(char* bgVramRaw) {
+extern "C" ARM void BgVram_Clear(char* bgVramRaw) {
     BgVram* bgVram = (BgVram*)bgVramRaw;
     memset(bgVram->charOffset, 0, sizeof(bgVram->charOffset));
     memset(bgVram->tileCount, 0, sizeof(bgVram->tileCount));

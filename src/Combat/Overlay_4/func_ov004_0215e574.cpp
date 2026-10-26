@@ -3,23 +3,23 @@
 
 class Struct_ov004_0215e574 {
 public:
-    virtual void inline_ov004_0215e574(); virtual void inline_ov004_0215e574_2(); virtual void inline_ov004_0215e574_3(); virtual void inline_ov004_0215e574_4();
-    virtual void inline_ov004_0215e574_5(); virtual void inline_ov004_0215e574_6(); virtual void inline_ov004_0215e574_7();
-    virtual void inline_ov004_0215e574_8(const Vector3i& arg0);
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+    virtual void v4(); virtual void v5(); virtual void v6();
+    virtual void inline_ov004_0215e574_8(const Vector3i& v);
     virtual Vector3i inline_ov004_0215e574_9();
 };
 
-extern "C" int func_ov004_0215e4e8(void* arg0, int arg1);
-extern "C" Struct_ov004_0215e574* func_ov004_0215e47c(void* arg0, int arg1);
+extern "C" int func_ov004_0215e4e8(void* a, int key);
+extern "C" Struct_ov004_0215e574* func_ov004_0215e47c(void* a, int key);
 
 // USA: func_ov004_0215e574
-extern "C" ARM void func_ov004_0215e574(void* arg0, int arg1, int arg2, int arg3) {
-    int var0 = func_ov004_0215e4e8(arg0, (short)arg1);
-    Struct_ov004_0215e574* var1 = func_ov004_0215e47c(arg0, arg1);
-    if (!var1) return;
-    Vector3i var2;
-    const Vector3i& var3 = var1->inline_ov004_0215e574_9();
-    var2 = var3;
-    var2.x = (arg3 + ((arg2 - var0) >> 1)) << 12;
-    var1->inline_ov004_0215e574_8(var2);
+extern "C" ARM void func_ov004_0215e574(void* a, int b, int c, int d) {
+    int r5 = func_ov004_0215e4e8(a, (short)b);
+    Struct_ov004_0215e574* node = func_ov004_0215e47c(a, b);
+    if (!node) return;
+    Vector3i v2;
+    const Vector3i& v = node->inline_ov004_0215e574_9();
+    v2 = v;
+    v2.x = (d + ((c - r5) >> 1)) << 12;
+    node->inline_ov004_0215e574_8(v2);
 }

@@ -2,32 +2,32 @@
 #include "GameState/GameState.h"
 #include "Graphics/Vector.h"
 
-struct Struct_0202c1a4;
+struct SearchStruct0202c1a4;
 
 struct Struct_ov017_021d36b4 {
-    char unknown_0_[4];
-    unsigned char unknown_4_;
-    unsigned char unknown_5_;
-    unsigned short unknown_6_;
-    Vector3s unknown_8_;
+    char pad0[4];
+    unsigned char mode;
+    unsigned char slotIndex;
+    unsigned short id;
+    Vector3s pos;
 };
 
-struct Struct_ov017_021d36b4_2 {
-    unsigned short unknown_0_;
-    Vector3s unknown_2_;
+struct Slot021d36b4 {
+    unsigned short id;
+    Vector3s pos;
 };
 
-void* GameState_GetPlayerLocation(char* base, unsigned int index);
+extern "C" void* GameState_GetPlayerLocation(char* base, unsigned int index);
 extern "C" int LinkSession_IsHostOrSolo(struct SearchStruct0202c1a4* search);
 extern "C" void func_ov017_021d360c(int a, unsigned char b, int c, Vector3s d);
-GameObject* FindCombatantByField0x16a_0200ffe0(GameState* battleStruct, int id);
-void SetField0xc4Low15Bits_02034044(unsigned char* obj, int val);
-void GameObject_EnableControl(void* obj);
-unsigned char GameObject_IsClimbingLadder(char* obj);
-signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
+extern "C" GameObject* func_0200ffe0(GameState* battleStruct, int id);
+extern "C" void func_02034044(unsigned char* obj, int val);
+extern "C" void GameObject_EnableControl(void* obj);
+extern "C" unsigned char GameObject_IsClimbingLadder(char* obj);
+extern "C" signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
 
 // USA: func_ov017_021d36b4
-extern "C" ARM void func_ov017_021d36b4(int remote, struct Evt021d36b4* evt, GameState* bs, int unused,
+extern "C" ARM void func_ov017_021d36b4(int arg0, struct Struct_ov017_021d36b4* evt, GameState* bs, int unused,
                                         struct SearchStruct0202c1a4* search) {
     struct Slot021d36b4* slot = (struct Slot021d36b4*)GameState_GetPlayerLocation((char*)bs, evt->slotIndex);
     if (slot == 0) return;
@@ -37,14 +37,14 @@ extern "C" ARM void func_ov017_021d36b4(int remote, struct Evt021d36b4* evt, Gam
             slot->id = evt->id;
             Vector3fix16Copy(&slot->pos, &evt->pos);
             func_ov017_021d360c(evt->mode, evt->slotIndex, evt->id, evt->pos);
-        } else if (remote == 0) {
+        } else if (arg0 == 0) {
             slot->id = evt->id;
             Vector3fix16Copy(&slot->pos, &evt->pos);
         }
     } else if (evt->mode == 1) {
         int isParty = evt->id <= 3;
         if (!isParty) {
-            GameObject* combatant = FindCombatantByField0x16a_0200ffe0(bs, evt->id - 4);
+            GameObject* combatant = func_0200ffe0(bs, evt->id - 4);
             if (combatant == 0) return;
             evt->id = combatant->obj3D_.actorIndex_;
         }
@@ -57,26 +57,26 @@ extern "C" ARM void func_ov017_021d36b4(int remote, struct Evt021d36b4* evt, Gam
             int inParty = 0;
             if (monster->obj3D_.actorIndex_ >= 0 && monster->obj3D_.actorIndex_ <= 3) inParty = 1;
             if (!inParty) {
-                SetField0xc4Low15Bits_02034044((unsigned char*)monster, 5000);
+                func_02034044((unsigned char*)monster, 5000);
                 if (member != 0) GameObject_EnableControl(member);
             }
             slot->id = 0;
             func_ov017_021d360c(evt->mode, evt->slotIndex, evt->id, evt->pos);
-        } else if (remote == 0) {
+        } else if (arg0 == 0) {
             short index;
             int inParty = 0;
             index = monster->obj3D_.actorIndex_;
             if (index >= 0 && index <= 3) inParty = 1;
             if (inParty) {
                 if (index == LinkSession_GetOwnSlot(search) && member != 0 && GameObject_IsClimbingLadder((char*)member) == 0) {
-                    SetField0xc4Low15Bits_02034044((unsigned char*)monster, 5000);
+                    func_02034044((unsigned char*)monster, 5000);
                     if (member != 0) GameObject_EnableControl(member);
                 }
             } else {
-                SetField0xc4Low15Bits_02034044((unsigned char*)monster, 5000);
+                func_02034044((unsigned char*)monster, 5000);
                 if (member != 0) GameObject_EnableControl(member);
             }
-            var0->unknown_0_ = 0;
+            slot->id = 0;
         }
     }
 }

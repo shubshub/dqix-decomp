@@ -13,15 +13,15 @@ enum { MiddleFieldDelta = 0, TailFieldDelta = 0 };
 #endif
 
 struct ClearThreeWords02094d00Struct;
-void GrottoChestList_Clear(ClearThreeWords02094d00Struct*);
-void Zone3D_ResetLootIcons(char* obj);
+extern "C" void GrottoChestList_Clear(ClearThreeWords02094d00Struct*);
+extern "C" void Zone3D_ResetLootIcons(char* obj);
 extern "C" void func_020982b4(void* obj);
-unsigned char GetByte0x4_0200fb9c(char* gs);
-int GetWord0x7f6c_0201201c(void* gs);
+extern "C" unsigned char func_0200fb9c(char* gs);
+extern "C" int func_0201201c(void* gs);
 struct FieldBlock63d6_115a8;
-unsigned char GetByteField0x63d6_020115a8(FieldBlock63d6_115a8*);
+extern "C" unsigned char func_020115a8(FieldBlock63d6_115a8*);
 
-// Zone3D::savedActor_ as set up when GetWord0x7f6c_0201201c is 5 or GameState byte 4 is 4 or 2: zone 1900 (0x76c),
+// Zone3D::savedActor_ as set up when func_0201201c is 5 or GameState byte 4 is 4 or 2: zone 1900 (0x76c),
 // position (25.0, 0.1, 56.8) in 20.12 fixed point
 enum {
     kDefaultSavedZoneId = 0x76c,
@@ -95,18 +95,18 @@ extern "C" ARM void Zone3D_Reset(Zone3D* zone) {
     zone->chestRenderingEnabled_274c_ = 1;
     *(int*)(raw + 0x2750 + TailFieldDelta) = 1;
 
-    if (GetByte0x4_0200fb9c((char*)gameState) != 5) {
+    if (func_0200fb9c((char*)gameState) != 5) {
         zone->pendingType2Mask_ = 0;
         zone->pendingLootableMask_ = 0;
     }
     *(char*)(raw + 0x281d + TailFieldDelta) = 0;
     zone->unknown_281e_ = 0;
-    if (GetByteField0x63d6_020115a8((FieldBlock63d6_115a8*)gameState) != 0) {
+    if (func_020115a8((FieldBlock63d6_115a8*)gameState) != 0) {
         return;
     }
 
-    if (GetWord0x7f6c_0201201c(gameState) == 5 || GetByte0x4_0200fb9c((char*)gameState) == 4 ||
-        GetByte0x4_0200fb9c((char*)gameState) == 2) {
+    if (func_0201201c(gameState) == 5 || func_0200fb9c((char*)gameState) == 4 ||
+        func_0200fb9c((char*)gameState) == 2) {
         func_020982b4(zone->unk_840);
         *(short*)(raw + 0x27b4 + TailFieldDelta) = 2;
         *(short*)(raw + 0x27b6 + TailFieldDelta) = 0;

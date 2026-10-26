@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
 struct Struct_021117ec_2 {
-    unsigned char unknown_0_[0x1c];
-    int unknown_1c_;
+    unsigned char pad[0x1c];
+    int lock;
 };
 extern struct Struct_021117ec_2 data_021117ec;
 extern int data_02111808;
@@ -12,13 +12,13 @@ void HandleCommandReceivedFromArm7(void);
 // USA: func_020ce148
 extern "C" ARM void func_020ce148(void) {
     struct Struct_021117ec_2* var0 = &data_021117ec;
-    int* var1 = &data_02111808;
-    if (var0->unknown_1c_ == 0) {
+    int* counter = &data_02111808;
+    if (var0->lock == 0) {
         return;
     }
     do {
         if (GetProcessorMode() == 0x12) {
             HandleCommandReceivedFromArm7();
         }
-    } while (*var1 != 0);
+    } while (*counter != 0);
 }

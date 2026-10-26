@@ -1,5 +1,5 @@
 // {tab, background 3 screens, background 4 screens} per tab, ending in -1: how many screen files each tab
-// archive holds (CharacterCreationUI_ApplyTabGraphics). Originally data_ov009_0218aa54 (USA/EUR; jpn's differ).
+// archive holds (CharacterCreationUI_ApplyTabGraphics). Originally CharacterCreationUI_tabScreenCounts (USA/EUR; jpn's differ).
 const signed char CharacterCreationUI_tabScreenCounts[27] = {
     1, 2, 2,
     2, 5, 5,

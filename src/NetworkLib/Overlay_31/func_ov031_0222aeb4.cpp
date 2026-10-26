@@ -4,7 +4,7 @@ extern char data_ov031_02290c80;
 extern "C" void func_ov031_0222af14(void);
 extern "C" void func_ov031_022239f4(void);
 extern "C" int func_ov031_0222336c(int, int, int);
-extern "C" int func_ov031_02223518(void *arg0);
+extern "C" int func_ov031_02223518(void *obj);
 extern "C" void func_ov031_022235a0(int);
 extern "C" void func_ov031_02222b0c(int);
 extern "C" void func_ov031_02226e08(void);

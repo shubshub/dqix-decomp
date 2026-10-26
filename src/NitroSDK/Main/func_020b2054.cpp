@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
 // USA: func_020b2054
-extern "C" ARM int func_020b2054(int arg0, int arg1) {
-    const unsigned int var0 = (unsigned int)arg0;
-    const unsigned int var1 = (unsigned int)arg1;
-    const unsigned int var2 = var0 / 8;
-    const unsigned int var3 = var1 / 8;
-    const unsigned int var4 = (var0 & 4) >> 2;
-    const unsigned int var5 = (var1 & 4) >> 2;
-    const unsigned int var6 = ((var0 & 2) >> 1) + (var0 & 1);
-    const unsigned int var7 = ((var1 & 2) >> 1) + (var1 & 1);
-    int var8 = 0;
+extern "C" ARM int func_020b2054(int areaWidth, int arg1) {
+    const unsigned int w = (unsigned int)areaWidth;
+    const unsigned int h = (unsigned int)arg1;
+    const unsigned int w8 = w / 8;
+    const unsigned int h8 = h / 8;
+    const unsigned int w4 = (w & 4) >> 2;
+    const unsigned int h4 = (h & 4) >> 2;
+    const unsigned int var6 = ((w & 2) >> 1) + (w & 1);
+    const unsigned int var7 = ((h & 2) >> 1) + (h & 1);
+    int ret = 0;
 
-    var8 += var2 * var3;
-    var8 += (var6 * 2 + var4) * var3;
-    var8 += (var7 * 2 + var5) * var2;
-    var8 += (var6 + var4) * (var7 + var5);
+    ret += w8 * h8;
+    ret += (var6 * 2 + w4) * h8;
+    ret += (var7 * 2 + h4) * w8;
+    ret += (var6 + w4) * (var7 + h4);
 
-    return var8;
+    return ret;
 }

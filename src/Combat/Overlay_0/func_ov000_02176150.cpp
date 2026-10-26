@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-struct Struct_ov000_021537b8_6 { char unknown_0_[0xe]; short unknown_e_; };
+struct Obj02176150 { char pad[0xe]; short val; };
 
-extern "C" void func_ov000_0217616c(struct Struct_ov000_021537b8_6*);
+extern "C" void func_ov000_0217616c(struct Obj02176150*);
 
 // USA: func_ov000_02176150
-extern "C" ARM void func_ov000_02176150(struct Struct_ov000_021537b8_6* arg0, short arg1) {
-    if (arg1 == arg0->unknown_e_) return;
-    arg0->unknown_e_ = arg1;
-    func_ov000_0217616c(arg0);
+extern "C" ARM void func_ov000_02176150(struct Obj02176150* obj, short val) {
+    if (val == obj->val) return;
+    obj->val = val;
+    func_ov000_0217616c(obj);
 }

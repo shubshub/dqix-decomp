@@ -13,9 +13,9 @@ enum { Enum_ov003_02171ba0_1828 = 0x724 };
 
 struct SearchStruct;
 extern "C" void* LinkSession_GetInstance(void);
-void* LinkMessageQueue_GetInstance(void);
-int LinkSession_IsSlotLost(struct SearchStruct*, int);
-void LinkSession_RemoveMember(struct SearchStruct*, int);
+extern "C" void* LinkMessageQueue_GetInstance(void);
+extern "C" int LinkSession_IsSlotLost(struct SearchStruct*, int);
+extern "C" void LinkSession_RemoveMember(struct SearchStruct*, int);
 extern "C" void LinkSession_End(void*);
 
 struct Struct_0202bad4;
@@ -26,18 +26,18 @@ extern "C" void func_ov003_02171e1c(void*, void*);
 extern "C" int func_0205e488(void*);
 
 struct Struct_ov003_02171ba0 {
-    unsigned char unknown_0_;
-    char unknown_1_[0x199 - 1];
-    unsigned char unknown_199_;
-    char unknown_19a_[Enum_ov003_02171ba0_1820 - 0x19a];
-    int unknown_71c_;
+    unsigned char field0;
+    char pad1[0x199 - 1];
+    unsigned char field199;
+    char pad2[Enum_ov003_02171ba0_1820 - 0x19a];
+    int field71c;
     int unknown_720_;
-    char unknown_724_[Enum_ov003_02171ba0_1836 - Enum_ov003_02171ba0_1828];
+    char pad3[Enum_ov003_02171ba0_1836 - Enum_ov003_02171ba0_1828];
     unsigned int unknown_72c_;
 };
 
 // USA: func_ov003_02171ba0
-extern "C" ARM void func_ov003_02171ba0(struct Obj02171ba0* obj) {
+extern "C" ARM void func_ov003_02171ba0(struct Struct_ov003_02171ba0* obj) {
     GameState* battle = GameState::GetInstance();
     struct SearchStruct* searchPtr = (struct SearchStruct*)LinkSession_GetInstance();
     void* ptr2 = LinkMessageQueue_GetInstance();
@@ -45,25 +45,25 @@ extern "C" ARM void func_ov003_02171ba0(struct Obj02171ba0* obj) {
     if (LinkSession_IsSlotLost(searchPtr, obj->field199)) {
         LinkSession_RemoveMember(searchPtr, obj->field199);
     }
-    obj->field72c += battle->GetEffectiveDeltaTime();
-    if (obj->field72c > 0xbb8) {
+    obj->unknown_72c_ += battle->GetEffectiveDeltaTime();
+    if (obj->unknown_72c_ > 0xbb8) {
         LinkSession_End(searchPtr);
         obj->field0 = 0;
         return;
     }
     if (LinkSession_IsSlotLost(searchPtr, 0) && obj->field71c == 0) {
-        GetElementAt0x10Stride0xc0((struct ElementArray0202bad4*)searchPtr, obj->field199);
+        func_0202bad4((struct Struct_0202bad4_2*)searchPtr, obj->field199);
         LinkSession_End(searchPtr);
         obj->field0 = 0;
         return;
     }
-    if (obj->field720 != 0 && obj->field71c != 0) {
-        struct Element0202bad4* elem = GetElementAt0x10Stride0xc0((struct ElementArray0202bad4*)searchPtr, obj->field199);
+    if (obj->unknown_720_ != 0 && obj->field71c != 0) {
+        struct Struct_0202bad4* elem = func_0202bad4((struct Struct_0202bad4_2*)searchPtr, obj->field199);
         func_ov003_02171e1c(obj, (char*)elem + 0x68);
         LinkSession_End(searchPtr);
         obj->field0 = 0;
     }
-    if (func_0205e488(var2) != 0) {
-        arg0->unknown_720_ = 1;
+    if (func_0205e488(ptr2) != 0) {
+        obj->unknown_720_ = 1;
     }
 }

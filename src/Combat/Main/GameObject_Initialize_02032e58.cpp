@@ -39,8 +39,8 @@ extern "C" ARM void GameObject_Initialize(void *gameObject) {
     self->fieldBa     = 0x199;
     self->fieldE0Bit2 = 0;
     self->fieldE0Bit1 = 0;
-    ClearFourHalfwords(&self->firstHalfwords);
-    ClearFourHalfwords(&self->secondHalfwords);
+    func_02032fb8(&self->firstHalfwords);
+    func_02032fb8(&self->secondHalfwords);
     self->fieldC1Bit2 = 0;
     self->fieldE0Bit3 = 0;
     self->fieldE0Bit4 = 0;

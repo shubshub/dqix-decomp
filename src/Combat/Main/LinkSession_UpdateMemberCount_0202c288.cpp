@@ -13,11 +13,11 @@ struct SearchStruct {
     struct MemberBlock_0202c288 members;
 };
 
-void VCountIrq_PushDisable(void);
+extern "C" void VCountIrq_PushDisable(void);
 extern "C" void VCountIrq_PopDisable(void);
-int LinkSession_IsSlotMember(struct SearchStruct* session, int slot);
-void LinkSession_UpdatePartySize(void* session);
-void GameState_UpdatePlayClocks(int commit);
+extern "C" int LinkSession_IsSlotMember(struct SearchStruct* session, int slot);
+extern "C" void LinkSession_UpdatePartySize(void* session);
+extern "C" void GameState_UpdatePlayClocks(int commit);
 unsigned long long GetCurrentTimestamp(void);
 
 // Main, originally func_0202c288 (USA 0x0202c288, EUR 0x0202c298, JPN 0x0202be38)

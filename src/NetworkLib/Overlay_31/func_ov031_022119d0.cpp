@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_0224e5a4_2 {
-	int unknown_0_;
-	int unknown_4_;
+	int field0;
+	int field4;
 };
 extern Struct_ov031_0224e5a4_2 data_ov031_0224e5a4;
 
 // USA: func_ov031_022119d0
-extern "C" ARM int func_ov031_022119d0(int *arg0, int *arg1) {
-	if (arg0 != 0) {
-		*arg0 = data_ov031_0224e5a4.unknown_4_;
+extern "C" ARM int func_ov031_022119d0(int *out, int *arg1) {
+	if (out != 0) {
+		*out = data_ov031_0224e5a4.field4;
 	}
 	if (arg1 != 0) {
-		switch (data_ov031_0224e5a4.unknown_0_) {
+		switch (data_ov031_0224e5a4.field0) {
 			case 2:
 			case 3:
 			case 4:
@@ -55,5 +55,5 @@ extern "C" ARM int func_ov031_022119d0(int *arg0, int *arg1) {
 				break;
 		}
 	}
-	return data_ov031_0224e5a4.unknown_0_;
+	return data_ov031_0224e5a4.field0;
 }

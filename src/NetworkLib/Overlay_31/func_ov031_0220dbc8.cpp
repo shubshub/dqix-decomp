@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_0220dbc8 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_;
+    unsigned short f0;
+    unsigned short f2;
+    unsigned short f4;
     unsigned short unknown_6_;
 };
 
@@ -13,10 +13,10 @@ extern "C" void func_ov031_0220da1c(int);
 extern "C" void func_ov031_0220db6c(void);
 
 // USA: func_ov031_0220dbc8
-extern "C" ARM void func_ov031_0220dbc8(struct Struct_ov031_0220dbc8 *arg0) {
-    if (arg0->unknown_2_ == 8 && arg0->unknown_4_ == 0x16 && arg0->unknown_6_ == 0x25) {
-        int var0 = *(int*)((char*)data_ov031_0224e53c + 0x2260) - 8;
-        switch (var0) {
+extern "C" ARM void func_ov031_0220dbc8(struct Struct_ov031_0220dbc8 *s) {
+    if (s->f2 == 8 && s->f4 == 0x16 && s->unknown_6_ == 0x25) {
+        int val = *(int*)((char*)data_ov031_0224e53c + 0x2260) - 8;
+        switch (val) {
             case 0:
                 func_ov031_0220da1c(0xc);
                 break;

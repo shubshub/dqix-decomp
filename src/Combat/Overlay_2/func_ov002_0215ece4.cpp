@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
-int Text_AppendNTag(char* dst, int n, const char* name);
-int Text_Append(char* dst, const char* src);
-void SetElementStateOrCreate0215b918(unsigned char* obj, int key, int b, int c);
+extern "C" int Text_AppendNTag(char* dst, int n, const char* name);
+extern "C" int Text_Append(char* dst, const char* src);
+extern "C" void func_ov002_0215b918(unsigned char* obj, int key, int b, int c);
 
 // USA: func_ov002_0215ece4
-extern "C" ARM void func_ov002_0215ece4(void* arg0, char* arg1, int arg2, int arg3, int arg4) {
-    char* var0 = (char*)arg0;
-    char* var1;
-    int var2;
-    int var3 = 0;
-    int var4 = (arg2 >= 0) && (arg2 <= 3);
+extern "C" ARM void func_ov002_0215ece4(void* base, char* dst, int c, int arg3, int arg4) {
+    char* obj = (char*)base;
+    char* buf;
+    int last;
+    int tag = 0;
+    int inRange = (c >= 0) && (c <= 3);
 
     if (inRange) {
         int i;
-        last = clampedSum - 1;
+        last = arg4 - 1;
         buf = obj + 0x1000;
-        for (i = productB; i < clampedSum; i++) {
+        for (i = arg3; i < arg4; i++) {
             void* entry = *(void**)(obj + (i << 2) + 0x2000 + 0x4a0);
             if (entry != 0) {
                 const char* name = *(const char**)entry;
@@ -24,15 +24,15 @@ extern "C" ARM void func_ov002_0215ece4(void* arg0, char* arg1, int arg2, int ar
                 if (i != last) {
                     Text_Append(dst, *(char**)(buf + 0xbdc));
                 }
-                var3++;
+                tag++;
             }
         }
     }
 
-    unsigned char var8 = *(unsigned char*)(var0 + 0x2000 + 0x520);
+    unsigned char var8 = *(unsigned char*)(obj + 0x2000 + 0x520);
     if (var8 == 0) {
-        func_ov002_0215b918((unsigned char*)var0, 0x11, 0, 0);
+        func_ov002_0215b918((unsigned char*)obj, 0x11, 0, 0);
         return;
     }
-    func_ov002_0215b918((unsigned char*)var0, 0x11, arg3 / 8, (var8 + 7) / 8);
+    func_ov002_0215b918((unsigned char*)obj, 0x11, arg3 / 8, (var8 + 7) / 8);
 }

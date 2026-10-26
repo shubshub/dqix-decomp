@@ -4,6 +4,6 @@
 int NitroVM_FinishRead(NitroVM*);
 
 // USA: func_020c00b8
-extern "C" ARM void *func_020c00b8(void *arg0) {
-    return (void*)NitroVM_FinishRead((NitroVM *)((char *)arg0 + 0x5c));
+extern "C" ARM void *func_020c00b8(void *obj) {
+    return (void*)NitroVM_FinishRead((NitroVM *)((char *)obj + 0x5c));
 }

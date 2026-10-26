@@ -7,33 +7,33 @@
 #include "std_library_functions.h"
 #include "Resource/Script.h"
 
-struct Struct_0201f040;
+struct ResetStruct;
 
-struct Struct_0201f040_2;
-struct Struct_02013fb4;
+struct StreamState;
+struct StreamHeader;
 
 struct Struct_0201f040_3;
 
 void* LoadFileIntoMemory(const char*, void*, unsigned int*);
 
 extern char data_020f15d4[];
-extern char data_0211e33c[];
+extern char g_fileLoadBuffer[];
 extern char data_020f15c4[];
 
 // USA: func_02099f6c
-extern "C" ARM void func_02099f6c(char* arg0) {
-    int var0;
-    char var1[0x430];
+extern "C" ARM void func_02099f6c(char* param0) {
+    int count;
+    char buf[0x430];
 
-    memset(arg0, 0, 0x150);
+    memset(param0, 0, 0x150);
     BackgroundLoader::AddLockGlobal();
 
-    struct Struct_02013fb4* var2 = (struct Struct_02013fb4*)LoadFileIntoMemory(data_020f15d4, data_0211e33c, (unsigned int*)&var0);
-    if (var2 != 0) {
-        ((Script*)((struct Struct_0201f040*)var1))->Initialize();
-        ((Script*)var1)->SetOpcodeLookup((Script::OpcodeLookupEntry*)data_020f15c4);
-        ((Script*)((struct Struct_0201f040_2*)var1))->Load(var2, var0);
-        ((Script*)((struct Struct_0201f040_3*)var1))->Execute();
+    struct StreamHeader* header = (struct StreamHeader*)LoadFileIntoMemory(data_020f15d4, g_fileLoadBuffer, (unsigned int*)&count);
+    if (header != 0) {
+        ((Script*)((struct ResetStruct*)buf))->Initialize();
+        ((Script*)buf)->SetOpcodeLookup((Script::OpcodeLookupEntry*)data_020f15c4);
+        ((Script*)((struct StreamState*)buf))->Load(header, count);
+        ((Script*)((struct Struct_0201f040_3*)buf))->Execute();
     }
     BackgroundLoader::RemoveLockGlobal();
 }

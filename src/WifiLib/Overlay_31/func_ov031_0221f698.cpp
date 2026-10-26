@@ -10,18 +10,18 @@ extern "C" int func_ov031_0220eb88(int);
 extern "C" int func_ov031_0220eb30(void);
 
 // USA: func_ov031_0221f698
-extern "C" THUMB int func_ov031_0221f698(Struct_ov031_0220ec04_3* arg0, int arg1) {
+extern "C" THUMB int func_ov031_0221f698(Struct_ov031_0220ec04_3* destination, int capacity) {
     func_ov031_0220eb88(1);
-    int var0 = func_ov031_0220eb30();
-    if (var0 > 0) {
-        int var1 = 0;
-        if (var1 < var0) do {
-            if (var1 >= arg1) break;
-            func_020ca408(func_ov031_0220ec04((unsigned short)var1), arg0, sizeof(*arg0));
-            ++var1;
-            ++arg0;
-        } while (var1 < var0);
+    int count = func_ov031_0220eb30();
+    if (count > 0) {
+        int index = 0;
+        if (index < count) do {
+            if (index >= capacity) break;
+            func_020ca408(func_ov031_0220ec04((unsigned short)index), destination, sizeof(*destination));
+            ++index;
+            ++destination;
+        } while (index < count);
     }
     func_ov031_0220eb88(0);
-    return var0;
+    return count;
 }

@@ -2,74 +2,74 @@
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
-struct Struct_0201099c_6 {
-    int unknown_0_;
-    short unknown_4_;
+struct ResetFieldsStruct {
+    int f0;
+    short f4;
     short unknown_6_;
-    short unknown_8_;
+    short f8;
     char unknown_a_[2];
-    int unknown_c_;
-    short unknown_10_;
-    char unknown_12_[2];
-    int unknown_14_;
-    short unknown_18_;
+    int fc;
+    short f10;
+    char pad12[2];
+    int f14;
+    short f18;
 };
-extern "C" void func_02089db4(struct Struct_0201099c_6* arg0);
-extern "C" void func_02089ddc(struct Struct_0201099c_6* arg0);
-extern "C" void func_02089de8(void* arg0, void* arg1, const char* arg2);
+extern "C" void PresetTable_Reset(struct ResetFieldsStruct* s);
+extern "C" void PresetTable_Destroy(struct ResetFieldsStruct* s);
+extern "C" void PresetTable_Load(void* param0, void* param1, const char* param2);
 
 struct Struct_02089fb0 {
-    signed char unknown_0_;
-    unsigned char unknown_1_[0x3f];
+    signed char id;
+    unsigned char pad[0x3f];
 };
 struct Struct_02086f24_5 {
-    struct Struct_02089fb0* unknown_0_;
-    short unknown_4_;
+    struct Struct_02089fb0* base;
+    short count;
 };
-extern "C" struct Struct_02089fb0* func_02089fb0(struct Struct_02086f24_5* arg0, int arg1);
+extern "C" struct Struct_02089fb0* func_02089fb0(struct Struct_02086f24_5* arr, int id);
 
-extern "C" int func_020426bc(char* arg0, unsigned char* arg1, int arg2);
+extern "C" int Font_EncodeText(char* str, unsigned char* out, int id);
 
-extern "C" void* func_02012d88(AllocatorUnion* arg0, unsigned int arg1);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern AllocatorUnion data_02114e20;
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern AllocatorUnion g_mainAllocator;
 
 struct Struct_020a93e0 {
-    unsigned char unknown_0_[0x13f];
-    unsigned char unknown_13f_0_ : 3;
+    unsigned char pad[0x13f];
+    unsigned char flags : 3;
 };
 
 // USA: func_020a93e0
-extern "C" ARM void func_020a93e0(char* arg0) {
-    char* var0;
-    int var1;
-    int var2;
-    for (var2 = 0; var2 < 13; var2++) {
-        char* var3 = arg0 + var2 * 0x23c;
-        if (((struct Struct_020a93e0*)var3)->unknown_13f_0_ != 0) {
-            struct Struct_0201099c_6 var4;
-            SafeAllocator var5;
-            var5.ResetAllocatorPointer();
-            var5.ResetAllocatorPointer();
-            void* var6 = func_02012d88(&data_02114e20, 0x800);
-            var5.CreateTypeA(var6, 0x800);
-            func_02089db4(&var4);
-            func_02089de8(&var4, &var5, 0);
-            var1 = *(unsigned char*)(arg0 + 0x1d11) + *(unsigned char*)(arg0 + 0x1d0c);
-            for (; var2 < var1; var2++) {
-                var0 = arg0 + var2 * 0x23c;
-                int var7 = ((struct Struct_020a93e0*)var0)->unknown_13f_0_;
-                if (var7 != 0) {
-                    struct Struct_02089fb0* var8 = func_02089fb0(
-                        (struct Struct_02086f24_5*)&var4, (short)(var7 + 7));
-                    char* var9 = *(char**)((char*)var8 + 4);
-                    func_020426bc(var9, (unsigned char*)(var0 + 0x140), 1);
+extern "C" ARM void func_020a93e0(char* param0) {
+    char* elem2;
+    int end;
+    int i;
+    for (i = 0; i < 13; i++) {
+        char* elem = param0 + i * 0x23c;
+        if (((struct Struct_020a93e0*)elem)->flags != 0) {
+            struct ResetFieldsStruct fields;
+            SafeAllocator localAlloc;
+            localAlloc.ResetAllocatorPointer();
+            localAlloc.ResetAllocatorPointer();
+            void* mem = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x800);
+            localAlloc.CreateTypeA(mem, 0x800);
+            PresetTable_Reset(&fields);
+            PresetTable_Load(&fields, &localAlloc, 0);
+            end = *(unsigned char*)(param0 + 0x1d11) + *(unsigned char*)(param0 + 0x1d0c);
+            for (; i < end; i++) {
+                elem2 = param0 + i * 0x23c;
+                int flags2 = ((struct Struct_020a93e0*)elem2)->flags;
+                if (flags2 != 0) {
+                    struct Struct_02089fb0* e = func_02089fb0(
+                        (struct Struct_02086f24_5*)&fields, (short)(flags2 + 7));
+                    char* str = *(char**)((char*)e + 4);
+                    Font_EncodeText(str, (unsigned char*)(elem2 + 0x140), 1);
                 }
             }
-            SignedAllocatorHeader* var10 = var5.GetSignedAllocator();
-            func_02089ddc(&var4);
-            var5.Destroy();
-            func_02012da4(&data_02114e20, var10);
+            SignedAllocatorHeader* sig = localAlloc.GetSignedAllocator();
+            PresetTable_Destroy(&fields);
+            localAlloc.Destroy();
+            AllocatorUnion_Free(&g_mainAllocator, sig);
             return;
         }
     }

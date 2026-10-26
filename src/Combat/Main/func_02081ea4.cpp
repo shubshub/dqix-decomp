@@ -3,23 +3,23 @@
 struct Struct_0207fdcc_2;
 
 struct Struct_0207fdcc {
-    char unknown_0_[0xc5];
-    unsigned char unknown_c5_;
-    char unknown_c6_[0x1a];
+    char unk[0xc5];
+    unsigned char flags;
+    char unk2[0x1a];
 };
 
-extern "C" struct Struct_0207fdcc* func_02081da8(struct Struct_0207fdcc_2* arg0, int arg1);
-extern "C" void func_020813ec(struct Struct_0207fdcc_2* arg0, int arg1);
+extern "C" struct Struct_0207fdcc* func_02081da8(struct Struct_0207fdcc_2* obj, int key);
+extern "C" void func_020813ec(struct Struct_0207fdcc_2* obj, int key);
 
 // USA: func_02081ea4
-extern "C" ARM void func_02081ea4(struct Struct_0207fdcc_2* arg0, int arg1, int arg2) {
-    struct Struct_0207fdcc* var0 = func_02081da8(arg0, arg1);
-    if (var0 != NULL) {
-        if (arg2 != 0) {
-            var0->unknown_c5_ |= 0x40;
+extern "C" ARM void func_02081ea4(struct Struct_0207fdcc_2* obj, int key, int enable) {
+    struct Struct_0207fdcc* elem = func_02081da8(obj, key);
+    if (elem != NULL) {
+        if (enable != 0) {
+            elem->flags |= 0x40;
         } else {
-            var0->unknown_c5_ &= ~0x40;
+            elem->flags &= ~0x40;
         }
-        func_020813ec(arg0, arg1);
+        func_020813ec(obj, key);
     }
 }

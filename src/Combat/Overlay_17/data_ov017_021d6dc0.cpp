@@ -7,16 +7,16 @@ extern float data_ov017_021d8340[8];
 
 // USA: func_ov017_021d6dc0
 extern "C" __declspec(initcode) ARM void __sinit_ov017_021d6dc0(void) {
-    float var0;
-    float var1;
-    float var2;
+    float t;
+    float a;
+    float b;
     data_ov017_021d8340[9] = data_ov017_021d73d8[3] + (data_ov017_021d73d8[1] + (data_ov017_021d73d8[0] + data_ov017_021d73d8[2]));
-    var0 = data_ov017_021d8340[8] + data_ov017_021d73d8[0];
-    var1 = data_ov017_021d73d8[2];
-    data_ov017_021d8340[7] = var0;
-    var0 = var0 + var1;
-    var2 = data_ov017_021d73d8[1];
-    data_ov017_021d8340[6] = var0;
-    var0 = var0 + var2;
-    data_ov017_021d8340[5] = var0;
+    t = data_ov017_021d8340[8] + data_ov017_021d73d8[0];
+    a = data_ov017_021d73d8[2];
+    data_ov017_021d8340[7] = t;
+    t = t + a;
+    b = data_ov017_021d73d8[1];
+    data_ov017_021d8340[6] = t;
+    t = t + b;
+    data_ov017_021d8340[5] = t;
 }

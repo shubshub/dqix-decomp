@@ -10,22 +10,22 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-extern "C" void func_020a0c0c(void);
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
-extern AllocatorUnion data_02114e20;
+extern "C" void ROMFilesystem_InitFileTables(void);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern AllocatorUnion g_mainAllocator;
 
 // USA: func_020a395c
 extern "C" ARM void func_020a395c(void) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = ((int)GetGameResources());
-    unsigned char* var2 = var0->GetTreasureMapLanguageData();
-    func_02012da4(&data_02114e20, *(void**)(var1 + 0x4000 + BUFFER_OFFSET));
-    func_02012da4(&data_02114e20, var2);
-    if (*(unsigned char*)(var1 + 0x4000 + OWNED_OFFSET) != 0) {
-        func_020a0c0c();
-        *(unsigned char*)(var1 + 0x4000 + OWNED_OFFSET) = 0;
+    GameState* battleStruct = GameState::GetInstance();
+    int base = ((int)GetGameResources());
+    unsigned char* word = battleStruct->GetTreasureMapLanguageData();
+    AllocatorUnion_Free(&g_mainAllocator, *(void**)(base + 0x4000 + BUFFER_OFFSET));
+    AllocatorUnion_Free(&g_mainAllocator, word);
+    if (*(unsigned char*)(base + 0x4000 + OWNED_OFFSET) != 0) {
+        ROMFilesystem_InitFileTables();
+        *(unsigned char*)(base + 0x4000 + OWNED_OFFSET) = 0;
     }
-    var0->SetTreasureMapLanguageDataPtr(0);
-    *(void**)(var1 + 0x4000 + BUFFER_OFFSET) = 0;
+    battleStruct->SetTreasureMapLanguageDataPtr(0);
+    *(void**)(base + 0x4000 + BUFFER_OFFSET) = 0;
 }
 

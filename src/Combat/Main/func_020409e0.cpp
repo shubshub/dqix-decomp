@@ -9,15 +9,15 @@ enum { Enum_020409e0_724 = 0x2d4 };
 extern "C" int func_0203cdf8(struct Struct_0203cdf8*);
 
 // USA: func_020409e0
-extern "C" ARM int func_020409e0(Struct_0203dce4* arg0) {
-    if (arg0->unknown_14_) {
-        return func_0203cdf8((struct Struct_0203cdf8*)(arg0->unknown_14_));
+extern "C" ARM int func_020409e0(Struct_0203dce4* obj) {
+    if (obj->child14) {
+        return func_0203cdf8((struct Struct_0203cdf8*)(obj->child14));
     }
-    if (arg0->unknown_18_) {
-        return *(int*)((char*)arg0->unknown_18_ + 0xb0);
+    if (obj->unknown_18_) {
+        return *(int*)((char*)obj->unknown_18_ + 0xb0);
     }
-    if (arg0->unknown_1c_) {
-        return *(int*)((char*)arg0->unknown_1c_ + Enum_020409e0_724);
+    if (obj->child1c) {
+        return *(int*)((char*)obj->child1c + Enum_020409e0_724);
     }
     return 0;
 }

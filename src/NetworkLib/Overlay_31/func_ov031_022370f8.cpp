@@ -6,34 +6,34 @@ extern "C" void func_ov031_0223bbd8(void*, int, int, int);
 extern "C" void func_ov031_0223e2b8(void*, int);
 extern "C" void func_ov031_022371d4(void*);
 
-struct Struct_ov031_02290d04_13 { char unknown_0_[4]; int* unknown_4_; };
+struct Struct_ov031_02290d04_13 { char pad[4]; int* p; };
 extern Struct_ov031_02290d04_13 data_ov031_02290d04;
 
-struct Struct_ov031_0224926a_6 { unsigned short unknown_0_; unsigned short unknown_2_; };
+struct Struct_ov031_0224926a_6 { unsigned short lo; unsigned short hi; };
 extern Struct_ov031_0224926a_6 data_ov031_0224926a[];
 
 // USA: func_ov031_022370f8
-extern "C" ARM void func_ov031_022370f8(void* arg0) {
+extern "C" ARM void func_ov031_022370f8(void* obj) {
 	unsigned int var0, var1;
-	func_ov031_0223bd28((Struct_ov031_02222f44_2*)data_ov031_02290d04.unknown_4_[2], 0, &var0, &var1);
+	func_ov031_0223bd28((Struct_ov031_02222f44_2*)data_ov031_02290d04.p[2], 0, &var0, &var1);
 	var0 = var0 - 8;
 	if ((int)var0 > 0x50) {
-		int var2 = 2;
+		int i = 2;
 		do {
-			Struct_ov031_0224926a_6* var3 = &data_ov031_0224926a[var2];
-			func_ov031_0223bbd8((void*)data_ov031_02290d04.unknown_4_[var2], -1, var0, var3->unknown_2_);
-			var2++;
-		} while (var2 < 5);
+			Struct_ov031_0224926a_6* e = &data_ov031_0224926a[i];
+			func_ov031_0223bbd8((void*)data_ov031_02290d04.p[i], -1, var0, e->hi);
+			i++;
+		} while (i < 5);
 		return;
 	}
 	var0 = 0x50;
 	{
-		int var4 = 2;
+		int i = 2;
 		do {
-			Struct_ov031_0224926a_6* var5 = &data_ov031_0224926a[var4];
-			func_ov031_0223bbd8((void*)data_ov031_02290d04.unknown_4_[var4], -1, var0, var5->unknown_2_);
-			var4++;
-		} while (var4 < 5);
+			Struct_ov031_0224926a_6* e = &data_ov031_0224926a[i];
+			func_ov031_0223bbd8((void*)data_ov031_02290d04.p[i], -1, var0, e->hi);
+			i++;
+		} while (i < 5);
 	}
-	func_ov031_0223e2b8(arg0, (int)func_ov031_022371d4);
+	func_ov031_0223e2b8(obj, (int)func_ov031_022371d4);
 }

@@ -2,47 +2,47 @@
 #include "Input/Input.h"
 
 struct Struct_ov015_0218eef0 {};
-struct Struct_ov015_0218f02c : Struct_ov015_0218eef0 {};
-struct Struct_ov015_02191c70 { Struct_ov015_0218f02c* unknown_0_; Struct_ov015_02191c70* unknown_4_; };
+struct Self0218f02c : Struct_ov015_0218eef0 {};
+struct CombatNode { Self0218f02c* object; CombatNode* next; };
 struct Struct_ov015_02191c70_2 {
-    int unknown_0_;
-    unsigned short unknown_4_;
-    unsigned char unknown_6_;
+    int value;
+    unsigned short parameter;
+    unsigned char mode;
     unsigned char unknown_7_;
-    Struct_ov015_02191c70_2* unknown_8_;
+    Struct_ov015_02191c70_2* next;
 };
-struct Struct_ov015_0218bb14 { int unknown_0_; Struct_ov015_02191c70_2* unknown_4_; };
-struct Struct_ov015_0218bb14_2 { void* unknown_0_; Struct_ov015_0218bb14* unknown_4_; void* unknown_8_; int unknown_c_; };
+struct Struct_ov015_0218bb14 { int value; Struct_ov015_02191c70_2* commands; };
+struct Struct_ov015_0218bb14_2 { void* field0; Struct_ov015_0218bb14* entries; void* field8; int count; };
 struct Struct_ov015_02191c70_3 {
-    char unknown_0_[0x2c];
-    Struct_ov015_02191c70* unknown_2c_;
+    char pad0[0x2c];
+    CombatNode* head;
     char unknown_30_[0xc];
-    Struct_ov015_0218bb14_2 unknown_3c_;
+    Struct_ov015_0218bb14_2 list;
     char unknown_4c_[0x1a4-0x4c];
-    int unknown_1a4_;
+    int state;
 };
 struct Struct_ov015_02191c70_4 {
-    int unknown_0_;
+    int value;
     int unknown_4_;
-    unsigned short unknown_8_;
-    unsigned char unknown_a_;
-    unsigned char unknown_b_;
+    unsigned short parameter;
+    unsigned char fieldA;
+    unsigned char fieldB;
 };
 struct AllocatorUnion;
 extern AllocatorUnion g_mainAllocator;
-Entry8_0218bb14* GetEntry8_0218bb14(List8_0218bb14*, int);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
-void AllocatorUnion_Free(AllocatorUnion*, void*);
-void InitCombatFieldStruct0218eef0(ResetStruct0218eef0*);
-int SetFieldAndModeThenDispatch0218f02c(Self0218f02c*, int, int);
+extern "C" Struct_ov015_0218bb14* func_ov015_0218bb14(Struct_ov015_0218bb14_2*, int);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
+extern "C" void AllocatorUnion_Free(AllocatorUnion*, void*);
+extern "C" void func_ov015_0218eef0(Struct_ov015_0218eef0*);
+extern "C" int func_ov015_0218f02c(Self0218f02c*, int, int);
 extern "C" void func_ov015_0218f0c4(Self0218f02c*);
 extern "C" void func_ov015_0218f308(Self0218f02c*, int);
-extern "C" int func_ov015_0218f27c(Self0218f02c*, CommandInfo*);
+extern "C" int func_ov015_0218f27c(Self0218f02c*, Struct_ov015_02191c70_4*);
 
 // USA: func_ov015_02191c70
-extern "C" ARM void func_ov015_02191c70(Struct_ov015_02191c70_3* arg0, int arg1) {
-    Struct_ov015_0218bb14* var0 = func_ov015_0218bb14(&arg0->unknown_3c_, arg1);
-    if (!var0) return;
+extern "C" ARM void func_ov015_02191c70(Struct_ov015_02191c70_3* self, int index) {
+    Struct_ov015_0218bb14* entry = func_ov015_0218bb14(&self->list, index);
+    if (!entry) return;
     if (g_keyManager.TestKeysHeld(0x100)) {
         CombatNode* node = self->head;
         while (node) {
@@ -52,24 +52,24 @@ extern "C" ARM void func_ov015_02191c70(Struct_ov015_02191c70_3* arg0, int arg1)
             node = node->next;
             AllocatorUnion_Free(&g_mainAllocator, old);
         }
-        arg0->unknown_2c_ = 0;
+        self->head = 0;
     }
-    Struct_ov015_02191c70_2* var3 = var0->unknown_4_;
+    Struct_ov015_02191c70_2* command = entry->commands;
     int var4;
-    Struct_ov015_02191c70* var5;
-    Struct_ov015_0218f02c* var6 = 0;
-    for (; var3; var3 = var3->unknown_8_) {
-        var4 = arg0->unknown_1a4_;
-        if (var3->unknown_6_ == 8 || var3->unknown_6_ == 9 || var3->unknown_6_ == 10) {
-            switch (var3->unknown_6_) {
-            case 8: arg0->unknown_1a4_ = 0x1e; break;
-            case 9: arg0->unknown_1a4_ = 0x1f; break;
-            case 10: arg0->unknown_1a4_ = 0x20; break;
+    CombatNode* node;
+    Self0218f02c* object = 0;
+    for (; command; command = command->next) {
+        var4 = self->state;
+        if (command->mode == 8 || command->mode == 9 || command->mode == 10) {
+            switch (command->mode) {
+            case 8: self->state = 0x1e; break;
+            case 9: self->state = 0x1f; break;
+            case 10: self->state = 0x20; break;
             }
-            if (var6) func_ov015_0218f308(var6, var3->unknown_0_);
-            arg0->unknown_1a4_ = var4;
-        } else if (var3->unknown_6_ == 11) {
-            if (var6) func_ov015_0218f308(var6, var3->unknown_0_);
+            if (object) func_ov015_0218f308(object, command->value);
+            self->state = var4;
+        } else if (command->mode == 11) {
+            if (object) func_ov015_0218f308(object, command->value);
         } else {
             node = (CombatNode*)AllocatorUnion_AllocateRounded(&g_mainAllocator, 8);
             if (!node) return;
@@ -80,21 +80,21 @@ extern "C" ARM void func_ov015_02191c70(Struct_ov015_02191c70_3* arg0, int arg1)
                 AllocatorUnion_Free(&g_mainAllocator, node);
                 return;
             }
-            InitCombatFieldStruct0218eef0(object);
-            if (!SetFieldAndModeThenDispatch0218f02c(object, (int)self, command->mode)) {
+            func_ov015_0218eef0(object);
+            if (!func_ov015_0218f02c(object, (int)self, command->mode)) {
                 AllocatorUnion_Free(&g_mainAllocator, node->object);
                 node->object = 0;
                 AllocatorUnion_Free(&g_mainAllocator, node);
                 return;
             }
-            CommandInfo info;
+            Struct_ov015_02191c70_4 info;
             info.value = 0;
-            info.secondValue = 0;
+            info.unknown_4_ = 0;
             info.parameter = 0;
             info.fieldA = 0;
             info.fieldB = 0;
             info.value = command->value;
-            info.secondValue = command->value;
+            info.unknown_4_ = command->value;
             info.parameter = command->parameter;
             if (!func_ov015_0218f27c(object, &info)) {
                 func_ov015_0218f0c4(node->object);
@@ -103,9 +103,9 @@ extern "C" ARM void func_ov015_02191c70(Struct_ov015_02191c70_3* arg0, int arg1)
                 AllocatorUnion_Free(&g_mainAllocator, node);
                 return;
             }
-            Struct_ov015_02191c70** var8 = &arg0->unknown_2c_;
-            while (*var8) var8 = &(*var8)->unknown_4_;
-            *var8 = var5;
+            CombatNode** tail = &self->head;
+            while (*tail) tail = &(*tail)->next;
+            *tail = node;
         }
     }
 }

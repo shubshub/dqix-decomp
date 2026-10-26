@@ -6,81 +6,81 @@
 #include "Graphics/LightingManager.h"
 #include "Combat/CombatantMotion.h"
 
-struct Struct_0203de84 { unsigned int unknown_0_[3]; };
-struct Struct_0203de84_2;
-struct Struct_020407c4 { unsigned int unknown_0_[3]; };
+struct Struct_0203de84 { unsigned int v[3]; };
+struct Node020406f8;
+struct Struct_020407c4 { unsigned int v[3]; };
 struct Struct_020407c4_2;
 struct Struct_02040c2c_4;
 struct Struct_02040c2c_5;
-struct Struct_02028460_3 { int unknown_0_; int unknown_4_; int unknown_8_; };
-struct Struct_02015438;
+struct Struct_02028460_3 { int x; int y; int z; };
+struct HeadNode02046b24;
 
 struct Struct_02040c2c_3 {
-    Object3D unknown_0_;
+    Object3D object;
     unsigned short unknown_ac_;
     char unknown_ae_[0xc0 - 0xae];
-    unsigned int unknown_c0_;
+    unsigned int idleTicks;
 
-    unsigned int inline_02040c2c_2() { return unknown_c0_; }
+    unsigned int inline_02040c2c_2() { return idleTicks; }
 };
 
 struct Struct_02040c2c_2 {
-    int unknown_0_;
-    Struct_0203de84 unknown_4_;
-    unsigned char unknown_10_[0x1a];
-    unsigned short unknown_2a_;
+    int unknown0;
+    Struct_0203de84 position;
+    unsigned char unknown10[0x1a];
+    unsigned short diffuseColor;
     unsigned char unknown_2c_[0x30];
-    unsigned int unknown_5c_;
-    int unknown_60_;
-    int unknown_64_;
-    int unknown_68_;
-    Vector3i unknown_6c_;
-    Vector3i unknown_78_;
-    int unknown_84_;
-    unsigned int unknown_88_;
+    unsigned int flags;
+    int angle;
+    int targetAngle;
+    int angularSpeed;
+    Vector3i previousPosition;
+    Vector3i targetPosition;
+    int unknown84;
+    unsigned int idleTicks;
 
-    unsigned int inline_02040c2c() { return unknown_88_; }
+    unsigned int inline_02040c2c() { return idleTicks; }
 };
 
 struct Struct_02040c2c {
     char unknown_0_[0x1f];
-    unsigned char unknown_1f_;
+    unsigned char mode;
     char unknown_20_[0x48 - 0x20];
-    struct Vector3i unknown_48_;
+    struct Vector3i v48;
 };
 
 struct Obj0203c818;
 extern "C" void NpcWalker_Update(Obj0203c818*, void*, int, int);
 extern "C" void Npc_PickWanderStep(struct Obj02040c2c* self, void* vec);
 extern "C" int rand(void);
-int Camera_GetOrbitDistance(void* p);
-void* Camera_GetPerspective(void* p);
+extern "C" int Camera_GetOrbitDistance(void* p);
+extern "C" void* Camera_GetPerspective(void* p);
 
-int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** head);
-void DispatchNearestActiveNode0204117c(struct Obj0204117c* obj, struct Vec3s32_020c3030* refPoint);
-void AdvanceAndAccumulate02041298(struct Obj02041298* obj, int value);
-void SelectVec3FromSources020406f8(struct Vec3_020406f8* out, struct Node020406f8* node);
-void FillVec3Default020407c4(struct Vec3_020407c4* out, struct Self020407c4* self);
+extern "C" int FieldTaskQueue_GetCurrentKind(struct HeadNode02046b24** head);
+extern "C" void func_0204117c(struct Struct_02040c2c_5* obj, struct Struct_02028460_3* arg1);
+extern "C" void func_02041298(struct Struct_02040c2c_4* obj, int value);
+extern "C" void func_020406f8(struct Struct_0203de84* out, struct Node020406f8* node);
+extern "C" void func_020407c4(struct Struct_020407c4* out, struct Struct_020407c4_2* self);
 
 // USA: func_02040c2c
-extern "C" ARM void func_02040c2c(struct Struct_0203dd20* arg0, void* arg1, int arg2, int arg3) {
-    struct Struct_0203de84 var0;
+extern "C" ARM void func_02040c2c(struct Obj02040c2c* self, void* context, int elapsedTicks, int movementTicks) {
+    struct Struct_0203de84 motionPosition;
     struct Struct_0203de84 var1;
     struct Struct_020407c4 var2;
     struct Vector3i var3;
-    struct Struct_0203de84 var4;
+    struct Struct_0203de84 sourcePosition;
 
     if (self->spriteMotion != 0) {
         NpcWalker_Update(reinterpret_cast<Obj0203c818*>(self->spriteMotion), context, elapsedTicks, movementTicks);
-        struct LightingManager* lm = LightingManager::GetInstance();
-        if (lm != 0) {
-            self->spriteMotion->diffuseColor = lm->spriteDiffuseColor_;
+        struct LightingManager* var5 = LightingManager::GetInstance();
+        if (var5 != 0) {
+            self->spriteMotion->diffuseColor = var5->spriteDiffuseColor_;
         }
         if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)GetGameResources()->fieldTaskQueue_) != 4) {
             if (!(self->flags & 1) && !(self->flags & 0x20000)) {
                 if (self->settings != 0 && self->settings->mode != 0) {
-                    SpriteMotion02040c2c* a = self->spriteMotion;
-                    if (!(a->flags & 1) && self->idleDelay < self->spriteMotion->GetIdleTicks()) {
+                    Struct_02040c2c_2* a = self->spriteMotion;
+                    if (!(a->flags & 1) && self->unknown_4_ < self->spriteMotion->inline_02040c2c()) {
                         motionPosition = a->position;
                         switch (self->settings->mode) {
                         case 7:
@@ -89,31 +89,31 @@ extern "C" ARM void func_02040c2c(struct Struct_0203dd20* arg0, void* arg1, int 
                             break;
                         case 9:
                         case 10:
-                            func_0204117c((struct Struct_02040c2c_5*)arg0, (struct Struct_02028460_3*)&var0);
+                            func_0204117c((struct Struct_02040c2c_5*)self, (struct Struct_02028460_3*)&motionPosition);
                             break;
                         }
-                        if (arg0->unknown_0_ & 8) {
-                            arg0->unknown_4_ = 0;
+                        if (self->flags & 8) {
+                            self->unknown_4_ = 0;
                         } else {
-                            arg0->unknown_4_ = rand() % 2000 + 2000;
+                            self->unknown_4_ = rand() % 2000 + 2000;
                         }
                     }
                 }
             }
         }
-    } else if (arg0->unknown_18_ != 0) {
-        func_02041298((struct Struct_02040c2c_4*)arg0->unknown_18_, arg2);
-        if (arg0->unknown_18_->unknown_0_.pModel_ != 0 && arg0->unknown_18_->unknown_0_.pModel_->rawInternalModel_ != 0) {
+    } else if (self->unknown_18_ != 0) {
+        func_02041298((struct Struct_02040c2c_4*)self->unknown_18_, elapsedTicks);
+        if (self->unknown_18_->object.pModel_ != 0 && self->unknown_18_->object.pModel_->rawInternalModel_ != 0) {
             if (LightingManager::GetInstance() != 0) {
-                arg0->unknown_18_->unknown_0_.SetDiffuseColor(LightingManager::GetInstance()->modelDiffuseColor_);
+                self->unknown_18_->object.SetDiffuseColor(LightingManager::GetInstance()->modelDiffuseColor_);
             }
         }
         if (FieldTaskQueue_GetCurrentKind((HeadNode02046b24**)GetGameResources()->fieldTaskQueue_) != 4) {
             if (!(self->flags & 1) && !(self->flags & 0x20000)) {
                 if (self->settings != 0 && self->settings->mode != 0) {
-                    ModelEffect02040c2c* b = self->modelMotion;
-                    if (!(b->flags_ac & 1)) {
-                        if (self->idleDelay < self->modelMotion->GetIdleTicks()) {
+                    Struct_02040c2c_3* b = self->unknown_18_;
+                    if (!(b->unknown_ac_ & 1)) {
+                        if (self->unknown_4_ < self->unknown_18_->inline_02040c2c_2()) {
                             switch (self->settings->mode) {
                             case 7:
                             case 8:
@@ -121,13 +121,13 @@ extern "C" ARM void func_02040c2c(struct Struct_0203dd20* arg0, void* arg1, int 
                                 break;
                             case 9:
                             case 10:
-                                func_0204117c((struct Struct_02040c2c_5*)arg0, (struct Struct_02028460_3*)&var7->unknown_0_.position_);
+                                func_0204117c((struct Struct_02040c2c_5*)self, (struct Struct_02028460_3*)&b->object.position_);
                                 break;
                             }
-                            if (arg0->unknown_0_ & 8) {
-                                arg0->unknown_4_ = 0;
+                            if (self->flags & 8) {
+                                self->unknown_4_ = 0;
                             } else {
-                                arg0->unknown_4_ = rand() % 2000 + 2000;
+                                self->unknown_4_ = rand() % 2000 + 2000;
                             }
                         }
                     }
@@ -136,26 +136,26 @@ extern "C" ARM void func_02040c2c(struct Struct_0203dd20* arg0, void* arg1, int 
         }
     }
 
-    if (self->attachment != 0) {
-        SelectVec3FromSources020406f8(&sourcePosition, (struct Node020406f8*)self);
-        attachmentPosition = sourcePosition;
-        FillVec3Default020407c4(&attachmentRotation, (struct Self020407c4*)self);
-        struct Vector3i* pB = (struct Vector3i*)&attachmentRotation;
-        attachmentPosition.v[1] += 0x1000;
+    if (self->unknown_10_ != 0) {
+        func_020406f8(&sourcePosition, (struct Node020406f8*)self);
+        var1 = sourcePosition;
+        func_020407c4(&var2, (struct Struct_020407c4_2*)self);
+        struct Vector3i* pB = (struct Vector3i*)&var2;
+        var1.v[1] += 0x1000;
         if (self->spriteMotion != 0) {
             unsigned char* camera = (unsigned char*)GameState::GetInstance()->GetCamera();
             Camera_GetPerspective(camera);
             float fx = (float)Camera_GetOrbitDistance(camera);
             fx *= 3.0f;
-            int divisor = (int)fx;
-            Vector3fix_Subtract(reinterpret_cast<Vector3i*>(camera + 0x10), reinterpret_cast<Vector3i*>(&attachmentPosition), &cameraOffset);
-            Vector3fixDivideScalar(&cameraOffset, divisor, &cameraOffset);
-            Vector3fix_Add(reinterpret_cast<Vector3i*>(&attachmentPosition), &cameraOffset, reinterpret_cast<Vector3i*>(&attachmentPosition));
+            int var11 = (int)fx;
+            Vector3fix_Subtract(reinterpret_cast<Vector3i*>(camera + 0x10), reinterpret_cast<Vector3i*>(&var1), &var3);
+            Vector3fixDivideScalar(&var3, var11, &var3);
+            Vector3fix_Add(reinterpret_cast<Vector3i*>(&var1), &var3, reinterpret_cast<Vector3i*>(&var1));
         }
-        Vector3fix_Add(reinterpret_cast<Vector3i*>(&var1), &arg0->unknown_c_->unknown_48_, reinterpret_cast<Vector3i*>(&var1));
-        arg0->unknown_10_->position_ = *(struct Vector3i*)&var1;
-        arg0->unknown_10_->rotation_ = *var8;
-        arg0->unknown_10_->AdvanceEffects();
+        Vector3fix_Add(reinterpret_cast<Vector3i*>(&var1), &self->settings->v48, reinterpret_cast<Vector3i*>(&var1));
+        self->unknown_10_->position_ = *(struct Vector3i*)&var1;
+        self->unknown_10_->rotation_ = *pB;
+        self->unknown_10_->AdvanceEffects();
     }
-    arg0->unknown_0_ &= ~0x20000u;
+    self->flags &= ~0x20000u;
 }

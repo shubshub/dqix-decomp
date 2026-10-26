@@ -2,33 +2,33 @@
 
 
 extern "C" void* Scenario_GetInstance(void);
-int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+extern "C" int Scenario_TestFlag(int unused, unsigned char* arr, int index);
 
 #if defined(jpn)
-enum { kEntryBase = 0x600, kPresentOffset = 0xe0, kStateOffset = 0xde, kIndexOffset = 0xd8, kFlagOffset = 0xe2 };
+enum { Enum_02023a9c_1792 = 0x600, Enum_02023a9c_140 = 0xe0, Enum_02023a9c_138 = 0xde, Enum_02023a9c_132 = 0xd8, Enum_02023a9c_142 = 0xe2 };
 #else
-enum { kEntryBase = 0x700, kPresentOffset = 0x8c, kStateOffset = 0x8a, kIndexOffset = 0x84, kFlagOffset = 0x8e };
+enum { Enum_02023a9c_1792 = 0x700, Enum_02023a9c_140 = 0x8c, Enum_02023a9c_138 = 0x8a, Enum_02023a9c_132 = 0x84, Enum_02023a9c_142 = 0x8e };
 #endif
 
 // Main, originally SetFlag0x8eIfBitTestFails_02023a9c (USA 0x02023a9c, EUR 0x02023aac, JPN 0x02023464)
-ARM int MapDisplay_IsRedChestUnopened(char* base, int index) {
+extern "C" ARM int MapDisplay_IsRedChestUnopened(char* base, int index) {
     void* g = Scenario_GetInstance();
     int offset = index * 0x1c;
     char* entry = base;
     entry += offset;
-    entry += kEntryBase;
+    entry += Enum_02023a9c_1792;
 
-    unsigned short f8c = *(unsigned short*)(entry + kPresentOffset);
-    if (f8c == 0) return 0;
+    unsigned short var3 = *(unsigned short*)(entry + Enum_02023a9c_140);
+    if (var3 == 0) return 0;
 
-    unsigned short f8a = *(unsigned short*)(entry + kStateOffset);
-    if (f8a == 0) {
-        unsigned short f84 = *(unsigned short*)(entry + kIndexOffset);
+    unsigned short var4 = *(unsigned short*)(entry + Enum_02023a9c_138);
+    if (var4 == 0) {
+        unsigned short f84 = *(unsigned short*)(entry + Enum_02023a9c_132);
         if (Scenario_TestFlag((int)g, (unsigned char*)g + 0x8c, f84 + 0x12 + 0x200)) {
             char* entry2 = base;
             entry2 += offset;
-            entry2 += kEntryBase;
-            *(unsigned short*)(entry2 + kFlagOffset) = 0;
+            entry2 += Enum_02023a9c_1792;
+            *(unsigned short*)(entry2 + Enum_02023a9c_142) = 0;
             return 0;
         }
     }

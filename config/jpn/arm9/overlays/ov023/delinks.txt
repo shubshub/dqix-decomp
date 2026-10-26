@@ -1993,7 +1993,7 @@ src/Combat/Overlay_23/func_ov023_021e0f44.cpp:
     complete
     .text start:0x021e1478 end:0x021e16a8
 
-src/Combat/Overlay_23/ApplyElemFieldsTwice_021e81f4.cpp:
+src/Combat/Overlay_23/func_ov023_021e802c.cpp:
     complete
     .text start:0x021e81f4 end:0x021e83a0
 
@@ -2001,7 +2001,7 @@ src/Combat/Overlay_23/func_ov023_021f288c.cpp:
     complete
     .text start:0x021f20a0 end:0x021f2248
 
-src/Combat/Overlay_23/RunIfPtr_021e4e20.cpp:
+src/Combat/Overlay_23/func_ov023_021e4c18.cpp:
     complete
     .text start:0x021e4e20 end:0x021e5010
 
@@ -2189,7 +2189,7 @@ src/Combat/Overlay_23/func_ov023_021d921c.cpp:
     complete
     .text start:0x021d9aa8 end:0x021d9b18
 
-src/Combat/Overlay_23/SetThreeElementFields_021e6378.cpp:
+src/Combat/Overlay_23/CharacterModel_GetBody_021e6194.cpp:
     complete
     .text start:0x021e6378 end:0x021e637c
 

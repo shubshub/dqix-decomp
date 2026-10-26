@@ -5,7 +5,6 @@
 #if defined(jpn)
 #define RG(u, j) (j)
 #define K(u, j) (j)
-#define func_ov002_0215a0a4 func_ov002_0215b558
 #define func_ov002_0215b6c0 func_ov002_0215c914
 #else
 #define RG(u, j) (u)
@@ -19,71 +18,71 @@ struct SearchStruct;
 extern "C" GameState* _ZN9GameState11GetInstanceEv(void);
 extern "C" unsigned int _ZNK9GameState21GetEffectiveDeltaTimeEv(GameState* gs);
 extern "C" int _ZNK9GameState12GetTickCountEv(GameState* gs);
-char* MessageSystem_GetInstance(void);
+extern "C" char* MessageSystem_GetInstance(void);
 extern "C" SearchStruct* LinkSession_GetInstance(void);
-char* GetCombatantWithFlag0x100_0200ff1c(GameState* gs, int id);
+extern "C" char* func_0200ff1c(GameState* gs, int id);
 extern "C" void _ZN8Vector3iaSERKS_(int* dst, const void* src);
-int LinkSession_IsSlotLost(SearchStruct* s, int bit);
-int DecrementOrClearCounterC74_0216c628(unsigned char*, int);
+extern "C" int LinkSession_IsSlotLost(SearchStruct* s, int bit);
+extern "C" int func_ov002_0216c628(unsigned char*, int);
 extern "C" void func_ov002_0215b6c0(char* self);
 extern "C" void func_ov002_0215a7b4(char* self, int a, int b, int c, int d);
 extern "C" void func_ov002_02159900(char* self, char* arr, int flag);
 extern "C" void func_ov002_0215a0a4(char* self, char* arr, int flag);
 struct SePlayer;
-void SePlayer_Play(SePlayer*, int, int);
-void InitStateArray02157ce0(char* arr);
+extern "C" void SePlayer_Play(SePlayer*, int, int);
+extern "C" void func_ov002_02157ce0(char* arr);
 struct Struct0205de24;
-void FindAndLinkMatchingEntry0205de24(Struct0205de24*, unsigned char, unsigned char);
-void InitBattleTag02161174(char* self);
+extern "C" void func_0205de24(Struct0205de24*, unsigned char, unsigned char);
+extern "C" void func_ov002_02161174(char* self);
 extern "C" void func_ov002_0216bfd4(char* self, int v);
-int CheckFlagOrThreshold_02161b48(char* self, int v);
-void EnqueueEventTag170_021d0198(int a, int b, int c, int d);
+extern "C" int func_ov002_02161b48(char* self, int v);
+extern "C" void func_ov017_021d0198(int a, int b, int c, int d);
 struct Obj_0205da38;
-int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
+extern "C" int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 extern "C" void func_ov002_0216c28c(char* self, int v);
-struct Struct020444bc;
-void SetField9a0AndIncrementField78(Struct020444bc*);
+struct Struct_ov002_0216acf0;
+extern "C" void func_020444bc(Struct_ov002_0216acf0*);
 extern "C" void func_ov016_0218b5c0(int a, int b);
 extern "C" void func_ov017_0218b5f8(int a);
 struct Struct0205d888;
-char* Window_GetTopPane(Struct0205d888*);
-void ClearMatchingEntry_02156ff0(unsigned char*, int);
-int GetCountByType02157108(void*, int);
-struct Obj0205dee8;
-void SetFieldB0AndUpdate0205dee8(Obj0205dee8*, int);
+extern "C" char* Window_GetTopPane(Struct0205d888*);
+extern "C" void func_ov002_02156ff0(unsigned char*, int);
+extern "C" int func_ov002_02157108(void*, int);
+struct Struct_ov002_02164748_2;
+extern "C" void func_0205dee8(Struct_ov002_02164748_2*, int);
 struct Struct_0205d81c;
-void Window_SetPanePalette(Struct_0205d81c*, int, int);
+extern "C" void Window_SetPanePalette(Struct_0205d81c*, int, int);
 extern "C" void func_ov002_02161cf0(char* self);
 extern "C" void func_ov023_021dca88(char* obj);
 extern "C" void func_0205d7a0(char* obj, int v);
 extern "C" void func_ov002_0215c988(char* self, void* buf, int v);
 struct StructA0205d5d0;
 #if defined(jpn)
-void Window_SetPaneText(StructA0205d5d0*, int, int, int);
+extern "C" void Window_SetPaneText(StructA0205d5d0*, int, int, int);
 #define TAE_LAST(x)
 #else
-void Window_SetPaneText(StructA0205d5d0*, int, int, int, unsigned char);
+extern "C" void Window_SetPaneText(StructA0205d5d0*, int, int, int, unsigned char);
 #define TAE_LAST(x) , x
 #endif
 extern "C" void func_ov002_0215b9a4(char* self, int key, int flag);
-void SePlayer_LoadExtraArchiveB(void* obj, int a, int b);
-void SePlayer_PlayExtra(void* obj, int a, int b);
-void MessageSystem_Reset(char* g);
+extern "C" void SePlayer_LoadExtraArchiveB(void* obj, int a, int b);
+extern "C" void SePlayer_PlayExtra(void* obj, int a, int b);
+extern "C" void MessageSystem_Reset(char* g);
 struct Entry_0205d6a0;
-void Window_ClosePane(Entry_0205d6a0*, int);
-char* FindElementByC40205d81c(Struct_0205d81c*, int);
+extern "C" void Window_ClosePane(Entry_0205d6a0*, int);
+extern "C" char* func_0205d81c(Struct_0205d81c*, int);
 
-struct Totals020fdcb0 {
+struct Struct_020fdcb0_2 {
     int a0;
     int b0;
     int a1;
     int b1;
     int pad10[2];
     int c;
-    int pad1c;
+    int unknown_1c_;
 };
 
-struct Slot0216acf0 {
+struct Struct_ov002_0216acf0_5 {
     unsigned char state;
     unsigned char pad1;
     unsigned short value;
@@ -91,7 +90,7 @@ struct Slot0216acf0 {
     unsigned char pad5;
 };
 
-extern Totals020fdcb0 data_020fdcb0[];
+extern Struct_020fdcb0_2 data_020fdcb0[];
 extern char g_sePlayer;
 
 #define U8(o) (*(unsigned char*)(self + (o)))
@@ -114,25 +113,25 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
     char* g = MessageSystem_GetInstance();
     SearchStruct* search = LinkSession_GetInstance();
 
-    int sumA = 0;
-    int sumB = 0;
-    int sumC = 0;
+    int var3 = 0;
+    int var4 = 0;
+    int var5 = 0;
     for (int i = 0; i < 4; i++) {
-        Totals020fdcb0* e = &data_020fdcb0[i];
-        if (e->a0 >= 0) sumA += e->a0;
-        if (e->b0 >= 0) sumB += e->b0;
-        if (e->a1 >= 0) sumA += e->a1;
-        if (e->b1 >= 0) sumB += e->b1;
-        sumC += e->c;
+        Struct_020fdcb0_2* e = &data_020fdcb0[i];
+        if (e->a0 >= 0) var3 += e->a0;
+        if (e->b0 >= 0) var4 += e->b0;
+        if (e->a1 >= 0) var3 += e->a1;
+        if (e->b1 >= 0) var4 += e->b1;
+        var5 += e->c;
     }
-    if (!(S16(RG(0x2548, 0x2370)) == sumA && S16(RG(0x254a, 0x2372)) == sumB && S32(RG(0x254c, 0x2374)) == sumC)) {
+    if (!(S16(RG(0x2548, 0x2370)) == var3 && S16(RG(0x254a, 0x2372)) == var4 && S32(RG(0x254c, 0x2374)) == var5)) {
         if (S32(RG(0x1bc0, 0x1a88)) != 0) {
             func_ov002_0215b6c0(self);
         }
     }
-    S16(RG(0x2548, 0x2370)) = sumA;
-    S16(RG(0x254a, 0x2372)) = sumB;
-    S32(RG(0x254c, 0x2374)) = sumC;
+    S16(RG(0x2548, 0x2370)) = var3;
+    S16(RG(0x254a, 0x2372)) = var4;
+    S32(RG(0x254c, 0x2374)) = var5;
 
     if (U8(RG(0x2522, 0x2352)) != 0 && S32(RG(0x1bc0, 0x1a88)) != 0) {
         if (S32(RG(0x1bc0, 0x1a88)) != 0) {
@@ -141,7 +140,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
                 S32(RG(0x2530, 0x2360)) = 10000;
             }
         }
-        char* c = GetCombatantWithFlag0x100_0200ff1c(gs, S8(RG(0x1c21, 0x1ae9)));
+        char* c = func_0200ff1c(gs, S8(RG(0x1c21, 0x1ae9)));
         if (c != 0) {
             int pos[3];
             _ZN8Vector3iaSERKS_(pos, c + 0x44);
@@ -169,9 +168,9 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
                     break;
                 }
             }
-            if (DecrementOrClearCounterC74_0216c628((unsigned char*)self, ticks) == 0 || found != 0) {
-                Slot0216acf0* a = (Slot0216acf0*)(self + RG(0xcd0 + 0x1000, 0x1b94));
-                Slot0216acf0* b = (Slot0216acf0*)(self + RG(0xe8 + 0x1c00, 0x1bac));
+            if (func_ov002_0216c628((unsigned char*)self, ticks) == 0 || found != 0) {
+                Struct_ov002_0216acf0_5* a = (Struct_ov002_0216acf0_5*)(self + RG(0xcd0 + 0x1000, 0x1b94));
+                Struct_ov002_0216acf0_5* b = (Struct_ov002_0216acf0_5*)(self + RG(0xe8 + 0x1c00, 0x1bac));
                 for (int i = 0; i < U8(RG(0x1ccb, 0x1b8f)); i++) {
                     if (a[i].active != 0 || b[i].active != 0) {
                         a[i].state = 0;
@@ -184,8 +183,8 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
             }
         }
         if (U8(RG(0x1c7b, 0x1b3f)) == 0x15) {
-            Slot0216acf0* a = (Slot0216acf0*)(self + RG(0xcd0 + 0x1000, 0x1b94));
-            Slot0216acf0* b = (Slot0216acf0*)(self + RG(0xe8 + 0x1c00, 0x1bac));
+            Struct_ov002_0216acf0_5* a = (Struct_ov002_0216acf0_5*)(self + RG(0xcd0 + 0x1000, 0x1b94));
+            Struct_ov002_0216acf0_5* b = (Struct_ov002_0216acf0_5*)(self + RG(0xe8 + 0x1c00, 0x1bac));
             int any = 0;
             for (int i = 0; i < U8(RG(0x1ccb, 0x1b8f)); i++) {
                 if (a[i].state == 3 || b[i].state == 3) {
@@ -216,7 +215,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
                     S32(RG(0x1bbc, 0x1a84)) = K(0x11, 0x12);
                 }
             }
-            InitStateArray02157ce0(self + RG(0xc8 + 0x1c00, 0x1b8c));
+            func_ov002_02157ce0(self + RG(0xc8 + 0x1c00, 0x1b8c));
             U8(RG(0x1c7a, 0x1b3e)) = 0;
             U8(RG(0x1c7b, 0x1b3f)) = 0;
         }
@@ -226,8 +225,8 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
             S32(RG(0x247c, 0x22ac)) &= ~4;
             S16(RG(0x1c16, 0x1ade)) = 0;
             S16(RG(0x1c18, 0x1ae0)) = 0;
-            FindAndLinkMatchingEntry0205de24((Struct0205de24*)(self + RG(0x2c8 + 0xc00, 0xe20)), 0, 3);
-            InitBattleTag02161174(self);
+            func_0205de24((Struct0205de24*)(self + RG(0x2c8 + 0xc00, 0xe20)), 0, 3);
+            func_ov002_02161174(self);
             S32(RG(0x247c, 0x22ac)) &= ~4;
             S32(RG(0x1bc0, 0x1a88)) = 1;
             return;
@@ -252,7 +251,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
         if (U8(RG(0x1c30, 0x1af8)) != 0) {
             int ticks = _ZNK9GameState12GetTickCountEv(_ZN9GameState11GetInstanceEv());
             if (ticks == 0) ticks = 1;
-            if (DecrementOrClearCounterC74_0216c628((unsigned char*)self, ticks) != 0) {
+            if (func_ov002_0216c628((unsigned char*)self, ticks) != 0) {
                 return;
             }
             switch (U8(RG(0x1c79, 0x1b3d))) {
@@ -261,7 +260,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
                 break;
             case 2:
                 if (*(int*)(g + RG(0x9a0, 0x870)) == 3) {
-                    if (CheckFlagOrThreshold_02161b48(self, 0) != 0 || g_touchInput.pressed_ != 0) {
+                    if (func_ov002_02161b48(self, 0) != 0 || g_touchInput.pressed_ != 0) {
                         func_ov002_0216bfd4(self, 3);
                     }
                 }
@@ -272,7 +271,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
                 } else {
                     func_ov002_0215a7b4(self, 4, S16(RG(0x1c22, 0x1aea)), S16(RG(0x1be8, 0x1ab0)), 0);
                 }
-                EnqueueEventTag170_021d0198(3, S8(RG(0x1c20, 0x1ae8)), S8(RG(0x1c21, 0x1ae9)), S16(RG(0x1c22, 0x1aea)));
+                func_ov017_021d0198(3, S8(RG(0x1c20, 0x1ae8)), S8(RG(0x1c21, 0x1ae9)), S16(RG(0x1c22, 0x1aea)));
                 func_ov002_0216bfd4(self, 9);
                 break;
             }
@@ -284,13 +283,13 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
             int ok = 0;
             int flag = g_keyManager.TestKeysPressed(0x601);
             if (AnySet(flag, Window_IsSelectionTouched((struct Obj_0205da38*)(self + RG(0x2c8 + 0xc00, 0xe20)), 0x14)) ||
-                CheckFlagOrThreshold_02161b48(self, 1) != 0 ||
+                func_ov002_02161b48(self, 1) != 0 ||
                 g_keyManager.TestKeysPressed(KEY_DPAD) != 0 || g_touchInput.pressed_ != 0) {
                 ok = 1;
             }
             switch (U8(RG(0x1c7b, 0x1b3f))) {
             case 10:
-                if (DecrementOrClearCounterC74_0216c628((unsigned char*)self, ticks) == 0) {
+                if (func_ov002_0216c628((unsigned char*)self, ticks) == 0) {
                     func_ov002_0216c28c(self, 0xc);
                 }
                 break;
@@ -319,7 +318,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
             return;
         }
         if (U8(RG(0x2522, 0x2352)) != 0 && *(int*)(g + RG(0x9a0, 0x870)) != 3) {
-            char* c = GetCombatantWithFlag0x100_0200ff1c(gs, S8(RG(0x1c21, 0x1ae9)));
+            char* c = func_0200ff1c(gs, S8(RG(0x1c21, 0x1ae9)));
             if (c != 0) {
                 int pos[3];
                 _ZN8Vector3iaSERKS_(pos, c + 0x44);
@@ -327,7 +326,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
                     *(unsigned int*)(c + RG(0x18c, 0x180)) &= ~1;
                     U8(RG(0x2523, 0x2353)) = 1;
                     if (*(int*)(g + RG(0x9a0, 0x870)) == 2 && S32(RG(0x2530, 0x2360)) >= 1000) {
-                        SetField9a0AndIncrementField78((Struct020444bc*)g);
+                        func_020444bc((Struct_ov002_0216acf0*)g);
                         SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);
                         U8(RG(0x2522, 0x2352)) = 0;
                         U8(RG(0x2523, 0x2353)) = 0;
@@ -349,20 +348,20 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
             if (e != 0) {
                 int next = S32(RG(0x1bbc, 0x1a84));
                 if (next != *(unsigned char*)(e + 0xc4) && next != K(0x26, 0x29) && next != K(0x10, 0x11) && next != K(0x11, 0x12)) {
-                    ClearMatchingEntry_02156ff0((unsigned char*)self, next);
+                    func_ov002_02156ff0((unsigned char*)self, next);
                 }
             }
             S32(RG(0x1bb8, 0x1a80)) = S32(RG(0x1bbc, 0x1a84));
             S32(RG(0x1bc0, 0x1a88)) = 1;
             if (S32(RG(0x1bb8, 0x1a80)) == 5) {
                 if (U8(RG(0x2478, 0x22a8)) != 0) {
-                    int count = GetCountByType02157108(self, S8(RG(0x1c20, 0x1ae8)));
+                    int count = func_ov002_02157108(self, S8(RG(0x1c20, 0x1ae8)));
                     if (count == 0) {
                         S16(RG(0x1c22, 0x1aea)) = -1;
                         S16(RG(0x1be8, 0x1ab0)) = -1;
                         S32(RG(0x1bb8, 0x1a80)) = 4;
                         S32(RG(0x1bc0, 0x1a88)) = 1;
-                        SetFieldB0AndUpdate0205dee8((Obj0205dee8*)(self + RG(0x2c8 + 0xc00, 0xe20)), 4);
+                        func_0205dee8((Struct_ov002_02164748_2*)(self + RG(0x2c8 + 0xc00, 0xe20)), 4);
                         Window_SetPanePalette((Struct_0205d81c*)(self + RG(0x2c8 + 0xc00, 0xe20)), 4, 0);
                         func_ov002_02161cf0(self);
                         if (S32(RG(0x247c, 0x22ac)) & 1) {
@@ -395,7 +394,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
         memset(self + RG(0x124 + 0x2400, 0x2354), 0, 0xc);
         S32(RG(0x2530, 0x2360)) = 0;
         if (U8(RG(0x248a, 0x22ba)) != 0) {
-            ClearMatchingEntry_02156ff0((unsigned char*)self, K(0x26, 0x29));
+            func_ov002_02156ff0((unsigned char*)self, K(0x26, 0x29));
             func_ov002_0215b9a4(self, S32(RG(0x1bb8, 0x1a80)) & 0xff, 1);
             S32(RG(0x1bb8, 0x1a80)) = K(0x26, 0x29);
             S16(RG(0x1c28, 0x1af0)) = S16(RG(0x2488, 0x22b8));
@@ -430,7 +429,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
             char* e = Window_GetTopPane((Struct0205d888*)(self + RG(0x2c8 + 0xc00, 0xe20)));
             if (U8(RG(0x2521, 0x2351)) != 0) {
                 S32(RG(0x1bb8, 0x1a80)) = S32(RG(0x1bbc, 0x1a84));
-                SetFieldB0AndUpdate0205dee8((Obj0205dee8*)(self + RG(0x2c8 + 0xc00, 0xe20)), 4);
+                func_0205dee8((Struct_ov002_02164748_2*)(self + RG(0x2c8 + 0xc00, 0xe20)), 4);
                 Window_SetPanePalette((Struct_0205d81c*)(self + RG(0x2c8 + 0xc00, 0xe20)), 4, 0);
                 func_ov002_02161cf0(self);
                 U8(RG(0x2521, 0x2351)) = 0;
@@ -438,7 +437,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
                 int next = S32(RG(0x1bbc, 0x1a84));
                 if (next != *(unsigned char*)(e + 0xc4) && next != K(0x26, 0x29) && next != K(0x10, 0x11) && next != K(0x11, 0x12) &&
                     next != K(9, 0xa) && next != K(0xb, 0xc)) {
-                    ClearMatchingEntry_02156ff0((unsigned char*)self, next);
+                    func_ov002_02156ff0((unsigned char*)self, next);
                 }
             }
             S32(RG(0x1bb8, 0x1a80)) = S32(RG(0x1bbc, 0x1a84));
@@ -453,7 +452,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
         if (cur == K(0xb, 0xc)) {
             func_ov002_0215b9a4(self, cur & 0xff, 0);
             Window_SetPanePalette((Struct_0205d81c*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(0xb, 0xc), 0);
-            SetFieldB0AndUpdate0205dee8((Obj0205dee8*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(0xb, 0xc));
+            func_0205dee8((Struct_ov002_02164748_2*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(0xb, 0xc));
             func_ov002_02161cf0(self);
         } else if (cur == 3) {
             short saved = S16(RG(0x1be4, 0x1aac));
@@ -464,7 +463,7 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
             func_ov002_0215b9a4(self, cur & 0xff, 0);
             S32(RG(0x247c, 0x22ac)) |= 4;
             Window_SetPanePalette((Struct_0205d81c*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(0x11, 0x12), 1);
-            SetFieldB0AndUpdate0205dee8((Obj0205dee8*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(0x10, 0x11));
+            func_0205dee8((Struct_ov002_02164748_2*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(0x10, 0x11));
             Window_SetPanePalette((Struct_0205d81c*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(0x10, 0x11), 0);
             S32(RG(0x1bc0, 0x1a88)) = 1;
             func_ov002_02161cf0(self);
@@ -474,9 +473,9 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
             S16(RG(0x1bfe, 0x1ac6)) = saved;
             func_ov002_0215b9a4(self, S32(RG(0x1bb8, 0x1a80)) & 0xff, 0);
         } else if (cur == K(0x11, 0x12)) {
-            if (FindElementByC40205d81c((Struct_0205d81c*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(7, 8)) != 0 || S16(RG(0x1bfc, 0x1ac4)) >= 0) {
-                ClearMatchingEntry_02156ff0((unsigned char*)self, K(0x13, 0x14));
-                SetFieldB0AndUpdate0205dee8((Obj0205dee8*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(0x11, 0x12));
+            if (func_0205d81c((Struct_0205d81c*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(7, 8)) != 0 || S16(RG(0x1bfc, 0x1ac4)) >= 0) {
+                func_ov002_02156ff0((unsigned char*)self, K(0x13, 0x14));
+                func_0205dee8((Struct_ov002_02164748_2*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(0x11, 0x12));
                 Window_SetPanePalette((Struct_0205d81c*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(0x11, 0x12), 0);
                 S32(RG(0x1bc0, 0x1a88)) = 1;
                 S32(RG(0x1bb8, 0x1a80)) = K(0x11, 0x12);
@@ -491,20 +490,20 @@ extern "C" ARM void func_ov002_0216acf0(char* self) {
         } else if (cur == K(9, 0xa)) {
             func_ov002_02161cf0(self);
             Window_SetPanePalette((Struct_0205d81c*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(9, 0xa), 0);
-            SetFieldB0AndUpdate0205dee8((Obj0205dee8*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(9, 0xa));
+            func_0205dee8((Struct_ov002_02164748_2*)(self + RG(0x2c8 + 0xc00, 0xe20)), K(9, 0xa));
             S32(RG(0x1bc8, 0x1a90)) = 1;
             S32(RG(0x1bcc, 0x1a94)) = 1;
             func_ov002_0215b9a4(self, S32(RG(0x1bb8, 0x1a80)) & 0xff, 0);
         }
         if (S32(RG(0x1bb8, 0x1a80)) == 5) {
             if (U8(RG(0x2478, 0x22a8)) != 0) {
-                int count = GetCountByType02157108(self, S8(RG(0x1c20, 0x1ae8)));
+                int count = func_ov002_02157108(self, S8(RG(0x1c20, 0x1ae8)));
                 if (count == 0) {
                     S16(RG(0x1c22, 0x1aea)) = -1;
                     S16(RG(0x1be8, 0x1ab0)) = -1;
                     S32(RG(0x1bb8, 0x1a80)) = 4;
                     S32(RG(0x1bc0, 0x1a88)) = 1;
-                    SetFieldB0AndUpdate0205dee8((Obj0205dee8*)(self + RG(0x2c8 + 0xc00, 0xe20)), 4);
+                    func_0205dee8((Struct_ov002_02164748_2*)(self + RG(0x2c8 + 0xc00, 0xe20)), 4);
                     Window_SetPanePalette((Struct_0205d81c*)(self + RG(0x2c8 + 0xc00, 0xe20)), 4, 0);
                     func_ov002_02161cf0(self);
                     if (S32(RG(0x247c, 0x22ac)) & 1) {

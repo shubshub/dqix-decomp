@@ -6,32 +6,32 @@ struct Struct_ov031_02222ddc_3 {
     unsigned short unknown_6_;
 };
 struct Struct_ov031_0222408c {
-    unsigned char unknown_0_[0x60];
-    Struct_ov031_02222ddc_3* unknown_60_;
+    unsigned char padding0[0x60];
+    Struct_ov031_02222ddc_3* sprite;
     unsigned char unknown_64_[0xb9];
-    unsigned char unknown_11d_;
+    unsigned char channel;
 };
 extern Struct_ov031_0222408c* data_ov031_02250bfc;
 extern "C" void func_ov031_02224ca4(int, int, int);
 extern "C" void func_ov031_0223e2b8(void*, int);
 extern "C" void func_ov031_02224120(void*);
-static inline void inline_ov031_0222408c(const Struct_ov031_02222ddc_3* arg0, unsigned long* arg1, unsigned long* arg2) {
-    unsigned long var0 = arg0->unknown_0_;
-    *arg1 = (var0 & 0x1ff0000) >> 16;
-    *arg2 = var0 & 0xff;
+static inline void inline_ov031_0222408c(const Struct_ov031_02222ddc_3* sprite, unsigned long* x, unsigned long* y) {
+    unsigned long attributes = sprite->unknown_0_;
+    *x = (attributes & 0x1ff0000) >> 16;
+    *y = attributes & 0xff;
 }
 
 // USA: func_ov031_0222408c
-extern "C" ARM void func_ov031_0222408c(void* arg0) {
-    Struct_ov031_0222408c* var0 = data_ov031_02250bfc;
-    int var1, var2;
-    inline_ov031_0222408c(var0->unknown_60_, (unsigned long*)&var1, (unsigned long*)&var2);
-    var2 -= 12;
-    if (var2 > 0x67) {
-        func_ov031_02224ca4(var0->unknown_11d_, 1, var2);
+extern "C" ARM void func_ov031_0222408c(void* object) {
+    Struct_ov031_0222408c* state = data_ov031_02250bfc;
+    int x, y;
+    inline_ov031_0222408c(state->sprite, (unsigned long*)&x, (unsigned long*)&y);
+    y -= 12;
+    if (y > 0x67) {
+        func_ov031_02224ca4(state->channel, 1, y);
         return;
     }
-    func_ov031_02224ca4(var0->unknown_11d_, 1, 0x67);
-    func_ov031_02224ca4(data_ov031_02250bfc->unknown_11d_, 2, 0xc0);
-    func_ov031_0223e2b8(arg0, (int)func_ov031_02224120);
+    func_ov031_02224ca4(state->channel, 1, 0x67);
+    func_ov031_02224ca4(data_ov031_02250bfc->channel, 2, 0xc0);
+    func_ov031_0223e2b8(object, (int)func_ov031_02224120);
 }

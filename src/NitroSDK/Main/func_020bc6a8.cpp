@@ -5,12 +5,12 @@ extern SignedAllocatorList data_0210f3d8;
 
 // USA: func_020bc6a8
 extern "C" ARM void func_020bc6a8(SignedAllocatorHeader* arg0) {
-    SignedAllocatorHeader* var0 = data_0210f3d8.ElementAfter(NULL);
-    if (var0 != NULL) {
+    SignedAllocatorHeader* e = data_0210f3d8.ElementAfter(NULL);
+    if (e != NULL) {
         do {
-            if (*((unsigned char*)arg0 + 0x3d) < *((unsigned char*)var0 + 0x3d)) break;
-            var0 = data_0210f3d8.ElementAfter(var0);
-        } while (var0 != NULL);
+            if (*((unsigned char*)arg0 + 0x3d) < *((unsigned char*)e + 0x3d)) break;
+            e = data_0210f3d8.ElementAfter(e);
+        } while (e != NULL);
     }
-    data_0210f3d8.InsertBefore(var0, arg0);
+    data_0210f3d8.InsertBefore(e, arg0);
 }

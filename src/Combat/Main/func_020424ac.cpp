@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
 // USA: func_020424ac
-extern "C" ARM char* func_020424ac(char* arg0) {
-    if (arg0 != 0) {
-        while (*arg0 != 0) {
-            if (*arg0 == '>' && arg0[1] != '>') {
-                return arg0;
+extern "C" ARM char* func_020424ac(char* str) {
+    if (str != 0) {
+        while (*str != 0) {
+            if (*str == '>' && str[1] != '>') {
+                return str;
             }
-            arg0++;
+            str++;
         }
     }
     return 0;

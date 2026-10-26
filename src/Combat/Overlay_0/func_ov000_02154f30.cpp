@@ -2,105 +2,105 @@
 #include "GameState/GameState.h"
 #include "Util/Random.h"
 
-struct Struct_02010088;
-extern "C" int func_02010088(struct Struct_02010088* arg0);
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
+struct S_10088;
+extern "C" int func_02010088(struct S_10088* obj);
+extern "C" GameObject* func_0200fea4(GameState* gameState, int combatantId);
 
 struct Struct_ov000_02154f30 {
-    char unknown_0_[0x3c];
+    char pad0[0x3c];
     unsigned int unknown_3c_0_ : 30;
-    unsigned int unknown_3f_6_ : 1;
+    unsigned int flag30 : 1;
     unsigned int unknown_3f_7_ : 1;
 };
 
 struct Struct_ov000_02154f30_2 {
-    char unknown_0_[0x2e];
-    short unknown_2e_;
+    char pad0[0x2e];
+    short targetId;
     char unknown_30_[0x32 - 0x30];
     short unknown_32_;
     short unknown_34_;
 };
 
 struct Struct_ov000_02154f30_3 {
-    char unknown_0_[0x10];
+    char pad0[0x10];
     unsigned int unknown_10_0_ : 26;
-    unsigned int unknown_13_2_ : 1;
+    unsigned int weighted : 1;
     unsigned int unknown_13_3_ : 5;
 };
 
 struct Struct_ov000_02154f30_4 {
-    char unknown_0_[0x134];
-    struct Struct_ov000_02154f30* unknown_134_;
-    struct Struct_ov000_02154f30_2* unknown_138_;
+    char pad0[0x134];
+    struct Struct_ov000_02154f30* baseStats;
+    struct Struct_ov000_02154f30_2* stats;
     char unknown_13c_[0x148 - 0x13c];
     struct Struct_ov000_02154f30_3* unknown_148_;
 };
 
 struct Struct_ov000_02182ca4 {
-    int unknown_0_[4];
+    int v[4];
 };
 
 struct Struct_ov000_02182c94 {
-    short unknown_0_[8];
+    short v[8];
 };
 
-extern "C" int func_ov000_02155154(GameObject* arg0);
-extern "C" int func_ov000_02153c0c(GameObject* arg0);
-extern "C" int func_ov000_0215516c(GameObject* arg0);
+extern "C" int func_ov000_02155154(GameObject* combatant);
+extern "C" int func_ov000_02153c0c(GameObject* combatant);
+extern "C" int func_ov000_0215516c(GameObject* combatant);
 
 extern struct Struct_ov000_02182ca4 data_ov000_02182ca4;
 extern struct Struct_ov000_02182c94 data_ov000_02182c94;
 
 // USA: func_ov000_02154f30
-extern "C" ARM short func_ov000_02154f30(struct Random* arg0, int arg1, int arg2, short* arg3) {
-    struct Struct_ov000_02154f30_4* var0 = (struct Struct_ov000_02154f30_4*)func_0200fea4(GameState::GetInstance(), arg1);
-    struct Struct_ov000_02154f30_3* var1 = var0->unknown_148_;
-    struct Struct_ov000_02182ca4 var2 = data_ov000_02182ca4;
-    int var3 = 0;
-    if (func_ov000_02155154((GameObject*)var0)) {
-        short var4 = var0->unknown_138_->unknown_2e_;
-        GameState* var5 = GameState::GetInstance();
-        GameObject* var6 = var5->GetCombatantByIndex(var4);
-        if (var6 != NULL && !func_02010088((struct Struct_02010088*)var6) && !func_ov000_02153c0c(var6)) {
-            return var0->unknown_138_->unknown_2e_;
+extern "C" ARM short func_ov000_02154f30(struct Random* rng, int id, int count, short* ids) {
+    struct Struct_ov000_02154f30_4* self = (struct Struct_ov000_02154f30_4*)func_0200fea4(GameState::GetInstance(), id);
+    struct Struct_ov000_02154f30_3* var1 = self->unknown_148_;
+    struct Struct_ov000_02182ca4 weights = data_ov000_02182ca4;
+    int total = 0;
+    if (func_ov000_02155154((GameObject*)self)) {
+        short targetId = self->stats->targetId;
+        GameState* gs = GameState::GetInstance();
+        GameObject* target = gs->GetCombatantByIndex(targetId);
+        if (target != NULL && !func_02010088((struct S_10088*)target) && !func_ov000_02153c0c(target)) {
+            return self->stats->targetId;
         }
     }
-    struct Struct_ov000_02182c94 var7 = data_ov000_02182c94;
-    unsigned char var8 = 0;
-    for (int var9 = 0; var9 < arg2; var9++) {
-        short var10 = arg3[var9];
-        GameState* var11 = GameState::GetInstance();
-        GameObject* var12 = var11->GetCombatantByIndex(var10);
-        if (var12 == NULL || func_02010088((struct Struct_02010088*)var12) || func_ov000_02153c0c(var12)) {
+    struct Struct_ov000_02182c94 list = data_ov000_02182c94;
+    unsigned char n = 0;
+    for (int i = 0; i < count; i++) {
+        short cid = ids[i];
+        GameState* gs = GameState::GetInstance();
+        GameObject* c = gs->GetCombatantByIndex(cid);
+        if (c == NULL || func_02010088((struct S_10088*)c) || func_ov000_02153c0c(c)) {
             continue;
         }
-        var2.unknown_0_[var8] = (unsigned short)((struct Struct_ov000_02154f30_4*)var12)->unknown_134_->unknown_3f_6_ == 0 ? 2 : 1;
-        if (var1->unknown_13_2_ == 1) {
-            struct Struct_ov000_02154f30_2* var13 = var0->unknown_138_;
-            short var14 = arg3[var9];
-            if (var14 == var13->unknown_32_) {
-                var2.unknown_0_[var8] += 2;
+        weights.v[n] = (unsigned short)((struct Struct_ov000_02154f30_4*)c)->baseStats->flag30 == 0 ? 2 : 1;
+        if (var1->weighted == 1) {
+            struct Struct_ov000_02154f30_2* stats = self->stats;
+            short cur = ids[i];
+            if (cur == stats->unknown_32_) {
+                weights.v[n] += 2;
             }
-            if (var14 == var13->unknown_34_) {
-                var2.unknown_0_[var8] += 1;
+            if (cur == stats->unknown_34_) {
+                weights.v[n] += 1;
             }
         }
-        var3 += var2.unknown_0_[var8];
-        var7.unknown_0_[var8] = arg3[var9];
-        if (func_ov000_0215516c(var12)) {
-            var2.unknown_0_[var8] >>= 1;
+        total += weights.v[n];
+        list.v[n] = ids[i];
+        if (func_ov000_0215516c(c)) {
+            weights.v[n] >>= 1;
         }
-        var8++;
+        n++;
     }
-    if (var8 == 0) {
+    if (n == 0) {
         return -1;
     }
-    int var15 = NextRandomMax(arg0, var3) + 1;
-    for (int var16 = 0; var16 < var8; var16++) {
-        if (var2.unknown_0_[var16] >= var15) {
-            return var7.unknown_0_[var16];
+    int r = NextRandomMax(rng, total) + 1;
+    for (int j = 0; j < n; j++) {
+        if (weights.v[j] >= r) {
+            return list.v[j];
         }
-        var15 -= var2.unknown_0_[var16];
+        r -= weights.v[j];
     }
-    return var7.unknown_0_[NextRandomMax(arg0, var8)];
+    return list.v[NextRandomMax(rng, n)];
 }

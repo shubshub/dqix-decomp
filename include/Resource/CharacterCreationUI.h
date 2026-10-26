@@ -19,15 +19,15 @@ struct PartyMemberData;
 // {tab, x, y, width, height, stepX, stepY, columns, rows} per tab, ending in -1. Defined in C for usa only.
 extern const short CharacterCreationUI_slotLayouts[];
 
-struct CreationTextEntry {
+struct Struct_02000c9c_6 {
     int key;
     const char* text;
 };
 
-struct Struct_0201099c_3 {
-    unsigned int unknown_0_0_ : 12;
-    unsigned int unknown_1_4_ : 20;
-    Struct_02000c9c_6* unknown_4_;
+struct Container020e0310 {
+    unsigned int count : 12;
+    unsigned int unknown : 20;
+    Struct_02000c9c_6* entries;
 };
 
 struct CreationWindow {
@@ -56,9 +56,9 @@ struct CreationWindow {
 
 struct CharacterCreationUI {
 #if defined(jpn)
-    SafeAllocator unknown_0_[8];
+    SafeAllocator allocators[8];
 #else
-    SafeAllocator unknown1_0_[9];
+    SafeAllocator allocators[9];
 #endif
     SafeAllocator* modelAllocator;
     SafeAllocator* previewAllocators;

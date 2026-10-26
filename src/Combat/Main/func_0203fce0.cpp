@@ -7,21 +7,21 @@
 
 void* LoadFileIntoMemory(const char*, void*, unsigned int*);
 
-extern "C" void func_0203fd5c(void* arg0, void* arg1, int arg2, void* arg3);
+extern "C" void func_0203fd5c(void* p0, void* buf, int p2, void* p3);
 
 extern char data_020efe50[];
-extern char data_0211e33c[];
+extern char g_fileLoadBuffer[];
 
 // USA: func_0203fce0
-extern "C" ARM void func_0203fce0(void* arg0, char* arg1, int arg2) {
-    char var0[0x80];
-    char* var1 = arg1 + strlen(arg1);
-    if (var1[-1] == 'r') {
-        sprintf(var0, data_020efe50, arg1);
+extern "C" ARM void func_0203fce0(void* p0, char* p1, int p2) {
+    char buf[0x80];
+    char* end = p1 + strlen(p1);
+    if (end[-1] == 'r') {
+        sprintf(buf, data_020efe50, p1);
         BackgroundLoader::AddLockGlobal();
-        void* var2 = LoadFileIntoMemory(var0, data_0211e33c, (unsigned int*)0);
-        if (var2 != NULL) {
-            func_0203fd5c(arg0, var0, arg2, var2);
+        void* result = LoadFileIntoMemory(buf, g_fileLoadBuffer, (unsigned int*)0);
+        if (result != NULL) {
+            func_0203fd5c(p0, buf, p2, result);
         }
         BackgroundLoader::RemoveLockGlobal();
     }

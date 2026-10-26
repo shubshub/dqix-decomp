@@ -10,8 +10,8 @@ enum { Enum_ov004_02165ef4_0 = 0 };
 #endif
 
 // USA: func_ov004_02165ef4
-extern "C" ARM void func_ov004_02165ef4(void* arg0) {
-    short var0 = *(short*)((&data_ov004_0217101c)[Enum_ov004_02165ef4_0] + 0x4c);
-    short var1 = (var0 + 7) / 8;
-    func_ov023_021f65b4(arg0, (void*)0x5b, 0, var1);
+extern "C" ARM void func_ov004_02165ef4(void* a) {
+    short field = *(short*)((&data_ov004_0217101c)[Enum_ov004_02165ef4_0] + 0x4c);
+    short v = (field + 7) / 8;
+    func_ov023_021f65b4(a, (void*)0x5b, 0, v);
 }

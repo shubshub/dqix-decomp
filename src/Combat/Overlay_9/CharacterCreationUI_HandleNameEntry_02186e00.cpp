@@ -13,7 +13,7 @@ extern "C" void CharacterCreationUI_MoveCursorToSlot(CharacterCreationUI*, int);
 extern "C" int func_ov009_02185c58(void*);
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI*);
 extern "C" void func_ov009_0218ad0c(void*);
-void CharacterCreationUI_SwitchTab(unsigned char*, int);
+extern "C" void CharacterCreationUI_SwitchTab(unsigned char*, int);
 extern char CharacterCreationUI_nameFill[];
 extern const char g_stringFormat[];
 
@@ -117,9 +117,9 @@ struct Keyboard {
     unsigned char allowAlt_;
     unsigned char allowCancel_;
     unsigned char autoRepeat_;
-    char unk_25[3];
+    char unknown_25_[3];
 
-    void inline_ov009_02186e00(char* arg0, int arg1)
+    void SetText(char* text, int size)
     {
         text_ = text;
         textSize_ = size;
@@ -129,19 +129,19 @@ struct Keyboard {
 struct GridCursor;
 
 extern "C" void Keyboard_ResetToKey(Keyboard* keyboard, const char* text);
-FontCharacter* Font_FindCharacter(int character, int font);
+extern "C" FontCharacter* Font_FindCharacter(int character, int font);
 extern "C" int Keyboard_Update(Keyboard* keyboard, int ticks);
 extern "C" int CharacterCreationUI_HandleInput(void* self);
 extern "C" void CharacterCreationUI_CheckName(void* self);
-void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
-void CharacterCreationUI_RefreshNameText(char* self);
+extern "C" void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
+extern "C" void CharacterCreationUI_RefreshNameText(char* self);
 extern "C" KeyboardKey* Keyboard_FindKeyByAction(Keyboard* keyboard, int action);
-void CharacterCreationUI_PickRandomName(void* self);
-void GridCursor_Init(GridCursor* cursor);
-void GridCursor_SetDimensions(GridCursor* cursor, int columns, int rows, int order);
-void GridCursor_SetCount(GridCursor* cursor, int count);
+extern "C" void CharacterCreationUI_PickRandomName(void* self);
+extern "C" void GridCursor_Init(GridCursor* cursor);
+extern "C" void GridCursor_SetDimensions(GridCursor* cursor, int columns, int rows, int order);
+extern "C" void GridCursor_SetCount(GridCursor* cursor, int count);
 extern "C" void GridCursor_SetSelectedIndex(GridCursor* cursor, int index);
-void Keyboard_SelectKeyByAction(Keyboard* keyboard, int action);
+extern "C" void Keyboard_SelectKeyByAction(Keyboard* keyboard, int action);
 extern "C" void Keyboard_GetKeySize(int sizeClass, short* width, short* height);
 
 extern char CharacterCreationUI_firstKeyText[];

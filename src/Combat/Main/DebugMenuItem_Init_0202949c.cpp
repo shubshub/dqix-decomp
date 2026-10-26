@@ -10,7 +10,7 @@ struct DebugMenuItem {
 };
 
 // Main, originally Init0202949c (USA 0x0202949c, EUR 0x020294ac, JPN 0x02029054)
-ARM void DebugMenuItem_Init(char* itemPtr) {
+extern "C" ARM void DebugMenuItem_Init(char* itemPtr) {
     DebugMenuItem* item = (DebugMenuItem*)itemPtr;
     item->text[0] = 0;
     memset(item->text, 0, sizeof(item->text));

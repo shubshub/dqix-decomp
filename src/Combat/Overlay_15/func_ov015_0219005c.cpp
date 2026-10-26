@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
-struct Struct_ov015_0219005c { char unknown_0_[0x1c]; unsigned char unknown_1c_; char unknown_1d_[0xf]; unsigned char unknown_2c_; char unknown_2d_[0x13]; short unknown_40_; short unknown_42_; };
+struct Struct_ov015_0219005c { char pad[0x1c]; unsigned char unknown_1c_; char pad2[0xf]; unsigned char unknown_2c_; char pad3[0x13]; short field40; short unknown_42_; };
 
 // USA: func_ov015_0219005c
-extern "C" ARM void func_ov015_0219005c(struct Struct_ov015_0219005c* arg0, short arg1, short arg2) {
-    unsigned char var0 = arg0->unknown_1c_;
-    if (var0 != 0 && var0 != 1)
+extern "C" ARM void func_ov015_0219005c(struct Struct_ov015_0219005c* o, short v1, short v2) {
+    unsigned char f = o->unknown_1c_;
+    if (f != 0 && f != 1)
         return;
-    if (arg0->unknown_42_ != arg1 || arg0->unknown_40_ != arg2) {
-        arg0->unknown_42_ = arg1;
-        arg0->unknown_40_ = arg2;
-        arg0->unknown_2c_ = 2;
+    if (o->unknown_42_ != v1 || o->field40 != v2) {
+        o->unknown_42_ = v1;
+        o->field40 = v2;
+        o->unknown_2c_ = 2;
     }
 }

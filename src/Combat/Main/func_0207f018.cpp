@@ -2,46 +2,46 @@
 
 struct Struct_0207ed48 {
     unsigned int unknown_0_;
-    unsigned int unknown_4_;
-    short unknown_8_;
-    short unknown_a_;
-    short unknown_c_;
-    short unknown_e_;
+    unsigned int w4;
+    short h8;
+    short ha;
+    short hc;
+    short he;
     short unknown_10_;
     unsigned char unknown_12_;
     unsigned char unknown_13_;
-    unsigned char unknown_14_;
+    unsigned char b14;
     unsigned char unknown_15_;
 };
 
 struct Struct_0207f018 {
-    struct Struct_0207ed48* unknown_0_;
-    short unknown_4_;
-    short unknown_6_;
+    struct Struct_0207ed48* base;
+    short count;
+    short capacity;
 };
 
 // USA: func_0207f018
-extern "C" ARM void func_0207f018(struct Struct_0207f018* arg0, struct Struct_0207ed48* arg1) {
-    short var0;
-    struct Struct_0207ed48* var1;
-    if (arg1 == NULL) {
+extern "C" ARM void func_0207f018(struct Struct_0207f018* arr, struct Struct_0207ed48* src) {
+    short count;
+    struct Struct_0207ed48* dst;
+    if (src == NULL) {
         return;
     }
-    var0 = arg0->unknown_4_;
-    if (arg0->unknown_6_ <= var0) {
+    count = arr->count;
+    if (arr->capacity <= count) {
         return;
     }
-    var1 = &arg0->unknown_0_[var0];
-    var1->unknown_0_ = arg1->unknown_0_;
-    var1->unknown_4_ = arg1->unknown_4_;
-    var1->unknown_8_ = arg1->unknown_8_;
-    var1->unknown_a_ = arg1->unknown_a_;
-    var1->unknown_c_ = arg1->unknown_c_;
-    var1->unknown_e_ = arg1->unknown_e_;
-    var1->unknown_10_ = arg1->unknown_10_;
-    var1->unknown_12_ = arg1->unknown_12_;
-    var1->unknown_13_ = arg1->unknown_13_;
-    var1->unknown_14_ = arg1->unknown_14_;
-    var1->unknown_15_ = arg1->unknown_15_;
-    arg0->unknown_4_ = arg0->unknown_4_ + 1;
+    dst = &arr->base[count];
+    dst->unknown_0_ = src->unknown_0_;
+    dst->w4 = src->w4;
+    dst->h8 = src->h8;
+    dst->ha = src->ha;
+    dst->hc = src->hc;
+    dst->he = src->he;
+    dst->unknown_10_ = src->unknown_10_;
+    dst->unknown_12_ = src->unknown_12_;
+    dst->unknown_13_ = src->unknown_13_;
+    dst->b14 = src->b14;
+    dst->unknown_15_ = src->unknown_15_;
+    arr->count = arr->count + 1;
 }

@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 
-extern "C" int func_020d1e08(int arg0, int arg1, int arg2, int arg3);
-extern "C" int func_020d1ebc(int arg0, int arg1, int arg2);
+extern "C" int func_020d1e08(int a, int b, int c, int d);
+extern "C" int func_020d1ebc(int a, int b, int c);
 struct Struct_020bc4f8;
-extern "C" void func_020bc610(Struct_020bc4f8* arg0);
+extern "C" void func_020bc610(Struct_020bc4f8* obj);
 extern "C" int func_020d26ec(void);
 
-struct Struct_020bc4f8_2 { unsigned char unknown_0_[0x1c]; int unknown_1c_; };
+struct Struct_020bc4f8_2 { unsigned char pad[0x1c]; int field1c; };
 
 struct Struct_020bc4f8_3 {
     unsigned char unknown_0_[4];
-    Struct_020bc4f8_2* unknown_4_;
-    unsigned char unknown_8_[0x24];
+    Struct_020bc4f8_2* field4;
+    unsigned char pad08[0x24];
     unsigned char unknown_2c_;
     unsigned char unknown_2d_[2];
     unsigned char unknown_2f_;
@@ -21,14 +21,14 @@ struct Struct_020bc4f8_3 {
 };
 
 // USA: func_020bc4f8
-extern "C" ARM void func_020bc4f8(Struct_020bc4f8_3* arg0, int arg1, int arg2, int arg3) {
-    Struct_020bc4f8_2* var0 = arg0->unknown_4_;
-    func_020d1e08(arg0->unknown_3c_, arg1, arg2, arg3);
-    if (var0->unknown_1c_ != 0) {
-        func_020d1ebc(arg0->unknown_3c_, 0xffff, var0->unknown_1c_);
+extern "C" ARM void func_020bc4f8(Struct_020bc4f8_3* obj, int b, int c, int d) {
+    Struct_020bc4f8_2* p = obj->field4;
+    func_020d1e08(obj->unknown_3c_, b, c, d);
+    if (p->field1c != 0) {
+        func_020d1ebc(obj->unknown_3c_, 0xffff, p->field1c);
     }
-    func_020bc610((Struct_020bc4f8*)arg0);
-    arg0->unknown_30_ = func_020d26ec();
-    arg0->unknown_2f_ = 1;
-    arg0->unknown_2c_ = 1;
+    func_020bc610((Struct_020bc4f8*)obj);
+    obj->unknown_30_ = func_020d26ec();
+    obj->unknown_2f_ = 1;
+    obj->unknown_2c_ = 1;
 }

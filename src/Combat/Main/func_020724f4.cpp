@@ -2,20 +2,20 @@
 #include "Memory/SafeAllocator.h"
 
 struct Struct_020724f4 {
-    void* unknown_0_;
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
+    void* ptr;
+    unsigned short count;
+    unsigned short pad;
 };
 
 // USA: func_020724f4
-extern "C" ARM void func_020724f4(Struct_020724f4* arg0, SafeAllocator* arg1, unsigned int arg2) {
-    if (arg0->unknown_0_ != NULL) {
+extern "C" ARM void func_020724f4(Struct_020724f4* obj, SafeAllocator* alloc, unsigned int count) {
+    if (obj->ptr != NULL) {
         return;
     }
-    arg0->unknown_6_ = 0;
-    arg0->unknown_4_ = arg2;
-    arg0->unknown_0_ = arg1->Allocate(arg2 * 0x2c);
-    for (unsigned short var0 = 0; var0 < arg2; var0++) {
-        *(short*)((char*)arg0->unknown_0_ + var0 * 0x2c) = -1;
+    obj->pad = 0;
+    obj->count = count;
+    obj->ptr = alloc->Allocate(count * 0x2c);
+    for (unsigned short i = 0; i < count; i++) {
+        *(short*)((char*)obj->ptr + i * 0x2c) = -1;
     }
 }

@@ -2,24 +2,24 @@
 #include "Memory/SafeAllocator.h"
 
 struct Struct_02071c64 {
-    void* unknown_0_;
-    void* unknown_4_;
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    void* field0;
+    void* field4;
+    unsigned short field8;
+    unsigned short fieldA;
 };
 
-extern "C" void func_02071b38(void* arg0);
+extern "C" void func_02071b38(void* entry);
 
 // USA: func_02071c64
-extern "C" ARM void func_02071c64(struct Struct_02071c64* arg0, void* arg1, unsigned int arg2) {
-    if (arg0->unknown_4_ != 0) return;
-    arg0->unknown_a_ = 0;
-    arg0->unknown_8_ = arg2;
-    void* var0 = ((SafeAllocator*)arg1)->Allocate(arg2 << 5);
-    arg0->unknown_4_ = var0;
-    arg0->unknown_0_ = var0;
-    unsigned short var1;
-    for (var1 = 0; var1 < arg2; var1++) {
-        func_02071b38((char*)arg0->unknown_4_ + var1 * 0x20);
+extern "C" ARM void func_02071c64(struct Struct_02071c64* self, void* allocator, unsigned int count) {
+    if (self->field4 != 0) return;
+    self->fieldA = 0;
+    self->field8 = count;
+    void* block = ((SafeAllocator*)allocator)->Allocate(count << 5);
+    self->field4 = block;
+    self->field0 = block;
+    unsigned short i;
+    for (i = 0; i < count; i++) {
+        func_02071b38((char*)self->field4 + i * 0x20);
     }
 }

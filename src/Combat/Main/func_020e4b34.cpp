@@ -2,42 +2,42 @@
 #include "std_library_functions.h"
 
 struct Struct_020e4b34_2 {
-    unsigned int unknown_0_0_ : 6;
-    unsigned int unknown_0_6_ : 6;
-    unsigned int unknown_1_4_ : 6;
-    unsigned int unknown_2_2_ : 6;
-    unsigned int unknown_3_0_ : 2;
-    unsigned int unknown_3_2_ : 1;
-    unsigned int unknown_3_3_ : 1;
-    unsigned int unknown_3_4_ : 1;
-    unsigned int unknown_3_5_ : 1;
-    unsigned int unknown_3_6_ : 1;
-    unsigned int unknown_3_7_ : 1;
+    unsigned int p0 : 6;
+    unsigned int p1 : 6;
+    unsigned int p2 : 6;
+    unsigned int p3 : 6;
+    unsigned int p4 : 2;
+    unsigned int p5 : 1;
+    unsigned int p6 : 1;
+    unsigned int p7 : 1;
+    unsigned int pad0 : 1;
+    unsigned int p8 : 1;
+    unsigned int pad1 : 1;
 };
 
 struct Struct_020e4b34 {
-    int unknown_0_;
-    int unknown_4_;
+    int f0;
+    int f4;
     union {
-        unsigned int unknown_0_;
-        Struct_020e4b34_2 unknown1_0_;
-    } unknown_8_;
+        unsigned int raw;
+        Struct_020e4b34_2 bits;
+    } f8;
 };
 
 // USA: func_020e4b34
-extern "C" ARM void func_020e4b34(Struct_020e4b34* arg0, int arg1, int arg2, unsigned int arg3,
-        unsigned char arg4, unsigned char arg5, unsigned char arg6, unsigned char arg7,
+extern "C" ARM void func_020e4b34(Struct_020e4b34* dst, int a1, int a2, unsigned int a3,
+        unsigned char b0, unsigned char b1, unsigned char b2, unsigned char b3,
         unsigned char arg8, unsigned char arg9, unsigned char arg10, unsigned char arg11) {
-    memset(arg0, 0, 0xc);
-    arg0->unknown_0_ = arg1;
-    arg0->unknown_4_ = arg2;
-    arg0->unknown_8_.unknown1_0_.unknown_0_0_ = arg3;
-    arg0->unknown_8_.unknown1_0_.unknown_0_6_ = arg4;
-    arg0->unknown_8_.unknown1_0_.unknown_1_4_ = arg5;
-    arg0->unknown_8_.unknown1_0_.unknown_2_2_ = arg6;
-    arg0->unknown_8_.unknown1_0_.unknown_3_0_ = arg7;
-    arg0->unknown_8_.unknown1_0_.unknown_3_2_ = arg8;
-    arg0->unknown_8_.unknown1_0_.unknown_3_3_ = arg9;
-    arg0->unknown_8_.unknown1_0_.unknown_3_4_ = arg10;
-    arg0->unknown_8_.unknown1_0_.unknown_3_6_ = arg11;
+    memset(dst, 0, 0xc);
+    dst->f0 = a1;
+    dst->f4 = a2;
+    dst->f8.bits.p0 = a3;
+    dst->f8.bits.p1 = b0;
+    dst->f8.bits.p2 = b1;
+    dst->f8.bits.p3 = b2;
+    dst->f8.bits.p4 = b3;
+    dst->f8.bits.p5 = arg8;
+    dst->f8.bits.p6 = arg9;
+    dst->f8.bits.p7 = arg10;
+    dst->f8.bits.p8 = arg11;
 }

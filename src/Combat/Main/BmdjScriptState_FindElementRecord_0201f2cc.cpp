@@ -25,7 +25,7 @@ struct Manager_1f2cc {
 };
 
 // Main, originally FindElementByHalfwordKey_0201f2cc (USA 0x0201f2cc, EUR 0x0201f2dc, JPN 0x0201f058)
-ARM struct Element_1f2cc* BmdjScriptState_FindElementRecord(struct Manager_1f2cc* state, int key) {
+extern "C" ARM struct Element_1f2cc* BmdjScriptState_FindElementRecord(struct Manager_1f2cc* state, int key) {
     int i;
     for (i = 0; i < state->elementCount; i++) {
         if (key == state->elements[i].key) {

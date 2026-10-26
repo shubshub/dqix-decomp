@@ -4,37 +4,37 @@
 
 class GameObject;
 
-struct Struct_02038598 {
-    unsigned char unknown_0_0_ : 1;
-    unsigned char unknown_0_1_ : 7;
+struct ActorActionFlags {
+    unsigned char active : 1;
+    unsigned char unknown : 7;
 };
 
-struct Struct_02037d10 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
-    unsigned short unknown_4_;
-    short unknown_6_;
-    short unknown_8_;
-    short unknown_a_;
-    Struct_02014900 unknown_c_;
-    Struct_02014900 unknown_18_;
-    Struct_02014900 unknown_24_;
-    Struct_02014900 unknown_30_;
-    Struct_02014900 unknown_3c_;
-    int unknown_48_;
-    int unknown_4c_;
-    short unknown_50_;
-    unsigned char unknown_52_;
-    unsigned char unknown_53_;
-    unsigned char unknown_54_;
-    Struct_020134e0::Struct_02018300* unknown_58_;
-    Struct_020134e0::Struct_02018300* unknown_5c_;
-    Struct_020134e0::Struct_02018300* unknown_60_;
+struct SubBlock02038508 {
+    unsigned char active;
+    unsigned char command;
+    unsigned char unknown2;
+    unsigned char reversed;
+    unsigned short unknown4;
+    short heading;
+    short startHeading;
+    short endHeading;
+    Struct_02014900 start;
+    Struct_02014900 end;
+    Struct_02014900 unknown24;
+    Struct_02014900 startControl;
+    Struct_02014900 endControl;
+    int unknown48;
+    int unknown4c;
+    short unknown50;
+    unsigned char unknown52;
+    unsigned char unknown53;
+    unsigned char unknown54;
+    ZoneFeatures::Opcode6aEntry* startNode;
+    ZoneFeatures::Opcode6aEntry* endNode;
+    ZoneFeatures::Opcode6aEntry* unknown60;
 };
 
-void LadderClimb_Reset(SubBlock02038508* block);
-SubBlock02038508* GameObject_GetLadderClimb(void* object);
-void GameObject_SetLadderClimb(GameObject* object, SubBlock02038508* source);
+extern "C" void LadderClimb_Reset(SubBlock02038508* block);
+extern "C" SubBlock02038508* GameObject_GetLadderClimb(void* object);
+extern "C" void GameObject_SetLadderClimb(GameObject* object, SubBlock02038508* source);
 extern "C" void LinkMessageQueue_SendLadderClimb(SubBlock02038508* block, unsigned char first, unsigned char second);

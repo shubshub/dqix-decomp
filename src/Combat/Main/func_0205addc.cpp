@@ -1,87 +1,88 @@
 #include <globaldefs.h>
+#include "Graphics/SpriteEntry.h"
 
-struct Struct_0205a254_2 {
-    char unknown_0_[8];
-    unsigned short unknown_8_;
-    char unknown_a_[0x18 - 0xa];
+struct Elem0205a3d0 {
+    char unk0[8];
+    unsigned short key;
+    char unk2[0x18 - 0xa];
 };
 
-struct Struct_0205a254 {
-    struct Struct_0205a254_2* unknown_0_;
-    unsigned short unknown_4_;
+struct Container0205a3d0 {
+    struct Elem0205a3d0* entries;
+    unsigned short count;
 };
 
-extern "C" struct Struct_0205a254_2* func_0205a3d0(struct Struct_0205a254* arg0, int arg1);
+extern "C" struct Elem0205a3d0* SpriteEntryList_Find(struct Container0205a3d0* c, int key);
 
 struct Struct_0205addc {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
+    unsigned short f0;
+    unsigned short f2;
 };
 
-struct Struct_0205addc_2 {
-    char unknown_0_[4];
-    short unknown_4_;
+struct Entry0205addc {
+    char pad0[4];
+    short f4;
     short unknown_6_;
-    char unknown_8_[4];
-    struct Struct_0205addc* unknown_c_;
-    unsigned short unknown_10_;
-    char unknown_12_[2];
-    unsigned char unknown_14_;
-    unsigned char unknown_15_;
+    char pad8[4];
+    struct Struct_0205addc* fc;
+    unsigned short f10;
+    char pad12[2];
+    unsigned char f14;
+    unsigned char f15;
 };
 
-struct Struct_0205addc_3 {
-    char unknown_0_[0x14];
-    int unknown_14_;
-    int unknown_18_;
+struct Slot0205addc {
+    char pad0[0x14];
+    int f14;
+    int f18;
     char unknown_1c_[0x22 - 0x1c];
-    unsigned char unknown_22_;
+    unsigned char f22;
     char unknown_23_[0x28 - 0x23];
 };
 
-struct Struct_0205addc_4 {
-    char unknown_0_[0x3c];
-    struct Struct_0205a254* unknown_3c_;
-    struct Struct_0205addc_3* unknown_40_;
+struct Context0205addc {
+    char pad0[0x3c];
+    struct Container0205a3d0* f3c;
+    struct Slot0205addc* f40;
     char unknown_44_[0x4c - 0x44];
     unsigned short unknown_4c_;
 };
 
-extern "C" int func_0205ac40(struct Struct_0205addc_4* arg0, struct Struct_0205addc_3* arg1, int arg2);
+extern "C" int SpriteContext_DrawSprite(struct Context0205addc* self, struct Slot0205addc* slot, int count);
 
 // USA: func_0205addc
-extern "C" ARM int func_0205addc(struct Struct_0205addc_4* arg0, int arg1) {
-    struct Struct_0205addc_2* var0;
-    struct Struct_0205addc_2* var1;
-    int var2;
-    unsigned short var3;
+extern "C" ARM int func_0205addc(struct Context0205addc* self, int id) {
+    struct Entry0205addc* e;
+    struct Entry0205addc* e2;
+    int ok;
+    unsigned short count;
 
-    if (arg0->unknown_3c_ == 0) {
-        return (int)arg0->unknown_3c_;
+    if (self->f3c == 0) {
+        return (int)self->f3c;
     }
-    var0 = (struct Struct_0205addc_2*)func_0205a3d0(arg0->unknown_3c_, arg1);
-    if (var0 == 0) {
-        return (int)var0;
+    e = (struct Entry0205addc*)SpriteEntryList_Find(self->f3c, id);
+    if (e == 0) {
+        return (int)e;
     }
-    var1 = (struct Struct_0205addc_2*)func_0205a3d0(arg0->unknown_3c_, arg1);
-    if (var1 != 0) {
-        var2 = (var1->unknown_15_ & 8) ? 1 : 0;
+    e2 = (struct Entry0205addc*)SpriteEntryList_Find(self->f3c, id);
+    if (e2 != 0) {
+        ok = (e2->f15 & SpriteEntryFlag_Shown) ? 1 : 0;
     } else {
-        var2 = 0;
+        ok = 0;
     }
-    if (!var2) {
-        return var2;
+    if (!ok) {
+        return ok;
     }
-    var3 = var0->unknown_c_[var0->unknown_10_].unknown_2_;
-    if (var3 >= arg0->unknown_4c_) {
-        return arg0->unknown_4c_;
+    count = e->fc[e->f10].f2;
+    if (count >= self->unknown_4c_) {
+        return self->unknown_4c_;
     }
-    struct Struct_0205addc_3* var4 = &arg0->unknown_40_[var3];
-    int var5 = var0->unknown_4_, var6 = var0->unknown_6_;
-    var4->unknown_14_ = var5 << 0xc;
-    var4->unknown_18_ = var6 << 0xc;
-    if (var0->unknown_14_ != 0xff) {
-        var4->unknown_22_ = var0->unknown_14_;
+    struct Slot0205addc* slot = &self->f40[count];
+    int v4 = e->f4, v6 = e->unknown_6_;
+    slot->f14 = v4 << 0xc;
+    slot->f18 = v6 << 0xc;
+    if (e->f14 != 0xff) {
+        slot->f22 = e->f14;
     }
-    return func_0205ac40(arg0, var4, var6);
+    return SpriteContext_DrawSprite(self, slot, v6);
 }

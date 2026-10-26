@@ -21,12 +21,12 @@ extern char data_020ef242[];
 extern char data_020ef251[];
 extern char data_020ef260[];
 
-void NNS_GfdGetFrmTexVramState(int*);
-void NNS_GfdSetFrmTexVramState(int*);
+extern "C" void NNS_GfdGetFrmTexVramState(int*);
+extern "C" void NNS_GfdSetFrmTexVramState(int*);
 extern "C" void __clear(void* buf, int len);
 extern "C" void* _ZN7Model3DC1Ev(void*);
 extern "C" void* _ZN7Model3DD1Ev(void*);
-void Zone3D_ApplyChestDiffuseColor(unsigned char*);
+extern "C" void Zone3D_ApplyChestDiffuseColor(unsigned char*);
 
 // Main, originally func_02018d28 (USA 0x02018d28, EUR 0x02018d38, JPN 0x02018ac8)
 extern "C" ARM void Zone3D_LoadChestModels(Zone3D* zone, SafeAllocator* allocator, void* archive, unsigned int archiveLength) {

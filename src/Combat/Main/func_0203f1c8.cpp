@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 // USA: func_0203f1c8
-extern "C" ARM void* func_0203f1c8(unsigned char* arg0, unsigned int arg1) {
-    if (*(unsigned int*)(arg0 + 0x18) <= arg1) {
+extern "C" ARM void* func_0203f1c8(unsigned char* obj, unsigned int index) {
+    if (*(unsigned int*)(obj + 0x18) <= index) {
         return NULL;
     }
-    return *(unsigned char**)(arg0 + 0x1c) + arg1 * 0x14;
+    return *(unsigned char**)(obj + 0x1c) + index * 0x14;
 }

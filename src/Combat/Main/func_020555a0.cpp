@@ -1,25 +1,25 @@
 #include <globaldefs.h>
 
-extern "C" void func_0207df90(char* arg0);
-extern "C" void func_0207dfac(char* arg0);
-extern "C" void func_020553ec(void* arg0, int arg1, int arg2, int arg3, int arg4);
+extern "C" void VramState_Restore(char* obj);
+extern "C" void VramState_Save(char* obj);
+extern "C" void func_020553ec(void* obj, int a, int b, int c, int d);
 
 struct Struct_020555a0 {
-    int unknown_0_;
-    int unknown_4_;
-    char* unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
+    int field0;
+    int field4;
+    char* field8;
+    int fieldc;
+    int field10;
 };
 
 // USA: func_020555a0
-extern "C" ARM void func_020555a0(struct Struct_020555a0* arg0) {
-    if (arg0->unknown_4_ != 0 && arg0->unknown_c_ != 0 && arg0->unknown_10_ != 0 && arg0->unknown_8_ != 0) {
-        func_0207df90(arg0->unknown_8_);
-        func_020553ec(arg0, arg0->unknown_0_, arg0->unknown_4_, arg0->unknown_c_, arg0->unknown_10_);
-        func_0207dfac(arg0->unknown_8_);
+extern "C" ARM void func_020555a0(struct Struct_020555a0* obj) {
+    if (obj->field4 != 0 && obj->fieldc != 0 && obj->field10 != 0 && obj->field8 != 0) {
+        VramState_Restore(obj->field8);
+        func_020553ec(obj, obj->field0, obj->field4, obj->fieldc, obj->field10);
+        VramState_Save(obj->field8);
     }
-    arg0->unknown_8_ = 0;
-    arg0->unknown_c_ = 0;
-    arg0->unknown_10_ = 0;
+    obj->field8 = 0;
+    obj->fieldc = 0;
+    obj->field10 = 0;
 }

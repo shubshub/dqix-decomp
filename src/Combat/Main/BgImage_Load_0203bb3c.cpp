@@ -5,7 +5,7 @@
 
 extern "C" void LoadToMainBGStandardPalette(int src, int dstOffset, unsigned int size);
 extern "C" void LoadToSubBGStandardPalette(int src, int dstOffset, unsigned int size);
-int BgTransfers_LoadTiles(int* bgTransfers, int screen, int bg, int source, unsigned int size, unsigned int tileCount);
+extern "C" int BgTransfers_LoadTiles(int* bgTransfers, int screen, int bg, int source, unsigned int size, unsigned int tileCount);
 
 extern int data_02105254;
 
@@ -31,7 +31,7 @@ enum {
 };
 
 // Main, originally SetupAndDispatchCharTransfer0203bb3c (USA 0x0203bb3c, EUR 0x0203bb4c, JPN 0x0203b594)
-ARM void BgImage_Load(struct Obj0203bb3c* image, char* data, SafeAllocator* allocator, int screen, unsigned short bg) {
+extern "C" ARM void BgImage_Load(struct Obj0203bb3c* image, char* data, SafeAllocator* allocator, int screen, unsigned short bg) {
     image->screen = screen;
     image->bg = bg;
     int* bgTransfers = (int*)&data_02105254;

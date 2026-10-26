@@ -5,28 +5,28 @@
 
 struct Struct_02048260_2;
 struct Struct_02010604_3;
-struct Struct_02010604;
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
+struct Bytes02033b88;
+struct TailList020469b4;
+struct TailNode020469b4;
 
 struct Struct_ov017_0219ff58 {
-    short unknown_0_;
-    char unknown_2_;
-    char unknown_3_[4];
+    short mapId;
+    char field2;
+    char pad3[4];
     char unknown_7_;
-    char unknown_8_[8];
-    int unknown_10_[3];
-    short unknown_1c_;
-    char unknown_1e_[0x70 - 0x1e];
+    char pad8[8];
+    int pos[3];
+    short angle;
+    char pad1e[0x70 - 0x1e];
 };
 
 struct Struct_ov017_0219ff58_2 {
-    unsigned int unknown_0_;
+    unsigned int flags;
 };
 
 struct Struct_ov017_0219ff58_3 {
-    unsigned char unknown_0_[0x130];
-    Struct_ov017_0219ff58_2* unknown_130_;
+    unsigned char pad0[0x130];
+    Struct_ov017_0219ff58_2* status;
 #if defined(jpn)
     unsigned char unknown_134_[0x180 - 0x134];
 #else
@@ -35,58 +35,58 @@ struct Struct_ov017_0219ff58_3 {
     unsigned int unknown_18c_;
 };
 
-int CheckBitsInField0x63dc_02011b50(void* obj, int mask);
-void SetBitsInField0x63dc_02011b3c(void* obj, unsigned char mask);
-int GameState_GetProtagonistIndex(GameState* battleStruct);
+extern "C" int func_02011b50(void* obj, int mask);
+extern "C" void func_02011b3c(void* obj, unsigned char mask);
+extern "C" int GameState_GetProtagonistIndex(GameState* battleStruct);
 extern "C" void func_02048150(void* combatant, int a, int b);
-int RestoreMaxHpToFull(struct Combatant02048260* c);
-int RestoreMaxMpToFull(struct Combatant020482bc* c);
-int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
-void GameObject_SetFollowedMember(unsigned char*, int);
-void GameObject_SetLinePosition(unsigned char* obj, int value);
-void GameObject_EnableControl(void* obj);
+extern "C" int func_02048260(struct Struct_02048260_2* c);
+extern "C" int func_020482bc(struct Struct_02010604_3* c);
+extern "C" int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
+extern "C" void GameObject_SetFollowedMember(unsigned char*, int);
+extern "C" void GameObject_SetLinePosition(unsigned char* obj, int value);
+extern "C" void GameObject_EnableControl(void* obj);
 extern "C" void func_ov017_021cedf4(int a, int b, int c);
 extern "C" void func_ov017_021c9e00(int id, int a, int b, int c);
-GameObject* GetCombatantWithFlag0x1000_0200ff58(GameState* battleStruct, int combatantId);
-int GetSignedByte0x2d0_020546a8(void* obj);
-void InitStruct02070378(char* obj);
-void FieldTask_InitEnterZone(unsigned char* obj, int flag);
-void AppendNodeToTail(struct TailList020469b4* list, struct TailNode020469b4* node);
+extern "C" GameObject* func_0200ff58(GameState* battleStruct, int combatantId);
+extern "C" int func_020546a8(void* obj);
+extern "C" void func_02070378(char* obj);
+extern "C" void FieldTask_InitEnterZone(unsigned char* obj, int flag);
+extern "C" void func_020469b4(struct TailList020469b4* list, struct TailNode020469b4* node);
 
 // USA: func_ov017_0219ff58
-extern "C" ARM int func_ov017_0219ff58(unsigned char* arg0, int arg1, int arg2, int arg3) {
+extern "C" ARM int func_ov017_0219ff58(unsigned char* ov, int flagA, int arg2, int arg3) {
 #if defined(jpn)
- enum { Enum_ov017_0219ff58_1804=0x4fc, Enum_ov017_0219ff58_1788=0x4ec };
+ enum { regionalNode=0x4fc, regionalList=0x4ec };
 #else
- enum { Enum_ov017_0219ff58_1804=0x70c, Enum_ov017_0219ff58_1788=0x6fc };
+ enum { regionalNode=0x70c, regionalList=0x6fc };
 #endif
-    GameState* var0 = GameState::GetInstance();
-    if (func_02011b50(var0, 1) != 0) {
+    GameState* battle = GameState::GetInstance();
+    if (func_02011b50(battle, 1) != 0) {
         if (arg3 != 0) {
             GetGameResources();
             signed char leader = GameState_GetProtagonistIndex(battle);
-            Combatant0219ff58* c = (Combatant0219ff58*)battle->GetPartyMemberByIndex(leader);
+            Struct_ov017_0219ff58_3* c = (Struct_ov017_0219ff58_3*)battle->GetPartyMemberByIndex(leader);
             if (c != NULL) {
                 func_02048150(c, 0, 1);
-                RestoreMaxHpToFull((struct Combatant02048260*)c);
-                RestoreMaxMpToFull((struct Combatant020482bc*)c);
-                c->flags18c &= ~1;
+                func_02048260((struct Struct_02048260_2*)c);
+                func_020482bc((struct Struct_02010604_3*)c);
+                c->unknown_18c_ &= ~1;
                 GameObject_ForceMotionState((struct Bytes02033b88*)c, 0);
                 if (c->status->flags & 1) {
                     GameObject_SetFollowedMember((unsigned char*)c, -1);
                     GameObject_SetLinePosition((unsigned char*)c, 0);
                     GameObject_EnableControl(c);
                 }
-                func_ov017_021cedf4(var1, 1, 0);
-                func_ov017_021c9e00(var1, 0, 0, 1);
+                func_ov017_021cedf4(leader, 1, 0);
+                func_ov017_021c9e00(leader, 0, 0, 1);
             }
             for (signed char i = 0; i < 4; i++) {
-                Combatant0219ff58* m = (Combatant0219ff58*)GetCombatantWithFlag0x1000_0200ff58(battle, i);
-                if (m != NULL && leader == GetSignedByte0x2d0_020546a8(m)) {
+                Struct_ov017_0219ff58_3* m = (Struct_ov017_0219ff58_3*)func_0200ff58(battle, i);
+                if (m != NULL && leader == func_020546a8(m)) {
                     func_02048150(m, 0, 1);
-                    RestoreMaxHpToFull((struct Combatant02048260*)m);
-                    RestoreMaxMpToFull((struct Combatant020482bc*)m);
-                    m->flags18c &= ~1;
+                    func_02048260((struct Struct_02048260_2*)m);
+                    func_020482bc((struct Struct_02010604_3*)m);
+                    m->unknown_18c_ &= ~1;
                     GameObject_ForceMotionState((struct Bytes02033b88*)m, 0);
                     func_ov017_021cedf4(i, 1, 0);
                     func_ov017_021c9e00(i, 0, 0, 1);
@@ -94,24 +94,24 @@ extern "C" ARM int func_ov017_0219ff58(unsigned char* arg0, int arg1, int arg2, 
             }
         }
 
-        if (arg1 != 0) func_02011b3c(var0, 2);
-        if (arg2 != 0) func_02011b3c(var0, 4);
-        if (arg3 != 0) func_02011b3c(var0, 8);
+        if (flagA != 0) func_02011b3c(battle, 2);
+        if (arg2 != 0) func_02011b3c(battle, 4);
+        if (arg3 != 0) func_02011b3c(battle, 8);
 
-        Struct_ov017_0219ff58 var5;
-        func_02070378((char*)&var5);
-        var5.unknown_0_ = 0x10d0;
-        var5.unknown_2_ = arg3 == 0;
-        var5.unknown_7_ = 1;
-        var5.unknown_10_[0] = -0xf5;
-        var5.unknown_10_[1] = 0x1199;
-        var5.unknown_10_[2] = -0x30a3;
-        var5.unknown_1c_ = 0x323d;
-        func_0200fba4(var0, &var5);
+        Struct_ov017_0219ff58 warp;
+        func_02070378((char*)&warp);
+        warp.mapId = 0x10d0;
+        warp.field2 = arg3 == 0;
+        warp.unknown_7_ = 1;
+        warp.pos[0] = -0xf5;
+        warp.pos[1] = 0x1199;
+        warp.pos[2] = -0x30a3;
+        warp.angle = 0x323d;
+        func_0200fba4(battle, &warp);
 
-        if (flagB != 0) {
+        if (arg2 != 0) {
             FieldTask_InitEnterZone(*(unsigned char**)(ov + 0x3000 + regionalNode), 0);
-            AppendNodeToTail(*(struct TailList020469b4**)(ov + 0x3000 + regionalList),
+            func_020469b4(*(struct TailList020469b4**)(ov + 0x3000 + regionalList),
                              *(struct TailNode020469b4**)(ov + 0x3000 + regionalNode));
         }
         return 1;

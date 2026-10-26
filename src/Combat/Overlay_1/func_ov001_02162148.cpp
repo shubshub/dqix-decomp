@@ -4,9 +4,9 @@
 extern "C" int func_ov017_021d60f4(void*);
 
 // USA: func_ov001_02162148
-extern "C" ARM int func_ov001_02162148(void* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = func_ov017_021d60f4(arg0);
-    ((GameState*)((char*)var0))->SetTimeOfDay((TimeOfDay)(var1));
+extern "C" ARM int func_ov001_02162148(void* obj) {
+    GameState* bs = GameState::GetInstance();
+    int idx = func_ov017_021d60f4(obj);
+    ((GameState*)((char*)bs))->SetTimeOfDay((TimeOfDay)(idx));
     return 1;
 }

@@ -12,19 +12,19 @@
 struct Struct_ov014_02184f78 {
     Struct_ov014_02184f78* unknown_0_;
     const char* unknown_4_;
-    const char* unknown_8_;
+    const char* name_;
     short unknown_c_;
     char unknown_e_[4];
     signed char unknown_12_;
     unsigned char unknown_13_0_ : 1;
     unsigned char unknown_13_1_ : 1;
     unsigned char unknown_13_2_ : 6;
-    char unknown_14_[6];
+    char unk_14[6];
     short unknown_1a_;
-    char unknown_1c_[4];
+    char unk_1c[4];
 };
 
-struct Struct_020a95a4_5 {
+struct MonsterRecord {
     unsigned int unknown_0_0_ : 10;
     unsigned int unknown_1_2_ : 1;
     unsigned int unknown_1_3_ : 7;
@@ -33,63 +33,63 @@ struct Struct_020a95a4_5 {
 };
 
 struct Struct_ov014_021850cc_3 {
-    char unknown_0_[8];
+    char unk_0[8];
     short unknown_8_[2];
     unsigned char unknown_c_;
-    char unknown_d_[3];
-    float unknown_10_[3];
+    char unk_d[3];
+    float position_[3];
     float unknown_1c_;
-    float unknown_20_[3];
-    const char** unknown_2c_;
+    float scale_[3];
+    const char** animations_;
 };
 
 struct Struct_ov014_021850cc {
     unsigned int unknown_0_;
-    char unknown_4_[2];
-    unsigned short unknown_6_;
+    char unk_4[2];
+    unsigned short count_;
 };
 
 struct Struct_02000c9c_52 {
-    char unknown_0_[0x10];
+    char unk_0[0x10];
 };
 
 struct Struct_ov014_021850cc_2 {
     unsigned int unknown_0_;
     short unknown_4_;
-    unsigned short unknown_6_;
+    unsigned short count_;
 };
 
 struct Struct_ov014_02188bfc {
-    char unknown_0_[0x20];
+    char unk_0[0x20];
 };
 
 struct Struct_ov014_02184dcc {
     void** unknown_0_;
-    void* unknown_4_;
-    void* unknown_8_;
+    void* spriteRenderer_;
+    void* sprites_;
     Struct_02000c9c_52 unknown_c_;
     Struct_ov014_02188bfc unknown_1c_;
-    SafeAllocator* unknown_3c_;
-    Object3D* unknown_40_;
-    void* unknown_44_;
+    SafeAllocator* allocators_;
+    Object3D* model_;
+    void* camera_;
     Struct_ov014_02184f78* unknown_48_;
     Struct_ov014_02184f78* unknown_4c_;
-    Struct_020a95a4_5* unknown_50_;
-    Struct_020a95a4_5* unknown_54_;
-    void* unknown_58_;
-    void* unknown_5c_;
+    MonsterRecord* unknown_50_;
+    MonsterRecord* unknown_54_;
+    void* layout_;
+    void* texts_;
     char* unknown_60_[2];
-    char* unknown_68_;
+    char* description_;
     int unknown_6c_;
     int unknown_70_;
     int unknown_74_;
     int unknown_78_;
-    unsigned char unknown_7c_;
+    unsigned char state_;
     unsigned char unknown_7d_;
     unsigned char unknown_7e_;
     unsigned char unknown_7f_;
-    unsigned char unknown_80_;
-    unsigned char unknown_81_;
+    unsigned char page_;
+    unsigned char flags_;
     unsigned char unknown_82_0_ : 1;
     unsigned char unknown_82_1_ : 1;
     unsigned char unknown_82_2_ : 1;
@@ -107,9 +107,9 @@ struct Struct_ov014_02184dcc {
 struct Struct_ov014_021845d4;
 struct Struct_02097238;
 struct Struct_02097054_5;
-struct Struct_0201099c_14;
-struct Struct_0203d028;
-struct Struct_0203d028_11;
+struct Struct020dfc40;
+struct Foo0207df50;
+struct Struct_203dafc;
 
 extern char data_ov014_021895d5[];
 extern char data_ov014_021895ed[];
@@ -124,214 +124,214 @@ extern char data_ov014_02189680[];
 extern char data_ov014_02189686[];
 extern char data_ov014_0218968c[];
 
-extern "C" bool func_ov014_02188bfc(HabitatTable* habitats, SafeAllocator* allocator, short monsterID);
-extern "C" bool func_ov014_02188c34(HabitatTable* habitats);
-void ResetFields_021845d4(ResetFieldsStruct021845d4* best);
-void Clear0x10Bytes02096fb0(void* table);
-extern "C" void func_02097054(MonsterInfoTable* table, SafeAllocator* allocator, void* file, unsigned int size, short monsterID);
-MonsterRecordCount* GetHandleField8(HandleField8_02097238* table);
-MonsterInfo* BinarySearchByField4_02097224(BinarySearch020971a8Container* table, int monsterID);
-void Zero4Bytes_020e526c(void* reader);
-void TryInvoke020e53bc_020e56fc(void* reader, int file, int size);
-const char** CallFunc020e52a0_020e5294(void* reader, int id);
+extern "C" bool func_ov014_02188bfc(Struct_ov014_02188bfc* arg0, SafeAllocator* allocator, short arg2);
+extern "C" bool func_ov014_02188c34(Struct_ov014_02188bfc* arg0);
+extern "C" void func_ov014_021845d4(Struct_ov014_021845d4* best);
+extern "C" void func_02096fb0(void* table);
+extern "C" void func_02097054(Struct_02000c9c_52* table, SafeAllocator* allocator, void* file, unsigned int size, short arg4);
+extern "C" Struct_ov014_021850cc* func_02097238(Struct_02097238* table);
+extern "C" Struct_ov014_021850cc_3* func_02097224(Struct_02097054_5* table, int arg1);
+extern "C" void func_020e526c(void* reader);
+extern "C" void func_020e56fc(void* reader, int file, int size);
+extern "C" const char** func_020e5294(void* reader, int id);
 extern "C" void func_020e4864(const char* input, char* output, int, int, int, int);
-void* KeyTable_Construct(void* text);
-void KeyTable_Reset(Struct020dfc40* text);
-extern "C" void func_020e046c(char* output, void* file, unsigned int size, short infoID);
-void VramState_Rewind(Foo0207df50* p);
-void VramState_Restore(char* p);
-void VramState_Save(char* p);
-void ClearEightWords_0203dafc(Struct_203dafc* info);
-void ComputeAndStoreVecs02184c08(unsigned char* screen);
+extern "C" void* KeyTable_Construct(void* text);
+extern "C" void KeyTable_Reset(Struct020dfc40* text);
+extern "C" void func_020e046c(char* output, void* file, unsigned int size, short arg3);
+extern "C" void VramState_Rewind(Foo0207df50* p);
+extern "C" void VramState_Restore(char* p);
+extern "C" void VramState_Save(char* p);
+extern "C" void func_0203dafc(Struct_203dafc* info);
+extern "C" void func_ov014_02184c08(unsigned char* screen);
 
 #if defined(jpn)
-int KeyTable_LoadInPlace(void* reader, void* file, int size);
+extern "C" int KeyTable_LoadInPlace(void* reader, void* file, int size);
 extern "C" char* func_020e207c(void* reader, char* output, int itemID);
 #endif
 
 // USA: func_ov014_021850cc
-extern "C" ARM void func_ov014_021850cc(Struct_ov014_02184dcc* arg0) {
-    if (!(arg0->unknown_81_ & 1))
+extern "C" ARM void func_ov014_021850cc(Struct_ov014_02184dcc* self) {
+    if (!(self->flags_ & 1))
         return;
 
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    if (arg0->unknown_7f_ == 0) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (self->unknown_7f_ == 0) {
 #if !defined(jpn)
-        char var1[0x40] = {};
+        char archive[0x40] = {};
 #endif
-        char var2[0x40] = {};
-        if (arg0->unknown_82_2_)
-            arg0->unknown_86_[0] = var0->QueueLoadFile(data_ov014_021895d5, NULL);
-        arg0->unknown_3c_[1].Reset();
-        func_ov014_02188bfc(&arg0->unknown_1c_, &arg0->unknown_3c_[1], arg0->unknown_48_->unknown_1a_);
+        char file[0x40] = {};
+        if (self->unknown_82_2_)
+            self->unknown_86_[0] = loader->QueueLoadFile(data_ov014_021895d5, NULL);
+        self->allocators_[1].Reset();
+        func_ov014_02188bfc(&self->unknown_1c_, &self->allocators_[1], self->unknown_48_->unknown_1a_);
 #if defined(jpn)
-        arg0->unknown_86_[1] = var0->QueueLoadFile(data_ov014_021895ed, NULL);
-        sprintf(var2, data_ov014_02189615, arg0->unknown_80_ + 1);
-        arg0->unknown_86_[2] = var0->QueueLoadFile(var2, NULL);
-        arg0->unknown_86_[3] = var0->QueueLoadFile(data_ov014_0218963f, NULL);
+        self->unknown_86_[1] = loader->QueueLoadFile(data_ov014_021895ed, NULL);
+        sprintf(file, data_ov014_02189615, self->page_ + 1);
+        self->unknown_86_[2] = loader->QueueLoadFile(file, NULL);
+        self->unknown_86_[3] = loader->QueueLoadFile(data_ov014_0218963f, NULL);
 #else
-        arg0->unknown_86_[1] = var0->QueueLoadFileInGP2(data_ov014_021895ed, data_ov014_02189603, NULL);
-        sprintf(var1, data_ov014_02189615, arg0->unknown_80_ + 1);
-        sprintf(var2, data_ov014_0218962c, arg0->unknown_80_ + 1);
-        arg0->unknown_86_[2] = var0->QueueLoadFileInGP2(var1, var2, NULL);
-        arg0->unknown_86_[3] = var0->QueueLoadFileInGP2(data_ov014_0218963f, data_ov014_02189652, NULL);
+        self->unknown_86_[1] = loader->QueueLoadFileInGP2(data_ov014_021895ed, data_ov014_02189603, NULL);
+        sprintf(archive, data_ov014_02189615, self->page_ + 1);
+        sprintf(file, data_ov014_0218962c, self->page_ + 1);
+        self->unknown_86_[2] = loader->QueueLoadFileInGP2(archive, file, NULL);
+        self->unknown_86_[3] = loader->QueueLoadFileInGP2(data_ov014_0218963f, data_ov014_02189652, NULL);
 #endif
-        if (arg0->unknown_82_2_ && arg0->unknown_48_ != NULL && arg0->unknown_50_ != NULL && arg0->unknown_48_->unknown_13_1_ && arg0->unknown_48_->unknown_4_ != NULL) {
-            sprintf(var2, data_ov014_02189661, arg0->unknown_48_->unknown_4_);
-            arg0->unknown_86_[4] = var0->QueueLoadFileInGP2(data_ov014_02189668, var2, NULL);
+        if (self->unknown_82_2_ && self->unknown_48_ != NULL && self->unknown_50_ != NULL && self->unknown_48_->unknown_13_1_ && self->unknown_48_->unknown_4_ != NULL) {
+            sprintf(file, data_ov014_02189661, self->unknown_48_->unknown_4_);
+            self->unknown_86_[4] = loader->QueueLoadFileInGP2(data_ov014_02189668, file, NULL);
         }
-        arg0->unknown_7f_++;
-    } else if (arg0->unknown_7f_ == 1) {
-        if (arg0->unknown_82_2_) {
-            if (var0->GetTaskStatus(arg0->unknown_86_[0])) {
-                void* var3;
-                unsigned int var4;
-                var0->GetLoadedFileByID(arg0->unknown_86_[0], &var3, &var4);
-                if (var3 != NULL) {
-                    short* var5 = arg0->unknown_98_;
-                    func_ov014_021845d4((Struct_ov014_021845d4*)&arg0->unknown_9c_);
-                    SafeAllocator* var6 = &arg0->unknown_3c_[0];
-                    for (; *var5 != 0; var5++) {
-                        var6->Reset();
-                        short var7 = *var5;
-                        func_02096fb0(&arg0->unknown_c_);
-                        func_02097054(&arg0->unknown_c_, var6, var3, var4, var7);
-                        Struct_ov014_021850cc* var8 = func_02097238((Struct_02097238*)&arg0->unknown_c_);
-                        if (arg0->unknown_9c_.unknown_4_ < 0
-                            || (var8 != NULL && (var8->unknown_0_ > arg0->unknown_9c_.unknown_0_ || var8->unknown_6_ > arg0->unknown_9c_.unknown_6_))) {
-                            arg0->unknown_9c_.unknown_4_ = var7;
-                            arg0->unknown_9c_.unknown_0_ = var8->unknown_0_;
-                            arg0->unknown_9c_.unknown_6_ = var8->unknown_6_;
+        self->unknown_7f_++;
+    } else if (self->unknown_7f_ == 1) {
+        if (self->unknown_82_2_) {
+            if (loader->GetTaskStatus(self->unknown_86_[0])) {
+                void* file;
+                unsigned int size;
+                loader->GetLoadedFileByID(self->unknown_86_[0], &file, &size);
+                if (file != NULL) {
+                    short* variant = self->unknown_98_;
+                    func_ov014_021845d4((Struct_ov014_021845d4*)&self->unknown_9c_);
+                    SafeAllocator* allocator = &self->allocators_[0];
+                    for (; *variant != 0; variant++) {
+                        allocator->Reset();
+                        short var7 = *variant;
+                        func_02096fb0(&self->unknown_c_);
+                        func_02097054(&self->unknown_c_, allocator, file, size, var7);
+                        Struct_ov014_021850cc* count = func_02097238((Struct_02097238*)&self->unknown_c_);
+                        if (self->unknown_9c_.unknown_4_ < 0
+                            || (count != NULL && (count->unknown_0_ > self->unknown_9c_.unknown_0_ || count->count_ > self->unknown_9c_.count_))) {
+                            self->unknown_9c_.unknown_4_ = var7;
+                            self->unknown_9c_.unknown_0_ = count->unknown_0_;
+                            self->unknown_9c_.count_ = count->count_;
                         }
                     }
-                    var6->Reset();
-                    short var9 = arg0->unknown_48_->unknown_c_;
-                    func_02096fb0(&arg0->unknown_c_);
-                    func_02097054(&arg0->unknown_c_, var6, var3, var4, var9);
-                    func_02097238((Struct_02097238*)&arg0->unknown_c_);
+                    allocator->Reset();
+                    short var9 = self->unknown_48_->unknown_c_;
+                    func_02096fb0(&self->unknown_c_);
+                    func_02097054(&self->unknown_c_, allocator, file, size, var9);
+                    func_02097238((Struct_02097238*)&self->unknown_c_);
                 }
-                var0->RemoveTask(arg0->unknown_86_[0]);
-                arg0->unknown_86_[0] = -1;
-                arg0->unknown_7f_++;
+                loader->RemoveTask(self->unknown_86_[0]);
+                self->unknown_86_[0] = -1;
+                self->unknown_7f_++;
             }
         } else {
-            arg0->unknown_7f_++;
+            self->unknown_7f_++;
         }
     }
 
-    if (arg0->unknown_7f_ == 2) {
-        if (func_ov014_02188c34(&arg0->unknown_1c_))
-            arg0->unknown_7f_++;
+    if (self->unknown_7f_ == 2) {
+        if (func_ov014_02188c34(&self->unknown_1c_))
+            self->unknown_7f_++;
     }
 
-    if (arg0->unknown_7f_ == 3 && var0->GetTaskStatus(arg0->unknown_86_[1])) {
-        void* var10;
-        unsigned int var11;
-        var0->GetLoadedFileByID(arg0->unknown_86_[1], &var10, &var11);
-        if (var10 != NULL) {
-            Struct_ov014_021850cc_3* var12 = func_02097224((Struct_02097054_5*)&arg0->unknown_c_, arg0->unknown_48_->unknown_c_);
-            if (var12 != NULL) {
+    if (self->unknown_7f_ == 3 && loader->GetTaskStatus(self->unknown_86_[1])) {
+        void* file;
+        unsigned int size;
+        loader->GetLoadedFileByID(self->unknown_86_[1], &file, &size);
+        if (file != NULL) {
+            Struct_ov014_021850cc_3* info = func_02097224((Struct_02097054_5*)&self->unknown_c_, self->unknown_48_->unknown_c_);
+            if (info != NULL) {
 #if defined(jpn)
                 char reader[0x18];
                 KeyTable_Construct(reader);
                 KeyTable_Reset((Struct020dfc40*)reader);
                 KeyTable_LoadInPlace(reader, file, size);
-                func_020e207c(reader, self->dropNames_[0], info->dropItemIDs_[0]);
-                func_020e207c(reader, self->dropNames_[1], info->dropItemIDs_[1]);
+                func_020e207c(reader, self->unknown_60_[0], info->unknown_8_[0]);
+                func_020e207c(reader, self->unknown_60_[1], info->unknown_8_[1]);
 #else
-                char var14[0xc];
-                func_020e526c(var14);
-                func_020e56fc(var14, (int)var10, var11);
-                const char** var15 = func_020e5294(var14, var12->unknown_8_[0]);
-                if (var15 != NULL) {
-                    memset(arg0->unknown_60_[0], 0, 0x48);
-                    func_020e4864(*var15, arg0->unknown_60_[0], 1, 0, 0, 0);
+                char reader[0xc];
+                func_020e526c(reader);
+                func_020e56fc(reader, (int)file, size);
+                const char** name = func_020e5294(reader, info->unknown_8_[0]);
+                if (name != NULL) {
+                    memset(self->unknown_60_[0], 0, 0x48);
+                    func_020e4864(*name, self->unknown_60_[0], 1, 0, 0, 0);
                 }
-                var15 = func_020e5294(var14, var12->unknown_8_[1]);
-                if (var15 != NULL) {
-                    memset(arg0->unknown_60_[1], 0, 0x48);
-                    func_020e4864(*var15, arg0->unknown_60_[1], 1, 0, 0, 0);
+                name = func_020e5294(reader, info->unknown_8_[1]);
+                if (name != NULL) {
+                    memset(self->unknown_60_[1], 0, 0x48);
+                    func_020e4864(*name, self->unknown_60_[1], 1, 0, 0, 0);
                 }
 #endif
             }
         }
-        var0->RemoveTask(arg0->unknown_86_[1]);
-        arg0->unknown_86_[1] = -1;
-        arg0->unknown_7f_++;
+        loader->RemoveTask(self->unknown_86_[1]);
+        self->unknown_86_[1] = -1;
+        self->unknown_7f_++;
     }
 
-    if (self->loadStep_ == 4 && loader->GetTaskStatus(self->taskIDs_[2])) {
+    if (self->unknown_7f_ == 4 && loader->GetTaskStatus(self->unknown_86_[2])) {
         void* file;
         unsigned int size;
-        loader->GetLoadedFileByID(self->taskIDs_[2], &file, &size);
+        loader->GetLoadedFileByID(self->unknown_86_[2], &file, &size);
         if (file != NULL) {
             char text[0x18];
             KeyTable_Construct(text);
             KeyTable_Reset((Struct020dfc40*)text);
-            func_020e046c(self->description_, file, size, self->monster_->number_);
+            func_020e046c(self->description_, file, size, self->unknown_48_->unknown_1a_);
         }
-        var0->RemoveTask(arg0->unknown_86_[2]);
-        arg0->unknown_86_[2] = -1;
-        arg0->unknown_7f_++;
+        loader->RemoveTask(self->unknown_86_[2]);
+        self->unknown_86_[2] = -1;
+        self->unknown_7f_++;
     }
 
-    if (arg0->unknown_7f_ == 6) {
-        if (!(arg0->unknown_81_ & 8) && arg0->unknown_86_[4] == -1) {
-            arg0->unknown_7f_ = 0;
-            arg0->unknown_81_ &= ~9;
+    if (self->unknown_7f_ == 6) {
+        if (!(self->flags_ & 8) && self->unknown_86_[4] == -1) {
+            self->unknown_7f_ = 0;
+            self->flags_ &= ~9;
         }
-        arg0->unknown_7f_++;
+        self->unknown_7f_++;
     }
 
-    if (arg0->unknown_7f_ == 7) {
-        if (arg0->unknown_82_2_) {
-            if (var0->GetTaskStatus(arg0->unknown_86_[4])) {
-                arg0->unknown_81_ &= ~4;
-                arg0->unknown_7f_++;
+    if (self->unknown_7f_ == 7) {
+        if (self->unknown_82_2_) {
+            if (loader->GetTaskStatus(self->unknown_86_[4])) {
+                self->flags_ &= ~4;
+                self->unknown_7f_++;
             }
         } else {
-            arg0->unknown_7f_++;
+            self->unknown_7f_++;
         }
-    } else if (self->loadStep_ == 8) {
-        if (self->loadModel_) {
+    } else if (self->unknown_7f_ == 8) {
+        if (self->unknown_82_2_) {
             SafeAllocator* allocator = &self->allocators_[2];
             allocator->Reset();
             void* file;
             unsigned int size;
-            loader->GetLoadedFileByID(self->taskIDs_[4], &file, &size);
+            loader->GetLoadedFileByID(self->unknown_86_[4], &file, &size);
             if (file != NULL) {
                 GameResources* resources = GetGameResources();
                 const void* found;
-                unsigned int foundSize;
-                if (FindFilesInNarcBySubstring(file, data_ov014_02189680, &found, &foundSize, 1)) {
+                unsigned int var24;
+                if (FindFilesInNarcBySubstring(file, data_ov014_02189680, &found, &var24, 1)) {
                     unsigned int characterSize;
                     void* character = DecompressLZ77FileIntoAllocatedSpace(*allocator, found, characterSize);
-                    if (FindFilesInNarcBySubstring(file, data_ov014_02189686, &found, &foundSize, 1)) {
+                    if (FindFilesInNarcBySubstring(file, data_ov014_02189686, &found, &var24, 1)) {
                         unsigned int motionSize;
                         void* motion = DecompressLZ77FileIntoAllocatedSpace(*allocator, found, motionSize);
                         const void* actions;
-                        unsigned int actionsSize;
-                        if (FindFilesInNarcBySubstring(file, data_ov014_0218968c, &actions, &actionsSize, 1)) {
+                        unsigned int var30;
+                        if (FindFilesInNarcBySubstring(file, data_ov014_0218968c, &actions, &var30, 1)) {
                             self->model_->Initialize();
-                            self->model_->unknown_2_ = self->monster_->monsterID_;
+                            self->model_->unknown_2_ = self->unknown_48_->unknown_c_;
                             self->model_->EnableFlag(4);
                             VramState_Rewind((Foo0207df50*)resources->vramStates_);
                             VramState_Restore(resources->vramStates_);
                             ObjectArchiveLoadInfo loadInfo;
-                            ClearEightWords_0203dafc((Struct_203dafc*)&loadInfo);
+                            func_0203dafc((Struct_203dafc*)&loadInfo);
                             loadInfo.fileData = character;
                             loadInfo.allocator = allocator;
                             loadInfo.fileSize = characterSize;
                             self->model_->LoadFromCCHROrCMOTArchive(&loadInfo, NULL);
                             VramState_Save(resources->vramStates_);
-                            ClearEightWords_0203dafc((Struct_203dafc*)&loadInfo);
+                            func_0203dafc((Struct_203dafc*)&loadInfo);
                             loadInfo.allocator = allocator;
                             loadInfo.fileData = motion;
                             loadInfo.fileSize = motionSize;
                             self->model_->LoadFromCCHROrCMOTArchive(&loadInfo, NULL);
-                            ComputeAndStoreVecs02184c08((unsigned char*)self);
-                            self->animationIndex_ = 0;
-                            MonsterInfo* info = BinarySearchByField4_02097224((BinarySearch020971a8Container*)&self->infos_, self->monster_->monsterID_);
+                            func_ov014_02184c08((unsigned char*)self);
+                            self->unknown_74_ = 0;
+                            Struct_ov014_021850cc_3* info = func_02097224((Struct_02097054_5*)&self->unknown_c_, self->unknown_48_->unknown_c_);
                             if (info != NULL)
                                 self->model_->SetAnimationByName(info->animations_[0], 0);
                             self->flags_ |= 4;
@@ -339,14 +339,14 @@ extern "C" ARM void func_ov014_021850cc(Struct_ov014_02184dcc* arg0) {
                     }
                 }
             }
-            var0->RemoveTask(arg0->unknown_86_[4]);
-            arg0->unknown_86_[4] = -1;
+            loader->RemoveTask(self->unknown_86_[4]);
+            self->unknown_86_[4] = -1;
         }
-        arg0->unknown_7f_ = 0;
-        arg0->unknown_81_ &= ~9;
-        if (arg0->unknown_82_3_)
-            arg0->unknown_82_3_ = false;
-        arg0->unknown_94_ = arg0->unknown_93_;
-        arg0->unknown_93_ = false;
+        self->unknown_7f_ = 0;
+        self->flags_ &= ~9;
+        if (self->unknown_82_3_)
+            self->unknown_82_3_ = false;
+        self->unknown_94_ = self->unknown_93_;
+        self->unknown_93_ = false;
     }
 }

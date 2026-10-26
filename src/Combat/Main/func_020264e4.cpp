@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void func_02042764(const char*, char*, int);
+extern "C" void Font_DecodeText(const char*, char*, int);
 extern char data_020ef6ca;
 
 // USA: func_020264e4
-extern "C" ARM void func_020264e4(char* arg0, char* arg1) {
+extern "C" ARM void func_020264e4(char* obj, char* name) {
 #if defined(jpn)
-    if (arg1 != NULL && *arg1 != 0) {
-        strcpy(arg0 + 0x688, arg1);
+    if (name != NULL && *name != 0) {
+        strcpy(obj + 0x688, name);
     } else {
-        strcpy(arg0 + 0x688, &data_020ef6ca);
+        strcpy(obj + 0x688, &data_020ef6ca);
     }
 #else
-    if (arg1 != NULL && *arg1 != 0) {
-        func_02042764(arg1, arg0 + 0x6f4, 1);
+    if (name != NULL && *name != 0) {
+        Font_DecodeText(name, obj + 0x6f4, 1);
     } else {
-        strcpy(arg0 + 0x6f4, &data_020ef6ca);
+        strcpy(obj + 0x6f4, &data_020ef6ca);
     }
 #endif
 }

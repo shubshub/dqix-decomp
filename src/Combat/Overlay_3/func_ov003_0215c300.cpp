@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 
-struct Struct_ov003_02158e94_2 { char unknown_0_[0x598]; int unknown_598_; };
+struct Struct_ov003_02158e94_2 { char unk[0x598]; int counter; };
 
 // USA: func_ov003_0215c300
 #pragma optimize_for_size off
-extern "C" ARM int func_ov003_0215c300(struct Struct_ov003_02158e94_2* arg0, int arg1) {
-    if (arg0->unknown_598_ > arg1) {
-        arg0->unknown_598_ -= arg1;
+extern "C" ARM int func_ov003_0215c300(struct Struct_ov003_02158e94_2* obj, int amount) {
+    if (obj->counter > amount) {
+        obj->counter -= amount;
     } else {
-        arg0->unknown_598_ = 0;
+        obj->counter = 0;
         return 0;
     }
     return 1;

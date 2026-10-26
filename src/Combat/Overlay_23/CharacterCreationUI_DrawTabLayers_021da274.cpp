@@ -7,8 +7,8 @@
 #include <std_library_functions.h>
 
 struct BackgroundGraphics;
-void Background_ClearMap(BackgroundGraphics*, void*);
-void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
+extern "C" void Background_ClearMap(BackgroundGraphics*, void*);
+extern "C" void Background_DrawScreen(BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
 extern "C" void Background_FlushMap(void*, void*);
 extern "C" void Background_SetRectPalette(BackgroundGraphics*, int, int, int, int, unsigned int);
 
@@ -101,9 +101,9 @@ extern "C" ARM void CharacterCreationUI_DrawTabLayers(CharacterCreationUI* edito
 
 struct Struct0200fb08;
 
-void Background_ClearMap(struct BackgroundGraphics*, void*);
-unsigned char GameState_GetLanguage(struct Struct0200fb08*);
-void Background_DrawScreen(struct BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
+extern "C" void Background_ClearMap(struct BackgroundGraphics*, void*);
+extern "C" unsigned char GameState_GetLanguage(struct Struct0200fb08*);
+extern "C" void Background_DrawScreen(struct BackgroundGraphics*, unsigned int, int, int, short, short, short, short, unsigned short);
 extern "C" void Background_FlushMap(void* obj, void* p);
 extern "C" void Background_SetRectPalette(BackgroundGraphics* layer, int x, int y, int width, int height, unsigned palette);
 extern "C" void Keyboard_GetKeySize(int id, short* w, short* h);
@@ -201,7 +201,7 @@ extern "C" ARM void CharacterCreationUI_DrawTabLayers(CharacterCreationUI* edito
                         Background_DrawScreen((struct BackgroundGraphics*)&editor->layers[CreationLayer_Page], (&CharacterCreationUI_keyboardPageScreens[i * 3])[shift], 0, 0, 0, 0, 0x20, 0x18, BackgroundPalette_Keep);
                         break;
                     }
-                    var30++;
+                    i++;
                 }
                 Background_SetRectPalette(&editor->layers[CreationLayer_Page], 2, 7, 0x1c, 0xc, 1);
                 KeyboardKey* key = editor->keyboard->key_;

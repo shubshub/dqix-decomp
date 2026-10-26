@@ -12,110 +12,110 @@
 #include "GameState/GameState.h"
 
 struct Struct_02054000;
-extern "C" void* func_02054000(struct Struct_02054000* arg0);
-extern "C" int func_02083b00(unsigned char* arg0, int arg1);
+extern "C" void* func_02054000(struct Struct_02054000* p);
+extern "C" int func_02083b00(unsigned char* obj, int index);
 
 struct Struct_ov000_02171ffc {
-    unsigned int unknown_0_0_ : 1;
+    unsigned int bit0 : 1;
     unsigned int unknown_0_1_ : 1;
-    unsigned int unknown_0_2_ : 30;
+    unsigned int rest : 30;
 };
 
 struct Struct_ov000_02171ffc_2 {
-    char unknown_0_[0x2f4];
-    struct Struct_ov000_02171ffc unknown_2f4_;
+    char unk0[0x2f4];
+    struct Struct_ov000_02171ffc flags;
 };
 
 struct Struct_ov000_02171ffc_3 {
-    char unknown_0_[LOW_REGION(0x144, 0x150)];
-    struct Struct_ov000_02171ffc_2* unknown_150_;
+    char unk0[LOW_REGION(0x144, 0x150)];
+    struct Struct_ov000_02171ffc_2* data;
 };
 
 struct Struct_ov000_02171ffc_4 {
-    char unknown_0_[0x18];
-    short unknown_18_;
+    char unk0[0x18];
+    short count;
 };
 
-struct Struct_ov000_0215767c_8 {
-    char unknown_0_[0x16];
+struct ActionEntry {
+    char unk0[0x16];
     short unknown_16_;
 };
 
 struct Struct_ov000_02171ffc_5 {
-    char unknown_0_[8];
+    char unk0[8];
     unsigned int unknown_8_0_ : 8;
-    unsigned int unknown_9_0_ : 2;
+    unsigned int kind : 2;
     unsigned int unknown_9_2_ : 22;
     char unknown_c_[0x14 - 0xc];
     unsigned int unknown_14_0_ : 28;
-    unsigned int unknown_17_4_ : 4;
+    unsigned int category : 4;
 };
 
 struct Struct_ov000_0215ab88 {
-    char unknown_0_[0x1c];
+    char unk0[0x1c];
     signed char unknown_1c_;
     char unknown_1d_[0x26 - 0x1d];
     short unknown_26_;
     char unknown_28_[0x2c - 0x28];
     short unknown_2c_;
     char unknown_2e_[0x4c - 0x2e];
-    int unknown_4c_;
+    int combatantId;
 };
 
-extern "C" struct Struct_ov000_0215767c_8* func_ov000_02171d90(struct Struct_ov000_0215ab88* arg0, int arg1);
-extern "C" struct Struct_ov000_02171ffc_5* func_ov000_02170cf8(struct Struct_ov000_0215ab88* arg0, int arg1);
+extern "C" struct ActionEntry* func_ov000_02171d90(struct Struct_ov000_0215ab88* obj, int key);
+extern "C" struct Struct_ov000_02171ffc_5* func_ov000_02170cf8(struct Struct_ov000_0215ab88* obj, int id);
 
 // USA: func_ov000_02171ffc
-extern "C" ARM int func_ov000_02171ffc(struct Struct_ov000_0215ab88* arg0) {
-    struct Struct_ov000_02171ffc_3* var0 = (struct Struct_ov000_02171ffc_3*)func_0200ff1c(GameState::GetInstance(), arg0->unknown_4c_);
-    if (var0 == 0) {
+extern "C" ARM int func_ov000_02171ffc(struct Struct_ov000_0215ab88* obj) {
+    struct Struct_ov000_02171ffc_3* combatant = (struct Struct_ov000_02171ffc_3*)func_0200ff1c(GameState::GetInstance(), obj->combatantId);
+    if (combatant == 0) {
         return 2;
     }
-    short var1 = arg0->unknown_26_;
-    int var2 = 2;
-    if (arg0->unknown_1c_ == 4) {
-        struct Struct_ov000_0215767c_8* var3 = func_ov000_02171d90(arg0, arg0->unknown_2c_);
-        if (var3 == 0) {
-            return var2;
+    short var1 = obj->unknown_26_;
+    int result = 2;
+    if (obj->unknown_1c_ == 4) {
+        struct ActionEntry* entry = func_ov000_02171d90(obj, obj->unknown_2c_);
+        if (entry == 0) {
+            return result;
         }
-        var1 = var3->unknown_16_;
+        var1 = entry->unknown_16_;
     }
     if (var1 == 0x20a) {
         return 3;
     }
-    struct Struct_ov000_02171ffc_5* var4 = func_ov000_02170cf8(arg0, (unsigned short)var1);
-    if (var4 == 0) {
+    struct Struct_ov000_02171ffc_5* info = func_ov000_02170cf8(obj, (unsigned short)var1);
+    if (info == 0) {
         return 2;
     }
     if (var1 == 1) {
-        if (var0 != 0) {
-            struct Struct_ov000_02171ffc_4* var5 = (struct Struct_ov000_02171ffc_4*)func_02054000((struct Struct_02054000*)var0);
-            if (var5 != 0 && var5->unknown_18_ > 0) {
-                struct Struct_ov000_02171ffc* var6 = &var0->unknown_150_->unknown_2f4_;
-                if (var6->unknown_0_1_) {
-                    var2 = 3;
-                } else if (var6->unknown_0_0_) {
-                    var2 = 4;
+        if (combatant != 0) {
+            struct Struct_ov000_02171ffc_4* sub = (struct Struct_ov000_02171ffc_4*)func_02054000((struct Struct_02054000*)combatant);
+            if (sub != 0 && sub->count > 0) {
+                struct Struct_ov000_02171ffc* flags = &combatant->data->flags;
+                if (flags->unknown_0_1_) {
+                    result = 3;
+                } else if (flags->bit0) {
+                    result = 4;
                 }
             }
         }
     } else {
-        int var7 = var4->unknown_9_0_;
-        if (var7 == 1) {
-            var2 = var4->unknown_17_4_;
-        } else if (var7 == 2) {
-            var2 = var4->unknown_17_4_;
+        int kind = info->kind;
+        if (kind == 1) {
+            result = info->category;
+        } else if (kind == 2) {
+            result = info->category;
         }
     }
-    if (var2 == 6 && var0 != 0) {
+    if (result == 6 && combatant != 0) {
 #if defined(jpn)
-        var2 = func_02083b00((unsigned char*)var0->unknown_150_, 0xe6) ? 3 : 2;
+        result = func_02083b00((unsigned char*)combatant->data, 0xe6) ? 3 : 2;
 #else
-        var2 = 2;
-        if (func_02083b00((unsigned char*)var0->unknown_150_, 0xe6)) {
-            var2 = 3;
+        result = 2;
+        if (func_02083b00((unsigned char*)combatant->data, 0xe6)) {
+            result = 3;
         }
 #endif
     }
-    return var2;
+    return result;
 }

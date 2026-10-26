@@ -1,0 +1,69 @@
+#include <globaldefs.h>
+
+extern "C" void func_02074af4(void*);
+
+struct Struct_02074b64;
+extern "C" void func_02074b64(struct Struct_02074b64* obj);
+
+struct Struct020dfc40;
+extern "C" void KeyTable_Reset(struct Struct020dfc40* p);
+
+struct BackgroundGraphics;
+extern "C" void Background_Init(struct BackgroundGraphics* obj);
+
+extern "C" void WindowPane_Init(void*);
+
+struct InitTarget0205cfd4;
+extern "C" void Window_Init(struct InitTarget0205cfd4* s);
+
+// USA: func_ov023_021eb138
+extern "C" ARM void func_ov023_021eb138(void* obj, unsigned char flag) {
+    *(unsigned char*)((char*)obj + 0x430) = flag;
+    *(unsigned char*)((char*)obj + 0x3a) = 0;
+    *(unsigned char*)((char*)obj + 0x3b) = 0;
+    func_02074af4((char*)obj + 0x2a);
+    func_02074b64((struct Struct_02074b64*)((char*)obj + 0x2a));
+
+    unsigned int* var0 = (unsigned int*)0x4000000;
+    *(int*)((char*)obj + 0x3c) = (*var0 & 0x1f00) >> 8;
+    unsigned int* var1 = (unsigned int*)0x4001000;
+    struct Struct020dfc40* sub4 = (struct Struct020dfc40*)((char*)obj + 4);
+    *(int*)((char*)obj + 0x40) = (*var1 & 0x1f00) >> 8;
+    *(int*)obj = 0;
+    KeyTable_Reset(sub4);
+
+    for (int i = 0; i < 2; i++) {
+        Background_Init((struct BackgroundGraphics*)((char*)obj + 0x44 + i * 0x20));
+    }
+    for (int i = 0; i < 2; i++) {
+        Background_Init((struct BackgroundGraphics*)((char*)obj + 0x84 + i * 0x20));
+    }
+    for (int i = 0; i < 3; i++) {
+        WindowPane_Init((char*)obj + 0x180 + i * 0xe0);
+    }
+
+    Window_Init((struct InitTarget0205cfd4*)((char*)obj + 0xc4));
+
+    *(int*)((char*)obj + 0x420) = 0;
+    *(int*)((char*)obj + 0x424) = 0;
+    *(int*)((char*)obj + 0x428) = 0;
+    *(int*)((char*)obj + 0x42c) = 0;
+    *(int*)((char*)obj + 0x20) = 0;
+    *(int*)((char*)obj + 0x24) = 0;
+    *(unsigned char*)((char*)obj + 0x28) = 0;
+    *(unsigned char*)((char*)obj + 0x431) = 0;
+    *(unsigned char*)((char*)obj + 0x432) = 0;
+    *(unsigned char*)((char*)obj + 0x433) = 0;
+    *(int*)((char*)obj + 0x434) = -1;
+    *(unsigned short*)((char*)obj + 0x438) = 0;
+    *(unsigned short*)((char*)obj + 0x43a) = 0;
+    *(unsigned char*)((char*)obj + 0x43c) = 0;
+    *(unsigned char*)((char*)obj + 0x43d) = 0;
+    *(unsigned short*)((char*)obj + 0x43e) = 0;
+    *(unsigned short*)((char*)obj + 0x440) = 0;
+    *(unsigned short*)((char*)obj + 0x442) = 0;
+    *(unsigned short*)((char*)obj + 0x444) = 0;
+    *(unsigned short*)((char*)obj + 0x446) = 0;
+    *(unsigned short*)((char*)obj + 0x448) = 0;
+    *(unsigned char*)((char*)obj + 0x44a) = 0;
+}

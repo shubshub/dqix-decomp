@@ -1,17 +1,18 @@
 #include <globaldefs.h>
 
-struct Struct_020fdc60_3 {
-    unsigned char unknown_0_; // +0
-    unsigned char unknown_1_;    // +1
-    unsigned char unknown_2_;    // +2
-    unsigned char unknown_3_;    // +3
+// One of the four party member panels at the bottom of the map screen (data_020fdc60): their head
+struct MapDisplayMemberPanel {
+    unsigned char state;      // MemberPanelState
+    unsigned char nextState;
+    unsigned char holdFlags;  // func_02026f34's PanelHold_*: while set the panel stays up
+    unsigned char unknown3;
 };
 
-extern "C" void func_0201fa00(void*);
+extern "C" void MapDisplayMemberPanel_Reset(void*);
 
 // USA: func_0201f9e8
-extern "C" ARM void func_0201f9e8(struct Struct_020fdc60_3* arg0) {
-    arg0->unknown_2_ = 0;
-    arg0->unknown_3_ = 0;
-    func_0201fa00(arg0);
+extern "C" ARM void func_0201f9e8(struct MapDisplayMemberPanel* panel) {
+    panel->holdFlags = 0;
+    panel->unknown3 = 0;
+    MapDisplayMemberPanel_Reset(panel);
 }

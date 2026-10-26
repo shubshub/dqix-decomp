@@ -2,68 +2,68 @@
 
 struct Struct_020026b4 {
     unsigned char unknown_0_;
-    char unknown_1_;
+    char unused;
     short unknown_2_;
     struct {
-        unsigned char unknown_0_;
-        unsigned char unknown_1_[32];
-        unsigned char unknown_21_;
-    } unknown_4_;
+        unsigned char length;
+        unsigned char text[32];
+        unsigned char unused;
+    } sig;
 };
 
-extern "C" void func_0200961c(Struct_020026b4* arg0, int arg1);
+extern "C" void func_0200961c(Struct_020026b4* d, int digits);
 
 // USA: func_02009778
-extern "C" ARM void func_02009778(Struct_020026b4* arg0, const Struct_020026b4* arg1, const Struct_020026b4* arg2) {
-    unsigned int var0 = 0;
+extern "C" ARM void func_02009778(Struct_020026b4* result, const Struct_020026b4* x, const Struct_020026b4* y) {
+    unsigned int accumulator = 0;
     unsigned char var1[32 * 2];
-    int var2 = arg1->unknown_4_.unknown_0_ + arg2->unknown_4_.unknown_0_ - 1;
-    unsigned char* var3 = var1 + var2 + 1;
+    int i = x->sig.length + y->sig.length - 1;
+    unsigned char* var3 = var1 + i + 1;
     unsigned char* var4 = var3;
 
-    arg0->unknown_0_ = 0;
+    result->unknown_0_ = 0;
 
-    for (; var2 > 0; var2--) {
-        int var5 = arg2->unknown_4_.unknown_0_ - 1;
-        int var6 = var2 - var5 - 1;
-        int var7;
-        int var8;
+    for (; i > 0; i--) {
+        int k = y->sig.length - 1;
+        int j = i - k - 1;
+        int l;
+        int t;
         const unsigned char* var9;
         const unsigned char* var10;
 
-        if (var6 < 0) {
-            var6 = 0;
-            var5 = var2 - 1;
+        if (j < 0) {
+            j = 0;
+            k = i - 1;
         }
 
-        var9 = arg1->unknown_4_.unknown_1_ + var6;
-        var10 = arg2->unknown_4_.unknown_1_ + var5;
-        var7 = var5 + 1;
-        var8 = arg1->unknown_4_.unknown_0_ - var6;
+        var9 = x->sig.text + j;
+        var10 = y->sig.text + k;
+        l = k + 1;
+        t = x->sig.length - j;
 
-        if (var7 > var8) {
-            var7 = var8;
+        if (l > t) {
+            l = t;
         }
 
-        for (; var7 > 0; var7--, var9++, var10--) {
-            var0 += *var9 * *var10;
+        for (; l > 0; l--, var9++, var10--) {
+            accumulator += *var9 * *var10;
         }
 
-        *--var3 = (unsigned char)(var0 % 10);
-        var0 /= 10;
+        *--var3 = (unsigned char)(accumulator % 10);
+        accumulator /= 10;
     }
 
-    arg0->unknown_2_ = (short)(arg1->unknown_2_ + arg2->unknown_2_);
+    result->unknown_2_ = (short)(x->unknown_2_ + y->unknown_2_);
 
-    if (var0) {
-        *--var3 = (unsigned char)(var0);
-        arg0->unknown_2_++;
+    if (accumulator) {
+        *--var3 = (unsigned char)(accumulator);
+        result->unknown_2_++;
     }
 
-    for (var2 = 0; var2 < 32 && var3 < var4; var2++, var3++) {
-        arg0->unknown_4_.unknown_1_[var2] = *var3;
+    for (i = 0; i < 32 && var3 < var4; i++, var3++) {
+        result->sig.text[i] = *var3;
     }
-    arg0->unknown_4_.unknown_0_ = (unsigned char)(var2);
+    result->sig.length = (unsigned char)(i);
 
     if (var3 < var4 && *var3 >= 5) {
         if (*var3 == 5) {
@@ -78,6 +78,6 @@ extern "C" ARM void func_02009778(Struct_020026b4* arg0, const Struct_020026b4* 
             }
         }
     round:
-        func_0200961c(arg0, arg0->unknown_4_.unknown_0_);
+        func_0200961c(result, result->sig.length);
     }
 }

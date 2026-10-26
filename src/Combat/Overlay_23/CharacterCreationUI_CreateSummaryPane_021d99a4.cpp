@@ -5,9 +5,9 @@
 #include "Resource/CharacterCreationUI.h"
 
 struct Struct0200fb08;
-unsigned char GameState_GetLanguage(struct Struct0200fb08* obj);
+extern "C" unsigned char GameState_GetLanguage(struct Struct0200fb08* obj);
 
-extern int KeyTable_Get(struct Container020e0310*, int);
+extern "C" int KeyTable_Get(struct Container020e0310*, int);
 
 #if defined(jpn)
 extern "C" void Window_OpenPane(void* window, void* text, int mode, int border, int flagBit3, int fullWidth, int extraStyle);

@@ -11,7 +11,7 @@ struct S_02010124 {
 };
 
 // Main, originally InitFields02010124 (USA 0x02010124, EUR 0x02010134, JPN 0x0200ff80)
-ARM void GameState_ResetTiming(struct S_02010124* gameState) {
+extern "C" ARM void GameState_ResetTiming(struct S_02010124* gameState) {
     gameState->effectiveDeltaTimeMilliseconds_ = 0x21;
     gameState->trueDeltaTimeMilliseconds_ = 0x21;
     gameState->gameSpeed_ = 0x1000;

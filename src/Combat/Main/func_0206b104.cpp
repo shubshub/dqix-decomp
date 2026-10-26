@@ -7,65 +7,65 @@ extern "C" void func_0206cb14(void*, int, unsigned short);
 #endif
 
 struct Struct_0204500c_4;
-extern "C" void func_0206b198(struct Struct_0204500c_4* arg0, unsigned short arg1);
-extern "C" ARM bool func_02044494(void* arg0, void* arg1);
-extern "C" int func_02044420(void* arg0, void* arg1);
+extern "C" void func_0206b198(struct Struct_0204500c_4* obj, unsigned short idx);
+extern "C" ARM bool func_02044494(void* obj, void* src);
+extern "C" int func_02044420(void* obj, void* src);
 
 #if defined(jpn)
 struct Struct_0206b104 {
- char unknown_0_[0x18]; unsigned short* unknown_4c_; int unknown_1c_; int unknown_20_; int unknown_24_;
- char unknown_28_[0x10]; int unknown_6c_; int unknown_70_; union { int unknown_74_; int unknown_88_; }; int unknown_78_;
+ char pad0[0x18]; unsigned short* arr; int unknown_1c_; int unknown_20_; int unknown_24_;
+ char pad28[0x10]; int count; int unknown_70_; union { int unknown_74_; int idx; }; int unknown_78_;
 };
 #else
 struct Struct_0206b104 {
-    char unknown_0_[0x4c];
-    unsigned short* unknown_4c_;
+    char pad0[0x4c];
+    unsigned short* arr;
     char unknown_50_[0x54 - 0x50];
     int unknown_54_;
     int unknown_58_;
     char unknown_5c_[0x6c - 0x5c];
-    int unknown_6c_;
+    int count;
     int unknown_70_;
     int unknown_74_;
     int unknown_78_;
     char unknown_7c_[0x88 - 0x7c];
-    int unknown_88_;
+    int idx;
 };
 
 #endif
 // USA: func_0206b104
-extern "C" ARM void func_0206b104(struct Struct_0206b104* arg0) {
+extern "C" ARM void func_0206b104(struct Struct_0206b104* obj) {
 #if defined(jpn)
-    if ((arg0->unknown_20_ == 0) | (arg0->unknown_24_ == 0)) return;
+    if ((obj->unknown_20_ == 0) | (obj->unknown_24_ == 0)) return;
 #else
-    if (arg0->unknown_54_ == 0 || arg0->unknown_58_ == 0) return;
+    if (obj->unknown_54_ == 0 || obj->unknown_58_ == 0) return;
 #endif
-    if (arg0->unknown_6c_ == 0) return;
-    unsigned short* var0;
-    unsigned int var1 = arg0->unknown_88_;
-    for (; var1 < arg0->unknown_6c_; var1++) {
-        var0 = arg0->unknown_4c_ + var1;
+    if (obj->count == 0) return;
+    unsigned short* p;
+    unsigned int i = obj->idx;
+    for (; i < obj->count; i++) {
+        p = obj->arr + i;
         #if defined(jpn)
-        if (func_02069430(arg0, *var0)) {
+        if (func_02069430(obj, *p)) {
 #else
-        if (func_02044494(arg0, var0)) {
+        if (func_02044494(obj, p)) {
 #endif
             #if defined(jpn)
-            var1 += func_02069444(arg0, *var0);
+            i += func_02069444(obj, *p);
 #else
-            var1 += func_02044420(arg0, var0);
+            i += func_02044420(obj, p);
 #endif
         } else {
 #if defined(jpn)
-            func_0206cb14(arg0, 12, *var0);
-            func_0206cb14(arg0, 6, *var0);
+            func_0206cb14(obj, 12, *p);
+            func_0206cb14(obj, 6, *p);
 #else
-            func_0206b198((struct Struct_0204500c_4*)arg0, *var0);
+            func_0206b198((struct Struct_0204500c_4*)obj, *p);
 #endif
         }
     }
-    arg0->unknown_6c_ = 0;
-    arg0->unknown_70_ = 0;
-    arg0->unknown_74_ = 0;
-    arg0->unknown_78_ = 0;
+    obj->count = 0;
+    obj->unknown_70_ = 0;
+    obj->unknown_74_ = 0;
+    obj->unknown_78_ = 0;
 }

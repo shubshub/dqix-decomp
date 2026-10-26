@@ -3,11 +3,11 @@
 #include "World/FieldTask.h"
 
 struct ByteHeader0204693c;
-void ResetByteHeader(struct ByteHeader0204693c* p);
+extern "C" void func_0204693c(struct ByteHeader0204693c* p);
 
 // Overlay 17, originally InitObj_021adc58 (USA/EUR 0x021adc58, JPN 0x021ae460)
-ARM void FieldTask_InitOpenChest(OpenChestTask* self) {
-	ResetByteHeader((struct ByteHeader0204693c*)self);
+extern "C" ARM void FieldTask_InitOpenChest(OpenChestTask* self) {
+	func_0204693c((struct ByteHeader0204693c*)self);
 	self->kind = FieldTaskKind_OpenChest;
 	self->step = OpenChestStep_Start;
 	self->timer = 0;

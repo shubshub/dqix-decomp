@@ -22,7 +22,7 @@ struct Obj02026b0c {
 };
 
 // Main, originally AllocateNameBuffer02026b0c (USA 0x02026b0c, EUR 0x02026b1c, JPN 0x02026470)
-ARM void MapDisplay_AllocateRedChestZones(struct Obj02026b0c* mapDisplay, int zoneCount) {
+extern "C" ARM void MapDisplay_AllocateRedChestZones(struct Obj02026b0c* mapDisplay, int zoneCount) {
     GameResources* resources = GetGameResources();
     SafeAllocator* allocator = &resources->allocator_array_38[12];
     mapDisplay->zoneCount = zoneCount;

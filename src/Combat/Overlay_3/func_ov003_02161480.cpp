@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-int GameState_GetProtagonistIndex(GameState* battleStruct);
-void GameObject_ResetTrail(unsigned char* obj);
+extern "C" int GameState_GetProtagonistIndex(GameState* battleStruct);
+extern "C" void GameObject_ResetTrail(unsigned char* obj);
 
-struct Struct_ov003_02161480 {
-    char unknown_0_[0xf78];
-    unsigned char unknown_f78_[4];
-    unsigned char unknown_f7c_;
+struct PartyRoster02161480 {
+    char pad0[0xf78];
+    unsigned char memberIds[4];
+    unsigned char memberCount;
 };
 
 // USA: func_ov003_02161480

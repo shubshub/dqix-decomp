@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
-struct Struct_020bc1cc { char unknown_0_[0x3c]; unsigned char unknown_3c_; };
-struct Struct_020bc1cc_2 { struct Struct_020bc1cc* unknown_0_; };
+struct Struct_020bc1cc { char pad[0x3c]; unsigned char f3c; };
+struct Struct_020bc1cc_2 { struct Struct_020bc1cc* f0; };
 
 extern "C" void func_020bc1cc(struct Struct_020bc1cc_2*, int, int);
 extern void* data_ov031_02290d00;

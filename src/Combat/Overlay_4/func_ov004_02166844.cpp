@@ -15,28 +15,28 @@ enum { Enum_ov004_02166844_0 = 0, Enum_ov004_02166844_1 = 1, Enum_ov004_02166844
 
 struct Struct_0208b9a0 {
     unsigned int unknown_0_;
-    unsigned short unknown_4_, unknown_6_;
-    unsigned int unknown_8_;
-    unsigned short unknown_c_, unknown_e_;
+    unsigned short h4, h6;
+    unsigned int w8;
+    unsigned short hc, he;
 };
-void InitStreamHeader0208d82c(struct StreamHeader0208d82c* header);
-int* GetGlobal02109418_02094d6c(void);
-int MessageSystem_GetInstance(void);
-void SetFieldsAt0x4And0x8_020e2d24(int* obj, int a, int b);
+extern "C" void func_0208d82c(struct Struct_0208b9a0* header);
+extern "C" int* func_02094d6c(void);
+extern "C" int MessageSystem_GetInstance(void);
+extern "C" void func_020e2d24(int* obj, int a, int b);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void func_02095b30(int* g, int v);
 extern "C" void* func_ov011_021845f8(void* obj, int key);
-void* CheckTypeAndReturnNode_02165e70_02165e70(void* obj, int type);
+extern "C" void* func_ov004_02165e70(void* obj, int type);
 
 extern void* data_ov004_0217101c[2];
 extern int data_ov004_0217059c;
 
 struct Struct_ov004_02166844 {
-    int unknown_0_, unknown_4_, unknown_8_;
-    Struct_0208b9a0 unknown_c_;
-    SafeAllocator unknown_1c_[2];
-    int unknown_44_;
-    short unknown_48_, unknown_4a_, unknown_4c_, unknown_4e_;
+    int field0, field4, field8;
+    Struct_0208b9a0 stream;
+    SafeAllocator allocators[2];
+    int taskId;
+    short field48, unknown_4a_, field4c, unknown_4e_;
     unsigned char unknown_50_0_ : 6;
     unsigned char unknown_50_6_ : 1;
     unsigned char unknown_50_7_ : 1;
@@ -47,72 +47,72 @@ struct Struct_ov004_02166844 {
 // USA: func_ov004_02166844
 extern "C" ARM int func_ov004_02166844(void* a1) {
     char* node;
-    data_ov004_0217101c[MainIndex] = 0;
-    int* g = GetGlobal02109418_02094d6c();
+    data_ov004_0217101c[Enum_ov004_02166844_0] = 0;
+    int* g = func_02094d6c();
     char* c = (char*)Scenario_GetInstance();
     node = (char*)func_ov011_021845f8(a1, 0);
     if (node == 0) {
         return 0;
     }
 
-    data_ov004_0217101c[Enum_ov004_02166844_0] = ((SafeAllocator*)(var0 + 4))->Allocate(sizeof(Struct_ov004_02166844));
-    void* var3 = ((SafeAllocator*)(var0 + 4))->Allocate(2);
-    if (var3 != 0) {
-        *(short*)var3 = 0x7de0;
-        CleanInvalidateCacheRange(var3, 2);
-        LoadToMainBGStandardPalette(var3, 0x12, 2);
-        CleanCacheRange(var3, 2);
+    data_ov004_0217101c[Enum_ov004_02166844_0] = ((SafeAllocator*)(node + 4))->Allocate(sizeof(Struct_ov004_02166844));
+    void* p = ((SafeAllocator*)(node + 4))->Allocate(2);
+    if (p != 0) {
+        *(short*)p = 0x7de0;
+        CleanInvalidateCacheRange(p, 2);
+        LoadToMainBGStandardPalette(p, 0x12, 2);
+        CleanCacheRange(p, 2);
     }
 
-    Struct_ov004_02166844* var4 = (Struct_ov004_02166844*)data_ov004_0217101c[Enum_ov004_02166844_0];
-    if (var4 == 0) {
+    Struct_ov004_02166844* state = (Struct_ov004_02166844*)data_ov004_0217101c[Enum_ov004_02166844_0];
+    if (state == 0) {
         return 0;
     }
-    var4->unknown_0_ = 0;
-    var4->unknown_4_ = 0;
-    var4->unknown_8_ = 0;
-    func_0208d82c(&var4->unknown_c_);
-    var4->unknown_1c_[0].ResetAllocatorPointer();
-    var4->unknown_44_ = -1;
-    var4->unknown_48_ = 0;
-    var4->unknown_4a_ = 0;
-    var4->unknown_4c_ = 0;
-    var4->unknown_4e_ = 0;
-    var4->unknown_50_0_ = 0;
-    var4->unknown_50_6_ = 0;
-    var4->unknown_50_7_ = 1;
-    memset(var4->unknown_51_, 0, sizeof(var4->unknown_51_));
-    var4->unknown_b8_ = 0;
+    state->field0 = 0;
+    state->field4 = 0;
+    state->field8 = 0;
+    func_0208d82c(&state->stream);
+    state->allocators[0].ResetAllocatorPointer();
+    state->taskId = -1;
+    state->field48 = 0;
+    state->unknown_4a_ = 0;
+    state->field4c = 0;
+    state->unknown_4e_ = 0;
+    state->unknown_50_0_ = 0;
+    state->unknown_50_6_ = 0;
+    state->unknown_50_7_ = 1;
+    memset(state->unknown_51_, 0, sizeof(state->unknown_51_));
+    state->unknown_b8_ = 0;
 
-    int var5 = data_ov004_0217059c;
-    void* var6 = ((SafeAllocator*)(var0 + 4))->Allocate(var5);
-    ((Struct_ov004_02166844*)data_ov004_0217101c[Enum_ov004_02166844_0])->unknown_1c_[0].CreateTypeA(var6, var5);
-    var5 = data_ov004_0217059c;
-    var6 = ((SafeAllocator*)(var0 + 4))->Allocate(var5);
-    ((Struct_ov004_02166844*)data_ov004_0217101c[Enum_ov004_02166844_0])->unknown_1c_[1].CreateTypeA(var6, var5);
+    int n = data_ov004_0217059c;
+    void* q = ((SafeAllocator*)(node + 4))->Allocate(n);
+    ((Struct_ov004_02166844*)data_ov004_0217101c[Enum_ov004_02166844_0])->allocators[0].CreateTypeA(q, n);
+    n = data_ov004_0217059c;
+    q = ((SafeAllocator*)(node + 4))->Allocate(n);
+    ((Struct_ov004_02166844*)data_ov004_0217101c[Enum_ov004_02166844_0])->allocators[1].CreateTypeA(q, n);
 
-    char* var7 = (char*)func_ov004_02165e70(arg0, 7);
-    if (var7 != 0) {
-        unsigned short* var8 = (unsigned short*)(var7 + 0x34);
-        var8[0x6d] |= 0x10;
+    char* n2 = (char*)func_ov004_02165e70(a1, 7);
+    if (n2 != 0) {
+        unsigned short* flags = (unsigned short*)(n2 + 0x34);
+        flags[0x6d] |= 0x10;
     }
-    var7[0x110] = 0;
+    n2[0x110] = 0;
 
-    memcpy(((Struct_ov004_02166844*)data_ov004_0217101c[Enum_ov004_02166844_0])->unknown_51_, var2 + 0x2cc, 0x66);
-    ((Struct_ov004_02166844*)data_ov004_0217101c[Enum_ov004_02166844_0])->unknown_b8_ = *(int*)((char*)var1 + 0xa0);
-    func_020956b8((Struct_020956b8*)var1, (SafeAllocator*)(var0 + 4));
-    func_02095b30(var1, 1);
+    memcpy(((Struct_ov004_02166844*)data_ov004_0217101c[Enum_ov004_02166844_0])->unknown_51_, c + 0x2cc, 0x66);
+    ((Struct_ov004_02166844*)data_ov004_0217101c[Enum_ov004_02166844_0])->unknown_b8_ = *(int*)((char*)g + 0xa0);
+    func_020956b8((Struct_020956b8*)g, (SafeAllocator*)(node + 4));
+    func_02095b30(g, 1);
 
     data_ov004_0217101c[Enum_ov004_02166844_1] = 0;
-    data_ov004_0217101c[Enum_ov004_02166844_1] = ((SafeAllocator*)(var0 + 4))->Allocate(0x20);
-    for (unsigned char var9 = 0; var9 < 8; var9++) {
-        ((void**)data_ov004_0217101c[Enum_ov004_02166844_1])[var9] = 0;
-        ((void**)data_ov004_0217101c[Enum_ov004_02166844_1])[var9] = ((SafeAllocator*)(var0 + 4))->Allocate(0x80);
+    data_ov004_0217101c[Enum_ov004_02166844_1] = ((SafeAllocator*)(node + 4))->Allocate(0x20);
+    for (unsigned char i = 0; i < 8; i++) {
+        ((void**)data_ov004_0217101c[Enum_ov004_02166844_1])[i] = 0;
+        ((void**)data_ov004_0217101c[Enum_ov004_02166844_1])[i] = ((SafeAllocator*)(node + 4))->Allocate(0x80);
     }
 
     char* f = (char*)MessageSystem_GetInstance();
-    *(unsigned char*)(f + 0x1000 + FlagOffset) = 1;
-    SetFieldsAt0x4And0x8_020e2d24((int*)(f + FirstWindow + WindowPrefix), 9, 1);
-    SetFieldsAt0x4And0x8_020e2d24((int*)(f + SecondWindow + WindowPrefix), 0x19, 1);
+    *(unsigned char*)(f + 0x1000 + Enum_ov004_02166844_2402) = 1;
+    func_020e2d24((int*)(f + Enum_ov004_02166844_356 + Enum_ov004_02166844_6144), 9, 1);
+    func_020e2d24((int*)(f + Enum_ov004_02166844_392 + Enum_ov004_02166844_6144), 0x19, 1);
     return 0;
 }

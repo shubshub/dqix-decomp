@@ -10,32 +10,32 @@
 #define REGION_OFFSET_2 0x3000
 #endif
 
-extern "C" void* func_ov000_02161318(void* arg0, int arg1);
-extern "C" int func_ov000_021761ec(char* arg0, int arg1);
+extern "C" void* func_ov000_02161318(void* obj, int id);
+extern "C" int func_ov000_021761ec(char* base, int index);
 
 // USA: func_ov000_02162b90
-extern "C" ARM void func_ov000_02162b90(void* arg0, int arg1, int arg2, int arg3, int arg4, signed char arg5, signed char arg6) {
-    int var0 = *(int*)((char*)arg0 + 0x5000 + REGION_OFFSET_0);
-    if (!(var0 & 0x10000)) {
+extern "C" ARM void func_ov000_02162b90(void* self, int unused1, int c, int arg3, int arg4, signed char arg5, signed char p2) {
+    int flags = *(int*)((char*)self + 0x5000 + REGION_OFFSET_0);
+    if (!(flags & 0x10000)) {
         return;
     }
-    if (var0 & 0x800000) {
+    if (flags & 0x800000) {
         return;
     }
     int var1 = -1;
-    int var2 = 0;
-    while (var2 < 12) {
-        int var3 = func_ov000_021761ec((char*)arg0 + REGION_OFFSET_1 + REGION_OFFSET_2, var2);
-        if (arg4 == var3) {
-            var1 = var2;
+    int i = 0;
+    while (i < 12) {
+        int val = func_ov000_021761ec((char*)self + REGION_OFFSET_1 + REGION_OFFSET_2, i);
+        if (arg4 == val) {
+            var1 = i;
             break;
         }
-        var2++;
+        i++;
     }
-    void* var4 = func_ov000_02161318((char*)arg0 + REGION_OFFSET_1 + REGION_OFFSET_2, arg5);
-    if (var4 != NULL) {
-        *(short*)((char*)var4 + 0x26) = (short)arg2;
-        *(unsigned char*)((char*)var4 + 0x1d) = (unsigned char)var1;
-        *(unsigned char*)((char*)var4 + 0x2e) = (unsigned char)arg6;
+    void* entry = func_ov000_02161318((char*)self + REGION_OFFSET_1 + REGION_OFFSET_2, arg5);
+    if (entry != NULL) {
+        *(short*)((char*)entry + 0x26) = (short)c;
+        *(unsigned char*)((char*)entry + 0x1d) = (unsigned char)var1;
+        *(unsigned char*)((char*)entry + 0x2e) = (unsigned char)p2;
     }
 }

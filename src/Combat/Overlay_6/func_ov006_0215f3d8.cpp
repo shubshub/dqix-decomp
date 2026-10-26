@@ -11,55 +11,55 @@
 #endif
 
 struct Struct_ov006_021591ec;
-extern "C" unsigned short func_ov006_021591ec(Struct_ov006_021591ec* arg0);
-extern "C" short func_02080468(void* arg0, int arg1);
-extern "C" void func_ov006_0215f4dc(void* arg0);
-extern "C" void func_ov006_0215f740(void* arg0);
+extern "C" unsigned short func_ov006_021591ec(Struct_ov006_021591ec* s);
+extern "C" short func_02080468(void* obj, int id);
+extern "C" void func_ov006_0215f4dc(void* obj);
+extern "C" void func_ov006_0215f740(void* obj);
 
 struct Struct_ov006_0215f3d8 {
-    unsigned char unknown_0_[0x14];
-    void* unknown_14_;
-    unsigned char unknown_18_[0x350 - 0x18];
-    unsigned int unknown_350_;
-    unsigned char unknown_354_[0x364 - 0x354];
-    short unknown_364_;
-    unsigned char unknown_366_[0x388 - 0x366];
-    unsigned char unknown_388_;
-    unsigned char unknown_389_;
-    unsigned char unknown_38a_[0x394 - 0x38a];
-    unsigned short unknown_394_;
+    unsigned char pad0[0x14];
+    void* f14;
+    unsigned char pad1[0x350 - 0x18];
+    unsigned int input;
+    unsigned char pad2[0x364 - 0x354];
+    short scroll;
+    unsigned char pad3[0x388 - 0x366];
+    unsigned char cursor;
+    unsigned char count;
+    unsigned char pad4[0x394 - 0x38a];
+    unsigned short flags;
 };
 
 // USA: func_ov006_0215f3d8
-extern "C" ARM void func_ov006_0215f3d8(Struct_ov006_0215f3d8* arg0) {
-    if ((arg0->unknown_394_ & 4) == 0) {
+extern "C" ARM void func_ov006_0215f3d8(Struct_ov006_0215f3d8* obj) {
+    if ((obj->flags & 4) == 0) {
         return;
     }
-    int var0 = 0;
-    if (arg0->unknown_350_ & 0x10) {
-        arg0->unknown_388_++;
-        var0 = 1;
-    } else if (arg0->unknown_350_ & 0x20) {
-        arg0->unknown_388_--;
-        var0 = 1;
+    int moved = 0;
+    if (obj->input & 0x10) {
+        obj->cursor++;
+        moved = 1;
+    } else if (obj->input & 0x20) {
+        obj->cursor--;
+        moved = 1;
     }
-    if (arg0->unknown_388_ == 0xff) {
-        arg0->unknown_388_ = arg0->unknown_389_ - 1;
+    if (obj->cursor == 0xff) {
+        obj->cursor = obj->count - 1;
     }
-    if (arg0->unknown_389_ <= arg0->unknown_388_) {
-        arg0->unknown_388_ = 0;
+    if (obj->count <= obj->cursor) {
+        obj->cursor = 0;
     }
-    if (var0 == 0) {
+    if (moved == 0) {
         return;
     }
-    unsigned short var1 = func_ov006_021591ec((Struct_ov006_021591ec*)arg0);
-    short var2 = arg0->unknown_364_ - func_02080468(*(void**)((char*)arg0 + LOW_REGION(0xc, 0x14)), 0x11);
-    short var3 = var2 + arg0->unknown_388_ * 8;
-    if (var3 >= var1) {
-        var3 = var1 - 1;
+    unsigned short total = func_ov006_021591ec((Struct_ov006_021591ec*)obj);
+    short offset = obj->scroll - func_02080468(*(void**)((char*)obj + LOW_REGION(0xc, 0x14)), 0x11);
+    short pos = offset + obj->cursor * 8;
+    if (pos >= total) {
+        pos = total - 1;
     }
-    var3 = var3 % 8;
-    arg0->unknown_364_ = func_02080468(*(void**)((char*)arg0 + LOW_REGION(0xc, 0x14)), 0x11) + var3;
-    func_ov006_0215f4dc(arg0);
-    func_ov006_0215f740(arg0);
+    pos = pos % 8;
+    obj->scroll = func_02080468(*(void**)((char*)obj + LOW_REGION(0xc, 0x14)), 0x11) + pos;
+    func_ov006_0215f4dc(obj);
+    func_ov006_0215f740(obj);
 }

@@ -2,22 +2,22 @@
 #include "GameState/GameState.h"
 
 struct Struct_ov001_0215cdf8;
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
+extern "C" void func_0200fd48(GameState* battleStruct, int id);
 
-struct Struct_ov025_021e7470 { char unknown_0_[0x10]; unsigned char* unknown_10_; };
+struct Struct_ov025_021e7470 { char pad[0x10]; unsigned char* node; };
 
 // USA: func_ov025_021e7470
-extern "C" ARM int func_ov025_021e7470(void* arg0, struct Struct_ov025_021e7470* arg1) {
-    GameState* var0 = GameState::GetInstance();
-    GameObject* var1 = var0->GetGameObjectByIndex(0xc8);
-    if (var1) {
-        ((Object3D*)((struct Struct_ov001_0215cdf8*)var1))->Detach();
-        func_0200fd48(var0, 0xc8);
+extern "C" ARM int func_ov025_021e7470(void* unused, struct Struct_ov025_021e7470* p2) {
+    GameState* bs = GameState::GetInstance();
+    GameObject* c = bs->GetGameObjectByIndex(0xc8);
+    if (c) {
+        ((Object3D*)((struct Struct_ov001_0215cdf8*)c))->Detach();
+        func_0200fd48(bs, 0xc8);
     }
-    unsigned short var2 = *(unsigned short*)(arg1->unknown_10_ + 0x20);
-    GameObject* var3 = var0->GetGameObjectByIndex(var2 * 0xc + 0x1c);
-    if (var3) {
-        ((Object3D*)((unsigned char*)var3))->MakeVisible();
+    unsigned short idx = *(unsigned short*)(p2->node + 0x20);
+    GameObject* c2 = bs->GetGameObjectByIndex(idx * 0xc + 0x1c);
+    if (c2) {
+        ((Object3D*)((unsigned char*)c2))->MakeVisible();
     }
     return 1;
 }

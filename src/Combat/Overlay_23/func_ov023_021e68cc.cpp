@@ -3,47 +3,47 @@
 struct Struct_0205d81c;
 
 struct Struct_ov023_021e68cc_3 {
-    char unknown_0_[0xac];
-    short unknown_ac_;
-    short unknown_ae_;
+    char pad0[0xac];
+    short x;
+    short y;
 };
 
 struct Struct_ov023_021e68cc {
-    char unknown_0_[0x14];
-    int unknown_14_;
+    char pad0[0x14];
+    int posX;
     int unknown_18_;
     char unknown_1c_[0x22 - 0x1c];
-    unsigned char unknown_22_;
+    unsigned char tile;
     char unknown_23_[0x25 - 0x23];
-    unsigned char unknown_25_;
+    unsigned char palette;
     char unknown_26_[0x28 - 0x26];
 };
 
 #if defined(jpn)
 struct Struct_ov023_021e68cc_2 {
-    char unknown_0_[0x90];
+    char pad0[0x90];
 #else
 struct Struct_ov023_021e68cc_2 {
-    char unknown_0_[0xac];
+    char pad0[0xac];
 #endif
 
 #if defined(jpn)
-    char unknown_ac_[0x1334 - 0x90];
+    char list_[0x1334 - 0x90];
 #else
-    char unknown_ac_[0x135c - 0xac];
+    char list_[0x135c - 0xac];
 #endif
 
-    void* unknown_135c_;
+    void* renderer_;
     char unknown_1360_[0x1364 - 0x1360];
-    Struct_ov023_021e68cc* unknown_1364_;
+    Struct_ov023_021e68cc* sprites_;
 #if defined(jpn)
 
 #else
     char unknown_1368_[0x1370 - 0x1368];
 #endif
 
-    unsigned char unknown_1370_;
-    unsigned char unknown_1371_;
+    unsigned char mode_;
+    unsigned char page_;
 #if defined(jpn)
     char unknown_1342_[0x1370 - 0x1342];
 #else
@@ -55,53 +55,53 @@ struct Struct_ov023_021e68cc_2 {
     unsigned char unknown_13ab_;
 };
 
-Element_021e68cc* FindElementByC40205d81c(Struct_0205d81c* s, int key);
+extern "C" Struct_ov023_021e68cc_3* func_0205d81c(Struct_0205d81c* s, int key);
 extern "C" void SpriteContext_DrawSprite(void* renderer, void* sprite);
 
 // USA: func_ov023_021e68cc
-extern "C" ARM void func_ov023_021e68cc(Struct_ov023_021e68cc_2* arg0) {
+extern "C" ARM void func_ov023_021e68cc(Struct_ov023_021e68cc_2* self) {
 #if defined(jpn)
- enum {Enum_ov023_021e68cc_19=0x11};
+ enum {regionalOffset0=0x11};
 #else
- enum {Enum_ov023_021e68cc_19=0x13};
+ enum {regionalOffset0=0x13};
 #endif
-    unsigned char var0 = arg0->unknown_1371_;
-    if (var0 != 7 && var0 != 8 && var0 != 9)
+    unsigned char page = self->page_;
+    if (page != 7 && page != 8 && page != 9)
         return;
-    if (arg0->unknown_1370_ != 4)
+    if (self->mode_ != 4)
         return;
 
-    int var1;
-    signed char var2 = 0;
-    unsigned char var3 = Enum_ov023_021e68cc_19;
-    for (int var4 = 0; var4 < 3; var4++) {
-        Struct_ov023_021e68cc_3* var5 = func_0205d81c((Struct_0205d81c*)arg0->unknown_ac_, (unsigned char)(var4 + 7));
-        var1 = ((short)(var5->unknown_ac_ * 8) + 10) << 12;
-        short var6 = var5->unknown_ae_ * 8;
-        for (int var7 = 0; var7 < 2; var7++) {
-            int var8 = 0x10;
-            int var9 = 0xd;
-            int var10 = 1;
-            if (var7 == 1) {
-                var8 = 0x1c;
-                var9 = 0xe;
-                var10 = -1;
+    int posX;
+    signed char slot = 0;
+    unsigned char tile = regionalOffset0;
+    for (int row = 0; row < 3; row++) {
+        Struct_ov023_021e68cc_3* e = func_0205d81c((Struct_0205d81c*)self->list_, (unsigned char)(row + 7));
+        posX = ((short)(e->x * 8) + 10) << 12;
+        short top = e->y * 8;
+        for (int col = 0; col < 2; col++) {
+            int offset = 0x10;
+            int index = 0xd;
+            int dir = 1;
+            if (col == 1) {
+                offset = 0x1c;
+                index = 0xe;
+                dir = -1;
             }
-            Struct_ov023_021e68cc* var11 = &arg0->unknown_1364_[var9];
-            int var12 = var6 + var8;
-            var11->unknown_14_ = var1;
-            var11->unknown_18_ = var12 << 12;
-            var11->unknown_22_ = var3++;
-            var11->unknown_25_ = 7;
-            if (var2 == arg0->unknown_13a8_) {
-                var11->unknown_14_ = var1;
-                var11->unknown_18_ = (var12 - var10) << 12;
+            Struct_ov023_021e68cc* sprite = &self->sprites_[index];
+            int y = top + offset;
+            sprite->posX = posX;
+            sprite->unknown_18_ = y << 12;
+            sprite->tile = tile++;
+            sprite->palette = 7;
+            if (slot == self->unknown_13a8_) {
+                sprite->posX = posX;
+                sprite->unknown_18_ = (y - dir) << 12;
             }
-            if (!(self->enabledMask_ & (1 << slot)))
+            if (!(self->unknown_13ab_ & (1 << slot)))
                 sprite->palette = 0xd;
             SpriteContext_DrawSprite(self->renderer_, sprite);
             slot++;
         }
     }
-    arg0->unknown_13a8_ = -1;
+    self->unknown_13a8_ = -1;
 }

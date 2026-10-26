@@ -17,23 +17,23 @@ enum { Enum_ov003_0215fb94_742 = 0x2e6 };
 #include "Memory/SafeAllocator.h"
 #include "Resource/Brightness.h"
 
-struct Struct_02038598_4;
+struct FlagWord020466f4;
 struct Struct_02074bd0;
 struct Struct_0207fcb8;
 struct Struct_0207fd44_2;
 struct Struct_0207fd88;
 
-void* GlobalFlags_GetInstance(void);
-void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
-void ClearFlag0x10IfSet(struct Struct02074bd0* obj);
-void ClearAllBuffers0207fcb8(struct Obj0207fcb8* obj);
-void CallFunc0204b04cOverList0x2c(struct Cont0207fd44* obj);
-void CallFunc0204b088OverList0x2c(struct Cont0207fd88* obj);
+extern "C" void* GlobalFlags_GetInstance(void);
+extern "C" void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
+extern "C" void func_02074bd0(struct Struct_02074bd0* obj);
+extern "C" void func_0207fcb8(struct Struct_0207fcb8* obj);
+extern "C" void func_0207fd44(struct Struct_0207fd44_2* obj);
+extern "C" void func_0207fd88(struct Struct_0207fd88* obj);
 extern "C" void* memset(void* dst, int val, unsigned int len);
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 extern "C" int LoadToMainBG1CharacterData(int arg0, int arg1, unsigned int arg2);
-int MessageSystem_GetInstance(void);
-void MessageSystem_Reset(char* obj);
+extern "C" int MessageSystem_GetInstance(void);
+extern "C" void MessageSystem_Reset(char* obj);
 extern "C" void MessageSystem_Stop(char* obj);
 
 struct Struct_ov003_0215fb94 {
@@ -49,7 +49,7 @@ struct Struct_ov003_0215fb94 {
     SafeAllocator unknown_2c8_;
     unsigned char unknown_2dc_[0x18];
     unsigned char unknown_2f4_[0x30];
-    Struct_0207f7f0* unknown_324_;
+    Manager0207f7f0* unknown_324_;
     unsigned char unknown_328_[0x8];
     int unknown_330_;
     unsigned char unknown_334_[0x64];
@@ -59,52 +59,52 @@ struct Struct_ov003_0215fb94 {
 };
 
 // USA: func_ov003_0215fb94
-extern "C" ARM void func_ov003_0215fb94(BattleView0215fb94* view) {
+extern "C" ARM void func_ov003_0215fb94(Struct_ov003_0215fb94* view) {
     FlagWord_ClearBits((struct FlagWord020466f4*)GlobalFlags_GetInstance(), 0x80000);
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
-    if (view->loadTaskId >= 0) {
-        loader->RemoveTask(view->loadTaskId);
-        view->loadTaskId = -1;
+    if (view->unknown_46c_ >= 0) {
+        loader->RemoveTask(view->unknown_46c_);
+        view->unknown_46c_ = -1;
     }
 
-    GameResources* var1 = GetGameResources();
-    volatile unsigned int* var2 = (volatile unsigned int*)0x4000000;
-    *var2 = (*var2 & ~0x1f00) | (arg0->unknown_330_ << 8);
-    ClearFlags04(var1, 0xc0);
-    *var2 = (*var2 & ~0x1f00) | 0x100;
+    GameResources* resources = GetGameResources();
+    volatile unsigned int* dispcnt = (volatile unsigned int*)0x4000000;
+    *dispcnt = (*dispcnt & ~0x1f00) | (view->unknown_330_ << 8);
+    ClearFlags04(resources, 0xc0);
+    *dispcnt = (*dispcnt & ~0x1f00) | 0x100;
     *(volatile unsigned short*)0x4000050 = 0;
 
-    func_02074bd0((struct Struct_02074bd0*)arg0->unknown_2f4_);
+    func_02074bd0((struct Struct_02074bd0*)view->unknown_2f4_);
 
-    Struct_0207f7f0* var3 = arg0->unknown_324_;
-    if (var3 != NULL) {
-        func_0207fcb8((struct Struct_0207fcb8*)var3);
-        func_0207fd44((struct Struct_0207fd44_2*)var3);
-        func_0207fd88((struct Struct_0207fd88*)var3);
-        func_0207f8bc(var3);
+    Manager0207f7f0* sub = view->unknown_324_;
+    if (sub != NULL) {
+        func_0207fcb8((struct Struct_0207fcb8*)sub);
+        func_0207fd44((struct Struct_0207fd44_2*)sub);
+        func_0207fd88((struct Struct_0207fd88*)sub);
+        func_0207f8bc(sub);
     }
 
-    if (arg0->unknown_398_ != NULL) {
-        memset(arg0->unknown_398_, 0, 0x20);
-        CleanInvalidateCacheRange(arg0->unknown_398_, 0x20);
-        LoadToMainBG1CharacterData((int)arg0->unknown_398_, 0, 0x20);
+    if (view->unknown_398_ != NULL) {
+        memset(view->unknown_398_, 0, 0x20);
+        CleanInvalidateCacheRange(view->unknown_398_, 0x20);
+        LoadToMainBG1CharacterData((int)view->unknown_398_, 0, 0x20);
     }
-    arg0->unknown_398_ = NULL;
+    view->unknown_398_ = NULL;
 
     char* controller = (char*)MessageSystem_GetInstance();
-    if (*(int*)(controller + kRegion998) != 0) {
+    if (*(int*)(controller + Enum_ov003_0215fb94_2456) != 0) {
         MessageSystem_Reset(controller);
         MessageSystem_Stop(controller);
     }
-    *(int*)(var4 + Enum_ov003_0215fb94_728) = 0;
-    var4[Enum_ov003_0215fb94_742] = 1;
+    *(int*)(controller + Enum_ov003_0215fb94_728) = 0;
+    controller[Enum_ov003_0215fb94_742] = 1;
 
-    arg0->unknown_2c8_.Destroy();
-    arg0->unknown_2b4_.Destroy();
-    arg0->unknown_2a0_.Destroy();
-    arg0->unknown_28c_.Destroy();
-    arg0->unknown_278_.Destroy();
-    arg0->unknown_264_.Destroy();
-    arg0->unknown_23c_.Destroy();
-    arg0->unknown_228_.Destroy();
+    view->unknown_2c8_.Destroy();
+    view->unknown_2b4_.Destroy();
+    view->unknown_2a0_.Destroy();
+    view->unknown_28c_.Destroy();
+    view->unknown_278_.Destroy();
+    view->unknown_264_.Destroy();
+    view->unknown_23c_.Destroy();
+    view->unknown_228_.Destroy();
 }

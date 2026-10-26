@@ -2,22 +2,22 @@
 
 extern "C" void* func_02086868(void*, void*);
 
-struct Struct_02086778_2 {
-    signed char unknown_0_0_ : 6;
+struct Entry02086778 {
+    signed char id : 6;
     unsigned char unknown_0_6_ : 1;
     unsigned char unknown_0_7_ : 1;
-    char unknown_1_[0x23c - 1];
+    char rest[0x23c - 1];
 };
 
 struct Struct_02086778 {
-    char unknown_0_[0xf80];
-    struct Struct_02086778_2 unknown_f80_[13];
-    unsigned char unknown_2c8c_;
+    char pad0[0xf80];
+    struct Entry02086778 elems[13];
+    unsigned char count;
 };
 
 // Main, originally func_02086778 (USA 0x02086778, EUR 0x02086788, JPN 0x02087098)
 extern "C" ARM int Party_AddMemberRecord(void* map, struct Entry02086778* buf, unsigned char c, unsigned char d) {
-    struct Container02086778* m = (struct Container02086778*)map;
+    struct Struct_02086778* m = (struct Struct_02086778*)map;
     signed char best = -1;
     signed char i = 0;
     int start = 0;
@@ -30,18 +30,18 @@ extern "C" ARM int Party_AddMemberRecord(void* map, struct Entry02086778* buf, u
                 break;
             }
         }
-        if (!var4) {
-            var1 = var2;
+        if (!found) {
+            best = i;
             break;
         }
     }
-    if (var1 < 0) {
+    if (best < 0) {
         return 0;
     }
-    arg1->unknown_0_0_ = var1;
-    arg1->unknown_0_6_ = arg2;
-    arg1->unknown_0_7_ = arg3;
-    func_02086868(&var0->unknown_f80_[var0->unknown_2c8c_], arg1);
-    var0->unknown_2c8c_++;
+    buf->id = best;
+    buf->unknown_0_6_ = c;
+    buf->unknown_0_7_ = d;
+    func_02086868(&m->elems[m->count], buf);
+    m->count++;
     return 1;
 }

@@ -3,13 +3,13 @@
 #include "Combat/Overlay_0/GetCombatantByID.h"
 #include "std_library_functions.h"
 
-extern "C" int func_ov000_0215eb1c(int arg0, unsigned short* arg1, int arg2, int arg3);
+extern "C" int func_ov000_0215eb1c(int battle, unsigned short* table, int count, int flag);
 struct Struct_ov024_021f1330;
-extern "C" int func_ov024_021f1440(struct Struct_ov024_021f1330* arg0);
-extern "C" GameObject* func_ov000_021536f8(int arg0, int arg1);
-extern "C" int func_ov024_021eda60(GameObject* arg0);
+extern "C" int func_ov024_021f1440(struct Struct_ov024_021f1330* obj);
+extern "C" GameObject* func_ov000_021536f8(int unused, int id);
+extern "C" int func_ov024_021eda60(GameObject* combatant);
 
-struct Struct_ov024_021f166c { int unknown_0_; };
+struct Struct_ov024_021f166c { int field0; };
 
 struct Struct_ov024_021f166c_2 {
     signed int unknown_0_0_ : 3;
@@ -25,33 +25,33 @@ struct Struct_ov024_021f166c_2 {
 extern unsigned short data_ov024_021fef6c;
 
 // USA: func_ov024_021f166c
-extern "C" ARM int func_ov024_021f166c(struct Struct_ov024_021f166c* arg0, short arg1, int arg2, int* arg3, void* arg4) {
-    GameObject* var0 = func_ov000_021536f8(arg0->unknown_0_, arg1);
-    if (!var0) return 0;
-    if (!func_ov024_021f1440((struct Struct_ov024_021f1330*)var0)) return 0;
+extern "C" ARM int func_ov024_021f166c(struct Struct_ov024_021f166c* obj, short id, int arg2, int* outCount, void* arg4) {
+    GameObject* c0 = func_ov000_021536f8(obj->field0, id);
+    if (!c0) return 0;
+    if (!func_ov024_021f1440((struct Struct_ov024_021f1330*)c0)) return 0;
 
-    unsigned short var1[8];
-    unsigned short* var2 = var1;
-    unsigned short* var3 = &data_ov024_021fef6c;
-    int var4 = 8;
+    unsigned short buf[8];
+    unsigned short* d = buf;
+    unsigned short* s = &data_ov024_021fef6c;
+    int n = 8;
     do {
-        unsigned short* var5 = var2++;
-        *var5 = *var3++;
-    } while (--var4);
+        unsigned short* var5 = d++;
+        *var5 = *s++;
+    } while (--n);
 
-    int var6 = func_ov000_0215eb1c(arg0->unknown_0_, var1, 8, 1);
-    if (var6 <= 0) return 0;
+    int count = func_ov000_0215eb1c(obj->field0, buf, 8, 1);
+    if (count <= 0) return 0;
 
-    for (int var7 = 0; var7 < var6; var7++) {
-        GameObject* var8 = GetCombatantByID(arg0->unknown_0_, *(short*)&var1[var7]);
-        if (!var8) continue;
-        if (func_ov024_021eda60(var8)) continue;
-        struct Struct_ov024_021f166c_2* var9 = (struct Struct_ov024_021f166c_2*)((char*)var8->currentStats_ + 0x58);
+    for (int i = 0; i < count; i++) {
+        GameObject* c = GetCombatantByID(obj->field0, *(short*)&buf[i]);
+        if (!c) continue;
+        if (func_ov024_021eda60(c)) continue;
+        struct Struct_ov024_021f166c_2* var9 = (struct Struct_ov024_021f166c_2*)((char*)c->currentStats_ + 0x58);
         if (var9->unknown_2_5_ < 2) break;
     }
-    if (*arg3 <= 0) return 0;
+    if (*outCount <= 0) return 0;
 
-    *arg3 = var6;
-    memcpy(arg4, var1, 0x10);
+    *outCount = count;
+    memcpy(arg4, buf, 0x10);
     return 1;
 }

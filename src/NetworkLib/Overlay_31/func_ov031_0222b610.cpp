@@ -6,7 +6,7 @@ extern "C" ARM void func_ov031_022274c0(int);
 
 // USA: func_ov031_0222b610
 extern "C" ARM void func_ov031_0222b610(void) {
-	unsigned char var0 = ++data_ov031_02290c88;
-	if (var0 < 0x78) return;
+	unsigned char v = ++data_ov031_02290c88;
+	if (v < 0x78) return;
 	func_ov031_022274c0((int)func_ov031_0222b564);
 }

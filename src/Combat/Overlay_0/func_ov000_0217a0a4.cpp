@@ -21,35 +21,35 @@
 
 #include "std_library_functions.h"
 
-struct Struct_0205d5d0;
+struct StructA0205d5d0;
 struct Struct_0205def8;
 struct Struct_0205d81c;
 
-struct Struct_0205d0e0 {
-    char unknown_0_[0xc2];
+struct Elem_0205d81c {
+    char pad0[0xc2];
     short unknown_c2_;
-    unsigned char unknown_c4_;
+    unsigned char fieldC4;
     unsigned char unknown_c5_;
 };
 
 struct Struct_ov000_0217a0a4 {
-    char unknown_0_[0x188];
-    char unknown_188_[REGION_OFFSET_2 - 0x188];
-    unsigned short unknown_1d72_;
+    char pad0[0x188];
+    char elements[REGION_OFFSET_2 - 0x188];
+    unsigned short flags;
     char unknown_1d74_[REGION_OFFSET_3 - REGION_OFFSET_4];
     unsigned char unknown_1d79_;
     char unknown_1d7a_[REGION_OFFSET_5 - REGION_OFFSET_6];
     unsigned char unknown_1d81_;
 };
 
-int MessageSystem_GetInstance();
-void SetElementFlag0x20ByKey0205def8(struct Struct_0205def8*, int, int);
-struct Elem_0205d81c* FindElementByC40205d81c(struct Struct_0205d81c*, int);
-extern "C" void func_ov000_0217a2dc(struct BattleField0217a0a4*, int, void*);
-extern "C" void func_ov000_0217a19c(struct BattleField0217a0a4*, int);
+extern "C" int MessageSystem_GetInstance();
+extern "C" void func_0205def8(struct Struct_0205def8*, int, int);
+extern "C" struct Elem_0205d81c* func_0205d81c(struct Struct_0205d81c*, int);
+extern "C" void func_ov000_0217a2dc(struct Struct_ov000_0217a0a4*, int, void*);
+extern "C" void func_ov000_0217a19c(struct Struct_ov000_0217a0a4*, int);
 
 // USA: func_ov000_0217a0a4
-extern "C" ARM void func_ov000_0217a0a4(struct BattleField0217a0a4* field) {
+extern "C" ARM void func_ov000_0217a0a4(struct Struct_ov000_0217a0a4* field) {
     void* buf = *(void**)(MessageSystem_GetInstance() + REGION_OFFSET_0);
     memset(buf, 0, REGION_OFFSET_1);
     func_ov000_0217a2dc(field, 0, buf);
@@ -58,23 +58,23 @@ extern "C" ARM void func_ov000_0217a0a4(struct BattleField0217a0a4* field) {
 #else
     Window_SetPaneText((struct StructA0205d5d0*)field->elements, 0x17, (int)buf, 1, 0);
 #endif
-    if (arg0->unknown_1d81_) {
-        func_0205def8((struct Struct_0205def8*)arg0->unknown_188_, 0, 0x18);
-        func_0205def8((struct Struct_0205def8*)arg0->unknown_188_, 0, 0x19);
-        struct Struct_0205d0e0* var1 = func_0205d81c((struct Struct_0205d81c*)arg0->unknown_188_, 0x17);
-        if (var1) {
-            var1->unknown_c5_ &= ~0x40;
-            var1->unknown_c2_ = 0;
+    if (field->unknown_1d81_) {
+        func_0205def8((struct Struct_0205def8*)field->elements, 0, 0x18);
+        func_0205def8((struct Struct_0205def8*)field->elements, 0, 0x19);
+        struct Elem_0205d81c* elem = func_0205d81c((struct Struct_0205d81c*)field->elements, 0x17);
+        if (elem) {
+            elem->unknown_c5_ &= ~0x40;
+            elem->unknown_c2_ = 0;
         }
-        arg0->unknown_1d72_ &= ~0x100;
+        field->flags &= ~0x100;
     }
-    if (arg0->unknown_1d79_) {
-        func_ov000_0217a19c(arg0, 0);
+    if (field->unknown_1d79_) {
+        func_ov000_0217a19c(field, 0);
     } else {
-        struct Struct_0205d0e0* var2 = func_0205d81c((struct Struct_0205d81c*)arg0->unknown_188_, 0x18);
-        if (var2) {
-            var2->unknown_c2_ = 0;
+        struct Elem_0205d81c* elem = func_0205d81c((struct Struct_0205d81c*)field->elements, 0x18);
+        if (elem) {
+            elem->unknown_c2_ = 0;
         }
-        arg0->unknown_1d79_ = 1;
+        field->unknown_1d79_ = 1;
     }
 }

@@ -8,49 +8,49 @@
 
 
 struct Struct_ov017_021986fc_2 {
-    unsigned int unknown_0_0_ : 16;
-    unsigned int unknown_2_0_ : 7;
+    unsigned int unk0 : 16;
+    unsigned int id : 7;
     unsigned int unknown_2_7_ : 9;
     unsigned int unknown_4_0_ : 17;
-    unsigned int unknown_6_1_ : 4;
-    unsigned int unknown_6_5_ : 8;
+    unsigned int count : 4;
+    unsigned int mask : 8;
     unsigned int unknown_7_5_ : 3;
-    Struct_0208ec78* unknown_8_;
-    Vector3fix unknown_c_[8];
-    struct Struct_ov017_021986fc_2* unknown_6c_;
+    Struct_0208ec78* entry;
+    Vector3fix pos[8];
+    struct Struct_ov017_021986fc_2* next;
 };
 
-struct Struct_0208e7d0 {
-    char unknown_0_[4];
-    struct Struct_ov017_021986fc_2* unknown_4_;
+struct Obj0208e7d0 {
+    char pad0[4];
+    struct Struct_ov017_021986fc_2* head;
 };
 
 struct Struct_ov017_021986fc_3 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[19];
+    unsigned char kind;
+    unsigned char padding1[19];
 };
 
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
-struct Struct_02015ef4;
+struct TailList020469b4;
+struct TailNode020469b4;
+struct Vec3copy0202ec84;
 struct Struct_0208f3b4;
-struct Struct_0202c1a4;
+struct SearchStruct0202c1a4;
 
 extern "C" Zone3D* Zone3D_GetInstance(void);
 extern "C" Obj0208e7d0* LootPointList_GetInstance(void);
-int LootPointList_AppliesToMap(void*, char*);
-int GameObject_IsGesturing(signed char*);
-Cont0208f3b4* GetData02109020_0208e9e8(void);
-void InitObj0219a674(unsigned char*);
-extern "C" void func_ov017_0219b33c(void*, Event021986fc*);
-int Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
+extern "C" int LootPointList_AppliesToMap(void*, char*);
+extern "C" int GameObject_IsGesturing(signed char*);
+extern "C" Struct_0208f3b4* func_0208e9e8(void);
+extern "C" void func_ov017_0219a674(unsigned char*);
+extern "C" void func_ov017_0219b33c(void*, Struct_ov017_021986fc_3*);
+extern "C" int Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
 extern "C" SearchStruct0202c1a4* LinkSession_GetInstance(void);
-int LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
+extern "C" int LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
 extern "C" void* Scenario_GetInstance(void);
 extern "C" void Scenario_SetFlag(void*, unsigned char*, int, int);
-void RemoveNodeByKey0208f3b4(Cont0208f3b4*, int);
-int GetRandomTableEntry0208e7d0(Obj0208e7d0*);
-void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
+extern "C" void func_0208f3b4(Struct_0208f3b4*, int);
+extern "C" int func_0208e7d0(Obj0208e7d0*);
+extern "C" void func_020469b4(TailList020469b4*, TailNode020469b4*);
 
 // USA: func_ov017_021986fc
 extern "C" ARM void func_ov017_021986fc(GameResources* self) {
@@ -61,60 +61,60 @@ extern "C" ARM void func_ov017_021986fc(GameResources* self) {
     GameState* gs = GameState::GetInstance();
     GameObject* actor = gs->GetLeader();
     if (GameObject_IsGesturing((signed char*)actor)) return;
-    GetData02109020_0208e9e8();
-    Node021986fc* node = list->head;
+    func_0208e9e8();
+    Struct_ov017_021986fc_2* node = list->head;
     void* camera = gs->GetCamera();
 
-    int var7 = 0;
-    unsigned int var8 = 0;
-    unsigned char var9 = 0;
-    unsigned char var10 = 0;
-    for (; var5 != NULL; var5 = var5->unknown_6c_, var9++) {
-        if (var5->unknown_8_ != NULL) {
-            for (unsigned int var11 = 0; var11 < var5->unknown_6_1_; var11++) {
-                unsigned int var12 = 1 << var11;
-                if ((var5->unknown_6_5_ & var12) == 0) continue;
-                if (var5->unknown_c_[var11].x - 2867 >= var4->obj3D_.position_.x) continue;
-                if (var5->unknown_c_[var11].x + 2867 <= var4->obj3D_.position_.x) continue;
-                if (var5->unknown_c_[var11].z - 2867 >= var4->obj3D_.position_.z) continue;
-                if (var5->unknown_c_[var11].z + 2867 <= var4->obj3D_.position_.z) continue;
-                var10 = var11 + var9 * 8;
-                var7 = 1;
-                var8 = var12;
-                Struct_ov017_021986fc_3 var13;
-                func_ov017_0219a674((unsigned char*)&var13);
-                var13.unknown_0_ = 3;
-                func_ov017_0219b33c(arg0, &var13);
+    int found = 0;
+    unsigned int mask = 0;
+    unsigned char idx = 0;
+    unsigned char key = 0;
+    for (; node != NULL; node = node->next, idx++) {
+        if (node->entry != NULL) {
+            for (unsigned int i = 0; i < node->count; i++) {
+                unsigned int bit = 1 << i;
+                if ((node->mask & bit) == 0) continue;
+                if (node->pos[i].x - 2867 >= actor->obj3D_.position_.x) continue;
+                if (node->pos[i].x + 2867 <= actor->obj3D_.position_.x) continue;
+                if (node->pos[i].z - 2867 >= actor->obj3D_.position_.z) continue;
+                if (node->pos[i].z + 2867 <= actor->obj3D_.position_.z) continue;
+                key = i + idx * 8;
+                found = 1;
+                mask = bit;
+                Struct_ov017_021986fc_3 event;
+                func_ov017_0219a674((unsigned char*)&event);
+                event.kind = 3;
+                func_ov017_0219b33c(self, &event);
                 break;
             }
-            if (var7) break;
+            if (found) break;
         }
     }
-    if (!var7) return;
+    if (!found) return;
 
-    int proceed = 0;
-    if (g_keyManager.TestKeysPressed(1)) proceed = 1;
+    int var14 = 0;
+    if (g_keyManager.TestKeysPressed(1)) var14 = 1;
     int cursorX = -1;
     int cursorY = -1;
     if (g_touchInput.released_ && (unsigned int)g_touchInput.prevTimeHeld_ < 10) { cursorX = g_touchInput.prevX_; cursorY = g_touchInput.prevY_; }
     int screenX, screenY;
     Camera_WorldToScreen(camera, (Vec3copy0202ec84*)&actor->obj3D_.position_, &screenX, &screenY);
-    if (cursorX > 0x70 && cursorX < 0x90 && cursorY > 0x28 && cursorY < 0x60) proceed = 1;
-    else if (screenX - 12 < cursorX && cursorX < screenX + 12 && screenY - 12 < cursorY && cursorY < screenY + 12) proceed = 1;
-    if (!proceed) return;
+    if (cursorX > 0x70 && cursorX < 0x90 && cursorY > 0x28 && cursorY < 0x60) var14 = 1;
+    else if (screenX - 12 < cursorX && cursorX < screenX + 12 && screenY - 12 < cursorY && cursorY < screenY + 12) var14 = 1;
+    if (!var14) return;
 
-    EnqueueEventTag183_021d38f8(1, LinkSession_GetOwnSlot(LinkSession_GetInstance()), mask, node->id, node->entry);
+    func_ov017_021d38f8(1, LinkSession_GetOwnSlot(LinkSession_GetInstance()), mask, node->id, node->entry);
     node->entry->fields.flags = ~mask & node->entry->fields.flags;
     node->mask = ~mask & node->mask;
     node->entry->fields.timer = node->entry->fields.count * 30;
     void* base = Scenario_GetInstance();
     Scenario_SetFlag(base, (unsigned char*)base + 0x8c, node->id + 0xc12, 1);
-    RemoveNodeByKey0208f3b4(GetData02109020_0208e9e8(), key);
-    if (node->id >= 0x62) node->unk0 = GetRandomTableEntry0208e7d0(list);
-    ResetHeaderAndAllocator_021ae800(((Obj021ae800*)self->fieldTasks_[11]));
+    func_0208f3b4(func_0208e9e8(), key);
+    if (node->id >= 0x62) node->unk0 = func_0208e7d0(list);
+    func_ov017_021ae800(((Obj021ae800*)self->fieldTasks_[11]));
     ((Obj021ae800*)self->fieldTasks_[11])->itemId = node->unk0;
     ((Obj021ae800*)self->fieldTasks_[11])->position = actor->obj3D_.position_;
     ((Obj021ae800*)self->fieldTasks_[11])->angle = 0;
     ((Obj021ae800*)self->fieldTasks_[11])->fade = 0x1f;
-    AppendNodeToTail((TailList020469b4*)self->fieldTaskQueue_, (TailNode020469b4*)((Obj021ae800*)self->fieldTasks_[11]));
+    func_020469b4((TailList020469b4*)self->fieldTaskQueue_, (TailNode020469b4*)((Obj021ae800*)self->fieldTasks_[11]));
 }

@@ -4,48 +4,48 @@
 #include "Memory/SafeAllocator.h"
 #include "std_library_functions.h"
 
-struct Struct_02072a68_2;
-extern "C" void* func_02072a68(Struct_02072a68_2* arg0, int arg1);
-extern "C" void func_020728ac(void* arg0, SafeAllocator* arg1, const void* arg2, unsigned int arg3, int, int, int);
+struct TableA68;
+extern "C" void* func_02072a68(TableA68* table, int key);
+extern "C" void func_020728ac(void* table, SafeAllocator* allocator, const void* file, unsigned int size, int, int, int);
 #if defined(jpn)
 extern char data_ov012_0218bf40[];
 extern char data_ov012_0218bf52[];
 #endif
 
 // USA: func_ov012_02185e18
-extern "C" ARM void func_ov012_02185e18(char* arg0) {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
+extern "C" ARM void func_ov012_02185e18(char* editor) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
 #if defined(jpn)
-    void* var1;
-    unsigned int var2;
-    const void* var3;
-    unsigned int var4;
-    var0->GetLoadedFileByID(*(int*)(arg0 + 0x1350), &var1, &var2);
-    if (!GetFileInNarc(var1, data_ov012_0218bf40, &var3, &var4, 0)) {
-        var0->RemoveTask(*(int*)(arg0 + 0x1350));
-        *(int*)(arg0 + 0x1350) = -1;
+    void* archive;
+    unsigned int archiveSize;
+    const void* file;
+    unsigned int size;
+    loader->GetLoadedFileByID(*(int*)(editor + 0x1350), &archive, &archiveSize);
+    if (!GetFileInNarc(archive, data_ov012_0218bf40, &file, &size, 0)) {
+        loader->RemoveTask(*(int*)(editor + 0x1350));
+        *(int*)(editor + 0x1350) = -1;
         return;
     }
-    ((SafeAllocator*)(arg0 + 0x2c))->Reset();
-    func_020728ac(arg0 + 0x1314, (SafeAllocator*)(arg0 + 0x2c), var3, var4, 0, 0, 0);
-    *(void**)(arg0 + 0x1348) = func_02072a68((Struct_02072a68_2*)(arg0 + 0x1314), 0);
-    if (!GetFileInNarc(var1, data_ov012_0218bf52, &var3, (unsigned int*)(arg0 + 0x1410), 0)) {
-        var0->RemoveTask(*(int*)(arg0 + 0x1350));
-        *(int*)(arg0 + 0x1350) = -1;
+    ((SafeAllocator*)(editor + 0x2c))->Reset();
+    func_020728ac(editor + 0x1314, (SafeAllocator*)(editor + 0x2c), file, size, 0, 0, 0);
+    *(void**)(editor + 0x1348) = func_02072a68((TableA68*)(editor + 0x1314), 0);
+    if (!GetFileInNarc(archive, data_ov012_0218bf52, &file, (unsigned int*)(editor + 0x1410), 0)) {
+        loader->RemoveTask(*(int*)(editor + 0x1350));
+        *(int*)(editor + 0x1350) = -1;
         return;
     }
-    memcpy(*(void**)(arg0 + 0x140c), var3, *(unsigned int*)(arg0 + 0x1410));
-    var0->RemoveTask(*(int*)(arg0 + 0x1350));
-    *(int*)(arg0 + 0x1350) = -1;
+    memcpy(*(void**)(editor + 0x140c), file, *(unsigned int*)(editor + 0x1410));
+    loader->RemoveTask(*(int*)(editor + 0x1350));
+    *(int*)(editor + 0x1350) = -1;
 #else
-    int var5 = *(int*)(arg0 + 0x1380);
-    void* var6;
-    unsigned int var7;
-    var0->GetLoadedFileByID(var5, &var6, &var7);
-    ((SafeAllocator*)(arg0 + 0x34))->Reset();
-    func_020728ac(arg0 + 0x133c, (SafeAllocator*)(arg0 + 0x34), var6, var7, 0, 0, 0);
-    *(void**)(arg0 + 0x1378) = func_02072a68((Struct_02072a68_2*)(arg0 + 0x133c), 0);
-    var0->RemoveTask(*(int*)(arg0 + 0x1380));
-    *(int*)(arg0 + 0x1380) = -1;
+    int task = *(int*)(editor + 0x1380);
+    void* file;
+    unsigned int size;
+    loader->GetLoadedFileByID(task, &file, &size);
+    ((SafeAllocator*)(editor + 0x34))->Reset();
+    func_020728ac(editor + 0x133c, (SafeAllocator*)(editor + 0x34), file, size, 0, 0, 0);
+    *(void**)(editor + 0x1378) = func_02072a68((TableA68*)(editor + 0x133c), 0);
+    loader->RemoveTask(*(int*)(editor + 0x1380));
+    *(int*)(editor + 0x1380) = -1;
 #endif
 }

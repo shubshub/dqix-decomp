@@ -12,11 +12,11 @@ struct State0xbb1c;
 struct Obj0203bb3c;
 struct Bcb8Params;
 
-void BgImage_Clear(struct State0xbb1c* obj);
-void BgImage_Load(struct Obj0203bb3c* obj, char* src, SafeAllocator* allocator, int category, unsigned short arg5);
-void BgImage_Place(struct Bcb8Params* s, int arg1, int arg2);
-int BgTransfers_LoadTiles(int* arr1, int idx, int category, int addr, unsigned int len, unsigned int len2);
-void* BgVram_GetInstance(void);
+extern "C" void BgImage_Clear(struct State0xbb1c* obj);
+extern "C" void BgImage_Load(struct Obj0203bb3c* obj, char* src, SafeAllocator* allocator, int category, unsigned short arg4);
+extern "C" void BgImage_Place(struct Bcb8Params* s, int arg1, int arg2);
+extern "C" int BgTransfers_LoadTiles(int* arr1, int idx, int category, int addr, unsigned int len, unsigned int len2);
+extern "C" void* BgVram_GetInstance(void);
 
 // The MapDisplay fields this reads (header: displayMode, forwardingFill, unknown78): +0x78 is a BG tile image that
 // BgImage_Load loads (8-byte header: width and height in tiles; then palette, tiles and
@@ -28,7 +28,7 @@ struct MapDisplayPattern_02020fc4 {
     int blankTile;
     unsigned char patternWidth;
     unsigned char patternHeight;
-    char pad7a[0x12];
+    char unknown_7a_[0x12];
     unsigned short patternFirstTile;
 };
 

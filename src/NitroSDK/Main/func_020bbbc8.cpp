@@ -5,8 +5,8 @@ extern "C" void MemoryMapSubObjExtendedPalette(void);
 extern "C" void MemoryUnmapSubObjExtendedPalette(void);
 
 // USA: func_020bbbc8
-extern "C" ARM void func_020bbbc8(int arg0, int arg1, int arg2) {
+extern "C" ARM void func_020bbbc8(int a, int b, int c) {
     MemoryMapSubObjExtendedPalette();
-    LoadToSubObjExtendedPalette((int)(arg0), (unsigned int)(arg1), (int)(arg2));
+    LoadToSubObjExtendedPalette((int)(a), (unsigned int)(b), (int)(c));
     MemoryUnmapSubObjExtendedPalette();
 }

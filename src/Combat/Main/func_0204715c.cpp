@@ -2,13 +2,13 @@
 #include "World/Object3D.h"
 
 // USA: func_0204715c
-extern "C" ARM void func_0204715c(char* arg0) {
-    void* var0 = *(void**)(arg0 + 0xe8);
-    if (var0 != NULL) {
-        ((Object3D*)var0)->Draw(1);
+extern "C" ARM void func_0204715c(char* obj) {
+    void* p = *(void**)(obj + 0xe8);
+    if (p != NULL) {
+        ((Object3D*)p)->Draw(1);
         return;
     }
-    if (*(unsigned char*)(arg0 + 0x1d) != 0) {
-        ((Object3D*)(arg0 + 0x3c))->Draw(1);
+    if (*(unsigned char*)(obj + 0x1d) != 0) {
+        ((Object3D*)(obj + 0x3c))->Draw(1);
     }
 }

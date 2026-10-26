@@ -11,7 +11,7 @@ struct Npc {
 };
 
 // Main, originally DispatchOnActiveChild020409b0 (USA 0x020409b0, EUR 0x020409c0, JPN 0x02040eac)
-ARM int Npc_WalkTo(struct Npc* npc, int target) {
+extern "C" ARM int Npc_WalkTo(struct Npc* npc, int target) {
     if (npc->walker != NULL) {
         return NpcWalker_WalkTo(npc->walker, target);
     }

@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 
 struct Struct_ov023_021ea1e0 {
-    char unknown_0_[0x7c];
-    unsigned int unknown_7c_0_ : 10;
+    char pad[0x7c];
+    unsigned int val : 10;
 };
 
-extern "C" int func_020ac4c0(void* arg0);
+extern "C" int func_020ac4c0(void* dst);
 extern "C" void func_ov017_021d6134(void*, int);
 
 // USA: func_ov023_021ea1e0
-extern "C" ARM int func_ov023_021ea1e0(void* arg0) {
-    char var0[0xb0];
-    func_020ac4c0(var0);
-    func_ov017_021d6134(arg0, ((struct Struct_ov023_021ea1e0*)var0)->unknown_7c_0_);
+extern "C" ARM int func_ov023_021ea1e0(void* obj) {
+    char buf[0xb0];
+    func_020ac4c0(buf);
+    func_ov017_021d6134(obj, ((struct Struct_ov023_021ea1e0*)buf)->val);
     return 1;
 }

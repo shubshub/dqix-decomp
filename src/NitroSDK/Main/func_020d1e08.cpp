@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
-extern "C" int func_020d217c(int arg0, int arg1, int arg2, int arg3, int arg4);
+extern "C" int func_020d217c(int type, int a, int b, int c, int d);
 
 // USA: func_020d1e08
-extern "C" ARM int func_020d1e08(int arg0, int arg1, int arg2, int arg3) {
-    return func_020d217c(2, arg0, arg1, arg2, arg3);
+extern "C" ARM int func_020d1e08(int a, int b, int c, int d) {
+    return func_020d217c(2, a, b, c, d);
 }

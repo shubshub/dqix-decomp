@@ -3,30 +3,30 @@
 #include "Combat/NameEntryQueue.h"
 
 // USA: func_ov017_02195250
-extern "C" ARM void func_ov017_02195250(void *arg0, void *arg1) {
-    Struct_ov017_02195250_2 *var0 = (Struct_ov017_02195250_2 *) arg0;
-    Struct_ov017_021941fc *var1           = (Struct_ov017_021941fc *) arg1;
+extern "C" ARM void func_ov017_02195250(void *receiver, void *arg1) {
+    Struct_ov017_02195250_2 *queue = (Struct_ov017_02195250_2 *) receiver;
+    Struct_ov017_021941fc *entry           = (Struct_ov017_021941fc *) arg1;
 
-    if (var0->unknown_441c_->unknown_0_ == 2 && var0->unknown_441c_->unknown_2_.unknown_0_ == var1->unknown_0_) {
-        var1->unknown_e_ = 1;
+    if (queue->active->state == 2 && queue->active->entry.a == entry->a) {
+        entry->e = 1;
     } else {
-        var1->unknown_e_ = 0;
+        entry->e = 0;
     }
-    for (int var2 = 0; var2 < var0->unknown_42f0_; var2++) {
-        if (var1->unknown_0_ == var0->unknown_42f1_[var2].unknown_0_) {
-            func_ov017_02195214(&var0->unknown_42f1_[var2], var1);
+    for (int i = 0; i < queue->count; i++) {
+        if (entry->a == queue->entries[i].a) {
+            func_ov017_02195214(&queue->entries[i], entry);
             return;
         }
     }
 
     {
-        Struct_ov017_02195250 *var3 = var0->unknown_441c_;
-        if (var3->unknown_0_ == 1 && var3->unknown_2_.unknown_0_ == var1->unknown_0_) {
-            var3->unknown_0_ = 0;
-            var3->unknown_1_  = 0;
+        Struct_ov017_02195250 *active = queue->active;
+        if (active->state == 1 && active->entry.a == entry->a) {
+            active->state = 0;
+            active->mode  = 0;
         }
     }
-    if (var0->unknown_42f0_ < 3) {
-        func_ov017_02195214(&var0->unknown_42f1_[var0->unknown_42f0_++], var1);
+    if (queue->count < 3) {
+        func_ov017_02195214(&queue->entries[queue->count++], entry);
     }
 }

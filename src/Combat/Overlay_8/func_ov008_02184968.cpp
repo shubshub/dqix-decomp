@@ -11,48 +11,48 @@
 struct StructA0205d5d0;
 extern "C" void func_ov008_02187278(void* obj, char* dst, int mode, void* extra);
 extern "C" void Background_TransferMap(void* p, int flag);
-void CallDispatchIfFlagSet_021eb4f4(char* obj);
+extern "C" void func_ov023_021eb4f4(char* obj);
 struct Obj0205d2bc;
-void Window_TransferLayers(struct Obj0205d2bc*);
-struct Obj021873ac;
-void UpdateElementBuffer_021873ac(struct Obj021873ac* obj, int modeArg);
+extern "C" void Window_TransferLayers(struct Obj0205d2bc*);
+struct Struct_ov008_02184968;
+extern "C" void func_ov008_021873ac(struct Struct_ov008_02184968* obj, int arg1);
 
 struct Struct_ov008_02184968_2 {
-    char unknown_0_[0xb8];
-    char* unknown_b8_;
-    char unknown_bc_[0xb08 - 0xbc];
+    char pad0[0xb8];
+    char* bufPtr;
+    char pad1[0xb08 - 0xbc];
     char* unknown_b08_;
-    char unknown_b0c_[0xb10 - 0xb0c];
-    signed char unknown_b10_;
-    char unknown_b11_[0xb18 - 0xb11];
+    char pad2[0xb10 - 0xb0c];
+    signed char b10;
+    char pad3[0xb18 - 0xb11];
     int unknown_b18_;
-    char unknown_b1c_[0xb24 - 0xb1c];
+    char pad4[0xb24 - 0xb1c];
     int unknown_b24_;
 };
 
 // USA: func_ov008_02184968
-extern "C" ARM void func_ov008_02184968(struct Struct_ov008_02184968_2* arg0) {
-    if (arg0->unknown_b10_ == 0 || arg0->unknown_b10_ == 1 || arg0->unknown_b10_ == 0xe) return;
+extern "C" ARM void func_ov008_02184968(struct Struct_ov008_02184968_2* obj) {
+    if (obj->b10 == 0 || obj->b10 == 1 || obj->b10 == 0xe) return;
 
-    if (obj->b24 == 0) {
+    if (obj->unknown_b24_ == 0) {
         Background_TransferMap((char*)obj + 0xd0, 0);
     }
-    if (arg0->unknown_b08_ != 0) {
-        func_ov023_021eb4f4(arg0->unknown_b08_);
+    if (obj->unknown_b08_ != 0) {
+        func_ov023_021eb4f4(obj->unknown_b08_);
         return;
     }
 
-    if (arg0->unknown_b18_ & 0x800) {
-        memset(arg0->unknown_b8_, 0, LOW_REGION(0x800, 0x960));
-        func_ov008_02187278(arg0, arg0->unknown_b8_, 0, 0);
+    if (obj->unknown_b18_ & 0x800) {
+        memset(obj->bufPtr, 0, LOW_REGION(0x800, 0x960));
+        func_ov008_02187278(obj, obj->bufPtr, 0, 0);
 #if defined(jpn)
         Window_SetPaneText((struct StructA0205d5d0*)((char*)obj + 0x130), 1, (int)obj->bufPtr, 1);
 #else
         Window_SetPaneText((struct StructA0205d5d0*)((char*)obj + 0x130), 1, (int)obj->bufPtr, 1, 0);
 #endif
-        arg0->unknown_b18_ &= ~0x800;
+        obj->unknown_b18_ &= ~0x800;
     }
 
-    UpdateElementBuffer_021873ac((struct Obj021873ac*)obj, 1);
+    func_ov008_021873ac((struct Struct_ov008_02184968*)obj, 1);
     Window_TransferLayers((struct Obj0205d2bc*)((char*)obj + 0x130));
 }

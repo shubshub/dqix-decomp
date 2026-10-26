@@ -2,40 +2,40 @@
 
 struct Struct_0207fdcc_2 {
 #if defined(jpn)
-    char unknown1_0_[0x2a];
+    char unk_0[0x2a];
 #else
-    char unknown_0_[0x36];
+    char unk_0[0x36];
 #endif
-    short unknown_36_;
+    short selected;
 };
-extern "C" int func_020811d0(struct Struct_0207fdcc_2* arg0, int arg1);
-extern "C" short func_02080468(void* arg0, int arg1);
-extern "C" void func_020813ec(void* arg0, int arg1);
-extern "C" void func_02080c68(void* arg0, int arg1, int arg2);
-extern "C" void func_0207fdcc(struct Struct_0207fdcc_2* arg0, int arg1);
+extern "C" int func_020811d0(struct Struct_0207fdcc_2* obj, int key);
+extern "C" short func_02080468(void* obj, int id);
+extern "C" void func_020813ec(void* obj, int key);
+extern "C" void func_02080c68(void* obj, int id, int value);
+extern "C" void func_0207fdcc(struct Struct_0207fdcc_2* obj, int key);
 
 struct Struct_02081f20_2;
-extern "C" void func_0208203c(struct Struct_02081f20_2* arg0);
+extern "C" void func_0208203c(struct Struct_02081f20_2* obj);
 
 struct SePlayer;
-void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern "C" void SePlayer_Play(struct SePlayer* obj, int a, int b);
 extern struct SePlayer g_sePlayer;
 
-extern "C" int func_ov003_021765b4(void* arg0);
-extern "C" int func_ov003_021766e8(void* arg0);
+extern "C" int func_ov003_021765b4(void* self);
+extern "C" int func_ov003_021766e8(void* self);
 
 struct Struct_ov003_0217a280 {
 #if defined(jpn)
-    char unknown_0_[0x808];
+    char unk_0[0x808];
 #else
-    char unknown1_0_[0x88c];
+    char unk_0[0x88c];
 #endif
-    char unknown_88c_[0x89c - 0x88c];
-    struct Struct_0207fdcc_2* unknown_89c_;
+    char repeat[0x89c - 0x88c];
+    struct Struct_0207fdcc_2* menu;
     char unknown_8a0_[0xff8 - 0x8a0];
-    short* unknown_ff8_;
+    short* cursor;
     short unknown_ffc_;
-    short unknown_ffe_;
+    short key;
     char unknown_1000_[4];
     short unknown_1004_;
     char unknown_1006_[6];
@@ -43,67 +43,67 @@ struct Struct_ov003_0217a280 {
     char unknown_100e_[4];
     short unknown_1012_;
     char unknown_1014_[0x1036 - 0x1014];
-    short unknown_1036_;
+    short nextState;
     char unknown_1038_[6];
-    unsigned char unknown_103e_;
-    unsigned char unknown_103f_;
+    unsigned char mode;
+    unsigned char step;
     char unknown_1040_[6];
-    unsigned short unknown_1046_;
+    unsigned short flags;
 };
 
 // USA: func_ov003_0217a280
-extern "C" ARM void func_ov003_0217a280(struct Struct_ov003_0217a280* arg0) {
-    struct Struct_0207fdcc_2* var0 = arg0->unknown_89c_;
-    if (arg0->unknown_103f_ == 0) {
-        arg0->unknown_ffe_ = 2;
-        if (func_020811d0(var0, arg0->unknown_ffe_) == 0) {
-            if (arg0->unknown_1004_ < 0) {
-                arg0->unknown_1004_ = func_02080468(var0, arg0->unknown_ffe_);
+extern "C" ARM void func_ov003_0217a280(struct Struct_ov003_0217a280* self) {
+    struct Struct_0207fdcc_2* menu = self->menu;
+    if (self->step == 0) {
+        self->key = 2;
+        if (func_020811d0(menu, self->key) == 0) {
+            if (self->unknown_1004_ < 0) {
+                self->unknown_1004_ = func_02080468(menu, self->key);
             }
-            var0->unknown_36_ = arg0->unknown_1004_;
-            func_020813ec(var0, arg0->unknown_ffe_);
-            func_02080c68(var0, arg0->unknown_ffe_, 1);
-            arg0->unknown_ffc_ = arg0->unknown_ffe_;
+            menu->selected = self->unknown_1004_;
+            func_020813ec(menu, self->key);
+            func_02080c68(menu, self->key, 1);
+            self->unknown_ffc_ = self->key;
         }
-        arg0->unknown_ffe_ = 0x10;
-        if (arg0->unknown_100c_ < 0) {
-            arg0->unknown_100c_ = func_02080468(var0, arg0->unknown_ffe_);
+        self->key = 0x10;
+        if (self->unknown_100c_ < 0) {
+            self->unknown_100c_ = func_02080468(menu, self->key);
         }
-        menu->selected = self->member100c;
+        menu->selected = self->unknown_100c_;
         func_020813ec(menu, self->key);
-        ResetWithSub0208203c((struct Obj0208203c*)self->repeat);
+        func_0208203c((struct Struct_02081f20_2*)self->repeat);
         self->cursor = 0;
         self->step++;
     } else if (self->step == 1) {
-        self->cursor = &self->member100c;
+        self->cursor = &self->unknown_100c_;
         if (func_ov003_021765b4(self)) {
             SePlayer_Play(&g_sePlayer, 1, 0);
-            ResetWithSub0208203c((struct Obj0208203c*)self->repeat);
+            func_0208203c((struct Struct_02081f20_2*)self->repeat);
             self->cursor = 0;
-            switch (self->member100c) {
+            switch (self->unknown_100c_) {
             case 0x76:
-                arg0->unknown_ffc_ = arg0->unknown_ffe_;
-                arg0->unknown_1036_ = 0xb;
-                arg0->unknown_103e_ = 4;
-                arg0->unknown_103f_ = 0;
-                arg0->unknown_1046_ |= 0x20;
+                self->unknown_ffc_ = self->key;
+                self->nextState = 0xb;
+                self->mode = 4;
+                self->step = 0;
+                self->flags |= 0x20;
                 break;
             case 0x77:
-                arg0->unknown_ffc_ = arg0->unknown_ffe_;
-                arg0->unknown_1036_ = 0xc;
-                arg0->unknown_103e_ = 7;
-                arg0->unknown_103f_ = 0;
-                arg0->unknown_1012_ = -1;
-                arg0->unknown_1046_ |= 0x20;
+                self->unknown_ffc_ = self->key;
+                self->nextState = 0xc;
+                self->mode = 7;
+                self->step = 0;
+                self->unknown_1012_ = -1;
+                self->flags |= 0x20;
                 break;
             }
-        } else if (func_ov003_021766e8(arg0)) {
-            func_0208203c((struct Struct_02081f20_2*)arg0->unknown_88c_);
-            arg0->unknown_ff8_ = 0;
-            arg0->unknown_1036_ = 0xa;
-            arg0->unknown_103e_ = 1;
-            arg0->unknown_103f_ = 0;
-            func_0207fdcc(var0, arg0->unknown_ffe_);
+        } else if (func_ov003_021766e8(self)) {
+            func_0208203c((struct Struct_02081f20_2*)self->repeat);
+            self->cursor = 0;
+            self->nextState = 0xa;
+            self->mode = 1;
+            self->step = 0;
+            func_0207fdcc(menu, self->key);
         }
     }
 }

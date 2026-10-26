@@ -3,7 +3,7 @@
 #include "Resource/ResourceMutex.h"
 #include "NitroSDK/Filesystem/OverlayFSManagement.h"
 
-extern "C" void func_020d9834(int arg0);
+extern "C" void func_020d9834(int flag);
 extern "C" void func_020cd584(OverlayMetadata* arg0);
 
 extern volatile int data_01ffd348;
@@ -14,29 +14,29 @@ extern Mutex data_01ffd34c;
 extern struct OverlayMetadata data_01ffd394[35];
 
 struct Struct_020e8f20 {
-    int unknown_0_;
-    int unknown_4_;
+    int col;
+    int pad;
 };
 extern struct Struct_020e8f20 data_020e8f20[];
 
 // USA: func_020a1ccc
-extern "C" ARM int func_020a1ccc(unsigned int arg0) {
-    int var0 = 0;
-    if (arg0 < 0x23) {
-    struct Struct_020e8f20* var1;
+extern "C" ARM int func_020a1ccc(unsigned int id) {
+    int ok = 0;
+    if (id < 0x23) {
+    struct Struct_020e8f20* table;
     int var2 = data_01ffd348;
-    var1 = data_020e8f20;
+    table = data_020e8f20;
 
     if (data_01ffd344) {
         LockMutex(&data_01ffd34c);
     }
 #if defined(jpn)
-    volatile signed char* var3 = &data_01ffd364 + var2 * 6;
+    volatile signed char* row = &data_01ffd364 + var2 * 6;
 #else
-    signed char* var3 = ((__typeof__(&data_01ffd364))0x01FFD364) + var2 * 6;
+    signed char* row = ((__typeof__(&data_01ffd364))0x01FFD364) + var2 * 6;
 #endif
-    int var4 = var1[arg0].unknown_0_;
-    var3[var4] = arg0 | 0x40;
+    int var4 = table[id].col;
+    row[var4] = id | 0x40;
     if (data_01ffd344) {
         UnlockMutex(&data_01ffd34c);
     }
@@ -47,20 +47,20 @@ extern "C" ARM int func_020a1ccc(unsigned int arg0) {
 
     data_01ffd340 = 1;
     LockResourceMutex();
-    func_020cd584(&data_01ffd394[arg0]);
+    func_020cd584(&data_01ffd394[id]);
     UnlockResourceMutex();
     data_01ffd340 = 0;
 
     if (data_01ffd344) {
         LockMutex(&data_01ffd34c);
     }
-    int var5 = var1[arg0].unknown_0_;
-    var3[var5] = -1;
+    int col2 = table[id].col;
+    row[col2] = -1;
     if (data_01ffd344) {
         UnlockMutex(&data_01ffd34c);
     }
 
-    var0 = 1;
+    ok = 1;
     }
-    return var0;
+    return ok;
 }

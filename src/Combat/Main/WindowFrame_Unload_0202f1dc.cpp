@@ -3,8 +3,8 @@
 #include "Memory/SafeAllocator.h"
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
-extern void WindowFrame_Init(char* frame);
-extern void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" void WindowFrame_Init(char* frame);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
 extern AllocatorUnion g_mainAllocator;
 
@@ -12,7 +12,7 @@ extern AllocatorUnion g_mainAllocator;
 enum { kFramePieceCount = 8 };
 
 // Main, originally ReinitEightSubStructsAndAllocator_0202f1dc (USA 0x0202f1dc, EUR 0x0202f1ec, JPN 0x0202ed4c)
-ARM void WindowFrame_Unload(char* frame) {
+extern "C" ARM void WindowFrame_Unload(char* frame) {
     char* piece;
     int i;
     piece = frame;

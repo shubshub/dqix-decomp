@@ -4,23 +4,23 @@
 #endif
 #include "GameState/GameState.h"
 
-extern "C" int func_02083b00(unsigned char* arg0, int arg1);
-extern "C" int func_0201137c(char* arg0, int arg1);
+extern "C" int func_02083b00(unsigned char* obj, int index);
+extern "C" int func_0201137c(char* base, int id);
 extern short data_020e8ac4[];
 
 // USA: func_020860f8
-extern "C" ARM int func_020860f8(unsigned char* arg0) {
-    short* var0;
-    GameState* var1 = GameState::GetInstance();
-    int var2 = 0;
-    unsigned char var3 = 0;
-    var0 = data_020e8ac4;
-    short var4;
-    while ((var4 = var0[var3]) != -1) {
-        if (func_02083b00(arg0, var4)) {
-            var2 += func_0201137c((char*)var1, var4);
+extern "C" ARM int func_020860f8(unsigned char* actor) {
+    short* list;
+    GameState* bs = GameState::GetInstance();
+    int total = 0;
+    unsigned char i = 0;
+    list = data_020e8ac4;
+    short id;
+    while ((id = list[i]) != -1) {
+        if (func_02083b00(actor, id)) {
+            total += func_0201137c((char*)bs, id);
         }
-        var3 = (var3 + 1) & 0xff;
+        i = (i + 1) & 0xff;
     }
-    return var2;
+    return total;
 }

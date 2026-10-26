@@ -61,10 +61,10 @@ static inline int inline_020ce89c_2()
     return var0;
 }
 
-static inline int inline_020ce89c_3(int arg0)
+static inline int inline_020ce89c_3(int enable)
 {
     const unsigned short var0 = IME;
-    IME = arg0;
+    IME = enable;
     return var0;
 }
 
@@ -77,18 +77,18 @@ extern "C" void func_020c976c(unsigned long cycles);
 extern "C" void func_020c9bf0();
 extern "C" int func_020d135c();
 extern "C" int func_020ceba8(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_020cef0c(Struct_020cef0c* arg0);
+extern "C" void func_020cef0c(Struct_020cef0c* list);
 int DisableIRQInterrupts();
 int SetIRQInterruptState(int);
 unsigned int DisableSpecificInterrupts(unsigned int mask);
 unsigned int SetSpecificInterruptsEnabled(unsigned int mask);
 int Is64BitTimerInitialized();
-int IsLcdPowerOn();
-unsigned long ReadTwoBitFlags_020ce810(int* top, int* bottom);
-unsigned long IssueCategorizedRequestAndPumpHandler020ce6d0(int target, int sw);
-unsigned long IssueRequestAndPumpHandler020ce614(int status);
-unsigned long SendEncodedMessagePair_020ce45c(int trigger, int keyIntrData);
-unsigned long TerminateSystem020ce7a4();
+extern "C" int IsLcdPowerOn();
+extern "C" unsigned long func_020ce810(int* top, int* bottom);
+extern "C" unsigned long func_020ce6d0(int target, int arg1);
+extern "C" unsigned long func_020ce614(int status);
+extern "C" unsigned long func_020ce45c(int trigger, int arg1);
+extern "C" unsigned long func_020ce7a4();
 
 // Main, originally func_020ce89c (USA 0x020ce89c, EUR 0x020ce8ac, JPN 0x020d0368)
 extern "C" ARM void EnterSleepMode(int trigger, int logic, unsigned short keyPattern)
@@ -101,7 +101,7 @@ extern "C" ARM void EnterSleepMode(int trigger, int logic, unsigned short keyPat
     int var5;
     unsigned long var6;
     unsigned long var7;
-    int var8;
+    int preLCDPower;
 
     func_020cef0c(data_021117ec.unknown_18_);
 
@@ -112,21 +112,21 @@ extern "C" ARM void EnterSleepMode(int trigger, int logic, unsigned short keyPat
     SetIRQInterruptState(var1);
     inline_020ce89c_2();
 
-    if (arg0 & PM_TRIGGER_CARD)
+    if (trigger & PM_TRIGGER_CARD)
     {
         if (BOOT_TYPE == BOOT_TYPE_MULTIBOOT)
-            arg0 &= ~PM_TRIGGER_CARD;
+            trigger &= ~PM_TRIGGER_CARD;
     }
-    if (arg0 & PM_TRIGGER_CARTRIDGE)
+    if (trigger & PM_TRIGGER_CARTRIDGE)
     {
         if (!func_020d135c())
-            arg0 &= ~PM_TRIGGER_CARTRIDGE;
+            trigger &= ~PM_TRIGGER_CARTRIDGE;
     }
 
-    preGX = DISPCNT;
-    preGXS = DISPCNTSUB;
+    var6 = DISPCNT;
+    var7 = DISPCNTSUB;
     preLCDPower = IsLcdPowerOn();
-    if (ReadTwoBitFlags_020ce810(&preTop, &preBottom) != PM_SUCCESS)
+    if (func_020ce810(&var4, &var5) != PM_SUCCESS)
         do
             func_020c976c(RETRY_WAIT_CYCLES);
         while (func_020ce810(&var4, &var5) != PM_SUCCESS);
@@ -154,19 +154,19 @@ extern "C" ARM void EnterSleepMode(int trigger, int logic, unsigned short keyPat
 
     data_021117ec.unknown_c_ = false;
     func_020ce45c(
-        (unsigned short)(arg0 | (var4 ? BACKLIGHT_RECOVER_TOP_ON : 0) | (var5 ? BACKLIGHT_RECOVER_BOTTOM_ON : 0)),
-        (unsigned short)(arg1 | arg2));
+        (unsigned short)(trigger | (var4 ? BACKLIGHT_RECOVER_TOP_ON : 0) | (var5 ? BACKLIGHT_RECOVER_BOTTOM_ON : 0)),
+        (unsigned short)(logic | keyPattern));
     if (!data_021117ec.unknown_c_)
         do
             func_020c9bf0();
         while (!data_021117ec.unknown_c_);
 
-    if ((arg0 & PM_TRIGGER_CARD) && (IF & IE_CARD_IREQ))
+    if ((trigger & PM_TRIGGER_CARD) && (IF & IE_CARD_IREQ))
         var3 = true;
 
     if (!var3)
     {
-        if (var8 == PM_LCD_POWER_ON)
+        if (preLCDPower == PM_LCD_POWER_ON)
         {
             while (func_020ceba8(PM_LCD_POWER_ON, PM_LED_ON, true, true) != true)
             {

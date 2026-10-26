@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
-extern "C" int func_020d217c(int arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" void func_020d2960(int arg0);
+extern "C" int func_020d217c(int type, int arg1, int arg2, int arg3, int arg4);
+extern "C" void func_020d2960(int idx);
 
 // USA: func_020d1f0c
-extern "C" ARM int func_020d1f0c(int arg0, int arg1, int arg2, int arg3) {
-    int var0;
-    unsigned int var1 = arg2;
-    for (var0 = 0; var0 < 8 && var1 != 0; var0++, var1 >>= 1) {
-        if (var1 & 1) {
-            func_020d2960(var0);
+extern "C" ARM int func_020d1f0c(int a0, int a1, int a2, int a3) {
+    int i;
+    unsigned int mask = a2;
+    for (i = 0; i < 8 && mask != 0; i++, mask >>= 1) {
+        if (mask & 1) {
+            func_020d2960(i);
         }
     }
-    return func_020d217c(0xd, arg0, arg1, arg2, arg3);
+    return func_020d217c(0xd, a0, a1, a2, a3);
 }

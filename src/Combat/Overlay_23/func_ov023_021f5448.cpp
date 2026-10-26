@@ -2,49 +2,49 @@
 #include "std_library_functions.h"
 #include "Memory/SafeAllocator.h"
 
-struct Struct_ov023_021f5448 { unsigned int unknown_0_0_ : 12; };
-extern "C" unsigned int func_ov023_021f5524(struct Struct_ov023_021f5448* arg0);
+struct Struct_ov023_021f5448 { unsigned int value : 12; };
+extern "C" unsigned int func_ov023_021f5524(struct Struct_ov023_021f5448* obj);
 
 struct Struct_ov023_021f5448_2 {
-    unsigned int unknown_0_0_ : 12;
-    unsigned int unknown_1_4_ : 19;
-    unsigned int unknown_3_7_ : 1;
-    void* unknown_4_;
-    void* unknown_8_;
+    unsigned int count1 : 12;
+    unsigned int count2 : 19;
+    unsigned int flag : 1;
+    void* field4;
+    void* field8;
 };
 
 // USA: func_ov023_021f5448
-extern "C" ARM int func_ov023_021f5448(struct Struct_ov023_021f5448_2* arg0, SafeAllocator* arg1, void* arg2, int arg3) {
-    if (arg1 == 0 || arg2 == 0 || arg3 == 0) {
+extern "C" ARM int func_ov023_021f5448(struct Struct_ov023_021f5448_2* obj, SafeAllocator* alloc, void* src, int cond) {
+    if (alloc == 0 || src == 0 || cond == 0) {
         return 0;
     }
 
-    if (arg1 != 0 && arg2 != 0) {
-        memcpy(arg0, arg2, 4);
+    if (alloc != 0 && src != 0) {
+        memcpy(obj, src, 4);
 
-        unsigned int var0 = func_ov023_021f5524((struct Struct_ov023_021f5448*)arg0);
-        unsigned int var1 = arg0->unknown_1_4_;
+        unsigned int var0 = func_ov023_021f5524((struct Struct_ov023_021f5448*)obj);
+        unsigned int var1 = obj->count2;
 
         if (var0 != 0) {
-            arg0->unknown_4_ = arg1->Allocate(var0);
+            obj->field4 = alloc->Allocate(var0);
         } else {
-            arg0->unknown_4_ = 0;
+            obj->field4 = 0;
         }
         if (var1 != 0) {
-            arg0->unknown_8_ = arg1->Allocate(var1);
+            obj->field8 = alloc->Allocate(var1);
         } else {
-            arg0->unknown_8_ = 0;
+            obj->field8 = 0;
         }
 
-        if (arg0->unknown_4_ != 0) {
-            memcpy(arg0->unknown_4_, (char*)arg2 + 4, var0);
+        if (obj->field4 != 0) {
+            memcpy(obj->field4, (char*)src + 4, var0);
         }
-        if (arg0->unknown_8_ != 0) {
-            unsigned int var2 = func_ov023_021f5524((struct Struct_ov023_021f5448*)arg0) + 4;
-            memcpy(arg0->unknown_8_, (char*)arg2 + var2, var1);
+        if (obj->field8 != 0) {
+            unsigned int off = func_ov023_021f5524((struct Struct_ov023_021f5448*)obj) + 4;
+            memcpy(obj->field8, (char*)src + off, var1);
         }
 
-        arg0->unknown_3_7_ = 1;
+        obj->flag = 1;
     }
 
     return 1;

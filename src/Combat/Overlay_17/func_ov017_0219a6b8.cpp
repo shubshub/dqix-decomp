@@ -8,21 +8,21 @@ struct HeadNode02046b24;
 struct PointerField32c_ffc0;
 struct Obj020397cc;
 struct BitField0203402c;
-void* MessageSystem_GetInstance();
+extern "C" void* MessageSystem_GetInstance();
 extern "C" Zone3D* Zone3D_GetInstance();
-FlagWord02046708* GlobalFlags_GetInstance();
-int FieldTaskQueue_IsEmpty(void**);
-int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
-int FlagWord_TestBits(FlagWord02046708*, unsigned int);
-unsigned char* GameState_GetShip(PointerField32c_ffc0*);
-int GameObject_IsGesturing(signed char*);
-int GameObject_IsSinking(BitField0203402c*);
-unsigned char GameObject_IsClimbingLadder(char*);
+extern "C" FlagWord02046708* GlobalFlags_GetInstance();
+extern "C" int FieldTaskQueue_IsEmpty(void**);
+extern "C" int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
+extern "C" int FlagWord_TestBits(FlagWord02046708*, unsigned int);
+extern "C" unsigned char* GameState_GetShip(PointerField32c_ffc0*);
+extern "C" int GameObject_IsGesturing(signed char*);
+extern "C" int GameObject_IsSinking(BitField0203402c*);
+extern "C" unsigned char GameObject_IsClimbingLadder(char*);
 extern "C" void __clear(void*, int);
-void GameObject_DisableControl(Obj020397cc*, int);
-void ClearByteFlagAt0x154_020a7f40(unsigned char*);
-void SetByteFlagAt0x154_020a7f34(unsigned char*);
-void GameObject_EnableControl(void*);
+extern "C" void GameObject_DisableControl(Obj020397cc*, int);
+extern "C" void func_020a7f40(unsigned char*);
+extern "C" void func_020a7f34(unsigned char*);
+extern "C" void GameObject_EnableControl(void*);
 
 // USA: func_ov017_0219a6b8
 extern "C" ARM void func_ov017_0219a6b8(GameResources* self) {
@@ -54,40 +54,40 @@ extern "C" ARM void func_ov017_0219a6b8(GameResources* self) {
             g_touchInput.GetTouchPoint(&x, &y);
             if (self->fieldButtonX[index] < x && x < self->fieldButtonX[index] + width && self->fieldButtonY[index] < y && y < self->fieldButtonY[index] + height) {
                 GameObject_DisableControl((Obj020397cc*)actor, 1);
-                if (other && zone == 0x2710) ClearByteFlagAt0x154_020a7f40(other);
+                if (other && zone == 0x2710) func_020a7f40(other);
                 self->fieldButtonState[index] = 1;
             }
         } else if (g_touchInput.isRepeatValid_ && (g_touchInput.currentReading_.isHeld)) {
-            int var12, var13;
-            g_touchInput.GetTouchPoint(&var12, &var13);
-            if (arg0->unknown_3658_[var7] == 1) {
-                if (!(arg0->unknown_3634_[var7] < var12 && var12 < arg0->unknown_3634_[var7] + var8 && arg0->unknown_3646_[var7] < var13 && var13 < arg0->unknown_3646_[var7] + var9)) arg0->unknown_3658_[var7] = 2;
-            } else if (arg0->unknown_3658_[var7] == 2) {
-                int var14 = (var12 - 12 + arg0->unknown_3634_[var7]) / 2;
-                int var15 = (var13 - 12 + arg0->unknown_3646_[var7]) / 2;
+            int x, y;
+            g_touchInput.GetTouchPoint(&x, &y);
+            if (self->fieldButtonState[index] == 1) {
+                if (!(self->fieldButtonX[index] < x && x < self->fieldButtonX[index] + width && self->fieldButtonY[index] < y && y < self->fieldButtonY[index] + height)) self->fieldButtonState[index] = 2;
+            } else if (self->fieldButtonState[index] == 2) {
+                int var14 = (x - 12 + self->fieldButtonX[index]) / 2;
+                int var15 = (y - 12 + self->fieldButtonY[index]) / 2;
                 if (var14 < 0) var14 = 0;
-                if (256 - var8 < var14) var14 = 256 - var8;
+                if (256 - width < var14) var14 = 256 - width;
                 if (var15 < 0) var15 = 0;
-                if (192 - var9 < var15) var15 = 192 - var9;
-                arg0->unknown_3634_[var7] = var14;
-                arg0->unknown_3646_[var7] = var15;
+                if (192 - height < var15) var15 = 192 - height;
+                self->fieldButtonX[index] = var14;
+                self->fieldButtonY[index] = var15;
             }
         } else if (g_touchInput.released_) {
             if (self->fieldButtonState[index]) {
                 GameObject_EnableControl(actor);
-                if (other && zone == 0x2710) SetByteFlagAt0x154_020a7f34(other);
+                if (other && zone == 0x2710) func_020a7f34(other);
             }
             if (self->fieldButtonState[index] == 1) {
                 self->unknown_42e3[1] = 1;
                 GameObject_EnableControl(actor);
-                if (other && zone == 0x2710) SetByteFlagAt0x154_020a7f34(other);
+                if (other && zone == 0x2710) func_020a7f34(other);
             }
             self->fieldButtonState[index] = 0;
         } else if (self->fieldButtonState[index]) {
             GameObject_EnableControl(actor);
-            if (other && zone == 0x2710) SetByteFlagAt0x154_020a7f34(other);
+            if (other && zone == 0x2710) func_020a7f34(other);
             self->fieldButtonState[index] = 0;
         }
-        if (arg0->unknown_3658_[var7]) return;
+        if (self->fieldButtonState[index]) return;
     }
 }

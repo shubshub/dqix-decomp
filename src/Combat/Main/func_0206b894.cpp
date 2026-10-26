@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-extern "C" void func_020696bc(int arg0, int* arg1, int arg2);
-extern "C" int func_02042648(int arg0);
+extern "C" void func_020696bc(int a, int* out, int c);
+extern "C" int Font_GetFallbackWidth(int idx);
 
 // USA: func_0206b894
-extern "C" ARM int func_0206b894(int arg0, int* arg1, int arg2) {
-    int var0;
-    func_020696bc(arg0, &var0, 1);
-    *arg1 = var0 - (func_02042648(arg2) + 1);
+extern "C" ARM int func_0206b894(int input, int* target, int c) {
+    int val;
+    func_020696bc(input, &val, 1);
+    *target = val - (Font_GetFallbackWidth(c) + 1);
     return 0;
 }

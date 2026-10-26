@@ -8,14 +8,14 @@
 
 
 struct Struct_020d7638;
-extern "C" void func_020d7638(struct Struct_020d7638* arg0);
-extern "C" void func_020d7534(void* arg0);
+extern "C" void func_020d7638(struct Struct_020d7638* obj);
+extern "C" void func_020d7534(void* p);
 
 // USA: func_ov000_02160c60
-extern "C" ARM void func_ov000_02160c60(void* arg0) {
-    void* var0 = *(void**)((char*)arg0 + REGION_OFFSET_0);
-    if (var0) {
-        func_020d7534(var0);
-        func_020d7638((struct Struct_020d7638*)*(void**)((char*)arg0 + REGION_OFFSET_0));
+extern "C" ARM void func_ov000_02160c60(void* work) {
+    void* p = *(void**)((char*)work + REGION_OFFSET_0);
+    if (p) {
+        func_020d7534(p);
+        func_020d7638((struct Struct_020d7638*)*(void**)((char*)work + REGION_OFFSET_0));
     }
 }

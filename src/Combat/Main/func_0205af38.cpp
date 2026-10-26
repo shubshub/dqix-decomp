@@ -3,14 +3,14 @@
 #define func_0205b008 func_0205c3a4
 #endif
 
-extern "C" int func_0205b008(int arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
+extern "C" int func_0205b008(int a, void* b, int c, int d, int e, int f);
 
 // USA: func_0205af38
-extern "C" ARM void func_0205af38(int arg0, char* arg1, int arg2, int arg3) {
-    if (arg1 != 0) {
-        if (func_0205b008(arg0, arg1, 0, 0x300, 8, arg2 | (((unsigned int)arg3 << 17) >> 16)) == 0) {
-            arg1[0x23] = (char)arg2;
-            arg1[0x24] = (char)arg3;
+extern "C" ARM void func_0205af38(int a, char* obj, int c, int d) {
+    if (obj != 0) {
+        if (func_0205b008(a, obj, 0, 0x300, 8, c | (((unsigned int)d << 17) >> 16)) == 0) {
+            obj[0x23] = (char)c;
+            obj[0x24] = (char)d;
         }
     }
 }

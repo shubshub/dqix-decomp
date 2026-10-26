@@ -3,14 +3,14 @@
 #include <globaldefs.h>
 
 struct Struct_020dd7ac {
-    int unknown_0_;
+    int flag;
     int unknown_4_;
     void *unknown_8_[12];
     unsigned char unknown_38_;
-    unsigned char unknown_39_[3];
-    unsigned short unknown_3c_;
+    unsigned char pad39[3];
+    unsigned short f3c;
     unsigned short unknown_3e_;
-    unsigned short unknown_40_;
+    unsigned short f40;
     unsigned short unknown_42_;
     int unknown_44_;
     int unknown_48_;
@@ -19,12 +19,12 @@ struct Struct_020dd7ac {
     int unknown_54_;
     int unknown_58_;
     int unknown_5c_;
-    int unknown_60_;
-    unsigned short unknown_64_;
+    int f60;
+    unsigned short f64;
     unsigned short unknown_66_;
-    unsigned short unknown_68_;
+    unsigned short f68;
     unsigned short unknown_6a_;
-    unsigned short unknown_6c_;
+    unsigned short f6c;
     unsigned short unknown_6e_;
     unsigned short unknown_70_;
     unsigned short unknown_72_;
@@ -34,4 +34,4 @@ struct Struct_020dd7ac {
     unsigned short unknown_7a_;
 };
 
-extern "C" void func_020dd9b4(Struct_020dd7ac *arg0, unsigned int arg1, void *arg2, void *arg3);
+extern "C" void func_020dd9b4(Struct_020dd7ac *table, unsigned int kind, void *arg2, void *arg3);

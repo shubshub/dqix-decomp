@@ -1,42 +1,42 @@
 #include <globaldefs.h>
 
-extern "C" void* func_ov000_02170cf8(char* arg0, int arg1);
-extern "C" int func_ov000_02171210(void* arg0, void* arg1);
-extern "C" void* __clear(void* arg0, int arg1);
-extern "C" void func_020e4864(int arg0, void* arg1, int arg2, int arg3, int arg4, int arg5);
-extern "C" void func_0206819c(const char* arg0, char* arg1, int arg2);
+extern "C" void* func_ov000_02170cf8(char* obj, int val);
+extern "C" int func_ov000_02171210(void* a, void* b);
+extern "C" void* __clear(void* dst, int count);
+extern "C" void func_020e4864(int a, void* b, int c, int d, int e, int f);
+extern "C" void func_0206819c(const char* src, char* dst, int flag);
 
 struct Obj0203c108;
-void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
+extern "C" void CachedTextLabel_SetText(struct Obj0203c108* obj, char* fmt);
 
 // USA: func_ov000_021718a4
-extern "C" ARM void func_ov000_021718a4(void* arg0) {
-    unsigned char* var0 = (unsigned char*)arg0 + 8;
-    unsigned short var1 = *(unsigned short*)(var0 + 0x1e);
-    void* var2 = func_ov000_02170cf8((char*)arg0, var1);
-    if (var2 == 0) return;
+extern "C" ARM void func_ov000_021718a4(void* self) {
+    unsigned char* base = (unsigned char*)self + 8;
+    unsigned short val = *(unsigned short*)(base + 0x1e);
+    void* entry = func_ov000_02170cf8((char*)self, val);
+    if (entry == 0) return;
 
-    signed char var3 = *(signed char*)(var0 + 0x10);
-    var3 = var3 + 1;
-    *(signed char*)(var0 + 0x10) = var3;
+    signed char counter = *(signed char*)(base + 0x10);
+    counter = counter + 1;
+    *(signed char*)(base + 0x10) = counter;
 
-    int var4 = func_ov000_02171210(var2, arg0);
+    int result = func_ov000_02171210(entry, self);
 
-    signed char var5 = *(signed char*)(var0 + 0x10);
-    unsigned char* var6 = var0 + var5;
-    var6[8] = (unsigned char)var4;
+    signed char var5 = *(signed char*)(base + 0x10);
+    unsigned char* slot = base + var5;
+    slot[8] = (unsigned char)result;
 
 #if defined(jpn)
     CachedTextLabel_SetText((struct Obj0203c108*)((char*)self + 0x50), *(char**)entry);
 #else
-    char var7[0x80];
-    __clear(var7, 0x80);
-    char var8[0x80];
-    __clear(var8, 0x80);
+    char buf1[0x80];
+    __clear(buf1, 0x80);
+    char buf2[0x80];
+    __clear(buf2, 0x80);
 
-    func_020e4864(*(int*)var2, var7, 1, 0, 0, 0);
+    func_020e4864(*(int*)entry, buf1, 1, 0, 0, 0);
 
-    CopyTextAndUppercaseIfFlagged0206819c(buf1, buf2, 0);
+    func_0206819c(buf1, buf2, 0);
     CachedTextLabel_SetText((struct Obj0203c108*)((char*)self + 0x50), buf2);
 #endif
 }

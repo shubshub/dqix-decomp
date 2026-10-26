@@ -202,9 +202,9 @@ int NitroVM_LoadDirectoryDataByIndex(NitroVM* vm, unsigned int dirIndex)
 int NitroVM_DefaultCommand_Read(NitroVM* vm)
 {
     unsigned int oldCursor = vm->fileInfo.unknown_c_;
-    unsigned int length = vm->args_Read.unknown_8_;
+    unsigned int length = vm->args_Read.length;
     NitroHandle* nitroHandle = vm->linkedHandle;
-    void* dst = vm->args_Read.unknown_0_;
+    void* dst = vm->args_Read.destination;
 
     vm->fileInfo.unknown_c_ = oldCursor + length;
     return nitroHandle->readProc(nitroHandle, dst, oldCursor, length);
@@ -213,9 +213,9 @@ int NitroVM_DefaultCommand_Read(NitroVM* vm)
 int NitroVM_DefaultCommand_Write(NitroVM* vm)
 {
     unsigned int oldOffset = vm->fileInfo.unknown_c_;
-    unsigned int length = vm->args_Write.unknown_8_;
+    unsigned int length = vm->args_Write.length;
     NitroHandle* nitroHandle = vm->linkedHandle;
-    void* src = vm->args_Write.unknown_0_;
+    void* src = vm->args_Write.source;
 
     vm->fileInfo.unknown_c_ = oldOffset + length;
     return nitroHandle->writeProc(nitroHandle, src, oldOffset, length);
@@ -257,7 +257,7 @@ int NitroVM_DefaultCommand_GetDirectoryData(NitroVM* vm)
 
 int NitroVM_DefaultCommand_GetFileOrDirectoryNameData(NitroVM* vm)
 {
-    FileDataStore* pStorage = vm->args_GetFileOrDirectoryNameData.unknown_0_;
+    FileDataStore* pStorage = vm->args_GetFileOrDirectoryNameData.output;
     FSReadDescription readDesc;
 
     readDesc.nitroHandle = vm->linkedHandle;
@@ -313,7 +313,7 @@ int NitroVM_DefaultCommand_GetFileOrDirectoryNameData(NitroVM* vm)
 int NitroVM_DefaultCommand_GetFileOrDirectoryByName(NitroVM* vm)
 {
     FileDataStore storage;
-    const unsigned char* filePath = vm->args_GetFileOrDirectoryByName.unknown_c_;
+    const unsigned char* filePath = vm->args_GetFileOrDirectoryByName.path;
     CBool targetIsDirectory = vm->args_GetFileOrDirectoryByName.unknown_10_;
 
     NitroVM_ExecuteCommand(vm, NITROVM_OPCODE_GET_DIRECTORY_DATA);
@@ -371,7 +371,7 @@ int NitroVM_DefaultCommand_GetFileOrDirectoryByName(NitroVM* vm)
             if (tokenLength > 127)
                 return NITRO_RESULT_FAILURE;
 
-            vm->args_GetFileOrDirectoryNameData.unknown_0_ = &storage;
+            vm->args_GetFileOrDirectoryNameData.output = &storage;
             vm->args_GetFileOrDirectoryNameData.unknown_4_ = 0;
             while (true)
             {
@@ -395,7 +395,7 @@ int NitroVM_DefaultCommand_GetFileOrDirectoryByName(NitroVM* vm)
                     return NITRO_RESULT_FAILURE;
 
                 volatile FileDataStore& volStorage = storage;
-                NitroFileAccessor* output = (NitroFileAccessor*)vm->args_GetFileOrDirectoryByName.unknown_14_;
+                NitroFileAccessor* output = (NitroFileAccessor*)vm->args_GetFileOrDirectoryByName.output;
 
                 NitroHandle* nh = volStorage.file.handle;
                 unsigned int fileID = volStorage.file.fileID;
@@ -415,7 +415,7 @@ int NitroVM_DefaultCommand_GetFileOrDirectoryByName(NitroVM* vm)
         return NITRO_RESULT_FAILURE;
     
     // base registers a, b, c follow the right format for NitroDirectoryMetadata
-    *((NitroDirectoryAccessor*)vm->args_GetFileOrDirectoryByName.unknown_14_) = vm->dirInfo.unknown_0_;
+    *((NitroDirectoryAccessor*)vm->args_GetFileOrDirectoryByName.output) = vm->dirInfo.unknown_0_;
     return NITRO_RESULT_SUCCESS;
 }
 
@@ -442,7 +442,7 @@ int NitroVM_DefaultCommand_GetPath(NitroVM* vm)
     }
     else // looking for a file
     {
-        targetFileID = vm->fileInfo.unknown_0_;
+        targetFileID = vm->fileInfo.fileID;
         if (vm->args_GetPath.unknown_8_ != 0)
         {
             targetDirID = vm->args_GetPath.unknown_a_;
@@ -462,7 +462,7 @@ int NitroVM_DefaultCommand_GetPath(NitroVM* vm)
                     numDirectories = tempVM.dirInfo.unknown_c_;
                 }
 
-                tempVM.args_GetFileOrDirectoryNameData.unknown_0_ = &storage;
+                tempVM.args_GetFileOrDirectoryNameData.output = &storage;
                 tempVM.args_GetFileOrDirectoryNameData.unknown_4_ = 1;
 
                 if (NitroVM_ExecuteCommand(&tempVM, NITROVM_OPCODE_GET_FILE_OR_DIRECTORY_NAME_DATA) == NITRO_RESULT_SUCCESS)
@@ -518,7 +518,7 @@ int NitroVM_DefaultCommand_GetPath(NitroVM* vm)
                 // Get data about the previous directory's parent
                 NitroVM_LoadDirectoryDataByIndex(&tempVM, tempVM.dirInfo.unknown_c_);
 
-                tempVM.args_GetFileOrDirectoryNameData.unknown_0_ = &storage;
+                tempVM.args_GetFileOrDirectoryNameData.output = &storage;
                 tempVM.args_GetFileOrDirectoryNameData.unknown_4_ = 1;
                 if (NitroVM_ExecuteCommand(&tempVM, NITROVM_OPCODE_GET_FILE_OR_DIRECTORY_NAME_DATA) == NITRO_RESULT_SUCCESS)
                 {
@@ -572,7 +572,7 @@ int NitroVM_DefaultCommand_GetPath(NitroVM* vm)
     NitroVM_LoadDirectoryDataByIndex(&tempVM, targetDirID);
     if (targetFileID != NITROFS_ID_INVALID)
     {
-        tempVM.args_GetFileOrDirectoryNameData.unknown_0_ = &storage;
+        tempVM.args_GetFileOrDirectoryNameData.output = &storage;
         tempVM.args_GetFileOrDirectoryNameData.unknown_4_ = 0;
         if (NitroVM_ExecuteCommand(&tempVM, NITROVM_OPCODE_GET_FILE_OR_DIRECTORY_NAME_DATA) == NITRO_RESULT_SUCCESS)
         {
@@ -598,7 +598,7 @@ int NitroVM_DefaultCommand_GetPath(NitroVM* vm)
         do
         {
             NitroVM_LoadDirectoryDataByIndex(&tempVM, tempVM.dirInfo.unknown_c_);
-            tempVM.args_GetFileOrDirectoryNameData.unknown_0_ = &storage;
+            tempVM.args_GetFileOrDirectoryNameData.output = &storage;
             tempVM.args_GetFileOrDirectoryNameData.unknown_4_ = 0;
 
             *(writeDst + backWriteLocation - 1) = '/';
@@ -646,19 +646,19 @@ int NitroVM_DefaultCommand_GetFATEntry(NitroVM* vm)
     if (result != NITRO_RESULT_SUCCESS)
         return result;
 
-    vm->args_SetFilePointers.unknown_0_ = offsets[0];
-    vm->args_SetFilePointers.unknown_4_ = offsets[1];
-    vm->args_SetFilePointers.unknown_8_ = entryIdx;
+    vm->args_SetFilePointers.startOffset = offsets[0];
+    vm->args_SetFilePointers.endOffset = offsets[1];
+    vm->args_SetFilePointers.fileID = entryIdx;
 
     return NitroVM_ExecuteCommand(vm, NITROVM_OPCODE_SET_FILE_POINTERS);
 }
 
 int NitroVM_DefaultCommand_SetFilePointers(NitroVM* vm)
 {
-    vm->fileInfo.unknown_4_ = vm->args_SetFilePointers.unknown_0_;
-    vm->fileInfo.unknown_c_ = vm->args_SetFilePointers.unknown_0_;
-    vm->fileInfo.unknown_8_ = vm->args_SetFilePointers.unknown_4_;
-    vm->fileInfo.unknown_0_ = vm->args_SetFilePointers.unknown_8_;
+    vm->fileInfo.startOffset = vm->args_SetFilePointers.startOffset;
+    vm->fileInfo.unknown_c_ = vm->args_SetFilePointers.startOffset;
+    vm->fileInfo.endOffset = vm->args_SetFilePointers.endOffset;
+    vm->fileInfo.fileID = vm->args_SetFilePointers.fileID;
     return NITRO_RESULT_SUCCESS;
 }
 

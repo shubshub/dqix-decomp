@@ -4,32 +4,32 @@
 #define data_0210cf84 data_0210cc3c
 #endif
 
-struct Struct_020f1f14_3 { int unknown_0_; int unknown_4_; int unknown_8_; int unknown_c_; char unknown_10_[8]; };
+struct Struct_020f1f14_3 { int a; int b; int active; int flag; char pad[8]; };
 extern struct Struct_020f1f14_3 data_020f1f14[];
 extern unsigned short data_0210cf84;
 
 // USA: func_020bb514
 extern "C" ARM void func_020bb514(void) {
-    int var0;
-    struct Struct_020f1f14_3* var1 = data_020f1f14;
+    int i;
+    struct Struct_020f1f14_3* slot = data_020f1f14;
     unsigned int var2 = data_0210cf84;
     if (var2 > 1) var2 = var2 + 1;
-    int var3 = (int)var2;
-    var0 = 0;
+    int count = (int)var2;
+    i = 0;
     do {
-        if (var0 < var3) {
-            var1->unknown_8_ = 1;
+        if (i < count) {
+            slot->active = 1;
         } else {
-            var1->unknown_8_ = 0;
+            slot->active = 0;
         }
-        if (var1->unknown_c_ != 0) {
-            var1->unknown_0_ = 0;
-            var1->unknown_4_ = 0x10000;
+        if (slot->flag != 0) {
+            slot->a = 0;
+            slot->b = 0x10000;
         } else {
-            var1->unknown_0_ = 0;
-            var1->unknown_4_ = 0x20000;
+            slot->a = 0;
+            slot->b = 0x20000;
         }
-        var0 = var0 + 1;
-        var1 = var1 + 1;
-    } while (var0 < 5);
+        i = i + 1;
+        slot = slot + 1;
+    } while (i < 5);
 }

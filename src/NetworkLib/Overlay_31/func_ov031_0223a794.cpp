@@ -73,9 +73,9 @@ extern "C" ARM void func_ov031_0223a794(void) {
 		data_ov031_02290d20[0xa90] = 0x11;
 		break;
 	case 17: {
-		unsigned int var1 = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
-		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = var1 + 1;
-		if (var1 <= 0x1e) break;
+		unsigned int v = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
+		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = v + 1;
+		if (v <= 0x1e) break;
 		func_ov031_0223b010();
 		break;
 	}
@@ -85,9 +85,9 @@ extern "C" ARM void func_ov031_0223a794(void) {
 		data_ov031_02290d20[0xa90] = 0x16;
 		break;
 	case 19: {
-		unsigned int var2 = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
-		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = var2 + 1;
-		if (var2 <= 0x1e) break;
+		unsigned int v = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
+		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = v + 1;
+		if (v <= 0x1e) break;
 		if (func_ov031_02239be8() != 1) break;
 		func_ov031_0223a47c();
 		data_ov031_02290d20[0xa90] = 0x14;
@@ -99,9 +99,9 @@ extern "C" ARM void func_ov031_0223a794(void) {
 		data_ov031_02290d20[0xa90] = 0x16;
 		break;
 	case 22: {
-		unsigned int var3 = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
-		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = var3 + 1;
-		if (var3 <= 0x1e) break;
+		unsigned int v = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
+		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = v + 1;
+		if (v <= 0x1e) break;
 		if (func_ov031_02239be8() != 1) break;
 		func_ov031_0223a47c();
 		data_ov031_02290d20[0xa90] = 0x17;
@@ -113,9 +113,9 @@ extern "C" ARM void func_ov031_0223a794(void) {
 		data_ov031_02290d20[0xa90] = 0x19;
 		break;
 	case 25: {
-		unsigned int var4 = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
-		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = var4 + 1;
-		if (var4 <= 0x1e) break;
+		unsigned int v = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
+		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = v + 1;
+		if (v <= 0x1e) break;
 		if (func_ov031_02239be8() != 1) break;
 		func_ov031_0223a47c();
 		data_ov031_02290d20[0xa90] = 0x1a;
@@ -127,18 +127,18 @@ extern "C" ARM void func_ov031_0223a794(void) {
 		data_ov031_02290d20[0xa90] = 0x1c;
 		break;
 	case 28: {
-		unsigned int var5 = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
-		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = var5 + 1;
-		if (var5 <= 0x1e) break;
+		unsigned int v = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
+		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = v + 1;
+		if (v <= 0x1e) break;
 		if (func_ov031_02239be8() == 1) {
 			func_ov031_0223a47c();
 			data_ov031_02290d20[0xa90] = 0x1d;
 			break;
 		}
 		{
-			unsigned int var6 = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
-			if (var6 % 30 != 1) break;
-			if (var6 <= 0x37) break;
+			unsigned int cnt = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
+			if (cnt % 30 != 1) break;
+			if (cnt <= 0x37) break;
 			func_ov031_0223a374();
 		}
 		break;
@@ -149,9 +149,9 @@ extern "C" ARM void func_ov031_0223a794(void) {
 		data_ov031_02290d20[0xa90] = 0x21;
 		break;
 	case 33: {
-		unsigned int var7 = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
-		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = var7 + 1;
-		if (var7 <= 0x1e) break;
+		unsigned int v = *(unsigned int*)(data_ov031_02290d20 + 0xa9c);
+		*(unsigned int*)(data_ov031_02290d20 + 0xa9c) = v + 1;
+		if (v <= 0x1e) break;
 		if (func_ov031_02239be8() != 1) break;
 		func_ov031_0223a47c();
 		data_ov031_02290d20[0xa90] = 0x22;

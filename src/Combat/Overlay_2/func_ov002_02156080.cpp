@@ -4,10 +4,10 @@
 
 extern "C" char *Scenario_GetInstance(void);
 extern "C" int func_ov002_02161920(void *self);
-int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" int Scenario_TestFlag(int, unsigned char*, int);
 
 struct Struct_ov002_0216c9ae {
-    short unknown_0_[9];
+    short v[9];
 };
 extern "C" const struct Struct_ov002_0216c9ae data_ov002_0216c9ae;
 
@@ -15,7 +15,7 @@ extern "C" const struct Struct_ov002_0216c9ae data_ov002_0216c9ae;
 extern "C" ARM void func_ov002_02156080(void *self, short *out, short *outCount) {
     char *save               = Scenario_GetInstance();
     int mode                 = func_ov002_02161920(self);
-    struct List02156080 list = data_ov002_0216c9ae;
+    struct Struct_ov002_0216c9ae list = data_ov002_0216c9ae;
     short n                  = 0;
     for (short i = 0; i < 9; i++) {
         int ok = 1;
@@ -23,14 +23,14 @@ extern "C" ARM void func_ov002_02156080(void *self, short *out, short *outCount)
             case 2: ok = Scenario_TestFlag((int)save, (unsigned char*)(save + 0x8c), 0x119c) != 0 ? 1 : 0; break;
             case 6: ok = 0; break;
             case 8:
-                if (var1 != 2) var5 = 0;
+                if (mode != 2) ok = 0;
                 break;
         }
-        if (var5) {
-            var2.unknown_0_[var3] = var4;
-            var3++;
+        if (ok) {
+            list.v[n] = i;
+            n++;
         }
     }
-    memcpy(arg1, &var2, 0x12);
-    *arg2 = var3;
+    memcpy(out, &list, 0x12);
+    *outCount = n;
 }

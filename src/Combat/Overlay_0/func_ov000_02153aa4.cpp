@@ -2,82 +2,82 @@
 #include "GameState/GameState.h"
 #include "Util/Random.h"
 
-extern "C" void __clear(void* arg0, int arg1);
+extern "C" void __clear(void* buf, int size);
 
-struct Struct_02010088;
-extern "C" int func_02010088(struct Struct_02010088* arg0);
-extern "C" int func_ov000_02153c0c(GameObject* arg0);
+struct S_10088;
+extern "C" int func_02010088(struct S_10088* obj);
+extern "C" int func_ov000_02153c0c(GameObject* combatant);
 
 struct Struct_ov000_02153aa4 {
-    unsigned short unknown_0_;
-    unsigned char unknown_2_[8];
-    unsigned char unknown_a_0_ : 4;
+    unsigned short value;
+    unsigned char members[8];
+    unsigned char total : 4;
     unsigned char unknown_a_4_ : 4;
-    char unknown_b_[0x18 - 0xb];
+    char pad[0x18 - 0xb];
 };
 
 struct Struct_ov000_02153aa4_2 {
-    unsigned char unknown_0_0_ : 4;
-    unsigned char unknown_0_4_ : 2;
-    unsigned char unknown_0_6_ : 2;
+    unsigned char counter : 4;
+    unsigned char groupCount : 2;
+    unsigned char unused : 2;
 };
 
 struct Struct_ov000_02153aa4_3 {
     Random unknown_0_;
-    char unknown_20_[0x81b1 - sizeof(Random)];
-    Struct_ov000_02153aa4_2 unknown_81b1_;
-    char unknown_81b2_[2];
-    Struct_ov000_02153aa4 unknown_81b4_[3];
+    char pad0[0x81b1 - sizeof(Random)];
+    Struct_ov000_02153aa4_2 counts;
+    char pad1[2];
+    Struct_ov000_02153aa4 groups[3];
 };
 
-static inline GameObject* inline_ov000_02153aa4(short arg0) {
-    return GameState::GetInstance()->GetCombatantByIndex(arg0);
+static inline GameObject* inline_ov000_02153aa4(short idx) {
+    return GameState::GetInstance()->GetCombatantByIndex(idx);
 }
 
 // USA: func_ov000_02153aa4
-extern "C" ARM void func_ov000_02153aa4(Struct_ov000_02153aa4_3* arg0, int arg1, int* arg2) {
-    short var0 = *arg2;
-    GameState* var1 = GameState::GetInstance();
-    GameObject* var2 = var1->GetCombatantByIndex(var0);
-    if (var2 == NULL) {
+extern "C" ARM void func_ov000_02153aa4(Struct_ov000_02153aa4_3* arg0, int arg1, int* target) {
+    short idx = *target;
+    GameState* bs = GameState::GetInstance();
+    GameObject* c = bs->GetCombatantByIndex(idx);
+    if (c == NULL) {
         return;
     }
-    if (!func_02010088((struct Struct_02010088*)var2) && !func_ov000_02153c0c(var2)) {
+    if (!func_02010088((struct S_10088*)c) && !func_ov000_02153c0c(c)) {
         return;
     }
-    Struct_ov000_02153aa4* var3 = arg0->unknown_81b4_;
+    Struct_ov000_02153aa4* groups = arg0->groups;
     int var4[3];
     __clear(var4, 0xc);
     int* var5 = var4;
-    int var6 = 0;
-    if (var3[arg1].unknown_a_4_ == 0) {
-        for (int var7 = 0; var7 < arg0->unknown_81b1_.unknown_0_4_; var7++) {
-            if (var3[var7].unknown_a_4_ != 0) {
-                var5[var6++] = var7;
+    int count = 0;
+    if (groups[arg1].unknown_a_4_ == 0) {
+        for (int i = 0; i < arg0->counts.groupCount; i++) {
+            if (groups[i].unknown_a_4_ != 0) {
+                var5[count++] = i;
             }
         }
-        arg1 = var5[NextRandomMax(&arg0->unknown_0_, var6)];
+        arg1 = var5[NextRandomMax(&arg0->unknown_0_, count)];
     }
 
-    int var8;
-    unsigned char* var9;
-    int var10;
-    int var11;
-    Struct_ov000_02153aa4* var12;
+    int n;
+    unsigned char* members;
+    int j;
+    int id;
+    Struct_ov000_02153aa4* group;
     int* var13;
-    int var14[8];
-    __clear(var14, 0x20);
-    var8 = 0;
-    var12 = &var3[arg1];
-    var9 = var12->unknown_2_;
-    var13 = var14;
-    for (var10 = 0; var10 < var12->unknown_a_0_; var10++) {
-        var11 = var9[var10] + 0xc0;
-        GameObject* var15 = inline_ov000_02153aa4(var11);
-        if (var15 != NULL && !func_02010088((struct Struct_02010088*)var15) && !func_ov000_02153c0c(var15)) {
-            var13[var8] = var11;
-            var8++;
+    int ids[8];
+    __clear(ids, 0x20);
+    n = 0;
+    group = &groups[arg1];
+    members = group->members;
+    var13 = ids;
+    for (j = 0; j < group->total; j++) {
+        id = members[j] + 0xc0;
+        GameObject* m = inline_ov000_02153aa4(id);
+        if (m != NULL && !func_02010088((struct S_10088*)m) && !func_ov000_02153c0c(m)) {
+            var13[n] = id;
+            n++;
         }
     }
-    *arg2 = var13[NextRandomMax(&arg0->unknown_0_, var8)];
+    *target = var13[NextRandomMax(&arg0->unknown_0_, n)];
 }

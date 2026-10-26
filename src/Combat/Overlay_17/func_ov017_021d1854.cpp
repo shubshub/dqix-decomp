@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-struct Struct_ov017_021d1854 { unsigned char unknown_0_[4]; short unknown_4_; short unknown_6_; signed char unknown_8_; };
+struct Struct_ov017_021d1854 { unsigned char pad0[4]; short h4; short h6; signed char b8; };
 
 extern "C" int* func_020936f8(void);
 extern "C" void func_02094030(int*, short, short, signed char);
 
 // USA: func_ov017_021d1854
-extern "C" ARM void func_ov017_021d1854(void* arg0, Struct_ov017_021d1854* arg1) {
-	int* var0 = func_020936f8();
-	func_02094030(var0, arg1->unknown_4_, arg1->unknown_6_, arg1->unknown_8_);
+extern "C" ARM void func_ov017_021d1854(void* unused0, Struct_ov017_021d1854* src) {
+	int* g = func_020936f8();
+	func_02094030(g, src->h4, src->h6, src->b8);
 }

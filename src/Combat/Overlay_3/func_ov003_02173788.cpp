@@ -14,20 +14,20 @@ enum { Enum_ov003_02173788_202 = 0xca };
 #endif
 
 
-extern "C" void func_020a620c(void* arg0);
+extern "C" void func_020a620c(void* obj);
 
 // USA: func_ov003_02173788
-extern "C" ARM void func_ov003_02173788(unsigned char* arg0) {
-    func_020a620c(arg0 + Enum_ov003_02173788_216);
-    if (arg0[Enum_ov003_02173788_239] != 0) {
+extern "C" ARM void func_ov003_02173788(unsigned char* obj) {
+    func_020a620c(obj + Enum_ov003_02173788_216);
+    if (obj[Enum_ov003_02173788_239] != 0) {
         return;
     }
-    if (arg0[Enum_ov003_02173788_203] != 0) {
-        arg0[Enum_ov003_02173788_203] = 0;
-        arg0[Enum_ov003_02173788_237] = 3;
-        arg0[Enum_ov003_02173788_239] = 0;
-    } else if (arg0[Enum_ov003_02173788_202] != 0) {
-        arg0[Enum_ov003_02173788_237] = 4;
-        arg0[Enum_ov003_02173788_239] = 0;
+    if (obj[Enum_ov003_02173788_203] != 0) {
+        obj[Enum_ov003_02173788_203] = 0;
+        obj[Enum_ov003_02173788_237] = 3;
+        obj[Enum_ov003_02173788_239] = 0;
+    } else if (obj[Enum_ov003_02173788_202] != 0) {
+        obj[Enum_ov003_02173788_237] = 4;
+        obj[Enum_ov003_02173788_239] = 0;
     }
 }

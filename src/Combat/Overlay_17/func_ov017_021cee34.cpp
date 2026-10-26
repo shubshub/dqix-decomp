@@ -9,28 +9,28 @@ enum { Enum_ov017_021cee34_396 = 0x18c };
 #include "GameState/GameState.h"
 
 struct Struct_ov017_021cee34 {
-    unsigned char unknown_0_[4];
-    int unknown_4_;
-    unsigned int unknown_8_;
-    int unknown_c_;
+    unsigned char header[4];
+    int combatantId;
+    unsigned int mask;
+    int enabled;
 };
 
 struct Struct_ov017_021cee34_2 {
     unsigned char unknown_0_[Enum_ov017_021cee34_396];
-    unsigned int unknown_18c_;
+    unsigned int flags;
 };
 
 // USA: func_ov017_021cee34
-extern "C" ARM void func_ov017_021cee34(void* arg0, Struct_ov017_021cee34* arg1, GameState* arg2) {
-    int var0 = arg1->unknown_c_;
-    unsigned int var1 = arg1->unknown_8_;
-    int var2 = arg1->unknown_4_;
-    GameObject* var3 = func_0200ff1c(arg2, var2);
-    if (var3 == NULL) return;
-    Struct_ov017_021cee34_2* var4 = (Struct_ov017_021cee34_2*)var3;
-    if (var0) {
-        var4->unknown_18c_ |= var1;
+extern "C" ARM void func_ov017_021cee34(void* unused, Struct_ov017_021cee34* args, GameState* battleStruct) {
+    int enabled = args->enabled;
+    unsigned int mask = args->mask;
+    int id = args->combatantId;
+    GameObject* combatant = func_0200ff1c(battleStruct, id);
+    if (combatant == NULL) return;
+    Struct_ov017_021cee34_2* status = (Struct_ov017_021cee34_2*)combatant;
+    if (enabled) {
+        status->flags |= mask;
     } else {
-        var4->unknown_18c_ &= ~var1;
+        status->flags &= ~mask;
     }
 }

@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
 struct Struct_ov004_021660f4 {
-    char unknown_0_[8];
-    int unknown_8_;
+    char pad[8];
+    int field8;
 };
 
 struct Struct_ov004_021660f4_2 {
-    struct Struct_ov004_021660f4* unknown_0_[2];
-    int unknown_8_;
-    char unknown_c_[0x48 - 0xc];
-    short unknown_48_[2];
-    short unknown_4c_;
+    struct Struct_ov004_021660f4* arr[2];
+    int field8;
+    char pad[0x48 - 0xc];
+    short counts[2];
+    short field4c;
 };
 #if defined(jpn)
-struct Struct_ov004_0217101c { unsigned int unknown_0_; struct Struct_ov004_021660f4_2* unknown_4_; };
+struct Struct_ov004_0217101c { unsigned int reserved; struct Struct_ov004_021660f4_2* value; };
 extern Struct_ov004_0217101c data_ov004_0217101c;
-#define CONTEXT_VALUE data_ov004_0217101c.unknown_4_
+#define CONTEXT_VALUE data_ov004_0217101c.value
 #else
 extern struct Struct_ov004_021660f4_2* data_ov004_0217101c;
 #define CONTEXT_VALUE data_ov004_0217101c
@@ -23,31 +23,31 @@ extern struct Struct_ov004_021660f4_2* data_ov004_0217101c;
 
 // USA: func_ov004_021660f4
 extern "C" ARM void func_ov004_021660f4(void) {
-    struct Struct_ov004_021660f4* var0[2];
-    short var1[2];
+    struct Struct_ov004_021660f4* arr[2];
+    short counts[2];
 #if defined(jpn)
-    short var3 = 0;
+    short i = 0;
 #endif
-    struct Struct_ov004_021660f4_2* var2 = CONTEXT_VALUE;
-    var0[0] = var2->unknown_0_[0];
-    var0[1] = var2->unknown_0_[1];
-    var1[0] = var2->unknown_48_[0];
-    var1[1] = var2->unknown_48_[1];
+    struct Struct_ov004_021660f4_2* obj = CONTEXT_VALUE;
+    arr[0] = obj->arr[0];
+    arr[1] = obj->arr[1];
+    counts[0] = obj->counts[0];
+    counts[1] = obj->counts[1];
 
 #if defined(jpn)
-    for (; var3 < 2; var3++) {
+    for (; i < 2; i++) {
 #else
-    short var3;
-    for (var3 = 0; var3 < 2; var3++) {
+    short i;
+    for (i = 0; i < 2; i++) {
 #endif
-        struct Struct_ov004_021660f4* var4 = var0[var3];
-        short var5 = var1[var3];
-        short var6;
-        for (var6 = 0; var6 < var5; var6++) {
-            var4->unknown_8_ = 0;
-            var4 = (struct Struct_ov004_021660f4*)((char*)var4 + 0xc);
+        struct Struct_ov004_021660f4* e = arr[i];
+        short cnt = counts[i];
+        short j;
+        for (j = 0; j < cnt; j++) {
+            e->field8 = 0;
+            e = (struct Struct_ov004_021660f4*)((char*)e + 0xc);
         }
     }
-    var2->unknown_8_ = 0;
-    var2->unknown_4c_ = 0;
+    obj->field8 = 0;
+    obj->field4c = 0;
 }

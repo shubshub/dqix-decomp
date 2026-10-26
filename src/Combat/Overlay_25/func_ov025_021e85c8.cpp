@@ -6,7 +6,7 @@ enum { Enum_ov025_021e85c8_12 = 0x4 };
 enum { Enum_ov025_021e85c8_12 = 0xc };
 #endif
 
-extern "C" int func_ov025_021eb6fc(void* arg0, int arg1);
+extern "C" int func_ov025_021eb6fc(void* p, int flag);
 
 struct Struct_ov025_021ef988_39 {
     char unknown_0_[Enum_ov025_021e85c8_12];

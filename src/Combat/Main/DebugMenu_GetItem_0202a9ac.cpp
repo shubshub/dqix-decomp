@@ -16,7 +16,7 @@ struct IndexList_0202a9ac {
 };
 
 // Main, originally GetNodeAtIndex (USA 0x0202a9ac, EUR 0x0202a9bc, JPN 0x0202a564)
-ARM struct IndexNode_0202a9ac* DebugMenu_GetItem(struct IndexList_0202a9ac* menu, int index) {
+extern "C" ARM struct IndexNode_0202a9ac* DebugMenu_GetItem(struct IndexList_0202a9ac* menu, int index) {
     struct IndexNode_0202a9ac* item;
     int i;
     if (index < 0 || menu->count <= index) {

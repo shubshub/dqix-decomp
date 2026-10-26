@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
 struct Struct_020b0eb4_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    struct Struct_020b0eb4_2* unknown_4_;
-    unsigned char unknown_8_[4];
+    unsigned short lo;
+    unsigned short hi;
+    struct Struct_020b0eb4_2* next;
+    unsigned char data[4];
 };
 
 struct Struct_020b0eb4 {
-    unsigned char unknown_0_[0xc];
-    struct Struct_020b0eb4_2* unknown_c_;
+    unsigned char pad0[0xc];
+    struct Struct_020b0eb4_2* head;
 };
 
 // USA: func_020b0eb4
-extern "C" ARM void* func_020b0eb4(struct Struct_020b0eb4** arg0, unsigned int arg1) {
-    struct Struct_020b0eb4_2* var0 = (*arg0)->unknown_c_;
-    if (var0 != NULL) {
+extern "C" ARM void* func_020b0eb4(struct Struct_020b0eb4** slot, unsigned int key) {
+    struct Struct_020b0eb4_2* node = (*slot)->head;
+    if (node != NULL) {
         do {
-            if (var0->unknown_0_ <= arg1 && arg1 <= var0->unknown_2_) {
-                return (char*)var0 + 8 + (arg1 - var0->unknown_0_) * 3;
+            if (node->lo <= key && key <= node->hi) {
+                return (char*)node + 8 + (key - node->lo) * 3;
             }
-            var0 = var0->unknown_4_;
-        } while (var0 != NULL);
+            node = node->next;
+        } while (node != NULL);
     }
-    return (char*)*arg0 + 4;
+    return (char*)*slot + 4;
 }

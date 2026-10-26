@@ -7,7 +7,7 @@
 #endif
 
 // USA: func_ov017_02195530
-extern "C" ARM void func_ov017_02195530(unsigned char* arg0) {
-	arg0 += 0x4000;
-	*(int*)(arg0 + FIELD_OFFSET) = 1;
+extern "C" ARM void func_ov017_02195530(unsigned char* obj) {
+	obj += 0x4000;
+	*(int*)(obj + FIELD_OFFSET) = 1;
 }

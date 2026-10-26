@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov031_0223c054(int arg0);
+extern "C" int func_ov031_0223c054(int flag);
 extern "C" void* func_ov031_0223c7c4(int);
 extern "C" void func_ov031_02223440(void);
 extern "C" void func_ov031_0223cbbc(int, int);
 extern "C" void func_ov031_022274d0(int, int);
 extern "C" void func_ov031_0222750c(int, int);
-extern "C" void func_ov031_022274c0(int arg0);
+extern "C" void func_ov031_022274c0(int v);
 extern "C" void func_ov031_022340c0(void);
 
 // USA: func_ov031_0223447c

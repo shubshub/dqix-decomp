@@ -7,34 +7,34 @@ enum { Enum_ov000_021637fc_828 = 0x33c, Enum_ov000_021637fc_29696 = 0x7400, Enum
 #include "Util/Random.h"
 
 // USA: func_ov000_021637fc
-extern "C" ARM int func_ov000_021637fc(void* arg0, int arg1) {
-    int var0;
-    signed char var1;
-    char* var2;
-    if (arg1 < 0 || arg1 >= 4) {
+extern "C" ARM int func_ov000_021637fc(void* obj, int id) {
+    int i;
+    signed char last;
+    char* p;
+    if (id < 0 || id >= 4) {
         return 0;
     }
-    var2 = (char*)arg0 + Enum_ov000_021637fc_828;
-    var1 = -1;
-    var0 = 0;
-    var2 = var2 + Enum_ov000_021637fc_29696;
-    while (var0 < 4) {
-        signed char var3 = var2[var0];
-        if (var3 < 0) {
-            int var4;
-            struct Random* var5;
-            var2[var0] = (char)arg1;
-            var5 = GetBTRandom();
-            if (var1 < 0) {
-                var4 = 0;
+    p = (char*)obj + Enum_ov000_021637fc_828;
+    last = -1;
+    i = 0;
+    p = p + Enum_ov000_021637fc_29696;
+    while (i < 4) {
+        signed char v = p[i];
+        if (v < 0) {
+            int r;
+            struct Random* rng;
+            p[i] = (char)id;
+            rng = GetBTRandom();
+            if (last < 0) {
+                r = 0;
             } else {
-                var4 = var1 + NextRandomBetween(var5, 3, 10);
+                r = last + NextRandomBetween(rng, 3, 10);
             }
-            *((char*)arg0 + var0 + Enum_ov000_021637fc_30528) = (char)var4;
+            *((char*)obj + i + Enum_ov000_021637fc_30528) = (char)r;
             return 1;
         }
-        var1 = *((char*)arg0 + var0 + Enum_ov000_021637fc_30528);
-        var0++;
+        last = *((char*)obj + i + Enum_ov000_021637fc_30528);
+        i++;
     }
     return 0;
 }

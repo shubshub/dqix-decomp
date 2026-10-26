@@ -6,7 +6,7 @@
 extern unsigned int CharacterModel_partAllocatorSizes[10];
 
 // Overlay 23, originally CreateTenAndOne_021e4f64 (USA/EUR 0x021e4f64, JPN 0x021e5148)
-ARM void CharacterModel_CreateAllocators(void* obj, SafeAllocator* allocator) {
+extern "C" ARM void CharacterModel_CreateAllocators(void* obj, SafeAllocator* allocator) {
     CharacterModel* model = (CharacterModel*)obj;
     for (int i = 0; i < 10; i++) {
         unsigned int size = CharacterModel_partAllocatorSizes[i];

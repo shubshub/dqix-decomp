@@ -7,19 +7,19 @@
 #endif
 
 
-struct Struct_ov000_02184288_5 { int unknown_0_; int unknown_4_; };
+struct Struct_ov000_02184288_5 { int f0; int limit; };
 extern struct Struct_ov000_02184288_5 data_ov000_02184288;
 
 // USA: func_ov000_02175348
-extern "C" ARM int func_ov000_02175348(void* arg0, int arg1) {
-    char* var0 = (char*)arg0;
-    int var1 = data_ov000_02184288.unknown_4_;
-    int var2 = 0;
-    for (int var3 = 0; var3 < var1; var3++) {
-        int var4 = *(int*)(var0 + var3 * 4 + 0x1000 + REGION_OFFSET_0);
-        if (arg1 == var4) {
-            var2++;
+extern "C" ARM int func_ov000_02175348(void* objRaw, int val) {
+    char* obj = (char*)objRaw;
+    int limit = data_ov000_02184288.limit;
+    int count = 0;
+    for (int i = 0; i < limit; i++) {
+        int v = *(int*)(obj + i * 4 + 0x1000 + REGION_OFFSET_0);
+        if (val == v) {
+            count++;
         }
     }
-    return var2;
+    return count;
 }

@@ -4,7 +4,7 @@
 
 int fix32ReduceAngle0To2Pi(int angle);
 struct Bytes02033b88;
-int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
+extern "C" int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
 int fix32SignedAngleDistance(int a, int b);
 struct Vector3i;
 
@@ -28,7 +28,7 @@ struct Obj02033710 {
 };
 
 // Main, originally AdvanceFacingAngleTowardTarget (USA 0x02033710, EUR 0x02033720, JPN 0x02033248)
-ARM void GameObject_TurnTowardFacing(struct Obj02033710* self) {
+extern "C" ARM void GameObject_TurnTowardFacing(struct Obj02033710* self) {
     GameState* game = GameState::GetInstance();
     if (self->motionState == 4 || self->motionState == 6) {
         return;

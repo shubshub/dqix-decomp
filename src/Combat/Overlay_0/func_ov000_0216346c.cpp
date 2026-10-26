@@ -12,17 +12,17 @@
 
 
 // USA: func_ov000_0216346c
-extern "C" ARM void func_ov000_0216346c(char* arg0, int arg1) {
-    int var0;
-    for (var0 = 0; var0 < *(short*)(arg0 + REGION_OFFSET_0 + REGION_OFFSET_1); var0++) {
-        if (arg1 == *(short*)(arg0 + var0 * 2 + REGION_OFFSET_0 + REGION_OFFSET_2)) break;
+extern "C" ARM void func_ov000_0216346c(char* obj, int val) {
+    int i;
+    for (i = 0; i < *(short*)(obj + REGION_OFFSET_0 + REGION_OFFSET_1); i++) {
+        if (val == *(short*)(obj + i * 2 + REGION_OFFSET_0 + REGION_OFFSET_2)) break;
     }
-    if (var0 != *(short*)(arg0 + REGION_OFFSET_0 + REGION_OFFSET_1)) return;
+    if (i != *(short*)(obj + REGION_OFFSET_0 + REGION_OFFSET_1)) return;
     {
-        short* var1 = (short*)(arg0 + REGION_OFFSET_0 + REGION_OFFSET_1);
+        short* var1 = (short*)(obj + REGION_OFFSET_0 + REGION_OFFSET_1);
         int var2 = *var1;
-        short* var3 = (short*)(arg0 + *(short*)(arg0 + REGION_OFFSET_0 + REGION_OFFSET_1) * 2 + REGION_OFFSET_0 + REGION_OFFSET_2);
+        short* var3 = (short*)(obj + *(short*)(obj + REGION_OFFSET_0 + REGION_OFFSET_1) * 2 + REGION_OFFSET_0 + REGION_OFFSET_2);
         *var1 = var2 + 1;
-        *var3 = (short)arg1;
+        *var3 = (short)val;
     }
 }

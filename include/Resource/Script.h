@@ -13,9 +13,9 @@ public:
         int type; // 0 = string, 1 = int, 2 = float?
         union
         {
-            const char* unknown_0_;
-            int unknown1_0_;
-            float unknown2_0_;
+            const char* str;
+            int i;
+            float f;
         } value;
 
         int ToInt() const;

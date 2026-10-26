@@ -7,12 +7,12 @@
 #include <globaldefs.h>
 
 // USA: func_ov006_021591c4
-extern "C" ARM int func_ov006_021591c4(void* arg0) {
-	int var0 = 0;
-	short var1 = *(short*)((char*)arg0 + 0x300 + 0x62) - 0x5b;
-	if (var1 >= 0) {
-		int* var2 = *(int**)((char*)arg0 + R(0x44, 0x4c));
-		var0 = var2[var1];
+extern "C" ARM int func_ov006_021591c4(void* p) {
+	int result = 0;
+	short idx = *(short*)((char*)p + 0x300 + 0x62) - 0x5b;
+	if (idx >= 0) {
+		int* arr = *(int**)((char*)p + R(0x44, 0x4c));
+		result = arr[idx];
 	}
-	return var0;
+	return result;
 }

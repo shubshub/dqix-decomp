@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 // USA: func_020a35e0
-extern "C" ARM int func_020a35e0(unsigned char* arg0, unsigned char arg1) {
-    if (arg1 >= 4) {
+extern "C" ARM int func_020a35e0(unsigned char* obj, unsigned char index) {
+    if (index >= 4) {
         return 0;
     }
-    return arg0[0x34] & (1 << arg1);
+    return obj[0x34] & (1 << index);
 }

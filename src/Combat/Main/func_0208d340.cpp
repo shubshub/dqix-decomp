@@ -2,7 +2,6 @@
 #include "GameState/GameState.h"
 #include "Resource/Brightness.h"
 
-extern "C" int func_0200fb8c(int* arg0);
 int IsSubBrightnessTransitionActive(GameResources*);
 
 struct Struct_02074bf4;
@@ -16,44 +15,44 @@ void SetSubBrightness(GameResources*, int, int);
 extern "C" void func_020dc2d0(int);
 
 struct Struct_0208d340 {
-    char unknown_0_[0xb8];
-    int unknown_b8_;
-    char unknown_bc_[0xd5 - 0xbc];
+    char pad0[0xb8];
+    int fb8;
+    char pad2[0xd5 - 0xbc];
     unsigned char unknown_d5_;
-    char unknown_d6_[0xda - 0xd6];
+    char pad3[0xda - 0xd6];
     unsigned short unknown_da_;
 };
 
 // USA: func_0208d340
-extern "C" ARM void func_0208d340(struct Struct_0208d340* arg0) {
-    int var0 = func_0200fb8c((int*)GameState::GetInstance());
+extern "C" ARM void func_0208d340(struct Struct_0208d340* obj) {
+    int val = (int)GameState::GetInstance()->GetResources();
 
-    if (arg0->unknown_d5_ == 0) {
-        if (!(arg0->unknown_da_ & 0x10)) {
-            SetSubBrightness((GameResources*)var0, -16, 8);
+    if (obj->unknown_d5_ == 0) {
+        if (!(obj->unknown_da_ & 0x10)) {
+            SetSubBrightness((GameResources*)val, -16, 8);
         }
-        arg0->unknown_d5_ = arg0->unknown_d5_ + 1;
+        obj->unknown_d5_ = obj->unknown_d5_ + 1;
         return;
     }
-    if (arg0->unknown_d5_ == 1) {
-        if (IsSubBrightnessTransitionActive((GameResources*)var0) == 0) {
-            arg0->unknown_d5_ = arg0->unknown_d5_ + 1;
+    if (obj->unknown_d5_ == 1) {
+        if (IsSubBrightnessTransitionActive((GameResources*)val) == 0) {
+            obj->unknown_d5_ = obj->unknown_d5_ + 1;
         }
         return;
     }
-    if (arg0->unknown_d5_ == 2) {
-        arg0->unknown_da_ = arg0->unknown_da_ & ~4;
-        func_02074bf4((struct Struct_02074bf4*)((char*)arg0 + 0x2c));
+    if (obj->unknown_d5_ == 2) {
+        obj->unknown_da_ = obj->unknown_da_ & ~4;
+        func_02074bf4((struct Struct_02074bf4*)((char*)obj + 0x2c));
         func_020dc2d0(0);
-        arg0->unknown_d5_ = arg0->unknown_d5_ + 1;
+        obj->unknown_d5_ = obj->unknown_d5_ + 1;
         return;
     }
-    if (arg0->unknown_d5_ != 3) return;
+    if (obj->unknown_d5_ != 3) return;
 
-    int* var1 = (int*)0x4001000;
-    *var1 = (*var1 & ~0x1f00) | (arg0->unknown_b8_ << 8);
-    *(short*)((char*)var1 + 0x50) = 0;
-    arg0->unknown_d5_ = arg0->unknown_d5_ + 1;
-    func_0208ba54((struct Struct_0208ba54*)arg0);
-    ClearFlags00((GameResources*)(func_0200fb8c((int*)GameState::GetInstance())), 0x6000);
+    int* reg = (int*)0x4001000;
+    *reg = (*reg & ~0x1f00) | (obj->fb8 << 8);
+    *(short*)((char*)reg + 0x50) = 0;
+    obj->unknown_d5_ = obj->unknown_d5_ + 1;
+    func_0208ba54((struct Struct_0208ba54*)obj);
+    ClearFlags00((GameResources*)((int)GameState::GetInstance()->GetResources()), 0x6000);
 }

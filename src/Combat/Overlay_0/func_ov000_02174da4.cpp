@@ -4,6 +4,6 @@
 extern int data_ov000_021833e8;
 
 // USA: func_ov000_02174da4
-extern "C" ARM void* func_ov000_02174da4(int arg0, void* arg1) {
-    return memcpy(arg1, &data_ov000_021833e8, 0x10);
+extern "C" ARM void* func_ov000_02174da4(int unused, void* dest) {
+    return memcpy(dest, &data_ov000_021833e8, 0x10);
 }

@@ -45,56 +45,56 @@ typedef char* Type_02001bdc;
 
 extern const unsigned short data_020e69ac[128];
 
-static inline int inline_02001bdc(int arg0) {
-    return ((arg0 < 0) || (arg0 >= 128)) ? 0 : (int)(data_020e69ac[arg0] & 0x008);
+static inline int inline_02001bdc(int c) {
+    return ((c < 0) || (c >= 128)) ? 0 : (int)(data_020e69ac[c] & 0x008);
 }
 
 // USA: func_02001bdc
-ARM const char* func_02001bdc(const char* arg0, Type_02001bdc* arg1, Struct_02001bdc* arg2) {
-    Struct_02001bdc var0;
-    const char*  var1 = arg0;
-    int          var2;
+ARM const char* func_02001bdc(const char* arg0, Type_02001bdc* arg, Struct_02001bdc* format) {
+    Struct_02001bdc f;
+    const char*  s = arg0;
+    int          c;
     int          var3;
 
-    var0.unknown_0_ = Enum_02001bdc_C_1;
-    var0.unknown_1_          = Enum_02001bdc_0;
-    var0.unknown_2_   = 0;
-    var0.unknown_3_        = 0;
-    var0.unknown_4_      = Enum_02001bdc_B_0;
-    var0.unknown_8_           = 0;
-    var0.unknown_c_             = 0;
+    f.unknown_0_ = Enum_02001bdc_C_1;
+    f.unknown_1_          = Enum_02001bdc_0;
+    f.unknown_2_   = 0;
+    f.unknown_3_        = 0;
+    f.unknown_4_      = Enum_02001bdc_B_0;
+    f.unknown_8_           = 0;
+    f.unknown_c_             = 0;
 
-    if ((var2 = *++var1) == '%') {
-        var0.unknown_5_ = var2;
-        *arg2           = var0;
-        return ((const char*)var1 + 1);
+    if ((c = *++s) == '%') {
+        f.unknown_5_ = c;
+        *format           = f;
+        return ((const char*)s + 1);
     }
 
     while (1) {
         var3 = 1;
 
-        switch (var2) {
+        switch (c) {
             case '-':
-                var0.unknown_0_ = Enum_02001bdc_C_0;
+                f.unknown_0_ = Enum_02001bdc_C_0;
                 break;
 
             case '+':
-                var0.unknown_1_ = Enum_02001bdc_1;
+                f.unknown_1_ = Enum_02001bdc_1;
                 break;
 
             case ' ':
-                if (var0.unknown_1_ != Enum_02001bdc_1) {
-                    var0.unknown_1_ = Enum_02001bdc_2;
+                if (f.unknown_1_ != Enum_02001bdc_1) {
+                    f.unknown_1_ = Enum_02001bdc_2;
                 }
                 break;
 
             case '#':
-                var0.unknown_3_ = 1;
+                f.unknown_3_ = 1;
                 break;
 
             case '0':
-                if (var0.unknown_0_ != Enum_02001bdc_C_0) {
-                    var0.unknown_0_ = Enum_02001bdc_C_2;
+                if (f.unknown_0_ != Enum_02001bdc_C_0) {
+                    f.unknown_0_ = Enum_02001bdc_C_2;
                 }
                 break;
 
@@ -104,77 +104,77 @@ ARM const char* func_02001bdc(const char* arg0, Type_02001bdc* arg1, Struct_0200
         }
 
         if (var3) {
-            var2 = *++var1;
+            c = *++s;
         } else {
             break;
         }
     }
 
-    if (var2 == '*') {
-        if ((var0.unknown_8_ = va_arg(*arg1, int)) < 0) {
-            var0.unknown_0_ = Enum_02001bdc_C_0;
-            var0.unknown_8_           = -var0.unknown_8_;
+    if (c == '*') {
+        if ((f.unknown_8_ = va_arg(*arg, int)) < 0) {
+            f.unknown_0_ = Enum_02001bdc_C_0;
+            f.unknown_8_           = -f.unknown_8_;
         }
 
-        var2 = *++var1;
+        c = *++s;
     } else {
-        while (inline_02001bdc(var2)) {
-            var0.unknown_8_ = (var0.unknown_8_ * 10) + (var2 - '0');
-            var2             = *++var1;
+        while (inline_02001bdc(c)) {
+            f.unknown_8_ = (f.unknown_8_ * 10) + (c - '0');
+            c             = *++s;
         }
     }
 
-    if (var0.unknown_8_ > conversion_max) {
-        var0.unknown_5_ = bad_conversion;
-        *arg2           = var0;
-        return ((const char*)var1 + 1);
+    if (f.unknown_8_ > conversion_max) {
+        f.unknown_5_ = bad_conversion;
+        *format           = f;
+        return ((const char*)s + 1);
     }
 
-    if (var2 == '.') {
-        var0.unknown_2_ = 1;
+    if (c == '.') {
+        f.unknown_2_ = 1;
 
-        if ((var2 = *++var1) == '*') {
-            if ((var0.unknown_c_ = va_arg(*arg1, int)) < 0) {
-                var0.unknown_2_ = 0;
+        if ((c = *++s) == '*') {
+            if ((f.unknown_c_ = va_arg(*arg, int)) < 0) {
+                f.unknown_2_ = 0;
             }
 
-            var2 = *++var1;
+            c = *++s;
         } else {
-            while (inline_02001bdc(var2)) {
-                var0.unknown_c_ = (var0.unknown_c_ * 10) + (var2 - '0');
-                var2           = *++var1;
+            while (inline_02001bdc(c)) {
+                f.unknown_c_ = (f.unknown_c_ * 10) + (c - '0');
+                c           = *++s;
             }
         }
     }
 
     var3 = 1;
 
-    switch (var2) {
+    switch (c) {
         case 'h':
-            var0.unknown_4_ = Enum_02001bdc_B_2;
-            if (var1[1] == 'h') {
-                var0.unknown_4_ = Enum_02001bdc_B_1;
-                var2                  = *++var1;
+            f.unknown_4_ = Enum_02001bdc_B_2;
+            if (s[1] == 'h') {
+                f.unknown_4_ = Enum_02001bdc_B_1;
+                c                  = *++s;
             }
             break;
         case 'l':
-            var0.unknown_4_ = Enum_02001bdc_B_3;
-            if (var1[1] == 'l') {
-                var0.unknown_4_ = Enum_02001bdc_B_4;
-                var2                  = *++var1;
+            f.unknown_4_ = Enum_02001bdc_B_3;
+            if (s[1] == 'l') {
+                f.unknown_4_ = Enum_02001bdc_B_4;
+                c                  = *++s;
             }
             break;
         case 'L':
-            var0.unknown_4_ = Enum_02001bdc_B_9;
+            f.unknown_4_ = Enum_02001bdc_B_9;
             break;
         case 'j':
-            var0.unknown_4_ = Enum_02001bdc_B_6;
+            f.unknown_4_ = Enum_02001bdc_B_6;
             break;
         case 't':
-            var0.unknown_4_ = Enum_02001bdc_B_8;
+            f.unknown_4_ = Enum_02001bdc_B_8;
             break;
         case 'z':
-            var0.unknown_4_ = Enum_02001bdc_B_7;
+            f.unknown_4_ = Enum_02001bdc_B_7;
             break;
         default:
             var3 = 0;
@@ -182,114 +182,114 @@ ARM const char* func_02001bdc(const char* arg0, Type_02001bdc* arg1, Struct_0200
     }
 
     if (var3) {
-        var2 = *++var1;
+        c = *++s;
     }
 
-    var0.unknown_5_ = var2;
+    f.unknown_5_ = c;
 
-    switch (var2) {
+    switch (c) {
         case 'd':
         case 'i':
         case 'u':
         case 'o':
         case 'x':
         case 'X':
-            if (var0.unknown_4_ == Enum_02001bdc_B_9) {
-                var0.unknown_5_ = bad_conversion;
+            if (f.unknown_4_ == Enum_02001bdc_B_9) {
+                f.unknown_5_ = bad_conversion;
                 break;
             }
 
-            if (!var0.unknown_2_) {
-                var0.unknown_c_ = 1;
-            } else if (var0.unknown_0_ == Enum_02001bdc_C_2) {
-                var0.unknown_0_ = Enum_02001bdc_C_1;
+            if (!f.unknown_2_) {
+                f.unknown_c_ = 1;
+            } else if (f.unknown_0_ == Enum_02001bdc_C_2) {
+                f.unknown_0_ = Enum_02001bdc_C_1;
             }
             break;
 
         case 'f':
         case 'F':
-            if (var0.unknown_4_ == Enum_02001bdc_B_2 || var0.unknown_4_ == Enum_02001bdc_B_6 ||
-                var0.unknown_4_ == Enum_02001bdc_B_7 || var0.unknown_4_ == Enum_02001bdc_B_8 ||
-                var0.unknown_4_ == Enum_02001bdc_B_4)
+            if (f.unknown_4_ == Enum_02001bdc_B_2 || f.unknown_4_ == Enum_02001bdc_B_6 ||
+                f.unknown_4_ == Enum_02001bdc_B_7 || f.unknown_4_ == Enum_02001bdc_B_8 ||
+                f.unknown_4_ == Enum_02001bdc_B_4)
             {
-                var0.unknown_5_ = bad_conversion;
+                f.unknown_5_ = bad_conversion;
                 break;
             }
 
-            if (!var0.unknown_2_) {
-                var0.unknown_c_ = 6;
+            if (!f.unknown_2_) {
+                f.unknown_c_ = 6;
             }
             break;
 
         case 'a':
         case 'A':
-            if (!var0.unknown_2_) {
-                var0.unknown_c_ = 0x0D;
+            if (!f.unknown_2_) {
+                f.unknown_c_ = 0x0D;
             }
-            if (var0.unknown_4_ == Enum_02001bdc_B_2 || var0.unknown_4_ == Enum_02001bdc_B_6 ||
-                var0.unknown_4_ == Enum_02001bdc_B_7 || var0.unknown_4_ == Enum_02001bdc_B_8 ||
-                var0.unknown_4_ == Enum_02001bdc_B_4 || var0.unknown_4_ == Enum_02001bdc_B_1)
+            if (f.unknown_4_ == Enum_02001bdc_B_2 || f.unknown_4_ == Enum_02001bdc_B_6 ||
+                f.unknown_4_ == Enum_02001bdc_B_7 || f.unknown_4_ == Enum_02001bdc_B_8 ||
+                f.unknown_4_ == Enum_02001bdc_B_4 || f.unknown_4_ == Enum_02001bdc_B_1)
             {
-                var0.unknown_5_ = bad_conversion;
+                f.unknown_5_ = bad_conversion;
             }
             break;
 
         case 'g':
         case 'G':
-            if (!var0.unknown_c_) {
-                var0.unknown_c_ = 1;
+            if (!f.unknown_c_) {
+                f.unknown_c_ = 1;
             }
 
         case 'e':
         case 'E':
-            if (var0.unknown_4_ == Enum_02001bdc_B_2 || var0.unknown_4_ == Enum_02001bdc_B_6 ||
-                var0.unknown_4_ == Enum_02001bdc_B_7 || var0.unknown_4_ == Enum_02001bdc_B_8 ||
-                var0.unknown_4_ == Enum_02001bdc_B_4 || var0.unknown_4_ == Enum_02001bdc_B_1)
+            if (f.unknown_4_ == Enum_02001bdc_B_2 || f.unknown_4_ == Enum_02001bdc_B_6 ||
+                f.unknown_4_ == Enum_02001bdc_B_7 || f.unknown_4_ == Enum_02001bdc_B_8 ||
+                f.unknown_4_ == Enum_02001bdc_B_4 || f.unknown_4_ == Enum_02001bdc_B_1)
             {
-                var0.unknown_5_ = bad_conversion;
+                f.unknown_5_ = bad_conversion;
                 break;
             }
 
-            if (!var0.unknown_2_) {
-                var0.unknown_c_ = 6;
+            if (!f.unknown_2_) {
+                f.unknown_c_ = 6;
             }
             break;
 
         case 'p':
-            var0.unknown_5_  = 'x';
-            var0.unknown_3_   = 1;
-            var0.unknown_4_ = Enum_02001bdc_B_3;
-            var0.unknown_c_        = 8;
+            f.unknown_5_  = 'x';
+            f.unknown_3_   = 1;
+            f.unknown_4_ = Enum_02001bdc_B_3;
+            f.unknown_c_        = 8;
             break;
 
         case 'c':
-            if (var0.unknown_4_ == Enum_02001bdc_B_3) {
-                var0.unknown_4_ = Enum_02001bdc_B_5;
-            } else if (var0.unknown_2_ || var0.unknown_4_ != Enum_02001bdc_B_0) {
-                var0.unknown_5_ = bad_conversion;
+            if (f.unknown_4_ == Enum_02001bdc_B_3) {
+                f.unknown_4_ = Enum_02001bdc_B_5;
+            } else if (f.unknown_2_ || f.unknown_4_ != Enum_02001bdc_B_0) {
+                f.unknown_5_ = bad_conversion;
             }
             break;
 
         case 's':
-            if (var0.unknown_4_ == Enum_02001bdc_B_3) {
-                var0.unknown_4_ = Enum_02001bdc_B_5;
-            } else if (var0.unknown_4_ != Enum_02001bdc_B_0) {
-                var0.unknown_5_ = bad_conversion;
+            if (f.unknown_4_ == Enum_02001bdc_B_3) {
+                f.unknown_4_ = Enum_02001bdc_B_5;
+            } else if (f.unknown_4_ != Enum_02001bdc_B_0) {
+                f.unknown_5_ = bad_conversion;
             }
             break;
 
         case 'n':
-            if (var0.unknown_4_ == Enum_02001bdc_B_9) {
-                var0.unknown_5_ = bad_conversion;
+            if (f.unknown_4_ == Enum_02001bdc_B_9) {
+                f.unknown_5_ = bad_conversion;
             }
             break;
 
         default:
-            var0.unknown_5_ = bad_conversion;
+            f.unknown_5_ = bad_conversion;
             break;
     }
 
-    *arg2 = var0;
+    *format = f;
 
-    return ((const char*)var1 + 1);
+    return ((const char*)s + 1);
 }

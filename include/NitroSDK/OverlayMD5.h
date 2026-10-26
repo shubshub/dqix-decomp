@@ -4,9 +4,9 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_02221e84 {
-    unsigned int unknown_0_[4];
+    unsigned int state[4];
     unsigned int unknown_10_[2];
-    unsigned char unknown_18_[64];
+    unsigned char buffer[64];
 };
 
 #if defined(jpn)

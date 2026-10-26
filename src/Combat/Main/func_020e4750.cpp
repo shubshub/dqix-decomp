@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
-extern "C" int func_020e51e4(int arg0);
+extern "C" int func_020e51e4(int value);
 extern "C" void* func_020e462c(void*, int, void*, int);
 
 struct Struct_020e4750 {
-    void* unknown_0_;
-    int unknown_4_;
-    unsigned int unknown_8_0_ : 12;
-    unsigned int unknown_9_4_ : 6;
-    unsigned int unknown_a_2_ : 14;
+    void* field0;
+    int unk4;
+    unsigned int pad0 : 12;
+    unsigned int val : 6;
+    unsigned int pad1 : 14;
 };
 
 // USA: func_020e4750
-extern "C" ARM void* func_020e4750(void* arg0, struct Struct_020e4750* arg1) {
-    if (arg1->unknown_0_ != NULL) {
-        int var0 = func_020e51e4(arg1->unknown_9_4_);
-        arg0 = func_020e462c(arg0, var0, arg1->unknown_0_, 0);
+extern "C" ARM void* func_020e4750(void* obj, struct Struct_020e4750* state) {
+    if (state->field0 != NULL) {
+        int v = func_020e51e4(state->val);
+        obj = func_020e462c(obj, v, state->field0, 0);
     }
-    return arg0;
+    return obj;
 }

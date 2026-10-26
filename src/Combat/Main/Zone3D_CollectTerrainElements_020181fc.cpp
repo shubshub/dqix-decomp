@@ -9,7 +9,7 @@ enum { kElementResource_Terrain = 1 };
 enum { kGrottoTileCount = 16 * 16 };
 
 // Main, originally CollectMatchingElems020181fc (USA 0x020181fc, EUR 0x0201820c, JPN 0x02017f9c)
-ARM void Zone3D_CollectTerrainElements(void* zoneBytes) {
+extern "C" ARM void Zone3D_CollectTerrainElements(void* zoneBytes) {
     Zone3D* zone = (Zone3D*)zoneBytes;
     zone->terrainElementCount_ = 0;
     if (zone->isInMainGrottoFloor_23b8_) {

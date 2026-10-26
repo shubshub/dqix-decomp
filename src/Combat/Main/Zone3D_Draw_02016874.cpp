@@ -4,20 +4,20 @@
 #include "Graphics/LightingManager.h"
 #include "NitroSDK/NSBXX/RenderConfig.h"
 
-struct Struct_02016874_3;
+struct CombatEntryList;
 struct Struct_020ef0dc {
-    float unknown_0_;
-    float unknown_4_;
-    float unknown_8_;
+    float unknown0;
+    float unknown4;
+    float unknown8;
     int unknown_c_;
-    float unknown_10_;
+    float unknown10;
 };
-extern RenderFlags02016874 data_020ef0dc;
+extern Struct_020ef0dc data_020ef0dc;
 extern "C" void Zone3D_DrawLootables(CombatEntryList*);
 extern "C" void Zone3D_DrawChests(Zone3D*);
-int ZoneId_IsMainGrottoFloor(int);
-void RenderConfig_SetObjectRotation(void*);
-void Zone3D_DrawScriptNode(void*, void*);
+extern "C" int ZoneId_IsMainGrottoFloor(int);
+extern "C" void RenderConfig_SetObjectRotation(void*);
+extern "C" void Zone3D_DrawScriptNode(void*, void*);
 extern "C" void MI_Copy36B(const void*, void*);
 
 // ActiveGrottoClass::GetActiveGrottoEnviron's values used here (DetailedTreasureMapData::environ_: caves, ruins, ice,
@@ -34,10 +34,10 @@ extern "C" ARM void Zone3D_Draw(Zone3D* self) {
     Zone3D_DrawLootables((CombatEntryList*)self);
     Zone3D_DrawChests(self);
     self->unk_276c[0xb0] = 0;
-    data_020ef0dc.normalPending = 1;
+    data_020ef0dc.unknown_c_ = 1;
     if (ZoneId_IsMainGrottoFloor(self->currentZoneID_)) {
         if (((unsigned char*)self->unk_23bc)[0] == 0) return;
-        ProcessNode0201aedc(self);
+        func_0201aedc(self);
         int environment;
         int minX;
         int z;
@@ -46,20 +46,20 @@ extern "C" ARM void Zone3D_Draw(Zone3D* self) {
         environment = self->grotto_.GetActiveGrottoEnviron();
         mapWidth = self->grotto_.floorWidth_;
         GameObject* player = GameState::GetInstance()->GetLeader();
-        int playerX = (int)(((float)(player->obj3D_.position_.x + 0x4000) / 4096.0f) / 8.0f);
-        int playerZ = (int)(((float)(player->obj3D_.position_.z + 0x4000) / 4096.0f) / 8.0f);
+        int var6 = (int)(((float)(player->obj3D_.position_.x + 0x4000) / 4096.0f) / 8.0f);
+        int var7 = (int)(((float)(player->obj3D_.position_.z + 0x4000) / 4096.0f) / 8.0f);
         int x;
         int maxX, minZ;
         int maxZ = 1;
-        maxZ += playerZ;
+        maxZ += var7;
         if (environment == GrottoEnviron_Fire) {
-            minX = playerX - 4;
-            maxX = playerX + 4;
-            minZ = playerZ - 4;
+            minX = var6 - 4;
+            maxX = var6 + 4;
+            minZ = var7 - 4;
         } else {
-            var1 = var6 - 2;
-            var9 = var6 + 2;
-            var10 = var7 - 2;
+            minX = var6 - 2;
+            maxX = var6 + 2;
+            minZ = var7 - 2;
         }
         if (minX < 0) minX = 0;
         if (minZ < 0) minZ = 0;
@@ -93,7 +93,7 @@ extern "C" ARM void Zone3D_Draw(Zone3D* self) {
                         Mat3x3_WriteIdentity(&identity);
                         RenderConfig_SetObjectRotation(&identity);
                         RenderConfig::SubmitToFifo();
-                        var13->Draw(true);
+                        model->Draw(true);
                     }
                 }
             }
@@ -102,47 +102,47 @@ extern "C" ARM void Zone3D_Draw(Zone3D* self) {
         Model3D* model = Zone3D_GetScriptNode(self, 12)->elements->resource->model;
         LightingManager* manager = LightingManager::GetInstance();
         manager->ApplyAmbientColorToModel(model->rawInternalModel_);
-        if (playerZ < 4) {
-            for (int z = playerZ - 4; z < playerZ; z++) {
+        if (var7 < 4) {
+            for (int z = var7 - 4; z < var7; z++) {
                 if (z < 0) {
-                    for (int x = playerX - 4; x < playerX + 5; x++) {
+                    for (int x = var6 - 4; x < var6 + 5; x++) {
                         Vector3i position;
                         position.x = (int)(4096.0f * (8.0f * (float)x));
                         position.y = 0;
                         position.z = (int)(4096.0f * (8.0f * (float)z));
                         RenderConfig::SetObjectPosition(&position);
                         RenderConfig::SubmitToFifo();
-                        var17->Draw(true);
+                        model->Draw(true);
                     }
                 }
             }
         }
         if (var6 < 4) {
-            for (int var22 = var7 - 4; var22 < var7 + 2; var22++) {
-                for (int var23 = var6 - 4; var23 < var6; var23++) {
-                    if (var23 < 0) {
-                        Vector3i var24;
-                        var24.x = (int)(4096.0f * (8.0f * (float)var23));
-                        var24.y = 0;
-                        var24.z = (int)(4096.0f * (8.0f * (float)var22));
-                        RenderConfig::SetObjectPosition(&var24);
+            for (int z = var7 - 4; z < var7 + 2; z++) {
+                for (int x = var6 - 4; x < var6; x++) {
+                    if (x < 0) {
+                        Vector3i position;
+                        position.x = (int)(4096.0f * (8.0f * (float)x));
+                        position.y = 0;
+                        position.z = (int)(4096.0f * (8.0f * (float)z));
+                        RenderConfig::SetObjectPosition(&position);
                         RenderConfig::SubmitToFifo();
-                        var17->Draw(true);
+                        model->Draw(true);
                     }
                 }
             }
         }
-        if (var6 > var4 - 5) {
-            for (int var25 = var10; var25 < var11; var25++) {
-                for (int var26 = var6; var26 < var6 + 5; var26++) {
-                    if (var26 >= var4) {
-                        Vector3i var27;
-                        var27.x = (int)(4096.0f * (8.0f * (float)var26));
-                        var27.y = 0;
-                        var27.z = (int)(4096.0f * (8.0f * (float)var25));
-                        RenderConfig::SetObjectPosition(&var27);
+        if (var6 > mapWidth - 5) {
+            for (int z = minZ; z < maxZ; z++) {
+                for (int x = var6; x < var6 + 5; x++) {
+                    if (x >= mapWidth) {
+                        Vector3i position;
+                        position.x = (int)(4096.0f * (8.0f * (float)x));
+                        position.y = 0;
+                        position.z = (int)(4096.0f * (8.0f * (float)z));
+                        RenderConfig::SetObjectPosition(&position);
                         RenderConfig::SubmitToFifo();
-                        var17->Draw(true);
+                        model->Draw(true);
                     }
                 }
             }
@@ -158,6 +158,6 @@ extern "C" ARM void Zone3D_Draw(Zone3D* self) {
             Zone3D_DrawScriptNode(self, node);
             node = node->next;
         }
-        arg0->unk_830[3] = 0;
+        self->unk_830[3] = 0;
     }
 }

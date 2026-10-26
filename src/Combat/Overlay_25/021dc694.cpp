@@ -10,88 +10,88 @@ enum { Enum_ov025_021dc694_680 = 0x224, Enum_ov025_021dc694_332 = 0x138, Enum_ov
 enum { Enum_ov025_021dc694_680 = 0x2a8, Enum_ov025_021dc694_332 = 0x14c, Enum_ov025_021dc694_668 = 0x29c, Enum_ov025_021dc694_3756 = 0xeac, Enum_ov025_021dc694_22308 = 0x5724 };
 #endif
 
-extern "C" void* func_ov000_02160f20(void* arg0);
-extern "C" void* func_02079e2c(char* arg0, int arg1);
-extern "C" void func_ov025_021e88d8(void* arg0);
-extern "C" void func_ov025_021e8a40(char* arg0, int arg1, int arg2);
-extern "C" void func_ov025_021e8a4c(char* arg0, int arg1);
-extern "C" void func_ov025_021e8d20(void* arg0, int arg1);
-extern "C" void func_ov025_021db8d8(void* arg0);
-extern "C" void* func_ov000_02169a58(char* arg0, int arg1);
+extern "C" void* func_ov000_02160f20(void* obj);
+extern "C" void* func_02079e2c(char* p, int key);
+extern "C" void func_ov025_021e88d8(void* obj);
+extern "C" void func_ov025_021e8a40(char* obj, int a, int b);
+extern "C" void func_ov025_021e8a4c(char* obj, int v);
+extern "C" void func_ov025_021e8d20(void* obj, int v);
+extern "C" void func_ov025_021db8d8(void* obj);
+extern "C" void* func_ov000_02169a58(char* node, int value);
 
-struct Struct_02013fb4;
-extern "C" ARM void func_ov000_0216d1c4(int arg0, struct Struct_02013fb4* arg1, int arg2, int* arg3);
+struct StreamHeader;
+extern "C" ARM void func_ov000_0216d1c4(int arg0, struct StreamHeader* buffer, int length, int* out);
 
 extern int data_ov025_021ef404;
 extern char data_ov025_021ef454[];
 extern "C" char _ZZ21inline_ov025_021dcf14vE1s[];
 
 struct Struct_ov025_021dc694 {
-    char unknown_0_[4];
-    unsigned int unknown_4_0_ : 12;
-    char unknown_6_[0x18 - 0x8];
+    char pad0[4];
+    unsigned int key : 12;
+    char pad1[0x18 - 0x8];
     unsigned int : 5;
     unsigned int unknown_16_5_ : 7;
 };
 
 // USA: func_ov025_021dc694
-extern "C" ARM void func_ov025_021dc694(void* arg0) {
-    char* var0 = (char*)arg0;
-    void* var1 = func_ov000_02160f20(var0);
-    BackgroundLoader* var2 = BackgroundLoader::GetInstance();
+extern "C" ARM void func_ov025_021dc694(void* arg) {
+    char* obj = (char*)arg;
+    void* slot = func_ov000_02160f20(obj);
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
-    if (var2->GetTaskStatus(data_ov025_021ef404) == 0) {
+    if (loader->GetTaskStatus(data_ov025_021ef404) == 0) {
         return;
     }
 
-    void* var3 = 0;
-    unsigned int var4 = 0;
-    var2->GetLoadedFileByID(data_ov025_021ef404, &var3, &var4);
+    void* filePtr = 0;
+    unsigned int fileLen = 0;
+    loader->GetLoadedFileByID(data_ov025_021ef404, &filePtr, &fileLen);
 
-    Struct_02108e10* var5 = func_020797dc();
-    struct Struct_ov025_021dc694* var6 = (struct Struct_ov025_021dc694*)func_02079e2c((char*)var5, *(short*)var1);
+    ActionDataTables* table = func_020797dc();
+    struct Struct_ov025_021dc694* entry = (struct Struct_ov025_021dc694*)func_02079e2c((char*)table, *(short*)slot);
 
-    if (var3 != 0 && var4 != 0 && var6 != 0) {
-        char var7[0x50];
-        sprintf(var7, data_ov025_021ef454, var6->unknown_4_0_);
+    if (filePtr != 0 && fileLen != 0 && entry != 0) {
+        char pathBuf[0x50];
+        sprintf(pathBuf, data_ov025_021ef454, entry->key);
 
         const void* var8 = 0;
         unsigned int var9 = 0;
-        if (GetFileInNarc(var3, var7, &var8, &var9, 0)) {
+        if (GetFileInNarc(filePtr, pathBuf, &var8, &var9, 0)) {
             int var10 = 0;
-            func_ov000_0216d1c4((int)(var0 + 0x30), (struct Struct_02013fb4*)var8, var9, &var10);
+            func_ov000_0216d1c4((int)(obj + 0x30), (struct StreamHeader*)var8, var9, &var10);
             if (var10 != 0) {
-                func_ov025_021e88d8(var0 + Enum_ov025_021dc694_680);
-                func_ov025_021e8a40(var0 + Enum_ov025_021dc694_680, (int)(var0 + 0x30), (int)(var0 + Enum_ov025_021dc694_332));
-                func_ov025_021e8a4c(var0 + Enum_ov025_021dc694_680, *(int*)(var0 + Enum_ov025_021dc694_668));
-                func_ov025_021e8d20(var0 + Enum_ov025_021dc694_680, var10);
-                func_ov025_021db8d8(var0);
+                func_ov025_021e88d8(obj + Enum_ov025_021dc694_680);
+                func_ov025_021e8a40(obj + Enum_ov025_021dc694_680, (int)(obj + 0x30), (int)(obj + Enum_ov025_021dc694_332));
+                func_ov025_021e8a4c(obj + Enum_ov025_021dc694_680, *(int*)(obj + Enum_ov025_021dc694_668));
+                func_ov025_021e8d20(obj + Enum_ov025_021dc694_680, var10);
+                func_ov025_021db8d8(obj);
             }
         }
     }
 
-    int var11 = *(int*)(var0 + Enum_ov025_021dc694_3756);
-    if (var11 != 3 && var11 != 2 && var11 != 6) {
-        int var12 = var6->unknown_16_5_;
-        int var13 = var6->unknown_4_0_;
+    int status = *(int*)(obj + Enum_ov025_021dc694_3756);
+    if (status != 3 && status != 2 && status != 6) {
+        int var12 = entry->unknown_16_5_;
+        int val = entry->key;
         if (var12 == 0xc) {
-            var13 = 0x158;
+            val = 0x158;
         }
-        char* var14 = *(char**)(var0 + Enum_ov025_021dc694_22308);
-        int var15 = (int)func_ov000_02169a58(var14, var13);
+        char* node = *(char**)(obj + Enum_ov025_021dc694_22308);
+        int var15 = (int)func_ov000_02169a58(node, val);
         if (var15 != 0) {
-            func_ov025_021e88d8(var0 + Enum_ov025_021dc694_680);
-            func_ov025_021e8a40(var0 + Enum_ov025_021dc694_680, (int)(var0 + 0x30), (int)(var0 + Enum_ov025_021dc694_332));
-            func_ov025_021e8a4c(var0 + Enum_ov025_021dc694_680, *(int*)(var0 + Enum_ov025_021dc694_668));
-            func_ov025_021e8d20(var0 + Enum_ov025_021dc694_680, var15);
-            func_ov025_021db8d8(var0);
+            func_ov025_021e88d8(obj + Enum_ov025_021dc694_680);
+            func_ov025_021e8a40(obj + Enum_ov025_021dc694_680, (int)(obj + 0x30), (int)(obj + Enum_ov025_021dc694_332));
+            func_ov025_021e8a4c(obj + Enum_ov025_021dc694_680, *(int*)(obj + Enum_ov025_021dc694_668));
+            func_ov025_021e8d20(obj + Enum_ov025_021dc694_680, var15);
+            func_ov025_021db8d8(obj);
         } else {
-            *(int*)(var0 + Enum_ov025_021dc694_3756) = 5;
+            *(int*)(obj + Enum_ov025_021dc694_3756) = 5;
             *(int*)(_ZZ21inline_ov025_021dcf14vE1s + 0x10) = 0;
             *(int*)(_ZZ21inline_ov025_021dcf14vE1s + 8) = 0;
         }
     }
 
-    var2->RemoveTask(data_ov025_021ef404);
+    loader->RemoveTask(data_ov025_021ef404);
     data_ov025_021ef404 = -1;
 }

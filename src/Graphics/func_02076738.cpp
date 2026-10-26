@@ -4,14 +4,14 @@
 #include <globaldefs.h>
 
 // USA: func_02076738
-extern "C" ARM int func_02076738(Struct_02075cdc *arg0, const unsigned char *arg1, int) {
+extern "C" ARM int func_02076738(Struct_02075cdc *resource, const unsigned char *stream, int) {
     unsigned int var0;
     int var1;
     unsigned int var2;
     unsigned short var3;
-    unsigned int var4;
+    unsigned int entryIndex;
     int var5;
-    if (arg0->unknown_5e_ == 0) {
+    if (resource->unknown_5e_ == 0) {
         var5 = (int) (DISPCNT & 0x300010);
     } else {
         var5 = (int) (DISPCNTSUB & 0x300010);
@@ -26,39 +26,39 @@ extern "C" ARM int func_02076738(Struct_02075cdc *arg0, const unsigned char *arg
         default: return 0;
     }
 
-    unsigned short var6 = 0;
-    unsigned int var7       = 0;
-    memcpy(&var6, arg1, 2);
-    memcpy(&var7, arg1 + 2, 2);
-    arg1 += 4;
+    unsigned short groupCount = 0;
+    unsigned int format       = 0;
+    memcpy(&groupCount, stream, 2);
+    memcpy(&format, stream + 2, 2);
+    stream += 4;
 
     var2 = 0;
     var3   = 0;
-    while (var3 < var6) {
+    while (var3 < groupCount) {
         unsigned short var8;
         unsigned short var9;
         unsigned int var10;
-        memcpy(&var8, arg1, 2);
-        memcpy(&var9, arg1 + 2, 2);
-        memcpy(&var10, arg1 + 4, 4);
-        arg1 += 8;
+        memcpy(&var8, stream, 2);
+        memcpy(&var9, stream + 2, 2);
+        memcpy(&var10, stream + 4, 4);
+        stream += 8;
 
-        var4    = 0;
+        entryIndex    = 0;
         var0 = (1u << var1) - 1;
 
-        while (var4 < var10) {
+        while (entryIndex < var10) {
             unsigned short var11, var12, var13, var14;
-            memcpy(&var11, arg1, 2);
-            memcpy(&var12, arg1 + 2, 2);
-            memcpy(&var13, arg1 + 4, 2);
-            memcpy(&var14, arg1 + 6, 2);
+            memcpy(&var11, stream, 2);
+            memcpy(&var12, stream + 2, 2);
+            memcpy(&var13, stream + 4, 2);
+            memcpy(&var14, stream + 6, 2);
 
-            arg1 += 8;
+            stream += 8;
             unsigned int var15 = (8 << var13) * (8 << var14);
-            if (var7 == 3) var15 = var15 >> 1;
-            arg1 += var15;
+            if (format == 3) var15 = var15 >> 1;
+            stream += var15;
             var2 += (var15 + var0) & ~var0;
-            var4++;
+            entryIndex++;
         }
         var3++;
     }

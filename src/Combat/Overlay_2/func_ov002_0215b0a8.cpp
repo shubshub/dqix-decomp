@@ -8,20 +8,20 @@
 
 struct Container0205a3d0;
 struct Elem0205a3d0;
-void SpriteEntryList_PlayAnimation(struct Container0205a3d0* c, int key);
-struct Elem0205a3d0* SpriteEntryList_Find(struct Container0205a3d0* c, int key);
-void SpriteEntryList_SetPosition(struct Container0205a3d0* c, int key, short a, short b);
-void SpriteEntryList_SetFirstObject(struct Container0205a3d0* c, int key, int val);
+extern "C" void SpriteEntryList_PlayAnimation(struct Container0205a3d0* c, int key);
+extern "C" struct Elem0205a3d0* SpriteEntryList_Find(struct Container0205a3d0* c, int key);
+extern "C" void SpriteEntryList_SetPosition(struct Container0205a3d0* c, int key, short a, short b);
+extern "C" void SpriteEntryList_SetFirstObject(struct Container0205a3d0* c, int key, int val);
 
 struct Container0205a330;
-void SpriteEntryList_AdvanceAnimations(struct Container0205a330* c, int arg);
+extern "C" void SpriteEntryList_AdvanceAnimations(struct Container0205a330* c, int arg);
 
 extern "C" void SpriteContext_DrawEntries(void* obj);
 
 // USA: func_ov002_0215b0a8
 // KEEP-NAME
-extern "C" ARM void func_ov002_0215b0a8(char* arg0) {
-    if ((*(int*)(arg0 + REGION_VALUE(0x22ac, 0x247c)) & 8) == 0) {
+extern "C" ARM void func_ov002_0215b0a8(char* obj) {
+    if ((*(int*)(obj + REGION_VALUE(0x22ac, 0x247c)) & 8) == 0) {
         return;
     }
     struct Container0205a3d0* c = *(struct Container0205a3d0**)(*(char**)(obj + REGION_VALUE(0x19c0, 0x1a68)) + 0x3c);

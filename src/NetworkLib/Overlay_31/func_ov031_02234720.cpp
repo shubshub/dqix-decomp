@@ -8,9 +8,9 @@ extern "C" void func_ov031_02234770(void);
 
 // USA: func_ov031_02234720
 extern "C" ARM void func_ov031_02234720(void) {
-	int var0 = func_ov031_02222e0c();
-	if (var0 == 0) goto isZero;
-	if (var0 == 1) goto isOne;
+	int v = func_ov031_02222e0c();
+	if (v == 0) goto isZero;
+	if (v == 1) goto isOne;
 	return;
 isZero:
 	func_ov031_02236878(7);

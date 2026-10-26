@@ -8,8 +8,8 @@
 #endif
 
 // USA: func_02041628
-extern "C" ARM void func_02041628(void* arg0, int arg1, int) {
-    unsigned char* var0 = (unsigned char*)arg0 + RG(0x2e8, 0x2dc);
-    *var0 = arg1;
-    ((Object3D*)arg0)->MaybeSetBCFGAnimation(*var0, 0);
+extern "C" ARM void func_02041628(void* obj, int v, int) {
+    unsigned char* p = (unsigned char*)obj + RG(0x2e8, 0x2dc);
+    *p = v;
+    ((Object3D*)obj)->SetAnimationByIndex(*p, 0);
 }

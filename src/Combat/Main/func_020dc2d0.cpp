@@ -4,27 +4,27 @@
 #include "Resource/GameResources.h"
 
 extern "C" {
-    void* func_0202ae18(GrottoStruct* arg0);
-    int func_0202c508(void* arg0);
-    void* func_02012fe4(void);
+    void* LinkSession_GetInstance(GrottoStruct* grotto);
+    int LinkSession_IsHostOrSolo(void* something);
+    void* Zone3D_GetInstance(void);
 }
 
-struct Struct_02038598_4;
-struct Struct_02038598_5;
+struct FlagWord020466f4;
+struct ListHead02046b60;
 struct Struct_02093b90_2;
 
 struct Struct_020dc2d0 {
-    char unknown_0_[0xc];
+    char pad[0xc];
     unsigned char unknown_c_0_ : 4;
     unsigned char unknown_c_4_ : 4;
 };
 
-extern "C" void func_020dc214(int arg0);
+extern "C" void func_020dc214(int mode);
 extern "C" int* func_020936f8(void);
-extern "C" void func_020941b0(struct Struct_02093b90_2* arg0);
-extern "C" void* func_020d6c00(void);
-extern "C" void func_020466f4(struct Struct_02038598_4* arg0, unsigned int arg1);
-extern "C" int func_02046b60(struct Struct_02038598_5* arg0, int arg1);
+extern "C" void func_020941b0(struct Struct_02093b90_2* p);
+extern "C" void* GlobalFlags_GetInstance(void);
+extern "C" void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
+extern "C" int func_02046b60(struct ListHead02046b60* list, int id);
 
 #if defined(jpn)
 enum { Enum_020dc2d0_1788 = 0x4ec };
@@ -33,49 +33,49 @@ enum { Enum_020dc2d0_1788 = 0x6fc };
 #endif
 
 // USA: func_020dc2d0
-extern "C" ARM void func_020dc2d0(int arg0) {
-    GameState* var0 = GameState::GetInstance();
-    GrottoStruct* var1 = var0->GetGrottoStruct();
-    void* var2 = func_0202ae18(var1);
-    void* var3 = func_02012fe4();
-    int var4;
-    int var5;
-    Struct_020dc2d0* var6 = *(Struct_020dc2d0**)((char*)var3 + 0x8);
+extern "C" ARM void func_020dc2d0(int mode) {
+    GameState* battle = GameState::GetInstance();
+    GrottoStruct* grotto = battle->GetGrottoStruct();
+    void* something = LinkSession_GetInstance(grotto);
+    void* ptr = Zone3D_GetInstance();
+    int flag1;
+    int flag2;
+    Struct_020dc2d0* field8 = *(Struct_020dc2d0**)((char*)ptr + 0x8);
 
-    int var7 = ((int)GetGameResources());
-    var4 = 0;
-    void* var8 = *(void**)(var7 + 0x3000 + Enum_020dc2d0_1788);
-    var5 = var4;
+    int base = ((int)GetGameResources());
+    flag1 = 0;
+    void* list = *(void**)(base + 0x3000 + Enum_020dc2d0_1788);
+    flag2 = flag1;
 
-    int var9 = func_02046b60((Struct_02038598_5*)var8, 0x43);
+    int var9 = func_02046b60((ListHead02046b60*)list, 0x43);
     if (var9) {
-        var4 = 1;
+        flag1 = 1;
     }
 
-    if (var1->unknown_0[0] != 0 && var1->unknown_0[1] != 0) {
-        if (func_0202c508(var2) != 0 && var6 != NULL) {
-            if (var6->unknown_c_0_ == 0) {
-                var4 = 1;
+    if (grotto->unknown_0[0] != 0 && grotto->unknown_0[1] != 0) {
+        if (LinkSession_IsHostOrSolo(something) != 0 && field8 != NULL) {
+            if (field8->unknown_c_0_ == 0) {
+                flag1 = 1;
             }
         }
     }
 
-    if (arg0 == 1) {
-        var4 = 1;
-    } else if (arg0 == 2) {
-        var4 = 0;
-    } else if (arg0 == 3) {
-        var5 = 1;
+    if (mode == 1) {
+        flag1 = 1;
+    } else if (mode == 2) {
+        flag1 = 0;
+    } else if (mode == 3) {
+        flag2 = 1;
     }
 
-    if (var4) {
+    if (flag1) {
         func_020dc214(1);
-    } else if (var5) {
+    } else if (flag2) {
         func_020dc214(2);
     } else {
         func_020dc214(0);
     }
 
     func_020941b0((Struct_02093b90_2*)func_020936f8());
-    func_020466f4((Struct_02038598_4*)func_020d6c00(), 0x41);
+    FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0x41);
 }

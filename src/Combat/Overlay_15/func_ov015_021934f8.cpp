@@ -16,32 +16,32 @@
 struct Struct_ov015_0218b810;
 struct Struct_ov015_02192600_3;
 struct Struct_0204a120_2;
-struct Struct_0203d028;
-struct Struct_0200f3a4_9;
-struct Struct_0203bdb0;
+struct Foo0207df50;
+struct S_02010124;
+struct Obj0203bdb0;
 
 struct Struct_ov015_021934f8 {
-    char unknown_0_[0x2c8];
+    char data[0x2c8];
 };
 
-struct Struct_ov015_021934f8_2 {
-    char unknown_0_[0x195a];
-    unsigned char unknown_195a_;
+struct Controller021934f8 {
+    char pad0[0x195a];
+    unsigned char mode;
 };
 
 struct Struct_ov015_021934f8_3 {
-    char unknown_0_[0x3c];
-    int unknown_3c_[4];
-    int unknown_4c_[6];
+    char pad0[0x3c];
+    int config[4];
+    int list[6];
     char unknown_64_[0x70 - 0x64];
     char unknown_70_[0x84 - 0x70];
-    void* unknown_84_;
-    SafeAllocator unknown_88_;
-    SafeAllocator unknown_9c_;
-    SafeAllocator unknown_b0_;
+    void* buffer;
+    SafeAllocator partsAllocator;
+    SafeAllocator monstersAllocator;
+    SafeAllocator soundsAllocator;
     char unknown_c4_[0x124 - 0xc4];
-    char unknown_124_[0x194 - 0x124];
-    int unknown_194_;
+    char tables[0x194 - 0x124];
+    int phase;
     int unknown_198_;
     char unknown_19c_[0x1a4 - 0x19c];
     int unknown_1a4_;
@@ -52,78 +52,78 @@ struct Struct_ov015_021934f8_3 {
     unsigned long long unknown_248_;
     float unknown_250_;
     char unknown_254_[0x268 - 0x250];
-    char unknown_26c_[0x52];
+    char scratch[0x52];
 };
 
-void SetWord0x0_0200fb84(int*, int);
+extern "C" void func_0200fb84(int*, int);
 extern "C" void GXx_SetMasterBrightness_(short*, int);
 extern "C" void* OamManager_GetInstance();
-void OamManager_Init(char*);
+extern "C" void OamManager_Init(char*);
 void LockStagedTextureVRAMCopying();
 extern "C" void MIi_CpuClearFast(unsigned int, unsigned int, unsigned int);
-void GX_SetGraphicsMode(int, int, int);
-void GXS_SetGraphicsMode(unsigned int);
+extern "C" void GX_SetGraphicsMode(int, int, int);
+extern "C" void GXS_SetGraphicsMode(unsigned int);
 void UpdateVRAMStagingVRAMBanks();
 void UnlockStagedTextureVRAMCopying();
 void Finish3DRendering();
 extern "C" void func_020c51dc();
-void ResetMatrixStacks020c537c();
-void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
-void GlyphBitmapContext_SetBuffer(void*);
-void GlyphMetrics_SetDisplayMode(int);
-void GlyphBitmapContext_SetUpLayer(int);
-void ConfigurePairMode020bb48c(unsigned int, int);
-void InitGlobalStateAndInstallHandlers020bb780(void*, int);
-void Init02192600(struct Obj02192600*);
-void Set3DClearColor(int, int, int, int, int);
-void ZeroFourFields0218b810(struct Struct0218b810*);
+extern "C" void func_020c537c();
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion*, unsigned int);
+extern "C" void GlyphBitmapContext_SetBuffer(void*);
+extern "C" void GlyphMetrics_SetDisplayMode(int);
+extern "C" void GlyphBitmapContext_SetUpLayer(int);
+extern "C" void func_020bb48c(unsigned int, int);
+extern "C" void func_020bb780(void*, int);
+extern "C" void func_ov015_02192600(struct Struct_ov015_02192600_3*);
+extern "C" void Set3DClearColor(int, int, int, int, int);
+extern "C" void func_ov015_0218b810(struct Struct_ov015_0218b810*);
 extern "C" void func_ov015_0218ba44(void*, int);
 extern "C" void* memset(void*, int, unsigned int);
-void ItemTable_Init(void*);
+extern "C" void ItemTable_Init(void*);
 extern "C" void* ExtractFileFromGP2(const char*, const char*, unsigned int*);
 extern "C" void func_020dea64(void*, SafeAllocator*, void*, unsigned int, const void*, int);
-void Clear12Bytes0206efc4(void*);
-void LockedLookupDispatch0206efd8(void*, void*);
-void ClearStruct020709d8(void*);
-void LockedLookupDispatch020709ec(void*, void*);
+extern "C" void func_0206efc4(void*);
+extern "C" void func_0206efd8(void*, void*);
+extern "C" void func_020709d8(void*);
+extern "C" void func_020709ec(void*, void*);
 extern "C" void Camera_Init(void*);
-void ResetState020a2cf0(struct Struct020A2CF0*);
-void InitCombatController020a2010(void*);
-void FollowCamera_DisableFollow(void*);
-void GameState_SetCamera(GameState*, int);
+extern "C" void func_020a2cf0(struct Struct_0204a120_2*);
+extern "C" void func_020a2010(void*);
+extern "C" void FollowCamera_DisableFollow(void*);
+extern "C" void GameState_SetCamera(GameState*, int);
 extern "C" void func_ov015_02192544(void*);
-void SePlayer_LoadArchive(void*, int);
-void OS_WaitVBlankIntr();
-void RestoreDisplayMode_020c38d4();
-void GameState_ResetTiming(S_02010124*);
-void SetActiveDmaChannel020c3a0c(int);
+extern "C" void SePlayer_LoadArchive(void*, int);
+extern "C" void OS_WaitVBlankIntr();
+extern "C" void func_020c38d4();
+extern "C" void GameState_ResetTiming(S_02010124*);
+extern "C" void func_020c3a0c(int);
 unsigned long long GetCurrentTimestamp();
-void* MessageSystem_GetInstance();
-void SetField0x1e28_02042b30(void*, void*);
-void VramState_Rewind(struct Foo0207df50*);
-void VramState_Restore(char*);
+extern "C" void* MessageSystem_GetInstance();
+extern "C" void func_02042b30(void*, void*);
+extern "C" void VramState_Rewind(struct Foo0207df50*);
+extern "C" void VramState_Restore(char*);
 extern "C" void func_020432c4(void*);
-void VramState_Save(char*);
+extern "C" void VramState_Save(char*);
 extern "C" void func_0204500c(void*, const void*, int, int);
 extern "C" void func_0204359c(void*, int);
 extern "C" void func_020439b0(void*, int);
 extern "C" void func_ov015_02192700(void*);
-void EmptyStub02012de4(AllocatorUnion*);
-void Main_UpdateLidAndInput();
-void DispatchToActiveEntries020bc028(int);
+extern "C" void func_02012de4(AllocatorUnion*);
+extern "C" void Main_UpdateLidAndInput();
+extern "C" void func_020bc028(int);
 extern "C" void func_ov015_02190e88(void*);
 extern "C" void func_ov015_02191294(void*);
 extern "C" void func_ov015_02191668(void*);
 extern "C" void func_ov015_02190d7c(void*);
 extern "C" void func_ov015_021901c8(void*);
-void OamManager_FlushBuffers(void* oam);
-void SoundPlayer_PlayPending(void*);
+extern "C" void OamManager_FlushBuffers(void* oam);
+extern "C" void SoundPlayer_PlayPending(void*);
 extern "C" void func_020bbd9c();
 extern "C" unsigned long long _ll_udiv(unsigned long long, unsigned long long);
 extern "C" float func_0200c76c(unsigned long long);
 extern "C" int GXx_GetMasterBrightness_(unsigned short volatile*);
-void OamManager_UploadBuffers(Obj0203bdb0*);
-void FlushOrClearBuffer020290ac(int);
+extern "C" void OamManager_UploadBuffers(Obj0203bdb0*);
+extern "C" void func_020290ac(int);
 
 extern AllocatorUnion g_mainAllocator;
 extern const char* g_itemDataArchive;
@@ -138,21 +138,21 @@ extern int data_ov015_02194528[];
 #define BG0HOFS_SUB (*(volatile int*)0x04001010)
 
 // USA: func_ov015_021934f8
-extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* arg0)
+extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* self)
 {
-    GameState* var0 = GameState::GetInstance();
-    if (var0 == NULL)
+    GameState* gs = GameState::GetInstance();
+    if (gs == NULL)
         return;
-    SetWord0x0_0200fb84((int*)gs, (int)self);
+    func_0200fb84((int*)gs, (int)self);
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     loader->ClearQueue();
     FontBankLoader* global = FontBankLoader_GetInstance();
-    BlankFunction02094b3c(global, 10);
-    BlankFunction02094b3c(global, 12);
-    BlankFunction02094b34(global, 0x69, 0, 0, 0);
-    BlankFunction02094b38(global, 0x69);
-    BlankFunction02094b38(global, 0);
-    while (!AlwaysTrue02094b4c(global))
+    func_02094b3c(global, 10);
+    func_02094b3c(global, 12);
+    func_02094b34(global, 0x69, 0, 0, 0);
+    func_02094b38(global, 0x69);
+    func_02094b38(global, 0);
+    while (!func_02094b4c(global))
         loader->RemoveAllLocks();
 
     GXx_SetMasterBrightness_(MASTER_BRIGHT, -16);
@@ -194,11 +194,11 @@ extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* arg0)
     GlyphBitmapContext_SetBuffer(self->buffer);
     GlyphMetrics_SetDisplayMode(4);
     GlyphBitmapContext_SetUpLayer(1);
-    ConfigurePairMode020bb48c(3, 1);
-    InitGlobalStateAndInstallHandlers020bb780((void*)0x8000, 1);
-    Init02192600((struct Obj02192600*)self);
+    func_020bb48c(3, 1);
+    func_020bb780((void*)0x8000, 1);
+    func_ov015_02192600((struct Struct_ov015_02192600_3*)self);
     Set3DClearColor(0x594a, 0x10, 0x7fff, 0, 0);
-    ZeroFourFields0218b810((struct Struct0218b810*)&self->config);
+    func_ov015_0218b810((struct Struct_ov015_0218b810*)&self->config);
     func_ov015_0218ba44(&self->config, 0);
     memset(self->scratch, 0, 0x52);
 
@@ -218,31 +218,31 @@ extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* arg0)
     self->monstersAllocator.ResetAllocatorPointer();
     self->monstersAllocator.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x20000), 0x20000);
     self->monstersAllocator.Reset();
-    Clear12Bytes0206efc4(self->lookupA);
-    LockedLookupDispatch0206efd8(self->lookupA, &self->monstersAllocator);
+    func_0206efc4(self->unknown_64_);
+    func_0206efd8(self->unknown_64_, &self->monstersAllocator);
 
     self->soundsAllocator.ResetAllocatorPointer();
     self->soundsAllocator.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x20000), 0x20000);
     self->soundsAllocator.Reset();
-    ClearStruct020709d8(self->lookupB);
-    LockedLookupDispatch020709ec(self->lookupB, &self->soundsAllocator);
+    func_020709d8(self->unknown_70_);
+    func_020709ec(self->unknown_70_, &self->soundsAllocator);
 
-    CombatController021934f8 combat;
+    Struct_ov015_021934f8 combat;
     Camera_Init(&combat);
-    ResetState020a2cf0((struct Struct020A2CF0*)&combat);
-    InitCombatController020a2010(&combat);
+    func_020a2cf0((struct Struct_0204a120_2*)&combat);
+    func_020a2010(&combat);
     FollowCamera_DisableFollow(&combat);
     GameState_SetCamera(gs, (int)&combat);
     func_ov015_02192544(self);
     SePlayer_LoadArchive(&g_sePlayer, 0x65);
     OS_WaitVBlankIntr();
-    RestoreDisplayMode_020c38d4();
+    func_020c38d4();
     DISPCNTSUB = DISPCNTSUB | 0x10000;
     GameState_ResetTiming((S_02010124*)gs);
-    SetActiveDmaChannel020c3a0c(0);
+    func_020c3a0c(0);
     GetCurrentTimestamp();
     Controller021934f8* controller = (Controller021934f8*)MessageSystem_GetInstance();
-    SetField0x1e28_02042b30(controller, self->tables);
+    func_02042b30(controller, self->tables);
     VramState_Rewind((struct Foo0207df50*)self->tables);
     VramState_Restore(self->tables);
     func_020432c4(controller);
@@ -251,23 +251,23 @@ extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* arg0)
     controller->mode = 8;
     for (unsigned int i = 0; i < 0x10; i++)
     {
-        func_0204359c(var7, 0x10);
-        func_020439b0(var7, 0);
+        func_0204359c(controller, 0x10);
+        func_020439b0(controller, 0);
     }
     self->phase = 0;
-    self->unk198 = 2;
-    self->quitRequested = 0;
+    self->unknown_198_ = 2;
+    self->unknown_1a4_ = 0;
     func_ov015_02192700(self);
-    EmptyStub02012de4(&g_mainAllocator);
+    func_02012de4(&g_mainAllocator);
     unsigned long long last = GetCurrentTimestamp();
 
     for (;;)
     {
         Main_UpdateLidAndInput();
-        int quit;
+        int var10;
         if (g_keyManager.TestKeysHeld(4) && g_keyManager.TestKeysHeld(8))
             var10 = 1;
-        else if (arg0->unknown_1a4_ == 0 && g_keyManager.TestKeysPressed(2))
+        else if (self->unknown_1a4_ == 0 && g_keyManager.TestKeysPressed(2))
             var10 = 1;
         else
             var10 = 0;
@@ -277,17 +277,17 @@ extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* arg0)
             break;
         }
         if (g_keyManager.TestKeysPressed(8))
-            func_ov015_02192544(arg0);
-        switch (arg0->unknown_194_)
+            func_ov015_02192544(self);
+        switch (self->phase)
         {
         case 0:
-            func_ov015_02190e88(arg0);
+            func_ov015_02190e88(self);
             break;
         case 1:
-            func_ov015_02191294(arg0);
+            func_ov015_02191294(self);
             break;
         case 2:
-            func_ov015_02191668(arg0);
+            func_ov015_02191668(self);
             break;
         }
         func_ov015_02190d7c(self);
@@ -296,37 +296,37 @@ extern "C" ARM void func_ov015_021934f8(Struct_ov015_021934f8_3* arg0)
         SoundPlayer_PlayPending(&g_sePlayer);
         func_020bbd9c();
 
-        unsigned long long var11 = arg0->unknown_240_;
-        arg0->unknown_240_ = _ll_udiv(GetCurrentTimestamp() * 64000, 33514);
-        if (arg0->unknown_238_ < arg0->unknown_240_)
+        unsigned long long var11 = self->unknown_240_;
+        self->unknown_240_ = _ll_udiv(GetCurrentTimestamp() * 64000, 33514);
+        if (self->unknown_238_ < self->unknown_240_)
         {
-            unsigned long long var12 = arg0->unknown_240_ - arg0->unknown_238_;
-            arg0->unknown_248_ = (var12 + arg0->unknown_248_) >> 1;
+            unsigned long long delta = self->unknown_240_ - self->unknown_238_;
+            self->unknown_248_ = (delta + self->unknown_248_) >> 1;
         }
-        if (var11 < arg0->unknown_240_)
+        if (var11 < self->unknown_240_)
         {
-            arg0->unknown_230_ += _ll_udiv(arg0->unknown_240_ - var11, 1000);
-            if (arg0->unknown_230_ > 1000)
+            self->unknown_230_ += _ll_udiv(self->unknown_240_ - var11, 1000);
+            if (self->unknown_230_ > 1000)
             {
-                arg0->unknown_230_ = 0;
-                arg0->unknown_250_ = 1000000.0f / func_0200c76c(arg0->unknown_248_);
+                self->unknown_230_ = 0;
+                self->unknown_250_ = 1000000.0f / func_0200c76c(self->unknown_248_);
             }
         }
         loader->RemoveAllLocks();
-        self->prevTime = _ll_udiv(GetCurrentTimestamp() * 64000, 33514);
+        self->unknown_238_ = _ll_udiv(GetCurrentTimestamp() * 64000, 33514);
         if (GXx_GetMasterBrightness_((unsigned short volatile*)MASTER_BRIGHT) > -16)
             OS_WaitVBlankIntr();
         GetCurrentTimestamp();
         OamManager_UploadBuffers((Obj0203bdb0*)context);
-        FlushOrClearBuffer020290ac(1);
+        func_020290ac(1);
         gs->CalculateDeltaTime(_ll_udiv((GetCurrentTimestamp() - last) * 64000, 33514));
         last = GetCurrentTimestamp();
     }
 
-    BlankFunction02094b38(global, 0x69);
+    func_02094b38(global, 0x69);
     FontBankLoader_CancelLoads(global);
     SePlayer_LoadArchive(&g_sePlayer, 0x64);
-    InitCombatController020a2010(&combat);
-    ResetState020a2cf0((struct Struct020A2CF0*)&combat);
+    func_020a2010(&combat);
+    func_020a2cf0((struct Struct_0204a120_2*)&combat);
     Camera_Init(&combat);
 }

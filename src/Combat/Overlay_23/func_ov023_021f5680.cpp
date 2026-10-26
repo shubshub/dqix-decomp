@@ -2,51 +2,51 @@
 #include "Util/Random.h"
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8;
+struct Variant02030b0c;
 
 struct Struct_ov023_021f5680 {
-    unsigned int unknown_0_0_ : 7;
-    unsigned int unknown_0_7_ : 25;
+    unsigned int lo : 7;
+    unsigned int hi : 25;
 };
 
 struct Struct_ov023_021f5680_2 {
-    char unknown_0_[4];
-    short unknown_4_;
-    struct Struct_ov023_021f5680 unknown_8_;
-    char unknown_c_[0x28 - 12];
+    char pad0[4];
+    short field4;
+    struct Struct_ov023_021f5680 packed;
+    char pad1[0x28 - 12];
 };
 
 struct Struct_ov023_021fff08_3 {
-    unsigned char unknown_0_;
-    char unknown_1_[1];
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
-    char unknown_4_[8];
-    struct Struct_ov023_021f5680_2* unknown_c_;
+    unsigned char count;
+    char pad0[1];
+    unsigned char flag;
+    unsigned char index;
+    char pad1[8];
+    struct Struct_ov023_021f5680_2* records;
 };
 
 extern struct Struct_ov023_021fff08_3 data_ov023_021fff08;
 extern unsigned char data_ov023_021fff1c[];
 
 // USA: func_ov023_021f5680
-extern "C" ARM int func_ov023_021f5680(struct Struct_0201c1c8* arg0) {
-    if (data_ov023_021fff08.unknown_2_ == 0) {
-        data_ov023_021fff08.unknown_3_ = data_ov023_021fff08.unknown_3_ + 1;
+extern "C" ARM int func_ov023_021f5680(struct Variant02030b0c* obj) {
+    if (data_ov023_021fff08.flag == 0) {
+        data_ov023_021fff08.index = data_ov023_021fff08.index + 1;
         return 1;
     }
-    int var0 = ((Script::Parameter*)arg0)->ToInt();
-    int var1 = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 8)))->ToInt();
-    int var2 = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 0x10)))->ToInt();
-    int var3 = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 0x18)))->ToInt();
-    for (int var4 = 0; var4 < data_ov023_021fff08.unknown_0_; var4++) {
-        if (data_ov023_021fff08.unknown_3_ == data_ov023_021fff1c[var4]) {
-            struct Random* var5 = GetBTRandom();
-            data_ov023_021fff08.unknown_c_[var4].unknown_4_ = (short)var0;
-            ((struct Struct_ov023_021f5680*)((char*)data_ov023_021fff08.unknown_c_ + 8 + var4 * 0x28))->unknown_0_7_ = var1;
-            int var6 = NextRandomBetween(var5, var2, var3);
-            ((struct Struct_ov023_021f5680*)((char*)data_ov023_021fff08.unknown_c_ + 8 + var4 * 0x28))->unknown_0_0_ = var6;
+    int v0 = ((Script::Parameter*)obj)->ToInt();
+    int v1 = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 8)))->ToInt();
+    int v2 = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 0x10)))->ToInt();
+    int v3 = ((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 0x18)))->ToInt();
+    for (int i = 0; i < data_ov023_021fff08.count; i++) {
+        if (data_ov023_021fff08.index == data_ov023_021fff1c[i]) {
+            struct Random* rng = GetBTRandom();
+            data_ov023_021fff08.records[i].field4 = (short)v0;
+            ((struct Struct_ov023_021f5680*)((char*)data_ov023_021fff08.records + 8 + i * 0x28))->hi = v1;
+            int n = NextRandomBetween(rng, v2, v3);
+            ((struct Struct_ov023_021f5680*)((char*)data_ov023_021fff08.records + 8 + i * 0x28))->lo = n;
         }
     }
-    data_ov023_021fff08.unknown_3_ = data_ov023_021fff08.unknown_3_ + 1;
+    data_ov023_021fff08.index = data_ov023_021fff08.index + 1;
     return 1;
 }

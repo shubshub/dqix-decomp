@@ -2,32 +2,32 @@
 #include "Memory/SafeAllocator.h"
 #include "Resource/Script.h"
 
-struct Struct_0201d530 { int unknown_0_; union { int unknown_0_; float unknown1_0_; } unknown_4_; };
+struct Struct_0201d530 { int type; union { int i; float f; } value; };
 
 struct Struct_ov000_02184264_30 {
-    char unknown_0_[8];
-    SafeAllocator* unknown_8_;
+    char pad[8];
+    SafeAllocator* allocator;
 };
 extern struct Struct_ov000_02184264_30 data_ov000_02184264;
 
 struct Struct_ov000_0216cd28 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
+    int type;
+    int field4;
+    int field8;
 };
 
 extern "C" void func_ov000_02169b78(struct Struct_ov000_0216cd28*);
 
 // USA: func_ov000_0216cd28
-extern "C" ARM int func_ov000_0216cd28(struct Struct_0201d530* arg0, int arg1) {
-    struct Struct_ov000_0216cd28* var0 = (struct Struct_ov000_0216cd28*)data_ov000_02184264.unknown_8_->Allocate(0xc);
-    var0->unknown_0_ = 0x7b;
-    int var1 = 0xf000;
-    if (arg1 > 0) {
-        float var2 = ((Script::Parameter*)arg0)->ToFloat();
-        var1 = (int)(var2 * 4096.0f);
+extern "C" ARM int func_ov000_0216cd28(struct Struct_0201d530* obj, int flag) {
+    struct Struct_ov000_0216cd28* e = (struct Struct_ov000_0216cd28*)data_ov000_02184264.allocator->Allocate(0xc);
+    e->type = 0x7b;
+    int result = 0xf000;
+    if (flag > 0) {
+        float val = ((Script::Parameter*)obj)->ToFloat();
+        result = (int)(val * 4096.0f);
     }
-    var0->unknown_8_ = var1;
-    func_ov000_02169b78(var0);
+    e->field8 = result;
+    func_ov000_02169b78(e);
     return 1;
 }

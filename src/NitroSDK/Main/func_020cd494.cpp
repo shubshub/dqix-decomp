@@ -3,9 +3,9 @@
 
 struct Struct_020cd494
 {
-    Struct_020cd494* unknown_0_;
-    void (*unknown_4_)(void* object);
-    void* unknown_8_;
+    Struct_020cd494* next;
+    void (*destructor)(void* object);
+    void* object;
 };
 
 int DisableIRQInterrupts();
@@ -14,70 +14,70 @@ int SetIRQInterruptState(int);
 extern Struct_020cd494* data_020f33b0;
 
 // USA: func_020cd494
-extern "C" ARM void func_020cd494(const OverlayMetadata& arg0)
+extern "C" ARM void func_020cd494(const OverlayMetadata& overlay)
 {
     for (;;)
     {
-        Struct_020cd494* var0 = NULL;
-        Struct_020cd494* var1 = NULL;
-        const unsigned int var2 = arg0.loadAddress;
-        const unsigned int var3 = var2 + (arg0.uncompressedSize + arg0.bssSectionSize);
+        Struct_020cd494* head = NULL;
+        Struct_020cd494* tail = NULL;
+        const unsigned int var2 = overlay.loadAddress;
+        const unsigned int var3 = var2 + (overlay.uncompressedSize + overlay.bssSectionSize);
 
         {
             int var4 = DisableIRQInterrupts();
-            Struct_020cd494* var5 = NULL;
-            Struct_020cd494* var6 = data_020f33b0;
-            Struct_020cd494* var7 = var6;
+            Struct_020cd494* prev = NULL;
+            Struct_020cd494* base = data_020f33b0;
+            Struct_020cd494* entry = base;
 
-            while (var7)
+            while (entry)
             {
-                Struct_020cd494* var8 = var7->unknown_0_;
-                const unsigned int var9 = (unsigned int)var7->unknown_4_;
-                const unsigned int var10 = (unsigned int)var7->unknown_8_;
+                Struct_020cd494* next = entry->next;
+                const unsigned int destructor = (unsigned int)entry->destructor;
+                const unsigned int object = (unsigned int)entry->object;
 
-                if (var10 == 0 && var9 >= var2 && var9 < var3 ||
-                    var10 >= var2 && var10 < var3)
+                if (object == 0 && destructor >= var2 && destructor < var3 ||
+                    object >= var2 && object < var3)
                 {
-                    if (!var1)
+                    if (!tail)
                     {
-                        var0 = var7;
+                        head = entry;
                     }
                     else
                     {
-                        var1->unknown_0_ = var7;
+                        tail->next = entry;
                     }
-                    if (var6 == var7)
+                    if (base == entry)
                     {
-                        var6 = data_020f33b0 = var8;
+                        base = data_020f33b0 = next;
                     }
-                    var1 = var7, var7->unknown_0_ = NULL;
-                    if (var5)
+                    tail = entry, entry->next = NULL;
+                    if (prev)
                     {
-                        var5->unknown_0_ = var8;
+                        prev->next = next;
                     }
                 }
                 else
                 {
-                    var5 = var7;
+                    prev = entry;
                 }
-                var7 = var8;
+                entry = next;
             }
             SetIRQInterruptState(var4);
         }
 
-        if (!var0)
+        if (!head)
         {
             break;
         }
 
         do
         {
-            Struct_020cd494* var11 = var0->unknown_0_;
-            if (var0->unknown_4_)
+            Struct_020cd494* next = head->next;
+            if (head->destructor)
             {
-                var0->unknown_4_(var0->unknown_8_);
+                head->destructor(head->object);
             }
-            var0 = var11;
-        } while (var0);
+            head = next;
+        } while (head);
     }
 }

@@ -1,10 +1,11 @@
 #include <globaldefs.h>
 #include "World/ZoneFeatures.h"
 
-// USA: func_0201e2d8
-ARM Struct_020134e0::Struct_020146fc* Struct_020134e0::func_0201e2d8(int arg0) {
-    if (arg0 < 0 || unknown_4_ <= arg0) {
+// USA: GetOpcode64Entry
+// Main, originally ZoneFeatures::GetOpcode64Entry_0201e2d8 (USA 0x0201e2d8, EUR 0x0201e2e8, JPN 0x0201e064)
+ARM ZoneFeatures::Opcode64Entry* ZoneFeatures::GetOpcode64Entry(int index) {
+    if (index < 0 || arraySize64_ <= index) {
         return NULL;
     }
-    return &unknown_0_[arg0];
+    return &entries64_[index];
 }

@@ -2,7 +2,7 @@
 #include "std_library_functions.h"
 #include "Resource/CharacterCreationUI.h"
 
-int KeyTable_Get(Container020e0310*, int);
+extern "C" int KeyTable_Get(Container020e0310*, int);
 extern "C" void Window_OpenPane(CreationWindow* window, const char* text, int mode,
                             unsigned char border, unsigned char flagBit3,
                             unsigned char fullWidth, void* extraStyle
@@ -12,7 +12,7 @@ extern "C" void Window_OpenPane(CreationWindow* window, const char* text, int mo
 );
 
 // Overlay 23, originally SetupTag021d9da4 (USA/EUR 0x021d9da4, JPN 0x021da63c)
-ARM void CharacterCreationUI_CreateNamePane(void* objRaw) {
+extern "C" ARM void CharacterCreationUI_CreateNamePane(void* objRaw) {
     CharacterCreationUI* self = (CharacterCreationUI*)objRaw;
 #if defined(jpn)
     self->windows[1].paneWidth = 0xa;

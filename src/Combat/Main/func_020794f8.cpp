@@ -2,24 +2,24 @@
 #include "World/Object3D.h"
 
 struct Struct_020794f8 {
-    Object3D unknown_0_;
+    Object3D obj3D_;
     char unknown_ac_[0xae - 0xac];
     short unknown_ae_;
 };
 
-extern "C" void func_ov017_021c95ec(int arg0, int arg1, int arg2, int arg3, int arg4,
-                                    Vector3fix arg5, int arg6, int arg7, int arg8);
+extern "C" void func_ov017_021c95ec(int id, int arg1, int unused, int kind, int arg4,
+                                    Vector3fix v, int field8, int arg7, int flag7);
 
 // USA: func_020794f8
-extern "C" ARM void func_020794f8(struct Obj020794f8* self, int flag6, int flag7) {
+extern "C" ARM void func_020794f8(struct Struct_020794f8* self, int arg1, int flag7) {
     int id = self->obj3D_.GetField06();
     int rem = self->obj3D_.actorIndex_ - 0x70;
     int v2 = self->obj3D_.unknown_2_;
     Vector3fix v = self->obj3D_.position_;
-    short field8 = self->field_ae;
+    short field8 = self->unknown_ae_;
     rem %= 12;
     if (rem < 0 || rem >= 12) {
         return;
     }
-    func_ov017_021c95ec(var0, var1, var2, 1, -1, var3, var4, arg1, arg2);
+    func_ov017_021c95ec(id, rem, v2, 1, -1, v, field8, arg1, flag7);
 }

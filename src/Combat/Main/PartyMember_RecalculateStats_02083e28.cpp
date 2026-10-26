@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-struct Struct_02083e28_10 {
-    unsigned int unknown_0_0_ : 10;
-    unsigned int unknown_1_2_ : 10;
-    unsigned int unknown_2_4_ : 10;
+struct StatTriple {
+    unsigned int f0 : 10;
+    unsigned int f1 : 10;
+    unsigned int f2 : 10;
     unsigned int : 2;
 };
 
-struct Struct_02083e28_4 {
-    int unknown_0_0_ : 10;
-    int unknown_1_2_ : 10;
-    int unknown_2_4_ : 10;
+struct SignedTriple {
+    int s0 : 10;
+    int s1 : 10;
+    int s2 : 10;
     int : 2;
 };
 
@@ -43,7 +43,7 @@ struct ItemStatBonusB {      // bandana "Magical Mending 2"; max HP and max MP b
     int : 2;
 };
 
-struct ByteQuad {
+struct Struct_02083e28_8 {
     int b0 : 8;
     int b1 : 8;
     int b2 : 8;
@@ -67,53 +67,53 @@ struct Record020836e4 {
     unsigned int kind : 4;
     unsigned int mode : 5;
     unsigned int : 23;
-    char unkC[0xc];
+    char unknown_c_[0xc];
     short itemId;               // -1: nothing in the slot
-    char unk1a[6];
+    char unknown_1a_[6];
 };
 
 struct Struct_02083e28_11 {
-    char unknown_0_[0x14];
+    char unk0[0x14];
     struct Struct_02083e28_8 unknown_14_[5];
-    short unknown_28_;
+    short count;
     char unknown_2a_[2];
 };
 
 struct Struct_02083e28 {
-    unsigned char unknown_0_[0x18];
+    unsigned char values[0x18];
 };
 
 struct Struct_02083e28_2 {
-    struct Struct_02083e28_10 unknown_0_[3];
+    struct StatTriple w[3];
 };
 
 struct BattleUnit {
     struct StatTriple stats[3];
     struct StatTriple style[3];     // the best style score, then the six scores
-    char unk18[4];
+    char unknown_18_[4];
     unsigned short hp;
     unsigned short mp;
-    char unk20;
-    unsigned char resistCopy[0x18];
-    char unk39[0x33];
+    char unknown_20_;
+    unsigned char unknown_21_[0x18];
+    char unknown_39_[0x33];
     unsigned short maxHp;
     unsigned short maxMp;
     unsigned short attack;
     unsigned short defence;
     unsigned short agility;
-    char unk76[2];
-    struct StatTriple derived;
-    unsigned char resistances[0x18];
-    char unk94[0x100];
+    char unknown_76_[2];
+    struct StatTriple unknown_78_;
+    unsigned char unknown_7c_[0x18];
+    char unknown_94_[0x100];
     struct Record020836e4 records[11];
-    struct EquipSlot equips[8];
+    struct Struct_02083e28_11 unknown_2f4_[8];
 #if defined(jpn)
     char unknown_454_[0x7b8 - 0x454];
 #else
     char unknown1_454_[0x850 - 0x454];
 #endif
-    struct Struct_02083e28_2 unknown_850_[17];
-    struct Struct_02083e28_10 unknown_91c_[3];
+    struct Struct_02083e28_2 rows[17];
+    struct StatTriple base[3];
     char unknown_928_[0xc];
     unsigned char unknown_934_[0x16];
     char unknown_94a_[6];
@@ -147,45 +147,45 @@ extern "C" int func_0208623c(unsigned char*);
 extern "C" int func_020862a8(unsigned char*);
 extern "C" int func_02086314(unsigned char*);
 extern "C" int func_02085cd0(unsigned char*, int);
-int AccumulateModeSlotBits02085f1c(unsigned char*, int);
-int AccumulateSlotBits02085b88(unsigned char*);
-struct ClampFieldPairStruct;
-void ClampFieldPairToMax_020863e0(ClampFieldPairStruct*);
-void ItemRecord_Copy(struct Record020836e4*, struct Record020836e4*);
+extern "C" int func_02085f1c(unsigned char*, int);
+extern "C" int func_02085b88(unsigned char*);
+struct Struct_02083e28_6;
+extern "C" void func_020863e0(Struct_02083e28_6*);
+extern "C" void ItemRecord_Copy(struct Record020836e4*, struct Record020836e4*);
 
-static inline void inline_02083e28(unsigned char* arg0, struct Struct_02083e28 arg1) {
-    memcpy(arg0, &arg1, sizeof(arg1));
+static inline void inline_02083e28(unsigned char* dst, struct Struct_02083e28 set) {
+    memcpy(dst, &set, sizeof(set));
 }
 
-static inline void inline_02083e28_2(struct Struct_02083e28_3* arg0, unsigned short arg1) {
-    arg0->unknown_78_.unknown_0_0_ = arg1;
+static inline void SetDerivedLow(struct BattleUnit* unit, unsigned short value) {
+    unit->unknown_78_.f0 = value;
 }
 
-static inline void inline_02083e28_3(struct Struct_02083e28_3* arg0, unsigned short arg1) {
-    arg0->unknown_78_.unknown_1_2_ = arg1;
+static inline void SetDerivedMid(struct BattleUnit* unit, unsigned short value) {
+    unit->unknown_78_.f1 = value;
 }
 
-static inline void inline_02083e28_4(struct Struct_02083e28_3* arg0, unsigned short arg1) {
-    arg0->unknown_78_.unknown_2_4_ = arg1;
+static inline void SetDerivedHigh(struct BattleUnit* unit, unsigned short value) {
+    unit->unknown_78_.f2 = value;
 }
 
 // Main, originally func_02083e28 (USA 0x02083e28, EUR 0x02083e38, JPN 0x02084740)
 extern "C" ARM void PartyMember_RecalculateStats(struct BattleUnit* unit, struct StatOutputs* out) {
-    int strength = AccumulateFlaggedSlotBits02085fb4((unsigned char*)unit) + unit->base[0].f0;
-    int agility = AccumulateFlaggedSlotBits02086020((unsigned char*)unit) + unit->base[0].f1;
-    int resilience = AccumulateFlaggedSlotBits0208608c((unsigned char*)unit) + unit->base[0].f2;
-    int deftness = AccumulateFlaggedSlotBits020860f8((unsigned char*)unit) + unit->base[1].f0;
-    int charm = AccumulateFlaggedSlotBits02086164((unsigned char*)unit) + unit->base[1].f1;
-    int magicalMending = AccumulateFlaggedSlotBits020861d0((unsigned char*)unit) + unit->base[1].f2;
-    int magicalMight = AccumulateFlaggedSlotBits0208623c((unsigned char*)unit) + unit->base[2].f0;
-    int maxHp = AccumulateSlotBitsFromTable020862a8((unsigned char*)unit) + unit->base[2].f1;
-    int maxMp = AccumulateSlotBitsFromTable02086314((unsigned char*)unit) + unit->base[2].f2;
+    int strength = func_02085fb4((unsigned char*)unit) + unit->base[0].f0;
+    int agility = func_02086020((unsigned char*)unit) + unit->base[0].f1;
+    int resilience = func_0208608c((unsigned char*)unit) + unit->base[0].f2;
+    int deftness = func_020860f8((unsigned char*)unit) + unit->base[1].f0;
+    int charm = func_02086164((unsigned char*)unit) + unit->base[1].f1;
+    int magicalMending = func_020861d0((unsigned char*)unit) + unit->base[1].f2;
+    int magicalMight = func_0208623c((unsigned char*)unit) + unit->base[2].f0;
+    int maxHp = func_020862a8((unsigned char*)unit) + unit->base[2].f1;
+    int maxMp = func_02086314((unsigned char*)unit) + unit->base[2].f2;
     float rateA;
     float rateB;
     float evasionChance;
     float rateD;
     rateD = evasionChance = rateB = rateA = 0.0f;
-    struct StatRow* row = &unit->rows[unit->rowIndex];
+    struct Struct_02083e28_2* row = &unit->rows[unit->unknown_950_];
     strength += row->w[0].f0;
     agility += row->w[0].f1;
     resilience += row->w[0].f2;
@@ -206,21 +206,21 @@ extern "C" ARM void PartyMember_RecalculateStats(struct BattleUnit* unit, struct
     for (int i = 0; i < 6; i++) {
         styleScores[i] = charm;
     }
-    struct Struct_0208358c_2* var16[11];
-    for (int var17 = 0; var17 < 11; var17++) {
-        var16[var17] = &arg0->unknown_194_[var17];
+    struct Record020836e4* recs[11];
+    for (int i = 0; i < 11; i++) {
+        recs[i] = &unit->records[i];
     }
-    struct Struct_0208358c_2* var18;
-    if (arg1 != NULL && (var18 = arg1->unknown_0_) != NULL) {
-        switch (var18->unknown_8_0_) {
-        case 0: var16[8] = var18; break;
-        case 1: var16[9] = var18; break;
-        case 4: var16[7] = var18; break;
-        case 2: var16[0] = var18; break;
-        case 5: var16[5] = var18; break;
-        case 3: var16[1] = var18; break;
-        case 6: var16[6] = var18; break;
-        case 7: var16[10] = var18; break;
+    struct Record020836e4* rec;
+    if (out != NULL && (rec = out->record) != NULL) {
+        switch (rec->kind) {
+        case 0: recs[8] = rec; break;
+        case 1: recs[9] = rec; break;
+        case 4: recs[7] = rec; break;
+        case 2: recs[0] = rec; break;
+        case 5: recs[5] = rec; break;
+        case 3: recs[1] = rec; break;
+        case 6: recs[6] = rec; break;
+        case 7: recs[10] = rec; break;
         }
     }
     for (int i = 0; i < 11; i++) {
@@ -292,7 +292,7 @@ extern "C" ARM void PartyMember_RecalculateStats(struct BattleUnit* unit, struct
         int magicalMending = unit->stats[1].f2;
         int magicalMight = unit->stats[2].f0;
         int maxHp = unit->stats[2].f1;
-        int maxMpBase = unit->stats[2].f2;
+        int var31 = unit->stats[2].f2;
         for (int i = 0; i < 11; i++) {
             struct Record020836e4* r = &unit->records[i];
             if (r != NULL && r->itemId > 0 && r->itemStats != NULL) {
@@ -301,7 +301,7 @@ extern "C" ARM void PartyMember_RecalculateStats(struct BattleUnit* unit, struct
             }
         }
         attack += func_02085cd0((unsigned char*)unit, -1);
-        int maxMp = AccumulateModeSlotBits02085f1c((unsigned char*)unit, -1) + maxMpBase;
+        int maxMp = func_02085f1c((unsigned char*)unit, -1) + var31;
         if (attack > 999) attack = 999;
         if (defence > 999) defence = 999;
         if (maxMp > 999) maxMp = 999;
@@ -316,45 +316,45 @@ extern "C" ARM void PartyMember_RecalculateStats(struct BattleUnit* unit, struct
         SetDerivedMid(unit, magicalMight);
         unit->maxHp = maxHp;
         unit->maxMp = maxMp;
-        ClampFieldPairToMax_020863e0((ClampFieldPairStruct*)unit);
+        func_020863e0((Struct_02083e28_6*)unit);
 
-        short var35[0x16] = {0};
-        for (int var36 = 0; var36 < 0x16; var36++) {
-            var35[var36] = arg0->unknown_934_[var36];
+        short totals[0x16] = {0};
+        for (int i = 0; i < 0x16; i++) {
+            totals[i] = unit->unknown_934_[i];
         }
-        for (int var37 = 0; var37 < 8; var37++) {
-            struct Struct_02083e28_11* var38 = &arg0->unknown_2f4_[var37];
-            if (var38->unknown_28_ > 0) {
-                var35[0] += var38->unknown_14_[0].unknown_0_0_;
-                var35[1] += var38->unknown_14_[0].unknown_1_0_;
-                var35[2] += var38->unknown_14_[0].unknown_2_0_;
-                var35[3] += var38->unknown_14_[0].unknown_3_0_;
-                var35[4] += var38->unknown_14_[1].unknown_0_0_;
-                var35[5] += var38->unknown_14_[1].unknown_1_0_;
-                var35[6] += var38->unknown_14_[1].unknown_2_0_;
-                var35[8] += var38->unknown_14_[1].unknown_3_0_;
-                var35[9] += var38->unknown_14_[2].unknown_0_0_;
-                var35[10] += var38->unknown_14_[2].unknown_1_0_;
-                var35[11] += var38->unknown_14_[2].unknown_2_0_;
-                var35[12] += var38->unknown_14_[2].unknown_3_0_;
-                var35[13] += var38->unknown_14_[3].unknown_0_0_;
-                var35[14] += var38->unknown_14_[3].unknown_1_0_;
-                var35[15] += var38->unknown_14_[3].unknown_2_0_;
-                var35[16] += var38->unknown_14_[3].unknown_3_0_;
-                var35[17] += var38->unknown_14_[4].unknown_0_0_;
-                var35[18] += var38->unknown_14_[4].unknown_1_0_;
-                var35[19] += var38->unknown_14_[4].unknown_2_0_;
-                var35[20] += var38->unknown_14_[4].unknown_3_0_;
+        for (int i = 0; i < 8; i++) {
+            struct Struct_02083e28_11* slot = &unit->unknown_2f4_[i];
+            if (slot->count > 0) {
+                totals[0] += slot->unknown_14_[0].b0;
+                totals[1] += slot->unknown_14_[0].b1;
+                totals[2] += slot->unknown_14_[0].b2;
+                totals[3] += slot->unknown_14_[0].b3;
+                totals[4] += slot->unknown_14_[1].b0;
+                totals[5] += slot->unknown_14_[1].b1;
+                totals[6] += slot->unknown_14_[1].b2;
+                totals[8] += slot->unknown_14_[1].b3;
+                totals[9] += slot->unknown_14_[2].b0;
+                totals[10] += slot->unknown_14_[2].b1;
+                totals[11] += slot->unknown_14_[2].b2;
+                totals[12] += slot->unknown_14_[2].b3;
+                totals[13] += slot->unknown_14_[3].b0;
+                totals[14] += slot->unknown_14_[3].b1;
+                totals[15] += slot->unknown_14_[3].b2;
+                totals[16] += slot->unknown_14_[3].b3;
+                totals[17] += slot->unknown_14_[4].b0;
+                totals[18] += slot->unknown_14_[4].b1;
+                totals[19] += slot->unknown_14_[4].b2;
+                totals[20] += slot->unknown_14_[4].b3;
             }
         }
-        struct Struct_02083e28 var39;
-        memset(&var39, 100, 0x16);
-        for (int var40 = 0; var40 < 0x16; var40++) {
-            if (var35[var40] < 0) var35[var40] = 0;
-            var39.unknown_0_[var40] = var35[var40];
+        struct Struct_02083e28 set;
+        memset(&set, 100, 0x16);
+        for (int i = 0; i < 0x16; i++) {
+            if (totals[i] < 0) totals[i] = 0;
+            set.values[i] = totals[i];
         }
-        inline_02083e28(arg0->unknown_7c_, var39);
-        inline_02083e28(arg0->unknown_21_, var39);
+        inline_02083e28(unit->unknown_7c_, set);
+        inline_02083e28(unit->unknown_21_, set);
     } else {
         *out->rateA = rateA;
         *out->evasionChance = evasionChance;
@@ -378,13 +378,13 @@ extern "C" ARM void PartyMember_RecalculateStats(struct BattleUnit* unit, struct
         signed char weapon = mode;
         attack += func_02085cd0((unsigned char*)unit, weapon);
         if (out->skipMode == 0) {
-            maxMp += AccumulateModeSlotBits02085f1c((unsigned char*)unit, weapon);
+            maxMp += func_02085f1c((unsigned char*)unit, weapon);
         }
         struct Record020836e4* shield;
         if (out->skipMode != 0 && (shield = recs[9]) != NULL && shield->itemId > 0) {
             struct Record020836e4 saved = unit->records[9];
             ItemRecord_Copy(&unit->records[9], shield);
-            rateB += AccumulateSlotBits02085b88((unsigned char*)unit);
+            rateB += func_02085b88((unsigned char*)unit);
             ItemRecord_Copy(&unit->records[9], &saved);
         }
         if (attack > 999) attack = 999;

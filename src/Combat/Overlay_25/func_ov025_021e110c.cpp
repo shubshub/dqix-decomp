@@ -1,54 +1,54 @@
 #include <globaldefs.h>
 
 struct Struct_ov025_021e110c_2 {
-    char unknown_0_[0x10];
-    unsigned int unknown_10_;
+    char pad[0x10];
+    unsigned int flags;
 };
 
 struct Struct_ov025_021e110c {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    char unknown_2_[6];
-    unsigned char* unknown_8_;
+    unsigned char id;
+    unsigned char val;
+    char pad[6];
+    unsigned char* obj;
 };
 
 extern "C" int func_020493a4(unsigned char*);
 extern "C" int func_020493c8(unsigned char*);
 extern "C" int func_020493ec(unsigned char*);
-extern "C" void func_ov025_021e12f8(unsigned char* arg0, int arg1, int arg2, int arg3, int arg4, int arg5);
+extern "C" void func_ov025_021e12f8(unsigned char* map, int id, int val, int extra, int a, int b);
 
-static inline void inline_ov025_021e110c(unsigned char* arg0, unsigned int arg1, unsigned char arg2) {
-    if (arg1 < 0x51) {
-        arg0[arg1] = arg2;
+static inline void inline_ov025_021e110c(unsigned char* map, unsigned int id, unsigned char val) {
+    if (id < 0x51) {
+        map[id] = val;
     }
 }
 
 // USA: func_ov025_021e110c
-extern "C" ARM void func_ov025_021e110c(unsigned char* arg0, Struct_ov025_021e110c* arg1, int arg2) {
-    for (int var0 = 0; var0 < 0x51; var0++) {
-        if (arg0[var0] < 0xff) {
-            arg0[var0] = 0;
+extern "C" ARM void func_ov025_021e110c(unsigned char* map, Struct_ov025_021e110c* ents, int n) {
+    for (int i = 0; i < 0x51; i++) {
+        if (map[i] < 0xff) {
+            map[i] = 0;
         }
     }
-    for (int var1 = 0; var1 < arg2; var1++) {
-        unsigned int var2 = func_020493c8(arg1[var1].unknown_8_);
-        if (var2 >= 0x51) {
-            var2 = func_020493a4(arg1[var1].unknown_8_);
+    for (int j = 0; j < n; j++) {
+        unsigned int id = func_020493c8(ents[j].obj);
+        if (id >= 0x51) {
+            id = func_020493a4(ents[j].obj);
         }
-        if (var2 < 0x51) {
-            inline_ov025_021e110c(arg0, var2, arg1[var1].unknown_1_);
+        if (id < 0x51) {
+            inline_ov025_021e110c(map, id, ents[j].val);
         }
-        unsigned char* var3 = arg1[var1].unknown_8_;
-        Struct_ov025_021e110c_2* var4;
-        if ((*(unsigned short*)var3 & 0x400) && (var4 = *(Struct_ov025_021e110c_2**)(var3 + 0x148)) != 0) {
-            unsigned int var5 = (var4->unknown_10_ << 1) >> 0x1e;
-            if (var5 != 0) {
-                func_ov025_021e12f8(arg0, var2, arg1[var1].unknown_1_, var5 & 0xff, 0, 0);
+        unsigned char* c = ents[j].obj;
+        Struct_ov025_021e110c_2* sub;
+        if ((*(unsigned short*)c & 0x400) && (sub = *(Struct_ov025_021e110c_2**)(c + 0x148)) != 0) {
+            unsigned int extra = (sub->flags << 1) >> 0x1e;
+            if (extra != 0) {
+                func_ov025_021e12f8(map, id, ents[j].val, extra & 0xff, 0, 0);
             }
         }
-        unsigned int var6 = func_020493ec(arg1[var1].unknown_8_);
-        if (var6 < 0x51) {
-            inline_ov025_021e110c(arg0, var6, arg1[var1].unknown_1_);
+        unsigned int id2 = func_020493ec(ents[j].obj);
+        if (id2 < 0x51) {
+            inline_ov025_021e110c(map, id2, ents[j].val);
         }
     }
 }

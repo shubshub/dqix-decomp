@@ -23,7 +23,7 @@ struct PartyMemberObject {
 };
 
 // Main, originally GetTableValue_0202053c (USA 0x0202053c, EUR 0x0202054c, JPN 0x02020188)
-ARM unsigned short GameObject_GetPartyMemberLevel(void* memberIn) {
+extern "C" ARM unsigned short GameObject_GetPartyMemberLevel(void* memberIn) {
     PartyMemberData* data = ((PartyMemberObject*)memberIn)->data;
     return data->levels_[data->vocation_];
 }

@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 #include "Combat/LootPickupEvent.h"
 
-struct Struct_0204693c;
-extern "C" void func_0204693c(Struct_0204693c* arg0);
+struct ByteHeader0204693c;
+extern "C" void func_0204693c(ByteHeader0204693c* p);
 
 // USA: func_ov017_021ae800
-extern "C" ARM void func_ov017_021ae800(Struct_ov017_021986fc* arg0) {
-    func_0204693c((Struct_0204693c*)arg0);
-    arg0->unknown_0_ = 0x23;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_a_ = 0;
-    arg0->unknown_c_ = 0;
-    arg0->unknown_2c_.ResetAllocatorPointer();
+extern "C" ARM void func_ov017_021ae800(Obj021ae800* self) {
+    func_0204693c((ByteHeader0204693c*)self);
+    self->type = 0x23;
+    self->stage = 0;
+    self->timer = 0;
+    self->itemId = 0;
+    self->allocator.ResetAllocatorPointer();
     {
-        volatile unsigned int* var0 = (volatile unsigned int*)0x4000000;
-        unsigned int var1 = (*var0 & 0x1f00) >> 8;
-        *var0 = (*var0 & ~0x1f00) | ((var1 | 0x10) << 8);
+        volatile unsigned int* reg = (volatile unsigned int*)0x4000000;
+        unsigned int extracted = (*reg & 0x1f00) >> 8;
+        *reg = (*reg & ~0x1f00) | ((extracted | 0x10) << 8);
     }
-    arg0->unknown_9_ = 0;
+    self->mode = 0;
 }

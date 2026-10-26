@@ -4,8 +4,8 @@
 extern "C" void func_0204a4ac(void*);
 
 // USA: func_0204a440
-extern "C" ARM void func_0204a440(char* arg0, const char* arg1) {
-    strcpy(arg0 + 0x224, arg1);
-    *(int*)(arg0 + 0x254) = -1;
-    func_0204a4ac(arg0);
+extern "C" ARM void func_0204a440(char* obj, const char* src) {
+    strcpy(obj + 0x224, src);
+    *(int*)(obj + 0x254) = -1;
+    func_0204a4ac(obj);
 }

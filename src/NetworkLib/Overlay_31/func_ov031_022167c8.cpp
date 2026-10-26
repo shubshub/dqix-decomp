@@ -8,31 +8,31 @@ union Struct_ov031_022167c8 {
         Type_ov031_022167c8 unknown_40_;
         int unknown_44_;
     } unknown_0_;
-    unsigned int unknown1_0_[18];
+    unsigned int words[18];
 };
 struct Struct_ov031_022167c8_2 {
     char unknown_0_[0x1004];
-    int unknown_1004_;
+    int result;
     struct {
-        unsigned int unknown_0_;
-        char unknown_4_[0x1c0];
-    } unknown_1008_;
+        unsigned int signature;
+        char data[0x1c0];
+    } buffer;
     union {
         Struct_ov031_022167c8 unknown_0_;
         struct {
             char unknown_0_[0x32];
-            unsigned short unknown_32_;
+            unsigned short counter;
             char unknown_34_[0xb];
-            unsigned char unknown_3f_;
-        } unknown1_0_;
-    } unknown_11cc_;
+            unsigned char flag;
+        } state;
+    } config;
     char unknown_1214_[0x100];
-    void* unknown_1314_;
+    void* context;
 };
 struct Struct_ov031_0224e5e8 {
-    int unknown_0_;
+    int state;
     int unknown_4_;
-    Struct_ov031_022167c8_2* unknown_8_;
+    Struct_ov031_022167c8_2* work;
 };
 extern Struct_ov031_0224e5e8 data_ov031_0224e5e8;
 extern const char data_ov031_02249b98[];
@@ -40,21 +40,21 @@ extern "C" int func_ov031_02216b90(int);
 extern "C" void func_ov031_022168ec();
 
 // USA: func_ov031_022167c8
-extern "C" ARM int func_ov031_022167c8(Struct_ov031_022167c8* arg0, void* arg1) {
+extern "C" ARM int func_ov031_022167c8(Struct_ov031_022167c8* arg0, void* context) {
     Type_ov031_022167c8 var0 = arg0->unknown_0_.unknown_40_;
-    if (data_ov031_0224e5e8.unknown_8_) return 2;
-    data_ov031_0224e5e8.unknown_8_ = (Struct_ov031_022167c8_2*)var0(data_ov031_02249b98, 0x13f4);
-    if (!data_ov031_0224e5e8.unknown_8_) return 2;
-    VectorizedMemset(data_ov031_0224e5e8.unknown_8_, 0, 0x13f4);
-    data_ov031_0224e5e8.unknown_8_->unknown_1314_ = arg1;
-    data_ov031_0224e5e8.unknown_0_ = 0;
-    VectorizedMemset(&data_ov031_0224e5e8.unknown_8_->unknown_1008_, 0, 0x1c4);
-    data_ov031_0224e5e8.unknown_8_->unknown_1008_.unknown_0_ = 0x4e84;
-    data_ov031_0224e5e8.unknown_8_->unknown_11cc_.unknown_0_ = *arg0;
-    data_ov031_0224e5e8.unknown_8_->unknown_11cc_.unknown1_0_.unknown_32_ = 0;
-    data_ov031_0224e5e8.unknown_8_->unknown_11cc_.unknown1_0_.unknown_3f_ = 0;
-    data_ov031_0224e5e8.unknown_8_->unknown_1004_ = func_ov031_02216b90(1);
-    if (data_ov031_0224e5e8.unknown_8_->unknown_1004_) return data_ov031_0224e5e8.unknown_8_->unknown_1004_;
+    if (data_ov031_0224e5e8.work) return 2;
+    data_ov031_0224e5e8.work = (Struct_ov031_022167c8_2*)var0(data_ov031_02249b98, 0x13f4);
+    if (!data_ov031_0224e5e8.work) return 2;
+    VectorizedMemset(data_ov031_0224e5e8.work, 0, 0x13f4);
+    data_ov031_0224e5e8.work->context = context;
+    data_ov031_0224e5e8.state = 0;
+    VectorizedMemset(&data_ov031_0224e5e8.work->buffer, 0, 0x1c4);
+    data_ov031_0224e5e8.work->buffer.signature = 0x4e84;
+    data_ov031_0224e5e8.work->config.unknown_0_ = *arg0;
+    data_ov031_0224e5e8.work->config.state.counter = 0;
+    data_ov031_0224e5e8.work->config.state.flag = 0;
+    data_ov031_0224e5e8.work->result = func_ov031_02216b90(1);
+    if (data_ov031_0224e5e8.work->result) return data_ov031_0224e5e8.work->result;
     data_ov031_0224e5e8.unknown_4_ = 0;
     func_ov031_022168ec();
     return 0;

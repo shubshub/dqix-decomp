@@ -3,15 +3,15 @@ extern "C" void func_020d0050(int);
 
 
 struct Struct_02108dfc {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned short unknown_2_;
+    unsigned char flag;
+    unsigned char pad1;
+    unsigned short value;
 };
 
 extern struct Struct_02108dfc data_02108dfc;
 
 // USA: func_02075cb8
 extern "C" ARM void func_02075cb8(void) {
-    func_020d0050((int)(data_02108dfc.unknown_2_));
-    data_02108dfc.unknown_0_ = 1;
+    func_020d0050((int)(data_02108dfc.value));
+    data_02108dfc.flag = 1;
 }

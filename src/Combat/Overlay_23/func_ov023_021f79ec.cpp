@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
-struct Struct_ov011_02186f08 { char unknown_0_[0xc]; unsigned char unknown_c_; char unknown_d_[3]; void* unknown_10_; char unknown_14_[0x1c - 0x14]; int unknown_1c_; };
+struct Struct_ov011_02186f08 { char pad[0xc]; unsigned char flags; char pad2[3]; void* field10; char pad3[0x1c - 0x14]; int field1c; };
 
 // USA: func_ov023_021f79ec
-extern "C" ARM void func_ov023_021f79ec(struct Struct_ov011_02186f08* arg0, void* arg1) {
-	arg0->unknown_10_ = arg1;
-	arg0->unknown_1c_ = 0;
-	arg0->unknown_c_ |= 3;
+extern "C" ARM void func_ov023_021f79ec(struct Struct_ov011_02186f08* obj, void* v) {
+	obj->field10 = v;
+	obj->field1c = 0;
+	obj->flags |= 3;
 }

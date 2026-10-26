@@ -2,29 +2,29 @@
 #include <globaldefs.h>
 
 
-void MapDisplay_RemoveTask(void *unusedSelf, int *task);
+extern "C" void MapDisplay_RemoveTask(void *unusedSelf, int *task);
 
 // The MapDisplay fields this resets (header names in brackets)
-struct CleanupReceiver02022bb0 {
+struct Struct_02022bb0 {
 #if defined(jpn)
     char pad0[0x90c];
 #else
     char pad0[0x9b8];
 #endif
     unsigned char redChestLoadPending; // [field9b8] MapDisplay_LoadRedChests loads treasure.nsarc while it is set
-    char pad9b9[8];
+    char unknown_9b9_[8];
     unsigned char currentMode;         // [field9c1] the mode MapDisplay_RunModeLoader loads
     unsigned char loadStage;           // [loadStage]
     unsigned char modeLoading;         // [field9c3]
     unsigned char fadeInPending;       // [field9c4] MapDisplay_Draw fades the sub screen in while it is set
-    unsigned char flag9c5;
-    char pad9c6[6];
+    unsigned char unknown_9c5_;
+    char unknown_9c6_[6];
     int iconArchiveTask;               // [fileTask920] obj_mm.pac
     int mapScriptTask;                 // [namesTask] <map>.bmmp
     int patternTask;                   // [fileTask928] <name>.obg, the background pattern
     int pieceTasks[8];                 // [nameTasks] the map pieces' .obg
 #if defined(jpn)
-    char unused94c[4];
+    char unknown_94c_[4];
 #else
     int mapNameTask;                   // [scriptTask] mapname_<LG>.bin
 #endif
@@ -32,7 +32,7 @@ struct CleanupReceiver02022bb0 {
     int taska00;
     int taska04;
     int taska08;
-    int mode2Task;
+    int unknown_a0c_;
     int taska10;
     int taska14;
     int taska18;
@@ -47,10 +47,10 @@ struct CleanupReceiver02022bb0 {
 
 // Main, originally func_02022bb0 (USA 0x02022bb0, EUR 0x02022bc0, JPN 0x02022644)
 extern "C" ARM void MapDisplay_CancelLoading(void *receiver) {
-    CleanupReceiver02022bb0 *object = (CleanupReceiver02022bb0 *) receiver;
+    Struct_02022bb0 *object = (Struct_02022bb0 *) receiver;
     object->modeLoading             = 0;
     object->loadStage               = 0;
-    object->flag9c5                 = 0;
+    object->unknown_9c5_                 = 0;
     object->redChestLoadPending     = 0;
     object->previousMode            = 0xff;
     object->fadeInPending           = 0;
@@ -98,7 +98,7 @@ extern "C" ARM void MapDisplay_CancelLoading(void *receiver) {
     object->shipPositionsTask = -1;
 
     if (object->currentMode == 2) {
-        BackgroundLoader::GetInstance()->RemoveTask(object->mode2Task);
-        object->mode2Task = -1;
+        BackgroundLoader::GetInstance()->RemoveTask(object->unknown_a0c_);
+        object->unknown_a0c_ = -1;
     }
 }

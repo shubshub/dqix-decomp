@@ -16,17 +16,17 @@ extern "C" int func_ov031_022212c4(unsigned int *arg0, const unsigned char *arg1
 
 // USA: func_ov031_0222157c (rijndaelKeySetupDec)
 extern "C" THUMB int func_ov031_0222157c(unsigned int *arg0, const unsigned char *arg1, int arg2) {
-    int var0, var1, var2;
+    int var0, i, j;
     unsigned int var3;
 
     var0 = func_ov031_022212c4(arg0, arg1, arg2);
-    for (var1 = 0, var2 = 4*var0; var1 < var2; var1 += 4, var2 -= 4) {
-        var3 = arg0[var1    ]; arg0[var1    ] = arg0[var2    ]; arg0[var2    ] = var3;
-        var3 = arg0[var1 + 1]; arg0[var1 + 1] = arg0[var2 + 1]; arg0[var2 + 1] = var3;
-        var3 = arg0[var1 + 2]; arg0[var1 + 2] = arg0[var2 + 2]; arg0[var2 + 2] = var3;
-        var3 = arg0[var1 + 3]; arg0[var1 + 3] = arg0[var2 + 3]; arg0[var2 + 3] = var3;
+    for (i = 0, j = 4*var0; i < j; i += 4, j -= 4) {
+        var3 = arg0[i    ]; arg0[i    ] = arg0[j    ]; arg0[j    ] = var3;
+        var3 = arg0[i + 1]; arg0[i + 1] = arg0[j + 1]; arg0[j + 1] = var3;
+        var3 = arg0[i + 2]; arg0[i + 2] = arg0[j + 2]; arg0[j + 2] = var3;
+        var3 = arg0[i + 3]; arg0[i + 3] = arg0[j + 3]; arg0[j + 3] = var3;
     }
-    for (var1 = 1; var1 < var0; var1++) {
+    for (i = 1; i < var0; i++) {
         arg0 += 4;
         arg0[0] =
             Td0[Te4[(arg0[0] >> 24)       ] & 0xff] ^

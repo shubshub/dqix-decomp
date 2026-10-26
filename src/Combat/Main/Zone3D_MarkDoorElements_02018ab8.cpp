@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "World/ZoneChest.h"
 
-void* ZoneFeatures_GetFirstOfType(unsigned char*, unsigned int);
+extern "C" void* ZoneFeatures_GetFirstOfType(unsigned char*, unsigned int);
 
 // ZoneFeatures::Opcode6aEntry::maybeType of a door
 enum { kDoorFeatureType = 2 };
@@ -17,7 +17,7 @@ enum {
 };
 
 // Main, originally UpdateEntryFlagsForNodeList_02018ab8 (USA 0x02018ab8, EUR 0x02018ac8, JPN 0x02018858)
-ARM void Zone3D_MarkDoorElements(Zone3D* zone) {
+extern "C" ARM void Zone3D_MarkDoorElements(Zone3D* zone) {
     ZoneFeatures::Opcode6aEntry* door;
     BmdjSceneElement* element;
     int staysVisible;

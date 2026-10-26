@@ -2,7 +2,7 @@
 #include "NitroSDK/ProcessorContext.h"
 
 struct Struct_ov031_0224e204;
-extern "C" void func_020c7de4(Struct_ov031_0224e204* arg0, int arg1, int arg2);
+extern "C" void func_020c7de4(Struct_ov031_0224e204* s, int e, int f);
 bool IsContextInactive(ProcessorContext* context);
 extern "C" void MIi_CpuClearFast(unsigned int value, void* dest, int count);
 extern "C" void func_ov031_0224599c(void);

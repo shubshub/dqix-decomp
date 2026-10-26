@@ -7,13 +7,13 @@
 
 struct InitTarget0205cfd4;
 struct BackgroundGraphics;
-struct List020727d8;
+struct Struct_020727d8;
 struct Struct020dfc40;
 
-struct Struct_ov005_0215840c_2
+struct PartyMemberData
 {
-    char unknown_0_[0x3c];
-    char unknown_3c_[0xc];
+    char unk_0[0x3c];
+    char name_[0xc];
 };
 
 struct Struct_ov008_02188f5c
@@ -22,7 +22,7 @@ struct Struct_ov008_02188f5c
     unsigned int unknown_1_4_ : 4;
     unsigned int unknown_2_0_ : 5;
     unsigned int unknown_2_5_ : 4;
-    unsigned int unknown_3_1_ : 1;
+    unsigned int female_ : 1;
     unsigned int unknown_3_2_ : 1;
     unsigned int unknown_3_3_ : 1;
     unsigned int unknown_3_4_ : 1;
@@ -31,16 +31,16 @@ struct Struct_ov008_02188f5c
     unsigned int unknown_3_7_ : 1;
     unsigned int unknown_4_0_ : 9;
     int unknown_5_1_ : 10;
-    int unknown_6_3_ : 11;
+    int accolade_ : 11;
     int unknown_7_6_ : 1;
     unsigned int unknown_7_7_ : 1;
-    char unknown_8_[0x74];
+    char unk_8[0x74];
 };
 
 struct Struct_ov008_02188f5c_4
 {
-    unsigned char unknown_0_[6];
-    char unknown_6_[0xb];
+    unsigned char id_[6];
+    char name_[0xb];
     unsigned char unknown_11_;
     unsigned short unknown_12_0_ : 14;
     unsigned short unknown_13_6_ : 1;
@@ -50,7 +50,7 @@ struct Struct_ov008_02188f5c_4
 
 struct Struct_ov008_02188f5c_2
 {
-    char unknown_0_[0x6c];
+    char unk_0[0x6c];
     Struct_ov008_02188f5c unknown_6c_;
 };
 
@@ -62,51 +62,51 @@ extern "C" void Font_EncodeText(const char* name, char* codes, int);
 extern "C" void func_ov008_021843f8(void* records);
 extern "C" void func_ov017_021d1014(signed char member, int, int);
 extern "C" void func_ov017_021d1118(signed char member, int, int, int);
-void Window_Init(InitTarget0205cfd4* window);
-void Background_Init(BackgroundGraphics* background);
-void ResetListHeader020727d8(List020727d8* texts);
-void KeyTable_Reset(Struct020dfc40* texts);
-void ResetSubStruct02189228(void* entry);
-PartyMemberData* GetFieldAt0x150_02053c6c(unsigned char* member);
-int LinkSession_IsActive(int*);
+extern "C" void Window_Init(InitTarget0205cfd4* window);
+extern "C" void Background_Init(BackgroundGraphics* background);
+extern "C" void func_020727d8(Struct_020727d8* texts);
+extern "C" void KeyTable_Reset(Struct020dfc40* texts);
+extern "C" void func_ov008_02189228(void* entry);
+extern "C" PartyMemberData* func_02053c6c(unsigned char* member);
+extern "C" int LinkSession_IsActive(int*);
 
 struct Struct_ov008_02188f5c_3
 {
-    char unknown_0_[0x10];
-    unsigned char unknown_10_;
+    char unk_0[0x10];
+    unsigned char unk_10;
     unsigned char unknown_11_;
-    unsigned int unknown_14_;
-    char unknown_18_[0xbc];
-    char unknown_d4_[2][0x20];
-    char unknown_114_[0xe0];
-    void* unknown_1f4_;
-    void* unknown_1f8_;
-    void* unknown_1fc_;
-    SafeAllocator unknown_200_;
-    SafeAllocator unknown_214_;
+    unsigned int layers_;
+    char window_[0xbc];
+    char backgrounds_[2][0x20];
+    char canvas_[0xe0];
+    void* renderer_;
+    void* sprites_;
+    void* animations_;
+    SafeAllocator allocator_;
+    SafeAllocator textAllocator_;
     SafeAllocator unknown_228_;
-    SafeAllocator unknown_23c_;
+    SafeAllocator spriteAllocator_;
     SafeAllocator unknown_250_;
-    SafeAllocator unknown_264_;
-    char unknown_278_[8];
+    SafeAllocator titleAllocator_;
+    char texts_[8];
     char unknown_280_[8];
-    char unknown_288_[0x18];
-    char* unknown_2a0_;
-    void* unknown_2a4_;
+    char titles_[0x18];
+    char* text_;
+    void* pixels_;
 #if defined(jpn)
     char unknown_2a8_[0xb44];
 #else
     char unknown_2a8_[0xb48];
 #endif
-    Struct_ov008_02188f5c_4 unknown_df0_;
+    Struct_ov008_02188f5c_4 entry_;
     Struct_ov008_02188f5c unknown_e1c_;
     unsigned char unknown_e98_;
-    signed char unknown_e99_;
-    signed char unknown_e9a_;
+    signed char state_;
+    signed char step_;
     signed char unknown_e9b_;
     signed char unknown_e9c_;
 #if defined(jpn)
-    int unknown1_e9c_[5];
+    int tasks_[5];
 #else
     int unknown_ea0_;
     int unknown_ea4_;
@@ -116,11 +116,11 @@ struct Struct_ov008_02188f5c_3
     int unknown_eb4_;
 #endif
     unsigned char unknown_eb8_;
-    signed char unknown_eb9_;
+    signed char member_;
     unsigned char unknown_eba_;
     unsigned char unknown_ebb_;
     Struct_ov008_02188f5c_2* unknown_ebc_;
-    unsigned char unknown_ec0_0_ : 1;
+    unsigned char active_ : 1;
     unsigned char unknown_ec0_1_ : 1;
     unsigned char unknown_ec0_2_ : 1;
     unsigned char unknown_ec0_3_ : 1;
@@ -130,12 +130,12 @@ struct Struct_ov008_02188f5c_3
 };
 
 // USA: func_ov008_02188f5c
-extern "C" ARM void func_ov008_02188f5c(Struct_ov008_02188f5c_3* arg0, signed char arg1, Struct_ov008_02188f5c_2* arg2)
+extern "C" ARM void func_ov008_02188f5c(Struct_ov008_02188f5c_3* self, signed char member, Struct_ov008_02188f5c_2* arg2)
 {
     GameState* gameState = GameState::GetInstance();
     LinkSession_GetInstance();
     self->unk_10 = 0;
-    self->unk_11 = 0;
+    self->unknown_11_ = 0;
     func_02074af4(self);
     self->layers_ = (REG_DISPCNT & 0x1f00) >> 8;
     REG_DISPCNT = (REG_DISPCNT & ~0x1f00) | 0x100;
@@ -143,97 +143,97 @@ extern "C" ARM void func_ov008_02188f5c(Struct_ov008_02188f5c_3* arg0, signed ch
     Background_Init((BackgroundGraphics*)&self->backgrounds_[0]);
     Background_Init((BackgroundGraphics*)&self->backgrounds_[1]);
     WindowPane_Init(&self->canvas_);
-    ResetListHeader020727d8((List020727d8*)&self->texts_);
-    ResetListHeader020727d8((List020727d8*)&self->profileTexts_);
+    func_020727d8((Struct_020727d8*)&self->texts_);
+    func_020727d8((Struct_020727d8*)&self->unknown_280_);
     KeyTable_Reset((Struct020dfc40*)&self->titles_);
     self->renderer_ = NULL;
     self->sprites_ = NULL;
     self->animations_ = NULL;
     self->allocator_.ResetAllocatorPointer();
     self->textAllocator_.ResetAllocatorPointer();
-    self->recordsAllocator_.ResetAllocatorPointer();
+    self->unknown_228_.ResetAllocatorPointer();
     self->spriteAllocator_.ResetAllocatorPointer();
-    self->profileAllocator_.ResetAllocatorPointer();
+    self->unknown_250_.ResetAllocatorPointer();
     self->titleAllocator_.ResetAllocatorPointer();
     self->text_ = NULL;
     self->pixels_ = NULL;
-    func_ov008_021843f8(&self->records_);
-    ResetSubStruct02189228(&self->entry_);
-    self->profile_.year_ = 2000;
-    self->profile_.month_ = 1;
-    self->profile_.day_ = 1;
-    self->profile_.birthdayChosen_ = 0;
-    self->profile_.unk_0_21 = 0;
-    self->profile_.designChosen_ = 0;
-    self->profile_.female_ = 0;
-    self->profile_.initialized_ = 0;
-    self->profile_.accoladeChosen_ = 0;
-    self->profile_.vocationAccolade_ = 1;
-    self->profile_.showBirthday_ = 0;
-    self->profile_.unk_4_0 = 0x1ff;
-    self->profile_.edited_ = 0;
-    self->profile_.title_ = 300;
-    self->profile_.accolade_ = 706;
-    self->profile_.unk_8[0] = 0;
-    self->unk_e98 = 0;
+    func_ov008_021843f8(&self->unknown_2a8_);
+    func_ov008_02189228(&self->entry_);
+    self->unknown_e1c_.unknown_0_0_ = 2000;
+    self->unknown_e1c_.unknown_1_4_ = 1;
+    self->unknown_e1c_.unknown_2_0_ = 1;
+    self->unknown_e1c_.unknown_3_4_ = 0;
+    self->unknown_e1c_.unknown_2_5_ = 0;
+    self->unknown_e1c_.unknown_3_3_ = 0;
+    self->unknown_e1c_.female_ = 0;
+    self->unknown_e1c_.unknown_3_2_ = 0;
+    self->unknown_e1c_.unknown_3_5_ = 0;
+    self->unknown_e1c_.unknown_3_6_ = 1;
+    self->unknown_e1c_.unknown_3_7_ = 0;
+    self->unknown_e1c_.unknown_4_0_ = 0x1ff;
+    self->unknown_e1c_.unknown_7_6_ = 0;
+    self->unknown_e1c_.unknown_5_1_ = 300;
+    self->unknown_e1c_.accolade_ = 706;
+    self->unknown_e1c_.unk_8[0] = 0;
+    self->unknown_e98_ = 0;
     self->state_ = 0;
     self->step_ = 0;
-    self->recordsState_ = 0;
-    self->recordsStep_ = 0;
+    self->unknown_e9b_ = 0;
+    self->unknown_e9c_ = 0;
 #if defined(jpn)
-    arg0->unknown1_e9c_[0] = -1;
-    arg0->unknown1_e9c_[1] = -1;
-    arg0->unknown1_e9c_[2] = -1;
-    arg0->unknown1_e9c_[3] = -1;
-    arg0->unknown1_e9c_[4] = -1;
+    self->tasks_[0] = -1;
+    self->tasks_[1] = -1;
+    self->tasks_[2] = -1;
+    self->tasks_[3] = -1;
+    self->tasks_[4] = -1;
 #else
-    arg0->unknown_ea0_ = -1;
-    arg0->unknown_ea4_ = -1;
-    arg0->unknown_ea8_ = -1;
-    arg0->unknown_eac_ = -1;
-    arg0->unknown_eb0_ = -1;
-    arg0->unknown_eb4_ = -1;
+    self->unknown_ea0_ = -1;
+    self->unknown_ea4_ = -1;
+    self->unknown_ea8_ = -1;
+    self->unknown_eac_ = -1;
+    self->unknown_eb0_ = -1;
+    self->unknown_eb4_ = -1;
 #endif
-    arg0->unknown_ec4_ = NULL;
-    arg0->unknown_ec8_ = 0;
-    arg0->unknown_eb8_ = 0;
-    arg0->unknown_eba_ = 0;
-    arg0->unknown_ebb_ = 0;
-    arg0->unknown_ebc_ = arg2;
-    arg0->unknown_ec0_0_ = 1;
-    arg0->unknown_ec0_1_ = 0;
-    arg0->unknown_ec0_2_ = 0;
-    arg0->unknown_ec0_3_ = 0;
-    arg0->unknown_eb9_ = arg1;
-    if (arg0->unknown_ebc_ == NULL)
+    self->unknown_ec4_ = NULL;
+    self->unknown_ec8_ = 0;
+    self->unknown_eb8_ = 0;
+    self->unknown_eba_ = 0;
+    self->unknown_ebb_ = 0;
+    self->unknown_ebc_ = arg2;
+    self->active_ = 1;
+    self->unknown_ec0_1_ = 0;
+    self->unknown_ec0_2_ = 0;
+    self->unknown_ec0_3_ = 0;
+    self->member_ = member;
+    if (self->unknown_ebc_ == NULL)
     {
-        GameObject* var1 = var0->GetPartyMemberByIndex(arg1);
-        if (var1 != NULL)
+        GameObject* object = gameState->GetPartyMemberByIndex(member);
+        if (object != NULL)
         {
-            Struct_ov005_0215840c_2* var2 = func_02053c6c((unsigned char*)var1);
-            if (var2 != NULL)
+            PartyMemberData* data = func_02053c6c((unsigned char*)object);
+            if (data != NULL)
             {
-                func_ov008_02189228(&arg0->unknown_df0_);
+                func_ov008_02189228(&self->entry_);
 #if defined(jpn)
-                memcpy(arg0->unknown_df0_.unknown_6_, var2->unknown_3c_, sizeof(arg0->unknown_df0_.unknown_6_));
+                memcpy(self->entry_.name_, data->name_, sizeof(self->entry_.name_));
 #else
                 char name[0xc];
                 __clear(name, sizeof(name));
                 Font_EncodeText(data->name_, name, 1);
                 memcpy(self->entry_.name_, name, sizeof(self->entry_.name_));
 #endif
-                self->entry_.used_ = 1;
+                self->entry_.unknown_13_6_ = 1;
                 if (LinkSession_IsActive((int*)LinkSession_GetInstance()))
                 {
-                    func_ov017_021d1014(arg1, 0, 0);
-                    func_ov017_021d1118(arg1, 1, 1, 0);
+                    func_ov017_021d1014(member, 0, 0);
+                    func_ov017_021d1118(member, 1, 1, 0);
                 }
             }
         }
     }
     else
     {
-        arg0->unknown_e98_ = 0xff;
-        memcpy(&arg0->unknown_e1c_, &arg0->unknown_ebc_->unknown_6c_, sizeof(Struct_ov008_02188f5c));
+        self->unknown_e98_ = 0xff;
+        memcpy(&self->unknown_e1c_, &self->unknown_ebc_->unknown_6c_, sizeof(Struct_ov008_02188f5c));
     }
 }

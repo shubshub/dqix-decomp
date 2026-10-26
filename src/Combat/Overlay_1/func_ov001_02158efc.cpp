@@ -5,11 +5,11 @@
 extern "C" void* func_ov001_02158dcc(void*);
 
 // USA: func_ov001_02158efc
-extern "C" ARM void* func_ov001_02158efc(void* arg0, Struct_ov001_02158efc arg1) {
-    void* var0 = func_ov001_02158dcc(arg0);
-    if (var0 != NULL) {
-        *(int*)var0 = 1;
-        var0 = memcpy((char*)var0 + 4, &arg1, 0xc);
+extern "C" ARM void* func_ov001_02158efc(void* ctx, EventVec3 v) {
+    void* node = func_ov001_02158dcc(ctx);
+    if (node != NULL) {
+        *(int*)node = 1;
+        node = memcpy((char*)node + 4, &v, 0xc);
     }
-    return var0;
+    return node;
 }

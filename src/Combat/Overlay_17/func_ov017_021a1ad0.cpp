@@ -1,44 +1,44 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_020fdd44 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_0_ : 2;
-    unsigned short unknown_2_2_ : 1;
-    unsigned short unknown_2_3_ : 13;
+struct Entry_02028bd0 {
+    unsigned short id;
+    unsigned short slotGroup : 2;
+    unsigned short active : 1;
+    unsigned short flags : 13;
 };
-struct Struct_02028bac;
+struct Element0x318_02028bac;
 struct Struct_02076a8c_2;
-struct Struct_ov017_021a1ad0 {
-    Object3D unknown_0_;
+struct FieldMonster021a1ad0 {
+    Object3D object;
     char unknown_ac_[0x130 - 0xac];
-    int unknown_130_;
+    int phase;
     char unknown_134_[0x17d - 0x134];
-    unsigned char unknown_17d_;
+    unsigned char flags;
 };
-struct Struct_ov017_021a1ad0_2 {
-    Vector3fix unknown_0_;
-    Vector3fix unknown_c_;
+struct MonsterBounds021a1ad0 {
+    Vector3fix maximum;
+    Vector3fix minimum;
 };
 union Struct_ov017_021a1ad0_3 {
-    Vector3fix unknown_0_;
-    unsigned int unknown1_0_[3];
+    Vector3fix vector;
+    unsigned int words[3];
 };
 struct Struct_ov017_021a1ad0_4 {
-    Vector3fix unknown_0_;
-    Struct_ov017_021a1ad0_3 unknown_c_;
-    Struct_ov017_021a1ad0_2 unknown_18_;
+    Vector3fix origin;
+    Struct_ov017_021a1ad0_3 position;
+    MonsterBounds021a1ad0 bounds;
     Struct_ov017_021a1ad0_3 unknown_30_;
 
-    Struct_ov017_021a1ad0_4(const Vector3fix& arg0) : unknown_0_(arg0) {}
+    Struct_ov017_021a1ad0_4(const Vector3fix& position) : origin(position) {}
 };
-Entry_02028bd0* ZoneRecords_GetInstance();
-Entry_02028bd0* ZoneRecords_GetAt(Element0x318_02028bac*, int);
-Entry_02028bd0* ZoneRecords_Find(Entry_02028bd0*, int);
-void TickActorAndDispatchPhase02076b58(Obj02076b58*);
-int ZoneId_IsGrottoBossFloor(int);
-int LinkSession_IsActive(int*);
-void EnqueueEventTag134_021c9544(int, int, int, int);
+extern "C" Entry_02028bd0* ZoneRecords_GetInstance();
+extern "C" Entry_02028bd0* ZoneRecords_GetAt(Element0x318_02028bac*, int);
+extern "C" Entry_02028bd0* ZoneRecords_Find(Entry_02028bd0*, int);
+extern "C" void func_02076b58(Struct_02076a8c_2*);
+extern "C" int ZoneId_IsGrottoBossFloor(int);
+extern "C" int LinkSession_IsActive(int*);
+extern "C" void func_ov017_021c9544(int, int, int, int);
 extern "C" int* LinkSession_GetInstance();
 extern "C" unsigned short* Zone3D_GetInstance();
 extern "C" int LinkSession_IsHostOrSolo(int*);
@@ -64,7 +64,7 @@ extern "C" ARM void func_ov017_021a1ad0() {
             for (int slot = 0; slot < 12; slot++) {
                 FieldMonster021a1ad0* monster = (FieldMonster021a1ad0*)state->GetFieldMonsterByIndex(slot + base);
                 if (!monster || !monster->object.IsVisible()) continue;
-                TickActorAndDispatchPhase02076b58((Obj02076b58*)monster);
+                func_02076b58((Struct_02076a8c_2*)monster);
                 int removable = 1;
                 if ((monster->flags & 2) || (monster->flags & 4) || ZoneId_IsGrottoBossFloor(*currentArea)) removable = 0;
                 if (monster->flags & 8) removable = 0;
@@ -76,14 +76,14 @@ extern "C" ARM void func_ov017_021a1ad0() {
                     fieldMonster = collisionState->GetFieldMonsterByIndex(slot + base);
                     if (!fieldMonster) clear = 0;
                     else {
-                        CollisionFrame021a1ad0 frame(fieldMonster->obj3D_.position_);
+                        Struct_ov017_021a1ad0_4 frame(fieldMonster->obj3D_.position_);
                         for (int i = 0; i < 4; i++) {
                             GameObject* wanderingMonster = collisionState->GetWanderingMonsterByIndex(i);
                             if (!wanderingMonster) continue;
                             int area = wanderingMonster->obj3D_.GetField06();
                             if (area != fieldMonster->obj3D_.GetField06()) continue;
-                            func_02034104(&frame.temporary.vector, wanderingMonster);
-                            frame.position = frame.temporary;
+                            func_02034104(&frame.unknown_30_.vector, wanderingMonster);
+                            frame.position = frame.unknown_30_;
                             frame.bounds.maximum = frame.position.vector;
                             frame.bounds.maximum.x += 0x19000;
                             frame.bounds.maximum.y += 0x19000;
@@ -97,7 +97,7 @@ extern "C" ARM void func_ov017_021a1ad0() {
                                 goto collisionComplete;
                             }
                         }
-                        var11 = 1;
+                        clear = 1;
                     }
                 }
 collisionComplete:
@@ -105,7 +105,7 @@ collisionComplete:
                     FieldMonsterState_Init(monster);
                     monster->object.MakeHidden();
                     if (LinkSession_IsActive(manager) && entry) {
-                        EnqueueEventTag134_021c9544(entry->id, slot, monster->object.unknown_2_, tag);
+                        func_ov017_021c9544(entry->id, slot, monster->object.unknown_2_, tag);
                     }
                 }
             }
@@ -115,7 +115,7 @@ collisionComplete:
         if (!entry) return;
         for (int slot = 0; slot < 12; slot++) {
             FieldMonster021a1ad0* monster = (FieldMonster021a1ad0*)state->GetFieldMonsterByIndex(entry->slotGroup * 12 + 0x70 + slot);
-            if (monster && monster->object.IsVisible()) TickActorAndDispatchPhase02076b58((Obj02076b58*)monster);
+            if (monster && monster->object.IsVisible()) func_02076b58((Struct_02076a8c_2*)monster);
         }
     }
 }

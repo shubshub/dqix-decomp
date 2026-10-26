@@ -11,13 +11,13 @@ extern int data_02107800;
 struct SePlayer;
 extern struct SePlayer g_sePlayer;
 
-int MessageSystem_GetInstance();
-void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern "C" int MessageSystem_GetInstance();
+extern "C" void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
 // USA: func_ov017_021aa080
 extern "C" ARM int func_ov017_021aa080() {
     int base = MessageSystem_GetInstance();
-    int field = *(int*)(base + RegionOffset9a0);
+    int field = *(int*)(base + Enum_ov017_021aa080_2464);
     int flag = 0;
     if (field == 3 || field == 0) {
         if (g_keyManager.TestKeysPressed(0x1) ||
@@ -27,13 +27,13 @@ extern "C" ARM int func_ov017_021aa080() {
             g_keyManager.TestKeysPressed(0x80) ||
             g_keyManager.TestKeysPressed(0x20) ||
             g_keyManager.TestKeysPressed(0x10)) {
-            var2 = 1;
+            flag = 1;
         }
         if (g_touchInput.released_ != 0) {
-            var2 = 1;
+            flag = 1;
         }
     }
-    if (var2 == 0) {
+    if (flag == 0) {
         return 0;
     }
     SePlayer_Play(&g_sePlayer, 1, 0);

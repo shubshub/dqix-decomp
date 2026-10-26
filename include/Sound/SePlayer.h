@@ -11,7 +11,7 @@ struct SePlayer {
     char unknownC6[0xd0 - 0xc6];
 };
 extern SePlayer g_sePlayer;
-void SePlayer_Play(SePlayer* player, int effect, int handle);
+extern "C" void SePlayer_Play(SePlayer* player, int effect, int handle);
 
 // Sound archive ids: SePlayer_LoadExtraArchiveA/B load one and make it SePlayer::extraArchive.
 enum SoundArchive

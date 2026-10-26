@@ -1,47 +1,47 @@
 #include <globaldefs.h>
 
-extern "C" int func_020493ec(unsigned char* arg0);
-extern "C" int func_020493a4(unsigned char* arg0);
-extern "C" void func_020493dc(unsigned char* arg0, unsigned char arg1);
+extern "C" int func_020493ec(unsigned char* obj);
+extern "C" int func_020493a4(unsigned char* obj);
+extern "C" void func_020493dc(unsigned char* obj, unsigned char value);
 
 struct Struct_ov025_021e1ff4 {
-    char unknown_0_[4];
-    short unknown_4_;
+    char pad0[4];
+    short id;
 };
 
 struct Struct_ov025_021e1ff4_2 {
-    unsigned char unknown_0_;
-    char unknown_1_[3];
-    int unknown_4_;
-    unsigned char* unknown_8_;
+    unsigned char id;
+    char pad1[3];
+    int matched;
+    unsigned char* obj;
 };
 
 // USA: func_ov025_021e1ff4
-extern "C" ARM void func_ov025_021e1ff4(unsigned char* arg0, int arg1, unsigned char* arg2, Struct_ov025_021e1ff4* arg3,
-                                        Struct_ov025_021e1ff4* arg4, Struct_ov025_021e1ff4_2* arg5, int arg6) {
-    if (arg3 == 0 || arg4 == 0) {
+extern "C" ARM void func_ov025_021e1ff4(unsigned char* ids, int idCount, unsigned char* out, Struct_ov025_021e1ff4* a,
+                                        Struct_ov025_021e1ff4* b, Struct_ov025_021e1ff4_2* entries, int arg6) {
+    if (a == 0 || b == 0) {
         return;
     }
-    for (int var0 = 0; var0 < arg1; var0++) {
-        if (arg0[var0] >= 0x51) {
+    for (int i = 0; i < idCount; i++) {
+        if (ids[i] >= 0x51) {
             continue;
         }
-        if (arg0[var0] < 0x51) {
-            arg2[arg0[var0]] = 0xff;
+        if (ids[i] < 0x51) {
+            out[ids[i]] = 0xff;
         }
-        for (int var1 = 0; var1 < arg6; var1++) {
-            unsigned char* var2 = arg5[var1].unknown_8_;
-            int var3 = arg5[var1].unknown_0_;
-            if (var3 == arg3->unknown_4_ || var3 == arg4->unknown_4_) {
+        for (int j = 0; j < arg6; j++) {
+            unsigned char* obj = entries[j].obj;
+            int id = entries[j].id;
+            if (id == a->id || id == b->id) {
                 continue;
             }
-            int var4 = func_020493ec(var2);
-            if (var4 >= 0x51) {
-                var4 = func_020493a4(var2);
+            int v = func_020493ec(obj);
+            if (v >= 0x51) {
+                v = func_020493a4(obj);
             }
-            if (var4 == arg0[var0]) {
-                arg5[var1].unknown_4_ = 1;
-                func_020493dc(var2, 0xff);
+            if (v == ids[i]) {
+                entries[j].matched = 1;
+                func_020493dc(obj, 0xff);
             }
         }
     }

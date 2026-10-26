@@ -15,7 +15,7 @@ enum {
 enum { kDoorMaskBits = 16 };
 
 // Main, originally UpdateFlaggedType2Entries02018c74 (USA 0x02018c74, EUR 0x02018c84, JPN 0x02018a14)
-ARM void Zone3D_OpenDoorsByMask(Zone3D* zone, unsigned int doorMask) {
+extern "C" ARM void Zone3D_OpenDoorsByMask(Zone3D* zone, unsigned int doorMask) {
     Scenario_GetInstance();
     int i;
     for (i = 0; i < kDoorMaskBits; i++) {

@@ -1,19 +1,19 @@
 #include <globaldefs.h>
 
-struct Struct_0204c654 {
-    char unknown_0_[0xc];
+struct ShortArrays0204c654 {
+    char unk0[0xc];
     short unknown_c_[18]; // 0xc
-    short unknown_30_[18]; // 0x30
-    short unknown_54_[18]; // 0x54
+    short arr1[18]; // 0x30
+    short arr2[18]; // 0x54
     short unknown_78_[18]; // 0x78
 };
 
 // USA: func_0204c654
-extern "C" ARM void func_0204c654(struct Struct_0204c654* arg0, int arg1, short arg2, short arg3, short arg4, short arg5) {
-    if (arg1 < 0) return;
-    if (arg1 >= 18) return;
-    arg0->unknown_c_[arg1] = arg2;
-    arg0->unknown_30_[arg1] = arg3;
-    arg0->unknown_54_[arg1] = arg4;
-    arg0->unknown_78_[arg1] = arg5;
+extern "C" ARM void func_0204c654(struct ShortArrays0204c654* base, int index, short v0, short v1, short v2, short v3) {
+    if (index < 0) return;
+    if (index >= 18) return;
+    base->unknown_c_[index] = v0;
+    base->arr1[index] = v1;
+    base->arr2[index] = v2;
+    base->unknown_78_[index] = v3;
 }

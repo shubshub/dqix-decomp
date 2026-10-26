@@ -1,51 +1,51 @@
 #include <globaldefs.h>
 
 extern "C" void* func_ov000_02160130(void);
-extern "C" void* func_ov000_02160f08(void* arg0);
-extern "C" void* func_ov024_021f69b4(char* arg0, int arg1);
-extern "C" void* func_ov000_02171b9c(void* arg0, int arg1);
+extern "C" void* func_ov000_02160f08(void* obj);
+extern "C" void* func_ov024_021f69b4(char* base, int key);
+extern "C" void* func_ov000_02171b9c(void* obj, int idx);
 
 struct Struct_ov024_021f691c {
-	unsigned short unknown_0_;
-	signed char unknown_2_;
-	char unknown_3_;
-	float unknown_4_;
-	char unknown_8_[2];
+	unsigned short field0;
+	signed char field2;
+	char pad3;
+	float field4;
+	char pad8[2];
 	unsigned char unknown_a_;
 	unsigned char unknown_b_;
 };
 
-struct Struct_ov024_021f691c_2 { unsigned short unknown_0_; unsigned char unknown_2_; unsigned char unknown_3_; };
+struct Struct_ov024_021f691c_2 { unsigned short v0; unsigned char v2; unsigned char v3; };
 
 struct Struct_ov024_021f691c_3 {
-	char unknown_0_[0x18];
+	char pad0[0x18];
 	short unknown_18_;
-	char unknown_1a_[8];
+	char pad1[8];
 	signed char unknown_22_;
-	char unknown_23_[9];
+	char pad2[9];
 	short unknown_2c_;
 };
 
 // USA: func_ov024_021f691c
-extern "C" ARM int func_ov024_021f691c(struct Struct_ov024_021f691c* arg0, unsigned short* arg1, struct Struct_ov024_021f691c_2* arg2, int arg3) {
-	if (arg0->unknown_4_ > 0.0f) {
-		unsigned short var0 = arg0->unknown_0_;
-		if (arg0->unknown_2_ >= 0) {
-			void* var1 = func_ov000_02160130();
-			void* var2 = func_ov000_02160f08(var1);
-			struct Struct_ov024_021f691c_3* var3 = (struct Struct_ov024_021f691c_3*)func_ov024_021f69b4((char*)var2, arg3);
-			if (var3) {
-				var3->unknown_22_ = arg0->unknown_2_;
-				struct Struct_ov024_021f691c_3* var4 = (struct Struct_ov024_021f691c_3*)func_ov000_02171b9c(var3, arg0->unknown_2_);
-				if (var4) {
-					var3->unknown_2c_ = var4->unknown_18_;
+extern "C" ARM int func_ov024_021f691c(struct Struct_ov024_021f691c* obj, unsigned short* outB, struct Struct_ov024_021f691c_2* outA, int key) {
+	if (obj->field4 > 0.0f) {
+		unsigned short field0 = obj->field0;
+		if (obj->field2 >= 0) {
+			void* work = func_ov000_02160130();
+			void* base = func_ov000_02160f08(work);
+			struct Struct_ov024_021f691c_3* found = (struct Struct_ov024_021f691c_3*)func_ov024_021f69b4((char*)base, key);
+			if (found) {
+				found->unknown_22_ = obj->field2;
+				struct Struct_ov024_021f691c_3* p = (struct Struct_ov024_021f691c_3*)func_ov000_02171b9c(found, obj->field2);
+				if (p) {
+					found->unknown_2c_ = p->unknown_18_;
 				}
 			}
 		}
-		arg2->unknown_0_ = var0;
-		*arg1 = var0;
-		if (arg0->unknown_a_ != 0xff) arg2->unknown_3_ = arg0->unknown_a_;
-		if (arg0->unknown_b_ != 0xff) arg2->unknown_2_ = arg0->unknown_b_;
+		outA->v0 = field0;
+		*outB = field0;
+		if (obj->unknown_a_ != 0xff) outA->v3 = obj->unknown_a_;
+		if (obj->unknown_b_ != 0xff) outA->v2 = obj->unknown_b_;
 		return 1;
 	}
 	return 0;

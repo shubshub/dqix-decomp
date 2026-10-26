@@ -7,6 +7,6 @@ enum { Enum_020108d8_2404 = 0x964 };
 #endif
 
 // USA: func_020108d8
-extern "C" ARM void* func_020108d8(char* arg0, int arg1) {
-    return arg0 + 0x474 + arg1 * Enum_020108d8_2404;
+extern "C" ARM void* func_020108d8(char* base, int index) {
+    return base + 0x474 + index * Enum_020108d8_2404;
 }

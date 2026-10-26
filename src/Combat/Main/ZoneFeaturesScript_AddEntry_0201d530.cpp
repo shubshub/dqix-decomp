@@ -7,11 +7,11 @@ static inline int FixedMultiplyRounded(int a, int b) {
 }
 
 // Main, originally WarpScript_Opcode_73_0201d530 (USA 0x0201d530, EUR 0x0201d540, JPN 0x0201d2bc)
-ARM int ZoneFeaturesScript_AddEntry(Script::Parameter* params, int) {
+extern "C" ARM int ZoneFeaturesScript_AddEntry(Script::Parameter* params, int) {
     ZoneFeatures::Opcode6aEntry entry;
     Vector3fix vector;
 
-    entry.Reset_0201d424();
+    entry.func_0201d424();
     entry.maybeType = params->ToInt();
 
     Script::Parameter* param = params[1].ToVec3fix(&vector);

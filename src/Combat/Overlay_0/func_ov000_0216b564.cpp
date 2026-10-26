@@ -4,9 +4,9 @@
 
 struct Struct_ov000_0216b564 {
     unsigned int unknown_0_;
-    Struct_ov000_0216b564* unknown_4_;
+    Struct_ov000_0216b564* next;
     unsigned int unknown_8_0_ : 1;
-    unsigned int unknown_8_1_ : 15;
+    unsigned int primary : 15;
     unsigned int unknown_a_0_ : 1;
     unsigned int unknown_a_1_ : 1;
     unsigned int unknown_a_2_ : 14;
@@ -15,48 +15,48 @@ struct Struct_ov000_0216b564 {
 };
 struct Struct_ov000_02184264_4 {
     void* unknown_0_;
-    void* unknown_4_;
-    SafeAllocator* unknown_8_;
+    void* queue;
+    SafeAllocator* allocator;
 };
 extern "C" {
     extern Struct_ov000_02184264_4 data_ov000_02184264;
     void func_ov000_02169b78(Struct_ov000_0216b564*);
 }
 
-extern "C" ARM int func_ov000_0216b564(Script::Parameter* arg0, int arg1)
+extern "C" ARM int func_ov000_0216b564(Script::Parameter* parameters, int count)
 {
-    Struct_ov000_0216b564* var0 = static_cast<Struct_ov000_0216b564*>(
-        data_ov000_02184264.unknown_8_->Allocate(sizeof(Struct_ov000_0216b564)));
-    if (!var0)
+    Struct_ov000_0216b564* command = static_cast<Struct_ov000_0216b564*>(
+        data_ov000_02184264.allocator->Allocate(sizeof(Struct_ov000_0216b564)));
+    if (!command)
         return 0;
-    var0->unknown_0_ = 0;
-    var0->unknown_4_ = NULL;
-    var0->unknown_0_ = 0x37;
-    int var1 = arg0[0].ToInt();
-    if (var1 < 0) {
-        var0->unknown_8_0_ = 0;
-    } else if (var1 == 0) {
-        var0->unknown_8_0_ = 1;
-        var0->unknown_8_1_ = 1;
+    command->unknown_0_ = 0;
+    command->next = NULL;
+    command->unknown_0_ = 0x37;
+    int primary = parameters[0].ToInt();
+    if (primary < 0) {
+        command->unknown_8_0_ = 0;
+    } else if (primary == 0) {
+        command->unknown_8_0_ = 1;
+        command->primary = 1;
     } else {
-        var0->unknown_8_0_ = 1;
-        var0->unknown_8_1_ = var1;
+        command->unknown_8_0_ = 1;
+        command->primary = primary;
     }
-    var0->unknown_a_0_ = 1;
-    var0->unknown_a_1_ = 0;
-    var0->unknown_c_0_ = 0;
-    if (arg1 >= 2) {
-        int var2 = arg0[1].ToInt();
+    command->unknown_a_0_ = 1;
+    command->unknown_a_1_ = 0;
+    command->unknown_c_0_ = 0;
+    if (count >= 2) {
+        int var2 = parameters[1].ToInt();
         if (var2 >= 0) {
-            var0->unknown_a_0_ = 0;
-            var0->unknown_a_1_ = 1;
-            var0->unknown_c_0_ = var2;
+            command->unknown_a_0_ = 0;
+            command->unknown_a_1_ = 1;
+            command->unknown_c_0_ = var2;
         } else if (var2 != -2) {
-            var0->unknown_a_0_ = 0;
-            var0->unknown_a_1_ = 0;
-            var0->unknown_c_0_ = 0;
+            command->unknown_a_0_ = 0;
+            command->unknown_a_1_ = 0;
+            command->unknown_c_0_ = 0;
         }
     }
-    func_ov000_02169b78(var0);
+    func_ov000_02169b78(command);
     return 1;
 }

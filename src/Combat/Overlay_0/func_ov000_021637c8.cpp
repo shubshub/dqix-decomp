@@ -11,7 +11,7 @@
 #include "std_library_functions.h"
 
 // USA: func_ov000_021637c8
-extern "C" ARM void func_ov000_021637c8(void* arg0) {
-    memset((char*)arg0 + REGION_OFFSET_0, -1, 4);
-    memset((char*)arg0 + REGION_OFFSET_1, 0, 4);
+extern "C" ARM void func_ov000_021637c8(void* obj) {
+    memset((char*)obj + REGION_OFFSET_0, -1, 4);
+    memset((char*)obj + REGION_OFFSET_1, 0, 4);
 }

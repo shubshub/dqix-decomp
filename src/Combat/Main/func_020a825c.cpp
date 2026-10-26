@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 struct Struct_020a825c {
-    unsigned int unknown_0_[4];
+    unsigned int v[4];
 };
 
 struct Struct_020a7f88_2 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
-    unsigned int unknown_4_;
-    struct Struct_020a825c unknown_8_;
+    unsigned char b0;
+    unsigned char b1;
+    unsigned char b2;
+    unsigned char b3;
+    unsigned int w4;
+    struct Struct_020a825c block;
     unsigned short unknown_18_;
     unsigned short unknown_1a_;
     unsigned short unknown_1c_;
@@ -21,36 +21,36 @@ struct Struct_020a7f88_2 {
 };
 
 struct Struct_020a825c_2 {
-    struct Struct_020a7f88_2* unknown_0_;
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
+    struct Struct_020a7f88_2* base;
+    unsigned short cap;
+    unsigned short count;
 };
 
 // USA: func_020a825c
-extern "C" ARM void func_020a825c(struct Struct_020a825c_2* arg0, struct Struct_020a7f88_2* arg1) {
-    struct Struct_020a7f88_2* var0;
-    unsigned short var1;
-    unsigned short var2;
-    if (arg1 == 0) {
+extern "C" ARM void func_020a825c(struct Struct_020a825c_2* list, struct Struct_020a7f88_2* src) {
+    struct Struct_020a7f88_2* dst;
+    unsigned short count;
+    unsigned short cap;
+    if (src == 0) {
         return;
     }
-    var1 = arg0->unknown_6_;
-    var2 = arg0->unknown_4_;
-    if (var2 <= var1) {
+    count = list->count;
+    cap = list->cap;
+    if (cap <= count) {
         return;
     }
-    var0 = &arg0->unknown_0_[var1];
-    var0->unknown_0_ = arg1->unknown_0_;
-    var0->unknown_1_ = arg1->unknown_1_;
-    var0->unknown_2_ = arg1->unknown_2_;
-    var0->unknown_3_ = arg1->unknown_3_;
-    var0->unknown_4_ = arg1->unknown_4_;
-    var0->unknown_8_ = arg1->unknown_8_;
-    var0->unknown_18_ = arg1->unknown_18_;
-    var0->unknown_1a_ = arg1->unknown_1a_;
-    var0->unknown_1c_ = arg1->unknown_1c_;
-    var0->unknown_20_ = arg1->unknown_20_;
-    var0->unknown_24_ = arg1->unknown_24_;
-    var0->unknown_28_ = arg1->unknown_28_;
-    arg0->unknown_6_++;
+    dst = &list->base[count];
+    dst->b0 = src->b0;
+    dst->b1 = src->b1;
+    dst->b2 = src->b2;
+    dst->b3 = src->b3;
+    dst->w4 = src->w4;
+    dst->block = src->block;
+    dst->unknown_18_ = src->unknown_18_;
+    dst->unknown_1a_ = src->unknown_1a_;
+    dst->unknown_1c_ = src->unknown_1c_;
+    dst->unknown_20_ = src->unknown_20_;
+    dst->unknown_24_ = src->unknown_24_;
+    dst->unknown_28_ = src->unknown_28_;
+    list->count++;
 }

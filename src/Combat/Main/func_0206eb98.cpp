@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 
-extern "C" int func_0206dfb0(int arg0, unsigned char* arg1, int arg2);
+extern "C" int Scenario_TestFlag(int unused, unsigned char* arr, int index);
 
 // USA: func_0206eb98
-extern "C" ARM int func_0206eb98(unsigned char* arg0, int arg1) {
-    int var0 = arg1;
-    if (var0 >= 0x400) {
-        return func_0206dfb0((int)arg0, arg0 + 0x8c, var0 + 0x6fa);
+extern "C" ARM int func_0206eb98(unsigned char* obj, int index) {
+    int i = index;
+    if (i >= 0x400) {
+        return Scenario_TestFlag((int)obj, obj + 0x8c, i + 0x6fa);
     }
-    return func_0206dfb0((int)arg0, arg0 + 0x8c, var0);
+    return Scenario_TestFlag((int)obj, obj + 0x8c, i);
 }

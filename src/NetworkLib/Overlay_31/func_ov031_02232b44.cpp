@@ -3,12 +3,12 @@
 extern "C" int func_ov031_0223c054(int);
 extern "C" ARM int func_ov031_02237388(void);
 extern "C" int func_ov031_02222e54(void);
-extern "C" void func_ov031_0223ba20(int arg0);
+extern "C" void func_ov031_0223ba20(int a);
 extern "C" void func_ov031_022238cc(void);
 extern "C" void func_ov031_02223440(void);
-extern "C" void func_ov031_0223b710(int arg0);
+extern "C" void func_ov031_0223b710(int a);
 typedef void (*Type_ov031_022234d8)(void*, int, int);
-extern "C" void func_ov031_022234d8(int arg0, Type_ov031_022234d8 arg1);
+extern "C" void func_ov031_022234d8(int a0, Type_ov031_022234d8 cb);
 extern "C" extern int LoadToMainObjStandardPalette(int, int, unsigned int);
 extern "C" void func_ov031_0223cbbc(int, int);
 extern "C" void func_ov031_022274d0(int, int);
@@ -23,17 +23,17 @@ extern "C" void func_ov031_02234520(void);
 extern "C" int func_ov031_0223cf70(void*);
 
 struct Struct_ov031_02232b44 {
-	int unknown_0_;
-	int unknown_4_[3];
-	int unknown_10_[3];
-	unsigned char unknown_1c_;
+	int field0;
+	int arr1[3];
+	int arr2[3];
+	unsigned char pad1;
 	unsigned char unknown_1d_;
 };
 
 struct Struct_ov031_02290cc0_6 {
-	unsigned char unknown_0_;
-	unsigned char unknown_1_[3];
-	Struct_ov031_02232b44* unknown_4_;
+	unsigned char state;
+	unsigned char pad[3];
+	Struct_ov031_02232b44* field4;
 };
 
 extern Struct_ov031_02290cc0_6 data_ov031_02290cc0;
@@ -47,37 +47,37 @@ extern "C" ARM void func_ov031_02232b44(void) {
 	if (func_ov031_02237388() == 0) return;
 	if (func_ov031_02222e54() == 0) return;
 
-	Struct_ov031_02290cc0_6* var0 = &data_ov031_02290cc0;
-	unsigned int var1 = 0;
+	Struct_ov031_02290cc0_6* outer = &data_ov031_02290cc0;
+	unsigned int i = 0;
 	do {
-		int var2 = var0->unknown_4_->unknown_4_[var1];
-		if (var2 != 0) {
-			func_ov031_0223ba20(var2);
+		int v = outer->field4->arr1[i];
+		if (v != 0) {
+			func_ov031_0223ba20(v);
 		}
-		var1++;
-	} while (var1 < 3);
-	var0 = &data_ov031_02290cc0;
-	var1 = 0;
+		i++;
+	} while (i < 3);
+	outer = &data_ov031_02290cc0;
+	i = 0;
 	do {
-		int var3 = var0->unknown_4_->unknown_10_[var1];
-		if (var3 != 0) {
-			func_ov031_0223ba20(var3);
+		int v = outer->field4->arr2[i];
+		if (v != 0) {
+			func_ov031_0223ba20(v);
 		}
-		var1++;
-	} while (var1 < 3);
+		i++;
+	} while (i < 3);
 
 	func_ov031_022238cc();
 	func_ov031_02223440();
-	func_ov031_0223b710(data_ov031_02290cc0.unknown_4_->unknown_0_);
+	func_ov031_0223b710(data_ov031_02290cc0.field4->field0);
 	func_ov031_022234d8((int)&data_ov031_0224bcec, (Type_ov031_022234d8)LoadToMainObjStandardPalette);
 	func_ov031_0223cbbc(1, 1);
 	func_ov031_0223cbbc(0, 0x14);
 
-	if (data_ov031_02290cc0.unknown_4_->unknown_1d_ == 2) {
+	if (data_ov031_02290cc0.field4->unknown_1d_ == 2) {
 		func_ov031_022274d0(0, 0);
 		func_ov031_022274c0((int)func_ov031_02228024);
 	} else {
-		switch (data_ov031_02290cc0.unknown_0_) {
+		switch (data_ov031_02290cc0.state) {
 		case 0:
 		case 1:
 		case 2:

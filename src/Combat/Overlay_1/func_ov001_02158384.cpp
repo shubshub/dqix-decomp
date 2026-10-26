@@ -1,50 +1,50 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void func_ov001_02157668(void* arg0);
+extern "C" void func_ov001_02157668(void* p);
 
-struct Struct_ov001_02157570 { int unknown_0_, unknown_4_, unknown_8_; };
-extern "C" void func_ov001_02157890(char* arg0, struct Struct_ov001_02157570* arg1, struct Struct_ov001_02157570* arg2);
+struct Struct_ov001_02157570 { int x, y, z; };
+extern "C" void func_ov001_02157890(char* d, struct Struct_ov001_02157570* v1, struct Struct_ov001_02157570* v2);
 
-struct Struct_ov009_0218aa28 { int unknown_0_, unknown_4_, unknown_8_; };
-extern "C" void Vector3fix_Subtract(struct Struct_ov009_0218aa28* arg0, struct Struct_ov009_0218aa28* arg1, struct Struct_ov009_0218aa28* arg2);
+struct Vec3 { int x, y, z; };
+extern "C" void Vector3fix_Subtract(struct Vec3* a, struct Vec3* b, struct Vec3* out);
 
 // USA: func_ov001_02158384
-extern "C" ARM int func_ov001_02158384(int arg0, char* arg1) {
-    if (*(int*)(arg1 + 0x38) <= 0) {
-        func_ov001_02157668(arg1 + 0x15c);
-        *(int*)(arg1 + 0xa1c) = 1;
-        *(int*)(arg1 + 0x38) = 1;
+extern "C" ARM int func_ov001_02158384(int unused, char* self) {
+    if (*(int*)(self + 0x38) <= 0) {
+        func_ov001_02157668(self + 0x15c);
+        *(int*)(self + 0xa1c) = 1;
+        *(int*)(self + 0x38) = 1;
     }
 
-    struct Struct_ov001_02157570 var0, var1;
-    func_ov001_02157890(arg1 + 0x15c, &var0, &var1);
+    struct Struct_ov001_02157570 v1, v2;
+    func_ov001_02157890(self + 0x15c, &v1, &v2);
 
-    struct Struct_ov009_0218aa28 var2;
-    var2.unknown_0_ = *(int*)(arg1 + 0x64);
-    var2.unknown_4_ = *(int*)(arg1 + 0x68);
-    var2.unknown_8_ = *(int*)(arg1 + 0x6c);
+    struct Vec3 pos;
+    pos.x = *(int*)(self + 0x64);
+    pos.y = *(int*)(self + 0x68);
+    pos.z = *(int*)(self + 0x6c);
 
-    Vector3fix_Subtract((struct Struct_ov009_0218aa28*)&var0, &var2, (struct Struct_ov009_0218aa28*)(arg1 + 0x128));
-    Vector3fix_Subtract((struct Struct_ov009_0218aa28*)&var1, (struct Struct_ov009_0218aa28*)(arg1 + 0x58), (struct Struct_ov009_0218aa28*)(arg1 + 0x11c));
+    Vector3fix_Subtract((struct Vec3*)&v1, &pos, (struct Vec3*)(self + 0x128));
+    Vector3fix_Subtract((struct Vec3*)&v2, (struct Vec3*)(self + 0x58), (struct Vec3*)(self + 0x11c));
 
-    memcpy(&var2, &var0, 0xc);
-    memcpy(arg1 + 0x58, &var1, 0xc);
+    memcpy(&pos, &v1, 0xc);
+    memcpy(self + 0x58, &v2, 0xc);
 
-    if (var2.unknown_0_ >= 0x647a) {
-        var2.unknown_0_ -= 0x647a;
+    if (pos.x >= 0x647a) {
+        pos.x -= 0x647a;
     }
 
-    *(int*)(arg1 + 0x64) = var2.unknown_0_;
-    *(int*)(arg1 + 0x68) = var2.unknown_4_;
-    *(int*)(arg1 + 0x6c) = var2.unknown_8_;
+    *(int*)(self + 0x64) = pos.x;
+    *(int*)(self + 0x68) = pos.y;
+    *(int*)(self + 0x6c) = pos.z;
 
-    int var3 = (*(int*)(arg1 + 0xa1c) == 0) ? 1 : 0;
-    if (var3) {
-        var3 = 0;
-        *(int*)(arg1 + 0x38) = var3;
+    int flag = (*(int*)(self + 0xa1c) == 0) ? 1 : 0;
+    if (flag) {
+        flag = 0;
+        *(int*)(self + 0x38) = flag;
     } else {
-        var3 = 1;
+        flag = 1;
     }
-    return var3;
+    return flag;
 }

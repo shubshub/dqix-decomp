@@ -9,29 +9,29 @@ extern int data_ov027_021dd920;
 #pragma optimize_for_size off
 
 // USA: func_ov027_021d9618
-extern "C" ARM void func_ov027_021d9618(int arg0)
+extern "C" ARM void func_ov027_021d9618(int p)
 {
-    unsigned short var0 = 0;
+    unsigned short i = 0;
     do
     {
-        char* var1 = (char*)data_ov027_021e33ec + var0 * 0x5d4;
-        if (*(unsigned char*)(var1 + 0x1d52) != 0)
-            *(unsigned short*)(var1 + 0x1d4a) = 0;
-        var0++;
-    } while (var0 < 16);
+        char* entry = (char*)data_ov027_021e33ec + i * 0x5d4;
+        if (*(unsigned char*)(entry + 0x1d52) != 0)
+            *(unsigned short*)(entry + 0x1d4a) = 0;
+        i++;
+    } while (i < 16);
 
     data_ov027_021dd920 = 0;
 
-    unsigned short var2 = 1;
+    unsigned short j = 1;
     do
     {
-        void* var3 = func_020d49c4(arg0, var2);
-        if (var3 != NULL)
+        void* h = func_020d49c4(p, j);
+        if (h != NULL)
         {
-            unsigned short var4 = *(unsigned short*)var3;
-            if (var4 != 0xffff && var4 != 0)
-                func_ov027_021d9134(var3, var2);
+            unsigned short v = *(unsigned short*)h;
+            if (v != 0xffff && v != 0)
+                func_ov027_021d9134(h, j);
         }
-        var2++;
-    } while (var2 <= 15);
+        j++;
+    } while (j <= 15);
 }

@@ -4,18 +4,18 @@
 
 union Struct_02070b6c {
     struct Header {
-        unsigned short unknown_0_0_ : 15;
-        unsigned short unknown_1_7_ : 1;
-    } unknown_0_;
-    unsigned int unknown1_0_[33];
+        unsigned short id : 15;
+        unsigned short flag : 1;
+    } header;
+    unsigned int data[33];
 };
 
 struct Struct_02070b6c_2 {
-    unsigned int unknown_0_0_ : 12;
-    unsigned int unknown_1_4_ : 19;
+    unsigned int count : 12;
+    unsigned int size : 19;
     unsigned int unknown_3_7_ : 1;
-    Struct_02070b6c* unknown_4_;
-    void* unknown_8_;
+    Struct_02070b6c* elements;
+    void* extra;
 };
 
 struct Struct_02070a30;
@@ -32,79 +32,79 @@ extern "C" Struct_02070b6c_5* func_02070ee0(Struct_02070b6c_5*, Struct_02070b6c_
 extern "C" int func_020709c8(Struct_020709c8*);
 
 // USA: func_02070b6c
-extern "C" ARM void func_02070b6c(Struct_02070b6c_2* arg0, SafeAllocator* arg1, Struct_02070b6c_2* arg2, unsigned int arg3, short* arg4, short arg5) {
-    if (!arg1 || !arg2 || !arg3 || !arg4) return;
+extern "C" ARM void func_02070b6c(Struct_02070b6c_2* self, SafeAllocator* allocator, Struct_02070b6c_2* source, unsigned int arg3, short* ids, short arg5) {
+    if (!allocator || !source || !arg3 || !ids) return;
     if (arg5 <= 0) return;
-    memset(arg0, 0, sizeof(*arg0));
-    Struct_02070b6c_2 var0;
-    memset(&var0, 0, sizeof(var0));
-    if (arg2) {
-        memcpy(&var0, arg2, 4);
-        var0.unknown_4_ = (Struct_02070b6c*)((char*)arg2 + 4);
-        var0.unknown_8_ = (char*)arg2 + (func_02070af4((Struct_02070a30*)&var0) + 4);
-        if (!var0.unknown_3_7_) {
-            func_02070b0c((Struct_02070b0c*)&var0, 0);
-            var0.unknown_3_7_ = 1;
-            arg2->unknown_3_7_ = 1;
+    memset(self, 0, sizeof(*self));
+    Struct_02070b6c_2 list;
+    memset(&list, 0, sizeof(list));
+    if (source) {
+        memcpy(&list, source, 4);
+        list.elements = (Struct_02070b6c*)((char*)source + 4);
+        list.extra = (char*)source + (func_02070af4((Struct_02070a30*)&list) + 4);
+        if (!list.unknown_3_7_) {
+            func_02070b0c((Struct_02070b0c*)&list, 0);
+            list.unknown_3_7_ = 1;
+            source->unknown_3_7_ = 1;
         }
     }
-    short* var1 = arg4;
+    short* id = ids;
     int var2 = 0;
-    for (int var3 = arg5, var4 = 0; var4 < var3; var4++, var1++) {
-        if (func_02070e60((Struct_02070b6c_3*)&var0, *var1, (int (*)(Struct_02070b6c_4*))func_020709c8)) var2++;
+    for (int idCount = arg5, i = 0; i < idCount; i++, id++) {
+        if (func_02070e60((Struct_02070b6c_3*)&list, *id, (int (*)(Struct_02070b6c_4*))func_020709c8)) var2++;
     }
-    arg0->unknown_4_ = (Struct_02070b6c*)arg1->Allocate(var2 * sizeof(Struct_02070b6c));
-    if (arg0->unknown_4_) {
-        arg0->unknown_0_0_ = var2;
-        Struct_02070b6c* var5;
-        var1 = arg4;
-        var5 = arg0->unknown_4_;
-        for (int var6 = 0; var6 < arg5; var6++, var1++) {
-            Struct_02070b6c* var7 = (Struct_02070b6c*)func_02070e60((Struct_02070b6c_3*)&var0, *var1, (int (*)(Struct_02070b6c_4*))func_020709c8);
-            if (var7) {
-                memcpy(var5, var7, sizeof(*var5));
-                var5++;
+    self->elements = (Struct_02070b6c*)allocator->Allocate(var2 * sizeof(Struct_02070b6c));
+    if (self->elements) {
+        self->count = var2;
+        Struct_02070b6c* out;
+        id = ids;
+        out = self->elements;
+        for (int var6 = 0; var6 < arg5; var6++, id++) {
+            Struct_02070b6c* entry = (Struct_02070b6c*)func_02070e60((Struct_02070b6c_3*)&list, *id, (int (*)(Struct_02070b6c_4*))func_020709c8);
+            if (entry) {
+                memcpy(out, entry, sizeof(*out));
+                out++;
             }
         }
     }
     if (var2 < 2) return;
-    if (!arg0) return;
-    int var8 = arg0->unknown_0_0_;
-    if (!arg0->unknown_4_ || !var8) return;
-    int var9 = var8 - 1;
-    Struct_02070b6c* var10;
+    if (!self) return;
+    int count = self->count;
+    if (!self->elements || !count) return;
+    int last = count - 1;
+    Struct_02070b6c* prev;
     int var11;
-    int var12;
-    int var13 = 0;
+    int swapped;
+    int first = 0;
     Struct_02070b6c var14;
     Struct_02070b6c var15;
     do {
-        int var16 = var13;
-        var12 = -1;
-        Struct_02070b6c* var17 = &arg0->unknown_4_[var13];
-        for (; var16 < var9; var17++, var16++) {
-            if (var17->unknown_0_.unknown_0_0_ > var17[1].unknown_0_.unknown_0_0_) {
-                var12 = var16;
-                var15 = *var17;
-                func_02070ee0((Struct_02070b6c_5*)var17, (Struct_02070b6c_5*)(var17 + 1));
-                func_02070ee0((Struct_02070b6c_5*)(var17 + 1), (Struct_02070b6c_5*)&var15);
+        int pos = first;
+        swapped = -1;
+        Struct_02070b6c* entry = &self->elements[first];
+        for (; pos < last; entry++, pos++) {
+            if (entry->header.id > entry[1].header.id) {
+                swapped = pos;
+                var15 = *entry;
+                func_02070ee0((Struct_02070b6c_5*)entry, (Struct_02070b6c_5*)(entry + 1));
+                func_02070ee0((Struct_02070b6c_5*)(entry + 1), (Struct_02070b6c_5*)&var15);
             }
         }
-        if (var12 == -1) break;
-        Struct_02070b6c* var18 = &arg0->unknown_4_[var12];
-        var9 = var12;
+        if (swapped == -1) break;
+        Struct_02070b6c* var18 = &self->elements[swapped];
+        last = swapped;
         var11 = -1;
-        for (; var12 > var13; var12--) {
-            var10 = var18 - 1;
-            if (var10->unknown_0_.unknown_0_0_ > var18->unknown_0_.unknown_0_0_) {
-                var11 = var12;
+        for (; swapped > first; swapped--) {
+            prev = var18 - 1;
+            if (prev->header.id > var18->header.id) {
+                var11 = swapped;
                 var14 = *var18;
-                func_02070ee0((Struct_02070b6c_5*)var18, (Struct_02070b6c_5*)var10);
-                func_02070ee0((Struct_02070b6c_5*)var10, (Struct_02070b6c_5*)&var14);
+                func_02070ee0((Struct_02070b6c_5*)var18, (Struct_02070b6c_5*)prev);
+                func_02070ee0((Struct_02070b6c_5*)prev, (Struct_02070b6c_5*)&var14);
             }
-            var18 = var10;
+            var18 = prev;
         }
-        if (var11 != -1) var13 = var11;
+        if (var11 != -1) first = var11;
         else break;
     } while (1);
 }

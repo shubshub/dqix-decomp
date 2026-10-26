@@ -10,36 +10,36 @@ struct Background0216b07c {
     unsigned char subScreen_ : 4;
     unsigned char bgNumber_ : 4;
     unsigned char screenCount_;
-    char unk_1e[2];
+    char unknown_1e_[2];
 };
 
 struct Struct_ov003_0216b07c_3 {
-    void *unknown_0_;
-    Struct_ov003_0216b07c_2 *unknown_4_;
-    char unknown_8_[0xc4 - 8];
+    void *unk_0;
+    Background0216b07c *background_;
+    char unk_8[0xc4 - 8];
     unsigned char unknown_c4_;
-    char unknown_c5_[0xe0 - 0xc5];
+    char unk_c5[0xe0 - 0xc5];
 };
 
 struct Struct_ov003_0216b07c_5 {
-    char unknown_0_[0x98];
-    Struct_ov003_0216b07c_2 *unknown_98_;
+    char unk_0[0x98];
+    Background0216b07c *background_;
     char unknown_9c_[0xb2 - 0x9c];
     unsigned char unknown_b2_;
     char unknown_b3_[0xbc - 0xb3];
 };
 
-struct Struct_ov003_0216b07c_6 {
+struct Global0216b07c {
 #if defined(jpn)
-    char unknown_0_[0x28];
-    char *unknown_28_;
-    char unknown_2c_[0x868 - 0x2c];
+    char unk_0[0x28];
+    char *text_;
+    char unk_2c[0x868 - 0x2c];
     int unknown_998_;
     int unknown_99c_;
     char unknown_870_[0x17e2 - 0x870];
 #else
-    char unknown1_0_[0x5c];
-    char *unknown_5c_;
+    char unk_0[0x5c];
+    char *text_;
     char unknown_60_[0x998 - 0x60];
     int unknown_998_;
     int unknown_99c_;
@@ -49,15 +49,15 @@ struct Struct_ov003_0216b07c_6 {
 };
 
 struct Struct_ov003_0216b07c {
-    char unknown_0_[4];
-    short unknown_4_;
-    short unknown_6_;
-    char unknown_8_[2];
-    short unknown_a_;
+    char unk_0[4];
+    short state_;
+    short step_;
+    char unk_8[2];
+    short mode_;
 #if defined(jpn)
-    char unknown_c_[0x10f4 - 0xc];
+    char unk_c[0x10f4 - 0xc];
 #else
-    char unknown1_c_[0x1264 - 0xc];
+    char unk_c[0x1264 - 0xc];
 #endif
     int unknown_1264_;
     int unknown_1268_;
@@ -69,19 +69,19 @@ struct Struct_ov003_0216b07c {
     char unknown_12ba_[2];
     unsigned char unknown_12bc_;
     char unknown_12bd_[0x12c0 - 0x12bd];
-    Struct_ov003_0216b07c_5 *unknown_12c0_;
-    Struct_ov003_0216b07c_2 *unknown_12c4_;
-    Struct_ov003_0216b07c_3 *unknown_12c8_;
-    void *unknown_12cc_;
-    SafeAllocator *unknown_12d0_;
+    Struct_ov003_0216b07c_5 *window_;
+    Background0216b07c *backgrounds_;
+    Struct_ov003_0216b07c_3 *canvases_;
+    void *pixels_;
+    SafeAllocator *allocator_;
     char unknown_12d4_[0x12fc - 0x12d4];
-    SafeAllocator unknown_12fc_[2];
+    SafeAllocator allocators_[2];
     char unknown_1324_[0x13ea - 0x1324];
     unsigned char unknown_13ea_;
     char unknown_13eb_;
     unsigned char unknown_13ec_;
     char unknown_13ed_[0x13fc - 0x13ed];
-    int unknown_13fc_[3];
+    int tasks_[3];
 };
 
 struct Obj020397cc;
@@ -91,43 +91,43 @@ struct WindowPane;
 struct Struct_0205cf78;
 struct WindowPane;
 
-void GameObject_DisableControl(Obj020397cc *obj, int a);
-int Text_Append(char *dst, const char *src);
-const char *StandardStrings_Get(int id);
-void Background_SetMapSize(unsigned char *background, int a);
-int Pac_CountFiles(PacRecord *archive);
-void *Pac_GetFile(PacRecord *archive, int index, void **name, int *size);
-int LinkSession_IsActive(int *p);
+extern "C" void GameObject_DisableControl(Obj020397cc *obj, int a);
+extern "C" int Text_Append(char *dst, const char *src);
+extern "C" const char *StandardStrings_Get(int id);
+extern "C" void Background_SetMapSize(unsigned char *background, int a);
+extern "C" int Pac_CountFiles(PacRecord *archive);
+extern "C" void *Pac_GetFile(PacRecord *archive, int index, void **name, int *size);
+extern "C" int LinkSession_IsActive(int *p);
 extern "C" void *LinkSession_GetInstance();
 extern "C" int LinkSession_IsHostOrSolo();
 extern "C" int LinkSession_IsGuest(void *p);
 extern "C" void func_02046380(void *p);
 #if defined(jpn)
 struct Obj02046574;
-void MessageSystem_SetStringArgument(Obj02046574 *obj, int index, char *name);
+extern "C" void MessageSystem_SetStringArgument(Obj02046574 *obj, int index, char *name);
 extern "C" void func_0204500c(void *p, const char *text, int a);
 extern char data_ov003_0217e930[];
 #else
-extern "C" void func_0204500c(void *arg0, const char *arg1, int arg2, int arg3);
+extern "C" void func_0204500c(void *p, const char *text, int a, int b);
 #endif
 extern "C" void SpriteContext_LoadFile(void *renderer, void *file, unsigned int size, SafeAllocator *allocator);
 extern "C" void KeyTable_Load(void *texts, SafeAllocator *allocator, void *file, unsigned int size);
 extern "C" void Background_SetPriority(Background0216b07c *background, int a);
-void Background_AllocateMap(BackgroundGraphics *background,
+extern "C" void Background_AllocateMap(BackgroundGraphics *background,
                                                                                          SafeAllocator *allocator);
-void Background_SetScroll(BackgroundGraphics *background, int a, int b);
+extern "C" void Background_SetScroll(BackgroundGraphics *background, int a, int b);
 extern "C" void Background_LoadFile(Background0216b07c *background, void *file, SafeAllocator *allocator, unsigned int size);
 extern "C" void Background_FillRect(Background0216b07c *background, int a, int b, int c, int d, int e, int f);
-void Background_UploadMap(BackgroundGraphics *background, void *a);
-void WindowPane_AllocateBuffer(WindowPane *canvas, SafeAllocator *allocator,
+extern "C" void Background_UploadMap(BackgroundGraphics *background, void *a);
+extern "C" void WindowPane_AllocateBuffer(WindowPane *canvas, SafeAllocator *allocator,
                                                                            int pixels, unsigned int size);
-void Window_SetPanes(Struct_0205cf78 *window,
+extern "C" void Window_SetPanes(Struct_0205cf78 *window,
                                                                                      WindowPane *canvases,
                                                                                      unsigned char count);
-void *MessageSystem_GetInstance();
+extern "C" void *MessageSystem_GetInstance();
 
 struct Struct_ov003_0217f56c {
-    const char *unknown_0_[3];
+    const char *names_[3];
 };
 extern Struct_ov003_0217f56c data_ov003_0217f56c;
 extern char data_ov003_02180198[];
@@ -138,7 +138,7 @@ struct Struct_ov003_0216b07c_4 {
 };
 
 // USA: func_ov003_0216b07c
-extern "C" ARM void func_ov003_0216b07c(Menu0216b07c *self) {
+extern "C" ARM void func_ov003_0216b07c(Struct_ov003_0216b07c *self) {
     Global0216b07c *global   = (Global0216b07c *) MessageSystem_GetInstance();
     GameState *state         = GameState::GetInstance();
     BackgroundLoader *loader = BackgroundLoader::GetInstance();
@@ -149,7 +149,7 @@ extern "C" ARM void func_ov003_0216b07c(Menu0216b07c *self) {
         LinkSession_GetInstance();
         if (LinkSession_IsHostOrSolo() != 0 && *(short *) ((char *) state->GetLeader() + 4) == 0) {
             if (self->mode_ == 3) {
-                global->unk_998 = 1;
+                global->unknown_998_ = 1;
 #if defined(jpn)
                 Text_Append(global->text_, data_ov003_0217e930);
                 func_0204500c(global, global->text_, 0);
@@ -159,64 +159,64 @@ extern "C" ARM void func_ov003_0216b07c(Menu0216b07c *self) {
                 func_02046380(global);
                 func_0204500c(global, global->text_, 0, 0xe3);
 #endif
-                var0->unknown_19b2_ = 1;
-                var0->unknown_99c_  = 2;
-                var0->unknown_998_  = 1;
+                global->unknown_19b2_ = 1;
+                global->unknown_99c_  = 2;
+                global->unknown_998_  = 1;
             }
         } else {
-            arg0->unknown_13ea_ = 1;
-            arg0->unknown_13ec_ |= 1;
-            arg0->unknown_4_ = 3;
-            arg0->unknown_6_  = 0;
+            self->unknown_13ea_ = 1;
+            self->unknown_13ec_ |= 1;
+            self->state_ = 3;
+            self->step_  = 0;
             return;
         }
-        arg0->unknown_12fc_[0].CreateTypeA(arg0->unknown_12d0_->Allocate(0x3800), 0x3800);
-        arg0->unknown_12fc_[1].CreateTypeA(arg0->unknown_12d0_->Allocate(0xc00), 0xc00);
-        arg0->unknown_12fc_[1].Reset();
-        int var4               = 0;
-        arg0->unknown_12bc_      = 0;
-        arg0->unknown_12ac_      = arg0->unknown_1264_;
-        arg0->unknown_12b8_      = 0xf;
-        arg0->unknown_12a8_      = arg0->unknown_1268_;
-        Struct_ov003_0217f56c var5 = data_ov003_0217f56c;
-        int var6            = 0;
-        for (; var4 < 3; var4++) {
-            int var7;
+        self->allocators_[0].CreateTypeA(self->allocator_->Allocate(0x3800), 0x3800);
+        self->allocators_[1].CreateTypeA(self->allocator_->Allocate(0xc00), 0xc00);
+        self->allocators_[1].Reset();
+        int i               = 0;
+        self->unknown_12bc_      = 0;
+        self->unknown_12ac_      = self->unknown_1264_;
+        self->unknown_12b8_      = 0xf;
+        self->unknown_12a8_      = self->unknown_1268_;
+        Struct_ov003_0217f56c names = data_ov003_0217f56c;
+        int zero            = 0;
+        for (; i < 3; i++) {
+            int id;
 #if defined(jpn)
-            var7 = var2->QueueLoadFile(var5.unknown_0_[var4], (SafeAllocator *) var6);
+            id = loader->QueueLoadFile(names.names_[i], (SafeAllocator *) zero);
 #else
-            if (var4 == 0)
-                var7 = var2->QueueLoadFileInGP2(data_ov003_02180198, var5.unknown_0_[var4], (SafeAllocator *) var6);
+            if (i == 0)
+                id = loader->QueueLoadFileInGP2(data_ov003_02180198, names.names_[i], (SafeAllocator *) zero);
             else
-                var7 = var2->QueueLoadFile(var5.unknown_0_[var4], (SafeAllocator *) var6);
+                id = loader->QueueLoadFile(names.names_[i], (SafeAllocator *) zero);
 #endif
-            arg0->unknown_13fc_[var4] = var7;
+            self->tasks_[i] = id;
         }
-        arg0->unknown_6_ = 1;
+        self->step_ = 1;
     }
-    if (arg0->unknown_6_ == 1) {
-        for (int var8 = 0; var8 < 3; var8++) {
-            if (arg0->unknown_13fc_[var8] == -1) continue;
-            if (var2->GetTaskStatus(arg0->unknown_13fc_[var8]) != 0) {
-                arg0->unknown_6_ = var8 + 2;
+    if (self->step_ == 1) {
+        for (int i = 0; i < 3; i++) {
+            if (self->tasks_[i] == -1) continue;
+            if (loader->GetTaskStatus(self->tasks_[i]) != 0) {
+                self->step_ = i + 2;
                 break;
             }
         }
     }
 #if defined(jpn)
-    if (arg0->unknown_6_ == 2) {
-        void *var9;
-        void *var10;
-        unsigned int var11;
-        int var12;
-        int var13 = arg0->unknown_13fc_[0];
+    if (self->step_ == 2) {
+        void *name;
+        void *file;
+        unsigned int size;
+        int fileSize;
+        int task = self->tasks_[0];
 #else
-    if (arg0->unknown_6_ == 4) {
-        void *var9;
-        void *var10;
-        unsigned int var11;
-        int var12;
-        int var13 = arg0->unknown_13fc_[2];
+    if (self->step_ == 4) {
+        void *name;
+        void *file;
+        unsigned int size;
+        int fileSize;
+        int task = self->tasks_[2];
 #endif
         loader->GetLoadedFileByID(task, &file, &size);
         int count            = Pac_CountFiles((PacRecord *) file);
@@ -229,13 +229,13 @@ extern "C" ARM void func_ov003_0216b07c(Menu0216b07c *self) {
             SpriteContext_LoadFile((char *) self + 0x126c, data, fileSize, alloc);
 #endif
         }
-        var2->RemoveTask(var13);
+        loader->RemoveTask(task);
 #if defined(jpn)
-        arg0->unknown_13fc_[0] = -1;
+        self->tasks_[0] = -1;
 #else
-        arg0->unknown_13fc_[2] = -1;
+        self->tasks_[2] = -1;
 #endif
-        arg0->unknown_6_     = 1;
+        self->step_     = 1;
     }
 #if defined(jpn)
     if (self->step_ == 3) {
@@ -276,17 +276,17 @@ extern "C" ARM void func_ov003_0216b07c(Menu0216b07c *self) {
         self->pixels_ = self->allocator_->Allocate(0x2800);
         WindowPane_AllocateBuffer((WindowPane *) self->canvases_, self->allocator_, (int) self->pixels_, 0x400);
         self->canvases_->background_ = self->backgrounds_;
-        self->canvases_->unk_c4      = 0;
-        Window0216b07c *window       = self->window_;
+        self->canvases_->unknown_c4_      = 0;
+        Struct_ov003_0216b07c_5 *window       = self->window_;
         window->background_          = self->backgrounds_;
-        window->unk_b2               = 2;
+        window->unknown_b2_               = 2;
         Window_SetPanes((Struct_0205cf78 *) self->window_, (WindowPane *) self->canvases_, 1);
-        ((BgCnt0216b07c *) 0x4000008)[0].priority_ = 3;
-        ((BgCnt0216b07c *) 0x4000008)[1].priority_ = 1;
-        ((BgCnt0216b07c *) 0x4000008)[2].priority_ = 2;
-        ((BgCnt0216b07c *) 0x4000008)[3].priority_ = 0;
+        ((Struct_ov003_0216b07c_4 *) 0x4000008)[0].unknown_0_0_ = 3;
+        ((Struct_ov003_0216b07c_4 *) 0x4000008)[1].unknown_0_0_ = 1;
+        ((Struct_ov003_0216b07c_4 *) 0x4000008)[2].unknown_0_0_ = 2;
+        ((Struct_ov003_0216b07c_4 *) 0x4000008)[3].unknown_0_0_ = 0;
         ColorEffect_ConfigureAlphaBlend(0x4000050, 4, 1, 0xa, 6);
-        arg0->unknown_6_ = 1;
+        self->step_ = 1;
     }
 #else
     if (self->step_ == 3) {
@@ -331,22 +331,22 @@ extern "C" ARM void func_ov003_0216b07c(Menu0216b07c *self) {
         Background_FillRect(&second[1], 0, 0, 0, 0x20, 0x19, 0);
         Background_UploadMap((BackgroundGraphics *) &second[1], 0);
         self->pixels_          = self->allocator_->Allocate(0x2800);
-        Canvas0216b07c *canvas = self->canvases_;
+        Struct_ov003_0216b07c_3 *canvas = self->canvases_;
         WindowPane_AllocateBuffer((WindowPane *) canvas, self->allocator_,
                                                                    (int) self->pixels_, 0x400);
         canvas->background_    = self->backgrounds_;
-        canvas->unk_c4         = 0;
-        Window0216b07c *window = self->window_;
+        canvas->unknown_c4_         = 0;
+        Struct_ov003_0216b07c_5 *window = self->window_;
         window->background_    = self->backgrounds_;
-        window->unk_b2         = 2;
+        window->unknown_b2_         = 2;
         Window_SetPanes((Struct_0205cf78 *) self->window_,
                                                                              (WindowPane *) self->canvases_, 1);
-        ((BgCnt0216b07c *) 0x4000008)[0].priority_ = 3;
-        ((BgCnt0216b07c *) 0x4000008)[1].priority_ = 1;
-        ((BgCnt0216b07c *) 0x4000008)[2].priority_ = 2;
-        ((BgCnt0216b07c *) 0x4000008)[3].priority_ = 0;
+        ((Struct_ov003_0216b07c_4 *) 0x4000008)[0].unknown_0_0_ = 3;
+        ((Struct_ov003_0216b07c_4 *) 0x4000008)[1].unknown_0_0_ = 1;
+        ((Struct_ov003_0216b07c_4 *) 0x4000008)[2].unknown_0_0_ = 2;
+        ((Struct_ov003_0216b07c_4 *) 0x4000008)[3].unknown_0_0_ = 0;
         ColorEffect_ConfigureAlphaBlend(0x4000050, 4, 1, 0xa, 6);
-        arg0->unknown_6_ = 1;
+        self->step_ = 1;
     }
 #endif
 #if defined(jpn)
@@ -370,18 +370,18 @@ extern "C" ARM void func_ov003_0216b07c(Menu0216b07c *self) {
         loader->RemoveTask(task);
         self->tasks_[0] = -1;
 #endif
-        arg0->unknown_6_     = 1;
+        self->step_     = 1;
     }
-    int var47 = 1;
-    for (int var48 = 0; var48 < 3; var48++) {
-        if (arg0->unknown_13fc_[var48] != -1) {
-            var47 = 0;
+    int done = 1;
+    for (int i = 0; i < 3; i++) {
+        if (self->tasks_[i] != -1) {
+            done = 0;
             break;
         }
     }
-    if (var47) {
+    if (done) {
         DISPCNT = (DISPCNT & ~0x1f00) | 0x1700;
-        arg0->unknown_13ec_ |= 1;
+        self->unknown_13ec_ |= 1;
 #if defined(jpn)
         MessageSystem_SetStringArgument((Obj02046574 *) global, 0, *(char **) ((char *) state->GetLeader() + 0x134));
 #endif
@@ -389,15 +389,15 @@ extern "C" ARM void func_ov003_0216b07c(Menu0216b07c *self) {
         if ((LinkSession_IsActive((int *) obj) != 0 && LinkSession_IsGuest(obj) != 0) ||
             *(short *) ((char *) state->GetLeader() + 4) != 0)
         {
-            arg0->unknown_4_ = 3;
-            arg0->unknown_6_  = 0;
-        } else if (arg0->unknown_a_ != 1 && arg0->unknown_a_ != 2) {
-            arg0->unknown_4_ = 2;
-            arg0->unknown_6_  = 0;
+            self->state_ = 3;
+            self->step_  = 0;
+        } else if (self->mode_ != 1 && self->mode_ != 2) {
+            self->state_ = 2;
+            self->step_  = 0;
         } else {
-            arg0->unknown_13ea_ = 1;
-            arg0->unknown_4_   = 5;
-            arg0->unknown_6_    = 0;
+            self->unknown_13ea_ = 1;
+            self->state_   = 5;
+            self->step_    = 0;
         }
     }
 }

@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 // USA: func_02088c54
-extern "C" ARM int func_02088c54(unsigned char* arg0) {
-    int var0 = *(int*)(arg0 + 0x14);
-    if (var0 & 1) {
+extern "C" ARM int func_02088c54(unsigned char* obj) {
+    int x = *(int*)(obj + 0x14);
+    if (x & 1) {
         return 0;
     }
-    return (var0 & 0x20000) == 0;
+    return (x & 0x20000) == 0;
 }

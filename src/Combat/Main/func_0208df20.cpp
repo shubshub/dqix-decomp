@@ -1,35 +1,35 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201f040;
+struct ResetStruct;
 
-struct Struct_0201f040_2;
-struct Struct_02013fb4;
+struct StreamState;
+struct StreamHeader;
 
 struct Struct_0201f040_3;
 
 struct Struct_02108fd4 {
-    void* unknown_0_;
-    int unknown_4_;
-    void* unknown_8_;
-    void* unknown_c_;
+    void* field0;
+    int field4;
+    void* field8;
+    void* fieldC;
 };
 extern struct Struct_02108fd4 data_02108fd4;
 extern int data_020f1258;
 
-struct Struct_0208df20 { int unknown_0_; short unknown_4_; };
+struct Struct_0208df20 { int field0; short field4; };
 
 // USA: func_0208df20
-extern "C" ARM void func_0208df20(struct Struct_0208df20* arg0, void* arg1, int arg2, int arg3, int arg4, void* arg5) {
-    char var0[0x430];
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0;
-    data_02108fd4.unknown_c_ = arg1;
-    data_02108fd4.unknown_4_ = arg4;
-    data_02108fd4.unknown_0_ = &arg5;
-    data_02108fd4.unknown_8_ = arg0;
-    ((Script*)((struct Struct_0201f040*)var0))->Initialize();
-    ((Script*)((struct Struct_0201f040*)var0))->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1258);
-    ((Script*)((struct Struct_0201f040_2*)var0))->Load((struct Struct_02013fb4*)arg2, arg3);
-    ((Script*)((struct Struct_0201f040_3*)var0))->Execute();
+extern "C" ARM void func_0208df20(struct Struct_0208df20* param0, void* param1, int param2, int param3, int param4, void* arg5) {
+    char local[0x430];
+    param0->field0 = 0;
+    param0->field4 = 0;
+    data_02108fd4.fieldC = param1;
+    data_02108fd4.field4 = param4;
+    data_02108fd4.field0 = &arg5;
+    data_02108fd4.field8 = param0;
+    ((Script*)((struct ResetStruct*)local))->Initialize();
+    ((Script*)((struct ResetStruct*)local))->SetOpcodeLookup((Script::OpcodeLookupEntry*)&data_020f1258);
+    ((Script*)((struct StreamState*)local))->Load((struct StreamHeader*)param2, param3);
+    ((Script*)((struct Struct_0201f040_3*)local))->Execute();
 }

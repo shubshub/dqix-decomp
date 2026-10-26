@@ -2,14 +2,14 @@
 
 
 struct Struct_ov031_0221e798 {
-    int unknown_0_;
-    int unknown_4_;
+    int value;
+    int rest;
 };
 
-extern "C" THUMB void func_ov031_0221e6e8(int arg0, int* arg1);
+extern "C" THUMB void func_ov031_0221e6e8(int a, int* b);
 
 // USA: func_ov031_0221e798
-extern "C" THUMB void func_ov031_0221e798(Struct_ov031_0221e798* arg0, int arg1, int arg2) {
-    arg0->unknown_0_ = arg2;
-    func_ov031_0221e6e8(arg1, &arg0->unknown_4_);
+extern "C" THUMB void func_ov031_0221e798(Struct_ov031_0221e798* node, int a, int value) {
+    node->value = value;
+    func_ov031_0221e6e8(a, &node->rest);
 }

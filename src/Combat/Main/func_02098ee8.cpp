@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
-struct Struct_0205faf4_12 {
-    char unknown_0_[0x1b61];
-    unsigned char unknown_1b61_;
+struct ReadClearByte02098ee8 {
+    char pad[0x1b61];
+    unsigned char flag;
 };
 
 // USA: func_02098ee8
-extern "C" ARM unsigned char func_02098ee8(struct Struct_0205faf4_12* arg0) {
-    unsigned char var0 = arg0->unknown_1b61_;
-    arg0->unknown_1b61_ = 0;
-    return var0;
+extern "C" ARM unsigned char func_02098ee8(struct ReadClearByte02098ee8* s) {
+    unsigned char old = s->flag;
+    s->flag = 0;
+    return old;
 }

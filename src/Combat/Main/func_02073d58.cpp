@@ -1,37 +1,37 @@
 #include <globaldefs.h>
 
 #if defined(jpn)
-enum { Enum_02073d58_24 = 0x14 };
+enum { EntryListOffset = 0x14 };
 #else
-enum { Enum_02073d58_24 = 0x18 };
+enum { EntryListOffset = 0x18 };
 #endif
 #include "GameState/GameState.h"
 
-struct Struct_02028430;
-struct Struct_02028430_2;
-extern "C" Struct_02028430_2* func_02028430(Struct_02028430* arg0, int arg1);
+struct List_02028430;
+struct ListEntry_02028430;
+extern "C" ListEntry_02028430* NodeGraph_GetNode(List_02028430* list, int index);
 
 struct Struct_02073d58 {
-    unsigned short unknown_0_0_ : 2;
-    unsigned short unknown_0_2_ : 14;
+    unsigned short kind : 2;
+    unsigned short pad : 14;
 };
 
 // USA: func_02073d58
-extern "C" ARM int func_02073d58(int arg0, void* arg1, int arg2) {
-    GameState* var0 = GameState::GetInstance();
-    int var1;
-    for (var1 = 0; var1 < 0xc; var1++) {
-        int var2 = ((struct Struct_02073d58*)((char*)arg1 + 2))->unknown_0_0_;
-        int var3 = var2 * 12 + 0x70;
-        int var4 = var1 + var3;
-        if (arg2 != -1 && var4 == arg2) continue;
-        GameObject* var5 = var0->GetMaybeWanderingMonsterByIndex(var4);
-        if (!var5) continue;
-        if (!var5->obj3D_.IsVisible()) continue;
-        unsigned short var6 = var5->unknown_ac_.unknown_b8_;
-        Struct_02028430_2* var7 = func_02028430((Struct_02028430*)((char*)arg1 + Enum_02073d58_24), var6);
-        if (!var7) continue;
-        if (*(unsigned char*)var7 == arg0) return 1;
+extern "C" ARM int func_02073d58(int entryId, void* spawnGroup, int arg2) {
+    GameState* bs = GameState::GetInstance();
+    int i;
+    for (i = 0; i < 0xc; i++) {
+        int kind = ((struct Struct_02073d58*)((char*)spawnGroup + 2))->kind;
+        int var3 = kind * 12 + 0x70;
+        int id = i + var3;
+        if (arg2 != -1 && id == arg2) continue;
+        GameObject* combatant = bs->GetWanderingMonsterByIndex(id);
+        if (!combatant) continue;
+        if (!combatant->obj3D_.IsVisible()) continue;
+        unsigned short field_b8 = combatant->combatFields_.unknown_b8_;
+        ListEntry_02028430* entry = NodeGraph_GetNode((List_02028430*)((char*)spawnGroup + EntryListOffset), field_b8);
+        if (!entry) continue;
+        if (*(unsigned char*)entry == entryId) return 1;
     }
     return 0;
 }

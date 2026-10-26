@@ -2,23 +2,23 @@
 #include "Resource/CharacterCreationUI.h"
 #include "Memory/SafeAllocator.h"
 
-void* GlobalFlags_GetInstance(void);
+extern "C" void* GlobalFlags_GetInstance(void);
 struct FlagWord020466f4;
-void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
-void CharacterModel_Destroy(void* obj);
-int MessageSystem_GetInstance();
+extern "C" void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
+extern "C" void CharacterModel_Destroy(void* obj);
+extern "C" int MessageSystem_GetInstance();
 struct CombatSlots02045cac;
-void MessageSystem_ResetGlyphs(struct CombatSlots02045cac* obj);
-void MessageSystem_Reset(char* obj);
+extern "C" void MessageSystem_ResetGlyphs(struct CombatSlots02045cac* obj);
+extern "C" void MessageSystem_Reset(char* obj);
 extern "C" void MessageSystem_Stop(char* obj);
-void SpriteContext_Destroy(void* obj);
-void* CachedTextTable_GetInstance();
-void CachedTextTable_Reset(char* obj);
+extern "C" void SpriteContext_Destroy(void* obj);
+extern "C" void* CachedTextTable_GetInstance();
+extern "C" void CachedTextTable_Reset(char* obj);
 struct BackgroundGraphics;
-void Background_ClearMap(BackgroundGraphics* obj, void* p);
+extern "C" void Background_ClearMap(BackgroundGraphics* obj, void* p);
 extern "C" void Background_FlushMap(void* p, int flag);
 extern "C" void Background_TransferMap(void* p, int flag);
-void Background_Destroy(struct BackgroundGraphics* obj);
+extern "C" void Background_Destroy(struct BackgroundGraphics* obj);
 extern "C" void Window_Destroy(CreationWindow* window); // resets the window's panes and layers
 extern "C" void* __clear(void* dst, int count);
 

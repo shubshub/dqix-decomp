@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
 struct Struct_0205e1e4_2 {
-    char unknown_0_[0x18];
-    struct Struct_0205e1e4_2* unknown_18_;
+    char pad[0x18];
+    struct Struct_0205e1e4_2* next;
 };
 struct Struct_0205e1e4 {
-    struct Struct_0205e1e4_2* unknown_0_;
-    struct Struct_0205e1e4_2* unknown_4_;
-    int unknown_8_;
+    struct Struct_0205e1e4_2* head;
+    struct Struct_0205e1e4_2* tail;
+    int count;
 };
 
-extern "C" void func_020d8654(void);
-extern "C" void func_020d8694(void);
+extern "C" void VCountIrq_PushDisable(void);
+extern "C" void VCountIrq_PopDisable(void);
 
 // USA: func_0205e1e4
-extern "C" ARM struct Struct_0205e1e4_2* func_0205e1e4(struct Struct_0205e1e4* arg0) {
-    struct Struct_0205e1e4_2* var0;
-    func_020d8654();
-    var0 = arg0->unknown_0_;
-    if (var0 != NULL) {
-        arg0->unknown_0_ = var0->unknown_18_;
-        arg0->unknown_8_--;
+extern "C" ARM struct Struct_0205e1e4_2* func_0205e1e4(struct Struct_0205e1e4* list) {
+    struct Struct_0205e1e4_2* head;
+    VCountIrq_PushDisable();
+    head = list->head;
+    if (head != NULL) {
+        list->head = head->next;
+        list->count--;
     }
-    func_020d8694();
-    return var0;
+    VCountIrq_PopDisable();
+    return head;
 }

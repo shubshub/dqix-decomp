@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "Resource/GameResources.h"
 
-struct Struct_0202b2f0;
-struct Struct_ov017_0218e674 { unsigned char unknown_0_[2]; unsigned char unknown_2_; unsigned char unknown_3_; unsigned char unknown_4_[0x96]; unsigned char unknown_9a_; };
+struct SearchStruct;
+struct Obj_021bd3a4 { unsigned char pad0[2]; unsigned char f2; unsigned char f3; unsigned char pad1[0x96]; unsigned char unknown_9a_; };
 
 struct Struct_ov017_021925e0 {
     unsigned int unknown_0_0_ : 27;
@@ -11,38 +11,38 @@ struct Struct_ov017_021925e0 {
 
 extern "C" struct SearchStruct* LinkSession_GetInstance(void);
 extern "C" int LinkSession_IsGuest(struct SearchStruct* obj);
-int HasFlag3orFlag2And9a_021bd3a4(struct Obj_021bd3a4* obj);
+extern "C" int func_ov017_021bd3a4(struct Obj_021bd3a4* obj);
 
 // USA: func_ov017_021925e0
 extern "C" ARM int func_ov017_021925e0(void) {
 #if defined(jpn)
- enum {Enum_ov017_021925e0_1844=0x524, Enum_ov017_021925e0_257=0xfd, Enum_ov017_021925e0_248=0xf4, Enum_ov017_021925e0_255=0xfb, Enum_ov017_021925e0_207=0xcb};
+ enum {regionalOffset0=0x524, regionalOffset1=0xfd, regionalOffset2=0xf4, regionalOffset3=0xfb, regionalOffset4=0xcb};
 #else
- enum {Enum_ov017_021925e0_1844=0x734, Enum_ov017_021925e0_257=0x101, Enum_ov017_021925e0_248=0xf8, Enum_ov017_021925e0_255=0xff, Enum_ov017_021925e0_207=0xcf};
+ enum {regionalOffset0=0x734, regionalOffset1=0x101, regionalOffset2=0xf8, regionalOffset3=0xff, regionalOffset4=0xcf};
 #endif
     char* base = (char*)GetGameResources();
     unsigned char* obj = *(unsigned char**)(base + 0x3000 + regionalOffset0);
     if (!LinkSession_IsGuest(LinkSession_GetInstance())) {
         goto ret0;
     }
-    if (func_ov017_021bd3a4((struct Struct_ov017_0218e674*)var1)) {
-        if (*(unsigned char*)(var1 + Enum_ov017_021925e0_257) == 0) {
+    if (func_ov017_021bd3a4((struct Obj_021bd3a4*)obj)) {
+        if (*(unsigned char*)(obj + regionalOffset1) == 0) {
             goto ret0;
         }
     } else {
         goto ret0;
     }
-    if (*(unsigned char*)(var1 + Enum_ov017_021925e0_257) == 0) {
+    if (*(unsigned char*)(obj + regionalOffset1) == 0) {
         goto skip;
     }
-    if (((struct Struct_ov017_021925e0*)(var1 + Enum_ov017_021925e0_248))->unknown_0_0_ & 4) {
+    if (((struct Struct_ov017_021925e0*)(obj + regionalOffset2))->unknown_0_0_ & 4) {
         goto ret0;
     }
 skip:
-    if (var1[Enum_ov017_021925e0_255] != 0) {
+    if (obj[regionalOffset3] != 0) {
         goto ret0;
     }
-    if (var1[Enum_ov017_021925e0_207] != 2) {
+    if (obj[regionalOffset4] != 2) {
         return 1;
     }
 ret0:

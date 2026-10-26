@@ -2,34 +2,34 @@
 
 struct Struct_0205d81c;
 
-struct Struct_0205d0e0 {
-    char unknown_0_[0xa8];
-    short unknown_a8_;
-    short unknown_aa_;
-    short unknown_ac_;
-    short unknown_ae_;
+struct Elem_0205d81c {
+    char pad0[0xa8];
+    short width;
+    short height;
+    short x;
+    short y;
 };
 
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c* arg0, int arg1);
-extern "C" void func_0205d904(unsigned char* arg0);
+extern "C" struct Elem_0205d81c* func_0205d81c(struct Struct_0205d81c* s, int key);
+extern "C" void func_0205d904(unsigned char* obj);
 
 // USA: func_ov000_02176210
-extern "C" ARM void func_ov000_02176210(struct Struct_0205d81c* arg0, int arg1, int arg2) {
-    struct Struct_0205d0e0* var0 = func_0205d81c(arg0, arg1);
-    struct Struct_0205d0e0* var1 = func_0205d81c(arg0, arg2);
-    if (var0 == NULL || var1 == NULL) return;
+extern "C" ARM void func_ov000_02176210(struct Struct_0205d81c* s, int key1, int key2) {
+    struct Elem_0205d81c* first = func_0205d81c(s, key1);
+    struct Elem_0205d81c* second = func_0205d81c(s, key2);
+    if (first == NULL || second == NULL) return;
 
-    short var2 = var0->unknown_ae_;
-    short var3 = var0->unknown_aa_;
-    short var4 = var1->unknown_a8_;
-    short var5 = var0->unknown_a8_;
-    short var6 = var1->unknown_aa_;
-    var0->unknown_ac_ = 0x20 - var5;
-    var0->unknown_ae_ = var2;
+    short var2 = first->y;
+    short var3 = first->height;
+    short var4 = second->width;
+    short var5 = first->width;
+    short var6 = second->height;
+    first->x = 0x20 - var5;
+    first->y = var2;
     short var7 = 0x20 - var4;
     short var8 = var2 + var3;
     if (var8 + var6 > 0x18) var8 = var2 - var6;
-    var1->unknown_ac_ = var7;
-    var1->unknown_ae_ = var8;
-    func_0205d904((unsigned char*)arg0);
+    second->x = var7;
+    second->y = var8;
+    func_0205d904((unsigned char*)s);
 }

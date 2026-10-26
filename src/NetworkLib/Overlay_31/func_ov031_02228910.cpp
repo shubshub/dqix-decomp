@@ -9,9 +9,9 @@ extern "C" void func_ov031_02228960(void);
 
 // USA: func_ov031_02228910
 extern "C" ARM void func_ov031_02228910(void) {
-    signed char var0 = func_ov031_02237e9c();
-    if (var0 != 0) {
-        if (var0 != 1) return;
+    signed char v = func_ov031_02237e9c();
+    if (v != 0) {
+        if (v != 1) return;
         func_ov031_02236878(0xe);
         data_ov031_02290c58 = 1;
     } else {

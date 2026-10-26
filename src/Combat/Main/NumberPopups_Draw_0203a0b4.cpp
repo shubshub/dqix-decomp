@@ -12,9 +12,9 @@ struct Vec3Target0203a46c {
     int z;
 };
 
-void Camera_WorldToScreen(void*, struct Vec3copy0202ec84*, int*, int*);
-void SprSprite_SetPosition(struct Vec3Target0203a46c*, int, int, int);
-void SprSprite_SetScale(unsigned int*, unsigned int, unsigned int, unsigned int);
+extern "C" void Camera_WorldToScreen(void*, struct Vec3copy0202ec84*, int*, int*);
+extern "C" void SprSprite_SetPosition(struct Vec3Target0203a46c*, int, int, int);
+extern "C" void SprSprite_SetScale(unsigned int*, unsigned int, unsigned int, unsigned int);
 extern "C" void SprSprite_DrawGroup(void* sprite, int frame, int flag);
 
 // data_020e7830: how much a digit grows (0x800, 0x1000, 0x1000, 0x1000, 0x800) over the five frames after it appears.

@@ -4,13 +4,13 @@ struct InitStruct;
 struct ResetObject0209af34Struct;
 struct ZeroWordAndByte0206ee60Struct;
 
-ARM void NodeGraph_Reset(struct InitStruct* graph);
-ARM void ClearHalfword0x18_0209bffc(void* obj);
-ARM void ClearBuffer0209bc84(void* obj);
-ARM void ResetObject0209af34(struct ResetObject0209af34Struct* obj);
-void* Clear12Bytes0206efc4(void* obj);
-ARM void ZeroWordAndByte0206ee60(struct ZeroWordAndByte0206ee60Struct* s);
-ARM void Clear12Bytes020a8e88(void* p);
+extern "C" ARM void NodeGraph_Reset(struct InitStruct* graph);
+extern "C" ARM void func_0209bffc(void* obj);
+extern "C" ARM void func_0209bc84(void* obj);
+extern "C" ARM void func_0209af34(struct ResetObject0209af34Struct* obj);
+extern "C" void* func_0206efc4(void* obj);
+extern "C" ARM void func_0206ee60(struct ZeroWordAndByte0206ee60Struct* s);
+extern "C" ARM void func_020a8e88(void* p);
 
 struct ZoneRecordFlags {
     unsigned short slotIndex : 2;
@@ -27,20 +27,20 @@ struct ZoneRecord {
     int unknown8;
     unsigned char loaded;
     signed char unknownD;
-    unsigned short pad0e;
+    unsigned short unknown_e_;
     int allocator;
 #if !defined(jpn)
     int secondAllocator;
 #endif
     unsigned char graph[0x2c];
     unsigned short unknown44;
-    unsigned char pad46[0x1a];
+    unsigned char unknown_46_[0x1a];
     unsigned char unknown60[0xc0];
-    unsigned char pad120[4];
+    unsigned char unknown_120_[4];
     unsigned char unknown124[0x1d4];
     unsigned char unknown2f8[0xc];
     unsigned char unknown304[5];
-    unsigned char pad309[3];
+    unsigned char unknown_309_[3];
     unsigned char unknown30c[0xc];
 };
 
@@ -68,12 +68,12 @@ extern "C" ARM void ZoneRecords_Reset(struct ZoneRecord* records) {
         record->openedDoors = 0;
         record->unknownD = -1;
         NodeGraph_Reset((struct InitStruct*)record->graph);
-        ClearHalfword0x18_0209bffc((void*)&record->unknown44);
-        ClearBuffer0209bc84(record->unknown60);
-        ResetObject0209af34((struct ResetObject0209af34Struct*)record->unknown124);
-        Clear12Bytes0206efc4(record->unknown2f8);
-        ZeroWordAndByte0206ee60((struct ZeroWordAndByte0206ee60Struct*)record->unknown304);
-        Clear12Bytes020a8e88(record->unknown30c);
+        func_0209bffc((void*)&record->unknown44);
+        func_0209bc84(record->unknown60);
+        func_0209af34((struct ResetObject0209af34Struct*)record->unknown124);
+        func_0206efc4(record->unknown2f8);
+        func_0206ee60((struct ZeroWordAndByte0206ee60Struct*)record->unknown304);
+        func_020a8e88(record->unknown30c);
         record->flags.slotIndex = i;
     }
 }

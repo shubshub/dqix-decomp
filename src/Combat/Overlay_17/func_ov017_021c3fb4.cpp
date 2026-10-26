@@ -2,57 +2,57 @@
 #include "GameState/GameState.h"
 
 struct Field150Holder02052e14;
-short* GetField150Ptr0x488(struct Field150Holder02052e14* obj);
-void* LinkMessageQueue_GetInstance(void);
+extern "C" short* func_02052e14(struct Field150Holder02052e14* obj);
+extern "C" void* LinkMessageQueue_GetInstance(void);
 extern "C" void func_0205e330(void* a, void* b, int c);
 
 struct Struct_ov017_021c3fb4 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[3];
-    unsigned char unknown_4_0_ : 4;
-    unsigned char unknown_4_4_ : 1;
-    unsigned char unknown_5_[5];
-    short unknown_a_[5];
+    unsigned char tag;
+    unsigned char pad[3];
+    unsigned char combatantId : 4;
+    unsigned char flag : 1;
+    unsigned char slots[5];
+    short values[5];
 };
 
 // USA: func_ov017_021c3fb4
-extern "C" ARM void func_ov017_021c3fb4(int arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    GameObject* var1 = func_0200ff1c(var0, arg0);
-    if (var1 == NULL) return;
+extern "C" ARM void func_ov017_021c3fb4(int combatantId, int flag) {
+    GameState* bs = GameState::GetInstance();
+    GameObject* c = func_0200ff1c(bs, combatantId);
+    if (c == NULL) return;
 
-    short* var2 = func_02052e14((struct Struct_02052e14*)var1);
-    if (var2 == NULL) return;
+    short* list = func_02052e14((struct Field150Holder02052e14*)c);
+    if (list == NULL) return;
 
     void* data = LinkMessageQueue_GetInstance();
 
-    struct Struct_ov017_021c3fb4 var4;
-    var4.unknown_0_ = 2;
-    var4.unknown_4_0_ = arg0;
+    struct Struct_ov017_021c3fb4 evt;
+    evt.tag = 2;
+    evt.combatantId = combatantId;
 
-    var4.unknown_5_[0] = 0;
-    var4.unknown_a_[0] = var2[0];
-    var4.unknown_5_[1] = 1;
-    var4.unknown_a_[1] = var2[1];
-    var4.unknown_5_[2] = 2;
-    var4.unknown_a_[2] = var2[2];
-    var4.unknown_5_[3] = 3;
-    var4.unknown_a_[3] = var2[3];
-    var4.unknown_5_[4] = 4;
-    var4.unknown_a_[4] = var2[4];
-    var4.unknown_4_4_ = 0;
-    func_0205e330(var3, &var4, 0);
+    evt.slots[0] = 0;
+    evt.values[0] = list[0];
+    evt.slots[1] = 1;
+    evt.values[1] = list[1];
+    evt.slots[2] = 2;
+    evt.values[2] = list[2];
+    evt.slots[3] = 3;
+    evt.values[3] = list[3];
+    evt.slots[4] = 4;
+    evt.values[4] = list[4];
+    evt.flag = 0;
+    func_0205e330(data, &evt, 0);
 
-    var4.unknown_5_[0] = 5;
-    var4.unknown_a_[0] = var2[5];
-    var4.unknown_5_[1] = 6;
-    var4.unknown_a_[1] = var2[6];
-    var4.unknown_5_[2] = 7;
-    var4.unknown_a_[2] = var2[7];
-    var4.unknown_5_[3] = 8;
-    var4.unknown_a_[3] = var2[8];
-    var4.unknown_5_[4] = 9;
-    var4.unknown_a_[4] = var2[9];
-    var4.unknown_4_4_ = arg1;
-    func_0205e330(var3, &var4, 0);
+    evt.slots[0] = 5;
+    evt.values[0] = list[5];
+    evt.slots[1] = 6;
+    evt.values[1] = list[6];
+    evt.slots[2] = 7;
+    evt.values[2] = list[7];
+    evt.slots[3] = 8;
+    evt.values[3] = list[8];
+    evt.slots[4] = 9;
+    evt.values[4] = list[9];
+    evt.flag = flag;
+    func_0205e330(data, &evt, 0);
 }

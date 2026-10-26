@@ -6,21 +6,21 @@
 #include "GameState/GameState.h"
 
 struct Struct_020dbd9c {
-    char unknown_0_[0x10];
-    int unknown_10_;
-    unsigned char unknown_14_;
+    char unk_0[0x10];
+    int state_;
+    unsigned char unk_14;
 };
 
 struct Struct_ov006_02154614_2 {
-    char unknown_0_[0x48];
-    void* unknown_48_;
+    char unk_0[0x48];
+    void* partNames_;
 #if defined(jpn)
     char unknown_4c_[0x6f0 - 0x4c];
 #else
     char unknown1_4c_[0x774 - 0x4c];
 #endif
-    unsigned short unknown_774_;
-    unsigned char unknown_776_;
+    unsigned short flags_;
+    unsigned char visible_;
     char unknown_777_[0x6];
     signed char unknown_77d_;
     char unknown_77e_[0x1d];
@@ -29,24 +29,24 @@ struct Struct_ov006_02154614_2 {
 };
 
 struct Struct_ov006_02156e54 {
-    char unknown_0_[0x7c];
+    char unk_0[0x7c];
 };
 
 struct Struct_ov006_021537d0 {
-    short unknown_0_;
-    short unknown_2_;
-    short unknown_4_[3];
+    short id_;
+    short item_;
+    short ingredients_[3];
     unsigned short unknown_a_0_ : 4;
     unsigned short unknown_a_4_ : 4;
     unsigned short unknown_b_0_ : 4;
     unsigned short unknown_b_4_ : 4;
     unsigned int unknown_c_0_ : 20;
-    unsigned int unknown_e_4_ : 8;
+    unsigned int letter_ : 8;
     unsigned int unknown_f_4_ : 4;
 };
 
 struct Struct_ov006_021555b0 {
-    short unknown_0_;
+    short id_;
     unsigned short unknown_2_0_ : 1;
     unsigned short unknown_2_1_ : 1;
     unsigned short unknown_2_2_ : 14;
@@ -54,135 +54,135 @@ struct Struct_ov006_021555b0 {
 
 struct Struct_ov006_02154614 {
 #if !defined(jpn)
-    char unknown_0_[3][0x80];
+    char names_[3][0x80];
 #endif
-    SafeAllocator* unknown_180_;
+    SafeAllocator* allocators_;
     SafeAllocator* unknown_184_;
     SafeAllocator* unknown_188_;
     SafeAllocator unknown_18c_;
-    void* unknown_1a0_;
-    void* unknown_1a4_;
+    void* previousCamera_;
+    void* canvasBuffer_;
     unsigned char* unknown_1a8_;
-    void* unknown_1ac_;
-    void* unknown_1b0_;
+    void* itemNames_;
+    void* texts_;
     Struct_ov006_021537d0* unknown_1b4_;
-    Struct_ov006_021537d0* unknown_1b8_;
+    Struct_ov006_021537d0* nextRecipe_;
     int unknown_1bc_;
     Struct_ov006_021555b0* unknown_1c0_;
     unsigned char* unknown_1c4_;
-    void* unknown_1c8_;
-    void* unknown_1cc_;
-    void* unknown_1d0_;
-    void* unknown_1d4_;
-    void* unknown_1d8_;
-    void* unknown_1dc_;
-    void* unknown_1e0_;
-    char unknown_1e4_[0x54];
+    void* layout_;
+    void* backgrounds_;
+    void* canvases_;
+    void* menu_;
+    void* item_;
+    void* nextItem_;
+    void* sprites_;
+    char renderer_[0x54];
     Object3D unknown_238_;
-    Object3D unknown_2e4_;
+    Object3D pot_;
     Object3D unknown_390_;
-    Object3D unknown_43c_;
-    Object3D unknown_4e8_;
+    Object3D effect_;
+    Object3D steam_;
     char unknown_594_[0x38];
-    char unknown_5cc_[0x2c8];
-    Struct_ov006_02156e54 unknown_894_[4];
+    char camera_[0x2c8];
+    Struct_ov006_02156e54 ingredients_[4];
     SafeAllocator unknown_a84_[4];
-    int unknown_ad4_;
+    int task_;
     int unknown_ad8_;
-    unsigned char unknown_adc_;
+    unsigned char state_;
     unsigned char unknown_add_;
     unsigned char unknown_ade_;
     unsigned char unknown_adf_;
     unsigned char unknown_ae0_;
     unsigned char unknown_ae1_;
-    unsigned short unknown_ae2_;
-    Struct_ov006_02154614_2 unknown_ae4_;
+    unsigned short flags_;
+    Struct_ov006_02154614_2 window_;
     SafeAllocator* unknown_1280_;
     SafeAllocator* unknown_1284_;
-    char unknown_1288_[0x18];
+    char partNames_[0x18];
     Struct_020dbd9c unknown_12a0_;
-    short unknown_12b8_;
+    short itemId_;
     signed char unknown_12ba_;
     unsigned char unknown_12bb_;
     unsigned char unknown_12bc_;
     unsigned char unknown_12bd_;
 };
 
-struct Struct_ov000_02171c04 {
+struct BattleEquipmentEntry {
     unsigned char unknown_0_[8];
-    unsigned int unknown_8_0_ : 4;
+    unsigned int category : 4;
     unsigned int unknown_8_4_ : 28;
     unsigned char unknown_c_[0xc];
-    short unknown_18_;
+    short item;
     unsigned char unknown_1a_[6];
 };
 
 struct Struct_ov000_02171c04_2 {
     unsigned char unknown_0_[0x194];
-    Struct_ov000_02171c04 unknown_194_[8];
+    BattleEquipmentEntry entries[8];
 };
 
-struct Struct_ov006_021557c0 {
-    char unknown_0_[0xf78];
-    unsigned char unknown_f78_[4];
-    unsigned char unknown_f7c_;
+struct Party021557c0 {
+    char pad[0xf78];
+    unsigned char ids[4];
+    unsigned char count;
 };
 
 struct Container020e0310;
 struct ItemTable;
 
 extern "C" void __clear(void* dst, int size);
-int KeyTable_Get(Container020e0310* texts, int id);
+extern "C" int KeyTable_Get(Container020e0310* texts, int id);
 #if defined(jpn)
-extern "C" int func_020e12ec(char* arg0, const char* arg1);
+extern "C" int func_020e12ec(char* destination, const char* source);
 #define data_ov006_0215ff5c data_ov006_021612c0
 #endif
-void ItemTable_Init(void* obj);
-int BuildDescriptorFlag1_020de980(void* obj, void* alloc, void* data, int size, int id);
-void* ItemTable_Find(ItemTable* c, int key);
-extern "C" void func_ov023_021dcd90(ItemInfoWindow* window, unsigned char inMenu);
-extern "C" void func_ov023_021dcae0(ItemInfoWindow* window, int item);
-extern "C" void func_ov023_021dced4(ItemInfoWindow* window, unsigned char multiplier);
-const char** CallFunc020e52a0_020e5294(void* names, int item);
+extern "C" void ItemTable_Init(void* obj);
+extern "C" int func_020de980(void* obj, void* alloc, void* data, int size, int id);
+extern "C" void* ItemTable_Find(ItemTable* c, int key);
+extern "C" void func_ov023_021dcd90(Struct_ov006_02154614_2* window, unsigned char arg1);
+extern "C" void func_ov023_021dcae0(Struct_ov006_02154614_2* window, int item);
+extern "C" void func_ov023_021dced4(Struct_ov006_02154614_2* window, unsigned char arg1);
+extern "C" const char** func_020e5294(void* names, int item);
 extern "C" void func_020e4864(const char* src, char* dst, int a, int b, int c, int d);
-GameObject* GetCombatantWithFlag0x100_0200ff1c(GameState* gameState, int combatantId);
-void* GameState_GetParty(GameState* gameState);
-void SetFields_021dceac(char* window, int index, int name, unsigned char count, unsigned char maximum, unsigned char unk);
+extern "C" GameObject* func_0200ff1c(GameState* gameState, int combatantId);
+extern "C" void* GameState_GetParty(GameState* gameState);
+extern "C" void func_ov023_021dceac(char* window, int index, int name, unsigned char count, unsigned char maximum, unsigned char unk);
 
 extern unsigned char data_ov006_0215ff5c[8];
 
 // USA: func_ov006_021557c0
-extern "C" ARM void func_ov006_021557c0(Struct_ov006_02154614* arg0) {
-    if (!(arg0->unknown_ae2_ & 2) || arg0->unknown_ae4_.unknown_776_ == 0)
+extern "C" ARM void func_ov006_021557c0(Struct_ov006_02154614* self) {
+    if (!(self->flags_ & 2) || self->window_.visible_ == 0)
         return;
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    short var1 = arg0->unknown_12b8_;
-    if (var1 > 0) {
-        if (arg0->unknown_ade_ == 0) {
-            short var2 = arg0->unknown_12ba_ + 0x26;
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    short item = self->itemId_;
+    if (item > 0) {
+        if (self->unknown_ade_ == 0) {
+            short innerKey = self->unknown_12ba_ + 0x26;
 #if defined(jpn)
             const char* inner = (const char*)KeyTable_Get((Container020e0310*)self->texts_, innerKey);
             char path[0x40];
             func_020e12ec(path, inner);
             self->task_ = loader->QueueLoadGP1(path, 0);
 #else
-            short gp2Key = self->itemSprites_ + 0x64;
+            short gp2Key = self->unknown_12ba_ + 0x64;
             const char* inner = (const char*)KeyTable_Get((Container020e0310*)self->texts_, innerKey);
             const char* gp2 = (const char*)KeyTable_Get((Container020e0310*)self->texts_, gp2Key);
             self->task_ = loader->QueueLoadFileInGP2(gp2, inner, 0);
 #endif
-            arg0->unknown_ade_++;
+            self->unknown_ade_++;
         }
-        if (arg0->unknown_ade_ == 1) {
-            if (var0->GetTaskStatus(arg0->unknown_ad4_) == 0)
+        if (self->unknown_ade_ == 1) {
+            if (loader->GetTaskStatus(self->task_) == 0)
                 return;
             void* data;
             unsigned int size;
             loader->GetLoadedFileByID(self->task_, &data, &size);
-            self->nextItemAllocator_->Reset();
+            self->unknown_188_->Reset();
             short id = self->itemId_;
             ItemTable_Init(self->partNames_);
-            BuildDescriptorFlag1_020de980(self->partNames_, self->nextItemAllocator_, data, size, id);
+            func_020de980(self->partNames_, self->unknown_188_, data, size, id);
             self->window_.flags_ &= ~0x1000;
             self->window_.partNames_ = self->partNames_;
             func_ov023_021dcd90(&self->window_, 1);
@@ -193,16 +193,16 @@ extern "C" ARM void func_ov006_021557c0(Struct_ov006_02154614* arg0) {
             func_ov023_021dcae0(&self->window_, self->itemId_);
             return;
         }
-    } else if (var1 == -1) {
-        arg0->unknown_ae2_ &= ~2;
-        arg0->unknown_ae2_ |= 0x40;
-        arg0->unknown_ae4_.unknown_774_ &= ~0x1000;
-        func_ov023_021dcd90(&arg0->unknown_ae4_, 1);
-        func_ov023_021dcae0(&arg0->unknown_ae4_, arg0->unknown_12b8_);
+    } else if (item == -1) {
+        self->flags_ &= ~2;
+        self->flags_ |= 0x40;
+        self->window_.flags_ &= ~0x1000;
+        func_ov023_021dcd90(&self->window_, 1);
+        func_ov023_021dcae0(&self->window_, self->itemId_);
         return;
     }
 
-    if (arg0->unknown_ade_ == 0) {
+    if (self->unknown_ade_ == 0) {
 #if defined(jpn)
         short innerKey = 0x26;
         innerKey += self->nextRecipe_->letter_;
@@ -219,51 +219,51 @@ extern "C" ARM void func_ov006_021557c0(Struct_ov006_02154614* arg0) {
         const char* gp2 = (const char*)KeyTable_Get((Container020e0310*)self->texts_, gp2Key);
         self->task_ = loader->QueueLoadFileInGP2(gp2, inner, 0);
 #endif
-        arg0->unknown_ade_++;
-    } else if (arg0->unknown_ade_ == 1) {
-        if (var0->GetTaskStatus(arg0->unknown_ad4_) == 0)
+        self->unknown_ade_++;
+    } else if (self->unknown_ade_ == 1) {
+        if (loader->GetTaskStatus(self->task_) == 0)
             return;
         void* data;
         unsigned int size;
         loader->GetLoadedFileByID(self->task_, &data, &size);
         if (data != 0) {
-            self->nextItemAllocator_->Reset();
+            self->unknown_188_->Reset();
             ItemTable_Init(self->partNames_);
-            BuildDescriptorFlag1_020de980(self->partNames_, self->nextItemAllocator_, data, size, self->nextRecipe_->item_);
+            func_020de980(self->partNames_, self->unknown_188_, data, size, self->nextRecipe_->item_);
             self->nextItem_ = ItemTable_Find((ItemTable*)self->partNames_, self->nextRecipe_->item_);
         }
-        var0->RemoveTask(arg0->unknown_ad4_);
-        arg0->unknown_ad4_ = -1;
-        arg0->unknown_ade_ = 3;
-    } else if (arg0->unknown_ade_ == 3) {
-        arg0->unknown_1b4_ = arg0->unknown_1b8_;
-        SafeAllocator* var20 = arg0->unknown_184_;
-        arg0->unknown_184_ = arg0->unknown_188_;
-        arg0->unknown_188_ = var20;
-        arg0->unknown_ae4_.unknown_48_ = arg0->unknown_1288_;
-        func_ov023_021dcd90(&arg0->unknown_ae4_, 1);
-        const char* var21[3] = {0};
-        if (arg0->unknown_1ac_ != 0) {
+        loader->RemoveTask(self->task_);
+        self->task_ = -1;
+        self->unknown_ade_ = 3;
+    } else if (self->unknown_ade_ == 3) {
+        self->unknown_1b4_ = self->nextRecipe_;
+        SafeAllocator* alloc = self->unknown_184_;
+        self->unknown_184_ = self->unknown_188_;
+        self->unknown_188_ = alloc;
+        self->window_.partNames_ = self->partNames_;
+        func_ov023_021dcd90(&self->window_, 1);
+        const char* names[3] = {0};
+        if (self->itemNames_ != 0) {
 #if defined(jpn)
             names[0] = (const char*)KeyTable_Get((Container020e0310*)self->itemNames_, self->nextRecipe_->ingredients_[0]);
             names[1] = (const char*)KeyTable_Get((Container020e0310*)self->itemNames_, self->nextRecipe_->ingredients_[1]);
             names[2] = (const char*)KeyTable_Get((Container020e0310*)self->itemNames_, self->nextRecipe_->ingredients_[2]);
 #else
-            memset(arg0->unknown_0_, 0, sizeof(arg0->unknown_0_));
-            const char** var22 = func_020e5294(arg0->unknown_1ac_, arg0->unknown_1b8_->unknown_4_[0]);
-            if (var22 != 0) {
-                func_020e4864(*var22, arg0->unknown_0_[0], 1, 0, 0, 0);
-                var21[0] = arg0->unknown_0_[0];
+            memset(self->names_, 0, sizeof(self->names_));
+            const char** name = func_020e5294(self->itemNames_, self->nextRecipe_->ingredients_[0]);
+            if (name != 0) {
+                func_020e4864(*name, self->names_[0], 1, 0, 0, 0);
+                names[0] = self->names_[0];
             }
-            var22 = func_020e5294(arg0->unknown_1ac_, arg0->unknown_1b8_->unknown_4_[1]);
-            if (var22 != 0) {
-                func_020e4864(*var22, arg0->unknown_0_[1], 1, 0, 0, 0);
-                var21[1] = arg0->unknown_0_[1];
+            name = func_020e5294(self->itemNames_, self->nextRecipe_->ingredients_[1]);
+            if (name != 0) {
+                func_020e4864(*name, self->names_[1], 1, 0, 0, 0);
+                names[1] = self->names_[1];
             }
-            var22 = func_020e5294(arg0->unknown_1ac_, arg0->unknown_1b8_->unknown_4_[2]);
-            if (var22 != 0) {
-                func_020e4864(*var22, arg0->unknown_0_[2], 1, 0, 0, 0);
-                var21[2] = arg0->unknown_0_[2];
+            name = func_020e5294(self->itemNames_, self->nextRecipe_->ingredients_[2]);
+            if (name != 0) {
+                func_020e4864(*name, self->names_[2], 1, 0, 0, 0);
+                names[2] = self->names_[2];
             }
 #endif
         }
@@ -271,47 +271,47 @@ extern "C" ARM void func_ov006_021557c0(Struct_ov006_02154614* arg0) {
         GameState* gs = GameState::GetInstance();
         Party021557c0* party = (Party021557c0*)GameState_GetParty(gs);
         for (int i = 0; i < party->count; i++) {
-            char* actor = (char*)GetCombatantWithFlag0x100_0200ff1c(gs, party->ids[i]);
+            char* actor = (char*)func_0200ff1c(gs, party->ids[i]);
             if (actor != 0) {
                 for (int j = 0; j < 8; j++) {
-                    BattleEquipmentView* equipment = *(BattleEquipmentView**)(actor
+                    Struct_ov000_02171c04_2* equipment = *(Struct_ov000_02171c04_2**)(actor
 #if defined(jpn)
                         + 0x144
 #else
                         + 0x150
 #endif
                     );
-                    Struct_ov000_02171c04* var30 = &var29->unknown_194_[data_ov006_0215ff5c[var28]];
-                    if (var30 != 0) {
-                        int var31 = var30->unknown_8_0_ <= 7;
-                        if (var31) {
-                            if (arg0->unknown_1b8_->unknown_4_[0] == var30->unknown_18_)
-                                var23[0]++;
-                            if (arg0->unknown_1b8_->unknown_4_[1] == var30->unknown_18_)
-                                var23[1]++;
-                            if (arg0->unknown_1b8_->unknown_4_[2] == var30->unknown_18_)
-                                var23[2]++;
+                    BattleEquipmentEntry* entry = &equipment->entries[data_ov006_0215ff5c[j]];
+                    if (entry != 0) {
+                        int equipped = entry->category <= 7;
+                        if (equipped) {
+                            if (self->nextRecipe_->ingredients_[0] == entry->item)
+                                counts[0]++;
+                            if (self->nextRecipe_->ingredients_[1] == entry->item)
+                                counts[1]++;
+                            if (self->nextRecipe_->ingredients_[2] == entry->item)
+                                counts[2]++;
                         }
                     }
                 }
             }
         }
-        func_ov023_021dceac((char*)&arg0->unknown_ae4_, 0, (int)var21[0], arg0->unknown_1b8_->unknown_a_0_, arg0->unknown_1a8_[0], var23[0]);
-        func_ov023_021dceac((char*)&arg0->unknown_ae4_, 1, (int)var21[1], arg0->unknown_1b8_->unknown_a_4_, arg0->unknown_1a8_[1], var23[1]);
-        func_ov023_021dceac((char*)&arg0->unknown_ae4_, 2, (int)var21[2], arg0->unknown_1b8_->unknown_b_0_, arg0->unknown_1a8_[2], var23[2]);
-        func_ov023_021dced4(&arg0->unknown_ae4_, 1);
-        int var32 = 0;
-        if (arg0->unknown_1c0_ != 0 && arg0->unknown_1c0_->unknown_2_0_)
-            var32 = 1;
-        if (var32)
-            arg0->unknown_ae4_.unknown_774_ &= ~0x1000;
+        func_ov023_021dceac((char*)&self->window_, 0, (int)names[0], self->nextRecipe_->unknown_a_0_, self->unknown_1a8_[0], counts[0]);
+        func_ov023_021dceac((char*)&self->window_, 1, (int)names[1], self->nextRecipe_->unknown_a_4_, self->unknown_1a8_[1], counts[1]);
+        func_ov023_021dceac((char*)&self->window_, 2, (int)names[2], self->nextRecipe_->unknown_b_0_, self->unknown_1a8_[2], counts[2]);
+        func_ov023_021dced4(&self->window_, 1);
+        int known = 0;
+        if (self->unknown_1c0_ != 0 && self->unknown_1c0_->unknown_2_0_)
+            known = 1;
+        if (known)
+            self->window_.flags_ &= ~0x1000;
         else
-            arg0->unknown_ae4_.unknown_774_ |= 0x1000;
-        func_ov023_021dcae0(&arg0->unknown_ae4_, arg0->unknown_1b8_->unknown_2_);
-        arg0->unknown_1d8_ = arg0->unknown_1dc_;
-        arg0->unknown_1dc_ = 0;
-        arg0->unknown_ade_ = 0;
-        arg0->unknown_ae2_ &= ~2;
-        arg0->unknown_ae2_ |= 0x44;
+            self->window_.flags_ |= 0x1000;
+        func_ov023_021dcae0(&self->window_, self->nextRecipe_->item_);
+        self->item_ = self->nextItem_;
+        self->nextItem_ = 0;
+        self->unknown_ade_ = 0;
+        self->flags_ &= ~2;
+        self->flags_ |= 0x44;
     }
 }

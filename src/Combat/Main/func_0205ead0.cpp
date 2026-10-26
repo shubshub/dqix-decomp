@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
-extern "C" void func_0203aa80(void* arg0, int arg1);
-extern "C" int func_0203aa64(void* arg0);
-extern "C" int func_0203aa98(void*, int);
+extern "C" void SoundPlayer_RestoreHeapState(void* obj, int arg1);
+extern "C" int SoundPlayer_SaveHeapState(void* obj);
+extern "C" int SoundPlayer_LoadGroup(void*, int);
 
-struct Struct_02108760_3 {
-    char unknown_0_[0xb8];
-    int unknown_b8_;
+struct Obj_0205ead0 {
+    char pad0[0xb8];
+    int fb8;
     short unknown_bc_;
-    char unknown_be_[0xc0 - 0xbe];
-    int unknown_c0_;
+    char pad1[0xc0 - 0xbe];
+    int fc0;
 };
 
 // USA: func_0205ead0
-extern "C" ARM void func_0205ead0(struct Struct_02108760_3* arg0, int arg1, int arg2) {
-    func_0203aa80(arg0, arg0->unknown_b8_);
-    func_0203aa98(arg0, arg1);
-    arg0->unknown_bc_ = arg2;
-    arg0->unknown_c0_ = func_0203aa64(arg0);
+extern "C" ARM void func_0205ead0(struct Obj_0205ead0* a, int b, int c) {
+    SoundPlayer_RestoreHeapState(a, a->fb8);
+    SoundPlayer_LoadGroup(a, b);
+    a->unknown_bc_ = c;
+    a->fc0 = SoundPlayer_SaveHeapState(a);
 }

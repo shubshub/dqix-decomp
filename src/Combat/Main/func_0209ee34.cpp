@@ -4,31 +4,31 @@
 #include "std_library_functions.h"
 
 // USA: func_0209ee34
-extern "C" ARM void func_0209ee34(void *arg0, int arg1, int arg2) {
-    Struct_0209e5b4_3 *var0 = (Struct_0209e5b4_3 *) arg0;
-    int var1                = sizeof(Struct_0209e5b4);
+extern "C" ARM void func_0209ee34(void *manager, int arg1, int mask) {
+    Struct_0209e5b4_3 *owner = (Struct_0209e5b4_3 *) manager;
+    int recordSize                = sizeof(Struct_0209e5b4);
     if (arg1 == 0) {
-        int var2;
-        var0->unknown_98_.unknown_0_ = 0;
-        var2             = var0->unknown_4_[0x8e07];
-        for (int var3 = 0; var3 < var2; ++var3) {
-            Struct_0209e5b4 *var4 = (Struct_0209e5b4 *) (var0->unknown_4_ + 0x5c60) + var3;
-            if (var4 != NULL && (var4->unknown_1e_ & arg2) != 0) {
-                int var5 = var0->unknown_98_.unknown_0_++;
-                memcpy(&var0->unknown_98_.unknown_4_[var5], var4, var1);
+        int total;
+        owner->kept.count = 0;
+        total             = owner->source[0x8e07];
+        for (int i = 0; i < total; ++i) {
+            Struct_0209e5b4 *record = (Struct_0209e5b4 *) (owner->source + 0x5c60) + i;
+            if (record != NULL && (record->unknown_1e_ & mask) != 0) {
+                int index = owner->kept.count++;
+                memcpy(&owner->kept.records[index], record, recordSize);
             }
         }
         return;
     }
-    var0->unknown_49c_.unknown_0_ = 0;
-    memset(var0->unknown_49c_.unknown_4_, 0, sizeof(var0->unknown_49c_.unknown_4_));
-    for (int var6 = 0; var6 < var0->unknown_98_.unknown_0_; ++var6) {
-        Struct_0209e5b4 *var7 = &var0->unknown_98_.unknown_4_[var6];
-        if ((var7->unknown_1e_ & arg2) != 0) {
-            int var8 = var0->unknown_49c_.unknown_0_++;
-            memcpy(&var0->unknown_49c_.unknown_4_[var8], var7, var1);
+    owner->scratch.count = 0;
+    memset(owner->scratch.records, 0, sizeof(owner->scratch.records));
+    for (int i = 0; i < owner->kept.count; ++i) {
+        Struct_0209e5b4 *record = &owner->kept.records[i];
+        if ((record->unknown_1e_ & mask) != 0) {
+            int index = owner->scratch.count++;
+            memcpy(&owner->scratch.records[index], record, recordSize);
         }
     }
-    var0->unknown_98_.unknown_0_ = var0->unknown_49c_.unknown_0_;
-    memcpy(var0->unknown_98_.unknown_4_, var0->unknown_49c_.unknown_4_, sizeof(var0->unknown_98_.unknown_4_));
+    owner->kept.count = owner->scratch.count;
+    memcpy(owner->kept.records, owner->scratch.records, sizeof(owner->kept.records));
 }

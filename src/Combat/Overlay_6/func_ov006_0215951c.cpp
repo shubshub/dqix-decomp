@@ -7,8 +7,8 @@
 #include <globaldefs.h>
 
 struct Struct_ov006_0215951c {
-    char unknown_0_[R(0x48, 0x50)];
-    unsigned short* unknown_50_;
+    char pad0[R(0x48, 0x50)];
+    unsigned short* table;
     char unknown_54_[0x362 - R(0x4c, 0x54)];
     short unknown_362_;
     char unknown_364_[0x388 - 0x364];
@@ -17,14 +17,14 @@ struct Struct_ov006_0215951c {
 };
 
 // USA: func_ov006_0215951c
-extern "C" ARM void func_ov006_0215951c(struct Struct_ov006_0215951c* arg0) {
-    int var0;
-    short var1;
-    arg0->unknown_388_ = 0;
-    var1 = arg0->unknown_362_ - 0x5b;
-    var0 = (arg0->unknown_50_[var1] + 7) / 8;
-    arg0->unknown_389_ = var0;
-    if ((var0 & 0xff) == 0) {
-        arg0->unknown_389_ = 1;
+extern "C" ARM void func_ov006_0215951c(struct Struct_ov006_0215951c* obj) {
+    int q;
+    short idx;
+    obj->unknown_388_ = 0;
+    idx = obj->unknown_362_ - 0x5b;
+    q = (obj->table[idx] + 7) / 8;
+    obj->unknown_389_ = q;
+    if ((q & 0xff) == 0) {
+        obj->unknown_389_ = 1;
     }
 }

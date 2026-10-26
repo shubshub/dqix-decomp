@@ -3,11 +3,11 @@
 #include "Resource/CharacterCreationUI.h"
 extern "C" void* memcpy(void*, const void*, unsigned int);
 
-int MessageSystem_GetInstance();
-int KeyTable_Get(Container020e0310*, int);
+extern "C" int MessageSystem_GetInstance();
+extern "C" int KeyTable_Get(Container020e0310*, int);
 struct SePlayer;
 extern SePlayer g_sePlayer;
-void SePlayer_Play(SePlayer*, int, int);
+extern "C" void SePlayer_Play(SePlayer*, int, int);
 extern "C" int memcmp(const void*, const void*, unsigned int);
 extern "C" void func_ov009_0218b200(CharacterCreationUI*, int);
 extern "C" void func_ov009_0218b2e8(CharacterCreationUI*);
@@ -28,7 +28,7 @@ extern "C" ARM int CharacterCreationUI_PressNameKey(CharacterCreationUI* self, u
     MessageSystem_GetInstance();
     char character[3] = {};
     int changedIndex = -1;
-    int inserted = 0;
+    int var2 = 0;
     const char* page = (const char*)KeyTable_Get(&self->texts, (short)(self->keyboardPage + 0x4268));
     memcpy(character, page + choice * 2, 2);
     SePlayer_Play(&g_sePlayer, 1, 0);
@@ -60,9 +60,9 @@ extern "C" ARM int CharacterCreationUI_PressNameKey(CharacterCreationUI* self, u
         if (changedIndex >= 5) --changedIndex;
         memcpy(&self->names[self->sex][changedIndex * 2], character, 2);
         self->nameLengths[self->sex] = changedIndex + 1;
-        inserted = 1;
+        var2 = 1;
     }
     if (changedIndex >= 0) self->flags |= CreationFlag_RefreshName;
-    return inserted;
+    return var2;
 }
 #endif

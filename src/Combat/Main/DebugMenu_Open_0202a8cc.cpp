@@ -28,7 +28,7 @@ enum {
 extern "C" void DebugMenu_UpdateLayout(DebugMenu* menu);
 
 // Main, originally Deactivate0202a8cc (USA 0x0202a8cc, EUR 0x0202a8dc, JPN 0x0202a484)
-ARM void DebugMenu_Open(char* menuBytes, int notify) {
+extern "C" ARM void DebugMenu_Open(char* menuBytes, int notify) {
     DebugMenu* menu = (DebugMenu*)menuBytes;
     if (menu->state == DebugMenuState_Open) return;
     menu->state = DebugMenuState_Opening;

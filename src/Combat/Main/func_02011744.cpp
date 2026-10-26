@@ -8,22 +8,22 @@ enum { Enum_02011744_25572 = 0x63e4, Enum_02011744_1104 = 0x450 };
 #include "Grotto/Main/TreasureMapMetadata.h"
 #include "NitroSDK/Memory.h"
 
-extern "C" int func_020ac760(void* arg0);
-extern "C" int func_020ac734(void* arg0);
+extern "C" int func_020ac760(void* dst);
+extern "C" int func_020ac734(void* arg);
 
 // USA: func_02011744
-extern "C" ARM void func_02011744(void* arg0) {
-    if (((unsigned char*)arg0)[Enum_02011744_25572] == 0) {
+extern "C" ARM void func_02011744(void* obj) {
+    if (((unsigned char*)obj)[Enum_02011744_25572] == 0) {
         return;
     }
 
-    unsigned char var0[0xad8];
-    func_020ac760(var0);
+    unsigned char localBuf[0xad8];
+    func_020ac760(localBuf);
 
-    for (int var1 = 0; var1 < var0[0]; var1++) {
-        if (((TreasureMapMetadata*)(var0 + 2 + var1 * 0x1c))->GetInitialByteUnknownBit()) {
-            VectorizedInvertedMemcpy((char*)arg0 + Enum_02011744_1104 + 0x6000, var0 + 2 + var1 * 0x1c, 0x1c);
-            func_020ac734(var0);
+    for (int i = 0; i < localBuf[0]; i++) {
+        if (((TreasureMapMetadata*)(localBuf + 2 + i * 0x1c))->GetInitialByteUnknownBit()) {
+            VectorizedInvertedMemcpy((char*)obj + Enum_02011744_1104 + 0x6000, localBuf + 2 + i * 0x1c, 0x1c);
+            func_020ac734(localBuf);
             return;
         }
     }

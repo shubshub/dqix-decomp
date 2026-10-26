@@ -2,11 +2,11 @@
 #include "NitroSDK/Memory.h"
 
 struct Struct_ov031_0222da60 {
-    unsigned char unknown_0_[4];
-    unsigned int* unknown_4_;
-    unsigned char unknown_8_[12];
-    unsigned char unknown_14_;
-    unsigned char unknown_15_;
+    unsigned char padding[4];
+    unsigned int* flags;
+    unsigned char digits[12];
+    unsigned char cursor;
+    unsigned char status;
 };
 extern Struct_ov031_0222da60* data_ov031_02290c98;
 extern "C" unsigned char func_ov031_02225c24(void);
@@ -24,70 +24,70 @@ extern "C" int func_ov031_0222e224(void);
 
 // USA: func_ov031_0222da60
 extern "C" ARM void func_ov031_0222da60(void) {
-    int var0 = func_ov031_02225c24();
-    switch (var0) {
+    int key = func_ov031_02225c24();
+    switch (key) {
     case 0:
         return;
     case 16:
-        if (data_ov031_02290c98->unknown_14_ == 0 && data_ov031_02290c98->unknown_8_[2] == 0) break;
+        if (data_ov031_02290c98->cursor == 0 && data_ov031_02290c98->digits[2] == 0) break;
         func_ov031_02236878(3);
-        if (data_ov031_02290c98->unknown_8_[data_ov031_02290c98->unknown_14_ * 3 + 2] == 0)
-            --data_ov031_02290c98->unknown_14_;
-        VectorizedMemset(data_ov031_02290c98->unknown_8_ + data_ov031_02290c98->unknown_14_ * 3, 0, 3);
-        if (data_ov031_02290c98->unknown_14_ == 0 && data_ov031_02290c98->unknown_8_[2] == 0)
+        if (data_ov031_02290c98->digits[data_ov031_02290c98->cursor * 3 + 2] == 0)
+            --data_ov031_02290c98->cursor;
+        VectorizedMemset(data_ov031_02290c98->digits + data_ov031_02290c98->cursor * 3, 0, 3);
+        if (data_ov031_02290c98->cursor == 0 && data_ov031_02290c98->digits[2] == 0)
             func_ov031_02225c38(0);
         func_ov031_02225c4c(1);
         func_ov031_02225c60(0);
         break;
     case 17:
-        if (data_ov031_02290c98->unknown_14_ >= 3) break;
-        if (data_ov031_02290c98->unknown_8_[data_ov031_02290c98->unknown_14_ * 3 + 2] == 0) break;
+        if (data_ov031_02290c98->cursor >= 3) break;
+        if (data_ov031_02290c98->digits[data_ov031_02290c98->cursor * 3 + 2] == 0) break;
         func_ov031_02236878(1);
-        ++data_ov031_02290c98->unknown_14_;
+        ++data_ov031_02290c98->cursor;
         func_ov031_02225c60(0);
         break;
     case 18:
-        data_ov031_02290c98->unknown_15_ = 0;
+        data_ov031_02290c98->status = 0;
         func_ov031_02236878(7);
         func_ov031_022274c0((int)func_ov031_0222de08);
         return;
     case 19:
         if (func_ov031_0222e224()) {
             func_ov031_02236878(6);
-            data_ov031_02290c98->unknown_15_ = 1;
+            data_ov031_02290c98->status = 1;
         } else {
-            data_ov031_02290c98->unknown_15_ = 2;
+            data_ov031_02290c98->status = 2;
             func_ov031_02236878(9);
         }
-        data_ov031_02290c98->unknown_14_ = 3;
-        *data_ov031_02290c98->unknown_4_ = (*data_ov031_02290c98->unknown_4_ & 0xc1fffcff) | 0x200;
+        data_ov031_02290c98->cursor = 3;
+        *data_ov031_02290c98->flags = (*data_ov031_02290c98->flags & 0xc1fffcff) | 0x200;
         func_ov031_0222e048();
         func_ov031_0222e1ac();
         func_ov031_022274c0((int)func_ov031_0222de08);
         return;
     default:
-        if (data_ov031_02290c98->unknown_14_ == 3 && func_ov031_0222dd70(26)) break;
+        if (data_ov031_02290c98->cursor == 3 && func_ov031_0222dd70(26)) break;
         func_ov031_02236878(1);
-        unsigned char* var1 = data_ov031_02290c98->unknown_8_;
-        int var2 = data_ov031_02290c98->unknown_14_ * 3;
-        if (var1[var2 + 2] == 0) {
-            var1[var2 + 2] = var0;
-        } else if (var1[var2 + 1] == 0) {
-            var1[var2 + 1] = var1[var2 + 2];
-            var1[var2 + 2] = var0;
+        unsigned char* digits = data_ov031_02290c98->digits;
+        int offset = data_ov031_02290c98->cursor * 3;
+        if (digits[offset + 2] == 0) {
+            digits[offset + 2] = key;
+        } else if (digits[offset + 1] == 0) {
+            digits[offset + 1] = digits[offset + 2];
+            digits[offset + 2] = key;
             if (func_ov031_0222dd70(26)) {
-                if (data_ov031_02290c98->unknown_14_ < 3) ++data_ov031_02290c98->unknown_14_;
+                if (data_ov031_02290c98->cursor < 3) ++data_ov031_02290c98->cursor;
             }
         } else {
-            var1[var2] = var1[var2 + 1];
-            var1[var2 + 1] = var1[var2 + 2];
-            var1[var2 + 2] = var0;
-            if (data_ov031_02290c98->unknown_14_ < 3) ++data_ov031_02290c98->unknown_14_;
+            digits[offset] = digits[offset + 1];
+            digits[offset + 1] = digits[offset + 2];
+            digits[offset + 2] = key;
+            if (data_ov031_02290c98->cursor < 3) ++data_ov031_02290c98->cursor;
         }
         func_ov031_02225c38(1);
-        if (data_ov031_02290c98->unknown_14_ < 3) func_ov031_02225c60(1);
+        if (data_ov031_02290c98->cursor < 3) func_ov031_02225c60(1);
         else func_ov031_02225c60(0);
-        if (data_ov031_02290c98->unknown_14_ == 3 && func_ov031_0222dd70(26))
+        if (data_ov031_02290c98->cursor == 3 && func_ov031_0222dd70(26))
             func_ov031_02225c4c(0);
         break;
     }

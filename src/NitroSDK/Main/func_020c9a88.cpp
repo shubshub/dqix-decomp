@@ -6,25 +6,25 @@
 
 unsigned int DisableIRQInterrupts(void);
 void SetIRQInterruptState(int state);
-extern "C" unsigned int func_020c9a4c(unsigned int arg0);
+extern "C" unsigned int func_020c9a4c(unsigned int value);
 
 extern int data_0211166c;
 extern unsigned short data_02111670[9];
 
 // USA: func_020c9a88
-extern "C" ARM void func_020c9a88(int arg0, int arg1) {
-    unsigned int var0;
-    unsigned int var1 = DisableIRQInterrupts();
-    var0 = arg0 & data_0211166c & 0x1ff;
+extern "C" ARM void func_020c9a88(int flags, int id) {
+    unsigned int mask;
+    unsigned int state = DisableIRQInterrupts();
+    mask = flags & data_0211166c & 0x1ff;
     for (;;) {
-        int var2 = 0x1f - func_020c9a4c(var0);
-        if (var2 < 0) break;
-        unsigned int var3 = 1 << var2;
-        unsigned short var4 = data_02111670[var2];
-        var0 &= ~var3;
-        if (arg1 != var4) continue;
-        data_02111670[var2] = 0;
-        data_0211166c &= ~var3;
+        int pos = 0x1f - func_020c9a4c(mask);
+        if (pos < 0) break;
+        unsigned int bit = 1 << pos;
+        unsigned short entry = data_02111670[pos];
+        mask &= ~bit;
+        if (id != entry) continue;
+        data_02111670[pos] = 0;
+        data_0211166c &= ~bit;
     }
-    SetIRQInterruptState(var1);
+    SetIRQInterruptState(state);
 }

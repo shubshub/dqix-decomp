@@ -2,14 +2,14 @@
 
 struct StructDE1D4 {
     int a, b, c, d;
-    unsigned int field10Low : 10;
-    unsigned int field10Mid : 10;
+    unsigned int unknown_10_0_ : 10;
+    unsigned int unknown_11_2_ : 10;
     unsigned int field10High : 12;
     short e, f, g, h, i;
 };
 
 // Main, originally InitStruct020de1d4 (USA 0x020de1d4, EUR 0x020de1e4, JPN 0x020dfb50)
-ARM void ItemRecord_Clear(struct StructDE1D4* p) {
+extern "C" ARM void ItemRecord_Clear(struct StructDE1D4* p) {
     p->a = 0;
     p->b = 0;
     p->c = 0;
@@ -19,6 +19,6 @@ ARM void ItemRecord_Clear(struct StructDE1D4* p) {
     p->g = -1;
     p->h = 0;
     p->i = 0;
-    p->field10Low = 999;
-    p->field10Mid = 999;
+    p->unknown_10_0_ = 999;
+    p->unknown_11_2_ = 999;
 }

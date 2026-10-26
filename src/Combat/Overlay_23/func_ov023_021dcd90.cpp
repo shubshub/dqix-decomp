@@ -10,21 +10,21 @@ enum { Enum_ov023_021dcd90_1947 = 0x79b };
 
 extern "C" unsigned int GetMainBG1ScreenBase(void);
 extern "C" unsigned int GetMainBG2ScreenBase(void);
-extern "C" void func_ov023_021dcdf4(void* arg0);
+extern "C" void func_ov023_021dcdf4(void* obj);
 
 struct Struct_ov023_021dcd90 {
-    char unknown_0_[Enum_ov023_021dcd90_1947];
-    unsigned char unknown_79b_0_ : 1;
+    char pad[Enum_ov023_021dcd90_1947];
+    unsigned char bit0 : 1;
     unsigned char unknown_79b_1_ : 1;
-    unsigned char unknown_79b_2_ : 6;
+    unsigned char rest : 6;
 };
 
 // USA: func_ov023_021dcd90
-extern "C" ARM void func_ov023_021dcd90(Struct_ov023_021dcd90* arg0, unsigned char arg1) {
-    if (arg0->unknown_79b_1_ && !arg1) {
+extern "C" ARM void func_ov023_021dcd90(Struct_ov023_021dcd90* obj, unsigned char enable) {
+    if (obj->unknown_79b_1_ && !enable) {
         memset((void*)GetMainBG1ScreenBase(), 0, 0x800);
         memset((void*)GetMainBG2ScreenBase(), 0, 0x800);
-        func_ov023_021dcdf4(arg0);
+        func_ov023_021dcdf4(obj);
     }
-    arg0->unknown_79b_1_ = arg1;
+    obj->unknown_79b_1_ = enable;
 }

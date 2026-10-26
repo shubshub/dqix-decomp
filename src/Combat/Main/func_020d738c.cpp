@@ -2,58 +2,58 @@
 #include "GameState/GameState.h"
 
 struct Struct_020d738c {
-    unsigned short unknown_0_0_ : 2;
+    unsigned short unused0 : 2;
     unsigned short unknown_0_2_ : 4;
-    unsigned short unknown_0_6_ : 10;
+    unsigned short unused1 : 10;
 };
 
-extern "C" void func_020d6f9c(void* arg0, int arg1, int arg2);
+extern "C" void func_020d6f9c(void* param0, int combatantId, int arg2);
 
 // USA: func_020d738c
-extern "C" ARM void func_020d738c(void* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1;
-    for (var1 = 0; var1 < 0xc; var1++) {
-        int var2 = var1;
-        if (var1 > 3) {
-            var2 = var1 + 0xbc;
+extern "C" ARM void func_020d738c(void* param0) {
+    GameState* battleStruct = GameState::GetInstance();
+    int id;
+    for (id = 0; id < 0xc; id++) {
+        int combatantId = id;
+        if (id > 3) {
+            combatantId = id + 0xbc;
         }
-        GameObject* var3 = var0->GetCombatantByIndex(var2);
-        struct ModifiableCombatStats* var4;
-        unsigned short var5;
+        GameObject* combatant = battleStruct->GetCombatantByIndex(combatantId);
+        struct ModifiableCombatStats* currentStats;
+        unsigned short flags;
         int var6;
-        unsigned short var7;
-        if (var3 == NULL) {
+        unsigned short hp;
+        if (combatant == NULL) {
             continue;
         }
-        var4 = var3->currentStats_;
-        var5 = *(unsigned int*)var4->unk1;
-        var6 = ((struct Struct_020d738c*)(var4->unk1 + 0xE))->unknown_0_2_;
-        var7 = var4->primaryStats.currHP;
-        if (var5 & 1) {
+        currentStats = combatant->currentStats_;
+        flags = *(unsigned int*)currentStats->unk1;
+        var6 = ((struct Struct_020d738c*)(currentStats->unk1 + 0xE))->unknown_0_2_;
+        hp = currentStats->primaryStats.currHP;
+        if (flags & 1) {
             continue;
         }
-        if (var7 == 0) {
+        if (hp == 0) {
             continue;
         }
-        if (var5 & 2) {
-            func_020d6f9c(arg0, var2, 0);
+        if (flags & 2) {
+            func_020d6f9c(param0, combatantId, 0);
             continue;
         }
-        if (var5 & 0x10) {
-            func_020d6f9c(arg0, var2, 1);
+        if (flags & 0x10) {
+            func_020d6f9c(param0, combatantId, 1);
             continue;
         }
-        if (var5 & 8) {
-            func_020d6f9c(arg0, var2, 3);
+        if (flags & 8) {
+            func_020d6f9c(param0, combatantId, 3);
             continue;
         }
-        if (var5 & 0x20) {
-            func_020d6f9c(arg0, var2, 4);
+        if (flags & 0x20) {
+            func_020d6f9c(param0, combatantId, 4);
             continue;
         }
-        if ((var5 & 0x80000) && var6 == 6) {
-            func_020d6f9c(arg0, var2, 2);
+        if ((flags & 0x80000) && var6 == 6) {
+            func_020d6f9c(param0, combatantId, 2);
         }
     }
 }

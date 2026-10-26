@@ -8,29 +8,29 @@ extern char data_020f1088;
 extern char data_020f109e;
 extern Script::OpcodeLookupEntry data_020f1048[];
 
-struct Container02108efc {
+struct Struct_02108efc_4 {
     void* field0;
     int field4;
     int field8;
     void* fieldc;
 };
-extern struct Container02108efc data_02108efc;
+extern struct Struct_02108efc_4 data_02108efc;
 
 // Main, originally SetupHeaderAndRunBufferedScript02089de8 (USA 0x02089de8, EUR 0x02089df8, JPN 0x0208a6e4)
-ARM void PresetTable_Load(void* param0, void* param1, const char* param2) {
+extern "C" ARM void PresetTable_Load(void* param0, void* param1, const char* param2) {
     BackgroundLoader::AddLockGlobal();
     unsigned int count;
     Script script;
     void* header;
     void* srcBuf = g_fileLoadBuffer;
-    unsigned int* pCount = &count;
+    unsigned int* var4 = &count;
     if (param2 != 0) {
-        header = LoadFileIntoMemory(param2, srcBuf, pCount);
+        header = LoadFileIntoMemory(param2, srcBuf, var4);
     } else {
         #if defined(jpn)
-        header = LoadFileIntoMemory(&data_020f1088, srcBuf, pCount);
+        header = LoadFileIntoMemory(&data_020f1088, srcBuf, var4);
 #else
-        header = ExtractFileFromGP2(&data_020f1088, &data_020f109e, pCount);
+        header = ExtractFileFromGP2(&data_020f1088, &data_020f109e, var4);
 #endif
     }
     if (header != 0) {

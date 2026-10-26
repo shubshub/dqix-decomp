@@ -25,12 +25,12 @@ static inline fix32_t FX_MulInline(fix32_t v1, fix32_t v2) {
 struct LadderClimber {
     GameObject object;
 #if defined(jpn)
-    char unknown13c[0x1be - 0x13c];
+    char unknown_13c_[0x1be - 0x13c];
 #else
-    char unknown13c[0x1ca - 0x13c];
+    char unknown1_13c_[0x1ca - 0x13c];
 #endif
     signed char lineLeader;         // +0x1ca: the walking line leader's index (GameObject_SetLineLeader)
-    char unknown1cb[0x252 - 0x1cb];
+    char unknown_1cb_[0x252 - 0x1cb];
     unsigned char controlEnabled;   // GameObject_DisableControl clears both
     unsigned char controlPending;
     char unknown254[0x26c - 0x254];
@@ -71,7 +71,7 @@ struct ZoneTransitionSettings {
     char unknown60[0xa];
     short ladderHeight;             // fx32 fraction of the way up (GameObject_PlaceInZone)
     short ladderNodeId;             // the node to put the climber on; 9999 for none, negative to stand
-    char unknown6e[2];
+    char unknown_6e_[2];
 };
 // What GameResources_GetTouchWalk returns: the touch-screen walking state (GameObject_HandleWalkInput reads +0x224/+0x225)
 struct ActorTouch02038598 {
@@ -94,22 +94,22 @@ struct TailList020469b4;
 struct TailNode020469b4;
 extern "C" Zone3D* Zone3D_GetInstance();
 extern "C" void Party_ReformLine(void*, int, int, int, int);
-void* GlobalFlags_GetInstance();
-void GameObject_SetFacing(Obj02033834*, int);
-void GameObject_SnapFacing(Obj02033874*, int);
-void GameObject_DisableControl(Obj020397cc*, int);
-int GameObject_ForceMotionState(Bytes02033b88*, int);
-void GameObject_StoreMotionState(Foo02033b58*, unsigned char);
-int GameObject_IsGlideDone(ShortField02033ec8*);
-void SetVec3038500_02038500(Vec3038500*, int, int, int);
-void GameObject_StartGlide(void*, int*, short);
-int GameResources_GetTouchWalk(void*);
-int GameState_GetProtagonistIndex(GameState*);
-int ListContainsId(ListHead02046b60*, int);
-void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
-void FlagWord_SetBits(unsigned int*, unsigned int);
-void FieldTask_InitEnterZone(unsigned char*, int);
-void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
+extern "C" void* GlobalFlags_GetInstance();
+extern "C" void GameObject_SetFacing(Obj02033834*, int);
+extern "C" void GameObject_SnapFacing(Obj02033874*, int);
+extern "C" void GameObject_DisableControl(Obj020397cc*, int);
+extern "C" int GameObject_ForceMotionState(Bytes02033b88*, int);
+extern "C" void GameObject_StoreMotionState(Foo02033b58*, unsigned char);
+extern "C" int GameObject_IsGlideDone(ShortField02033ec8*);
+extern "C" void func_02038500(Vec3038500*, int, int, int);
+extern "C" void GameObject_StartGlide(void*, int*, short);
+extern "C" int GameResources_GetTouchWalk(void*);
+extern "C" int GameState_GetProtagonistIndex(GameState*);
+extern "C" int func_02046b60(ListHead02046b60*, int);
+extern "C" void FlagWord_ClearBits(FlagWord020466f4*, unsigned int);
+extern "C" void FlagWord_SetBits(unsigned int*, unsigned int);
+extern "C" void FieldTask_InitEnterZone(unsigned char*, int);
+extern "C" void func_020469b4(TailList020469b4*, TailNode020469b4*);
 extern const char data_020efb44[];
 extern const char data_020efb4e[];
 extern const char data_020efb5a[];
@@ -209,9 +209,9 @@ extern "C" ARM void GameObject_UpdateLadderClimb(LadderClimber* self) {
         Vector3fix nextPosition;
         Vector3fix targetPosition;
         if (climb->reversed == 0) {
-            SetVec3038500_02038500((Vec3038500*)&targetPosition, climb->start.entries[0], climb->start.entries[1] + 0x51, climb->start.entries[2]);
+            func_02038500((Vec3038500*)&targetPosition, climb->start.entries[0], climb->start.entries[1] + 0x51, climb->start.entries[2]);
         } else if (climb->reversed == 1) {
-            SetVec3038500_02038500((Vec3038500*)&targetPosition, climb->end.entries[0], climb->end.entries[1] - 0xa3, climb->end.entries[2]);
+            func_02038500((Vec3038500*)&targetPosition, climb->end.entries[0], climb->end.entries[1] - 0xa3, climb->end.entries[2]);
         }
 
         if (!self->object.obj3D_.HasAnimationStopped()) {
@@ -221,12 +221,12 @@ extern "C" ARM void GameObject_UpdateLadderClimb(LadderClimber* self) {
             int rz = FX_MulInline(dz, animationProgress);
             int ry = FX_MulInline(dy, animationProgress);
             int rx = FX_MulInline(dx, animationProgress);
-            SetVec3038500_02038500((Vec3038500*)&nextPosition, climb->unknown24.entries[0] + rx, climb->unknown24.entries[1] + ry, climb->unknown24.entries[2] + rz);
+            func_02038500((Vec3038500*)&nextPosition, climb->unknown24.entries[0] + rx, climb->unknown24.entries[1] + ry, climb->unknown24.entries[2] + rz);
             self->object.obj3D_.position_ = nextPosition;
         }
 
         if (self->object.obj3D_.HasAnimationStopped()) {
-            SetVec3038500_02038500((Vec3038500*)&nextPosition, targetPosition.x, targetPosition.y, targetPosition.z);
+            func_02038500((Vec3038500*)&nextPosition, targetPosition.x, targetPosition.y, targetPosition.z);
             self->object.obj3D_.position_ = nextPosition;
             climb->command = LadderStep_Climb;
             self->object.obj3D_.SetAnimationByName(data_020efb4e, 0);
@@ -243,7 +243,7 @@ extern "C" ARM void GameObject_UpdateLadderClimb(LadderClimber* self) {
         GameObject_DisableControl((struct Obj020397cc*)self, 1);
 
         Vector3fix position = self->object.obj3D_.position_;
-        Vector3fix touchStart, touchEnd;
+        Vector3fix var23, touchEnd;
 
         GameResources* touchResources = GetGameResources();
         ActorTouch02038598* touch = (ActorTouch02038598*)GameResources_GetTouchWalk(touchResources);
@@ -256,17 +256,17 @@ extern "C" ARM void GameObject_UpdateLadderClimb(LadderClimber* self) {
         }
 
         if ((unsigned int)g_touchInput.timeHeld_ > 5) {
-            fix32_t endFixedX = touch->endX << 12;
+            fix32_t var27 = touch->endX << 12;
             int startX = touch->startX;
             int startY = touch->startY;
-            fix32_t endFixedY = touch->endY << 12;
-            touchEnd.x = endFixedX;
-            touchEnd.y = endFixedY;
+            fix32_t var30 = touch->endY << 12;
+            touchEnd.x = var27;
+            touchEnd.y = var30;
             touchEnd.z = 0;
-            touchStart.x = startX << 12;
-            touchStart.y = startY << 12;
-            touchStart.z = 0;
-            Vector3fix_Subtract(&touchEnd, &touchStart, &touchEnd);
+            var23.x = startX << 12;
+            var23.y = startY << 12;
+            var23.z = 0;
+            Vector3fix_Subtract(&touchEnd, &var23, &touchEnd);
             if (Vector3fix_Length(&touchEnd) >= ClimbTouchDeadZone) {
                 Vector3fix_Normalize(&touchEnd, &touchEnd);
                 if (touchEnd.x >= -ClimbTouchVertical && touchEnd.x <= ClimbTouchVertical) {
@@ -279,11 +279,11 @@ extern "C" ARM void GameObject_UpdateLadderClimb(LadderClimber* self) {
         }
 
         int taskQueued = 0;
-        if (ListContainsId(list, FieldTaskKind_ScriptedEvent) ||
-            ListContainsId(list, 0x26 /* kind 38, not named yet */) ||
-            ListContainsId(list, FieldTaskKind_Zoom) ||
-            ListContainsId(list, FieldTaskKind_EnterZone) ||
-            ListContainsId(list, FieldTaskKind_WarpToStarflight)) {
+        if (func_02046b60(list, FieldTaskKind_ScriptedEvent) ||
+            func_02046b60(list, 0x26 /* kind 38, not named yet */) ||
+            func_02046b60(list, FieldTaskKind_Zoom) ||
+            func_02046b60(list, FieldTaskKind_EnterZone) ||
+            func_02046b60(list, FieldTaskKind_WarpToStarflight)) {
             taskQueued = 1;
             direction = ClimbDirection_None;
         }
@@ -297,14 +297,14 @@ extern "C" ARM void GameObject_UpdateLadderClimb(LadderClimber* self) {
         }
 
         int fraction = fix32_Divide(position.y - climb->start.entries[1], climb->end.entries[1] - climb->start.entries[1]);
-        SetVec3038500_02038500((Vec3038500*)&position,
+        func_02038500((Vec3038500*)&position,
             climb->start.entries[0] + FX_MulInline(climb->end.entries[0] - climb->start.entries[0], fraction), position.y,
             climb->start.entries[2] + FX_MulInline(climb->end.entries[2] - climb->start.entries[2], fraction));
         self->object.obj3D_.position_ = position;
 
         int heightDelta = self->object.obj3D_.MaybeGetShadowSource().y - climb->unknown4c;
-        int scaledHeight = FX_MulInline(heightDelta, 0x14000);
-        int t2 = (int)((float)scaledHeight / 4096.0f);
+        int var34 = FX_MulInline(heightDelta, 0x14000);
+        int t2 = (int)((float)var34 / 4096.0f);
         int tick2 = zone->substruct_c_.unknown_30_;
         climb->unknown50 = tick2 - t2;
         if (climb->unknown50 < 0) climb->unknown50 = 0;
@@ -474,7 +474,7 @@ extern "C" ARM void GameObject_UpdateLadderClimb(LadderClimber* self) {
         GameState_SetZoneTransition(gameState, event);
 
         FieldTask_InitEnterZone((unsigned char*)transitionResources->unknown_ptr_array_3700[3], 0);
-        AppendNodeToTail((struct TailList020469b4*)transitionResources->fieldTaskQueue_,
+        func_020469b4((struct TailList020469b4*)transitionResources->fieldTaskQueue_,
             (struct TailNode020469b4*)transitionResources->unknown_ptr_array_3700[3]);
         FlagWord_ClearBits((struct FlagWord020466f4*)inputFlags, 0x400);
 

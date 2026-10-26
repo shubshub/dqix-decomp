@@ -2,9 +2,9 @@
 
 #include "NitroSDK/Matrix.h"
 
-struct Struct_02018fbc {
-    Vector3fix unknown_0_;
-    Vector3fix unknown_c_;
+struct Bounds3D {
+    Vector3fix maximum;
+    Vector3fix minimum;
 };
 
 

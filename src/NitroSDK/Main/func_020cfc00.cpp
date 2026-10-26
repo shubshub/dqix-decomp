@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
 struct Struct_020cfc00 {
-    unsigned int unknown_0_;
-    unsigned int unknown_4_;
-    unsigned int unknown_8_;
+    unsigned int year;
+    unsigned int month;
+    unsigned int day;
     int unknown_c_;
 };
 
 // USA: func_020cfc00  (NitroSDK: RTC_GetDayOfWeek)
-extern "C" ARM int func_020cfc00(struct Struct_020cfc00* arg0) {
+extern "C" ARM int func_020cfc00(struct Struct_020cfc00* date) {
     int var0;
-    int var1 = (int)(2000 + arg0->unknown_0_);
-    int var2 = (int)arg0->unknown_4_;
-    int var3 = (int)arg0->unknown_8_;
+    int year = (int)(2000 + date->year);
+    int month = (int)date->month;
+    int day = (int)date->day;
 
-    var2 -= 2;
+    month -= 2;
 
-    if (var2 < 1) {
-        var2 += 12;
-        --var1;
+    if (month < 1) {
+        month += 12;
+        --year;
     }
 
-    var0 = var1 / 100;
-    var1 %= 100;
-    return ((26 * var2 - 2) / 10 + var3 + var1 + var1 / 4 + var0 / 4 + 5 * var0) % 7;
+    var0 = year / 100;
+    year %= 100;
+    return ((26 * month - 2) / 10 + day + year + year / 4 + var0 / 4 + 5 * var0) % 7;
 }

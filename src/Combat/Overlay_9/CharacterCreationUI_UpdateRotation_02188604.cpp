@@ -7,8 +7,8 @@ struct Words021e60c4;
 
 extern "C" Vector3fix CharacterModel_GetRotation(void* character);
 int fix32ReduceAngle0To2Pi(int angle);
-void CharacterModel_SetAngle(void* character, unsigned int angle);
-void CharacterModel_SetRotation(void* character, Words021e60c4* rotation);
+extern "C" void CharacterModel_SetAngle(void* character, unsigned int angle);
+extern "C" void CharacterModel_SetRotation(void* character, Words021e60c4* rotation);
 
 // Turning towards targetAngle: each tick turns 1/Divisor of what's left, and within Snap it snaps there.
 enum RotationTurn

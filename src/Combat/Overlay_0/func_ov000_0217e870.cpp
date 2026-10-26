@@ -8,33 +8,33 @@ struct BattleCommand {
     char padding0[0x10];
     signed char commands[8];
     signed char selected;
-    char padding19[4];
+    char unknown_19_[4];
     signed char previous;
-    char padding1e[8];
+    char unknown_1e_[8];
     unsigned short action;
     char padding28[6];
     signed char variant;
 };
 struct Struct_ov004_021707e8 {
-    char unknown_0_[0x1c];
-    signed char unknown_1c_;
+    char padding0[0x1c];
+    signed char current;
     char unknown_1d_[0x16b];
 #if defined(jpn)
-    char unknown_188_[0x1e10];
+    char entries[0x1e10];
 #else
-    char unknown_188_[0x1bd8];
+    char entries[0x1bd8];
 #endif
-    signed char unknown_1d60_[8];
-    signed char unknown_1d68_;
+    signed char commands[8];
+    signed char selected;
     char unknown_1d69_[9];
-    unsigned short unknown_1d72_;
+    unsigned short flags;
     char unknown_1d74_[5];
     unsigned char unknown_1d79_;
 };
-struct Struct_ov000_0217e870_2 {
-    char unknown_0_[0xf78];
-    signed char unknown_f78_[4];
-    unsigned char unknown_f7c_;
+struct PartyState {
+    char padding0[0xf78];
+    signed char ids[4];
+    unsigned char count;
 };
 extern SePlayer g_sePlayer;
 #if defined(jpn)
@@ -44,20 +44,20 @@ extern int data_ov000_02184294[3];
 extern int data_ov000_02184294[2];
 #define G02184294(i) data_ov000_02184294[i]
 #endif
-int GameState_GetProtagonistIndex(GameState*);
-int Window_GetSelectedIndex(Struct_0205c570*);
-extern "C" BattleCommand* func_ov000_02161318(BattleMenuState*, int);
-extern "C" int func_ov000_0217c594(BattleMenuState*, int);
-void SePlayer_Play(SePlayer*, int, int);
-extern "C" void func_ov000_02176e3c(BattleMenuState*, BattleCommand*, int, int, int, int);
+extern "C" int GameState_GetProtagonistIndex(GameState*);
+extern "C" int Window_GetSelectedIndex(Struct_0205c570*);
+extern "C" BattleCommand* func_ov000_02161318(Struct_ov004_021707e8*, int);
+extern "C" int func_ov000_0217c594(Struct_ov004_021707e8*, int);
+extern "C" void SePlayer_Play(SePlayer*, int, int);
+extern "C" void func_ov000_02176e3c(Struct_ov004_021707e8*, BattleCommand*, int, int, int, int);
 extern "C" void func_ov000_02170db0(BattleCommand*);
-int CheckFlagsOrField_0217c5f4_0217c5f4(void*);
-void Window_ClosePane(Entry_0205d6a0*, int);
-extern "C" void func_ov000_0217c638(BattleMenuState*, int, int);
-extern "C" void func_ov000_02177038(BattleMenuState*, BattleCommand*, int, int, int);
+extern "C" int func_ov000_0217c5f4(void*);
+extern "C" void Window_ClosePane(Entry_0205d6a0*, int);
+extern "C" void func_ov000_0217c638(Struct_ov004_021707e8*, int, int);
+extern "C" void func_ov000_02177038(Struct_ov004_021707e8*, BattleCommand*, int, int, int);
 
 // USA: func_ov000_0217e870
-extern "C" ARM void func_ov000_0217e870(BattleMenuState* state, int first, int second) {
+extern "C" ARM void func_ov000_0217e870(Struct_ov004_021707e8* state, int first, int second) {
     state->flags |= 0x100;
     state->current = Window_GetSelectedIndex((Struct_0205c570*)state->entries);
     GameState* game = GameState::GetInstance();
@@ -81,7 +81,7 @@ extern "C" ARM void func_ov000_0217e870(BattleMenuState* state, int first, int s
                 func_ov000_02170db0(candidate);
             }
         }
-    } else if (CheckFlagsOrField_0217c5f4_0217c5f4(state)) {
+    } else if (func_ov000_0217c5f4(state)) {
         state->flags &= ~0x100;
         Window_ClosePane((Entry_0205d6a0*)state->entries, 0);
         state->commands[state->selected] = 0;
@@ -104,8 +104,8 @@ extern "C" ARM void func_ov000_0217e870(BattleMenuState* state, int first, int s
                 candidate->commands[candidate->selected] = 0x17;
             }
         }
-        arg0->unknown_1d79_ = 0;
-        func_ov000_02176e3c(arg0, var10, 0x17, G02184294(1), G02184294(0), 0);
+        state->unknown_1d79_ = 0;
+        func_ov000_02176e3c(state, candidate, 0x17, G02184294(1), G02184294(0), 0);
     }
-    func_ov000_02177038(arg0, var2, 0x19, arg1, arg2);
+    func_ov000_02177038(state, command, 0x19, first, second);
 }

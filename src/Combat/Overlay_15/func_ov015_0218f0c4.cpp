@@ -3,29 +3,29 @@
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
 extern AllocatorUnion g_mainAllocator;
-void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
 struct Struct_ov015_0218eef0;
-extern "C" void func_ov015_0218eef0(struct Struct_ov015_0218eef0* arg0);
+extern "C" void func_ov015_0218eef0(struct Struct_ov015_0218eef0* s);
 
 struct Struct_ov015_0218f0c4 {
     unsigned int unknown_0_;
-    void* unknown_4_;
-    SafeAllocator* unknown_8_;
-    unsigned int unknown_c_;
-    unsigned int unknown_10_;
-    void* unknown_14_;
-    unsigned int unknown_18_;
-    unsigned char unknown_1c_;
+    void* f04;
+    SafeAllocator* f08;
+    unsigned int f0c;
+    unsigned int f10;
+    void* f14;
+    unsigned int f18;
+    unsigned char f1c;
     unsigned char unknown_1d_[3];
-    void* unknown_20_;
-    void* unknown_24_;
-    void* unknown_28_;
+    void* f20;
+    void* f24;
+    void* f28;
 };
 
 // USA: func_ov015_0218f0c4
-extern "C" ARM void func_ov015_0218f0c4(void* arg0) {
-    Struct_ov015_0218f0c4* var0 = (Struct_ov015_0218f0c4*)arg0;
+extern "C" ARM void func_ov015_0218f0c4(void* p) {
+    Struct_ov015_0218f0c4* s = (Struct_ov015_0218f0c4*)p;
 
     if (s->f08 != 0) {
         if (s->f1c == 0 || s->f1c == 1) {
@@ -48,9 +48,9 @@ extern "C" ARM void func_ov015_0218f0c4(void* arg0) {
     if (s->f24 != 0) AllocatorUnion_Free(&g_mainAllocator, s->f24);
     if (s->f28 != 0) AllocatorUnion_Free(&g_mainAllocator, s->f28);
 
-    if (var0->unknown_4_ != 0) {
-        *((unsigned char*)var0->unknown_4_ + 4) = 0;
+    if (s->f04 != 0) {
+        *((unsigned char*)s->f04 + 4) = 0;
     }
 
-    func_ov015_0218eef0((struct Struct_ov015_0218eef0*)var0);
+    func_ov015_0218eef0((struct Struct_ov015_0218eef0*)s);
 }

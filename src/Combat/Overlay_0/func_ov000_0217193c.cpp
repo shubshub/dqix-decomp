@@ -12,17 +12,17 @@
 
 
 struct Struct_ov000_0217193c {
-	unsigned char unknown_0_[REGION_OFFSET_0];
-	unsigned short unknown_84_;
-	unsigned char unknown_86_[REGION_OFFSET_1 - REGION_OFFSET_2];
+	unsigned char pad0[REGION_OFFSET_0];
+	unsigned short f84;
+	unsigned char pad1[REGION_OFFSET_1 - REGION_OFFSET_2];
 	int unknown_1a4_[0x93];
 };
 
 // USA: func_ov000_0217193c
-extern "C" ARM void func_ov000_0217193c(struct Struct_ov000_0217193c* arg0) {
-	int var0;
-	for (var0 = 0; var0 < 0x93; var0++) {
-		arg0->unknown_1a4_[var0] = 0;
+extern "C" ARM void func_ov000_0217193c(struct Struct_ov000_0217193c* obj) {
+	int i;
+	for (i = 0; i < 0x93; i++) {
+		obj->unknown_1a4_[i] = 0;
 	}
-	arg0->unknown_84_ = 0;
+	obj->f84 = 0;
 }

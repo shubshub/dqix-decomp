@@ -1,23 +1,30 @@
 #include <globaldefs.h>
 #include "Combat/SearchEntry.h"
 
-struct Struct_0202b2f0;
-extern "C" int func_0202c1c0(struct Struct_0202b2f0* arg0, int arg1);
-extern "C" unsigned short func_0202df58(void);
+// The link session (data_020fefec), as far as this function reads it.
+struct SearchStruct {
+    char padding0[0x7c0];
+    SearchEntry0202c178 ownRecord;  // this console's record (LinkSession_GetOwnRecord)
+    char padding7d0[0x868];
+    signed char slotOfAid[16];      // +0x1038
+};
+
+extern "C" int LinkSession_IsSlotMember(struct SearchStruct* session, int slot);
+extern "C" unsigned short WH_GetCurrentAid(void);
 
 // USA: func_0202be08
-extern "C" ARM int func_0202be08(struct Struct_0202b2f0* arg0, int arg1) {
-    void* var0;
-    if (!func_0202c1c0(arg0, arg1)) {
+extern "C" ARM int func_0202be08(struct SearchStruct* session, int slot) {
+    SearchEntry0202c178* record;
+    if (!LinkSession_IsSlotMember(session, slot)) {
         return 0;
     }
-    if (arg1 == *(signed char*)((char*)arg0 + func_0202df58() + 0x1000 + 0x38)) {
-        var0 = (char*)arg0 + 0x7c0;
+    if (slot == session->slotOfAid[WH_GetCurrentAid()]) {
+        record = &session->ownRecord;
     } else {
-        var0 = func_0202c178(arg0, arg1);
+        record = LinkSession_GetReceivedRecord(session, slot);
     }
-    if (var0 == NULL) {
+    if (record == NULL) {
         return 0;
     }
-    return (((unsigned int)*(unsigned short*)((char*)var0 + 0x2) << 0x14) >> 31) != 0;
+    return record->bit11 != 0;
 }

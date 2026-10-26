@@ -9,33 +9,33 @@ enum { Enum_0202738c_1880 = 0x758 };
 #endif
 
 // USA: func_0202738c
-extern "C" ARM void func_0202738c(unsigned char *arg0, int arg1, int arg2, int arg3) {
-    if (arg3 < 0) {
-        int var0;
-        for (var0 = 0; var0 < 4; var0++) {
-            Struct_020fdc60 *var1 = &data_020fdc60[var0];
+extern "C" ARM void func_0202738c(unsigned char *obj, int arg1, int mask, int id) {
+    if (id < 0) {
+        int i;
+        for (i = 0; i < 4; i++) {
+            Struct_020fdc60 *e = &data_020fdc60[i];
             if (arg1) {
-                var1->unknown_2_ = var1->unknown_2_ | arg2;
+                e->b2 = e->b2 | mask;
             } else {
-                var1->unknown_2_ = var1->unknown_2_ & ~arg2;
+                e->b2 = e->b2 & ~mask;
             }
         }
         return;
     }
-    if (arg3 >= 4) return;
+    if (id >= 4) return;
     {
-        int var2;
-        unsigned char *var3;
-        Struct_020fdc60 *var4;
-        for (var2 = 0; var2 < 4; var2++) {
-            var3 = arg0 + var2;
-            var4 = &data_020fdc60[var2];
-            if (arg3 == var3[Enum_0202738c_1880]) {
+        int i;
+        unsigned char *p;
+        Struct_020fdc60 *e;
+        for (i = 0; i < 4; i++) {
+            p = obj + i;
+            e = &data_020fdc60[i];
+            if (id == p[Enum_0202738c_1880]) {
                 if (arg1) {
-                    var4->unknown_2_ = var4->unknown_2_ | arg2;
+                    e->b2 = e->b2 | mask;
                     return;
                 }
-                var4->unknown_2_ = var4->unknown_2_ & ~arg2;
+                e->b2 = e->b2 & ~mask;
                 return;
             }
         }

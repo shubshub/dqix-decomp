@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 struct Struct_0200e830 {
-    void* unknown_0_;
+    void* location;
     void* unknown_4_;
-    void* unknown_8_;
+    void* dtor;
     void* unknown_c_;
     long unknown_10_;
     void* unknown_14_;
@@ -22,13 +22,13 @@ struct Struct_0200d958_13 {
 
 struct Struct_0200e830_2 {
     unsigned char* unknown_0_;
-    void* unknown_4_;
-    void* unknown_8_;
+    void* location;
+    void* dtor;
     Struct_0200e830* unknown_c_;
     char* unknown_10_;
     char* unknown_14_;
-    char* unknown_18_;
-    Struct_0200d958_13 unknown_1c_;
+    char* fp;
+    Struct_0200d958_13 target;
 };
 
 struct Struct_0200e830_3 {
@@ -37,29 +37,29 @@ struct Struct_0200e830_3 {
     char* unknown_8_;
     void* unknown_c_;
     void* unknown_10_;
-    int unknown_14_;
+    int target;
 };
 
 struct Struct_0200e830_4 {
-    Struct_0200e830_3 unknown_0_;
-    Struct_0200e830_2 unknown_18_;
+    Struct_0200e830_3 info;
+    Struct_0200e830_2 context;
 };
 
 extern "C" unsigned char func_0200dbdc(const Struct_0200e830_4* arg0);
 extern "C" unsigned char func_0200dbf8(Struct_0200e830_4* arg0);
-extern "C" char* func_0200d958(char* arg0, long* arg1);
+extern "C" char* func_0200d958(char* p, long* value);
 
 // USA: func_0200e830
-extern "C" ARM Struct_0200e830* func_0200e830(Struct_0200e830_2* arg0, Struct_0200e830_3* arg1) {
+extern "C" ARM Struct_0200e830* func_0200e830(Struct_0200e830_2* context, Struct_0200e830_3* info) {
     Struct_0200e830_4 var0;
-    unsigned char var1;
+    unsigned char action;
     Struct_0200e830* var2;
     long var3;
 
-    var0.unknown_0_ = *arg1;
-    var0.unknown_18_ = *arg0;
-    for (var1 = func_0200dbdc(&var0);; var1 = func_0200dbf8(&var0)) {
-        switch (var1) {
+    var0.info = *info;
+    var0.context = *context;
+    for (action = func_0200dbdc(&var0);; action = func_0200dbf8(&var0)) {
+        switch (action) {
             case 13:
                 break;
 
@@ -88,12 +88,12 @@ extern "C" ARM Struct_0200e830* func_0200e830(Struct_0200e830_2* arg0, Struct_02
         break;
     }
 
-    func_0200d958(var0.unknown_0_.unknown_8_ + 1, &var3);
-    var2 = (Struct_0200e830*)(var0.unknown_18_.unknown_18_ + var3);
-    arg0->unknown_0_ = (unsigned char*)var2->unknown_4_;
-    arg0->unknown_4_ = var2->unknown_0_;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_c_ = var2;
+    func_0200d958(var0.info.unknown_8_ + 1, &var3);
+    var2 = (Struct_0200e830*)(var0.context.fp + var3);
+    context->unknown_0_ = (unsigned char*)var2->unknown_4_;
+    context->location = var2->location;
+    context->dtor = 0;
+    context->unknown_c_ = var2;
 
     return var2;
 }

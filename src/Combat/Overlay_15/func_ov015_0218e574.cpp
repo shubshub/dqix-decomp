@@ -10,17 +10,17 @@ struct Struct_ov015_0218e574 {
 };
 
 // USA: func_ov015_0218e574
-extern "C" ARM void func_ov015_0218e574(struct Struct_ov015_0218e574* arg0) {
-    int var0 = 0;
-    if (arg0->unknown_3a_ != 0) {
+extern "C" ARM void func_ov015_0218e574(struct Struct_ov015_0218e574* obj) {
+    int ok = 0;
+    if (obj->unknown_3a_ != 0) {
         if (g_keyManager.TestKeysPressed(0x100) != 0) {
-            var0 = 1;
+            ok = 1;
         }
     } else {
-        var0 = 1;
+        ok = 1;
     }
-    if (var0 == 0) {
+    if (ok == 0) {
         return;
     }
-    ((Object3D*)arg0->unknown_24_)->AdvanceEffects();
+    ((Object3D*)obj->unknown_24_)->AdvanceEffects();
 }

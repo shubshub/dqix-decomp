@@ -12,40 +12,40 @@ extern "C" ARM int WH_GetMeasureChannel(void) {
     int seed;
 
     *(int*)(&data_021015a0 + 0x10) = 1;
-    var0 = 0;
-    var2 = 0;
-    var3 = 0;
-    var1 = *(unsigned short*)(&data_021015a0 + 0xc);
+    pos = 0;
+    count = 0;
+    i = 0;
+    mask = *(unsigned short*)(&data_021015a0 + 0xc);
 
-    for (var3 = 0; var3 < 0x10; var3++) {
-        if (var1 & (1 << var3)) {
-            var0 = var3 + 1;
-            var2 = var2 + 1;
+    for (i = 0; i < 0x10; i++) {
+        if (mask & (1 << i)) {
+            pos = i + 1;
+            count = count + 1;
         }
     }
 
-    if (var2 <= 1) {
+    if (count <= 1) {
         goto out;
     }
 
-    var5 = *(int*)(&data_021015a0 + 0x20);
-    var5 = var5 * 0x10DCD + 0x3039;
-    var4 = (unsigned short)((var2 * (var5 & 0xff)) >> 8);
-    *(int*)(&data_021015a0 + 0x20) = var5;
+    seed = *(int*)(&data_021015a0 + 0x20);
+    seed = seed * 0x10DCD + 0x3039;
+    n = (unsigned short)((count * (seed & 0xff)) >> 8);
+    *(int*)(&data_021015a0 + 0x20) = seed;
 
-    for (var3 = 0; var3 < 0x10; var3++) {
-        if (var1 & 1) {
-            if (var4 == 0) {
-                var0 = var3 + 1;
+    for (i = 0; i < 0x10; i++) {
+        if (mask & 1) {
+            if (n == 0) {
+                pos = i + 1;
                 goto out;
             }
-            var4 = var4 - 1;
+            n = n - 1;
         }
-        var1 >>= 1;
+        mask >>= 1;
     }
 
-    var0 = 0;
+    pos = 0;
 
 out:
-    return (*(unsigned short*)(&data_021015a0 + 2) = var0);
+    return (*(unsigned short*)(&data_021015a0 + 2) = pos);
 }

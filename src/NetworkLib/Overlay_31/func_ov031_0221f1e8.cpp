@@ -8,10 +8,10 @@
 
 struct Struct_ov031_0224f620_6 {
     char unknown_0_[0xc];
-    int unknown_c_;
+    int mode;
     char unknown_10_[8];
-    int unknown_18_;
-    int unknown_1c_;
+    int status;
+    int field_1c;
     void* unknown_20_;
     void* unknown_24_;
 };
@@ -21,22 +21,22 @@ extern "C" int func_ov031_0221ef80();
 extern "C" int func_ov031_0220d010(void*, void*, int);
 
 // USA: func_ov031_0221f1e8
-extern "C" THUMB int func_ov031_0221f1e8(const void* arg0, const void* arg1, int arg2) {
+extern "C" THUMB int func_ov031_0221f1e8(const void* primary, const void* arg1, int mode) {
     int var0 = DisableIRQInterrupts();
-    data_ov031_0224f620.unknown_c_ = arg2;
+    data_ov031_0224f620.mode = mode;
     if (arg1 != 0)
         VectorizedInvertedMemcpy(arg1, data_ov031_0224f620.unknown_24_, 0x50);
     else
         VectorizedMemset(data_ov031_0224f620.unknown_24_, 0, 0x50);
-    func_020ca408(arg0, data_ov031_0224f620.unknown_20_, 0xc0);
+    func_020ca408(primary, data_ov031_0224f620.unknown_20_, 0xc0);
     if (func_ov031_0221ef80() == 1) {
-        data_ov031_0224f620.unknown_18_ = 8;
+        data_ov031_0224f620.status = 8;
         SetIRQInterruptState(var0);
         return 1;
     }
-    if (data_ov031_0224f620.unknown_18_ == 3 &&
-        func_ov031_0220d010(data_ov031_0224f620.unknown_20_, data_ov031_0224f620.unknown_24_, data_ov031_0224f620.unknown_c_) == 3) {
-        data_ov031_0224f620.unknown_18_ = 8;
+    if (data_ov031_0224f620.status == 3 &&
+        func_ov031_0220d010(data_ov031_0224f620.unknown_20_, data_ov031_0224f620.unknown_24_, data_ov031_0224f620.mode) == 3) {
+        data_ov031_0224f620.status = 8;
         SetIRQInterruptState(var0);
         return 1;
     }

@@ -12,49 +12,49 @@ struct Struct_0209dcdc_4 {
     signed int unknown_2_5_:3;
     signed int unknown_3_0_:3;
     signed int unknown_3_3_:3;
-    unsigned int unknown_3_6_:2;
+    unsigned int padding:2;
 };
 struct Struct_0209dcdc {
-    unsigned short unknown_0_0_:2;
-    unsigned short unknown_0_2_:14;
+    unsigned short style:2;
+    unsigned short padding:14;
 };
 struct Struct_0209dcdc_2 {
-    unsigned char unknown_0_0_:4;
-    unsigned char unknown_0_4_:4;
+    unsigned char padding:4;
+    unsigned char category:4;
 };
 struct Struct_0209dcdc_3 {
     unsigned long long unknown_0_[2];
     unsigned char unknown_10_[8];
-    Struct_0209dcdc unknown_18_[2];
+    Struct_0209dcdc styles[2];
     Struct_0209dcdc_2 unknown_1c_[2];
     unsigned char unknown_1e_[0xa];
     Struct_0209dcdc_4 unknown_28_[2];
 };
 
 // USA: func_0209dcdc
-extern "C" ARM int func_0209dcdc(void* arg0, Struct_0209dcdc_3* arg1, int arg2, unsigned int arg3) {
-    unsigned int var0;
+extern "C" ARM int func_0209dcdc(void* manager, Struct_0209dcdc_3* record, int alternate, unsigned int arg3) {
+    unsigned int category;
     unsigned int var1;
     unsigned int var2;
-    unsigned int var3;
+    unsigned int style;
     Struct_0209dcdc_4 var4;
-    if (arg2 == 0) {
-        var3 = arg1->unknown_18_[0].unknown_0_0_;
-        var0 = arg1->unknown_1c_[0].unknown_0_4_;
-        unsigned long long var5 = arg1->unknown_0_[0];
-        var1 = var5;
-        var2 = var5 >> 32;
-        memcpy(&var4, &arg1->unknown_28_[0], sizeof(var4));
+    if (alternate == 0) {
+        style = record->styles[0].style;
+        category = record->unknown_1c_[0].category;
+        unsigned long long flags = record->unknown_0_[0];
+        var1 = flags;
+        var2 = flags >> 32;
+        memcpy(&var4, &record->unknown_28_[0], sizeof(var4));
     } else {
-        var3 = arg1->unknown_18_[1].unknown_0_0_;
-        var0 = arg1->unknown_1c_[1].unknown_0_4_;
-        unsigned long long var6 = arg1->unknown_0_[1];
-        var1 = var6;
-        var2 = var6 >> 32;
-        memcpy(&var4, &arg1->unknown_28_[1], sizeof(var4));
+        style = record->styles[1].style;
+        category = record->unknown_1c_[1].category;
+        unsigned long long flags = record->unknown_0_[1];
+        var1 = flags;
+        var2 = flags >> 32;
+        memcpy(&var4, &record->unknown_28_[1], sizeof(var4));
     }
-    if ((arg3 & 0x1) && (var1 & 2) && var3 == 1) return 1;
-    if ((arg3 & 0x2) && (var1 & 2) && var3 == 2) return 1;
+    if ((arg3 & 0x1) && (var1 & 2) && style == 1) return 1;
+    if ((arg3 & 0x2) && (var1 & 2) && style == 2) return 1;
     if ((arg3 & 0x4) && (var1 & 0x400) && var4.unknown_0_0_ == 2) return 1;
     if ((arg3 & 0x8) && (var1 & 0x400) && var4.unknown_0_0_ == 1) return 1;
     if ((arg3 & 0x10) && (var1 & 0x400) && var4.unknown_0_0_ == -1) return 1;
@@ -80,8 +80,8 @@ extern "C" ARM int func_0209dcdc(void* arg0, Struct_0209dcdc_3* arg1, int arg2, 
     if ((arg3 & 0x1000000) && (var1 & 0x20000) && var4.unknown_2_5_ == 1) return 1;
     if ((arg3 & 0x2000000) && (var2 & 1) && var4.unknown_3_0_ == 2) return 1;
     if ((arg3 & 0x4000000) && (var1 & 0x2000000) && var4.unknown_3_3_ == 2) return 1;
-    if ((arg3 & 0x8000000) && (var1 & 0x800000) && var0 == 1) return 1;
-    if ((arg3 & 0x10000000) && (var1 & 0x800000) && var0 == 2) return 1;
-    if ((arg3 & 0x20000000) && (var1 & 0x800000) && var0 == 3) return 1;
+    if ((arg3 & 0x8000000) && (var1 & 0x800000) && category == 1) return 1;
+    if ((arg3 & 0x10000000) && (var1 & 0x800000) && category == 2) return 1;
+    if ((arg3 & 0x20000000) && (var1 & 0x800000) && category == 3) return 1;
     return 0;
 }

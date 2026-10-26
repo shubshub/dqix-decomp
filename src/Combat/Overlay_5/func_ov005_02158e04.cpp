@@ -10,28 +10,28 @@
 #define func_ov005_02158e04 func_ov005_0215a36c
 #endif
 
-struct Struct_ov005_02158e04 {
-    char unknown_0_[0xc5];
-    unsigned char unknown_c5_;
+struct MenuElement {
+    char unk_0[0xc5];
+    unsigned char flags_;
 };
 
-struct Struct_ov005_02153954 {
-    char unknown_0_[LOW_REGION(0xee0, 0xee4)];
-    char unknown_ee4_[LOW_REGION(0x3d33, 0x3dbb) - LOW_REGION(0xee0, 0xee4)];
-    signed char unknown_3dbb_;
+struct EquipmentMenu {
+    char unk_0[LOW_REGION(0xee0, 0xee4)];
+    char window_[LOW_REGION(0x3d33, 0x3dbb) - LOW_REGION(0xee0, 0xee4)];
+    signed char slot_;
     char unknown_3dbc_[LOW_REGION(0x3d54, 0x3ddc) - LOW_REGION(0x3d34, 0x3dbc)];
     unsigned char unknown_3ddc_;
-    unsigned char unknown_3ddd_;
-    signed char unknown_3dde_;
+    unsigned char menuResult_;
+    signed char menuChoice_;
     unsigned char unknown_3ddf_;
 
-    char* inline_ov005_02158e04() { return unknown_ee4_; }
+    char* GetWindow() { return window_; }
 };
 
 struct Struct_0205d81c;
-MenuElement* Window_GetActivePane(Struct_0205d81c*);
-int WindowPane_IsReady(unsigned char*);
-void TouchGrid_SetTouchedCell(void* p, int value);
+extern "C" MenuElement* Window_GetActivePane(Struct_0205d81c*);
+extern "C" int WindowPane_IsReady(unsigned char*);
+extern "C" void TouchGrid_SetTouchedCell(void* p, int value);
 extern "C" unsigned char Window_Update(void* window, int arg);
 extern "C" void func_ov005_02158f80(EquipmentMenu* self);
 extern "C" void func_ov005_0215916c(EquipmentMenu* self);
@@ -46,22 +46,22 @@ extern "C" ARM void func_ov005_02158e04(EquipmentMenu* self, int arg) {
     if (elem != NULL && WindowPane_IsReady((unsigned char*)elem) && !(elem->flags_ & 2))
         TouchGrid_SetTouchedCell(self->GetWindow() + 4, -1);
     self->menuResult_ = Window_Update(self->window_, arg);
-    switch (self->menuState_) {
+    switch (self->unknown_3ddf_) {
     case 0:
-        func_ov005_02158f80(arg0);
+        func_ov005_02158f80(self);
         break;
     case 1:
-        func_ov005_0215916c(arg0);
+        func_ov005_0215916c(self);
         break;
     case 2:
-        func_ov005_02159208(arg0);
+        func_ov005_02159208(self);
         break;
     case 3:
-        func_ov005_02159274(arg0);
+        func_ov005_02159274(self);
         break;
     case 4:
-        func_ov005_02159850(arg0);
+        func_ov005_02159850(self);
         break;
     }
-    func_ov005_02158ed0(arg0);
+    func_ov005_02158ed0(self);
 }

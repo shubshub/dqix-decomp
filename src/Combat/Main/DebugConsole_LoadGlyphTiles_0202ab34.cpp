@@ -30,14 +30,14 @@ extern "C" ARM void DebugConsole_LoadGlyphTiles(void* firstCharacter, int count,
                             destination[column >> 1] |= 0x01;
                         }
                     }
-                    var4++;
-                    if (var4 >= 8) {
-                        var4 = 0;
-                        var2++;
+                    bit++;
+                    if (bit >= 8) {
+                        bit = 0;
+                        glyph++;
                     }
                 }
-                var5++;
-                var3 += 4;
+                row++;
+                destination += 4;
             }
             CleanInvalidateCacheRange(data_020fe9ac, kTileBytes);
             LoadToMainBG1CharacterData(data_020fe9ac, tileIndex * kTileBytes, kTileBytes);

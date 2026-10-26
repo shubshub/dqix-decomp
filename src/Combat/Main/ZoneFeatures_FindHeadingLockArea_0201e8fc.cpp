@@ -4,7 +4,7 @@
 
 struct Vec3 { int x; int y; int z; };
 
-ARM void StoreThreeWordsAt0x00201ce78(int* obj, int a, int b, int c);
+extern "C" ARM void func_0201ce78(int* obj, int a, int b, int c);
 
 // A ZoneFeatures::Opcode7bEntry (World/ZoneFeatures.h): a box turned about y, with the x/z bounds of the turned box
 struct BoxEntry0201e8fc {
@@ -23,7 +23,7 @@ struct Container0201e8fc {
 };
 
 // Main, originally FindBoxContainingPoint0201e8fc (USA 0x0201e8fc, EUR 0x0201e90c, JPN 0x0201e688)
-ARM void* ZoneFeatures_FindHeadingLockArea(struct Container0201e8fc* features, struct Vec3* point) {
+extern "C" ARM void* ZoneFeatures_FindHeadingLockArea(struct Container0201e8fc* features, struct Vec3* point) {
     int i;
     for (i = 0; i < features->arraySize7b_; i++) {
         struct BoxEntry0201e8fc* box = &features->entries7b_[i];
@@ -41,8 +41,8 @@ ARM void* ZoneFeatures_FindHeadingLockArea(struct Container0201e8fc* features, s
         Mat4x3_ApplyToVector(&boxPoint, &rotation, &boxPoint);
         Vector3fix_Add(&boxPoint, &box->center, &boxPoint);
 
-        StoreThreeWordsAt0x00201ce78(&bounds.minimum.x, box->center.x - box->size.x / 2, box->center.y - box->size.y / 2, box->center.z - box->size.z / 2);
-        StoreThreeWordsAt0x00201ce78(&bounds.maximum.x, box->center.x + box->size.x / 2, box->center.y + box->size.y / 2, box->center.z + box->size.z / 2);
+        func_0201ce78(&bounds.minimum.x, box->center.x - box->size.x / 2, box->center.y - box->size.y / 2, box->center.z - box->size.z / 2);
+        func_0201ce78(&bounds.maximum.x, box->center.x + box->size.x / 2, box->center.y + box->size.y / 2, box->center.z + box->size.z / 2);
 
         if (Bounds3D_ContainsPoint(&boxPoint, &bounds) != 0)
             return box;

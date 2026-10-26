@@ -2,8 +2,8 @@
 
 #pragma define_section initcode ".init" RX
 
-extern "C" void* func_ov004_021633e4(void* arg0);
-extern "C" void* func_ov004_02163408(void* arg0);
+extern "C" void* func_ov004_021633e4(void* obj);
+extern "C" void* func_ov004_02163408(void* obj);
 extern "C" void __register_global_object(void*, void*, void*);
 
 extern int data_ov004_021708c8;

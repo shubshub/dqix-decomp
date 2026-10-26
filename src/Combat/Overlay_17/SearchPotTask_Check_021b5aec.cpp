@@ -45,15 +45,15 @@ struct SearchPotTask021b5aec : FieldTask {
 class Zone3D;
 extern "C" Zone3D021b5aec* Zone3D_GetInstance(void);
 extern "C" unsigned char* Scenario_GetInstance(void);
-ZoneLootableRecord021b5aec* Zone3D_GetLootable(Zone3D* zone, int index);
-void GameObject_EnableControl(void* obj);
+extern "C" ZoneLootableRecord021b5aec* Zone3D_GetLootable(Zone3D* zone, int index);
+extern "C" void GameObject_EnableControl(void* obj);
 extern "C" void SearchPotTask_Release(SearchPotTask021b5aec* self);
-int Scenario_TestFlag(int unused, unsigned char* arr, int index);
-void* ItemTable_Construct(void* obj);
-void InitStruct0207cbe8(char* obj);
+extern "C" int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+extern "C" void* ItemTable_Construct(void* obj);
+extern "C" void func_0207cbe8(char* obj);
 extern "C" void func_0207d538(LootTextContext* context, int lootType, int itemID, int arg, int flag);
 extern "C" void Zone3D_MarkLootableSearched(int id, int index, int bit);
-void LinkMessageQueue_SendLootableSearched(unsigned short a, unsigned short b, unsigned short c);
+extern "C" void LinkMessageQueue_SendLootableSearched(unsigned short a, unsigned short b, unsigned short c);
 
 // Overlay 17, originally func_ov017_021b5aec (USA/EUR 0x021b5aec, JPN 0x021b60a0)
 extern "C" ARM int SearchPotTask_Check(SearchPotTask021b5aec* self) {
@@ -77,7 +77,7 @@ extern "C" ARM int SearchPotTask_Check(SearchPotTask021b5aec* self) {
     self->position.y = lootable->position.y;
     self->position.z = lootable->position.z;
     int alreadyOpened = 1;
-    int hasLoot = 0;
+    int var5 = 0;
     unsigned short listPos = 0;
     unsigned short containerID = 0;
     LootableContainerManager::Container* container = containers->GetContainerByID(lootable->id, &listPos);
@@ -87,12 +87,12 @@ extern "C" ARM int SearchPotTask_Check(SearchPotTask021b5aec* self) {
         if (!alreadyOpened) {
             self->container = container;
             if (container->lootType) {
-                hasLoot = 1;
+                var5 = 1;
                 LootTextContext context;
                 context.allocator.ResetAllocatorPointer();
                 ItemTable_Construct(context.itemTable);
-                InitStruct0207cbe8((char*)&context);
-                InitStruct0207cbe8((char*)&context);
+                func_0207cbe8((char*)&context);
+                func_0207cbe8((char*)&context);
                 context.containerItems = (char*)zone + containerItemsOffset;
                 func_0207d538(&context, container->lootType, container->itemIDOrRank, self->message, 1);
                 self->itemId = container->itemIDOrRank;
@@ -101,7 +101,7 @@ extern "C" ARM int SearchPotTask_Check(SearchPotTask021b5aec* self) {
     }
     Zone3D_MarkLootableSearched(zone->id, self->lootableIndex, containerID);
     LinkMessageQueue_SendLootableSearched(zone->id, self->lootableIndex, containerID);
-    if (!alreadyOpened && hasLoot) {
+    if (!alreadyOpened && var5) {
         SetFlags04(GetGameResources(), 0x40);
         return SearchPotStep_PickSprite;
     }

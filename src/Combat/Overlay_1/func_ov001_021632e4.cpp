@@ -1,0 +1,20 @@
+#include <globaldefs.h>
+
+
+extern "C" void* Scenario_GetInstance(void);
+extern "C" int func_ov017_021d60f4(void* a);
+extern "C" void func_ov017_021d6134(void* param, int val);
+extern "C" int Scenario_TestFlag(int, unsigned char*, int);
+
+// USA: func_ov001_021632e4
+extern "C" ARM int func_ov001_021632e4(void* param) {
+	void* base = Scenario_GetInstance();
+	int id = func_ov017_021d60f4(param);
+	int bit = Scenario_TestFlag((int)base, (unsigned char*)base + 0x8c, id);
+	if (bit != 0) {
+		func_ov017_021d6134((char*)param + 8, 1);
+	} else {
+		func_ov017_021d6134((char*)param + 8, 0);
+	}
+	return 1;
+}

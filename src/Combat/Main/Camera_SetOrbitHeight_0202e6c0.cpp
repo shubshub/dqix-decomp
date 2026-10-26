@@ -12,7 +12,7 @@ struct CamState0202e6c0 {
 
 // Keeps |height| at least 1.0 (0x1000) below the distance, so the orbit's horizontal leg stays real.
 // Main, originally ClampField74BySign (USA 0x0202e6c0, EUR 0x0202e6d0, JPN 0x0202e230)
-ARM void Camera_SetOrbitHeight(struct CamState0202e6c0* camera, int height) {
+extern "C" ARM void Camera_SetOrbitHeight(struct CamState0202e6c0* camera, int height) {
     int limit;
     camera->orbitHeight = height;
     if (0.0f < (float)camera->orbitHeight) {

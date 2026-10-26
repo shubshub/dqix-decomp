@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-extern "C" void func_020bf1a0(void* arg0);
+extern "C" void func_020bf1a0(void* entry);
 struct Struct_020bcb70;
 extern "C" void func_020bcb70(Struct_020bcb70*);
 struct Struct_020bcbe0;
@@ -17,55 +17,55 @@ extern short data_020ed82c[];
 
 // USA: func_020bed10
 extern "C" ARM void func_020bed10(void) {
-    int var0 = 0;
-    int var1;
-    unsigned char* var2 = (unsigned char*)data_02110a4c;
+    int index = 0;
+    int a;
+    unsigned char* entry = (unsigned char*)data_02110a4c;
 LOOP_START:;
     {
-        int var3 = *(int*)(var2 + 0x110);
-        if (((var3 << 31) >> 31) == 0) {
+        int flags = *(int*)(entry + 0x110);
+        if (((flags << 31) >> 31) == 0) {
             goto LOOP_CONTINUE;
         }
-        if (*(int*)(var2 + 0x114) == 0) {
-            func_020bf1a0(var2);
+        if (*(int*)(entry + 0x114) == 0) {
+            func_020bf1a0(entry);
             goto LOOP_CONTINUE;
         }
 
-        if (((var3 << 29) >> 31) != 0 && *(int*)(var2 + 0x118) != 0) {
-            func_020bcb70((Struct_020bcb70*)var2);
-            int var4 = *(int*)(var2 + 0x110);
-            var4 = (var4 | 2) & ~4;
-            *(int*)(var2 + 0x110) = var4;
+        if (((flags << 29) >> 31) != 0 && *(int*)(entry + 0x118) != 0) {
+            func_020bcb70((Struct_020bcb70*)entry);
+            int f2 = *(int*)(entry + 0x110);
+            f2 = (f2 | 2) & ~4;
+            *(int*)(entry + 0x110) = f2;
         }
 
-        int var5 = *(int*)(var2 + 0x110);
-        if (((var5 << 30) >> 31) == 0) {
+        int flags2 = *(int*)(entry + 0x110);
+        if (((flags2 << 30) >> 31) == 0) {
             goto LOOP_CONTINUE;
         }
-        func_020c0260((Struct_020bc180_2*)(var2 + 0xe8));
-        var1 = data_020ed82c[*(int*)(var2 + 0x154)];
-        int var6 = func_020c022c((Struct_020bc180_2*)(var2 + 0xe8));
-        int var7 = data_020ed82c[var6 >> 8];
-        int var8 = data_020ed82c[*(int*)(var2 + 0x158)];
-        int var9 = var8 + (var7 + var1);
-        if (var9 != *(int*)(var2 + 0x15c)) {
-            func_020bcbe0((Struct_020bcbe0*)var2, (void*)var9);
-            *(int*)(var2 + 0x15c) = var9;
+        func_020c0260((Struct_020bc180_2*)(entry + 0xe8));
+        a = data_020ed82c[*(int*)(entry + 0x154)];
+        int var6 = func_020c022c((Struct_020bc180_2*)(entry + 0xe8));
+        int b = data_020ed82c[var6 >> 8];
+        int c = data_020ed82c[*(int*)(entry + 0x158)];
+        int newVal = c + (b + a);
+        if (newVal != *(int*)(entry + 0x15c)) {
+            func_020bcbe0((Struct_020bcbe0*)entry, (void*)newVal);
+            *(int*)(entry + 0x15c) = newVal;
         }
 
-        int var10 = *(int*)(var2 + 0x110);
+        int var10 = *(int*)(entry + 0x110);
         if (((var10 << 28) >> 31) == 0) {
             goto LOOP_CONTINUE;
         }
-        if (func_020c0278((Struct_020bc2f0*)(var2 + 0xe8)) == 0) {
+        if (func_020c0278((Struct_020bc2f0*)(entry + 0xe8)) == 0) {
             goto LOOP_CONTINUE;
         }
-        func_020bf1a0(var2);
+        func_020bf1a0(entry);
     }
 LOOP_CONTINUE:;
-    var0++;
-    var2 += 0x174;
-    if (var0 < 4) {
+    index++;
+    entry += 0x174;
+    if (index < 4) {
         goto LOOP_START;
     }
 }

@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 struct Struct_ov000_02169b2c {
-    char unknown_0_[4];
-    struct Struct_ov000_02169b2c* unknown_4_;
+    char pad[4];
+    struct Struct_ov000_02169b2c* next;
 };
 
 // USA: func_ov000_02169b2c
-extern "C" ARM void func_ov000_02169b2c(struct Struct_ov000_02169b2c* arg0, struct Struct_ov000_02169b2c* arg1) {
-    if (arg0->unknown_4_ == NULL) {
-        arg0->unknown_4_ = arg1;
-        arg1->unknown_4_ = NULL;
+extern "C" ARM void func_ov000_02169b2c(struct Struct_ov000_02169b2c* node, struct Struct_ov000_02169b2c* arg1) {
+    if (node->next == NULL) {
+        node->next = arg1;
+        arg1->next = NULL;
         return;
     }
-    func_ov000_02169b2c(arg0->unknown_4_, arg1);
+    func_ov000_02169b2c(node->next, arg1);
 }

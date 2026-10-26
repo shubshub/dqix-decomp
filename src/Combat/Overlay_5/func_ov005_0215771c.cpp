@@ -11,51 +11,51 @@
 struct SePlayer;
 struct GridCursor;
 
-struct Struct_ov005_02153ba4_2 {
-    char unknown_0_[R(0x4f8, 0x4fc)];
-    int unknown_4fc_;
+struct MemberScreen {
+    char unk_0[R(0x4f8, 0x4fc)];
+    int member_;
     char unknown_500_[R(0x56c - 0x4fc, 0x634 - 0x500)];
-    unsigned short unknown_634_;
+    unsigned short flags_;
 };
 
 struct Struct_ov005_02153ba4 {
-    short unknown_0_;
-    signed char unknown_2_;
+    short item_;
+    signed char count_;
     unsigned char unknown_3_;
-    void* unknown_4_;
-    void* unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
+    void* vramState_;
+    void* model_;
+    int x_;
+    int y_;
     int unknown_14_;
     short unknown_18_;
 };
 
-struct Struct_ov005_02153954 {
-    char unknown_0_[R(0x196c, 0x19f4)];
-    char unknown_19f4_[0x2d90 - 0x19f4];
-    Struct_ov005_02153ba4 unknown_2d90_[24];
+struct EquipmentMenu {
+    char unk_0[R(0x196c, 0x19f4)];
+    char cursor_[0x2d90 - 0x19f4];
+    Struct_ov005_02153ba4 slots_[24];
     char unknown_3030_[0x3db8 - 0x3030];
-    unsigned char unknown_3db8_;
+    unsigned char state_;
     unsigned char unknown_3db9_;
-    unsigned char unknown_3dba_;
-    signed char unknown_3dbb_;
-    unsigned char unknown_3dbc_;
-    signed char unknown_3dbd_;
+    unsigned char step_;
+    signed char slot_;
+    unsigned char kind_;
+    signed char page_;
     unsigned char unknown_3dbe_;
     signed char unknown_3dbf_;
     signed char unknown_3dc0_;
     char unknown_3dc1_[0x3dcc - 0x3dc1];
-    unsigned int unknown_3dcc_;
+    unsigned int flags_;
 };
 
 extern int g_sePlayer;
 
 extern "C" void func_ov005_0215792c(EquipmentMenu* self, unsigned char state);
-MemberScreen* GetField1c_021a193c(int* p);
-void SePlayer_Play(SePlayer* obj, int a, int b);
-int CheckFlag30Or401_02157190(void* self);
+extern "C" MemberScreen* func_ov017_021a193c(int* p);
+extern "C" void SePlayer_Play(SePlayer* obj, int a, int b);
+extern "C" int func_ov005_02157190(void* self);
 extern "C" void func_ov005_021579ec(EquipmentMenu* self, unsigned int state, unsigned char slot);
-int GridCursor_GetSelectedIndex(GridCursor* s);
+extern "C" int GridCursor_GetSelectedIndex(GridCursor* s);
 extern "C" void func_ov005_021555c0(EquipmentMenu* self);
 extern "C" int func_ov005_02157ae8(EquipmentMenu* self, int member);
 extern "C" int func_ov005_021585fc(EquipmentMenu* self, int direction);
@@ -71,22 +71,22 @@ extern "C" ARM void func_ov005_0215771c(EquipmentMenu* self) {
         func_ov005_021579ec(self, self->state_, GridCursor_GetSelectedIndex((GridCursor*)self->cursor_));
         return;
     }
-    int var3 = var1 % 4;
-    int var4 = 0;
-    if (var3 == 0) {
+    int column = index % 4;
+    int changed = 0;
+    if (column == 0) {
         if (g_keyManager.TestKeysPressed(0x20)) {
-            var4 = func_ov005_021585fc(arg0, -1);
-            arg0->unknown_3dcc_ |= 0x20000;
+            changed = func_ov005_021585fc(self, -1);
+            self->flags_ |= 0x20000;
         }
-    } else if (var3 == 3 && g_keyManager.TestKeysPressed(0x10)) {
-        var4 = func_ov005_021585fc(arg0, 1);
-        arg0->unknown_3dcc_ |= 0x40000;
+    } else if (column == 3 && g_keyManager.TestKeysPressed(0x10)) {
+        changed = func_ov005_021585fc(self, 1);
+        self->flags_ |= 0x40000;
     }
-    if (var4 != 0)
-        func_ov005_021555c0(arg0);
+    if (changed != 0)
+        func_ov005_021555c0(self);
     else {
-        arg0->unknown_3dcc_ &= ~0x20000;
-        arg0->unknown_3dcc_ &= ~0x40000;
+        self->flags_ &= ~0x20000;
+        self->flags_ &= ~0x40000;
     }
     cursor = GridCursor_GetSelectedIndex((GridCursor*)self->cursor_) + 8;
     slot = self->slot_;
@@ -96,15 +96,15 @@ extern "C" ARM void func_ov005_0215771c(EquipmentMenu* self) {
         func_ov005_021579ec(self, self->state_, self->slot_);
         return;
     }
-    if (var2 != var0)
+    if (cursor != slot)
         return;
     GameState::GetInstance();
-    MemberScreen* screen = GetField1c_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
+    MemberScreen* screen = func_ov017_021a193c((int*)GetGameResources()->unknown_ptr_array_3700[2]);
     if (!func_ov005_02157ae8(self, screen->member_))
         return;
-    if (!func_ov005_02157190(arg0))
+    if (!func_ov005_02157190(self))
         return;
-    if (arg0->unknown_2d90_[arg0->unknown_3dbb_].unknown_0_ < 0)
+    if (self->slots_[self->slot_].item_ < 0)
         return;
     func_ov005_0215792c(self, 5);
     SePlayer_Play((SePlayer*)&g_sePlayer, 1, 0);

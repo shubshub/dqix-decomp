@@ -6,26 +6,26 @@ extern "C" int* func_02094d6c(void);
 extern "C" void* func_0209dccc(void);
 
 struct Struct_0205faf4_7;
-extern "C" void* func_02096134(struct Struct_0205faf4_7* arg0, int arg1);
+extern "C" void* func_02096134(struct Struct_0205faf4_7* t, int id);
 
 // USA: func_0209d83c
-extern "C" ARM int func_0209d83c(void* arg0) {
-    struct Struct_0205faf4_7* var0;
-    void* var1;
-    int var2;
-    int var3;
+extern "C" ARM int func_0209d83c(void* obj) {
+    struct Struct_0205faf4_7* table;
+    void* entry;
+    int id;
+    int val;
 
-    var0 = (struct Struct_0205faf4_7*)func_02094d6c();
-    if (var0 == NULL) return 0;
+    table = (struct Struct_0205faf4_7*)func_02094d6c();
+    if (table == NULL) return 0;
 
     if (func_0209dccc() == NULL) return 0;
 
-    var2 = func_ov017_021d60f4(arg0);
-    var1 = func_02096134(var0, var2);
-    if (var1 == NULL) return 0;
+    id = func_ov017_021d60f4(obj);
+    entry = func_02096134(table, id);
+    if (entry == NULL) return 0;
 
-    var3 = func_ov017_021d60f4((char*)arg0 + 8);
-    if (var3 > 0xffff) var3 = 0xffff;
-    *(unsigned short*)((char*)var1 + 0xa) = (unsigned short)var3;
+    val = func_ov017_021d60f4((char*)obj + 8);
+    if (val > 0xffff) val = 0xffff;
+    *(unsigned short*)((char*)entry + 0xa) = (unsigned short)val;
     return 1;
 }

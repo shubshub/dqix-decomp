@@ -10,17 +10,17 @@ struct Struct020dfc40;
 struct InitTarget0205cfd4;
 struct GridCursor;
 
-unsigned int* GlobalFlags_GetInstance();
-void FlagWord_SetBits(unsigned int* field, unsigned int bits);
-void ItemTable_Init(void* table);
-void KeyTable_Reset(Struct020dfc40* table);
+extern "C" unsigned int* GlobalFlags_GetInstance();
+extern "C" void FlagWord_SetBits(unsigned int* field, unsigned int bits);
+extern "C" void ItemTable_Init(void* table);
+extern "C" void KeyTable_Reset(Struct020dfc40* table);
 extern "C" void NameFilter_Reset(void* checker);
-void Background_Init(BackgroundGraphics* background);
-void Window_Init(InitTarget0205cfd4* window);
+extern "C" void Background_Init(BackgroundGraphics* background);
+extern "C" void Window_Init(InitTarget0205cfd4* window);
 extern "C" void WindowPane_Init(void* pane);
-void GridCursor_Init(GridCursor* cursor);
-void CharacterCreationUI_ResetTargetLayout(CreationSlotLayout* grid);
-int Font_FindCharacterIndex(int text, int mode);
+extern "C" void GridCursor_Init(GridCursor* cursor);
+extern "C" void CharacterCreationUI_ResetTargetLayout(CreationSlotLayout* grid);
+extern "C" int Font_FindCharacterIndex(int text, int mode);
 
 extern char CharacterCreationUI_nameFillText[];
 

@@ -1,33 +1,33 @@
 #include <globaldefs.h>
 
-struct Struct_0205a254;
-extern "C" void func_020e27ec(struct Struct_0205a254* arg0, int arg1, short arg2, short arg3);
-extern "C" void func_0205ae8c(void* arg0);
-extern "C" void func_020e1780(void* arg0);
+struct Container0205a3d0;
+extern "C" void SpriteEntryList_SetPosition(struct Container0205a3d0* c, int key, short a, short b);
+extern "C" void SpriteContext_DrawEntries(void* p);
+extern "C" void func_020e1780(void* p);
 
 struct Struct_020e2794 {
-    unsigned char unknown_0_[0x3f];
+    unsigned char pad[0x3f];
     unsigned char unknown_3f_0_ : 1;
 };
 
 struct Struct_020e2794_2 {
-    unsigned char unknown_0_[0xc];
-    struct Struct_020e2794* unknown_c_;
+    unsigned char pad0[0xc];
+    struct Struct_020e2794* c;
     void* unknown_10_;
-    unsigned char unknown_14_[4];
-    short unknown_18_;
-    short unknown_1a_;
-    unsigned short unknown_1c_;
-    unsigned char unknown_1e_[2];
-    struct Struct_0205a254* unknown_20_;
+    unsigned char pad1[4];
+    short field_18;
+    short field_1a;
+    unsigned short field_1c;
+    unsigned char pad2[2];
+    struct Container0205a3d0* field_20;
 };
 
 // USA: func_020e2794
-extern "C" ARM void func_020e2794(struct Struct_020e2794_2* arg0, void* arg1) {
-    if (!arg0->unknown_c_->unknown_3f_0_) return;
-    if (arg0->unknown_20_ != NULL) {
-        func_020e27ec(arg0->unknown_20_, arg0->unknown_1c_, arg0->unknown_18_, arg0->unknown_1a_);
-        if (arg1 != NULL) func_0205ae8c(arg1);
+extern "C" ARM void func_020e2794(struct Struct_020e2794_2* self, void* b) {
+    if (!self->c->unknown_3f_0_) return;
+    if (self->field_20 != NULL) {
+        SpriteEntryList_SetPosition(self->field_20, self->field_1c, self->field_18, self->field_1a);
+        if (b != NULL) SpriteContext_DrawEntries(b);
     }
-    func_020e1780(arg0->unknown_10_);
+    func_020e1780(self->unknown_10_);
 }

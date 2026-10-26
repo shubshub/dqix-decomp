@@ -4,9 +4,9 @@
 #include "GameState/GameState.h"
 
 struct FlagWord02046708;
-void *GlobalFlags_GetInstance();
-int FlagWord_TestBits(FlagWord02046708 *word, unsigned int mask);
-void MapDisplay_DrawSprite(void *receiver, int x, int y, int spriteIndex, unsigned char oamSlot, unsigned char priority,
+extern "C" void *GlobalFlags_GetInstance();
+extern "C" int FlagWord_TestBits(FlagWord02046708 *word, unsigned int mask);
+extern "C" void MapDisplay_DrawSprite(void *receiver, int x, int y, int spriteIndex, unsigned char oamSlot, unsigned char priority,
                               unsigned short palette, unsigned char matrixIndex, int scaleX, int scaleY);
 
 // The battles already marked this frame; data_020e7064 is {-1, -1, -1, -1}
@@ -25,9 +25,9 @@ struct MapDisplayBlinkPrefix {
     unsigned char unknown0[0x38];
     fix32_t scale;
 #if defined(jpn)
-    unsigned char unknown3c[0x914 - 0x3c];
+    unsigned char unknown_3c_[0x914 - 0x3c];
 #else
-    unsigned char unknown3c[0x9c0 - 0x3c];
+    unsigned char unknown1_3c_[0x9c0 - 0x3c];
 #endif
     unsigned char blinkPhase; // MapDisplay_UpdateBlink: 0 for 500 ms, then 1 until 1200 ms
 };

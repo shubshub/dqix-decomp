@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
-struct Struct_ov015_02193294 { int unknown_0_; char unknown_4_; };
+struct Struct_ov015_02193294 { int f0; char f4; };
 
 // USA: func_ov015_021933ac
-extern "C" ARM void func_ov015_021933ac(struct Struct_ov015_02193294* arg0) {
-	arg0->unknown_0_ = 0;
-	arg0->unknown_4_ = 0;
+extern "C" ARM void func_ov015_021933ac(struct Struct_ov015_02193294* s) {
+	s->f0 = 0;
+	s->f4 = 0;
 }

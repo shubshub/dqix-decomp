@@ -2,12 +2,12 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "GameState/GameState.h"
 
-void GameObject_EnableControl(void* obj);
-void* GlobalFlags_GetInstance(void);
+extern "C" void GameObject_EnableControl(void* obj);
+extern "C" void* GlobalFlags_GetInstance(void);
 struct FlagWord020466f4 {
     unsigned int flags;
 };
-void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
+extern "C" void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
 
 struct Struct020d9fc8 {
     char pad[0xc];
@@ -15,7 +15,7 @@ struct Struct020d9fc8 {
 };
 
 // Main, originally ClearHandleArrayAndFinalize020d9fc8 (USA 0x020d9fc8, EUR 0x020d9fd8, JPN 0x020db9d0)
-ARM void FieldTask_EndQuestCancel(struct Struct020d9fc8* p) {
+extern "C" ARM void FieldTask_EndQuestCancel(struct Struct020d9fc8* p) {
     int x = (int)BackgroundLoader::GetInstance();
     int i;
     for (i = 0; i < 1; i++) {

@@ -2,7 +2,7 @@
 #include "Filesystem/Pac.h"
 
 // Main, originally FindRecordByIndex (USA 0x020467f0, EUR 0x02046800, JPN 0x02047610)
-ARM void* Pac_GetFile(struct PacRecord* record, int index, void** outRecord, int* outSize) {
+extern "C" ARM void* Pac_GetFile(struct PacRecord* record, int index, void** outRecord, int* outSize) {
     int i;
     if (record == NULL) return NULL;
     i = 0;

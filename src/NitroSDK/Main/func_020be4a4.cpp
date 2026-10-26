@@ -5,8 +5,8 @@ extern "C" void func_020d2c98(int);
 extern "C" void func_020d20c4(int, int);
 
 // USA: func_020be4a4
-extern "C" ARM void func_020be4a4(int arg0, int arg1, int arg2, int arg3) {
-    func_020be3f4((int)(arg0), (void*)(arg2), (unsigned int)(arg3));
-    func_020d20c4(arg0, arg0 + arg1);
-    func_020d2c98(arg0);
+extern "C" ARM void func_020be4a4(int start, int length, int c, int d) {
+    func_020be3f4((int)(start), (void*)(c), (unsigned int)(d));
+    func_020d20c4(start, start + length);
+    func_020d2c98(start);
 }

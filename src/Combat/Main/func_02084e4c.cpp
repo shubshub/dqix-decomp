@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 
 // USA: func_02084e4c
-extern "C" ARM unsigned int func_02084e4c(unsigned int arg0, unsigned int arg1, unsigned int arg2, unsigned int arg3) {
-    unsigned int var0 = arg1 + arg2;
-    if (arg1 == arg3) {
-        arg2 = 0;
-    } else if (arg1 > arg3) {
-        arg2 = 0;
-    } else if (var0 > arg3) {
-        arg2 = arg3 - arg1;
+extern "C" ARM unsigned int func_02084e4c(unsigned int a, unsigned int start, unsigned int length, unsigned int max) {
+    unsigned int end = start + length;
+    if (start == max) {
+        length = 0;
+    } else if (start > max) {
+        length = 0;
+    } else if (end > max) {
+        length = max - start;
     }
-    return arg2;
+    return length;
 }

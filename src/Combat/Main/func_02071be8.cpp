@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 struct Struct_02071be8 {
-    void* unknown_0_;
-    void* unknown_4_;
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    void* field0;
+    void* field4;
+    unsigned short field8;
+    unsigned short fielda;
 };
 
 // USA: func_02071be8
-extern "C" ARM void func_02071be8(struct Struct_02071be8* arg0) {
-    arg0->unknown_0_ = NULL;
-    arg0->unknown_4_ = NULL;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_a_ = 0;
+extern "C" ARM void func_02071be8(struct Struct_02071be8* s) {
+    s->field0 = NULL;
+    s->field4 = NULL;
+    s->field8 = 0;
+    s->fielda = 0;
 }

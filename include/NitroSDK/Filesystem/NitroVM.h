@@ -22,12 +22,12 @@ union FSRegister
     int s32;
     unsigned int u32;
     struct {
-        unsigned short unknown_0_;
-        unsigned short unknown_2_;
+        unsigned short low;
+        unsigned short high;
     } u16;
     struct {
-        short unknown_0_;
-        short unknown_2_;
+        short low;
+        short high;
     } s16;
 };
 
@@ -125,9 +125,9 @@ struct NitroVM
         } dirInfo;
         struct
         {
-            unsigned int unknown_0_;
-            int unknown_4_; // offsets relative to the start of the
-            int unknown_8_;   // archive the file is in. Notably, 
+            unsigned int fileID;
+            int startOffset; // offsets relative to the start of the
+            int endOffset;   // archive the file is in. Notably, 
             int unknown_c_;   // startOffset <= cursorPos <= endOffset.
         } fileInfo;
     };
@@ -135,15 +135,15 @@ struct NitroVM
     {
         struct
         {
-            void* unknown_0_;
-            int unknown_4_;
-            int unknown_8_;
+            void* destination;
+            int unknown;
+            int length;
         } args_Read;
         struct
         {
-            void* unknown_0_;
-            int unknown_4_;
-            int unknown_8_;
+            void* source;
+            int unknown;
+            int length;
         } args_Write;
         struct
         {
@@ -151,16 +151,16 @@ struct NitroVM
         } args_GetDirectoryData;
         struct
         {
-            FileDataStore* unknown_0_;
+            FileDataStore* output;
             CBool unknown_4_;
         } args_GetFileOrDirectoryNameData;
         struct
         {
             // the directory to search in
             NitroDirectoryAccessor unknown_0_;
-            const unsigned char* unknown_c_;
+            const unsigned char* path;
             CBool unknown_10_;
-            void* volatile unknown_14_;
+            void* volatile output;
         } args_GetFileOrDirectoryByName;
         struct
         {
@@ -180,9 +180,9 @@ struct NitroVM
         } args_GetFATEntry;
         struct
         {
-            int unknown_0_;
-            int unknown_4_;
-            int unknown_8_;
+            int startOffset;
+            int endOffset;
+            int fileID;
         } args_SetFilePointers;
     };
 };

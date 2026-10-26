@@ -2,40 +2,40 @@
 
 #include "World/Zone3D.h"
 
-struct Struct_02012ff0 {
-    short unknown_0_;
-    short unknown_2_;
-    Object3D* unknown_4_;
-    Animation3D* unknown_8_;
-    Animation3D* unknown_c_;
-    Animation3D* unknown_10_;
-    Animation3D* unknown_14_;
+struct Struct02012ff0 {
+    short field0;
+    short field2;
+    Object3D* field4;
+    Animation3D* field8;
+    Animation3D* fieldc;
+    Animation3D* field10;
+    Animation3D* field14;
 };
 
 struct Struct_02015134 {
-    char unknown_0_[0x68];
-    void *unknown_68_;
+    char pad[0x68];
+    void *allocator;
 };
-struct Struct_02015134_2 {
-    unsigned short unknown_0_;
-    void *unknown_4_;
+struct Out02015134 {
+    unsigned short flag;
+    void *field4;
 };
-struct Struct_02014a24 {
-    char unknown_0_[4];
-    int unknown_4_;
+struct Src02015134 {
+    char pad[4];
+    int id;
 };
 
 struct Struct_02014a24_2 {
-    int unknown_0_;
-    unsigned char *unknown_4_;
-    int unknown_8_;
+    int unknown0;
+    unsigned char *records;
+    int elementCount;
     int unknown_c_;
-    char unknown_10_[0x30];
-    Struct_02012ff0 *unknown_40_;
+    char unknown10[0x30];
+    Struct02012ff0 *trackers;
 };
 
-void *BmdjScriptState_GetResourceRecord(unsigned char *obj, int index);
-void BmdjElementResource_Init(Struct02012ff0 *s);
+extern "C" void *BmdjScriptState_GetResourceRecord(unsigned char *obj, int index);
+extern "C" void BmdjElementResource_Init(Struct02012ff0 *s);
 extern "C" int Zone3D_LoadElementTerrainMesh(Zone3D* ctx, Struct02012ff0* out, Src02015134* src);
 extern "C" int Zone3D_LoadElementObject(Zone3D *zone, Struct02012ff0 *tracker, Src02015134 *source);
 extern "C" int Zone3D_LoadElementModel(Zone3D *zone, void *node, Struct02012ff0 *tracker, Src02015134 *source);

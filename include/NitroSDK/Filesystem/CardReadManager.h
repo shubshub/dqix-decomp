@@ -12,13 +12,13 @@ struct Arm7CardReadData
     union {
         int unknown_4[23];
         struct {
-            unsigned int unknown_0_;
-            unsigned int unknown_4_;
-            unsigned int unknown_8_;
-            unsigned int unknown_c_;
-            unsigned int unknown_10_;
+            unsigned int type;
+            unsigned int id;
+            unsigned int source;
+            unsigned int destination;
+            unsigned int length;
             Struct_020d0078 unknown_14_;
-        } unknown_4_;
+        } backup;
     };
 };
 

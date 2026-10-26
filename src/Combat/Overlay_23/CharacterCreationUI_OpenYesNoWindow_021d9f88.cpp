@@ -5,13 +5,13 @@
 #include "Resource/CharacterCreationUI.h"
 
 struct GridCursor;
-void GridCursor_SetDimensions(GridCursor*, int, int, int);
-void GridCursor_SetCount(GridCursor*, int);
+extern "C" void GridCursor_SetDimensions(GridCursor*, int, int, int);
+extern "C" void GridCursor_SetCount(GridCursor*, int);
 struct Struct_0205bcdc;
-void GridCursor_SelectIfValid(Struct_0205bcdc*, int);
+extern "C" void GridCursor_SelectIfValid(Struct_0205bcdc*, int);
 extern "C" void GridCursor_SetSelectedIndex(void*, int);
 struct Struct0200fb08;
-unsigned char GameState_GetLanguage(Struct0200fb08*);
+extern "C" unsigned char GameState_GetLanguage(Struct0200fb08*);
 extern "C" void CharacterCreationUI_WriteYesNoText(char*, char*, int);
 #if defined(jpn)
 extern "C" void Window_OpenPane(void*, void*, int, int, int, int, int);

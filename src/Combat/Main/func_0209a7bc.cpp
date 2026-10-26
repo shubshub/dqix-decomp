@@ -1,25 +1,25 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8;
+struct Variant02030b0c;
 
-struct Struct_0209a97c;
-struct Struct_0209a7bc;
-extern "C" void func_0209a97c(struct Struct_0209a97c* arg0, int arg1, struct Struct_0209a7bc* arg2);
+struct Holder0209a97c;
+struct Pair0209a97c;
+extern "C" void func_0209a97c(struct Holder0209a97c* h, int slot, struct Pair0209a97c* src);
 
-extern struct Struct_0209a97c* data_02109ba8;
+extern struct Holder0209a97c* SpellTable_scriptContext;
 
 struct Struct_0209a7bc_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
+    unsigned short a;
+    unsigned short b;
 };
 
 // USA: func_0209a7bc
-extern "C" ARM int func_0209a7bc(void* arg0) {
-    int var0 = ((Script::Parameter*)((struct Struct_0201c1c8*)arg0))->ToInt();
-    struct Struct_0209a7bc_2 var1;
-    var1.unknown_0_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 8)))->ToInt();
-    var1.unknown_2_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 0x10)))->ToInt();
-    func_0209a97c(data_02109ba8, var0, (struct Struct_0209a7bc*)&var1);
+extern "C" ARM int func_0209a7bc(void* arg) {
+    int slot = ((Script::Parameter*)((struct Variant02030b0c*)arg))->ToInt();
+    struct Struct_0209a7bc_2 pair;
+    pair.a = (unsigned short)((Script::Parameter*)((struct Variant02030b0c*)((char*)arg + 8)))->ToInt();
+    pair.b = (unsigned short)((Script::Parameter*)((struct Variant02030b0c*)((char*)arg + 0x10)))->ToInt();
+    func_0209a97c(SpellTable_scriptContext, slot, (struct Pair0209a97c*)&pair);
     return 1;
 }

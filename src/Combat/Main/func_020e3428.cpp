@@ -1,15 +1,15 @@
 #include <globaldefs.h>
-extern "C" int func_0202c1a4(struct Struct_0202c1a4*);
+extern "C" int LinkSession_GetOwnSlot(struct SearchStruct0202c1a4*);
 
-extern "C" void* func_0202ae18(void);
-extern "C" int func_0202b7d8(int* arg0);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" int LinkSession_IsActive(int* obj);
 extern "C" void func_020e33b4(void*, int, int);
 
 // USA: func_020e3428
-extern "C" ARM void func_020e3428(void* arg0, int arg1) {
-    void* var0 = func_0202ae18();
-    if (func_0202b7d8((int*)var0)) {
-        int var1 = func_0202c1a4((struct Struct_0202c1a4*)(var0));
-        func_020e33b4(arg0, arg1, var1 & 0xff);
+extern "C" ARM void func_020e3428(void* a, int b) {
+    void* ctx = LinkSession_GetInstance();
+    if (LinkSession_IsActive((int*)ctx)) {
+        int v = LinkSession_GetOwnSlot((struct SearchStruct0202c1a4*)(ctx));
+        func_020e33b4(a, b, v & 0xff);
     }
 }

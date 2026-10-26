@@ -3,6 +3,6 @@
 extern "C" int func_020054f4(int, int, int, int);
 
 // USA: func_020055d4
-extern "C" ARM int func_020055d4(int arg0, int arg1, int arg2, int arg3) {
-    return func_020054f4(arg0, 0, arg2, arg3);
+extern "C" ARM int func_020055d4(int a, int unused, int c, int d) {
+    return func_020054f4(a, 0, c, d);
 }

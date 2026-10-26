@@ -1,32 +1,32 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" int func_ov000_0215e9fc(int arg0, short* arg1, int arg2, int arg3);
-extern "C" void func_ov017_021917f0(int arg0, int arg1);
+extern "C" int func_ov000_0215e9fc(int a, short* buf, int max, int start);
+extern "C" void func_ov017_021917f0(int id, int flag);
 
 struct Struct_ov000_021639b4 {
 #if defined(jpn)
-    char unknown_0_[0x218];
+    char pad[0x218];
 #else
-    char unknown1_0_[0x29c];
+    char pad[0x29c];
 #endif
     int unknown_29c_;
 };
 
 // USA: func_ov000_021639b4
-extern "C" ARM void func_ov000_021639b4(struct Struct_ov000_021639b4* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    short var1[4];
-    int var2 = func_ov000_0215e9fc(arg0->unknown_29c_, var1, 4, 0);
-    for (int var3 = 0; var3 < var2; var3++) {
-        GameObject* var4 = var0->GetGameObjectByIndex(var1[var3] * 12 + 0x1c);
-        if (var4 && var4->obj3D_.unknown_2_ >= 0) {
-            ((Object3D*)((unsigned char*)var4))->MakeVisible();
+extern "C" ARM void func_ov000_021639b4(struct Struct_ov000_021639b4* obj) {
+    GameState* bs = GameState::GetInstance();
+    short buf[4];
+    int n = func_ov000_0215e9fc(obj->unknown_29c_, buf, 4, 0);
+    for (int i = 0; i < n; i++) {
+        GameObject* c = bs->GetGameObjectByIndex(buf[i] * 12 + 0x1c);
+        if (c && c->obj3D_.unknown_2_ >= 0) {
+            ((Object3D*)((unsigned char*)c))->MakeVisible();
         }
-        var4 = var0->GetGameObjectByIndex(var1[var3] * 12 + 0x1d);
-        if (var4 && var4->obj3D_.unknown_2_ >= 0) {
-            ((Object3D*)((unsigned char*)var4))->MakeVisible();
+        c = bs->GetGameObjectByIndex(buf[i] * 12 + 0x1d);
+        if (c && c->obj3D_.unknown_2_ >= 0) {
+            ((Object3D*)((unsigned char*)c))->MakeVisible();
         }
-        func_ov017_021917f0(var1[var3], 1);
+        func_ov017_021917f0(buf[i], 1);
     }
 }

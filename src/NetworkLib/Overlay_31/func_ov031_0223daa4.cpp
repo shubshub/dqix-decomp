@@ -3,6 +3,6 @@
 extern char* data_ov031_02290d60;
 
 // USA: func_ov031_0223daa4
-extern "C" ARM void* func_ov031_0223daa4(int arg0, int arg1) {
-	return data_ov031_02290d60 + (arg0 << 0xa) + (arg1 << 0x3);
+extern "C" ARM void* func_ov031_0223daa4(int row, int col) {
+	return data_ov031_02290d60 + (row << 0xa) + (col << 0x3);
 }

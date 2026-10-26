@@ -3,75 +3,75 @@
 #include "Resource/ActionDataTables.h"
 
 struct Struct_02079a58_2 {
-    unsigned int unknown_0_0_ : 12;
+    unsigned int value : 12;
 };
 
-extern "C" int func_02079b94(struct Struct_02079a58_2* arg0);
+extern "C" int func_02079b94(struct Struct_02079a58_2* obj);
 
-extern "C" void* memcpy(void* arg0, const void* arg1, unsigned int arg2);
+extern "C" void* memcpy(void* dst, const void* src, unsigned int len);
 
 // USA: func_02079a58
-extern "C" ARM int func_02079a58(Struct_02079a58* arg0, SafeAllocator* arg1, void* arg2,
-                                 Type_02079900 arg3,
-                                 void (*arg4)(Struct_02079a58*)
+extern "C" ARM int func_02079a58(Struct_02079a58* obj, SafeAllocator* alloc, void* data,
+                                 Type_02079900 cb,
+                                 void (*cb2)(Struct_02079a58*)
 #if !defined(jpn)
     , SafeAllocator* arg5
 #endif
 ) {
 #if defined(jpn)
-    SafeAllocator* arg5 = arg1;
+    SafeAllocator* arg5 = alloc;
 #endif
-    if (arg1 == NULL || arg2 == NULL) {
+    if (alloc == NULL || data == NULL) {
         return 0;
     }
 
 #if !defined(jpn)
     if (arg5 == NULL) {
-        arg5 = arg1;
+        arg5 = alloc;
     }
 #endif
 
-    memcpy(arg0, arg2, 4);
+    memcpy(obj, data, 4);
 
-    unsigned int var0 = (unsigned int)func_02079b94((struct Struct_02079a58_2*)arg0);
-    unsigned int var1 = arg0->unknown_1_4_;
+    unsigned int n = (unsigned int)func_02079b94((struct Struct_02079a58_2*)obj);
+    unsigned int m = obj->size;
 
-    arg0->unknown_4_ = (var0 != 0) ? arg1->Allocate(var0) : NULL;
-    arg0->unknown_8_ = (var1 != 0) ? arg5->Allocate(var1) : NULL;
+    obj->p1 = (n != 0) ? alloc->Allocate(n) : NULL;
+    obj->p2 = (m != 0) ? arg5->Allocate(m) : NULL;
 
-    if (arg0->unknown_4_ != NULL) {
-        memcpy(arg0->unknown_4_, (unsigned char*)arg2 + 4, var0);
+    if (obj->p1 != NULL) {
+        memcpy(obj->p1, (unsigned char*)data + 4, n);
     }
 
-    if (arg0->unknown_8_ != NULL) {
-        memcpy(arg0->unknown_8_,
-               (unsigned char*)arg2 + (func_02079b94((struct Struct_02079a58_2*)arg0) + 4),
-               var1);
+    if (obj->p2 != NULL) {
+        memcpy(obj->p2,
+               (unsigned char*)data + (func_02079b94((struct Struct_02079a58_2*)obj) + 4),
+               m);
     }
 
-    int var2;
-    void* var3;
-    int var4;
-    if (arg3 != NULL && (var3 = arg0->unknown_4_) != NULL) {
-        var4 = (int)arg0->unknown_0_0_;
-        if (var4 != 0 && arg3 != NULL) {
-            var2 = 0;
-            while (var2 < var4) {
-                arg3(arg0, (Struct_02079808*)var3);
-                var2++;
+    int i;
+    void* p;
+    int k;
+    if (cb != NULL && (p = obj->p1) != NULL) {
+        k = (int)obj->count;
+        if (k != 0 && cb != NULL) {
+            i = 0;
+            while (i < k) {
+                cb(obj, (Struct_02079808*)p);
+                i++;
                 #if defined(jpn)
-                var3 = (void*)((unsigned char*)var3 + 0x34);
+                p = (void*)((unsigned char*)p + 0x34);
 #else
-                var3 = (void*)((unsigned char*)var3 + 0x3c);
+                p = (void*)((unsigned char*)p + 0x3c);
 #endif
             }
         }
     }
 
-    if (arg4 != NULL) {
-        arg4(arg0);
+    if (cb2 != NULL) {
+        cb2(obj);
     }
 
-    arg0->unknown_3_7_ = 1;
+    obj->flag = 1;
     return 1;
 }

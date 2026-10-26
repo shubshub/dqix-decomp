@@ -13,48 +13,48 @@ enum { Enum_ov003_021785d4_4088 = 0xff8 };
 #endif
 
 
-extern "C" short func_02080468(void* arg0, int arg1);
-extern "C" void func_ov003_02178548(void* arg0);
-extern "C" void func_ov003_021767ec(void* arg0);
-extern "C" void func_ov003_021769ec(void* arg0);
-extern "C" void func_ov003_02176ed4(void* arg0);
-extern "C" void func_ov003_02176f94(void* arg0);
+extern "C" short func_02080468(void* obj, int id);
+extern "C" void func_ov003_02178548(void* self);
+extern "C" void func_ov003_021767ec(void* self);
+extern "C" void func_ov003_021769ec(void* self);
+extern "C" void func_ov003_02176ed4(void* self);
+extern "C" void func_ov003_02176f94(void* self);
 
 // USA: func_ov003_021785d4
-extern "C" ARM void func_ov003_021785d4(char* arg0) {
-    int var0 = *(int*)(arg0 + Enum_ov003_021785d4_4068);
-    int var1 = 0;
-    if (var0 & 0x10) {
-        var1 = 1;
-    } else if (var0 & 0x20) {
-        var1 -= 1;
+extern "C" ARM void func_ov003_021785d4(char* obj) {
+    int flags = *(int*)(obj + Enum_ov003_021785d4_4068);
+    int delta = 0;
+    if (flags & 0x10) {
+        delta = 1;
+    } else if (flags & 0x20) {
+        delta -= 1;
     }
 
-    *(short*)(arg0 + Enum_ov003_021785d4_4096 + 0x14) = *(short*)(arg0 + Enum_ov003_021785d4_4096 + 0x14) + var1;
-    if (*(short*)(arg0 + Enum_ov003_021785d4_4096 + 0x16) <= *(short*)(arg0 + Enum_ov003_021785d4_4096 + 0x14)) {
-        *(short*)(arg0 + Enum_ov003_021785d4_4096 + 0x14) = 0;
+    *(short*)(obj + Enum_ov003_021785d4_4096 + 0x14) = *(short*)(obj + Enum_ov003_021785d4_4096 + 0x14) + delta;
+    if (*(short*)(obj + Enum_ov003_021785d4_4096 + 0x16) <= *(short*)(obj + Enum_ov003_021785d4_4096 + 0x14)) {
+        *(short*)(obj + Enum_ov003_021785d4_4096 + 0x14) = 0;
     }
-    if (*(short*)(arg0 + Enum_ov003_021785d4_4096 + 0x14) < 0) {
-        *(short*)(arg0 + Enum_ov003_021785d4_4096 + 0x14) = *(short*)(arg0 + Enum_ov003_021785d4_4096 + 0x16) - 1;
-    }
-
-    if (var1 != 0) {
-        void* var2 = *(void**)(arg0 + Enum_ov003_021785d4_2204);
-        short var3 = func_02080468(var2, 3);
-        *(short*)(*(void**)(arg0 + Enum_ov003_021785d4_4088)) = var3;
-        func_ov003_02178548(arg0);
-        func_ov003_021767ec(arg0);
-        func_ov003_021769ec(arg0);
-        func_ov003_02176ed4(arg0);
-        func_ov003_02176f94(arg0);
+    if (*(short*)(obj + Enum_ov003_021785d4_4096 + 0x14) < 0) {
+        *(short*)(obj + Enum_ov003_021785d4_4096 + 0x14) = *(short*)(obj + Enum_ov003_021785d4_4096 + 0x16) - 1;
     }
 
-    func_ov003_02178548(arg0);
-    if (*(short*)(arg0 + Enum_ov003_021785d4_4096) == *(short*)(*(void**)(arg0 + Enum_ov003_021785d4_4088))) {
+    if (delta != 0) {
+        void* var2 = *(void**)(obj + Enum_ov003_021785d4_2204);
+        short id = func_02080468(var2, 3);
+        *(short*)(*(void**)(obj + Enum_ov003_021785d4_4088)) = id;
+        func_ov003_02178548(obj);
+        func_ov003_021767ec(obj);
+        func_ov003_021769ec(obj);
+        func_ov003_02176ed4(obj);
+        func_ov003_02176f94(obj);
+    }
+
+    func_ov003_02178548(obj);
+    if (*(short*)(obj + Enum_ov003_021785d4_4096) == *(short*)(*(void**)(obj + Enum_ov003_021785d4_4088))) {
         return;
     }
-    func_ov003_021767ec(arg0);
-    func_ov003_021769ec(arg0);
-    func_ov003_02176ed4(arg0);
-    func_ov003_02176f94(arg0);
+    func_ov003_021767ec(obj);
+    func_ov003_021769ec(obj);
+    func_ov003_02176ed4(obj);
+    func_ov003_02176f94(obj);
 }

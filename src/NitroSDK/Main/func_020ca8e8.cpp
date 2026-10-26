@@ -9,11 +9,11 @@ void VerifyDMASource(int channel, unsigned int source, unsigned int length, unsi
 void ConfigureDMATransferAtomic(int channel, unsigned int src, unsigned int dst, unsigned int ctrl);
 
 // USA: func_020ca8e8
-extern "C" ARM void func_020ca8e8(unsigned int arg0, unsigned int arg1, unsigned int arg2, unsigned int arg3) {
-    VerifyDMATimingChangePermitted_020c9fd0(arg0, -1);
-    VerifyDMASource(arg0, arg1, arg3, 0x1000000);
-    if (arg3 == 0) return;
-    volatile unsigned int* var0 = (volatile unsigned int*)(0x040000b0 + (arg0 * 3 + 2) * 4);
+extern "C" ARM void func_020ca8e8(unsigned int chan, unsigned int addr, unsigned int len, unsigned int size) {
+    VerifyDMATimingChangePermitted_020c9fd0(chan, -1);
+    VerifyDMASource(chan, addr, size, 0x1000000);
+    if (size == 0) return;
+    volatile unsigned int* var0 = (volatile unsigned int*)(0x040000b0 + (chan * 3 + 2) * 4);
     while (*var0 & 0x80000000) {}
-    ConfigureDMATransferAtomic(arg0, arg1, arg2, 0xaf000001);
+    ConfigureDMATransferAtomic(chan, addr, len, 0xaf000001);
 }

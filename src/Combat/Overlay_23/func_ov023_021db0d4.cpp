@@ -4,14 +4,14 @@
 unsigned long long GetCurrentTimestamp(void);
 
 // USA: func_ov023_021db0d4
-extern "C" ARM void func_ov023_021db0d4(void* arg0, int arg1) {
-    char* var0 = (char*)arg0;
-    *(unsigned char*)(var0 + 0x24) = (unsigned char)arg1;
-    *(short*)(var0 + 0x20) = 0;
-    *(short*)(var0 + 0x22) = 0;
-    memset(var0, 0, 0x18);
-    *(short*)(var0 + 0x2) = 0xf;
-    *(short*)(var0 + 0xa) = 0xf;
-    *(short*)(var0 + 0x12) = 0x17;
+extern "C" ARM void func_ov023_021db0d4(void* obj, int flag) {
+    char* o = (char*)obj;
+    *(unsigned char*)(o + 0x24) = (unsigned char)flag;
+    *(short*)(o + 0x20) = 0;
+    *(short*)(o + 0x22) = 0;
+    memset(o, 0, 0x18);
+    *(short*)(o + 0x2) = 0xf;
+    *(short*)(o + 0xa) = 0xf;
+    *(short*)(o + 0x12) = 0x17;
     GetCurrentTimestamp();
 }

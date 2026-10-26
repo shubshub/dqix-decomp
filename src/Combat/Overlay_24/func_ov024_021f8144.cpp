@@ -1,24 +1,24 @@
 #include <globaldefs.h>
 
-struct Struct_02053dc0 { char unknown_0_[0x19c]; void* unknown_19c_; };
-extern "C" void* func_02053dc0(struct Struct_02053dc0* arg0);
+struct Struct_02053dc0 { char pad[0x19c]; void* unknown_19c_; };
+extern "C" void* func_02053dc0(struct Struct_02053dc0* p);
 
-extern "C" void func_ov024_021f9660(void* arg0);
-extern "C" int func_ov024_021f8628(void* arg0, void* arg1, void* arg2, void* arg3);
-extern "C" int func_ov024_021f691c(void* arg0, unsigned short* arg1, void* arg2, int arg3);
+extern "C" void func_ov024_021f9660(void* obj);
+extern "C" int func_ov024_021f8628(void* obj, void* p1, void* p2, void* p3);
+extern "C" int func_ov024_021f691c(void* obj, unsigned short* outB, void* outA, int key);
 
-struct Struct_ov024_021f8144 { char unknown_0_[4]; short unknown_4_; };
+struct Struct_ov024_021f8144 { char pad[4]; short field4; };
 
 // USA: func_ov024_021f8144
-extern "C" ARM int func_ov024_021f8144(struct Struct_ov024_021f8144* arg0, void* arg1, struct Struct_02053dc0* arg2, unsigned short* arg3) {
-	void* var0 = func_02053dc0(arg2);
-	if (!var0) return (int)var0;
-	*(int*)((char*)arg0 + 0x170) = 0;
-	*(float*)((char*)arg0 + 0x124) = 0.08f;
-	func_ov024_021f9660(arg0);
-	int var1 = func_ov024_021f691c((char*)arg0 + 0xc8 + 0x400, arg3, var0, arg0->unknown_4_);
-	if (var1) return var1;
-	var1 = func_ov024_021f691c((char*)arg0 + 8 + 0x400, arg3, var0, arg0->unknown_4_);
-	if (var1) return var1;
-	return func_ov024_021f8628(arg0, arg1, arg2, arg3);
+extern "C" ARM int func_ov024_021f8144(struct Struct_ov024_021f8144* obj, void* p1, struct Struct_02053dc0* p2, unsigned short* outB) {
+	void* result = func_02053dc0(p2);
+	if (!result) return (int)result;
+	*(int*)((char*)obj + 0x170) = 0;
+	*(float*)((char*)obj + 0x124) = 0.08f;
+	func_ov024_021f9660(obj);
+	int r = func_ov024_021f691c((char*)obj + 0xc8 + 0x400, outB, result, obj->field4);
+	if (r) return r;
+	r = func_ov024_021f691c((char*)obj + 8 + 0x400, outB, result, obj->field4);
+	if (r) return r;
+	return func_ov024_021f8628(obj, p1, p2, outB);
 }

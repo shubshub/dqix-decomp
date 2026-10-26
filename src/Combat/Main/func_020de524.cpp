@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
 struct Struct_020de3ac;
-extern "C" int func_020de3ac(struct Struct_020de3ac* arg0, int arg1, int arg2, int arg3);
+extern "C" int func_020de3ac(struct Struct_020de3ac* obj, int a, int unused, int b);
 
 struct Struct_020de38c;
-extern "C" int func_020de38c(struct Struct_020de38c* arg0, int arg1, int arg2);
+extern "C" int func_020de38c(struct Struct_020de38c* obj, int a, int b);
 
 struct Struct_020de3cc;
-extern "C" int func_020de3cc(struct Struct_020de3cc* arg0, int arg1, int arg2, int arg3);
+extern "C" int func_020de3cc(struct Struct_020de3cc* obj, int a, int b, int c);
 
 // USA: func_020de524
-extern "C" ARM void func_020de524(int arg0, int arg1, void** arg2) {
-    if (arg0 == 999) {
-        if (arg1 == 999) {
-            *arg2 = 0;
+extern "C" ARM void func_020de524(int a, int b, void** out) {
+    if (a == 999) {
+        if (b == 999) {
+            *out = 0;
         } else {
-            *arg2 = (void*)func_020de3ac;
+            *out = (void*)func_020de3ac;
         }
     } else {
-        if (arg1 == 999) {
-            *arg2 = (void*)func_020de38c;
+        if (b == 999) {
+            *out = (void*)func_020de38c;
         } else {
-            *arg2 = (void*)func_020de3cc;
+            *out = (void*)func_020de3cc;
         }
     }
 }

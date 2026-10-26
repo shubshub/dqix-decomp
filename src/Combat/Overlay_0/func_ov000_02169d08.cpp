@@ -2,60 +2,60 @@
 #include "Memory/SafeAllocator.h"
 #include "Resource/Script.h"
 
-extern "C" void func_ov000_02169b78(void* arg0);
+extern "C" void func_ov000_02169b78(void* node);
 
 struct Struct_ov000_02184264_2 {
-    unsigned char unknown_0_[8];
-    SafeAllocator* unknown_8_;
+    unsigned char pad[8];
+    SafeAllocator* alloc;
 };
 extern struct Struct_ov000_02184264_2 data_ov000_02184264;
 
 struct Struct_ov000_02169d08 {
-    int unknown_0_;
-    int unknown_4_;
-    char* unknown_8_;
-    short unknown_c_;
-    unsigned char unknown_e_;
-    unsigned char unknown_f_;
+    int tag;
+    int unk_4;
+    char* name;
+    short count;
+    unsigned char kind;
+    unsigned char extra;
 };
 
 // USA: func_ov000_02169d08
-extern "C" ARM int func_ov000_02169d08(Script::Parameter* arg0, int arg1) {
-    struct Struct_ov000_02169d08* var0 = (struct Struct_ov000_02169d08*)data_ov000_02184264.unknown_8_->Allocate(sizeof(struct Struct_ov000_02169d08));
-    var0->unknown_0_ = 3;
-    if (arg0->type == 0) {
-        const char* var1 = (arg0++)->ToString();
-        int var2 = 1;
-        if (arg1 >= 2) {
-            var2 = (arg0++)->ToInt();
+extern "C" ARM int func_ov000_02169d08(Script::Parameter* params, int numParams) {
+    struct Struct_ov000_02169d08* node = (struct Struct_ov000_02169d08*)data_ov000_02184264.alloc->Allocate(sizeof(struct Struct_ov000_02169d08));
+    node->tag = 3;
+    if (params->type == 0) {
+        const char* name = (params++)->ToString();
+        int count = 1;
+        if (numParams >= 2) {
+            count = (params++)->ToInt();
         }
-        var0->unknown_8_ = (char*)data_ov000_02184264.unknown_8_->Allocate(strlen(var1) + 1);
-        strcpy(var0->unknown_8_, var1);
-        var0->unknown_c_ = var2;
-        var0->unknown_e_ = 7;
-        int var3 = 0;
-        if (arg1 >= 3) {
-            var3 = arg0->ToInt();
+        node->name = (char*)data_ov000_02184264.alloc->Allocate(strlen(name) + 1);
+        strcpy(node->name, name);
+        node->count = count;
+        node->kind = 7;
+        int extra = 0;
+        if (numParams >= 3) {
+            extra = params->ToInt();
         }
-        var0->unknown_f_ = var3;
-    } else if (arg0->type == 1) {
-        var0->unknown_e_ = (arg0++)->ToInt();
-        const char* var4 = (arg0++)->ToString();
-        int var5 = 1;
-        if (arg1 >= 3) {
-            var5 = (arg0++)->ToInt();
+        node->extra = extra;
+    } else if (params->type == 1) {
+        node->kind = (params++)->ToInt();
+        const char* name = (params++)->ToString();
+        int count = 1;
+        if (numParams >= 3) {
+            count = (params++)->ToInt();
         }
-        var0->unknown_8_ = (char*)data_ov000_02184264.unknown_8_->Allocate(strlen(var4) + 1);
-        strcpy(var0->unknown_8_, var4);
-        var0->unknown_c_ = var5;
-        int var6 = 0;
-        if (arg1 >= 4) {
-            var6 = arg0->ToInt();
+        node->name = (char*)data_ov000_02184264.alloc->Allocate(strlen(name) + 1);
+        strcpy(node->name, name);
+        node->count = count;
+        int extra = 0;
+        if (numParams >= 4) {
+            extra = params->ToInt();
         }
-        var0->unknown_f_ = var6;
+        node->extra = extra;
     } else {
         return 0;
     }
-    func_ov000_02169b78(var0);
+    func_ov000_02169b78(node);
     return 1;
 }

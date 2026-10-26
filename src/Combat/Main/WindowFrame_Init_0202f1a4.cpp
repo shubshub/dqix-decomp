@@ -6,7 +6,7 @@
 enum { kFramePieceCount = 8 };
 
 // Main, originally InitEightSubStructs_0202f1a4 (USA 0x0202f1a4, EUR 0x0202f1b4, JPN 0x0202ed14)
-ARM void WindowFrame_Init(char* frame) {
+extern "C" ARM void WindowFrame_Init(char* frame) {
     int i;
     for (i = 0; i < kFramePieceCount; i++) {
         SprSprite_Init(frame + i * sizeof(Foo02048004));

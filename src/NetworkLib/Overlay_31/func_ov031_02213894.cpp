@@ -1,34 +1,34 @@
 #include <globaldefs.h>
 
-extern "C" int func_ov031_02213800(void* arg0);
+extern "C" int func_ov031_02213800(void* obj);
 extern "C" int strncmp(const void*, const void*, unsigned int);
 
 struct Struct_ov031_02213694 {
-	unsigned char unknown_0_;
-	unsigned char unknown_1_;
-	unsigned char unknown_2_;
+	unsigned char field0;
+	unsigned char field1;
+	unsigned char field2;
 	unsigned char unknown_3_;
-	char unknown_4_[0x20];
+	char field4[0x20];
 };
 
 // USA: func_ov031_02213894
-extern "C" ARM int func_ov031_02213894(char* arg0, int arg1, struct Struct_ov031_02213694* arg2) {
-	if (*(unsigned short*)(arg0 + 0xa) == 0x20) {
-		int var0 = func_ov031_02213800(arg0);
-		if (var0 > 0) return var0;
+extern "C" ARM int func_ov031_02213894(char* obj, int count, struct Struct_ov031_02213694* arr) {
+	if (*(unsigned short*)(obj + 0xa) == 0x20) {
+		int r = func_ov031_02213800(obj);
+		if (r > 0) return r;
 	}
-	int var1 = 0;
-	if (arg1 > 0) {
-		unsigned short var2 = *(unsigned short*)(arg0 + 0xa);
+	int i = 0;
+	if (count > 0) {
+		unsigned short var2 = *(unsigned short*)(obj + 0xa);
 		do {
-			if ((unsigned char)var2 == arg2->unknown_3_) {
-				if (strncmp(arg0 + 0xc, arg2->unknown_4_, var2) == 0) {
-					return arg2->unknown_1_;
+			if ((unsigned char)var2 == arr->unknown_3_) {
+				if (strncmp(obj + 0xc, arr->field4, var2) == 0) {
+					return arr->field1;
 				}
 			}
-			var1++;
-			arg2++;
-		} while (var1 < arg1);
+			i++;
+			arr++;
+		} while (i < count);
 	}
 	return -1;
 }

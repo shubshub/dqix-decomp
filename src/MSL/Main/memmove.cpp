@@ -2,23 +2,23 @@
 
 // KEEP-NAME: the ROM symbol is the C library name, not a func_ tag.
 // USA: func_02001a60
-extern "C" ARM void* memmove(void* arg0, const void* arg1, unsigned int arg2) {
-    if ((const char*)arg1 >= (const char*)arg0) {
-        char* var0 = (char*)arg0;
-        const char* var1 = (const char*)arg1;
-        if (arg2 != 0) {
+extern "C" ARM void* memmove(void* dst, const void* src, unsigned int n) {
+    if ((const char*)src >= (const char*)dst) {
+        char* d = (char*)dst;
+        const char* s = (const char*)src;
+        if (n != 0) {
             do {
-                *var0++ = *var1++;
-            } while (--arg2);
+                *d++ = *s++;
+            } while (--n);
         }
-        return arg0;
+        return dst;
     }
-    const char* var2 = (const char*)arg1 + arg2;
-    char* var3 = (char*)arg0 + arg2;
-    if (arg2 != 0) {
+    const char* s = (const char*)src + n;
+    char* d = (char*)dst + n;
+    if (n != 0) {
         do {
-            *--var3 = *--var2;
-        } while (--arg2);
+            *--d = *--s;
+        } while (--n);
     }
-    return arg0;
+    return dst;
 }

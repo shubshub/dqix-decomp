@@ -32,7 +32,7 @@ struct Npc {
     void* walker;   // its NpcWalker (at its own +0x20)
     void* model;    // its 3D-model mover (NpcModel_WalkTo), used when it has no walker; null for the NPCs seen
 };
-extern int Npc_WalkTo(struct Npc* obj, int arg);
+extern "C" int Npc_WalkTo(struct Npc* obj, int arg);
 
 // Main, originally func_02040f48 (USA 0x02040f48, EUR 0x02040f58, JPN 0x02041444)
 // Sends the NPC one unit from where it is (clamped into its wander box) in a random one of the step directions

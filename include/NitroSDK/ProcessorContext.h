@@ -127,9 +127,9 @@ int IsPrimaryContextSetUp();
 void PopulateContext(ProcessorContext* context, unsigned int startAddress, unsigned int userdata,
     unsigned int stackBottom, unsigned int stackSize, unsigned int priority);
 
-int ProcessorContext_Create(ProcessorContext* context, void* stackSpace, unsigned int stackSize,
-                         int relativePriority, const void* entry, int userdata);
-void ProcessorContext_Start(ProcessorContext* context);
+extern "C" int ProcessorContext_Create(ProcessorContext* context, void* stackSpace, unsigned int stackSize,
+                         int arg3, const void* entry, int arg5);
+extern "C" void ProcessorContext_Start(ProcessorContext* context);
 
 void ContextExecutionReturnProc();
 void ExitContext(ProcessorContext* context, int exitCode);

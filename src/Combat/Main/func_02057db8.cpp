@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
+extern "C" void func_0200fd48(GameState* battleStruct, int id);
 
 // USA: func_02057db8
-extern "C" ARM void func_02057db8(void* arg0, int arg1) {
-    if (arg1 < 0xd0) return;
-    if (arg1 > 0xdf) return;
-    func_0200fd48(GameState::GetInstance(), arg1);
+extern "C" ARM void func_02057db8(void* unused, int id) {
+    if (id < 0xd0) return;
+    if (id > 0xdf) return;
+    func_0200fd48(GameState::GetInstance(), id);
 }

@@ -21,7 +21,7 @@
 #include <globaldefs.h>
 
 // USA: func_0200fb40
-ARM void ClearSubstructBytes_0200fb40(void* gameState) {
+extern "C" ARM void func_0200fb40(void* gameState) {
     char* base = (char*)gameState;
     unsigned char i;
     base[SUBSTRUCT_BYTE0_OFFSET] = 0;
@@ -29,5 +29,5 @@ ARM void ClearSubstructBytes_0200fb40(void* gameState) {
     for (i = 0; i < 4; i++) {
         (base + i)[SUBSTRUCT_ARRAY_OFFSET] = 0;
     }
-    var0[SUBSTRUCT_LAST_BYTE_OFFSET] = 0;
+    base[SUBSTRUCT_LAST_BYTE_OFFSET] = 0;
 }

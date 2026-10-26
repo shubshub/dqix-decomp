@@ -12,6 +12,6 @@ struct Struct02012dd0 {
 enum { kForwardAlign4 = 4 };
 
 // Main, originally GetMaxAlloc02012dd0 (USA 0x02012dd0, EUR 0x02012de0, JPN 0x02012b98)
-ARM unsigned int AllocatorUnion_GetMaxPossibleAllocation(Struct02012dd0* allocator) {
+extern "C" ARM unsigned int AllocatorUnion_GetMaxPossibleAllocation(Struct02012dd0* allocator) {
     return allocator->pHPXEAllocator->GetMaxPossibleAllocation(kForwardAlign4);
 }

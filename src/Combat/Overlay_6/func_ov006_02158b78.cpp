@@ -10,60 +10,60 @@
 struct Struct_020e28dc;
 struct Struct_0207fdcc_2;
 
-struct Struct_ov006_021580b8 {
-    char unknown_0_[0x28];
+struct Sprite {
+    char unk_0[0x28];
 };
 
 struct Struct_ov006_02156e54_2 {
-    int unknown_0_[0x70 / 4];
+    int unk_0[0x70 / 4];
 };
 
 struct Struct_ov006_02154614;
 
 extern "C" int func_020e28dc(Struct_020e28dc*);
-extern "C" int func_020e2984(struct Struct_020e28dc* arg0);
+extern "C" int func_020e2984(struct Struct_020e28dc* window);
 extern "C" int func_02080d54(Struct_0207fdcc_2*, int, int, int);
 
 struct Struct_ov006_02157a60 {
 #if !defined(jpn)
     int unknown_0_;
-    char** unknown_4_;
+    char** texts_;
 #endif
-    void* unknown_8_;
-    void* unknown_c_;
-    Struct_ov006_02154614* unknown_10_;
-    void* unknown_14_;
-    void* unknown_18_;
-    void* unknown_1c_;
-    void* unknown_20_;
-    Struct_ov006_021580b8* unknown_24_;
-    void* unknown_28_;
+    void* canvasBuffer_;
+    void* allocators_;
+    Struct_ov006_02154614* pot_;
+    void* menu_;
+    void* choice_;
+    void* backgrounds_;
+    void* canvases_;
+    Sprite* sprites_;
+    void* animations_;
     void* unknown_2c_;
     void* unknown_30_;
     void* unknown_34_;
     void* unknown_38_;
     char unknown_3c_[8];
-    short* unknown_44_;
-    short** unknown_48_;
+    short* cursor_;
+    short** items_;
     unsigned char** unknown1_4c_;
-    unsigned short* unknown_50_;
+    unsigned short* sizes_;
 #if defined(jpn)
     char unknown_4c_[8];
 #endif
-    int unknown_54_[0x20 / 4];
-    int unknown_74_[0x28 / 4];
+    int subBackground_[0x20 / 4];
+    int ingredients_[0x28 / 4];
     int unknown_9c_[0xc / 4];
     unsigned short unknown_a8_;
     unsigned char unknown_aa_;
-    int unknown_ac_[0x54 / 4];
-    int unknown_100_[0x4c / 4];
-    int unknown_14c_[0xc / 4];
-    int unknown_158_[0x18 / 4];
-    char unknown_170_[0xc];
-    int unknown_17c_[4][0x74 / 4];
-    int unknown_34c_;
-    int unknown_350_;
-    int unknown_354_;
+    int renderer_[0x54 / 4];
+    int layout_[0x4c / 4];
+    int table_[0xc / 4];
+    int menuTexts_[0x18 / 4];
+    char itemNames_[0xc];
+    int results_[4][0x74 / 4];
+    int ticks_;
+    int menuResult_;
+    int task_;
     int unknown_358_;
     short unknown_35c_;
     short unknown_35e_;
@@ -75,29 +75,29 @@ struct Struct_ov006_02157a60 {
     short unknown_36a_;
     short unknown_36c_;
     short unknown_36e_;
-    short unknown_370_;
+    short item_;
     unsigned short unknown_372_[3];
     short unknown_378_[3];
-    short unknown_37e_;
+    short message_;
     unsigned short unknown_380_;
     short unknown_382_;
     signed char unknown_384_;
     signed char unknown_385_;
     unsigned char unknown_386_;
     unsigned char unknown_387_;
-    unsigned char unknown_388_;
-    unsigned char unknown_389_;
-    unsigned char unknown_38a_;
-    unsigned char unknown_38b_;
+    unsigned char page_;
+    unsigned char pages_;
+    unsigned char category_;
+    unsigned char count_;
     unsigned char unknown_38c_[3];
-    unsigned char unknown_38f_;
-    unsigned char unknown_390_;
+    unsigned char state_;
+    unsigned char step_;
     unsigned char unknown_391_;
     unsigned char unknown_392_;
     unsigned char unknown_393_;
-    unsigned short unknown_394_;
-    unsigned char unknown_396_;
-    unsigned char unknown_397_;
+    unsigned short flags_;
+    unsigned char female_;
+    unsigned char background_;
     unsigned char unknown_398_[3];
     int unknown_39c_;
     int unknown_3a0_;
@@ -120,23 +120,23 @@ struct Struct_ov006_02157a60 {
 };
 
 // USA: func_ov006_02158b78
-extern "C" ARM unsigned char func_ov006_02158b78(Struct_ov006_02157a60* arg0)
+extern "C" ARM unsigned char func_ov006_02158b78(Struct_ov006_02157a60* self)
 {
-    unsigned char var0 = 0;
+    unsigned char cancelled = 0;
     if (g_keyManager.TestKeysPressed(2))
-        var0 = 1;
-    if (arg0->unknown_18_ != 0 && func_020e28dc((Struct_020e28dc*)arg0->unknown_18_))
+        cancelled = 1;
+    if (self->choice_ != 0 && func_020e28dc((Struct_020e28dc*)self->choice_))
     {
-        if (func_020e2984((struct Struct_020e28dc*)arg0->unknown_18_))
-            var0 = 1;
+        if (func_020e2984((struct Struct_020e28dc*)self->choice_))
+            cancelled = 1;
     }
     else if (g_touchInput.pressed_)
     {
-        int var1;
-        int var2;
-        g_touchInput.GetTouchPoint(&var1, &var2);
-        if (!func_02080d54((Struct_0207fdcc_2*)arg0->unknown_14_, arg0->unknown_36e_, (short)var1, (short)var2))
-            var0 = 1;
+        int x;
+        int y;
+        g_touchInput.GetTouchPoint(&x, &y);
+        if (!func_02080d54((Struct_0207fdcc_2*)self->menu_, self->unknown_36e_, (short)x, (short)y))
+            cancelled = 1;
     }
-    return var0;
+    return cancelled;
 }

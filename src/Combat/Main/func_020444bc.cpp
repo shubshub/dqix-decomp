@@ -7,14 +7,14 @@ enum { Enum_020444bc_120 = 0x78, Enum_020444bc_2464 = 0x9a0 };
 #endif
 
 struct Struct_020444bc {
-    char unknown_0_[Enum_020444bc_120];
+    char pad0[Enum_020444bc_120];
     int unknown_78_;
     char unknown_7c_[Enum_020444bc_2464 - Enum_020444bc_120 - 4];
     int unknown_9a0_;
 };
 
 // USA: func_020444bc
-extern "C" ARM void func_020444bc(struct Struct_020444bc* arg0) {
-    arg0->unknown_9a0_ = 5;
-    arg0->unknown_78_ = arg0->unknown_78_ + 1;
+extern "C" ARM void func_020444bc(struct Struct_020444bc* s) {
+    s->unknown_9a0_ = 5;
+    s->unknown_78_ = s->unknown_78_ + 1;
 }

@@ -24,9 +24,9 @@ extern "C"
 
     void Font_EncodeText(void*, char* buffer, int);
 
-    const char* _Z19StandardStrings_Geti(int);
+    const char* StandardStrings_Get(int);
 
-    int _Z21GameState_GetLanguageP14Struct0200fb08(GameState*);
+    int GameState_GetLanguage(GameState*);
 }
 
 #define BINARY_READ_AND_ADVANCE(buffer, offset, dst, len) \
@@ -38,40 +38,40 @@ extern "C"
 #ifdef jpn
 
 // JPN: func_020a5c20
-void RemoveFurigana(const char* arg0, char* arg1)
+void RemoveFurigana(const char* src, char* dst)
 {
-    if (arg1 == NULL)
+    if (dst == NULL)
         return;
 
-    VectorizedMemset(arg1, 0, 4);
+    VectorizedMemset(dst, 0, 4);
 
-    unsigned int var0 = 0;
+    unsigned int mode = 0;
     int var1;
     int var2 = 0;
 
-    for (var1 = 0; arg0[var1] != '\0'; var1++)
+    for (var1 = 0; src[var1] != '\0'; var1++)
     {
-        int var3 = arg0[var1];
+        int var3 = src[var1];
 
         if (var3 == '[')
         {
-            var0 = 1;
+            mode = 1;
             continue;
         }
 
         if (var3 == '/')
         {
-            var0 = 2;
+            mode = 2;
             continue;
         }
 
         if (var3 == ']')
         {
-            var0 = 0;
+            mode = 0;
             continue;
         }
 
-        if (var0 <= 1)
+        if (mode <= 1)
         {
             unsigned char var4 = var3;
             bool var5;
@@ -83,17 +83,17 @@ void RemoveFurigana(const char* arg0, char* arg1)
             if (var5)
             {
                 int var6 = var1 + 1;
-                arg1[var2] = arg0[var6 - 1];
+                dst[var2] = src[var6 - 1];
                 var1++;
                 var2++;
             }
 
-            arg1[var2] = arg0[var1];
+            dst[var2] = src[var1];
             var2++;
         }
     }
 
-    arg1[var2] = 0;
+    dst[var2] = 0;
 }
 
 #endif
@@ -390,7 +390,7 @@ void DetailedTreasureMapData::LegacyBossMapData::Populate(
 #if defined(usa)
     sprintf(mapNameNoLevel_v2_, data_020f1ac0, mapNameNoLevel_);
     strcpy(seeminglyEmptyBuffer_, data_020f1ac3);
-    sprintf(mapLevelString_, data_020f1ac4, _Z19StandardStrings_Geti(1011), level_);
+    sprintf(mapLevelString_, data_020f1ac4, StandardStrings_Get(1011), level_);
     sprintf(topScreenName_, data_020f1ac9, mapNameNoLevel_, mapLevelString_);
     sprintf(popupName_, data_020f1ac9, bossName_, mapLevelString_);
 #elif defined(jpn)
@@ -412,7 +412,7 @@ void DetailedTreasureMapData::LegacyBossMapData::Populate(
 void DetailedTreasureMapData::LegacyBossMapData::WriteMapLevelString()
 {
 #if defined(usa)
-    const char* lvlPrefix = _Z19StandardStrings_Geti(1011);
+    const char* lvlPrefix = StandardStrings_Get(1011);
     sprintf(mapLevelString_, data_020f1ac4, lvlPrefix, level_);
 #elif defined(jpn)
     sprintf(mapLevelString_, data_020f1c27, level_);
@@ -808,7 +808,7 @@ void DetailedTreasureMapData::RegularMapData::GenerateNameBuffers()
     int* offsetArray = (int*)(GetGameResources()->pTMapLanguageOffsets);
 
     unsigned char partOrder[3];
-    switch (_Z21GameState_GetLanguageP14Struct0200fb08(GameState::GetInstance()))
+    switch (GameState_GetLanguage(GameState::GetInstance()))
     {
     case 1:
     case 3:
@@ -885,7 +885,7 @@ void DetailedTreasureMapData::RegularMapData::GenerateNameBuffers()
         }
     }
 
-    sprintf(levelString_, data_020f1ad0, _Z19StandardStrings_Geti(1011), level_);
+    sprintf(levelString_, data_020f1ad0, StandardStrings_Get(1011), level_);
     sprintf(topScreenName_, data_020f1ad5, nameNoLevel_, levelString_);
 }
 
@@ -914,7 +914,7 @@ void DetailedTreasureMapData::RegularMapData::GeneratePopupName()
     int* offsetArray = (int*)(GetGameResources()->pTMapLanguageOffsets);
 
     unsigned char partOrder[3];
-    switch (_Z21GameState_GetLanguageP14Struct0200fb08(GameState::GetInstance()))
+    switch (GameState_GetLanguage(GameState::GetInstance()))
     {
     case 1:
     case 3:
@@ -991,7 +991,7 @@ void DetailedTreasureMapData::RegularMapData::GeneratePopupName()
         }
     }
 
-    sprintf(tempBuffer, data_020f1adb, _Z19StandardStrings_Geti(1011), level_);
+    sprintf(tempBuffer, data_020f1adb, StandardStrings_Get(1011), level_);
     strcat(popupName_, tempBuffer);
 }
 

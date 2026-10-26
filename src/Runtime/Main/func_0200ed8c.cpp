@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
 struct Struct_0200ed8c {
-    void* unknown_0_;
-    int unknown_4_;
-    void (*unknown_8_)(void*, int);
+    void* field0;
+    int pad4;
+    void (*func)(void*, int);
 };
 
 // KEEP-NAME
 // USA: func_0200ed8c
-extern "C" ARM void __end__catch(Struct_0200ed8c* arg0) {
-    void* var0 = arg0->unknown_0_;
-    if (var0 != 0 && arg0->unknown_8_ != 0) {
-        arg0->unknown_8_(var0, -1);
+extern "C" ARM void __end__catch(Struct_0200ed8c* obj) {
+    void* f0 = obj->field0;
+    if (f0 != 0 && obj->func != 0) {
+        obj->func(f0, -1);
     }
 }

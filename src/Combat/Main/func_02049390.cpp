@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
 // USA: func_02049390
-extern "C" ARM void func_02049390(unsigned char* arg0, unsigned char arg1) {
-    unsigned char* var0 = *(unsigned char**)(arg0 + 0x13c);
-    if (var0 != 0 && arg1 != 0xff) {
-        var0[0x1c] = arg1;
+extern "C" ARM void func_02049390(unsigned char* obj, unsigned char value) {
+    unsigned char* p = *(unsigned char**)(obj + 0x13c);
+    if (p != 0 && value != 0xff) {
+        p[0x1c] = value;
     }
 }

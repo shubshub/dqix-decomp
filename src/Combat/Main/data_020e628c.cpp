@@ -2,7 +2,7 @@
 
 #pragma define_section initcode ".init" RX
 
-extern "C" void func_0208b508(void* arg0);
+extern "C" void func_0208b508(void* obj);
 
 extern char data_02108f0c;
 

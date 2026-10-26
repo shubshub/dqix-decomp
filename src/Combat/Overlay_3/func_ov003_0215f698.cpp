@@ -1,37 +1,37 @@
 #include <globaldefs.h>
 
 struct Struct_0202bad4 {
-    char unknown_0_[4];
-    unsigned char unknown_4_[6];
-    char unknown_a_[0x43 - 0xa];
-    unsigned char unknown_43_;
+    char unk_0[4];
+    unsigned char id[6];
+    char unk_a[0x43 - 0xa];
+    unsigned char removed;
     char unknown_44_[0x50 - 0x44];
-    unsigned char unknown_50_[0x63 - 0x50];
-    signed char unknown_63_;
-    char unknown_64_;
+    unsigned char name[0x63 - 0x50];
+    signed char level;
+    char unk_64;
     unsigned char unknown_65_0_ : 1;
-    unsigned char unknown_65_1_ : 1;
-    unsigned char unknown_65_2_ : 1;
-    unsigned char unknown_65_3_ : 1;
-    unsigned char unknown_65_4_ : 1;
-    unsigned char unknown_65_5_ : 1;
+    unsigned char flag1 : 1;
+    unsigned char flag2 : 1;
+    unsigned char hidden : 1;
+    unsigned char present : 1;
+    unsigned char visible : 1;
     unsigned char unknown_65_6_ : 1;
-    unsigned char unknown_65_7_ : 1;
+    unsigned char flag7 : 1;
     char unknown_66_[0xc0 - 0x66];
 };
 struct Struct_0202bad4_2;
 
 struct Struct_ov003_0215f698_2 {
-    unsigned char unknown_0_0_ : 1;
-    unsigned char unknown_0_1_ : 6;
+    unsigned char active : 1;
+    unsigned char level : 6;
     unsigned char unknown_0_7_ : 1;
-    char unknown_1_[0x30];
-    unsigned char unknown_31_[6];
+    char name[0x30];
+    unsigned char id[6];
 };
 
 extern "C" void* LinkSession_GetInstance(void);
-int GetField0xc_0202bae4(void* obj);
-struct Element0202bad4* GetElementAt0x10Stride0xc0(struct ElementArray0202bad4* base, int index);
+extern "C" int func_0202bae4(void* obj);
+extern "C" struct Struct_0202bad4* func_0202bad4(struct Struct_0202bad4_2* base, int index);
 extern "C" int memcmp(void* a, void* b, int n);
 extern "C" void __clear(void* buf, int size);
 extern "C" void Font_DecodeText(void* src, char* dst, int flag);
@@ -41,70 +41,70 @@ extern "C" void* memcpy(void* dst, const void* src, int size);
 // USA: func_ov003_0215f698
 #if defined(jpn)
 struct Struct_ov003_0215f698 {
-    unsigned char unknown_0_0_ : 1;
-    unsigned char unknown_0_1_ : 6;
+    unsigned char active : 1;
+    unsigned char level : 6;
     unsigned char unknown_0_7_ : 1;
-    char unknown_1_[0x13];
+    char name[0x13];
     signed char unknown_14_;
-    unsigned char unknown_15_[6];
+    unsigned char id[6];
 };
 
-extern "C" ARM void func_ov003_0215f698(struct Record0215f89c* records, short* count) {
+extern "C" ARM void func_ov003_0215f698(struct Struct_ov003_0215f698* records, short* count) {
     void* ctx = LinkSession_GetInstance();
-    int n = GetField0xc_0202bae4(ctx);
+    int n = func_0202bae4(ctx);
 
-    struct Struct_ov003_0215f698* var2 = arg0;
-    for (short var3 = 0; var3 < 10; var3++) {
-        var2->unknown_0_0_ = 0;
-        var2++;
+    struct Struct_ov003_0215f698* rec = records;
+    for (short i = 0; i < 10; i++) {
+        rec->active = 0;
+        rec++;
     }
 
     for (int k = 0; k < n; k++) {
-        struct Element0202bad4* elem = GetElementAt0x10Stride0xc0((struct ElementArray0202bad4*)ctx, k);
+        struct Struct_0202bad4* elem = func_0202bad4((struct Struct_0202bad4_2*)ctx, k);
         int found = 0;
         for (short j = 0; j < *count; j++) {
             rec = &records[j];
             if (elem->removed == 0 && memcmp(rec->id, elem->id, 6) == 0 && !elem->hidden && !elem->present) {
-                rec->valid = 1;
+                rec->unknown_0_7_ = 1;
                 rec->active = 1;
                 memcpy(rec->name, elem->name, 0x14);
                 memcpy(rec->id, elem->id, 6);
-                rec->level = rec->nameLevel;
+                rec->level = rec->unknown_14_;
                 found = 1;
                 break;
             }
         }
-        if (!var6 && *arg1 < 10 && var5->unknown_43_ == 0 && !var5->unknown_65_3_ && !var5->unknown_65_4_ && var5->unknown_63_ > 0) {
-            struct Struct_ov003_0215f698* var8 = &arg0[*arg1];
-            var8->unknown_0_7_ = 1;
-            var8->unknown_0_0_ = 1;
-            memcpy(var8->unknown_1_, var5->unknown_50_, 0x14);
-            memcpy(var8->unknown_15_, var5->unknown_4_, 6);
-            var8->unknown_0_1_ = var5->unknown_63_;
-            (*arg1)++;
+        if (!found && *count < 10 && elem->removed == 0 && !elem->hidden && !elem->present && elem->level > 0) {
+            struct Struct_ov003_0215f698* added = &records[*count];
+            added->unknown_0_7_ = 1;
+            added->active = 1;
+            memcpy(added->name, elem->name, 0x14);
+            memcpy(added->id, elem->id, 6);
+            added->level = elem->level;
+            (*count)++;
         }
     }
 }
 #else
-extern "C" ARM void func_ov003_0215f698(struct Record0215f698* records, short* count) {
+extern "C" ARM void func_ov003_0215f698(struct Struct_ov003_0215f698_2* records, short* count) {
     void* ctx = LinkSession_GetInstance();
-    int n = GetField0xc_0202bae4(ctx);
+    int n = func_0202bae4(ctx);
 
-    struct Struct_ov003_0215f698_2* var11 = arg0;
-    for (short var12 = 0; var12 < 10; var12++) {
-        var11->unknown_0_0_ = 0;
-        var11++;
+    struct Struct_ov003_0215f698_2* rec = records;
+    for (short i = 0; i < 10; i++) {
+        rec->active = 0;
+        rec++;
     }
 
     for (int k = 0; k < n; k++) {
-        struct Element0202bad4* elem = GetElementAt0x10Stride0xc0((struct ElementArray0202bad4*)ctx, k);
+        struct Struct_0202bad4* elem = func_0202bad4((struct Struct_0202bad4_2*)ctx, k);
         int found = 0;
         for (short j = 0; j < *count; j++) {
             rec = &records[j];
             if (elem->removed == 0 && memcmp(rec->id, elem->id, 6) == 0 && !elem->hidden && elem->present &&
                 elem->visible) {
                 char buf[0x30];
-                rec->valid = 1;
+                rec->unknown_0_7_ = 1;
                 rec->active = 1;
                 __clear(buf, 0x30);
                 Font_DecodeText(elem->name, buf, 1);
@@ -118,8 +118,8 @@ extern "C" ARM void func_ov003_0215f698(struct Record0215f698* records, short* c
         if (!found && *count < 10 && elem->removed == 0 && !elem->hidden && elem->present && elem->visible &&
             elem->level > 0) {
             char buf[0x30];
-            struct Record0215f698* added = &records[*count];
-            added->valid = 1;
+            struct Struct_ov003_0215f698_2* added = &records[*count];
+            added->unknown_0_7_ = 1;
             added->active = 1;
             __clear(buf, 0x30);
             Font_DecodeText(elem->name, buf, 1);

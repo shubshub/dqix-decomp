@@ -33,7 +33,7 @@ src/Combat/Overlay_28/func_ov028_021d99f8.cpp:
     complete
     .text start:0x021d99f8 end:0x021d9a18
 
-src/Combat/Overlay_28/DispatchHandlerTable_021d8d40.cpp:
+src/Combat/Overlay_28/func_ov028_021d8d40.cpp:
     complete
     .text start:0x021d8d40 end:0x021d8dd0
 
@@ -45,7 +45,7 @@ src/Combat/Overlay_28/func_ov028_021d987c.cpp:
     complete
     .text start:0x021d987c end:0x021d9898
 
-src/Combat/Overlay_30/func_ov030_021d8a40.cpp:
+src/Combat/Overlay_28/func_ov028_021d8a40.cpp:
     complete
     .text start:0x021d8a40 end:0x021d8a74
 
@@ -73,15 +73,15 @@ src/Combat/Overlay_28/func_ov028_021d98b8.cpp:
     complete
     .text start:0x021d98b8 end:0x021d98d4
 
-src/Combat/Overlay_28/AdvanceStateMachine_021d8dd0.cpp:
+src/Combat/Overlay_28/func_ov028_021d8dd0.cpp:
     complete
     .text start:0x021d8dd0 end:0x021d9188
 
-src/Combat/Overlay_28/ApplyElementListEffects_021d9208.cpp:
+src/Combat/Overlay_28/func_ov028_021d9208.cpp:
     complete
     .text start:0x021d9208 end:0x021d942c
 
-src/Combat/Overlay_28/ResetStateAndCounters_021d8c20.cpp:
+src/Combat/Overlay_28/func_ov028_021d8c20.cpp:
     complete
     .text start:0x021d8c20 end:0x021d8d40
 

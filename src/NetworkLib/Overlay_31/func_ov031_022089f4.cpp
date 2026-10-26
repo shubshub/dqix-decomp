@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 
 // USA: func_ov031_022089f4
-extern "C" ARM int func_ov031_022089f4(unsigned char* arg0, int arg1, int arg2, unsigned int arg3) {
-	int var0 = 0;
-	if (arg1 > 0) {
+extern "C" ARM int func_ov031_022089f4(unsigned char* data, int count, int stride, unsigned int target) {
+	int i = 0;
+	if (count > 0) {
 		do {
-			unsigned int var1 = (arg0[0] << 8) + arg0[1];
-			if (arg2 == 3) {
-				var1 = (var1 << 8) + arg0[2];
+			unsigned int v = (data[0] << 8) + data[1];
+			if (stride == 3) {
+				v = (v << 8) + data[2];
 			}
-			if (var1 == arg3) {
+			if (v == target) {
 				return 1;
 			}
-			var0++;
-			arg0 += arg2;
-		} while (var0 < arg1);
+			i++;
+			data += stride;
+		} while (i < count);
 	}
 	return 0;
 }

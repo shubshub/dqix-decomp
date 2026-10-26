@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 #include "Graphics/Vector.h"
 
-static inline fix32_t RoundedRegionProduct(fix32_t a, fix32_t b)
+static inline fix32_t inline_02031d20(fix32_t a, fix32_t b)
 {
-    int64_t product = (int64_t)a * (int64_t)b;
-    return (fix32_t)((product + (int64_t)0x800) >> 12);
+    int64_t var0 = (int64_t)a * (int64_t)b;
+    return (fix32_t)((var0 + (int64_t)0x800) >> 12);
 }
 
 // Keep widened dot products: their spill/reload behavior is present in the original.
@@ -12,45 +12,45 @@ static inline fix32_t RoundedRegionProduct(fix32_t a, fix32_t b)
 extern "C" ARM Vector3fix Vector3fix_ClosestPointOnTriangle(const Vector3fix* point, const Vector3fix* a,
                                         const Vector3fix* b, const Vector3fix* c)
 {
-    Vector3fix ab, ac, ap;
-    Vector3fix_Subtract(b, a, &ab);
+    Vector3fix var0, ac, var2;
+    Vector3fix_Subtract(b, a, &var0);
     Vector3fix_Subtract(c, a, &ac);
-    Vector3fix_Subtract(point, a, &ap);
-    fix32_t d1 = Vector3fix_InnerProduct(&ab, &ap);
-    fix32_t d2 = Vector3fix_InnerProduct(&ac, &ap);
-    if (d1 <= 0 && d2 <= 0)
+    Vector3fix_Subtract(point, a, &var2);
+    fix32_t var3 = Vector3fix_InnerProduct(&var0, &var2);
+    fix32_t var4 = Vector3fix_InnerProduct(&ac, &var2);
+    if (var3 <= 0 && var4 <= 0)
         return *a;
-    Vector3fix bp;
-    Vector3fix_Subtract(point, b, &bp);
-    fix32_t d3 = Vector3fix_InnerProduct(&ab, &bp);
-    fix32_t d4 = Vector3fix_InnerProduct(&ac, &bp);
-    if (d3 >= 0 && d4 <= d3)
+    Vector3fix var5;
+    Vector3fix_Subtract(point, b, &var5);
+    fix32_t var6 = Vector3fix_InnerProduct(&var0, &var5);
+    fix32_t var7 = Vector3fix_InnerProduct(&ac, &var5);
+    if (var6 >= 0 && var7 <= var6)
         return *b;
-    fix32_t vc = RoundedRegionProduct(d1, d4) - RoundedRegionProduct(d3, d2);
-    if (vc <= 0 && d1 >= 0 && d3 <= 0) {
-        fix32_t v = fix32_Divide((fix32_t)d1, (fix32_t)(d1 - d3));
+    fix32_t vc = inline_02031d20(var3, var7) - inline_02031d20(var6, var4);
+    if (vc <= 0 && var3 >= 0 && var6 <= 0) {
+        fix32_t v = fix32_Divide((fix32_t)var3, (fix32_t)(var3 - var6));
         Vector3fix result;
-        Vector3fixMultiplyScalar(&ab, v, &result);
+        Vector3fixMultiplyScalar(&var0, v, &result);
         Vector3fix_Add(a, &result, &result);
         return result;
     }
     Vector3fix cp;
     Vector3fix_Subtract(point, c, &cp);
-    fix32_t d5 = Vector3fix_InnerProduct(&ab, &cp);
-    fix32_t d6 = Vector3fix_InnerProduct(&ac, &cp);
-    if (d6 >= 0 && d5 <= d6)
+    fix32_t var12 = Vector3fix_InnerProduct(&var0, &cp);
+    fix32_t var13 = Vector3fix_InnerProduct(&ac, &cp);
+    if (var13 >= 0 && var12 <= var13)
         return *c;
-    fix32_t vb = RoundedRegionProduct(d5, d2) - RoundedRegionProduct(d1, d6);
-    if (vb <= 0 && d2 >= 0 && d6 <= 0) {
-        fix32_t w = fix32_Divide((fix32_t)d2, (fix32_t)(d2 - d6));
+    fix32_t var14 = inline_02031d20(var12, var4) - inline_02031d20(var3, var13);
+    if (var14 <= 0 && var4 >= 0 && var13 <= 0) {
+        fix32_t w = fix32_Divide((fix32_t)var4, (fix32_t)(var4 - var13));
         Vector3fix result;
         Vector3fixMultiplyScalar(&ac, w, &result);
         Vector3fix_Add(a, &result, &result);
         return result;
     }
-    fix32_t va = RoundedRegionProduct(d3, d6) - RoundedRegionProduct(d5, d4);
-    if (va <= 0 && d4 - d3 >= 0 && d5 - d6 >= 0) {
-        fix32_t w = fix32_Divide((fix32_t)(d4 - d3), (fix32_t)((d4 - d3) + (d5 - d6)));
+    fix32_t var17 = inline_02031d20(var6, var13) - inline_02031d20(var12, var7);
+    if (var17 <= 0 && var7 - var6 >= 0 && var12 - var13 >= 0) {
+        fix32_t w = fix32_Divide((fix32_t)(var7 - var6), (fix32_t)((var7 - var6) + (var12 - var13)));
         Vector3fix result;
         Vector3fix_Subtract(c, b, &result);
         Vector3fixMultiplyScalar(&result, w, &result);

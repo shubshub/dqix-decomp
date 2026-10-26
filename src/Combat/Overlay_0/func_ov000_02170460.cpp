@@ -1,24 +1,24 @@
 #include <globaldefs.h>
 
 struct Struct_ov000_02170460 {
-    char unknown_0_[0x24];
-    unsigned char unknown_24_;
-    char unknown_25_[0x40 - 0x25];
-    float unknown_40_;
-    char unknown_44_[0x4c - 0x44];
-    int unknown_4c_;
+    char pad0[0x24];
+    unsigned char flags;
+    char pad1[0x40 - 0x25];
+    float accum;
+    char pad2[0x4c - 0x44];
+    int field4c;
 };
 
 // USA: func_ov000_02170460
-extern "C" ARM void func_ov000_02170460(struct Struct_ov000_02170460* arg0, int arg1) {
-    if (arg0->unknown_4c_ < 0) return;
-    if (arg1 <= 0) arg1 = 1;
-    if (arg0->unknown_24_ & 8) {
-        float var0 = arg0->unknown_40_ + (float)arg1 * 0.2f;
-        if (3.1415926f < (arg0->unknown_40_ = var0)) {
-            arg0->unknown_40_ = 3.1415926f;
+extern "C" ARM void func_ov000_02170460(struct Struct_ov000_02170460* obj, int count) {
+    if (obj->field4c < 0) return;
+    if (count <= 0) count = 1;
+    if (obj->flags & 8) {
+        float sum = obj->accum + (float)count * 0.2f;
+        if (3.1415926f < (obj->accum = sum)) {
+            obj->accum = 3.1415926f;
         }
     } else {
-        arg0->unknown_40_ = 0.0f;
+        obj->accum = 0.0f;
     }
 }

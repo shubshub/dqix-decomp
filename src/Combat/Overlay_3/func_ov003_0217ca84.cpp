@@ -10,45 +10,45 @@ void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 void UnlockStagedTextureVRAMCopying(void);
 
 struct Struct_ov003_0217ca84 {
-    SafeAllocator* unknown_0_;
-    char unknown_4_[0x88 - 4];
+    SafeAllocator* allocator;
+    char pad4[0x88 - 4];
     void* unknown_88_;
 };
 
 struct Struct_ov003_0217ca84_2 {
-    char unknown_0_[0x2c];
-    int unknown_2c_;
+    char pad0[0x2c];
+    int field2c;
     char unknown_30_[0x30 - 0x30];
     unsigned short unknown1_30_;
 };
 
 // USA: func_ov003_0217ca84
-extern "C" ARM void func_ov003_0217ca84(Struct_ov003_0217ca84* arg0, unsigned short arg1) {
+extern "C" ARM void func_ov003_0217ca84(Struct_ov003_0217ca84* obj, unsigned short arg1) {
     GameState::GetInstance();
     LockStagedTextureVRAMCopying();
     MemoryMapTexturePalette();
 
-    void* var0 = arg0->unknown_88_;
+    void* var0 = obj->unknown_88_;
     if (var0 != NULL) {
-        Struct_ov003_0217ca84_2* var1 = (Struct_ov003_0217ca84_2*)((Model3D*)var0)->GetTEX0();
-        if (var1 != NULL) {
-            int var2 = var1->unknown_2c_;
-            if (((Object3D*)((unsigned char*)arg0 + 0x80))->GetTexturePaletteOffset()) {
-                var2 = ((Object3D*)((unsigned char*)arg0 + 0x80))->GetTexturePaletteOffset();
+        Struct_ov003_0217ca84_2* inner = (Struct_ov003_0217ca84_2*)((Model3D*)var0)->GetTEX0();
+        if (inner != NULL) {
+            int size = inner->field2c;
+            if (((Object3D*)((unsigned char*)obj + 0x80))->GetTexturePaletteOffset()) {
+                size = ((Object3D*)((unsigned char*)obj + 0x80))->GetTexturePaletteOffset();
             }
 
-            void* var3;
-            unsigned int var4 = (unsigned int)var1->unknown1_30_ << 3;
-            int var5 = (unsigned short)var2 << 3;
+            void* buf;
+            unsigned int allocSize = (unsigned int)inner->unknown1_30_ << 3;
+            int var5 = (unsigned short)size << 3;
 
-            var3 = arg0->unknown_0_->Allocate(var4);
-            if (var3 != NULL) {
-                unsigned int var6;
-                for (var6 = 0; var6 < var4 / 2; var6++) {
-                    ((unsigned short*)var3)[var6] = arg1;
+            buf = obj->allocator->Allocate(allocSize);
+            if (buf != NULL) {
+                unsigned int i;
+                for (i = 0; i < allocSize / 2; i++) {
+                    ((unsigned short*)buf)[i] = arg1;
                 }
-                CleanInvalidateCacheRange(var3, var4);
-                LoadToTexturePalette(var3, var5, var4);
+                CleanInvalidateCacheRange(buf, allocSize);
+                LoadToTexturePalette(buf, var5, allocSize);
             }
         }
     }

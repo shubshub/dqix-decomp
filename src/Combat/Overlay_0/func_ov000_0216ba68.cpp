@@ -2,32 +2,32 @@
 #include "Memory/SafeAllocator.h"
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8;
+struct Variant02030b0c;
 
 struct Struct_ov000_02184264_17 {
-    char unknown_0_[8];
-    SafeAllocator* unknown_8_;
+    char pad[8];
+    SafeAllocator* allocator;
 };
 extern struct Struct_ov000_02184264_17 data_ov000_02184264;
 
 struct Struct_ov000_0216ba68 {
-    int unknown_0_;
-    int unknown_4_;
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    int type;
+    int field4;
+    unsigned short field8;
+    unsigned short fielda;
 };
 
 extern "C" void func_ov000_02169b78(struct Struct_ov000_0216ba68*);
 
 // USA: func_ov000_0216ba68
-extern "C" ARM int func_ov000_0216ba68(struct Struct_0201c1c8* arg0) {
-    struct Struct_ov000_0216ba68* var0 = (struct Struct_ov000_0216ba68*)data_ov000_02184264.unknown_8_->Allocate(0xc);
-    if (var0 == 0) return 0;
-    var0->unknown_0_ = 0;
-    var0->unknown_4_ = 0;
-    var0->unknown_0_ = 0x45;
-    var0->unknown_8_ = (unsigned short)((Script::Parameter*)arg0)->ToInt();
-    var0->unknown_a_ = (unsigned short)((Script::Parameter*)((struct Struct_0201c1c8*)((char*)arg0 + 8)))->ToInt();
-    func_ov000_02169b78(var0);
+extern "C" ARM int func_ov000_0216ba68(struct Variant02030b0c* obj) {
+    struct Struct_ov000_0216ba68* e = (struct Struct_ov000_0216ba68*)data_ov000_02184264.allocator->Allocate(0xc);
+    if (e == 0) return 0;
+    e->type = 0;
+    e->field4 = 0;
+    e->type = 0x45;
+    e->field8 = (unsigned short)((Script::Parameter*)obj)->ToInt();
+    e->fielda = (unsigned short)((Script::Parameter*)((struct Variant02030b0c*)((char*)obj + 8)))->ToInt();
+    func_ov000_02169b78(e);
     return 1;
 }

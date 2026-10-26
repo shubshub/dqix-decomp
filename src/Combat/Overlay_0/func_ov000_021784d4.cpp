@@ -3,12 +3,12 @@
 #include "Combat/Main/BattleList.h"
 #include "GameState/GameState.h"
 
-struct Struct_ov000_021784d4 {
+struct Panel_021784d4 {
     char unknown_0_[0xa0];
-    short unknown_a0_;
-    short unknown_a2_;
-    short unknown_a4_;
-    short unknown_a6_;
+    short width;
+    short height;
+    short tileX;
+    short tileY;
     short unknown_a8_;
     short unknown_aa_;
     short unknown_ac_;
@@ -19,30 +19,30 @@ struct Struct_ov000_021784d4 {
 
 struct Struct_ov000_021784d4_2 {
     char unknown_0_[0x79];
-    unsigned char unknown_79_;
+    unsigned char memberCount;
     char unknown_7a_[0x10e];
-    struct Struct_ov000_021784d4 unknown_188_;
+    struct Panel_021784d4 panel;
 };
 
 struct Struct_ov000_021784d4_3 {
-    char unknown_0_[0x44];
-    int unknown_44_;
-    int unknown_48_;
+    char pad[0x44];
+    int x;
+    int y;
 };
 
-struct Struct_ov000_02178074_4 {
+struct TextWorkspace {
 #if defined(jpn)
-    char unknown_0_[0x28];
+    char unknown0[0x28];
 #else
-    char unknown1_0_[0x5c];
+    char unknown0[0x5c];
 #endif
-    char* unknown_5c_;
+    char* textBuffer;
 };
 
-TextWorkspace* MessageSystem_GetInstance();
+extern "C" TextWorkspace* MessageSystem_GetInstance();
 
-extern "C" void func_ov000_0217c638(struct Struct_ov000_021784d4_2* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02178648(struct Struct_ov000_021784d4_2* arg0, void* arg1);
+extern "C" void func_ov000_0217c638(struct Struct_ov000_021784d4_2* obj, int a, int b);
+extern "C" void func_ov000_02178648(struct Struct_ov000_021784d4_2* obj, void* textBuffer);
 #if defined(jpn)
 extern "C" void Window_OpenPane(struct Panel_021784d4* panel, void* textBuffer, int a, int b, int c, int d, int e);
 #else
@@ -50,8 +50,8 @@ extern "C" void Window_OpenPane(struct Panel_021784d4* panel, void* textBuffer, 
 #endif
 
 // USA: func_ov000_021784d4
-extern "C" ARM void func_ov000_021784d4(struct Struct_ov000_021784d4_2* arg0, struct Struct_ov000_021784d4_3* arg1, int arg2, int arg3) {
-    if (arg1 == 0) {
+extern "C" ARM void func_ov000_021784d4(struct Struct_ov000_021784d4_2* obj, struct Struct_ov000_021784d4_3* in, int arg2, int arg3) {
+    if (in == 0) {
         return;
     }
     int x = in->x;
@@ -61,39 +61,39 @@ extern "C" ARM void func_ov000_021784d4(struct Struct_ov000_021784d4_2* arg0, st
     func_ov000_0217c638(obj, arg2, arg3);
     struct Panel_021784d4* panel = &obj->panel;
 #if defined(jpn)
-    var3->unknown_a0_ = 0xa;
+    panel->width = 0xa;
 #else
-    var3->unknown_a0_ = 0x10;
+    panel->width = 0x10;
 #endif
-    var3->unknown_a2_ = 1;
-    var3->unknown_a4_ = (var0 >> 3) + 9;
-    var3->unknown_a6_ = (var1 >> 3) + 1;
-    var3->unknown_a8_ = 0xc;
-    var3->unknown_aa_ = 0xa;
-    var3->unknown_ac_ = 0xa;
-    var3->unknown_ae_ = 0xd;
-    if (var2 == 2) {
-        var3->unknown_a8_ = 0xc;
-        var3->unknown_aa_ = 0xa;
+    panel->height = 1;
+    panel->tileX = (x >> 3) + 9;
+    panel->tileY = (y >> 3) + 1;
+    panel->unknown_a8_ = 0xc;
+    panel->unknown_aa_ = 0xa;
+    panel->unknown_ac_ = 0xa;
+    panel->unknown_ae_ = 0xd;
+    if (memberCount == 2) {
+        panel->unknown_a8_ = 0xc;
+        panel->unknown_aa_ = 0xa;
     }
-    if (var2 == 3) {
-        var3->unknown_a8_ = 0xc;
-        var3->unknown_aa_ = 8;
+    if (memberCount == 3) {
+        panel->unknown_a8_ = 0xc;
+        panel->unknown_aa_ = 8;
     }
-    if (var2 == 4) {
-        var3->unknown_a8_ = 0xc;
-        var3->unknown_aa_ = 4;
-        var3->unknown_ac_ = 0xa;
-        var3->unknown_ae_ = 0xb;
+    if (memberCount == 4) {
+        panel->unknown_a8_ = 0xc;
+        panel->unknown_aa_ = 4;
+        panel->unknown_ac_ = 0xa;
+        panel->unknown_ae_ = 0xb;
     }
-    panel->field_0xb1 = 8;
+    panel->unknown_b1_ = 8;
     char* textBuffer = MessageSystem_GetInstance()->textBuffer;
 #if defined(jpn)
-    memset(var4, 0, 0x800);
+    memset(textBuffer, 0, 0x800);
 #else
-    memset(var4, 0, 0x960);
+    memset(textBuffer, 0, 0x960);
 #endif
-    func_ov000_02178648(arg0, var4);
+    func_ov000_02178648(obj, textBuffer);
 #if defined(jpn)
     Window_OpenPane(&obj->panel, textBuffer, 0, 1, 0, 1, 0);
 #else

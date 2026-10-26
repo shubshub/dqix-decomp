@@ -2,4 +2,4 @@
 
 class GameState;
 
-int GameState_IsInGrotto(GameState *gameState);
+extern "C" int GameState_IsInGrotto(GameState *gameState);

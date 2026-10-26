@@ -1,19 +1,19 @@
 #include <globaldefs.h>
 
 struct Struct_020ee958 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_[2];
-    unsigned int unknown_4_;
+    unsigned char width;
+    unsigned char height;
+    unsigned char pad[2];
+    unsigned int attr;
 };
 
 struct Struct_020e1438 {
-    unsigned int unknown_0_;
-    unsigned int unknown_4_;
-    unsigned char unknown_8_;
-    unsigned char unknown_9_;
-    unsigned char unknown_a_;
-    unsigned char unknown_b_;
+    unsigned int attr;
+    unsigned int reserved;
+    unsigned char x;
+    unsigned char y;
+    unsigned char width;
+    unsigned char height;
 };
 
 extern Struct_020ee958 data_020ee958[];
@@ -21,55 +21,55 @@ extern Struct_020ee958 data_020ee958[];
 #pragma opt_common_subs off
 
 // USA: func_020e1438
-extern "C" ARM unsigned int func_020e1438(Struct_020e1438* arg0, unsigned int arg1,
-                                                      unsigned int arg2, unsigned int arg3,
-                                                      unsigned int arg4, unsigned int arg5) {
-    unsigned int var0;
-    unsigned int var1;
-    unsigned char var2;
+extern "C" ARM unsigned int func_020e1438(Struct_020e1438* out, unsigned int maxCount,
+                                                      unsigned int x, unsigned int arg3,
+                                                      unsigned int width, unsigned int height) {
+    unsigned int count;
+    unsigned int y;
+    unsigned char left;
 
-    if (arg1 == 0) {
+    if (maxCount == 0) {
         return 0;
     }
-    var0 = 0;
-    var1 = 0;
-    var2 = (unsigned char)arg2;
+    count = 0;
+    y = 0;
+    left = (unsigned char)x;
 
-    while (var1 < arg5) {
-        Struct_020ee958* var3 = 0;
-        Struct_020ee958* var4 = data_020ee958;
-        unsigned int var5 = 0;
-        unsigned int var6 = arg5 - var1;
+    while (y < height) {
+        Struct_020ee958* best = 0;
+        Struct_020ee958* e = data_020ee958;
+        unsigned int i = 0;
+        unsigned int remaining = height - y;
 
-        while (var5 < 12) {
-            if (var4->unknown_0_ == arg4 && var4->unknown_1_ <= var6) {
-                var3 = var4;
+        while (i < 12) {
+            if (e->width == width && e->height <= remaining) {
+                best = e;
                 break;
             }
-            var5++;
-            var4++;
+            i++;
+            e++;
         }
 
-        if (var3 != 0) {
-            arg0[var0].unknown_8_ = var2;
-            arg0[var0].unknown_9_ = (unsigned char)(var1 + arg3);
-            arg0[var0].unknown_a_ = var3->unknown_0_;
-            arg0[var0].unknown_b_ = var3->unknown_1_;
-            arg0[var0].unknown_0_ = var3->unknown_4_;
-            var0++;
-            var1 += var3->unknown_1_;
+        if (best != 0) {
+            out[count].x = left;
+            out[count].y = (unsigned char)(y + arg3);
+            out[count].width = best->width;
+            out[count].height = best->height;
+            out[count].attr = best->attr;
+            count++;
+            y += best->height;
         } else {
-            unsigned int var7 = arg4 >> 1;
-            unsigned int var8 = arg5 - var1;
-            var0 += func_020e1438(arg0 + var0, arg1 - var0, arg2, var1, var7, var8);
-            var0 += func_020e1438(arg0 + var0, arg1 - var0, arg2 + (arg4 >> 1), var1,
-                                               var7, var8);
+            unsigned int half = width >> 1;
+            unsigned int rest = height - y;
+            count += func_020e1438(out + count, maxCount - count, x, y, half, rest);
+            count += func_020e1438(out + count, maxCount - count, x + (width >> 1), y,
+                                               half, rest);
             break;
         }
 
-        if (var0 >= arg1) {
+        if (count >= maxCount) {
             break;
         }
     }
-    return var0;
+    return count;
 }

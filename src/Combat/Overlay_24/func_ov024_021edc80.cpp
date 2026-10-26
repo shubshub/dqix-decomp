@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 
 struct Struct_ov024_021edc80 {
-	char unknown_0_[0x21];
-	unsigned char unknown_21_;
+	char unk[0x21];
+	unsigned char state;
 };
 
 struct Struct_ov024_021eda78 {
-	char unknown_0_[0x138];
-	struct Struct_ov024_021edc80* unknown_138_;
+	char unk[0x138];
+	struct Struct_ov024_021edc80* inner;
 };
 
 // USA: func_ov024_021edc80
-extern "C" ARM int func_ov024_021edc80(struct Struct_ov024_021eda78* arg0) {
-	int var0 = arg0->unknown_138_->unknown_21_ == 4;
-	return var0 != 0;
+extern "C" ARM int func_ov024_021edc80(struct Struct_ov024_021eda78* obj) {
+	int result = obj->inner->state == 4;
+	return result != 0;
 }

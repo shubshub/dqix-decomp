@@ -4,26 +4,26 @@ extern "C" int func_ov017_021d60f4(void*);
 extern "C" void* func_ov017_021d612c(void*);
 extern "C" float func_ov017_021d6110(void*);
 extern "C" void* func_ov001_0215ab20(int);
-extern "C" void func_ov001_0215a550(int arg0, char* arg1, int arg2, int arg3);
+extern "C" void func_ov001_0215a550(int a, char* name, int b, int c);
 
 // USA: func_ov001_0215c298
-extern "C" ARM int func_ov001_0215c298(char* arg0, int arg1) {
-    int var0 = 0x1000;
-    int var1;
-    int var2 = func_ov017_021d60f4(arg0);
-    char* var3 = arg0 + 0x8;
-    arg0 += 0x10;
-    char* var4 = (char*)func_ov017_021d612c(var3);
-    var1 = 0;
-    if (arg1 >= 3) {
-        var1 = func_ov017_021d60f4(arg0);
-        arg0 += 0x8;
+extern "C" ARM int func_ov001_0215c298(char* self, int mode) {
+    int c = 0x1000;
+    int b;
+    int id = func_ov017_021d60f4(self);
+    char* var3 = self + 0x8;
+    self += 0x10;
+    char* name = (char*)func_ov017_021d612c(var3);
+    b = 0;
+    if (mode >= 3) {
+        b = func_ov017_021d60f4(self);
+        self += 0x8;
     }
-    if (arg1 >= 4) {
-        var0 = (int)(4096.0f * func_ov017_021d6110(arg0));
+    if (mode >= 4) {
+        c = (int)(4096.0f * func_ov017_021d6110(self));
     }
-    void* var5 = func_ov001_0215ab20(var2);
-    if (var5 == NULL) return 0;
-    func_ov001_0215a550((int)var5, var4, var1, var0);
+    void* ctx = func_ov001_0215ab20(id);
+    if (ctx == NULL) return 0;
+    func_ov001_0215a550((int)ctx, name, b, c);
     return 1;
 }

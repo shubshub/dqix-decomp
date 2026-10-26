@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 
 // USA: func_ov031_0223dd60
-extern "C" ARM int func_ov031_0223dd60(unsigned short* arg0, unsigned char* arg1, int arg2) {
-	int var0 = arg2 - 1;
-	int var1 = 0;
-	if (var0 > 0) {
+extern "C" ARM int func_ov031_0223dd60(unsigned short* dst, unsigned char* src, int maxLen) {
+	int limit = maxLen - 1;
+	int i = 0;
+	if (limit > 0) {
 		do {
-			unsigned char var2 = arg1[var1];
-			if (var2 == 0) break;
-			arg0[var1] = var2;
-			var1++;
-		} while (var1 < var0);
+			unsigned char c = src[i];
+			if (c == 0) break;
+			dst[i] = c;
+			i++;
+		} while (i < limit);
 	}
-	arg0[var1] = 0;
-	return var1;
+	dst[i] = 0;
+	return i;
 }

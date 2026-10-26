@@ -4,34 +4,34 @@
 
 struct Holder020bd110
 {
-    char _pad0[0x30];
+    char unknown_0_[0x30];
     int flag30;
-    NitroVM vm34;
-    NitroFileAccessor accessor7c;
-    void* list84;
-    unsigned int f88;
-    void* f8c;
+    NitroVM unknown_34_;
+    NitroFileAccessor unknown_7c_;
+    void* unknown_84_;
+    unsigned int unknown_88_;
+    void* unknown_8c_;
     unsigned int f90;
 };
 
 extern struct Holder020bd110* data_02110370;
-extern "C" int func_020bd190(struct Holder020bd110* obj, int arg2, int arg3);
+extern "C" int func_020bd190(struct Holder020bd110* obj, int arg1, int arg2);
 
 // Main, originally InitStreamHolder020bd110 (USA 0x020bd110, EUR 0x020bd120, JPN 0x020bebdc)
-ARM int NNS_SndArcInit(struct Holder020bd110* obj, const char* path, int arg2, int arg3)
+extern "C" ARM int NNS_SndArcInit(struct Holder020bd110* obj, const char* path, int arg2, int arg3)
 {
-    obj->f8c = 0;
-    obj->list84 = 0;
-    obj->f88 = 0;
+    obj->unknown_8c_ = 0;
+    obj->unknown_84_ = 0;
+    obj->unknown_88_ = 0;
     obj->f90 = 0;
 
-    int ok = CreateFileAccessor(&obj->accessor7c, path);
+    int ok = CreateFileAccessor(&obj->unknown_7c_, path);
     if (ok == 0)
         return ok;
 
-    NitroVM_Initialize(&obj->vm34);
+    NitroVM_Initialize(&obj->unknown_34_);
 
-    ok = NitroVM_PrepareReadFileByID(&obj->vm34, obj->accessor7c);
+    ok = NitroVM_PrepareReadFileByID(&obj->unknown_34_, obj->unknown_7c_);
     if (ok == 0)
         return ok;
 

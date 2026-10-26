@@ -12,7 +12,7 @@ struct List_02027878 {
 };
 
 // Main, originally GetEntryFromList (USA 0x02027878, EUR 0x02027888, JPN 0x020270e4)
-ARM struct Entry_02027878* MapDisplay_GetMapPiece(struct List_02027878* display, int index) {
+extern "C" ARM struct Entry_02027878* MapDisplay_GetMapPiece(struct List_02027878* display, int index) {
     if (index < 0) {
         goto outOfRange;
     }

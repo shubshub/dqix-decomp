@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 
-void VCountIrq_PushDisable();
-void WH_Reset();
+extern "C" void VCountIrq_PushDisable();
+extern "C" void WH_Reset();
 extern "C" int LinkSession_WaitForIdle(int* session, int unused);
 extern "C" void LinkSession_Reset(void* session);
 extern "C" void VCountIrq_PopDisable(void);
 void SleepCurrentContext(unsigned int);
-int WH_GetSystemState(void);
+extern "C" int WH_GetSystemState(void);
 extern "C" void WH_Finalize(void);
-int WH_End();
+extern "C" int WH_End();
 
 // NitroSDK wh library system state (WH_GetSystemState).
 enum { WH_SYSSTATE_BUSY = 3 };

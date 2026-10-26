@@ -1,19 +1,19 @@
 #include <globaldefs.h>
 
-struct Struct_0203d028;
+struct Foo0207df50;
 
 extern "C" void VramState_Reserve(void* state, int a, int b);
-void VramState_Rewind(struct Foo0207df50* p);
+extern "C" void VramState_Rewind(struct Foo0207df50* p);
 
 struct Struct_ov005_02155d6c {
-    char unknown_0_[0x70];
+    char unk_0[0x70];
 };
 
-struct Struct_ov005_02153954 {
-    char unknown_0_[0x294];
-    Struct_ov005_02155d6c unknown_294_;
-    Struct_ov005_02155d6c unknown_304_[24];
-    Struct_ov005_02155d6c unknown_d84_;
+struct EquipmentMenu {
+    char unk_0[0x294];
+    Struct_ov005_02155d6c vramState_;
+    Struct_ov005_02155d6c slotVramStates_[24];
+    Struct_ov005_02155d6c dragVramState_;
 };
 
 // USA: func_ov005_02153b20

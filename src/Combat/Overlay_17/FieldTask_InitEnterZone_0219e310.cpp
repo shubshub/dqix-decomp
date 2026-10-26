@@ -2,11 +2,11 @@
 #include "NitroSDK/Memory.h"
 
 struct ByteHeader0204693c;
-extern void ResetByteHeader(ByteHeader0204693c* p);
+extern "C" void func_0204693c(ByteHeader0204693c* p);
 
 // Overlay 17, originally InitAndResetHeader_0219e310 (USA/EUR 0x0219e310, JPN 0x0219ee00)
-ARM void FieldTask_InitEnterZone(unsigned char* obj, int flag) {
-    ResetByteHeader((ByteHeader0204693c*)obj);
+extern "C" ARM void FieldTask_InitEnterZone(unsigned char* obj, int flag) {
+    func_0204693c((ByteHeader0204693c*)obj);
     obj[0x0] = 3;
     obj[0x8] = 0;
     obj[0x9] = 0;

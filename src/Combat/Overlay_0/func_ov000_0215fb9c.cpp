@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
-struct Struct_ov024_021fea1c { int unknown_0_; int unknown_4_; };
-extern "C" int func_ov000_0215fb54(int arg0, int arg1, struct Struct_ov024_021fea1c* arg2);
+struct Struct_ov024_021fea1c { int unknown_0_; int x1; };
+extern "C" int func_ov000_0215fb54(int unused, int key, struct Struct_ov024_021fea1c* out);
 
 // USA: func_ov000_0215fb9c
-extern "C" ARM int func_ov000_0215fb9c(int arg0, short arg1) {
-    struct Struct_ov024_021fea1c var0;
-    int var1 = func_ov000_0215fb54(arg0, arg1, &var0);
-    if (var1 > 0 || arg1 == 0xf2 || arg1 == 0x1da) {
+extern "C" ARM int func_ov000_0215fb9c(int unused, short key) {
+    struct Struct_ov024_021fea1c out;
+    int result = func_ov000_0215fb54(unused, key, &out);
+    if (result > 0 || key == 0xf2 || key == 0x1da) {
         return 1;
     }
     return 0;

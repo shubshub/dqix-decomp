@@ -68,7 +68,7 @@ struct BmdjSceneElement02016e14 {
     Object3D* object;
 };
 
-void RenderConfig_SetObjectRotation(void* arg0);
+extern "C" void RenderConfig_SetObjectRotation(void* arg0);
 extern "C" void Mat3x3_WriteRotationY(Matrix3x3* out, int sine, int cosine);
 
 // Main, originally func_02016e14 (USA 0x02016e14, EUR 0x02016e24, JPN 0x02016bb4)

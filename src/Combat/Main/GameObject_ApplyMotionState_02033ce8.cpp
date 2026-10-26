@@ -18,8 +18,8 @@ struct Obj02033b68 {
 };
 
 extern "C" void func_02057924(void);
-void GameObject_PlayMotionAnimation(unsigned char* obj);
-void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
+extern "C" void GameObject_PlayMotionAnimation(unsigned char* obj);
+extern "C" void GameObject_SetMotionState(struct Obj02033b68* obj, int newVal);
 
 // Main, originally func_02033ce8 (USA 0x02033ce8, EUR 0x02033cf8, JPN 0x02033820)
 extern "C" ARM void GameObject_ApplyMotionState(struct Obj02033b68* self) {

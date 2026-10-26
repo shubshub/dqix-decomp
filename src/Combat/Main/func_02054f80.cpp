@@ -2,11 +2,11 @@
 #include "NitroSDK/Memory/SignedAllocator.h"
 
 struct Struct_02054f80 {
-    int unknown_0_;
-    int unknown_4_;
+    int field0;
+    int field4;
     SignedAllocatorList unknown_8_[3];
-    SignedAllocatorList unknown_2c_[3];
-    SignedAllocatorList unknown_50_[3];
+    SignedAllocatorList arr1[3];
+    SignedAllocatorList arr2[3];
     SignedAllocatorList unknown_74_;
     SignedAllocatorList unknown_80_[3];
     SignedAllocatorList unknown_a4_;
@@ -23,27 +23,27 @@ struct Struct_02054f80 {
 };
 
 // USA: func_02054f80
-extern "C" ARM void func_02054f80(Struct_02054f80* arg0) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0;
+extern "C" ARM void func_02054f80(Struct_02054f80* obj) {
+    obj->field0 = 0;
+    obj->field4 = 0;
 
-    for (int var0 = 0; var0 < 3; var0++) {
-        arg0->unknown_8_[var0].Initialize(4);
-        arg0->unknown_2c_[var0].Initialize(4);
-        arg0->unknown_50_[var0].Initialize(4);
-        arg0->unknown_80_[var0].Initialize(4);
+    for (int i = 0; i < 3; i++) {
+        obj->unknown_8_[i].Initialize(4);
+        obj->arr1[i].Initialize(4);
+        obj->arr2[i].Initialize(4);
+        obj->unknown_80_[i].Initialize(4);
     }
 
-    arg0->unknown_74_.Initialize(4);
-    arg0->unknown_a4_.Initialize(4);
-    arg0->unknown_b0_.Initialize(4);
-    arg0->unknown_bc_.Initialize(4);
-    arg0->unknown_c8_.Initialize(4);
-    arg0->unknown_d4_.Initialize(4);
-    arg0->unknown_e0_.Initialize(4);
-    arg0->unknown_ec_.Initialize(4);
-    arg0->unknown_f8_.Initialize(4);
-    arg0->unknown_104_.Initialize(4);
-    arg0->unknown_110_.Initialize(4);
-    arg0->unknown_11c_.Initialize(4);
+    obj->unknown_74_.Initialize(4);
+    obj->unknown_a4_.Initialize(4);
+    obj->unknown_b0_.Initialize(4);
+    obj->unknown_bc_.Initialize(4);
+    obj->unknown_c8_.Initialize(4);
+    obj->unknown_d4_.Initialize(4);
+    obj->unknown_e0_.Initialize(4);
+    obj->unknown_ec_.Initialize(4);
+    obj->unknown_f8_.Initialize(4);
+    obj->unknown_104_.Initialize(4);
+    obj->unknown_110_.Initialize(4);
+    obj->unknown_11c_.Initialize(4);
 }

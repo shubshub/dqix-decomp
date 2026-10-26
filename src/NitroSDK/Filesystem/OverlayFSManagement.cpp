@@ -27,8 +27,8 @@ extern struct UnknownDownloadPlayStruct
 
 extern struct
 {
-    const void* unknown_0_;
-    unsigned int unknown_4_;
+    const void* start;
+    unsigned int length;
 } data_020f2290;
 
 extern "C"
@@ -117,8 +117,8 @@ bool LoadOverlayMetadataFromNitro(OverlayMetadata *into, bool isArm7,
     if (!NitroVM_PrepareReadFileByID(&machine, overlayAccessor))
         return false;
     
-    into->romStorageOffset = machine.fileInfo.unknown_4_;
-    into->romStorageSize = machine.fileInfo.unknown_8_ - machine.fileInfo.unknown_4_;
+    into->romStorageOffset = machine.fileInfo.startOffset;
+    into->romStorageSize = machine.fileInfo.endOffset - machine.fileInfo.startOffset;
     NitroVM_FinishRead(&machine);
     return true;
 }
@@ -146,8 +146,8 @@ bool LoadOverlayMetadata(OverlayMetadata* into, bool isArm7, unsigned int idx)
         if (!NitroVM_PrepareReadFileByID(&machine, accessor))
             return false;
 
-        into->romStorageOffset = machine.fileInfo.unknown_4_;
-        into->romStorageSize = machine.fileInfo.unknown_8_ - machine.fileInfo.unknown_4_;
+        into->romStorageOffset = machine.fileInfo.startOffset;
+        into->romStorageSize = machine.fileInfo.endOffset - machine.fileInfo.startOffset;
         NitroVM_FinishRead(&machine);
         return true;
     }
@@ -209,8 +209,8 @@ bool VerifyDownloadPlayStruct(const UnknownDownloadPlayStruct& data,
     VectorizedMemset(&clone, 0, sizeof(UnknownDownloadPlayStruct));
 
     unsigned char buffer[64];
-    VectorizedInvertedMemcpy(data_020f2290.unknown_0_, buffer, data_020f2290.unknown_4_);
-    func_020c0c3c(&clone, loadAddress, size, buffer, data_020f2290.unknown_4_);
+    VectorizedInvertedMemcpy(data_020f2290.start, buffer, data_020f2290.length);
+    func_020c0c3c(&clone, loadAddress, size, buffer, data_020f2290.length);
     
     const unsigned char* source = (const unsigned char*)&data;
     for (offsetCounter = 0; offsetCounter < sizeof(UnknownDownloadPlayStruct); offsetCounter += 4)

@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 // USA: func_02042b10
-extern "C" ARM void func_02042b10(void* arg0, void* arg1) {
+extern "C" ARM void func_02042b10(void* obj, void* value) {
 #if defined(jpn)
-    *(void**)((char*)arg0 + 0x1c44) = arg1;
+    *(void**)((char*)obj + 0x1c44) = value;
 #else
-    *(void**)((char*)arg0 + 0x1e20) = arg1;
+    *(void**)((char*)obj + 0x1e20) = value;
 #endif
 }

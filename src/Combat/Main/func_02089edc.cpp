@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 
 struct Struct_02089b90_2 {
-    unsigned short unknown_0_[10];
+    unsigned short v[10];
 };
 
 struct Struct_02089b90_3 {
-    unsigned char unknown_0_[13];
+    unsigned char v[13];
 };
 
 struct Struct_02089b90_4 {
-    signed char unknown_0_;
-    int unknown_4_;
-    unsigned char unknown_8_;
-    short unknown_a_;
+    signed char b0;
+    int w4;
+    unsigned char b8;
+    short ha;
     int unknown_c_;
-    unsigned char unknown_10_;
+    unsigned char b10;
     unsigned char unknown_11_;
     unsigned char unknown_12_;
     int unknown_14_;
@@ -27,37 +27,37 @@ struct Struct_02089b90_4 {
 };
 
 struct Struct_02089b90_5 {
-    struct Struct_02089b90_4* unknown_0_;
-    short unknown_4_;
-    short unknown_6_;
+    struct Struct_02089b90_4* base;
+    short count;
+    short capacity;
 };
 
 // USA: func_02089edc
-extern "C" ARM void func_02089edc(struct Struct_02089b90_5* arg0, struct Struct_02089b90_4* arg1) {
-    struct Struct_02089b90_4* var0;
-    short var1;
-    if (arg0->unknown_0_ == 0) {
+extern "C" ARM void func_02089edc(struct Struct_02089b90_5* arr, struct Struct_02089b90_4* src) {
+    struct Struct_02089b90_4* dst;
+    short count;
+    if (arr->base == 0) {
         return;
     }
-    var1 = arg0->unknown_4_;
-    if (arg0->unknown_6_ <= var1) {
+    count = arr->count;
+    if (arr->capacity <= count) {
         return;
     }
-    var0 = &arg0->unknown_0_[var1];
-    var0->unknown_0_ = arg1->unknown_0_;
-    var0->unknown_4_ = arg1->unknown_4_;
-    var0->unknown_8_ = arg1->unknown_8_;
-    var0->unknown_a_ = arg1->unknown_a_;
-    var0->unknown_c_ = arg1->unknown_c_;
-    var0->unknown_10_ = arg1->unknown_10_;
-    var0->unknown_11_ = arg1->unknown_11_;
-    var0->unknown_12_ = arg1->unknown_12_;
-    var0->unknown_14_ = arg1->unknown_14_;
-    var0->unknown_18_ = arg1->unknown_18_;
-    var0->unknown_1c_ = arg1->unknown_1c_;
-    var0->unknown_30_ = arg1->unknown_30_;
-    var0->unknown_3d_ = arg1->unknown_3d_;
-    var0->unknown_3e_ = arg1->unknown_3e_;
-    var0->unknown_3f_ = arg1->unknown_3f_;
-    arg0->unknown_4_ = arg0->unknown_4_ + 1;
+    dst = &arr->base[count];
+    dst->b0 = src->b0;
+    dst->w4 = src->w4;
+    dst->b8 = src->b8;
+    dst->ha = src->ha;
+    dst->unknown_c_ = src->unknown_c_;
+    dst->b10 = src->b10;
+    dst->unknown_11_ = src->unknown_11_;
+    dst->unknown_12_ = src->unknown_12_;
+    dst->unknown_14_ = src->unknown_14_;
+    dst->unknown_18_ = src->unknown_18_;
+    dst->unknown_1c_ = src->unknown_1c_;
+    dst->unknown_30_ = src->unknown_30_;
+    dst->unknown_3d_ = src->unknown_3d_;
+    dst->unknown_3e_ = src->unknown_3e_;
+    dst->unknown_3f_ = src->unknown_3f_;
+    arr->count = arr->count + 1;
 }

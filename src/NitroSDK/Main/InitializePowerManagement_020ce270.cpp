@@ -7,22 +7,22 @@ void SetArm9IPCCommandHandler(int command, IPCCommandHandler handler);
 extern "C" void WaitByLoop(int);
 extern "C" void func_020ce308(unsigned int, unsigned int, unsigned int);
 
-struct Ctx021117ec {
-    unsigned short flag0;
+struct Struct_021117ec_3 {
+    unsigned short unknown_0_;
     short pad2;
     int f4;
     int f8;
-    char pad0c[0x1c - 0xc];
+    char unknown_c_[0x1c - 0xc];
     int f1c;
     int f20;
 };
 
-extern struct Ctx021117ec data_021117ec;
+extern struct Struct_021117ec_3 data_021117ec;
 
 // Main, originally func_020ce270 (USA 0x020ce270, EUR 0x020ce280, JPN 0x020cfd3c)
 extern "C" ARM void InitializePowerManagement(void) {
-    if (data_021117ec.flag0 != 0) return;
-    data_021117ec.flag0 = 1;
+    if (data_021117ec.unknown_0_ != 0) return;
+    data_021117ec.unknown_0_ = 1;
     data_021117ec.f1c = 0;
     data_021117ec.f20 = 0;
     InitializeInterProcessorCommunication();

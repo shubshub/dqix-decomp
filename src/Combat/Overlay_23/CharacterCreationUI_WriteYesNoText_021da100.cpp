@@ -7,12 +7,12 @@ enum {SelectionOffset=0xd84, regionalOffset1=0x30, TextsOffset=0xe0};
 #include "Resource/CreationEnums.h"
 
 struct Container020e0310;
-int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
-int Text_AppendCursorTag(char* dst, int cursor);
-int Text_AppendSdrcTag(char* dst, int a, int b, int c, int d, int e);
-int KeyTable_Get(struct Container020e0310* c, int key);
-int Text_AppendNTag(char* dst, int n, const char* name);
-int Text_Append(char* dst, const char* src);
+extern "C" int Text_AppendFrameTag(char* dst, int a1, int a2, int a3, int a4, int a5);
+extern "C" int Text_AppendCursorTag(char* dst, int cursor);
+extern "C" int Text_AppendSdrcTag(char* dst, int a, int b, int c, int d, int e);
+extern "C" int KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" int Text_AppendNTag(char* dst, int n, const char* name);
+extern "C" int Text_Append(char* dst, const char* src);
 
 // Overlay 23, originally func_ov023_021da100 (USA/EUR 0x021da100, JPN 0x021da8cc)
 extern "C" ARM void CharacterCreationUI_WriteYesNoText(char* self, char* dst, int withFrame) {

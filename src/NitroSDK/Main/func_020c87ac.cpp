@@ -1,46 +1,46 @@
 #include <globaldefs.h>
 
 struct Struct_020c87ac {
-    struct Struct_020c87ac* unknown_0_;
-    struct Struct_020c87ac* unknown_4_;
-    unsigned int unknown_8_;
+    struct Struct_020c87ac* prev;
+    struct Struct_020c87ac* next;
+    unsigned int size;
 };
 
 // USA: func_020c87ac
-extern "C" ARM struct Struct_020c87ac* func_020c87ac(struct Struct_020c87ac* arg0, struct Struct_020c87ac* arg1) {
-    struct Struct_020c87ac* var0 = NULL;
-    struct Struct_020c87ac* var1 = arg0;
-    if (var1 != NULL) {
+extern "C" ARM struct Struct_020c87ac* func_020c87ac(struct Struct_020c87ac* head, struct Struct_020c87ac* blk) {
+    struct Struct_020c87ac* prev = NULL;
+    struct Struct_020c87ac* cur = head;
+    if (cur != NULL) {
         for (;;) {
-            if (arg1 <= var1) break;
-            var0 = var1;
-            var1 = var1->unknown_4_;
-            if (var1 == NULL) break;
+            if (blk <= cur) break;
+            prev = cur;
+            cur = cur->next;
+            if (cur == NULL) break;
         }
     }
-    arg1->unknown_0_ = var0;
-    arg1->unknown_4_ = var1;
-    if (var1 != NULL) {
-        var1->unknown_0_ = arg1;
-        if ((struct Struct_020c87ac*)((char*)arg1 + arg1->unknown_8_) == var1) {
-            arg1->unknown_8_ += var1->unknown_8_;
-            var1 = var1->unknown_4_;
-            arg1->unknown_4_ = var1;
-            if (var1 != NULL) {
-                var1->unknown_0_ = arg1;
+    blk->prev = prev;
+    blk->next = cur;
+    if (cur != NULL) {
+        cur->prev = blk;
+        if ((struct Struct_020c87ac*)((char*)blk + blk->size) == cur) {
+            blk->size += cur->size;
+            cur = cur->next;
+            blk->next = cur;
+            if (cur != NULL) {
+                cur->prev = blk;
             }
         }
     }
-    if (var0 != NULL) {
-        var0->unknown_4_ = arg1;
-        if ((struct Struct_020c87ac*)((char*)var0 + var0->unknown_8_) == arg1) {
-            var0->unknown_8_ += arg1->unknown_8_;
-            var0->unknown_4_ = var1;
-            if (var1 != NULL) {
-                var1->unknown_0_ = var0;
+    if (prev != NULL) {
+        prev->next = blk;
+        if ((struct Struct_020c87ac*)((char*)prev + prev->size) == blk) {
+            prev->size += blk->size;
+            prev->next = cur;
+            if (cur != NULL) {
+                cur->prev = prev;
             }
         }
-        return arg0;
+        return head;
     }
-    return arg1;
+    return blk;
 }

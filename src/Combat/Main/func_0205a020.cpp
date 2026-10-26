@@ -1,80 +1,80 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_ov009_0218aa28 { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Vec3 { int x; int y; int z; };
 
-struct Struct_ov001_021592bc { int unknown_0_; int unknown_4_; int unknown_8_; };
+struct Struct_ov001_021592bc { int x; int y; int z; };
 struct Vector3i;
 void Vector3fixMultiplyScalar(Vector3i const*, int, Vector3i*);
 
 struct Struct_02059cfc_2;
 struct Struct_02059cfc_3;
-extern "C" void func_02059f38(struct Struct_02059cfc_2* arg0, struct Struct_02059cfc_3* arg1);
+extern "C" void func_02059f38(struct Struct_02059cfc_2* dst, struct Struct_02059cfc_3* src);
 
 struct Struct_02059cfc_4;
 
-extern "C" void func_02059cc8(unsigned char* arg0);
+extern "C" void func_02059cc8(unsigned char* obj);
 
 struct Struct_02057334_2;
-extern "C" int func_02057854(struct Struct_02057334_2* arg0);
+extern "C" int func_02057854(struct Struct_02057334_2* node);
 
-extern "C" int func_02055774(int* arg0);
+extern "C" int func_02055774(int* obj);
 
-struct Struct_02108760;
-extern "C" void func_0205eaa0(struct Struct_02108760* arg0, int arg1, int arg2);
+struct SePlayer;
+extern "C" void SePlayer_Play(struct SePlayer* obj, int a, int b);
 
-extern int data_02108760;
+extern int g_sePlayer;
 
 // USA: func_0205a020
-extern "C" ARM void func_0205a020(unsigned char* arg0, int arg1) {
+extern "C" ARM void func_0205a020(unsigned char* p, int arg1) {
     GameState::GetInstance();
 
-    short* var0 = (short*)(arg0 + 0xb0);
+    short* var0 = (short*)(p + 0xb0);
     if (*var0 > 0) {
         *var0 -= arg1;
         return;
     }
 
-    if (*(int*)(arg0 + 0xac) == 0) {
-        if (*(int*)(arg0 + 0xb8) > 0) {
-            int var1 = *(int*)(arg0 + 0x28);
-            int var2 = *(int*)(arg0 + 0xbc);
-            if (var1 <= var2) {
-                int var3 = *(int*)(arg0 + 0x24);
-                if (var2 < var3) {
-                    func_0205eaa0((struct Struct_02108760*)&data_02108760, *(int*)(arg0 + 0xb8), 0);
+    if (*(int*)(p + 0xac) == 0) {
+        if (*(int*)(p + 0xb8) > 0) {
+            int f28 = *(int*)(p + 0x28);
+            int var2 = *(int*)(p + 0xbc);
+            if (f28 <= var2) {
+                int f24 = *(int*)(p + 0x24);
+                if (var2 < f24) {
+                    SePlayer_Play((struct SePlayer*)&g_sePlayer, *(int*)(p + 0xb8), 0);
                 }
             }
         }
 
-        struct Struct_0205a020 { char unknown_0_[0x44]; struct Struct_ov009_0218aa28 unknown_44_; };
-        struct Struct_ov009_0218aa28 var4 = ((struct Struct_0205a020*)arg0)->unknown_44_;
+        struct Struct_0205a020 { char pad[0x44]; struct Vec3 pos; };
+        struct Vec3 pos = ((struct Struct_0205a020*)p)->pos;
 
-        struct Struct_ov009_0218aa28 var5;
-        Vector3fixMultiplyScalar((Vector3i const*)(arg0 + 0xc0), arg1 << 12, (Vector3i*)&var5);
-        Vector3fix_Add((const Vector3fix*)&var4, (const Vector3fix*)&var5, (Vector3fix*)&var4);
-        func_02059f38((struct Struct_02059cfc_2*)arg0, (struct Struct_02059cfc_3*)&var4);
+        struct Vec3 var5;
+        Vector3fixMultiplyScalar((Vector3i const*)(p + 0xc0), arg1 << 12, (Vector3i*)&var5);
+        Vector3fix_Add((const Vector3fix*)&pos, (const Vector3fix*)&var5, (Vector3fix*)&pos);
+        func_02059f38((struct Struct_02059cfc_2*)p, (struct Struct_02059cfc_3*)&pos);
 
-        ((Object3D*)arg0)->AdvanceEffects();
+        ((Object3D*)p)->AdvanceEffects();
 
-        if (arg0[0x19] & 1) {
-            if (((Object3D*)((struct Struct_02059cfc_4*)arg0))->HasAnimationStopped()) {
-                func_02059cc8(arg0);
+        if (p[0x19] & 1) {
+            if (((Object3D*)((struct Struct_02059cfc_4*)p))->HasAnimationStopped()) {
+                func_02059cc8(p);
             }
         }
 
-        short* var6 = (short*)(arg0 + 0xb6);
+        short* var6 = (short*)(p + 0xb6);
         if (*var6 > 0) {
             *var6 -= arg1;
             if (*var6 <= 0) {
-                func_02059cc8(arg0);
+                func_02059cc8(p);
             }
         }
     } else {
-        if (func_02057854(*(struct Struct_02057334_2**)(arg0 + 0x4)) == 1) {
-            func_02059cc8(arg0);
+        if (func_02057854(*(struct Struct_02057334_2**)(p + 0x4)) == 1) {
+            func_02059cc8(p);
         } else {
-            func_02055774((int*)arg0);
+            func_02055774((int*)p);
         }
     }
 }

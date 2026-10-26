@@ -6,6 +6,6 @@
 #endif
 
 // USA: func_ov023_021f79e4
-extern "C" ARM void* func_ov023_021f79e4(void* arg0) {
-    return (char*)arg0 + REGION_FIELD;
+extern "C" ARM void* func_ov023_021f79e4(void* obj) {
+    return (char*)obj + REGION_FIELD;
 }

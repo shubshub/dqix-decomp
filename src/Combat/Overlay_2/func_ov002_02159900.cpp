@@ -3,8 +3,8 @@
 #if defined(jpn)
 #define REGION_LAYOUT(j,u) j
 #define func_020dcf7c func_020de968
-extern "C" void func_020de968(int arg0, void *arg1);
-extern "C" void func_020474a8(void *arg0, int arg1, const char *arg2, char *arg3);
+extern "C" void func_020de968(int count, void *buf);
+extern "C" void func_020474a8(void *g, int kind, const char *text, char *out);
 #else
 #define REGION_LAYOUT(j,u) u
 #endif
@@ -13,30 +13,30 @@ struct ItemTable;
 struct Container020e0310;
 struct Obj02046574;
 struct StoreStruct;
-void *GetData02153637_020e2ff8(void);
-void Dispatch020e3428(void *a, int b);
-int MessageSystem_GetInstance(void);
-char *ItemTable_Find(struct ItemTable *c, int key);
+extern "C" void *func_020e2ff8(void);
+extern "C" void func_020e3428(void *a, int b);
+extern "C" int MessageSystem_GetInstance(void);
+extern "C" char *ItemTable_Find(struct ItemTable *c, int key);
 extern "C" void *memset(void *dst, int value, unsigned int length);
 extern "C" void func_02046380(void *g);
-void *NameText_Clear(void *p);
-void MessageSystem_SetStringArgument(struct Obj02046574 *obj, int index, char *str);
-void NameText_InitFromPartyMember(void *obj, int combatantId);
+extern "C" void *NameText_Clear(void *p);
+extern "C" void MessageSystem_SetStringArgument(struct Obj02046574 *obj, int index, char *str);
+extern "C" void NameText_InitFromPartyMember(void *obj, int combatantId);
 extern "C" void __clear(void *buf, int n);
 #if !defined(jpn)
-extern "C" void func_020dcf7c(int arg0, void *arg1);
+extern "C" void func_020dcf7c(int count, void *buf);
 #endif
-void SetByteInRange_020465f0(unsigned char *base, int index, unsigned char value);
-void StoreInArray0x8b0_020465c0(struct StoreStruct *base, int index, int value);
-int KeyTable_Get(struct Container020e0310 *c, int key);
-int Text_Append(char *dst, const char *src);
+extern "C" void func_020465f0(unsigned char *base, int index, unsigned char value);
+extern "C" void func_020465c0(struct StoreStruct *base, int index, int value);
+extern "C" int KeyTable_Get(struct Container020e0310 *c, int key);
+extern "C" int Text_Append(char *dst, const char *src);
 extern "C" void MessageSystem_FormatText(void *a, int b, int c, void *d, int e, int f, int g);
 extern "C" void func_ov016_0218b5c0(int a, int b);
 
 struct Struct_ov002_02159900 {
-    char *unknown_0_;
-    char *unknown_4_;
-    int unknown_8_;
+    char *a;
+    char *b;
+    int c;
 };
 
 #define TXT(k) KeyTable_Get((struct Container020e0310 *) (base + REGION_LAYOUT(8, 0x20)), (k))
@@ -44,7 +44,7 @@ struct Struct_ov002_02159900 {
 
 // USA: func_ov002_02159900
 extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
-    Dispatch020e3428(GetData02153637_020e2ff8(), 1);
+    func_020e3428(func_020e2ff8(), 1);
     GameState *gs      = GameState::GetInstance();
     char *g            = (char *) MessageSystem_GetInstance();
     unsigned char *ent = (unsigned char *) (arr + 8);
@@ -56,19 +56,19 @@ extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
     memset(*(void **) (base + 0x1a9c), 0, 0x800);
     func_02046380(g);
     char *out = *(char **) (base + 0x1a98);
-    char *m   = (char *)GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (arr + 2));
+    char *m   = (char *)func_0200ff1c(gs, *(signed char *) (arr + 2));
     if (m != NULL) {
         MessageSystem_SetStringArgument((struct Obj02046574 *) g, 0, *(char **) (m + 0x134));
     }
     char names[0x40];
     __clear(names, 0x40);
-    DispatchIfCountPositive020dcf7c(*(short *) (e + 0x18), names);
+    func_020dcf7c(*(short *) (e + 0x18), names);
     MessageSystem_SetStringArgument((struct Obj02046574 *) g, 1, names);
-    char *m2 = (char *)GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (arr + 4));
+    char *m2 = (char *)func_0200ff1c(gs, *(signed char *) (arr + 4));
     if (m2 != NULL) {
         MessageSystem_SetStringArgument((struct Obj02046574 *) g, 2, *(char **) (m2 + 0x134));
-        SetByteInRange_020465f0((unsigned char *) g, 9, 0);
-        StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 9, *(short *) (m2 + 4));
+        func_020465f0((unsigned char *) g, 9, 0);
+        func_020465c0((struct StoreStruct *) g, 9, *(short *) (m2 + 4));
     }
 #else
     memset(*(void **) (base + 0x1000 + 0xbd0), 0, 0x960);
@@ -77,13 +77,13 @@ extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
     NameText_Clear(base + 8);
     NameText_Clear(base + 0x14);
     char *out = *(char **) (base + 0x1000 + 0xbd0);
-    char *m   = (char *)GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (arr + 2));
+    char *m   = (char *)func_0200ff1c(gs, *(signed char *) (arr + 2));
     if (m != NULL) {
         MessageSystem_SetStringArgument((struct Obj02046574 *) g, 0, *(char **) (m + 0x134));
         NameText_InitFromPartyMember(base + 8, *(signed char *) (arr + 2));
         *(char **) g = base + 8;
     }
-    struct Names9900 nm;
+    struct Struct_ov002_02159900 nm;
     char buf1[0x80];
     char buf2[0x80];
     NameText_Clear(&nm);
@@ -91,40 +91,40 @@ extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
     __clear(buf2, 0x80);
     nm.a = buf1;
     nm.b = buf2;
-    DispatchIfCountPositive020dcf7c(*(short *) (e + 0x18), &nm);
-    *(struct Names9900 **) (g + 0x18) = &nm;
+    func_020dcf7c(*(short *) (e + 0x18), &nm);
+    *(struct Struct_ov002_02159900 **) (g + 0x18) = &nm;
     MessageSystem_SetStringArgument((struct Obj02046574 *) g, 1, nm.a);
-    char *m2 = (char *)GetCombatantWithFlag0x100_0200ff1c(gs, *(signed char *) (arr + 4));
+    char *m2 = (char *)func_0200ff1c(gs, *(signed char *) (arr + 4));
     if (m2 != NULL) {
         MessageSystem_SetStringArgument((struct Obj02046574 *) g, 2, *(char **) (m2 + 0x134));
         NameText_InitFromPartyMember(base + 0x14, *(signed char *) (arr + 4));
         *(char **) (g + 0x10) = base + 0x14;
-        SetByteInRange_020465f0((unsigned char *) g, 9, 0);
-        StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 9, *(short *) (m2 + 4));
+        func_020465f0((unsigned char *) g, 9, 0);
+        func_020465c0((struct StoreStruct *) g, 9, *(short *) (m2 + 4));
     }
 #endif
-    int var14              = 0x7918;
-    int var15              = 0x7919;
-    unsigned char var16 = 0;
-    switch ((*(unsigned int *) (var3 + 8) << 1) >> 27) {
+    int a              = 0x7918;
+    int b              = 0x7919;
+    unsigned char done = 0;
+    switch ((*(unsigned int *) (e + 8) << 1) >> 27) {
         case 2:
-            var14 = 0x7922;
-            var15 = 0x7923;
+            a = 0x7922;
+            b = 0x7923;
             break;
         case 3:
-            if (var2[0] == 3) {
-                var14 = 0x792c;
-                var15 = 0x7941;
+            if (ent[0] == 3) {
+                a = 0x792c;
+                b = 0x7941;
             } else {
-                var14 = 0x7936;
+                a = 0x7936;
             }
             break;
         case 4:
-            if (var2[0] == 3) {
-                var14 = 0x792c;
-                var15 = 0x794b;
+            if (ent[0] == 3) {
+                a = 0x792c;
+                b = 0x794b;
             } else {
-                var14 = 0x7936;
+                a = 0x7936;
             }
             break;
         case 5:
@@ -140,23 +140,23 @@ extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
                     Text_Append(BD0, (const char *) TXT(0x794b));
                 }
             } else {
-                var14 = 0x7936;
+                a = 0x7936;
             }
             break;
         case 6:
-            if (var2[0] == 3) {
-                *(signed char *) (arg0 + REGION_LAYOUT(0x1ae8, 0x1000 + 0xc20))   = *(signed char *) (arg1 + 2);
-                *(short *) (arg0 + REGION_LAYOUT(0x1af0, 0x1c00 + 0x28))          = 0x792c;
-                *(short *) (arg0 + REGION_LAYOUT(0x1af2, 0x1c00 + 0x2a))          = var16 - 1;
-                *(short *) (arg0 + REGION_LAYOUT(0x22b8, 0x2400 + 0x88))          = 0x7955;
-                *(unsigned char *) (arg0 + REGION_LAYOUT(0x22ba, 0x2000 + 0x48a)) = 1;
+            if (ent[0] == 3) {
+                *(signed char *) (base + REGION_LAYOUT(0x1ae8, 0x1000 + 0xc20))   = *(signed char *) (arr + 2);
+                *(short *) (base + REGION_LAYOUT(0x1af0, 0x1c00 + 0x28))          = 0x792c;
+                *(short *) (base + REGION_LAYOUT(0x1af2, 0x1c00 + 0x2a))          = done - 1;
+                *(short *) (base + REGION_LAYOUT(0x22b8, 0x2400 + 0x88))          = 0x7955;
+                *(unsigned char *) (base + REGION_LAYOUT(0x22ba, 0x2000 + 0x48a)) = 1;
                 return;
             }
-            var14 = 0x7936;
+            a = 0x7936;
             break;
         case 7:
-            if (arg2) {
-                var16 = 1;
+            if (any) {
+                done = 1;
 #if defined(jpn)
                 func_020474a8(g, 0xc, (const char *) TXT(0x792c), out + 0x700);
                 Text_Append(BD0, out + 0x700);
@@ -164,21 +164,21 @@ extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
                 MessageSystem_FormatText(g, 0xc, TXT(0x792c), out + 0x860, 0xe3, 0, 1);
                 Text_Append(BD0, out + 0x860);
 #endif
-                int var17;
-                for (var17 = 0; var17 < *(unsigned char *) (arg1 + 3); var17++) {
-                    if (var2[var17 * 6] == 3) {
-                        var15 = 0x7941;
+                int i;
+                for (i = 0; i < *(unsigned char *) (arr + 3); i++) {
+                    if (ent[i * 6] == 3) {
+                        b = 0x7941;
                     } else {
-                        var15 = 0x233a;
+                        b = 0x233a;
                     }
-                    if (var15 >= 0) {
-                        int var18 = *(signed char *) (arg1 + var17 + 4);
-                        char *var19 = (char *)func_0200ff1c(var0, var18);
-                        if (var19 != NULL) {
-                            func_02046380(var1);
+                    if (b >= 0) {
+                        int cid = *(signed char *) (arr + i + 4);
+                        char *c = (char *)func_0200ff1c(gs, cid);
+                        if (c != NULL) {
+                            func_02046380(g);
 #if defined(jpn)
                             MessageSystem_SetStringArgument((struct Obj02046574 *) g, 2, *(char **) (c + 0x134));
-                            StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 9, cid);
+                            func_020465c0((struct StoreStruct *) g, 9, cid);
                             func_020474a8(g, 0xc, (const char *) TXT(b), out + 0x700);
                             Text_Append(BD0, (const char *) TXT(8));
                             Text_Append(BD0, out + 0x700);
@@ -186,7 +186,7 @@ extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
                             MessageSystem_SetStringArgument((struct Obj02046574 *) g, 2, *(char **) (c + 0x134));
                             NameText_InitFromPartyMember(base + 0x14, cid);
                             *(char **) (g + 0x10) = base + 0x14;
-                            StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 9, cid);
+                            func_020465c0((struct StoreStruct *) g, 9, cid);
                             MessageSystem_FormatText(g, 0xc, TXT(b), out + 0x860, 0xe3, 0, 1);
                             Text_Append(BD0, (const char *) TXT(8));
                             Text_Append(BD0, out + 0x860);
@@ -196,88 +196,88 @@ extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
                 }
             } else {
                 func_ov016_0218b5c0(1, -1);
-                var14 = 0x7936;
-                var15 = 0x7919;
+                a = 0x7936;
+                b = 0x7919;
             }
             break;
         case 8:
-            if (var2[0] != 3) {
-                var14 = 0x7936;
+            if (ent[0] != 3) {
+                a = 0x7936;
                 break;
             }
-            func_020465f0((unsigned char *) var1, var16, var16);
-            func_020465c0((struct Struct_020465c0 *) var1, 0, *(short *) (var2 + 2));
-            var14 = 0x792c;
-            var15 = 0x795f;
+            func_020465f0((unsigned char *) g, done, done);
+            func_020465c0((struct StoreStruct *) g, 0, *(short *) (ent + 2));
+            a = 0x792c;
+            b = 0x795f;
             break;
         case 9:
-            var14 = 0x7968;
-            if (var2[0] == 3) var15 = 0x7969;
+            a = 0x7968;
+            if (ent[0] == 3) b = 0x7969;
             break;
         case 12:
-            var14 = 0x7986;
-            var15 = 0x7987;
+            a = 0x7986;
+            b = 0x7987;
             break;
         case 13:
-            if (var2[0] == 3) {
-                func_020465f0((unsigned char *) var1, var16, var16);
-                func_020465c0((struct Struct_020465c0 *) var1, 0, *(short *) (var2 + 2));
-                int var20 = -1;
-                switch (*(short *) (var3 + 0x18)) {
-                    case 0x561d: var20 = 0x7991; break;
-                    case 0x561e: var20 = 0x7992; break;
-                    case 0x561f: var20 = 0x7993; break;
-                    case 0x5620: var20 = 0x7994; break;
-                    case 0x5621: var20 = 0x7995; break;
-                    case 0x5622: var20 = 0x7996; break;
-                    case 0x5623: var20 = 0x7998; break;
-                    case 0x5624: var20 = 0x7999; break;
-                    case 0x5619: var20 = 0x7997; break;
+            if (ent[0] == 3) {
+                func_020465f0((unsigned char *) g, done, done);
+                func_020465c0((struct StoreStruct *) g, 0, *(short *) (ent + 2));
+                int k = -1;
+                switch (*(short *) (e + 0x18)) {
+                    case 0x561d: k = 0x7991; break;
+                    case 0x561e: k = 0x7992; break;
+                    case 0x561f: k = 0x7993; break;
+                    case 0x5620: k = 0x7994; break;
+                    case 0x5621: k = 0x7995; break;
+                    case 0x5622: k = 0x7996; break;
+                    case 0x5623: k = 0x7998; break;
+                    case 0x5624: k = 0x7999; break;
+                    case 0x5619: k = 0x7997; break;
                 }
                 MessageSystem_SetStringArgument((struct Obj02046574 *) g, 5, (char *) TXT(k));
                 a = 0x792c;
                 b = 0x7990;
             } else {
-                var14 = 0x7936;
+                a = 0x7936;
             }
             break;
         case 14:
-            if (var2[0] != 3) {
-                var14 = 0x7936;
+            if (ent[0] != 3) {
+                a = 0x7936;
                 break;
             }
-            func_020465f0((unsigned char *) var1, var16, var16);
-            func_020465c0((struct Struct_020465c0 *) var1, 0, *(short *) (var2 + 2));
-            var14 = 0x792c;
-            var15 = 0x799b;
+            func_020465f0((unsigned char *) g, done, done);
+            func_020465c0((struct StoreStruct *) g, 0, *(short *) (ent + 2));
+            a = 0x792c;
+            b = 0x799b;
             break;
         case 15:
-            var14 = 0x79a4;
-            var15 = 0x79a5;
+            a = 0x79a4;
+            b = 0x79a5;
             break;
         case 16:
-            var14 = 0x79ae;
-            var15 = 0x79af;
+            a = 0x79ae;
+            b = 0x79af;
             break;
         case 17:
-            var14 = 0x79b8;
-            var15 = 0x79b9;
+            a = 0x79b8;
+            b = 0x79b9;
             break;
         case 18:
-            var14 = 0x79c2;
-            var15 = 0x79c3;
+            a = 0x79c2;
+            b = 0x79c3;
             break;
         case 19:
-            var14 = 0x79cc;
-            var15 = 0x79cd;
+            a = 0x79cc;
+            b = 0x79cd;
             break;
         case 20:
-            var14 = 0x79d6;
-            var15 = 0x79d7;
+            a = 0x79d6;
+            b = 0x79d7;
             break;
         case 21:
-            var14 = 0x79e0;
-            var15 = 0x79e1;
+            a = 0x79e0;
+            b = 0x79e1;
             break;
     }
     if (!done) {
@@ -286,10 +286,10 @@ extern "C" ARM void func_ov002_02159900(char *base, char *arr, int any) {
         Text_Append(BD0, (const char *) TXT(b));
     }
 #if defined(jpn)
-    func_020474a8(var1, 0xc, *(const char **) (arg0 + 0x1a98), *(char **) (arg0 + 0x1a9c));
-    *(unsigned char *) (arg0 + 0x1af9) = 1;
-    *(short *) (arg0 + 0x22b8)          = -1;
-    *(unsigned char *) (arg0 + 0x22ba) = 0;
+    func_020474a8(g, 0xc, *(const char **) (base + 0x1a98), *(char **) (base + 0x1a9c));
+    *(unsigned char *) (base + 0x1af9) = 1;
+    *(short *) (base + 0x22b8)          = -1;
+    *(unsigned char *) (base + 0x22ba) = 0;
 #else
     MessageSystem_FormatText(g, 0xc, *(int *) (base + 0x1000 + 0xbd0), *(void **) (base + 0x1000 + 0xbd4), 0xe3, 0, 1);
     *(unsigned char *) (base + 0x1000 + 0xc31) = 1;

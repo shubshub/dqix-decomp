@@ -6,15 +6,15 @@
 #endif
 
 
-extern "C" void func_ov023_021ddf5c(void *arg0, int arg1);
+extern "C" void func_ov023_021ddf5c(void *obj, int v);
 
 struct Struct_ov004_02158bd4 {
-	char unknown_0_[REGION_FIELD_0];
-	unsigned char unknown_79a_;
+	char pad[REGION_FIELD_0];
+	unsigned char field;
 };
 
 // USA: func_ov023_021fbdf4
-extern "C" ARM void func_ov023_021fbdf4(struct Struct_ov004_02158bd4 *arg0, int arg1) {
-	arg0->unknown_79a_ = arg1;
-	func_ov023_021ddf5c((char*)arg0 + 0x20, arg1);
+extern "C" ARM void func_ov023_021fbdf4(struct Struct_ov004_02158bd4 *obj, int v) {
+	obj->field = v;
+	func_ov023_021ddf5c((char*)obj + 0x20, v);
 }

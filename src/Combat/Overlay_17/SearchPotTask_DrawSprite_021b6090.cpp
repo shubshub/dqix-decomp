@@ -5,10 +5,10 @@
 #include "Graphics/Vector.h"
 
 struct Vec3copy0202ec84 { unsigned int v[3]; };
-int Camera_WorldToScreen(void* obj, struct Vec3copy0202ec84* src, int* out1, int* out2);
+extern "C" int Camera_WorldToScreen(void* obj, struct Vec3copy0202ec84* src, int* out1, int* out2);
 
 struct StructAt020473c8;
-void RenderFlaggedIndexedEntry(struct StructAt020473c8* obj, int param1);
+extern "C" void func_020473c8(struct StructAt020473c8* obj, int param1);
 
 // A FieldTaskKind_SearchPot task (its own copy of the layout, as in the other step files).
 struct SearchPotTask021b6090 : FieldTask {
@@ -56,7 +56,7 @@ extern "C" ARM void SearchPotTask_DrawSprite(struct SearchPotTask021b6090* self)
     *(int*)(sprite + 0x1c) = spriteX;
     *(int*)(sprite + 0x20) = spriteY;
     *(int*)(sprite + 0x24) = 0;
-    RenderFlaggedIndexedEntry((struct StructAt020473c8*)sprite, 1);
+    func_020473c8((struct StructAt020473c8*)sprite, 1);
 
     unsigned char timer = self->spriteTimer;
     unsigned short alpha = (timer > 0x1f) ? 0x1f : timer;

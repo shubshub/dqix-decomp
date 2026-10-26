@@ -5,9 +5,9 @@
 #endif
 
 struct Struct_ov011_02184740;
-extern "C" ARM void func_ov023_021f698c(struct Struct_ov011_02184740* arg0);
+extern "C" ARM void func_ov023_021f698c(struct Struct_ov011_02184740* head);
 
 // USA: func_ov011_02184740
-extern "C" ARM void func_ov011_02184740(void* arg0) {
-    func_ov023_021f698c((struct Struct_ov011_02184740*)((char*)arg0 + 0x118));
+extern "C" ARM void func_ov011_02184740(void* obj) {
+    func_ov023_021f698c((struct Struct_ov011_02184740*)((char*)obj + 0x118));
 }

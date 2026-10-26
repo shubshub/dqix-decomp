@@ -7,14 +7,14 @@ static const int kCount=0x2788, kStride=0x99c;
 #endif
 
 // USA: func_ov023_021f0360
-extern "C" ARM void* func_ov023_021f0360(void* arg0, int arg1) {
-    unsigned char* var0 = (unsigned char*)arg0 + 0x118;
-    int var1;
-    for (var1 = 0; var1 < *((unsigned char*)arg0 + kCount); var1++) {
-        if (*var0 == arg1) {
-            return var0;
+extern "C" ARM void* func_ov023_021f0360(void* base, int val) {
+    unsigned char* p = (unsigned char*)base + 0x118;
+    int i;
+    for (i = 0; i < *((unsigned char*)base + kCount); i++) {
+        if (*p == val) {
+            return p;
         }
-        var0 += kStride;
+        p += kStride;
     }
     return 0;
 }

@@ -2,9 +2,9 @@
 #include <std_library_functions.h>
 
 struct Struct_ov006_021537d0 {
-    short unknown_0_;
-    short unknown_2_;
-    short unknown_4_[3];
+    short id_;
+    short item_;
+    short ingredients_[3];
     unsigned short unknown_a_0_ : 4;
     unsigned short unknown_a_4_ : 4;
     unsigned short unknown_b_0_ : 4;
@@ -13,34 +13,34 @@ struct Struct_ov006_021537d0 {
 
 struct Struct_02071d60;
 
-extern "C" Struct_ov006_021537d0* func_02071d60(Struct_02071d60* arg0, int arg1);
+extern "C" Struct_ov006_021537d0* func_02071d60(Struct_02071d60* list, int key);
 
 struct Struct_ov006_021537c8 {
-    Struct_02071d60* unknown_0_;
-    short** unknown_4_;
+    Struct_02071d60* table_;
+    short** items_;
     unsigned char** unknown_8_;
-    unsigned short* unknown_c_;
+    unsigned short* sizes_;
 };
 
 // USA: func_ov006_02153b9c
-extern "C" ARM void func_ov006_02153b9c(Struct_ov006_021537c8* arg0, short arg1, unsigned char* arg2) {
+extern "C" ARM void func_ov006_02153b9c(Struct_ov006_021537c8* self, short id, unsigned char* arg2) {
     memset(arg2, 0, 3);
-    Struct_ov006_021537d0* var0 = func_02071d60(arg0->unknown_0_, arg1);
+    Struct_ov006_021537d0* var0 = func_02071d60(self->table_, id);
     if (var0 == 0)
         return;
-    for (int var1 = 0; var1 < 9; var1++) {
-        short* var2 = arg0->unknown_4_[var1];
-        unsigned char* var3 = arg0->unknown_8_[var1];
-        short var4 = arg0->unknown_c_[var1];
-        for (short var5 = 0; var5 < var4; var5++) {
-            short var6 = var2[var5];
-            if (var6 > 0) {
-                if (var6 == var0->unknown_4_[0])
-                    arg2[0] = var3[var5];
-                else if (var6 == var0->unknown_4_[1])
-                    arg2[1] = var3[var5];
-                else if (var6 == var0->unknown_4_[2])
-                    arg2[2] = var3[var5];
+    for (int category = 0; category < 9; category++) {
+        short* items = self->items_[category];
+        unsigned char* counts = self->unknown_8_[category];
+        short size = self->sizes_[category];
+        for (short i = 0; i < size; i++) {
+            short item = items[i];
+            if (item > 0) {
+                if (item == var0->ingredients_[0])
+                    arg2[0] = counts[i];
+                else if (item == var0->ingredients_[1])
+                    arg2[1] = counts[i];
+                else if (item == var0->ingredients_[2])
+                    arg2[2] = counts[i];
             }
         }
     }

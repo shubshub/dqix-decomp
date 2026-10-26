@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 #include "Resource/Brightness.h"
 
-void* GlobalFlags_GetInstance(void);
+extern "C" void* GlobalFlags_GetInstance(void);
 
 struct FlagWord02046708;
-int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
+extern "C" int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 
-int MapDisplay_UploadMapName(void* display, int waitVBlank);
-int MapDisplay_UploadTreasureMapName(void* display, int waitVBlank);
+extern "C" int MapDisplay_UploadMapName(void* display, int waitVBlank);
+extern "C" int MapDisplay_UploadTreasureMapName(void* display, int waitVBlank);
 
 // MapDisplay (USA/EUR layout): field9c1, scriptNameWidth, fieldb3c, fieldb40, fieldb42
 struct Obj020275e4 {
@@ -29,7 +29,7 @@ enum {
 enum { kScrollDelayFrames = 0x10 };
 
 // Main, originally UpdateTimedBufferState020275e4 (USA 0x020275e4, EUR 0x020275f4; JPN not identified)
-ARM void MapDisplay_ScrollMapName(struct Obj020275e4* display) {
+extern "C" ARM void MapDisplay_ScrollMapName(struct Obj020275e4* display) {
     if (FlagWord_TestBits((struct FlagWord02046708*)GlobalFlags_GetInstance(), 0x41)) {
         return;
     }

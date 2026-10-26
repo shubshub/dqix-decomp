@@ -73,17 +73,17 @@ enum {
 };
 
 extern "C" char* Zone3D_GetInstance();
-struct Field4328* GameResources_GetTouchWalk(void*);
-void GameObject_ForceMotionState(struct Bytes02033b88*, int);
-void GameObject_SetMotionState(struct Obj02033b68*, int);
-void GameObject_StoreMotionState(struct Foo02033b58*, unsigned char);
-int Camera_GetOrbitYaw(void*);
+extern "C" struct Field4328* GameResources_GetTouchWalk(void*);
+extern "C" void GameObject_ForceMotionState(struct Bytes02033b88*, int);
+extern "C" void GameObject_SetMotionState(struct Obj02033b68*, int);
+extern "C" void GameObject_StoreMotionState(struct Foo02033b58*, unsigned char);
+extern "C" int Camera_GetOrbitYaw(void*);
 int fix32ReduceAngle0To2Pi(int);
-struct Box0201e8fc* ZoneFeatures_FindHeadingLockArea(struct Container0201e8fc*, struct Vec3*);
+extern "C" struct Box0201e8fc* ZoneFeatures_FindHeadingLockArea(struct Container0201e8fc*, struct Vec3*);
 int fix32SignedAngleDistance(int, int);
 int fix32abs(int);
-void GameObject_SetFacing(struct Obj02033834*, int);
-short TouchWalk_GetHeading(struct ShortField0x22e_020968c4*);
+extern "C" void GameObject_SetFacing(struct Obj02033834*, int);
+extern "C" short TouchWalk_GetHeading(struct ShortField0x22e_020968c4*);
 
 extern int data_020e780c[8];
 

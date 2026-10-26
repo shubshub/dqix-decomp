@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 
 struct Struct_020725d8_2 {
-    signed short unknown_0_;
-    char unknown_2_[0x2a];
+    signed short id;
+    char unk[0x2a];
 };
 
 struct Struct_020725d8 {
-    struct Struct_020725d8_2* unknown_0_;
-    short unknown_4_;
+    struct Struct_020725d8_2* entries;
+    short count;
 };
 
 // USA: func_020725d8
-extern "C" ARM struct Struct_020725d8_2* func_020725d8(struct Struct_020725d8* arg0, int arg1) {
-    int var0;
-    for (var0 = 0; var0 < arg0->unknown_4_; var0++) {
-        if (arg1 == arg0->unknown_0_[var0].unknown_0_) {
-            return &arg0->unknown_0_[var0];
+extern "C" ARM struct Struct_020725d8_2* func_020725d8(struct Struct_020725d8* list, int id) {
+    int i;
+    for (i = 0; i < list->count; i++) {
+        if (id == list->entries[i].id) {
+            return &list->entries[i];
         }
     }
     return 0;

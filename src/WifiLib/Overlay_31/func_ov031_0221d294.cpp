@@ -1,48 +1,48 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_0221d294_2 {
-    int unknown_0_;
-    char unknown_4_[0x20];
-    int unknown_24_;
+    int nameLength;
+    char name[0x20];
+    int active;
     unsigned int unknown_28_;
-    char unknown_2c_[0x24];
-    unsigned int unknown_50_;
+    char label[0x24];
+    unsigned int flags;
 };
 
 struct Struct_ov031_0221d294 {
-    unsigned int unknown_0_;
-    Struct_ov031_0221d294_2 unknown_4_[64];
+    unsigned int count;
+    Struct_ov031_0221d294_2 entries[64];
 };
 
-extern "C" int func_ov031_0221e650(const char* arg0);
-extern "C" int func_ov031_0221e4fc(unsigned char* arg0, unsigned char* arg1, int arg2);
+extern "C" int func_ov031_0221e650(const char* text);
+extern "C" int func_ov031_0221e4fc(unsigned char* a, unsigned char* b, int n);
 extern char data_ov031_0224b0d0[];
 
 // USA: func_ov031_0221d294
-extern "C" THUMB int func_ov031_0221d294(Struct_ov031_0221d294* arg0) {
-    int var0 = 0;
-    int var1 = 0;
-    int var2 = arg0->unknown_0_;
-    int var3;
-    if (arg0->unknown_0_ == 0) {
+extern "C" THUMB int func_ov031_0221d294(Struct_ov031_0221d294* table) {
+    int result = 0;
+    int found = 0;
+    int count = table->count;
+    int i;
+    if (table->count == 0) {
         return 5;
     }
-    if (arg0->unknown_0_ > 64) {
-        var2 = 64;
+    if (table->count > 64) {
+        count = 64;
     }
-    for (var3 = 0; var3 < var2; var3++) {
-        if ((arg0->unknown_4_[var3].unknown_50_ & 1) != 0 &&
-            arg0->unknown_4_[var3].unknown_0_ == func_ov031_0221e650(data_ov031_0224b0d0) &&
-            func_ov031_0221e4fc((unsigned char*)arg0->unknown_4_[var3].unknown_4_, (unsigned char*)data_ov031_0224b0d0,
+    for (i = 0; i < count; i++) {
+        if ((table->entries[i].flags & 1) != 0 &&
+            table->entries[i].nameLength == func_ov031_0221e650(data_ov031_0224b0d0) &&
+            func_ov031_0221e4fc((unsigned char*)table->entries[i].name, (unsigned char*)data_ov031_0224b0d0,
                                 func_ov031_0221e650(data_ov031_0224b0d0)) == 0) {
-            var1++;
+            found++;
         }
     }
-    if (var1 > 1) {
-        var0 = 4;
+    if (found > 1) {
+        result = 4;
     }
-    if (var1 == 0) {
-        var0 = 5;
+    if (found == 0) {
+        result = 5;
     }
-    return var0;
+    return result;
 }

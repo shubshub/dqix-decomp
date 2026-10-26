@@ -3,22 +3,22 @@
 #include "Memory/SafeAllocator.h"
 #include "Graphics/Vector.h"
 
-struct Struct_0201bdac;
-struct Struct_02012fa4;
+struct TailNode020469b4;
+struct Foo02048004;
 
-struct Struct_ov017_021986fc {
-    signed char unknown_0_;
-    unsigned char unknown_1_, unknown_2_, unknown_3_;
-    Struct_0201bdac* unknown_4_;
-    unsigned char unknown_8_, unknown_9_;
-    unsigned short unknown_a_;
-    short unknown_c_, unknown_e_;
-    int unknown_10_;
-    Vector3fix unknown_14_;
-    int unknown_20_, unknown_24_;
-    Struct_02012fa4* unknown_28_;
-    SafeAllocator unknown_2c_;
+struct Obj021ae800 {
+    signed char type;
+    unsigned char unknown_1_, inList, unknown3;
+    TailNode020469b4* next;
+    unsigned char stage, mode;
+    unsigned short timer;
+    short itemId, unknownE;
+    int task;
+    Vector3fix position;
+    int angle, fade;
+    Foo02048004* sprite;
+    SafeAllocator allocator;
 };
 
-extern "C" void func_ov017_021ae800(Struct_ov017_021986fc* arg0);
+extern "C" void func_ov017_021ae800(Obj021ae800* event);
 

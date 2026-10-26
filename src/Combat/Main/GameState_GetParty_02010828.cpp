@@ -2,7 +2,7 @@
 #include "GameState/GameState.h"
 
 // Main, originally GetPtrField0x2a04_02010828 (USA 0x02010828, EUR 0x02010838, JPN 0x02010684)
-ARM void* GameState_GetParty(GameState* gameState) {
+extern "C" ARM void* GameState_GetParty(GameState* gameState) {
 #if defined(jpn)
     return (char*)gameState + 0x27a4;
 #else

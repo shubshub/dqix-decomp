@@ -14,9 +14,9 @@
 extern "C" Zone3D* Zone3D_GetInstance(void);
 extern "C" void func_020a0cc4(unsigned int size);
 extern "C" void ROMFilesystem_InitFileTables(void);
-int ZoneId_IsMainGrottoFloor(int id);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" int ZoneId_IsMainGrottoFloor(int id);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
 extern AllocatorUnion g_mainAllocator;
 #if defined(jpn)
@@ -28,14 +28,14 @@ extern const char data_ov017_021d7b57[];
 extern const char data_ov017_021d7b3a[];
 
 struct Struct_ov017_021b4a88 {
-    unsigned char unknown_0_[8];
-    Struct_0201a300_4* unknown_8_;
-    int unknown_c_;
-    unsigned char unknown_10_;
+    unsigned char pad0[8];
+    Struct_0201a300_4* target;
+    int taskId;
+    unsigned char state;
 };
 
 // USA: func_ov017_021b4a88
-extern "C" ARM void func_ov017_021b4a88(Struct_ov017_021b4a88* arg0) {
+extern "C" ARM void func_ov017_021b4a88(Struct_ov017_021b4a88* request) {
     GameState::GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     Zone3D* zone = Zone3D_GetInstance();
@@ -43,11 +43,11 @@ extern "C" ARM void func_ov017_021b4a88(Struct_ov017_021b4a88* arg0) {
     ZoneFeatures features;
     features.Reset();
 
-    if (var0->GetTaskStatus(arg0->unknown_c_)) {
-        if (var0->GetDetailedTaskStatus(arg0->unknown_c_) == BackgroundLoader::TaskStatus_Complete) {
-            unsigned int var4;
-            void* var5;
-            var0->GetLoadedFileByID(arg0->unknown_c_, &var5, &var4);
+    if (loader->GetTaskStatus(request->taskId)) {
+        if (loader->GetDetailedTaskStatus(request->taskId) == BackgroundLoader::TaskStatus_Complete) {
+            unsigned int size;
+            void* data;
+            loader->GetLoadedFileByID(request->taskId, &data, &size);
             func_020a0cc4(0x2800);
 
             SafeAllocator scriptAllocator;
@@ -55,18 +55,18 @@ extern "C" ARM void func_ov017_021b4a88(Struct_ov017_021b4a88* arg0) {
             scriptAllocator.CreateTypeA(AllocatorUnion_AllocateRounded(&g_mainAllocator, 0x800), 0x800);
             scriptAllocator.Reset();
 
-            NarcHandle var7;
-            if (var7.Initialize(data_ov017_021d7b53, (const unsigned char*)var5)) {
-                NitroVM var8;
-                NitroVM_Initialize(&var8);
-                char var9[0x50];
-                unsigned int var10 = 0;
-                while (PrepareReadFileInNARCByID(&var8, &var7, var10)) {
-                    NitroVM_WriteOutFilePath(&var8, var9, 0x50);
-                    char* var11 = strrchr(var9, '.');
-                    if (var11 == 0) {
-                        NitroVM_FinishRead(&var8);
-                        var10++;
+            NarcHandle archive;
+            if (archive.Initialize(data_ov017_021d7b53, (const unsigned char*)data)) {
+                NitroVM vm;
+                NitroVM_Initialize(&vm);
+                char path[0x50];
+                unsigned int index = 0;
+                while (PrepareReadFileInNARCByID(&vm, &archive, index)) {
+                    NitroVM_WriteOutFilePath(&vm, path, 0x50);
+                    char* extension = strrchr(path, '.');
+                    if (extension == 0) {
+                        NitroVM_FinishRead(&vm);
+                        index++;
                         continue;
                     }
                     NitroVM_FinishRead(&vm);
@@ -77,9 +77,9 @@ extern "C" ARM void func_ov017_021b4a88(Struct_ov017_021b4a88* arg0) {
                         features.Reset();
                         features.LoadFromScript(&scriptAllocator, script, scriptSize);
                     }
-                    var10++;
+                    index++;
                 }
-                var7.Destroy();
+                archive.Destroy();
             }
 
             int id = request->target->zoneId;
@@ -114,10 +114,10 @@ extern "C" ARM void func_ov017_021b4a88(Struct_ov017_021b4a88* arg0) {
             AllocatorUnion_Free(&g_mainAllocator, floorHeap);
             ROMFilesystem_InitFileTables();
         }
-        var0->RemoveTask(arg0->unknown_c_);
-        arg0->unknown_c_ = -1;
-        arg0->unknown_c_ = var0->QueueLoadFile(data_ov017_021d7b3a, 0);
-        arg0->unknown_10_ = 3;
+        loader->RemoveTask(request->taskId);
+        request->taskId = -1;
+        request->taskId = loader->QueueLoadFile(data_ov017_021d7b3a, 0);
+        request->state = 3;
     }
     features.Reset();
 }

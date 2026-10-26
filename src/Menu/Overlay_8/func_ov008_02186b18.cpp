@@ -21,65 +21,65 @@
 
 struct Struct_ov008_02186b18 {
     unsigned char unknown_0_[0x74c];
-    unsigned char unknown_74c_;
+    unsigned char count;
     unsigned char unknown_74d_[3];
-    unsigned char unknown_750_[0x40];
-    Object3D unknown_790_;
+    unsigned char cursor[0x40];
+    Object3D object;
     unsigned char unknown_83c_[0xb10 - 0x83c];
-    signed char unknown_b10_;
+    signed char phase;
     unsigned char unknown_b11_[7];
-    unsigned int unknown_b18_;
+    unsigned int flags;
     unsigned char unknown_b1c_[0xb29 - 0xb1c];
-    unsigned char unknown_b29_;
+    unsigned char page;
 };
 
-extern char data_02108760[];
+extern char g_sePlayer[];
 extern char data_ov008_0218b490[];
 extern "C" {
-    int func_0205bafc(void*);
-    int func_0205bb84(void*);
-    void func_0205bb04(void*, int);
-    void func_0205eaa0(void*, int, int);
+    int GridCursor_GetCount(void*);
+    int GridCursor_GetSelectedIndex(void*);
+    void GridCursor_SetSelectedIndex(void*, int);
+    void SePlayer_Play(void*, int, int);
 
-    int func_ov008_02186b18(Struct_ov008_02186b18* arg0, int arg1, int arg2) {
-        if (!arg1 || !arg2)
+    int func_ov008_02186b18(Struct_ov008_02186b18* menu, int touchX, int touchY) {
+        if (!touchX || !touchY)
             return -1;
-        int var0 = func_0205bafc(arg0->unknown_750_);
-        if (var0 > 6)
-            var0 = 6;
-        for (int var1 = 0; var1 < var0; ++var1) {
-            int var2 = (var1 << 4) + 8;
-            int var3 = var2 + 16;
-            if (arg2 > var2 && arg2 < var3 && arg1 > 16 && arg1 < R(136, 152))
-                return var1 + arg0->unknown_b29_;
+        int count = GridCursor_GetCount(menu->cursor);
+        if (count > 6)
+            count = 6;
+        for (int i = 0; i < count; ++i) {
+            int y = (i << 4) + 8;
+            int var3 = y + 16;
+            if (touchY > y && touchY < var3 && touchX > 16 && touchX < R(136, 152))
+                return i + menu->page;
         }
 
-        if ((arg0->unknown_b18_ & 0x10) && arg0->unknown_b10_ != 12 && arg1 >= 70 && arg1 < 82) {
-            int var4 = arg0->unknown_b29_;
-            if (var4 != 0 && arg2 >= 0 && arg2 < 8) {
-                arg0->unknown_b29_ = var4 - 1;
-                int var5 = arg0->unknown_b29_ + 5;
-                if (func_0205bb84(arg0->unknown_750_) > var5)
-                    func_0205bb04(arg0->unknown_750_, var5);
+        if ((menu->flags & 0x10) && menu->phase != 12 && touchX >= 70 && touchX < 82) {
+            int page = menu->page;
+            if (page != 0 && touchY >= 0 && touchY < 8) {
+                menu->page = page - 1;
+                int index = menu->page + 5;
+                if (GridCursor_GetSelectedIndex(menu->cursor) > index)
+                    GridCursor_SetSelectedIndex(menu->cursor, index);
                 return -1;
             }
-            if ((unsigned int)var4 < 2 && arg2 >= 104 && arg2 < 112) {
-                if (var4 + 6 < arg0->unknown_74c_)
-                    ++arg0->unknown_b29_;
-                int var6 = arg0->unknown_b29_;
-                if (func_0205bb84(arg0->unknown_750_) < var6)
-                    func_0205bb04(arg0->unknown_750_, var6);
+            if ((unsigned int)page < 2 && touchY >= 104 && touchY < 112) {
+                if (page + 6 < menu->count)
+                    ++menu->page;
+                int index = menu->page;
+                if (GridCursor_GetSelectedIndex(menu->cursor) < index)
+                    GridCursor_SetSelectedIndex(menu->cursor, index);
                 return -1;
             }
         }
 
-        if (arg2 > 96 && arg2 < 106 && arg1 > R(207, 199) && arg1 < 242)
+        if (touchY > 96 && touchY < 106 && touchX > R(207, 199) && touchX < 242)
             return -2;
 
-        if (!(arg0->unknown_b18_ & 0x80) && arg2 > 16 && arg2 < 96 && arg1 > 176 && arg1 < 208 && !(arg0->unknown_b18_ & 0x4000)) {
-            func_0205eaa0(data_02108760, 0x5e, 0);
-            arg0->unknown_790_.MaybeSetRegularAnimation(data_ov008_0218b490, 0);
-            arg0->unknown_b18_ |= 0x4000;
+        if (!(menu->flags & 0x80) && touchY > 16 && touchY < 96 && touchX > 176 && touchX < 208 && !(menu->flags & 0x4000)) {
+            SePlayer_Play(g_sePlayer, 0x5e, 0);
+            menu->object.SetAnimationByName(data_ov008_0218b490, 0);
+            menu->flags |= 0x4000;
         }
         return -1;
     }

@@ -5,10 +5,10 @@ extern "C" void OS_GetOwnerInfo(void* out);
 
 struct Struct0200fb08 { unsigned char pad[5]; unsigned char language; };
 
-// USA: _Z21GameState_GetLanguageP14Struct0200fb08
-// EUR: _Z21GameState_GetLanguageP14Struct0200fb08
+// USA: GameState_GetLanguage
+// EUR: GameState_GetLanguage
 // Main, originally NormalizeField5_0200fb08 (USA 0x0200fb08, EUR 0x0200fb10; JPN not identified)
-ARM unsigned char GameState_GetLanguage(Struct0200fb08* gameState) {
+extern "C" ARM unsigned char GameState_GetLanguage(Struct0200fb08* gameState) {
     unsigned char ownerInfo[0x54];
     unsigned char ownerLanguage;
     OS_GetOwnerInfo(ownerInfo);

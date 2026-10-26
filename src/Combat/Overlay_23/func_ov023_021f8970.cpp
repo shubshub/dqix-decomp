@@ -2,29 +2,29 @@
 #include "Input/Input.h"
 
 struct Struct_ov023_021f8970 {
-    char unknown_0_[0xc8];
-    short unknown_c8_;
-    short unknown_ca_;
-    short unknown_cc_;
-    short unknown_ce_;
+    char pad0[0xc8];
+    short width;
+    short height;
+    short x;
+    short y;
 };
 
 // USA: func_ov023_021f8970
-extern "C" ARM int func_ov023_021f8970(struct Struct_ov023_021f8970* arg0) {
-    short var0 = arg0->unknown_cc_;
-    short var1 = arg0->unknown_ce_;
-    short var2 = arg0->unknown_c8_;
-    short var3 = arg0->unknown_ca_;
-    int var4, var5;
-    g_touchInput.GetTouchPoint(&var4, &var5);
-    if ((short)(var0 << 3) > var4) goto fail;
-    short var6 = (short)(var0 << 3);
-    short var7 = (short)(var2 << 3);
-    int var8 = var6 + var7;
-    if (var4 >= var8) goto fail;
-    if ((short)(var1 << 3) > var5) goto fail;
-    short var9 = (short)(var1 << 3);
-    short var10 = (short)(var3 << 3);
+extern "C" ARM int func_ov023_021f8970(struct Struct_ov023_021f8970* obj) {
+    short x = obj->x;
+    short y = obj->y;
+    short width = obj->width;
+    short height = obj->height;
+    int px, var5;
+    g_touchInput.GetTouchPoint(&px, &var5);
+    if ((short)(x << 3) > px) goto fail;
+    short var6 = (short)(x << 3);
+    short var7 = (short)(width << 3);
+    int xMax = var6 + var7;
+    if (px >= xMax) goto fail;
+    if ((short)(y << 3) > var5) goto fail;
+    short var9 = (short)(y << 3);
+    short var10 = (short)(height << 3);
     int var11 = var9 + var10;
     if (var5 < var11) return 1;
 fail:

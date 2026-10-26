@@ -10,6 +10,6 @@ enum { kActorFlagsOffset = 0x1ce };
 enum { kActorFlag_Hidden = 4 };
 
 // Main, originally ClearFlag0x1ceBit0x4_02039d58 (USA 0x02039d58, EUR 0x02039d68, JPN 0x020397b0)
-ARM void GameObject_ClearHidden(unsigned char* actor) {
+extern "C" ARM void GameObject_ClearHidden(unsigned char* actor) {
     actor[kActorFlagsOffset] &= ~kActorFlag_Hidden;
 }

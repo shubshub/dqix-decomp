@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void __clear(void* arg0, unsigned int arg1);
-extern "C" int func_02039730(void* arg0, int arg1);
-extern "C" void func_ov017_0219a544(unsigned char* arg0, char* arg1, int arg2, int arg3);
+extern "C" void __clear(void* dst, unsigned int size);
+extern "C" int func_02039730(void* unused, int index);
+extern "C" void func_ov017_0219a544(unsigned char* a, char* buf, int type, int value);
 #if defined(jpn)
 extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
 #else
@@ -11,11 +11,11 @@ extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, in
 #endif
 
 extern "C" int Window_Update(void* objPtr, int val);
-void ClearFourHalfwords_0219a644(void* base, int value);
+extern "C" void func_ov017_0219a644(void* base, int value);
 
-struct Struct_ov017_021d6448 { short unknown_0_[4]; };
-struct Struct_ov017_021d6444 { unsigned char unknown_0_[4]; };
-struct Struct_ov017_021d6484 { int unknown_0_[7]; };
+struct Struct_ov017_021d6448 { short v[4]; };
+struct Struct_ov017_021d6444 { unsigned char v[4]; };
+struct Struct_ov017_021d6484 { int v[7]; };
 
 extern struct Struct_ov017_021d6448 data_ov017_021d6458;
 extern struct Struct_ov017_021d6448 data_ov017_021d6450;
@@ -24,53 +24,53 @@ extern struct Struct_ov017_021d6444 data_ov017_021d6444;
 extern struct Struct_ov017_021d6484 data_ov017_021d6484;
 
 struct Struct_ov017_0219a388 {
-    unsigned char unknown_0_[0xa0];
-    short unknown_a0_;
+    unsigned char pad0[0xa0];
+    short x;
     short unknown_a2_;
-    short unknown_a4_;
-    short unknown_a6_;
+    short y;
+    short width;
     short unknown_a8_;
     short unknown_aa_;
-    short unknown_ac_;
+    short field_ac;
     short unknown_ae_;
     unsigned char unknown_b0_;
-    unsigned char unknown_b1_;
+    unsigned char type;
     unsigned char unknown_b2_[3];
     unsigned char unknown_b5_;
 };
 
 // USA: func_ov017_0219a388
-extern "C" ARM void func_ov017_0219a388(unsigned char* arg0) {
+extern "C" ARM void func_ov017_0219a388(unsigned char* base) {
 #if defined(jpn)
- enum {Enum_ov017_0219a388_3248=0xa90};
+ enum {regionalOffset0=0xa90};
 #else
- enum {Enum_ov017_0219a388_3248=0xcb0};
+ enum {regionalOffset0=0xcb0};
 #endif
-    GameState* var0 = GameState::GetInstance();
-    GameObject* var1 = var0->GetProtagonist();
-    struct Struct_ov017_021d6448 var2 = data_ov017_021d6458;
-    struct Struct_ov017_021d6448 var3 = data_ov017_021d6450;
-    struct Struct_ov017_021d6448 var4 = data_ov017_021d6448;
-    struct Struct_ov017_021d6444 var5 = data_ov017_021d6444;
-    struct Struct_ov017_021d6484 var6 = data_ov017_021d6484;
-    char var7[0x80];
-    Struct_ov017_0219a388* var8 = *(Struct_ov017_0219a388**)(arg0 + 0x3000 + Enum_ov017_0219a388_3248);
-    int var9;
+    GameState* gs = GameState::GetInstance();
+    GameObject* protagonist = gs->GetProtagonist();
+    struct Struct_ov017_021d6448 xs = data_ov017_021d6458;
+    struct Struct_ov017_021d6448 ys = data_ov017_021d6450;
+    struct Struct_ov017_021d6448 widths = data_ov017_021d6448;
+    struct Struct_ov017_021d6444 types = data_ov017_021d6444;
+    struct Struct_ov017_021d6484 indices = data_ov017_021d6484;
+    char buf[0x80];
+    Struct_ov017_0219a388* win = *(Struct_ov017_0219a388**)(base + 0x3000 + regionalOffset0);
+    int i;
 
-    for (var9 = 0; var9 < 4; var9++) {
-        var8->unknown_a0_ = var2.unknown_0_[var9];
-        var8->unknown_a2_ = 2;
-        var8->unknown_a4_ = var3.unknown_0_[var9];
-        var8->unknown_a6_ = var4.unknown_0_[var9];
-        var8->unknown_a8_ = 2;
-        var8->unknown_aa_ = 2;
-        var8->unknown_ac_ = 0xa;
-        var8->unknown_ae_ = 0xb;
-        unsigned char var10 = var5.unknown_0_[var9];
-        var8->unknown_b1_ = var10;
-        var8->unknown_b5_ = 1;
-        __clear(var7, 0x80);
-        func_ov017_0219a544(arg0, var7, var10, (signed char)func_02039730(var1, var6.unknown_0_[var9]));
+    for (i = 0; i < 4; i++) {
+        win->x = xs.v[i];
+        win->unknown_a2_ = 2;
+        win->y = ys.v[i];
+        win->width = widths.v[i];
+        win->unknown_a8_ = 2;
+        win->unknown_aa_ = 2;
+        win->field_ac = 0xa;
+        win->unknown_ae_ = 0xb;
+        unsigned char type = types.v[i];
+        win->type = type;
+        win->unknown_b5_ = 1;
+        __clear(buf, 0x80);
+        func_ov017_0219a544(base, buf, type, (signed char)func_02039730(protagonist, indices.v[i]));
 #if defined(jpn)
         Window_OpenPane(win, buf, 0, 0, 0, 1, 0);
 #else
@@ -79,5 +79,5 @@ extern "C" ARM void func_ov017_0219a388(unsigned char* arg0) {
 
         Window_Update(win, gs->GetTickCount());
     }
-    func_ov017_0219a644(arg0, 0xff);
+    func_ov017_0219a644(base, 0xff);
 }

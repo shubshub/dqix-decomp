@@ -3,7 +3,7 @@
 extern "C" void func_ov001_021575ec(void*);
 
 // USA: func_ov001_02158324
-extern "C" ARM int func_ov001_02158324(void* arg0, char* arg1) {
-	func_ov001_021575ec(arg1 + 0x15c);
+extern "C" ARM int func_ov001_02158324(void* unused, char* p) {
+	func_ov001_021575ec(p + 0x15c);
 	return 0;
 }

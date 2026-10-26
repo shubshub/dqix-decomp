@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 
 struct Struct_020e1568 {
-    int unknown_0_;
-    int unknown_4_;
-    unsigned char unknown_8_;
-    unsigned char unknown_9_;
-    unsigned char unknown_a_;
-    unsigned char unknown_b_;
+    int field0;
+    int field4;
+    unsigned char field8;
+    unsigned char field9;
+    unsigned char fieldA;
+    unsigned char fieldB;
 };
 
 // USA: func_020e1568
-extern "C" ARM void func_020e1568(struct Struct_020e1568* arg0) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0;
-    arg0->unknown_9_ = 0;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_b_ = 0;
-    arg0->unknown_a_ = 0;
+extern "C" ARM void func_020e1568(struct Struct_020e1568* s) {
+    s->field0 = 0;
+    s->field4 = 0;
+    s->field9 = 0;
+    s->field8 = 0;
+    s->fieldB = 0;
+    s->fieldA = 0;
 }

@@ -1,25 +1,25 @@
 #include <globaldefs.h>
 
-struct Struct_0201bdac_2;
-struct Struct_0201bdac;
+struct TailList020469b4;
+struct TailNode020469b4;
 
-extern "C" void func_ov017_021b6790(void* arg0);
-extern "C" void func_020469b4(struct Struct_0201bdac_2* arg0, struct Struct_0201bdac* arg1);
+extern "C" void func_ov017_021b6790(void* node);
+extern "C" void func_020469b4(struct TailList020469b4* list, struct TailNode020469b4* node);
 
 // USA: func_ov017_021b6728
-extern "C" ARM void func_ov017_021b6728(char* arg0, int arg1, unsigned char arg2) {
+extern "C" ARM void func_ov017_021b6728(char* obj, int mode, unsigned char val) {
 #if defined(jpn)
- enum {Enum_ov017_021b6728_2816=0x8e0, Enum_ov017_021b6728_1788=0x4ec};
+ enum {regionalOffset0=0x8e0, regionalOffset1=0x4ec};
 #else
- enum {Enum_ov017_021b6728_2816=0xb00, Enum_ov017_021b6728_1788=0x6fc};
+ enum {regionalOffset0=0xb00, regionalOffset1=0x6fc};
 #endif
-	func_ov017_021b6790(*(void**)(arg0 + 0x3000 + Enum_ov017_021b6728_2816));
-	func_020469b4((struct Struct_0201bdac_2*)*(void**)(arg0 + 0x3000 + Enum_ov017_021b6728_1788),
-	                 (struct Struct_0201bdac*)*(void**)(arg0 + 0x3000 + Enum_ov017_021b6728_2816));
-	if (arg1 == 1) {
-		((unsigned char*)(*(void**)(arg0 + 0x3000 + Enum_ov017_021b6728_2816)))[0x1f] = 4;
-		((unsigned char*)(*(void**)(arg0 + 0x3000 + Enum_ov017_021b6728_2816)))[0x20] = arg2;
-	} else if (arg1 == 0) {
-		((unsigned char*)(*(void**)(arg0 + 0x3000 + Enum_ov017_021b6728_2816)))[0x1f] = 3;
+	func_ov017_021b6790(*(void**)(obj + 0x3000 + regionalOffset0));
+	func_020469b4((struct TailList020469b4*)*(void**)(obj + 0x3000 + regionalOffset1),
+	                 (struct TailNode020469b4*)*(void**)(obj + 0x3000 + regionalOffset0));
+	if (mode == 1) {
+		((unsigned char*)(*(void**)(obj + 0x3000 + regionalOffset0)))[0x1f] = 4;
+		((unsigned char*)(*(void**)(obj + 0x3000 + regionalOffset0)))[0x20] = val;
+	} else if (mode == 0) {
+		((unsigned char*)(*(void**)(obj + 0x3000 + regionalOffset0)))[0x1f] = 3;
 	}
 }

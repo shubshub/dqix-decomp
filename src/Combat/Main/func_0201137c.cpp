@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 
-struct Struct_0201137c { int unknown_0_; unsigned int unknown_4_; };
-extern "C" struct Struct_0201137c* func_0209a594(void* arg0, int arg1);
+struct Struct_0201137c { int a; unsigned int b; };
+extern "C" struct Struct_0201137c* func_0209a594(void* p, int id);
 
 // USA: func_0201137c
-extern "C" ARM int func_0201137c(char* arg0, int arg1) {
-    struct Struct_0201137c* var0;
-    unsigned int var1 = 0;
+extern "C" ARM int func_0201137c(char* base, int id) {
+    struct Struct_0201137c* e;
+    unsigned int result = 0;
 #if defined(jpn)
-    var0 = func_0209a594(arg0 + 0x54cc, arg1);
+    e = func_0209a594(base + 0x54cc, id);
 #else
-    var0 = func_0209a594(arg0 + 0x572c, arg1);
+    e = func_0209a594(base + 0x572c, id);
 #endif
-    if (var0 != NULL) {
+    if (e != NULL) {
 #if defined(jpn)
-        var1 = var0->unknown_4_ >> 24;
+        result = e->b >> 24;
 #else
-        var1 = (var0->unknown_4_ << 12) >> 24;
+        result = (e->b << 12) >> 24;
 #endif
     }
-    return var1;
+    return result;
 }

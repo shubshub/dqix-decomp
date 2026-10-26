@@ -14,53 +14,53 @@ typedef void (*Type_01ff8300_3)(unsigned long result, void* arg);
 
 struct Struct_020ce308
 {
-    int unknown_0_;
-    Type_01ff8300_3 unknown_4_;
+    int lock;
+    Type_01ff8300_3 callback;
     void* unknown_8_;
-    void* unknown_c_;
+    void* work;
 };
 
 struct Struct_021117ec_5
 {
-    char unknown_0_[0xc];
+    char unknown_0[0xc];
     volatile int unknown_c_;
-    char unknown_10_[0xc];
-    Struct_020ce308 unknown_1c_;
+    char unknown_10[0xc];
+    Struct_020ce308 work;
 };
 
 extern Struct_021117ec_5 data_021117ec;
 
-extern "C" void func_020ce240(int arg0);
+extern "C" void func_020ce240(int result);
 
 // USA: func_020ce308
-extern "C" ARM void func_020ce308(unsigned int arg0, unsigned int arg1, unsigned int arg2)
+extern "C" ARM void func_020ce308(unsigned int tag, unsigned int data, unsigned int arg2)
 {
-    const unsigned short var0 = (arg1 & 0x7f00) >> 8;
-    unsigned short var1 = arg1 & 0xff;
+    const unsigned short command = (data & 0x7f00) >> 8;
+    unsigned short result = data & 0xff;
     if (arg2)
     {
-        switch (var0)
+        switch (command)
         {
         case COMMAND_UTILITY:
         case COMMAND_SLEEP_START:
-            var1 = RESULT_SEND_FAILED;
+            result = RESULT_SEND_FAILED;
             break;
         default:
-            var1 = RESULT_ERROR;
+            result = RESULT_ERROR;
             break;
         }
-        func_020ce240(var1);
+        func_020ce240(result);
         return;
     }
-    switch (var0)
+    switch (command)
     {
     case COMMAND_UTILITY:
-        if (data_021117ec.unknown_1c_.unknown_c_)
-            *(unsigned short*)data_021117ec.unknown_1c_.unknown_c_ = var1;
-        var1 = PM_SUCCESS;
+        if (data_021117ec.work.work)
+            *(unsigned short*)data_021117ec.work.work = result;
+        result = PM_SUCCESS;
         break;
     case COMMAND_SYNC:
-        var1 = PM_SUCCESS;
+        result = PM_SUCCESS;
         break;
     case COMMAND_SLEEP_START:
         break;
@@ -68,5 +68,5 @@ extern "C" ARM void func_020ce308(unsigned int arg0, unsigned int arg1, unsigned
         data_021117ec.unknown_c_ = true;
         break;
     }
-    func_020ce240(var1);
+    func_020ce240(result);
 }

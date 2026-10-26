@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 
 struct Struct_020b0094 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned int *unknown_4_;
+    unsigned short count;
+    unsigned short pad;
+    unsigned int *arr;
 };
 
-extern "C" void func_020b02d0(struct Struct_020b0094 *arg0);
+extern "C" void func_020b02d0(struct Struct_020b0094 *h);
 
 // USA: func_020b0094
-extern "C" ARM void func_020b0094(char *arg0) {
-    func_020b02d0((struct Struct_020b0094 *)(arg0 + 8));
+extern "C" ARM void func_020b0094(char *base) {
+    func_020b02d0((struct Struct_020b0094 *)(base + 8));
 }

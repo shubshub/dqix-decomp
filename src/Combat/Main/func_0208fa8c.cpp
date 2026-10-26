@@ -4,19 +4,19 @@
 #include "Grotto/Main/DetailedTreasureMapData.h"
 #include "Resource/GameResources.h"
 
-struct Struct_0208fa8c { unsigned short unknown_0_; };
+struct ZoneState { unsigned short zoneId; };
 struct Struct_0208fa8c_2 {
 #if defined(jpn)
-    char unknown_0_[0x280];
+    char pad0[0x280];
 #else
-    char unknown1_0_[0x260];
+    char pad0[0x260];
 #endif
     unsigned char unknown_260_;
 };
-void* GameState_GetZoneTransition(GameState*);
-int ZoneId_IsGrotto(int);
-void ClearOrFillBattleRegion02027ad8(int, int);
-int LinkSession_IsActive(int*);
+extern "C" void* GameState_GetZoneTransition(GameState*);
+extern "C" int ZoneId_IsGrotto(int);
+extern "C" void func_02027ad8(int, int);
+extern "C" int LinkSession_IsActive(int*);
 extern "C" {
 int* LinkSession_GetInstance();
 ZoneState* Zone3D_GetInstance();
@@ -46,18 +46,18 @@ extern "C" ARM void func_0208fa8c(DetailedTreasureMapData* map) {
         map->Clear();
         func_020a0cc4(0x2000);
         func_020a3720();
-        ExportDetailedTreasureMapData(&var4->activeMapData, arg0, true, 0);
+        ExportDetailedTreasureMapData(&grotto->activeMapData, map, true, 0);
         func_020a395c();
         ROMFilesystem_InitFileTables();
-        if (!grotto->unknown_0[0]) ((DetailedMapFlags*)map)->field260 = 1;
+        if (!grotto->unknown_0[0]) ((Struct_0208fa8c_2*)map)->unknown_260_ = 1;
         grotto->unknown_0[1] = 0;
         if (LinkSession_IsGuest(session)) grotto->activeMapLevel = map->GetLevel();
-        if (region && nextZone) ClearOrFillBattleRegion02027ad8((int)region, map->discoveryState_ == 3);
+        if (region && nextZone) func_02027ad8((int)region, map->discoveryState_ == 3);
     } else if (!ZoneId_IsGrotto(currentZone) && ZoneId_IsGrotto(nextZone) &&
                (currentZone < 30000 || currentZone > 39999)) {
         if (LinkSession_IsActive(session) && LinkSession_IsGuest(session) && !grotto->unknown_0[1])
             grotto->unknown_0[1] = 0;
         else grotto->unknown_0[1] = 1;
-        if (region) ClearOrFillBattleRegion02027ad8((int)region, 0);
+        if (region) func_02027ad8((int)region, 0);
     }
 }

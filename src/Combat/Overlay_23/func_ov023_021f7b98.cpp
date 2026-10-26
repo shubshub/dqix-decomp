@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 #include "Graphics/Background.h"
 
-void Background_Init(struct BackgroundGraphics* obj);
+extern "C" void Background_Init(struct BackgroundGraphics* obj);
 
 struct PacRecord;
-int Pac_CountFiles(struct PacRecord* entry);
+extern "C" int Pac_CountFiles(struct PacRecord* entry);
 
-void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
+extern "C" void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 
-void Background_FlushFile(void* obj, char* str);
+extern "C" void Background_FlushFile(void* obj, char* str);
 
-void Background_UploadFile(struct BackgroundGraphics* self, char* str);
+extern "C" void Background_UploadFile(struct BackgroundGraphics* self, char* str);
 
 // The copy goes through byte-returning accessors (as the original's member functions did); direct field copies
 // compile differently.
@@ -19,11 +19,11 @@ static inline unsigned char GetBgNumber(struct BackgroundGraphics* layer) { retu
 static inline void SetSubScreen(struct BackgroundGraphics* layer, unsigned char value) { layer->subScreen_ = value; }
 static inline void SetBgNumber(struct BackgroundGraphics* layer, unsigned char value) { layer->bgNumber_ = value; }
 
-struct Struct_ov023_021f7b98 {
+struct Obj021f7b98 {
 #if defined(jpn)
-    char unknown1_0_[0x24];
+    char pad0[0x24];
 #else
-    char unknown_0_[0x28];
+    char pad0[0x28];
 #endif
     struct BackgroundGraphics list;
 };
@@ -34,7 +34,7 @@ extern "C" ARM void func_ov023_021f7b98(struct Obj021f7b98* self, void* keyObj, 
     void* rp;
     struct BackgroundGraphics list;
 
-    if (arg3 == 0 || arg4 == 0) {
+    if (entry == 0 || entryLength == 0) {
         return;
     }
     int count = Pac_CountFiles((struct PacRecord*)entry);

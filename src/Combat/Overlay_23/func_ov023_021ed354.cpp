@@ -2,60 +2,60 @@
 #include "std_library_functions.h"
 
 struct Struct0205de24;
-void FindAndLinkMatchingEntry0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
-int MessageSystem_GetInstance(void);
+extern "C" void func_0205de24(struct Struct0205de24* obj, unsigned char keyLow, unsigned char keyHigh);
+extern "C" int MessageSystem_GetInstance(void);
 extern "C" ARM void MessageSystem_FormatText(void* a, int b, int c, void* d, int e, int f, int g);
 #if defined(jpn)
 extern "C" void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g);
-void Text_Append(char*, const char*);
+extern "C" void Text_Append(char*, const char*);
 #else
 extern "C" ARM void Window_OpenPane(void* a, void* b, int c, int d, int e, int f, int g, int h);
 #endif
 
 
 // USA: func_ov023_021ed354
-extern "C" ARM void func_ov023_021ed354(char* arg0) {
+extern "C" ARM void func_ov023_021ed354(char* obj) {
     struct Struct_ov023_021ed354 { unsigned char unknown_0_0_ : 4; unsigned char unknown_0_4_ : 4; };
-    unsigned char var0 = ((Struct_ov023_021ed354*)(arg0 + 0xa0))->unknown_0_0_;
-    func_0205de24((struct Struct_0205de24_2*)(arg0 + 0xc4), var0, 3);
+    unsigned char keyLow = ((Struct_ov023_021ed354*)(obj + 0xa0))->unknown_0_0_;
+    func_0205de24((struct Struct0205de24*)(obj + 0xc4), keyLow, 3);
 
-    *(unsigned short*)(arg0 + 0x164) = 0x1e;
+    *(unsigned short*)(obj + 0x164) = 0x1e;
 #if defined(jpn)
-    *(unsigned short*)(arg0 + 0x166) = 0xb;
+    *(unsigned short*)(obj + 0x166) = 0xb;
 #else
-    *(unsigned short*)(arg0 + 0x166) = 0xa;
+    *(unsigned short*)(obj + 0x166) = 0xa;
 #endif
 
-    *(unsigned short*)(arg0 + 0x168) = 0x1;
+    *(unsigned short*)(obj + 0x168) = 0x1;
 #if defined(jpn)
-    *(unsigned short*)(arg0 + 0x16a) = 0xc;
+    *(unsigned short*)(obj + 0x16a) = 0xc;
 #else
-    *(unsigned short*)(arg0 + 0x16a) = 0xd;
-#endif
-
-#if defined(jpn)
-    *(unsigned short*)(arg0 + 0x16c) = 0xa;
-#else
-    *(unsigned short*)(arg0 + 0x16c) = 0x7;
+    *(unsigned short*)(obj + 0x16a) = 0xd;
 #endif
 
 #if defined(jpn)
-    *(unsigned short*)(arg0 + 0x16e) = 0xa;
+    *(unsigned short*)(obj + 0x16c) = 0xa;
 #else
-    *(unsigned short*)(arg0 + 0x16e) = 0x8;
+    *(unsigned short*)(obj + 0x16c) = 0x7;
 #endif
 
-    *(unsigned short*)(arg0 + 0x170) = 0xc;
 #if defined(jpn)
-    *(unsigned short*)(arg0 + 0x172) = 0x14;
+    *(unsigned short*)(obj + 0x16e) = 0xa;
 #else
-    *(unsigned short*)(arg0 + 0x172) = 0xc;
+    *(unsigned short*)(obj + 0x16e) = 0x8;
 #endif
 
-    *(unsigned char*)(arg0 + 0x17b) = 0xc;
-    *(unsigned char*)(arg0 + 0x175) = 0x1;
-    *(unsigned char*)(arg0 + 0x179) = 0;
-    *(unsigned char*)(arg0 + 0x17a) = 0;
+    *(unsigned short*)(obj + 0x170) = 0xc;
+#if defined(jpn)
+    *(unsigned short*)(obj + 0x172) = 0x14;
+#else
+    *(unsigned short*)(obj + 0x172) = 0xc;
+#endif
+
+    *(unsigned char*)(obj + 0x17b) = 0xc;
+    *(unsigned char*)(obj + 0x175) = 0x1;
+    *(unsigned char*)(obj + 0x179) = 0;
+    *(unsigned char*)(obj + 0x17a) = 0;
 
 #if defined(jpn)
     char* elem = *(char**)(obj + 0x20) + *(unsigned char*)(obj + 0x28) * 0x15c;

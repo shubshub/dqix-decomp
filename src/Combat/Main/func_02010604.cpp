@@ -8,80 +8,74 @@ enum { Enum_02010604_2428 = 0x97c, Enum_02010604_396 = 0x18c, Enum_02010604_2432
 
 #include "GameState/GameState.h"
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 
-extern "C" void* func_0202ae18(void);
-extern "C" void* func_0205ec34(void);
+extern "C" void* LinkSession_GetInstance(void);
+extern "C" void* Scenario_GetInstance(void);
 extern "C" void func_ov017_021d2400(void);
-extern "C" void func_02048150(void* arg0, int arg1, int arg2);
-extern "C" void func_ov017_021cedf4(int arg0, int arg1, int arg2);
-extern "C" void func_ov017_021c9e00(int arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov017_0219bfb4(int arg0, int arg1);
+extern "C" void func_02048150(void* combatant, int a, int b);
+extern "C" void func_ov017_021cedf4(int a, int b, int c);
+extern "C" void func_ov017_021c9e00(int a, int b, int c, int d);
+extern "C" void func_ov017_0219bfb4(int a, int b);
 
-extern "C" int func_0202b7d8(int* arg0);
+extern "C" int LinkSession_IsActive(int* obj);
 
 struct Struct_02010604_3;
-extern "C" int func_020482bc(struct Struct_02010604_3* arg0);
+extern "C" int func_020482bc(struct Struct_02010604_3* c);
 
-struct Struct_02010604;
-extern "C" int func_02033b88(struct Struct_02010604* arg0, int arg1);
+struct Bytes02033b88;
+extern "C" int GameObject_ForceMotionState(struct Bytes02033b88* p, int val);
 
-extern "C" void func_0206df6c(void* arg0, unsigned char* arg1, int arg2, int arg3);
+extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
 
 extern int data_020f83d8;
 
 struct Struct_02010604_2 {
-    char unknown_0_[0x130];
-    unsigned int* unknown_130_;
+    char pad0[0x130];
+    unsigned int* current;
     char unknown_134_[Enum_02010604_396 - 0x134];
     unsigned int unknown_18c_;
 };
 
 // USA: func_02010604
-extern "C" ARM void func_02010604(GameState* arg0, int arg1, int arg2, int arg3) {
-    void* var0 = func_0202ae18();
-    int var1;
+extern "C" ARM void func_02010604(GameState* obj, int arg1, int arg2, int arg3) {
+    void* g = LinkSession_GetInstance();
+    int i;
 
     if (arg1 != 0) {
-        if (func_0202b7d8((int*)var0)) {
+        if (LinkSession_IsActive((int*)g)) {
             func_ov017_021d2400();
         }
     }
 
-    for (var1 = 0; var1 < *((unsigned char*)((char*)arg0 + 0x3000) + Enum_02010604_2432); var1++) {
-        int var2 = *((unsigned char*)((char*)arg0 + var1 + 0x3000) + Enum_02010604_2428);
-        GameObject* var3 = arg0->GetPartyMemberByIndex(var2);
-        struct Struct_02010604_2* var4;
-        if (var3 == NULL) continue;
-        var4 = (struct Struct_02010604_2*)var3;
-        if ((*var4->unknown_130_ & 1) == 0) continue;
-        func_02048150(var3, 0, 1);
-        func_020482bc((struct Struct_02010604_3*)var3);
-        var4->unknown_18c_ &= ~1;
-        func_02033b88((struct Struct_02010604*)var3, 0);
-        if (func_0202b7d8((int*)var0)) {
-            func_ov017_021cedf4(var2, 1, 0);
-            func_ov017_021c9e00(var2, 0, 0, 1);
+    for (i = 0; i < *((unsigned char*)((char*)obj + 0x3000) + Enum_02010604_2432); i++) {
+        int id = *((unsigned char*)((char*)obj + i + 0x3000) + Enum_02010604_2428);
+        GameObject* combatant = obj->GetPartyMemberByIndex(id);
+        struct Struct_02010604_2* view;
+        if (combatant == NULL) continue;
+        view = (struct Struct_02010604_2*)combatant;
+        if ((*view->current & 1) == 0) continue;
+        func_02048150(combatant, 0, 1);
+        func_020482bc((struct Struct_02010604_3*)combatant);
+        view->unknown_18c_ &= ~1;
+        GameObject_ForceMotionState((struct Bytes02033b88*)combatant, 0);
+        if (LinkSession_IsActive((int*)g)) {
+            func_ov017_021cedf4(id, 1, 0);
+            func_ov017_021c9e00(id, 0, 0, 1);
         }
     }
 
     if (arg2 != 0) {
-        unsigned int* var5 = (unsigned int*)((char*)arg0 + 0x3000 + Enum_02010604_2416);
+        unsigned int* var5 = (unsigned int*)((char*)obj + 0x3000 + Enum_02010604_2416);
         *var5 = *var5 >> 1;
     }
 
     func_ov017_0219bfb4(2, arg3);
 
-    if (*(int*)((char*)arg0 + 0x5000 + Enum_02010604_3248) == 0x10 && *(int*)((char*)arg0 + 0x5000 + Enum_02010604_3252) == 2 &&
-        *(int*)((char*)arg0 + 0x5000 + Enum_02010604_3256) == 1) {
-        void* var6 = func_0205ec34();
-        func_0206df6c(var6, (unsigned char*)((char*)var6 + 0x8c), 0x113a, 0);
+    if (*(int*)((char*)obj + 0x5000 + Enum_02010604_3248) == 0x10 && *(int*)((char*)obj + 0x5000 + Enum_02010604_3252) == 2 &&
+        *(int*)((char*)obj + 0x5000 + Enum_02010604_3256) == 1) {
+        void* g2 = Scenario_GetInstance();
+        Scenario_SetFlag(g2, (unsigned char*)((char*)g2 + 0x8c), 0x113a, 0);
     }
 
     *((unsigned char*)&data_020f83d8 + Enum_02010604_1833) = 0;

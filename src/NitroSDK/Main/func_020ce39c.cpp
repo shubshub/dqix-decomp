@@ -3,47 +3,47 @@
 unsigned int DisableIRQInterrupts(void);
 unsigned int SetIRQInterruptState(int mask);
 extern "C" int func_020ce128(void);
-extern "C" void func_020ce870(int arg0);
+extern "C" void func_020ce870(int cmd);
 extern "C" void func_020c976c(int);
-extern "C" void func_020ce234(int arg0, int* arg1);
+extern "C" void func_020ce234(int value, int* ptr);
 
 typedef void (*Type_01ff8300_3)(int result, int* arg);
 
 struct Struct_020ce308 {
-    int unknown_0_;
-    Type_01ff8300_3 unknown_4_;
+    int lock;
+    Type_01ff8300_3 callback;
     void* unknown_8_;
-    void* unknown_c_;
+    void* work;
 };
 
 struct Struct_021117ec_5 {
-    char unknown_0_[0x1c];
-    Struct_020ce308 unknown_1c_;
+    char unknown_0[0x1c];
+    Struct_020ce308 work;
 };
 
 extern Struct_021117ec_5 data_021117ec;
 
 // USA: func_020ce39c
-extern "C" ARM void func_020ce39c(int* arg0, int arg1) {
-    volatile int var0;
-    int var1;
+extern "C" ARM void func_020ce39c(int* arr, int count) {
+    volatile int result;
+    int i;
     for (;;) {
         unsigned var2 = DisableIRQInterrupts();
         if (!func_020ce128()) {
             SetIRQInterruptState(var2);
             continue;
         }
-        var0 = -0x10000;
-        data_021117ec.unknown_1c_.unknown_4_ = func_020ce234;
-        data_021117ec.unknown_1c_.unknown_8_ = (void*)&var0;
-        for (var1 = 0; var1 < arg1; var1++) {
-            func_020ce870(arg0[var1]);
+        result = -0x10000;
+        data_021117ec.work.callback = func_020ce234;
+        data_021117ec.work.unknown_8_ = (void*)&result;
+        for (i = 0; i < count; i++) {
+            func_020ce870(arr[i]);
         }
         SetIRQInterruptState(var2);
-        while (var0 == -0x10000) {
+        while (result == -0x10000) {
             func_020c976c(0xa3a47);
         }
-        if (var0 == 0) {
+        if (result == 0) {
             return;
         }
         func_020c976c(0xa3a47);

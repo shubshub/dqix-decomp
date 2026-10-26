@@ -23,30 +23,30 @@ enum { Enum_ov003_0215f8cc_712 = 0x2c8 };
 
 
 // USA: func_ov003_0215f8cc
-extern "C" ARM void func_ov003_0215f8cc(void* arg0, SafeAllocator* arg1) {
-    if (arg1 == 0) return;
+extern "C" ARM void func_ov003_0215f8cc(void* self, SafeAllocator* other) {
+    if (other == 0) return;
 
-    void* var0 = arg1->Allocate(0x1000);
-    ((SafeAllocator*)((char*)arg0 + Enum_ov003_0215f8cc_552))->CreateTypeA(var0, 0x1000);
+    void* buf = other->Allocate(0x1000);
+    ((SafeAllocator*)((char*)self + Enum_ov003_0215f8cc_552))->CreateTypeA(buf, 0x1000);
 
-    var0 = arg1->Allocate(0x7000);
-    ((SafeAllocator*)((char*)arg0 + Enum_ov003_0215f8cc_572))->CreateTypeA(var0, 0x7000);
+    buf = other->Allocate(0x7000);
+    ((SafeAllocator*)((char*)self + Enum_ov003_0215f8cc_572))->CreateTypeA(buf, 0x7000);
 
-    var0 = arg1->Allocate(0x2000);
-    ((SafeAllocator*)((char*)arg0 + Enum_ov003_0215f8cc_612))->CreateTypeA(var0, 0x2000);
+    buf = other->Allocate(0x2000);
+    ((SafeAllocator*)((char*)self + Enum_ov003_0215f8cc_612))->CreateTypeA(buf, 0x2000);
 
-    var0 = arg1->Allocate(0x7400);
-    ((SafeAllocator*)((char*)arg0 + Enum_ov003_0215f8cc_632))->CreateTypeA(var0, 0x7400);
+    buf = other->Allocate(0x7400);
+    ((SafeAllocator*)((char*)self + Enum_ov003_0215f8cc_632))->CreateTypeA(buf, 0x7400);
 
-    var0 = arg1->Allocate(0x4c00);
-    ((SafeAllocator*)((char*)arg0 + Enum_ov003_0215f8cc_652))->CreateTypeA(var0, 0x4c00);
+    buf = other->Allocate(0x4c00);
+    ((SafeAllocator*)((char*)self + Enum_ov003_0215f8cc_652))->CreateTypeA(buf, 0x4c00);
 
-    var0 = arg1->Allocate(0xc00);
-    ((SafeAllocator*)((char*)arg0 + Enum_ov003_0215f8cc_672))->CreateTypeA(var0, 0xc00);
+    buf = other->Allocate(0xc00);
+    ((SafeAllocator*)((char*)self + Enum_ov003_0215f8cc_672))->CreateTypeA(buf, 0xc00);
 
-    var0 = arg1->Allocate(0x3c00);
-    ((SafeAllocator*)((char*)arg0 + Enum_ov003_0215f8cc_692))->CreateTypeA(var0, 0x3c00);
+    buf = other->Allocate(0x3c00);
+    ((SafeAllocator*)((char*)self + Enum_ov003_0215f8cc_692))->CreateTypeA(buf, 0x3c00);
 
-    var0 = arg1->Allocate(0x200);
-    ((SafeAllocator*)((char*)arg0 + Enum_ov003_0215f8cc_712))->CreateTypeA(var0, 0x200);
+    buf = other->Allocate(0x200);
+    ((SafeAllocator*)((char*)self + Enum_ov003_0215f8cc_712))->CreateTypeA(buf, 0x200);
 }

@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
 struct Struct_020688e4 {
-    char unknown_0_[0x19d6];
-    unsigned char unknown_19d6_;
+    char unk[0x19d6];
+    unsigned char field;
 };
 
 // USA: func_020688e4
-extern "C" ARM int func_020688e4(int arg0, struct Struct_020688e4* arg1) {
-    return arg1->unknown_19d6_ == 0;
+extern "C" ARM int func_020688e4(int unused, struct Struct_020688e4* obj) {
+    return obj->field == 0;
 }

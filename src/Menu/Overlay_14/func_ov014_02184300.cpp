@@ -17,75 +17,75 @@
 #include "Memory/SafeAllocator.h"
 #include "World/Object3D.h"
 
-struct Struct_ov014_02184300 { char unknown_0_[0x28]; };
-struct Struct_ov014_02184300_2 {
+struct Struct_ov014_02184300 { char unknown[0x28]; };
+struct BestiaryList {
     char unknown_0_[0x40];
-    Struct_ov014_02184300* unknown_40_;
-    char unknown_44_[8];
-    short unknown_4c_;
+    Struct_ov014_02184300* items;
+    char unknown44[8];
+    short count;
     char unknown_4e_[2];
-    unsigned char unknown_50_;
+    unsigned char flags;
     char unknown_51_[3];
 };
 struct Struct_ov014_02184300_3 {
     void** unknown_0_;
-    Struct_ov014_02184300_2* unknown_4_;
-    Struct_ov014_02184300* unknown_8_;
+    BestiaryList* list;
+    Struct_ov014_02184300* items;
     char unknown_c_[0x30];
-    SafeAllocator* unknown_3c_;
-    Object3D* unknown_40_;
+    SafeAllocator* allocators;
+    Object3D* model;
     void* unknown_44_;
-    char unknown_48_[0x10];
-    void* unknown_58_;
+    char unknown48[0x10];
+    void* labels;
     void* unknown_5c_;
-    void* unknown_60_;
-    void* unknown_64_;
-    void* unknown_68_;
+    void* name;
+    void* description;
+    void* extra;
     char unknown_6c_[0x16];
     unsigned char unknown_82_0_ : 2;
     unsigned char unknown_82_2_ : 1;
     unsigned char unknown_82_3_ : 5;
 };
-struct Struct_ov014_02189498 { unsigned int unknown_0_[6]; };
+struct Struct_ov014_02189498 { unsigned int values[6]; };
 extern "C" {
 extern const Struct_ov014_02189498 data_ov014_02189498;
 extern const unsigned int data_ov014_02189480[3];
-void func_0205a198(void*);
-void func_0205a444(Struct_ov014_02184300_2*);
+extern "C" void Sprite_Init(void*);
+extern "C" void SpriteContext_Init(BestiaryList*);
 }
 
-extern "C" ARM void func_ov014_02184300(Struct_ov014_02184300_3* arg0, SafeAllocator* arg1) {
-    if (arg1) {
-        Struct_ov014_02189498 var0 = data_ov014_02189498;
-        arg0->unknown_3c_ = (SafeAllocator*)arg1->Allocate(0x78);
-        arg0->unknown_0_ = (void**)arg1->Allocate(0xc);
-        for (int var1 = 0; var1 < 3; ++var1) {
-            arg0->unknown_0_[var1] = arg1->Allocate(data_ov014_02189480[var1]);
+extern "C" ARM void func_ov014_02184300(Struct_ov014_02184300_3* state, SafeAllocator* allocator) {
+    if (allocator) {
+        Struct_ov014_02189498 sizes = data_ov014_02189498;
+        state->allocators = (SafeAllocator*)allocator->Allocate(0x78);
+        state->unknown_0_ = (void**)allocator->Allocate(0xc);
+        for (int i = 0; i < 3; ++i) {
+            state->unknown_0_[i] = allocator->Allocate(data_ov014_02189480[i]);
         }
-        arg0->unknown_40_ = (Object3D*)arg1->Allocate(0xac);
-        arg0->unknown_44_ = arg1->Allocate(0x2c8);
-        arg0->unknown_58_ = arg1->Allocate(R(0x48, 0x4c));
-        arg0->unknown_60_ = arg1->Allocate(R(0x40, 0x48));
-        arg0->unknown_64_ = arg1->Allocate(R(0x40, 0x48));
-        arg0->unknown_68_ = arg1->Allocate(R(0xc0, 0x200));
-        arg0->unknown_4_ = (Struct_ov014_02184300_2*)arg1->Allocate(0x54);
-        arg0->unknown_8_ = (Struct_ov014_02184300*)arg1->Allocate(0x78);
-        for (unsigned char var2 = 0; var2 < 3; ++var2) func_0205a198(&arg0->unknown_8_[var2]);
-        func_0205a444(arg0->unknown_4_);
-        arg0->unknown_4_->unknown_50_ = 0;
-        Struct_ov014_02184300_2* var3 = arg0->unknown_4_;
-        var3->unknown_40_ = arg0->unknown_8_;
-        var3->unknown_4c_ = 3;
-        for (int var4 = 0; var4 < 6; ++var4) {
-            unsigned int var5;
-            unsigned int var6 = var4 * sizeof(SafeAllocator);
-            var5 = var0.unknown_0_[var4];
-            void* var7 = arg1->Allocate(var5);
-            ((SafeAllocator*)((char*)arg0->unknown_3c_ + var6))->CreateTypeA(var7, var5);
-            ((SafeAllocator*)((char*)arg0->unknown_3c_ + var6))->Reset();
+        state->model = (Object3D*)allocator->Allocate(0xac);
+        state->unknown_44_ = allocator->Allocate(0x2c8);
+        state->labels = allocator->Allocate(R(0x48, 0x4c));
+        state->name = allocator->Allocate(R(0x40, 0x48));
+        state->description = allocator->Allocate(R(0x40, 0x48));
+        state->extra = allocator->Allocate(R(0xc0, 0x200));
+        state->list = (BestiaryList*)allocator->Allocate(0x54);
+        state->items = (Struct_ov014_02184300*)allocator->Allocate(0x78);
+        for (unsigned char i = 0; i < 3; ++i) Sprite_Init(&state->items[i]);
+        SpriteContext_Init(state->list);
+        state->list->flags = 0;
+        BestiaryList* list = state->list;
+        list->items = state->items;
+        list->count = 3;
+        for (int i = 0; i < 6; ++i) {
+            unsigned int size;
+            unsigned int offset = i * sizeof(SafeAllocator);
+            size = sizes.values[i];
+            void* buffer = allocator->Allocate(size);
+            ((SafeAllocator*)((char*)state->allocators + offset))->CreateTypeA(buffer, size);
+            ((SafeAllocator*)((char*)state->allocators + offset))->Reset();
         }
-        arg0->unknown_40_->Initialize();
-        arg0->unknown_40_->EnableFlag(4);
-        arg0->unknown_82_2_ = 1;
+        state->model->Initialize();
+        state->model->EnableFlag(4);
+        state->unknown_82_2_ = 1;
     }
 }

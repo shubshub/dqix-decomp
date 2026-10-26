@@ -2,8 +2,8 @@
 #include "Filesystem/BackgroundLoader.h"
 #include "NitroSDK/Memory/AllocatorUnion.h"
 
-struct Struct_02114e20;
-extern "C" unsigned int func_02012dd0(struct Struct_02114e20* arg0);
+struct Struct02012dd0;
+extern "C" unsigned int AllocatorUnion_GetMaxPossibleAllocation(struct Struct02012dd0* self);
 
 
 
@@ -11,34 +11,34 @@ struct NitroHandle;
 NitroHandle* NitroHandle_FindBySignature(const char* sig, int a);
 void NitroHandle_ReleaseFileTables(NitroHandle* h);
 
-extern "C" void func_02012da4(AllocatorUnion* arg0, void* arg1);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 
 struct Struct_020a0cc4;
 
-extern struct Struct_02114e20 data_02114e20;
+extern struct Struct02012dd0 g_mainAllocator;
 extern void* data_02109d90;
 extern const char data_020f18e8[];
 
 // USA: func_020a0cc4
-extern "C" ARM int func_020a0cc4(int arg0) {
-    if (arg0 >= 0) {
-        unsigned int var0 = func_02012dd0(&data_02114e20);
-        if (var0 >= arg0) goto fail;
+extern "C" ARM int func_020a0cc4(int id) {
+    if (id >= 0) {
+        unsigned int max = AllocatorUnion_GetMaxPossibleAllocation(&g_mainAllocator);
+        if (max >= id) goto fail;
     }
     if (data_02109d90 == NULL) goto fail;
 
     {
-        int var1 = (int)BackgroundLoader::GetInstance();
-        if (var1 != 0) {
-            ((BackgroundLoader*)(var1))->MaybeWaitIdle();
+        int field4Val = (int)BackgroundLoader::GetInstance();
+        if (field4Val != 0) {
+            ((BackgroundLoader*)(field4Val))->Suspend();
         }
 
         NitroHandle_ReleaseFileTables(NitroHandle_FindBySignature(data_020f18e8, 3));
-        func_02012da4((AllocatorUnion*)&data_02114e20, data_02109d90);
+        AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, data_02109d90);
         data_02109d90 = NULL;
 
-        if (var1 != 0) {
-            ((BackgroundLoader*)((struct Struct_020a0cc4*)var1))->RemoveLock();
+        if (field4Val != 0) {
+            ((BackgroundLoader*)((struct Struct_020a0cc4*)field4Val))->RemoveLock();
         }
     }
     return 1;

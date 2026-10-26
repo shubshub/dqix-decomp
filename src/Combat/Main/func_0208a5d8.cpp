@@ -2,51 +2,51 @@
 #include "GameState/GameState.h"
 #include "Util/Random.h"
 
-extern "C" GameObject* func_0200fea4(GameState* arg0, int arg1);
-extern "C" int func_0208a03c(void* arg0, int arg1, int arg2, int* arg3, int arg4);
-extern "C" int func_ov000_02154a04(int arg0, int arg1, int arg2, int arg3);
+extern "C" GameObject* func_0200fea4(GameState* battleStruct, int combatantId);
+extern "C" int func_0208a03c(void* p0, int arg1, int id, int* outPtr, int p3);
+extern "C" int func_ov000_02154a04(int field0, int id, int flag, int p3);
 
 // USA: func_0208a5d8
-extern "C" ARM int func_0208a5d8(int* arg0, int arg1, int* arg2, int arg3) {
-    unsigned char var0;
-    GameState* var1;
-    GameObject* var2;
-    struct ModifiableCombatStats* var3;
+extern "C" ARM int func_0208a5d8(int* p0, int id, int* outPtr, int p3) {
+    unsigned char i;
+    GameState* bs;
+    GameObject* combatant;
+    struct ModifiableCombatStats* stats;
     unsigned char* var4;
     char* var5;
     struct Random* var6;
-    unsigned char var7;
+    unsigned char bit;
     unsigned char var8;
-    unsigned char var9;
+    unsigned char base;
     unsigned char var10;
-    unsigned char var11;
+    unsigned char slotB;
 
-    var1 = GameState::GetInstance();
-    var2 = func_0200fea4(var1, arg1);
-    var5 = *(char**)((char*)var2 + 0x148);
-    var3 = var2->currentStats_;
-    var4 = (unsigned char*)((char*)var3 + 0x38);
+    bs = GameState::GetInstance();
+    combatant = func_0200fea4(bs, id);
+    var5 = *(char**)((char*)combatant + 0x148);
+    stats = combatant->currentStats_;
+    var4 = (unsigned char*)((char*)stats + 0x38);
     *var4 = *var4 % 3u;
-    var0 = 0;
-    var6 = (struct Random*)*arg0;
+    i = 0;
+    var6 = (struct Random*)*p0;
 
-    while (var0 < 3) {
-        var7 = NextRandom(var6) & 1;
-        var8 = var7 ^ 1;
-        var9 = *var4 * 2;
-        var10 = var9 + var7;
-        var11 = var9 + var8;
+    while (i < 3) {
+        bit = NextRandom(var6) & 1;
+        var8 = bit ^ 1;
+        base = *var4 * 2;
+        var10 = base + bit;
+        slotB = base + var8;
         *var4 = *var4 + 1;
         *var4 = *var4 % 3u;
-        if (func_0208a03c(arg0, var10, arg1, arg2, arg3) != 0) {
+        if (func_0208a03c(p0, var10, id, outPtr, p3) != 0) {
             return *(unsigned short*)(var5 + var10 * 2 + 0x18);
         }
-        if (func_0208a03c(arg0, var11, arg1, arg2, arg3) != 0) {
-            return *(unsigned short*)(var5 + var11 * 2 + 0x18);
+        if (func_0208a03c(p0, slotB, id, outPtr, p3) != 0) {
+            return *(unsigned short*)(var5 + slotB * 2 + 0x18);
         }
-        var0 = var0 + 1;
+        i = i + 1;
     }
-    *arg2 = 0;
-    *arg2 = func_ov000_02154a04(*arg0, arg1, 2, arg3);
+    *outPtr = 0;
+    *outPtr = func_ov000_02154a04(*p0, id, 2, p3);
     return 2;
 }

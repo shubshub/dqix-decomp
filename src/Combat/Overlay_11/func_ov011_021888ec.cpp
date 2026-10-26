@@ -9,10 +9,10 @@
 #endif
 #include <globaldefs.h>
 
-extern "C" void func_ov017_021d4cc0(void* arg0, void* arg1, int arg2);
+extern "C" void func_ov017_021d4cc0(void* obj, void* a, int b);
 extern int data_ov011_021889a0;
 
 // USA: func_ov011_021888ec
-extern "C" ARM void func_ov011_021888ec(void* arg0) {
-    func_ov017_021d4cc0(arg0, &data_ov011_021889a0, R(0x6f,0x73));
+extern "C" ARM void func_ov011_021888ec(void* obj) {
+    func_ov017_021d4cc0(obj, &data_ov011_021889a0, R(0x6f,0x73));
 }

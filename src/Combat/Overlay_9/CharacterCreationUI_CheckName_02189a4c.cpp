@@ -9,7 +9,7 @@ extern unsigned char g_fileLoadBuffer[0x30000] __attribute__((aligned(4)));
 
 extern "C" int ForbiddenWordFile_RelocatePattern(ForbiddenWordFile*, ForbiddenWordPattern*);
 
-// The font every lookup here uses: data/pack_lv5/fi_me.bin (RegisterFieldTableEntries02042944 loads "me" second).
+// The font every lookup here uses: data/pack_lv5/fi_me.bin (func_02042944 loads "me" second).
 enum FontId {
     FontId_Me = 1,
 };
@@ -54,7 +54,7 @@ struct Struct020dfc40 : Container020e0310 { short unknownC_; short unknownE_; in
 struct CharacterCreation {
     char pad0[0xfc];
     NameFilter nameFilter_;
-    char pad138[0xd9c - 0x138];
+    char unknown_138_[0xd9c - 0x138];
     unsigned int flags_;
     signed char furthestState_[2];
     unsigned char vocation_;
@@ -75,26 +75,26 @@ extern const char* NameFilter_patternsFilePath;
 extern const char* NameFilter_reservedNamesFilePath;
 extern char NameFilter_cSlashText[];
 extern "C" void NameFilter_Reset(NameFilter*);
-void KeyTable_Reset(Struct020dfc40*);
-int KeyTable_LoadInPlace(void*, void*, int);
+extern "C" void KeyTable_Reset(Struct020dfc40*);
+extern "C" int KeyTable_LoadInPlace(void*, void*, int);
 extern "C" void __clear(void*, unsigned int);
-FontCharacter* Font_FindCharacter(int, int);
-void NameFilter_CopyUppercase(int, char*, char*);
-unsigned int KeyTable_GetCount(Header020e0424*);
-int KeyTable_Get(Container020e0310*, int);
-int Font_FindCharacterIndex(int, int);
-FontCharacter* Font_GetCharacter(int, int);
+extern "C" FontCharacter* Font_FindCharacter(int, int);
+extern "C" void NameFilter_CopyUppercase(int, char*, char*);
+extern "C" unsigned int KeyTable_GetCount(Header020e0424*);
+extern "C" int KeyTable_Get(Container020e0310*, int);
+extern "C" int Font_FindCharacterIndex(int, int);
+extern "C" FontCharacter* Font_GetCharacter(int, int);
 extern "C" int Font_EncodeText(const char*, unsigned char*, int);
-int NameFilter_FindWord(int, int, int, int, int);
+extern "C" int NameFilter_FindWord(int, int, int, int, int);
 extern "C" int NameFilter_MatchPattern(NameFilter*, const unsigned char*, const unsigned char*, int, int);
 
-static inline Struct_ov009_02189a4c_3* inline_ov009_02189a4c(const Struct_ov009_02189a4c_2* arg0) { return arg0->unknown_4_; }
-static inline int inline_ov009_02189a4c_2(const Struct_ov009_02189a4c_2* arg0) { return arg0->unknown_0_.unknown_0_0_; }
+static inline ForbiddenWordPattern* GetFilePatterns(const ForbiddenWordFile* file) { return file->patterns_; }
+static inline int GetFileCount(const ForbiddenWordFile* file) { return file->header_.count_; }
 
-static inline unsigned int inline_ov009_02189a4c_3(unsigned int arg0, unsigned int arg1, unsigned int arg2, unsigned int arg3) {
-    unsigned int var0 = inline_ov009_02189a4c_4(arg2, arg3);
-    unsigned int var1 = arg1 * var0;
-    return arg0 + var1;
+static inline unsigned int PatternOffset(unsigned int base, unsigned int count, unsigned int size, unsigned int alignment) {
+    unsigned int stride = AlignUp(size, alignment);
+    unsigned int amount = count * stride;
+    return base + amount;
 }
 
 // Overlay 9, originally func_ov009_02189a4c (USA/EUR 0x02189a4c; JPN not identified)

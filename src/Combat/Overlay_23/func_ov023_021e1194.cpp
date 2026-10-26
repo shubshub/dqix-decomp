@@ -1,26 +1,26 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8;
+struct Variant02030b0c;
 
-extern "C" void func_ov023_021e13b0(void* arg0, void* arg1, int arg2);
+extern "C" void func_ov023_021e13b0(void* obj, void* alloc, int capacity);
 
 struct Struct_ov023_021ffa34 {
-    short unknown_0_;
-    short unknown_2_;
-    void* unknown_4_;
-    void* unknown_8_;
-    void* unknown_c_;
+    short count;
+    short pad2;
+    void* arr;
+    void* field8;
+    void* fieldC;
 };
 extern struct Struct_ov023_021ffa34 data_ov023_021ffa34;
 
 // USA: func_ov023_021e1194
-extern "C" ARM int func_ov023_021e1194(struct Struct_0201c1c8* arg0) {
-    short var0 = (short)((Script::Parameter*)arg0)->ToInt();
-    if (data_ov023_021ffa34.unknown_4_ != 0 && data_ov023_021ffa34.unknown_0_ != 0) {
-        func_ov023_021e13b0(data_ov023_021ffa34.unknown_c_, data_ov023_021ffa34.unknown_8_, data_ov023_021ffa34.unknown_0_);
+extern "C" ARM int func_ov023_021e1194(struct Variant02030b0c* objRaw) {
+    short v0 = (short)((Script::Parameter*)objRaw)->ToInt();
+    if (data_ov023_021ffa34.arr != 0 && data_ov023_021ffa34.count != 0) {
+        func_ov023_021e13b0(data_ov023_021ffa34.fieldC, data_ov023_021ffa34.field8, data_ov023_021ffa34.count);
     } else {
-        func_ov023_021e13b0(data_ov023_021ffa34.unknown_c_, data_ov023_021ffa34.unknown_8_, var0);
+        func_ov023_021e13b0(data_ov023_021ffa34.fieldC, data_ov023_021ffa34.field8, v0);
     }
     return 1;
 }

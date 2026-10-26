@@ -1,47 +1,47 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-struct Struct_02000c9c_8;
+struct Struct0200fb08;
 
-struct Struct_020200c0_3 {
-    int unknown_0_;
-    short unknown_4_;
-    short unknown_6_;
-    short unknown_8_;
-    short unknown_a_;
+struct Struct02020520 {
+    int a;
+    short b;
+    short c;
+    short d;
+    short e;
 };
 
-struct Struct_020200c0_4 {
-    int unknown_0_;
-    int unknown_4_;
-    unsigned char unknown_8_;
+struct S_b20c {
+    int field0;
+    int field4;
+    unsigned char field8;
 };
 
-void GlyphDestinationRect_InitArray(struct Struct02020520* arr, unsigned int count, short* a, short* b, short* c, short* d);
-void GlyphDestination_Clear(struct S_b20c* obj);
-void GlyphDestination_SetPixels(void* obj, int value);
-void GlyphDestination_SetRects(void* obj, int value, unsigned char flag);
-int GameState_GetLanguage(Struct0200fb08*);
+extern "C" void GlyphDestinationRect_InitArray(struct Struct02020520* arr, unsigned int count, short* a, short* b, short* c, short* d);
+extern "C" void GlyphDestination_Clear(struct S_b20c* obj);
+extern "C" void GlyphDestination_SetPixels(void* obj, int value);
+extern "C" void GlyphDestination_SetRects(void* obj, int value, unsigned char flag);
+extern "C" int GameState_GetLanguage(Struct0200fb08*);
 extern "C" int GlyphDestination_DrawText(void*, short, short, int, unsigned char, unsigned char);
 
 #if defined(jpn)
 extern short data_020ee91a[];
 extern short data_020ee92c[];
 extern short data_020ee914[];
-enum { Enum_020e0ec4_14 = 3 };
+enum { kEntryCount = 3 };
 #else
 extern short data_020ee8e8[];
 extern short data_020ee8cc[];
 extern short data_020ee904[];
 extern const short data_020ee820[];
-enum { Enum_020e0ec4_14 = 14 };
+enum { kEntryCount = 14 };
 #endif
 extern short data_020ee920[];
 
 // JPN: func_020e2ad4
 // USA: func_020e0ec4
-extern "C" ARM void func_020e0ec4(void* arg0, void* arg1, int arg2, int) {
-    struct Struct_020200c0_3 var0[Enum_020e0ec4_14];
+extern "C" ARM void func_020e0ec4(void* obj, void* buffer, int offset, int) {
+    struct Struct02020520 arr[kEntryCount];
 #if defined(jpn)
     GlyphDestinationRect_InitArray(arr, kEntryCount, data_020ee920, data_020ee91a, data_020ee92c, data_020ee914);
 #else

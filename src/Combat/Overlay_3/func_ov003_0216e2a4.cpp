@@ -8,53 +8,53 @@ struct Background0216e2a4 {
     unsigned char subScreen_ : 4;
     unsigned char bgNumber_ : 4;
     unsigned char screenCount_;
-    char unk_1e[2];
+    char unknown_1e_[2];
 };
 
 struct Struct_ov003_0216e2a4_2 {
-    void *unknown_0_;
-    Struct_ov003_0216e2a4 *unknown_4_;
-    char unknown_8_[0xc4 - 8];
+    void *unk_0;
+    Background0216e2a4 *background_;
+    char unk_8[0xc4 - 8];
     unsigned char unknown_c4_;
-    char unknown_c5_[0xe0 - 0xc5];
+    char unk_c5[0xe0 - 0xc5];
 };
 
 struct Struct_ov003_0216e2a4_3 {
-    char unknown_0_[0x98];
-    Struct_ov003_0216e2a4 *unknown_98_;
+    char unk_0[0x98];
+    Background0216e2a4 *background_;
     char unknown_9c_[0xb2 - 0x9c];
     unsigned char unknown_b2_;
     char unknown_b3_[0xbc - 0xb3];
 };
 
 struct Struct_ov003_0216e2a4_4 {
-    char unknown_0_;
-    char unknown_1_;
-    char unknown_2_;
-    char unknown_3_[0x14 - 3];
-    void *unknown_14_;
+    char unk_0;
+    char state_;
+    char step_;
+    char unk_3[0x14 - 3];
+    void *pixels_;
     char unknown_18_[4];
-    int unknown_1c_;
-    char unknown_20_[0x3c - 0x20];
-    Struct_ov003_0216e2a4_3 *unknown_3c_;
-    Struct_ov003_0216e2a4 *unknown_40_;
-    Struct_ov003_0216e2a4_2 *unknown_44_;
+    int task_;
+    char unk_20[0x3c - 0x20];
+    Struct_ov003_0216e2a4_3 *window_;
+    Background0216e2a4 *backgrounds_;
+    Struct_ov003_0216e2a4_2 *canvases_;
     char unknown_48_[0x60 - 0x48];
     int unknown_60_;
-    int unknown_64_;
+    int unk_64;
     char unknown_68_[0xa4 - 0x68];
     int unknown_a4_;
     int unknown_a8_;
-    char unknown_ac_[0xb4 - 0xac];
+    char unk_ac[0xb4 - 0xac];
     short unknown_b4_;
     char unknown_b6_[2];
-    unsigned char unknown_b8_;
+    unsigned char unk_b8;
     char unknown_b9_[0xbc - 0xb9];
-    SafeAllocator unknown_bc_;
-    SafeAllocator *unknown_d0_;
+    SafeAllocator allocator_;
+    SafeAllocator *allocatorPtr_;
     void *unknown_d4_;
-    char unknown_d8_[4];
-    char unknown_dc_[0x20];
+    char unk_d8[4];
+    char unk_dc[0x20];
 };
 
 struct BackgroundGraphics;
@@ -63,19 +63,19 @@ struct WindowPane;
 struct Struct_0205cf78;
 struct WindowPane;
 
-void Background_SetMapSize(unsigned char *background, int a);
-int Pac_CountFiles(PacRecord *archive);
-void *Pac_GetFile(PacRecord *archive, int index, void **name, int *size);
+extern "C" void Background_SetMapSize(unsigned char *background, int a);
+extern "C" int Pac_CountFiles(PacRecord *archive);
+extern "C" void *Pac_GetFile(PacRecord *archive, int index, void **name, int *size);
 extern "C" void Background_SetPriority(Background0216e2a4 *background, int a);
-void Background_AllocateMap(BackgroundGraphics *background,
+extern "C" void Background_AllocateMap(BackgroundGraphics *background,
                                                                                          SafeAllocator *allocator);
-void Background_SetScroll(BackgroundGraphics *background, int a, int b);
+extern "C" void Background_SetScroll(BackgroundGraphics *background, int a, int b);
 extern "C" void Background_LoadFile(Background0216e2a4 *background, void *file, SafeAllocator *allocator, unsigned int size);
 extern "C" void Background_FillRect(Background0216e2a4 *background, int a, int b, int c, int d, int e, int f);
-void Background_UploadMap(BackgroundGraphics *background, void *a);
-void WindowPane_AllocateBuffer(WindowPane *canvas, SafeAllocator *allocator,
+extern "C" void Background_UploadMap(BackgroundGraphics *background, void *a);
+extern "C" void WindowPane_AllocateBuffer(WindowPane *canvas, SafeAllocator *allocator,
                                                                            int pixels, unsigned int size);
-void Window_SetPanes(Struct_0205cf78 *window,
+extern "C" void Window_SetPanes(Struct_0205cf78 *window,
                                                                                      WindowPane *canvases,
                                                                                      unsigned char count);
 extern "C" void SpriteContext_LoadFile(void *renderer, void *file, unsigned int size, SafeAllocator *allocator);
@@ -101,8 +101,8 @@ extern char data_ov003_0218027a[];
 
 // USA: func_ov003_0216e2a4
 #if defined(jpn)
-extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
-    BackgroundLoader *var0 = BackgroundLoader::GetInstance();
+extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *self) {
+    BackgroundLoader *loader = BackgroundLoader::GetInstance();
 
     if (self->step_ == 0) {
         Background_SetMapSize((unsigned char *) &self->backgrounds_[0], 0);
@@ -144,19 +144,19 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
             self->pixels_ = self->allocatorPtr_->Allocate(0x2800);
             WindowPane_AllocateBuffer((WindowPane *) &self->canvases_[0], self->allocatorPtr_, (int) self->pixels_, 0x500);
             self->canvases_[0].background_ = &self->backgrounds_[0];
-            self->canvases_[0].unk_c4      = 0;
+            self->canvases_[0].unknown_c4_      = 0;
             WindowPane_AllocateBuffer((WindowPane *) &self->canvases_[1], self->allocatorPtr_, (int) self->pixels_, 0x500);
             self->canvases_[1].background_ = &self->backgrounds_[1];
-            self->canvases_[1].unk_c4      = 0;
-            Window0216e2a4 *window = self->window_;
+            self->canvases_[1].unknown_c4_      = 0;
+            Struct_ov003_0216e2a4_3 *window = self->window_;
             window->background_    = self->backgrounds_;
-            window->unk_b2         = 2;
+            window->unknown_b2_         = 2;
             Window_SetPanes((Struct_0205cf78 *) self->window_,
                                                                                  (WindowPane *) self->canvases_, 2);
             self->unk_b8 = 0;
-            self->unk_a8 = self->unk_60;
-            self->unk_b4 = 0xa;
-            self->unk_a4 = self->unk_64;
+            self->unknown_a8_ = self->unknown_60_;
+            self->unknown_b4_ = 0xa;
+            self->unknown_a4_ = self->unk_64;
             self->task_  = loader->QueueLoadFile(data_ov003_02180235, 0);
             self->step_  = 2;
         }
@@ -172,21 +172,21 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
                 void *data = Pac_GetFile((PacRecord *) file, i, &name, &fileSize);
                 SpriteContext_LoadFile((char *) self + 0x68, data, fileSize, &self->allocator_);
             }
-            var0->RemoveTask(arg0->unknown_1c_);
-            arg0->unknown_1c_ = -1;
-            arg0->unknown_1c_ = var0->QueueLoadFile(data_ov003_02180249, 0);
-            arg0->unknown_2_ = 3;
+            loader->RemoveTask(self->task_);
+            self->task_ = -1;
+            self->task_ = loader->QueueLoadFile(data_ov003_02180249, 0);
+            self->step_ = 3;
         }
-    } else if (arg0->unknown_2_ == 3) {
-        if (var0->GetTaskStatus(arg0->unknown_1c_) != 0) {
-            void *var17;
-            unsigned int var18;
-            var0->GetLoadedFileByID(arg0->unknown_1c_, &var17, &var18);
-            func_ov023_021e20f0(arg0->unknown_d4_, arg0->unknown_d0_, var17, var18);
-            var0->RemoveTask(arg0->unknown_1c_);
-            arg0->unknown_1c_ = -1;
-            arg0->unknown_1c_ = var0->QueueLoadFile(data_ov003_0217ea05, 0);
-            arg0->unknown_2_ = 4;
+    } else if (self->step_ == 3) {
+        if (loader->GetTaskStatus(self->task_) != 0) {
+            void *file;
+            unsigned int size;
+            loader->GetLoadedFileByID(self->task_, &file, &size);
+            func_ov023_021e20f0(self->unknown_d4_, self->allocatorPtr_, file, size);
+            loader->RemoveTask(self->task_);
+            self->task_ = -1;
+            self->task_ = loader->QueueLoadFile(data_ov003_0217ea05, 0);
+            self->step_ = 4;
         }
     } else if (self->step_ == 4) {
         if (loader->GetTaskStatus(self->task_) != 0) {
@@ -202,8 +202,8 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
     }
 }
 #else
-extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
-    BackgroundLoader *var21 = BackgroundLoader::GetInstance();
+extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *self) {
+    BackgroundLoader *loader = BackgroundLoader::GetInstance();
 
     if (self->step_ == 0) {
         Background0216e2a4 *background = self->backgrounds_;
@@ -244,23 +244,23 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
                 background++;
             }
             self->pixels_          = self->allocatorPtr_->Allocate(0x2800);
-            Canvas0216e2a4 *canvas = self->canvases_;
+            Struct_ov003_0216e2a4_2 *canvas = self->canvases_;
             for (int i = 0; i < 2; i++) {
                 WindowPane_AllocateBuffer((WindowPane *) canvas, self->allocatorPtr_,
                                                                            (int) self->pixels_, 0x500);
                 canvas->background_ = &self->backgrounds_[i];
-                canvas->unk_c4      = 0;
+                canvas->unknown_c4_      = 0;
                 canvas++;
             }
-            Window0216e2a4 *window = self->window_;
+            Struct_ov003_0216e2a4_3 *window = self->window_;
             window->background_    = self->backgrounds_;
-            window->unk_b2         = 2;
+            window->unknown_b2_         = 2;
             Window_SetPanes((Struct_0205cf78 *) self->window_,
                                                                                  (WindowPane *) self->canvases_, 2);
             self->unk_b8 = 0;
-            self->unk_a8 = self->unk_60;
-            self->unk_b4 = 0x16;
-            self->unk_a4 = self->unk_64;
+            self->unknown_a8_ = self->unknown_60_;
+            self->unknown_b4_ = 0x16;
+            self->unknown_a4_ = self->unk_64;
             self->task_  = loader->QueueLoadFile(data_ov003_02180235, 0);
             self->step_  = 2;
         }
@@ -276,21 +276,21 @@ extern "C" ARM void func_ov003_0216e2a4(Struct_ov003_0216e2a4_4 *arg0) {
                 void *data = Pac_GetFile((PacRecord *) file, i, &name, &fileSize);
                 SpriteContext_LoadFile((char *) self + 0x68, data, fileSize, &self->allocator_);
             }
-            var21->RemoveTask(arg0->unknown_1c_);
-            arg0->unknown_1c_ = -1;
-            arg0->unknown_1c_ = var21->QueueLoadFile(data_ov003_02180249, 0);
-            arg0->unknown_2_ = 3;
+            loader->RemoveTask(self->task_);
+            self->task_ = -1;
+            self->task_ = loader->QueueLoadFile(data_ov003_02180249, 0);
+            self->step_ = 3;
         }
-    } else if (arg0->unknown_2_ == 3) {
-        if (var21->GetTaskStatus(arg0->unknown_1c_) != 0) {
-            void *var44;
-            unsigned int var45;
-            var21->GetLoadedFileByID(arg0->unknown_1c_, &var44, &var45);
-            func_ov023_021e20f0(arg0->unknown_d4_, arg0->unknown_d0_, var44, var45);
-            var21->RemoveTask(arg0->unknown_1c_);
-            arg0->unknown_1c_ = -1;
-            arg0->unknown_1c_ = var21->QueueLoadFileInGP2(data_ov003_02180260, data_ov003_0218027a, 0);
-            arg0->unknown_2_ = 4;
+    } else if (self->step_ == 3) {
+        if (loader->GetTaskStatus(self->task_) != 0) {
+            void *file;
+            unsigned int size;
+            loader->GetLoadedFileByID(self->task_, &file, &size);
+            func_ov023_021e20f0(self->unknown_d4_, self->allocatorPtr_, file, size);
+            loader->RemoveTask(self->task_);
+            self->task_ = -1;
+            self->task_ = loader->QueueLoadFileInGP2(data_ov003_02180260, data_ov003_0218027a, 0);
+            self->step_ = 4;
         }
     } else if (self->step_ == 4) {
         if (loader->GetTaskStatus(self->task_) != 0) {

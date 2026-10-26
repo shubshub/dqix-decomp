@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 
 #if defined(jpn)
-enum { kModeOffset = 0x915, kFlagsOffset = 0x9cb, kBattleFlagsOffset = 0xa6c };
+enum { Enum_020235c8_2497 = 0x915, kFlagsOffset = 0x9cb, Enum_020235c8_3276 = 0xa6c };
 #else
-enum { kModeOffset = 0x9c1, kFlagsOffset = 0xa97, kBattleFlagsOffset = 0xccc };
+enum { Enum_020235c8_2497 = 0x9c1, kFlagsOffset = 0xa97, Enum_020235c8_3276 = 0xccc };
 #endif
 
 #include "GameState/GameState.h"
 
-void* GlobalFlags_GetInstance(void);
+extern "C" void* GlobalFlags_GetInstance(void);
 
 struct FlagWord02046708;
-int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
+extern "C" int FlagWord_TestBits(struct FlagWord02046708* word, unsigned int mask);
 
-void ApplyBitfieldsForTableEntries02026ebc(void* obj);
-void MapDisplay_DrawMemberPanels(unsigned char* obj);
+extern "C" void func_02026ebc(void* obj);
+extern "C" void MapDisplay_DrawMemberPanels(unsigned char* obj);
 
 extern "C" {
     void MapDisplay_DrawTreasureMap(void* obj);
@@ -31,24 +31,24 @@ extern "C" {
 }
 
 struct BattleFlags5ccc020235c8 {
-    char pad[kBattleFlagsOffset];
-    unsigned int flagsBit0 : 1;
+    char pad[Enum_020235c8_3276];
+    unsigned int unknown_ccc_0_ : 1;
     signed int flagsBit1 : 1;
-    unsigned int flagsRest : 30;
+    unsigned int unknown_ccc_2_ : 30;
 };
 
 // The MapDisplay fields this reads (header: displayMode, field9c1, flags at 0xa97)
 struct Obj020235c8 {
     char pad0[0x14];
     int displayMode; // the map layout, from the zone's map type (MapDisplay_LoadLocalMap)
-    char pad1[kModeOffset - 0x18];
+    char pad1[Enum_020235c8_2497 - 0x18];
     unsigned char mode; // what MapDisplay_SetMode set: 1 treasure map, 4 world map
-    char pad2[kFlagsOffset - (kModeOffset + 1)];
-    unsigned char panelFlags; // bit 0 (SetFlagsAt0xa97, ClearFlags0xa97_02027bbc): leave out the member panels
+    char pad2[kFlagsOffset - (Enum_020235c8_2497 + 1)];
+    unsigned char panelFlags; // bit 0 (func_02027bac, func_02027bbc): leave out the member panels
 };
 
 // Main, originally ProcessCombatantState020235c8 (USA 0x020235c8, EUR 0x020235d8, JPN 0x02022f90)
-ARM void MapDisplay_DrawMapAndPanels(struct Obj020235c8* obj) {
+extern "C" ARM void MapDisplay_DrawMapAndPanels(struct Obj020235c8* obj) {
     GameState* game = GameState::GetInstance();
 
     if (FlagWord_TestBits((struct FlagWord02046708*)GlobalFlags_GetInstance(), 0x41)) {
@@ -66,7 +66,7 @@ ARM void MapDisplay_DrawMapAndPanels(struct Obj020235c8* obj) {
     default:
         MapDisplay_DrawGrottoIcons(obj);
         MapDisplay_DrawMapNameFrame(obj);
-        ApplyBitfieldsForTableEntries02026ebc(obj);
+        func_02026ebc(obj);
         switch (obj->displayMode) {
         case 0:
             MapDisplay_DrawFreeScrollMap(obj);

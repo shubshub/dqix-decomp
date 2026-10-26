@@ -1,60 +1,60 @@
 #include <globaldefs.h>
 
-struct Struct_020200c0_3 {
-    int unknown_0_;
-    short unknown_4_;
-    short unknown_6_;
-    short unknown_8_;
-    short unknown_a_;
+struct Struct02020520 {
+    int a;
+    short b;
+    short c;
+    short d;
+    short e;
 };
 
-struct Struct_020200c0_4 {
-    int unknown_0_;
-    int unknown_4_;
-    unsigned char unknown_8_;
+struct S_b20c {
+    int field0;
+    int field4;
+    unsigned char field8;
 };
 
-extern "C" void func_02023064(struct Struct_020200c0_3* arg0, unsigned int arg1, short* arg2, short* arg3, short* arg4, short* arg5);
-extern "C" void func_0205b20c(struct Struct_020200c0_4* arg0);
-extern "C" void func_0205b220(void* arg0, int arg1);
-extern "C" void func_0205b228(void* arg0, int arg1, unsigned char arg2);
-extern "C" int func_0205b234(void*, short, short, int, unsigned char, unsigned char);
+extern "C" void GlyphDestinationRect_InitArray(struct Struct02020520* arr, unsigned int count, short* a, short* b, short* c, short* d);
+extern "C" void GlyphDestination_Clear(struct S_b20c* obj);
+extern "C" void GlyphDestination_SetPixels(void* obj, int value);
+extern "C" void GlyphDestination_SetRects(void* obj, int value, unsigned char flag);
+extern "C" int GlyphDestination_DrawText(void*, short, short, int, unsigned char, unsigned char);
 
 #if defined(jpn)
-extern "C" int func_020d2ff0(const char*);
+extern "C" int STD_GetStringLength(const char*);
 extern short data_020ee980[];
 extern short data_020ee938[];
 extern short data_020ee950[];
 extern short data_020ee968[];
-enum { Enum_020e0df8_7 = 12, Enum_020e0df8_2 = 7, Enum_020e0df8_15 = 10, Enum_020e0df8_0 = 15 };
+enum { kEntryCount = 12, kY = 7, kDrawFirst = 10, kDrawSecond = 15 };
 #else
 extern short data_020ee82c[];
 extern short data_020ee848[];
 extern short data_020ee856[];
 extern short data_020ee83a[];
-enum { Enum_020e0df8_7 = 7, Enum_020e0df8_2 = 2, Enum_020e0df8_15 = 15, Enum_020e0df8_0 = 0 };
+enum { kEntryCount = 7, kY = 2, kDrawFirst = 15, kDrawSecond = 0 };
 #endif
 
 // JPN: func_020e29f0
 // USA: func_020e0df8
-extern "C" ARM void func_020e0df8(void* arg0, int arg1, int arg2, int) {
-    struct Struct_020200c0_3 var0[Enum_020e0df8_7];
+extern "C" ARM void func_020e0df8(void* obj, int b, int c, int) {
+    struct Struct02020520 arr[kEntryCount];
 #if defined(jpn)
-    func_02023064(var0, Enum_020e0df8_7, data_020ee980, data_020ee938, data_020ee950, data_020ee968);
+    GlyphDestinationRect_InitArray(arr, kEntryCount, data_020ee980, data_020ee938, data_020ee950, data_020ee968);
 #else
-    func_02023064(var0, Enum_020e0df8_7, data_020ee82c, data_020ee848, data_020ee856, data_020ee83a);
+    GlyphDestinationRect_InitArray(arr, kEntryCount, data_020ee82c, data_020ee848, data_020ee856, data_020ee83a);
 #endif
-    struct Struct_020200c0_4 var1;
-    func_0205b20c(&var1);
-    func_0205b220(&var1, arg1 + arg2);
-    func_0205b228(&var1, (int)var0, Enum_020e0df8_7);
+    struct S_b20c localObj;
+    GlyphDestination_Clear(&localObj);
+    GlyphDestination_SetPixels(&localObj, b + c);
+    GlyphDestination_SetRects(&localObj, (int)arr, kEntryCount);
 #if defined(jpn)
-    func_0205b234((void*)&var1, (short)6, (short)Enum_020e0df8_2, (int)((char*)arg0 + 0x1b4 + 0x400), (unsigned char)Enum_020e0df8_15, (unsigned char)Enum_020e0df8_0);
-    int var2 = func_020d2ff0((char*)arg0 + 0x1b4 + 0x400);
-    short var4 = (var2 / 2) * 10 + 7;
+    GlyphDestination_DrawText((void*)&localObj, (short)6, (short)kY, (int)((char*)obj + 0x1b4 + 0x400), (unsigned char)kDrawFirst, (unsigned char)kDrawSecond);
+    int byteLength = STD_GetStringLength((char*)obj + 0x1b4 + 0x400);
+    short val = (byteLength / 2) * 10 + 7;
 #else
-    int var3 = func_0205b234((void*)&var1, (short)6, (short)Enum_020e0df8_2, (int)((char*)arg0 + 0x1b4 + 0x400), (unsigned char)Enum_020e0df8_15, (unsigned char)Enum_020e0df8_0);
-    short var4 = var3 + 9;
+    int ret = GlyphDestination_DrawText((void*)&localObj, (short)6, (short)kY, (int)((char*)obj + 0x1b4 + 0x400), (unsigned char)kDrawFirst, (unsigned char)kDrawSecond);
+    short val = ret + 9;
 #endif
-    func_0205b234((void*)&var1, var4, (short)Enum_020e0df8_2, (int)((char*)arg0 + 0x1f4 + 0x400), (unsigned char)Enum_020e0df8_15, (unsigned char)Enum_020e0df8_0);
+    GlyphDestination_DrawText((void*)&localObj, val, (short)kY, (int)((char*)obj + 0x1f4 + 0x400), (unsigned char)kDrawFirst, (unsigned char)kDrawSecond);
 }

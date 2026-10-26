@@ -4,26 +4,26 @@
 #include "GameState/GameState.h"
 
 extern "C" void FontBankLoader_CancelLoads(void);
-int MessageSystem_GetInstance(void);
-void MessageSystem_Reset(char* obj);
+extern "C" int MessageSystem_GetInstance(void);
+extern "C" void MessageSystem_Reset(char* obj);
 extern "C" void MessageSystem_Stop(void* self);
-int FontBankLoader_GetInstance(void);
-void GameObject_EnableControl(void* obj);
-int GameState_GetFollowCamera(char* obj);
-void ClearFlagBits_020a28b0(unsigned char* obj, int mask);
-void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" int FontBankLoader_GetInstance(void);
+extern "C" void GameObject_EnableControl(void* obj);
+extern "C" int GameState_GetFollowCamera(char* obj);
+extern "C" void func_020a28b0(unsigned char* obj, int mask);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
 extern "C" void ROMFilesystem_InitFileTables(void);
 
 extern int g_mainAllocator;
 
 struct Struct_ov017_021ac32c {
-    char unknown_0_[0xc];
+    char pad0[0xc];
     int unknown_c_;
-    SafeAllocator unknown_10_;
+    SafeAllocator allocator;
 };
 
 // USA: func_ov017_021ac32c
-extern "C" ARM void func_ov017_021ac32c(struct Obj021ac32c* self) {
+extern "C" ARM void func_ov017_021ac32c(struct Struct_ov017_021ac32c* self) {
     void* ctrl = (void*)MessageSystem_GetInstance();
     MessageSystem_Reset((char*)ctrl);
     MessageSystem_Stop(ctrl);
@@ -38,8 +38,8 @@ extern "C" ARM void func_ov017_021ac32c(struct Obj021ac32c* self) {
         AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p);
         ROMFilesystem_InitFileTables();
     }
-    self->field0xc = 0;
+    self->unknown_c_ = 0;
     int flag = GameState_GetFollowCamera((char*)battle);
     if (flag == 0) return;
-    ClearFlagBits_020a28b0((unsigned char*)flag, 3);
+    func_020a28b0((unsigned char*)flag, 3);
 }

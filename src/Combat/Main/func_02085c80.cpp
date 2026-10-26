@@ -1,28 +1,28 @@
 #include <globaldefs.h>
 #if defined(jpn)
-enum { Enum_02085c80_2291 = 0x85b };
+enum { kFlagsOffset = 0x85b };
 #else
-enum { Enum_02085c80_2291 = 0x8f3 };
+enum { kFlagsOffset = 0x8f3 };
 #endif
 
 #include "GameState/GameState.h"
 
-extern "C" int func_0201137c(char* arg0, int arg1);
+extern "C" int func_0201137c(char* base, int id);
 
 struct Struct_02085c80 {
-    char unknown_0_[Enum_02085c80_2291];
+    char pad0[kFlagsOffset];
     unsigned char unknown_8f3_;
 };
 
 // USA: func_02085c80
-extern "C" ARM int func_02085c80(struct Struct_02085c80* arg0) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = 0;
-    if (arg0->unknown_8f3_ & 0x2) {
-        var1 += func_0201137c((char*)var0, 0x39);
+extern "C" ARM int func_02085c80(struct Struct_02085c80* actor) {
+    GameState* bs = GameState::GetInstance();
+    int total = 0;
+    if (actor->unknown_8f3_ & 0x2) {
+        total += func_0201137c((char*)bs, 0x39);
     }
-    if (arg0->unknown_8f3_ & 0x20) {
-        var1 += func_0201137c((char*)var0, 0x3d);
+    if (actor->unknown_8f3_ & 0x20) {
+        total += func_0201137c((char*)bs, 0x3d);
     }
-    return var1;
+    return total;
 }

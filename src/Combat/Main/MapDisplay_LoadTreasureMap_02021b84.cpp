@@ -9,7 +9,7 @@
 #include "NitroSDK/Memory.h"
 #include "NitroSDK/Cache.h"
 #include "NitroSDK/LoadToVRAM.h"
-int MessageSystem_GetInstance(void);
+extern "C" int MessageSystem_GetInstance(void);
 extern "C" void func_02023218(MapDisplay* self, void* buffer, int offset, unsigned int capacity);
 extern char data_020ef4b1[], data_020ef4c9[], data_020ef4d0[];
 #endif
@@ -18,53 +18,53 @@ extern char data_020ef4b1[], data_020ef4c9[], data_020ef4d0[];
 
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void* OamManager_GetInstance(void);
-void* BgVram_GetInstance(void);
+extern "C" void* BgVram_GetInstance(void);
 extern "C" void MapDisplay_FadeOutSubScreen(void* obj, int amount);
 
-void InitSubScreenDisplay_020209d0(void* context);
-void BgVram_Reset(char* obj);
-void OamManager_ResetTextTable(char* obj);
-void OamManager_Init(char* obj);
-void BgVram_FillMap(void* objPtr, int mode, int idx, int fillByte);
+extern "C" void func_020209d0(void* context);
+extern "C" void BgVram_Reset(char* obj);
+extern "C" void OamManager_ResetTextTable(char* obj);
+extern "C" void OamManager_Init(char* obj);
+extern "C" void BgVram_FillMap(void* objPtr, int mode, int idx, int fillByte);
 extern "C" void BgTransfers_UploadDirtyScreens(void* obj);
-void OS_WaitVBlankIntr(void);
+extern "C" void OS_WaitVBlankIntr(void);
 #if defined(jpn)
-extern "C" void func_02020cb8(void* arg0, int arg1);
-extern "C" void func_02020e58(void* arg0, int arg1);
+extern "C" void func_02020cb8(void* self, int handle);
+extern "C" void func_02020e58(void* self, int handle);
 #else
-extern "C" void func_02020cb8(void* arg0, int* arg1);
-extern "C" void func_02020e58(void* arg0, int* arg1);
+extern "C" void func_02020cb8(void* self, int* handle);
+extern "C" void func_02020e58(void* self, int* handle);
 #endif
-void CopyStringOrDefault02026428(void* obj, const char* name);
-void SetEventStringAndAccumulateLength02026470(void* obj, int flag);
+extern "C" void func_02026428(void* obj, const char* name);
+extern "C" void func_02026470(void* obj, int flag);
 struct Struct0205a198;
-void Sprite_Init(struct Struct0205a198* p);
-void SpriteContext_Init(char* obj);
+extern "C" void Sprite_Init(struct Struct0205a198* p);
+extern "C" void SpriteContext_Init(char* obj);
 struct PacRecord;
-int SpriteContext_LoadArchive(void* a, struct PacRecord* b, int flag, void* d);
-void SetBitfieldStoreBytes0205af38(int a, char* obj, int c, int d);
-void* CachedTextTable_GetInstance();
-int MapDisplay_UploadTreasureMapName(void* arg0, int flag1);
+extern "C" int SpriteContext_LoadArchive(void* a, struct PacRecord* b, int flag, void* d);
+extern "C" void func_0205af38(int a, char* obj, int c, int d);
+extern "C" void* CachedTextTable_GetInstance();
+extern "C" int MapDisplay_UploadTreasureMapName(void* arg0, int flag1);
 extern "C" void* OamManager_GetSubOamBuffer(void);
-void MapDisplay_RefreshAllMemberPanels(void* obj);
+extern "C" void MapDisplay_RefreshAllMemberPanels(void* obj);
 #if defined(jpn)
-extern "C" void func_02026898(void* arg0);
+extern "C" void func_02026898(void* obj);
 #else
-extern "C" void func_02026f34(void* arg0);
+extern "C" void func_02026f34(void* obj);
 #endif
 extern "C" void func_ov017_02191234(void* obj);
 extern "C" void MapDisplay_Draw(void* obj);
-void MapDisplay_RecheckAllMembers(unsigned char* obj);
+extern "C" void MapDisplay_RecheckAllMembers(unsigned char* obj);
 extern "C" void MapDisplay_PlaceMembers(void* obj, int flag);
-int MapDisplay_QueueMapScript(void* obj);
+extern "C" int MapDisplay_QueueMapScript(void* obj);
 
 extern char data_020ef5c0[];
 extern char data_020ef5d8[];
 extern int data_020ef460;
 extern char data_020ef5df[];
 
-static inline SafeAllocator* inline_02021b84(GameResources* arg0, int arg1) {
-    return &arg0->allocator_array_38[arg1];
+static inline SafeAllocator* inline_02021b84(GameResources* axis, int i) {
+    return &axis->allocator_array_38[i];
 }
 
 // Main, originally func_02021b84 (USA 0x02021b84, EUR 0x02021b94, JPN 0x0202162c)
@@ -73,14 +73,14 @@ extern "C" ARM void MapDisplay_LoadTreasureMap(MapDisplay* self) {
     void* fileData;
     unsigned int fileLength;
 
-    GameState* var3;
-    BackgroundLoader* var4;
-    GameResources* var5;
-    char* var6;
-    char* var7;
-    SafeAllocator* var8;
-    GrottoStruct* var9;
-    int var10;
+    GameState* game;
+    BackgroundLoader* loader;
+    GameResources* axis;
+    char* battleCtx;
+    char* table;
+    SafeAllocator* alloc;
+    GrottoStruct* grotto;
+    int state;
 
     game = GameState::GetInstance();
     loader = BackgroundLoader::GetInstance();
@@ -88,7 +88,7 @@ extern "C" ARM void MapDisplay_LoadTreasureMap(MapDisplay* self) {
     axis = GetGameResources();
     battleCtx = (char*)OamManager_GetInstance();
     table = (char*)BgVram_GetInstance();
-    alloc = GetAlloc02021b84(axis, 12);
+    alloc = inline_02021b84(axis, 12);
     grotto = game->GetGrottoStruct();
     state = self->loadStage;
 
@@ -102,14 +102,14 @@ extern "C" ARM void MapDisplay_LoadTreasureMap(MapDisplay* self) {
             data_020ef5c0,
 #endif
             (SafeAllocator*)0);
-        sprintf(var0,
+        sprintf(path,
 #if defined(jpn)
             data_020ef4c9,
 #else
             data_020ef5d8,
 #endif
-            var9->activeMapImageName);
-        arg0->unknown_a00_ = var4->QueueLoadFileInGP2(
+            grotto->activeMapImageName);
+        self->taska00 = loader->QueueLoadFileInGP2(
 
 #if defined(jpn)
             *(const char**)&data_020ef460,
@@ -133,7 +133,7 @@ extern "C" ARM void MapDisplay_LoadTreasureMap(MapDisplay* self) {
         if (loader->GetTaskStatus(self->task9fc) == 0) return;
         if (loader->GetTaskStatus(self->taska00) == 0) return;
         MapDisplay_ResetMap(self);
-        InitSubScreenDisplay_020209d0(self);
+        func_020209d0(self);
         alloc->Reset();
         BgVram_Reset(table);
         OamManager_ResetTextTable(battleCtx);
@@ -143,14 +143,14 @@ extern "C" ARM void MapDisplay_LoadTreasureMap(MapDisplay* self) {
         BgTransfers_UploadDirtyScreens(table);
         OS_WaitVBlankIntr();
 #if defined(jpn)
-        func_02020cb8(arg0, arg0->unknown_9fc_);
+        func_02020cb8(self, self->task9fc);
 #else
-        func_02020cb8(arg0, &arg0->unknown_9fc_);
+        func_02020cb8(self, &self->task9fc);
 #endif
 #if defined(jpn)
-        func_02020e58(arg0, arg0->unknown_a00_);
+        func_02020e58(self, self->taska00);
 #else
-        func_02020e58(arg0, &arg0->unknown_a00_);
+        func_02020e58(self, &self->taska00);
 #endif
         self->loadStage = self->loadStage + 1;
     } else if (state == 2) {
@@ -159,27 +159,27 @@ extern "C" ARM void MapDisplay_LoadTreasureMap(MapDisplay* self) {
         if (status > 0) {
             MapDisplay_RunMapScript(self,
 #if defined(jpn)
-                arg0->unknown_9d0_,
+                self->namesTask,
 #else
-                &arg0->unknown_9d0_,
+                &self->namesTask,
 #endif
-                var8);
+                alloc);
         } else {
-            BackgroundLoader::GetInstance()->RemoveTask(arg0->unknown_9d0_);
-            arg0->unknown_9d0_ = -1;
+            BackgroundLoader::GetInstance()->RemoveTask(self->namesTask);
+            self->namesTask = -1;
         }
-        arg0->unknown_14_ = 1;
-        arg0->unknown_9c2_ = arg0->unknown_9c2_ + 1;
-    } else if (var10 == 3) {
-        if (var4->GetTaskStatus(arg0->unknown_a04_) == 0) return;
+        self->displayMode = 1;
+        self->loadStage = self->loadStage + 1;
+    } else if (state == 3) {
+        if (loader->GetTaskStatus(self->taska04) == 0) return;
  #if !defined(jpn)
-        arg0->unknown_be4_ = 0;
-        arg0->unknown_be8_ = 0;
-        arg0->unknown_bec_ = 0;
-        arg0->unknown_bee_ = 0;
+        self->scriptNameWidth = 0;
+        self->fieldb3c = 0;
+        self->fieldb40 = 0;
+        self->fieldb42 = 0;
 #endif
-        CopyStringOrDefault02026428(self, grotto->activeMapNameNoLevel);
-        SetEventStringAndAccumulateLength02026470(self, grotto->activeMapLevel);
+        func_02026428(self, grotto->activeMapNameNoLevel);
+        func_02026470(self, grotto->activeMapLevel);
         strcpy((char*)self->bytesa55, grotto->activeMapNameNoLevel);
         self->fielda95 = grotto->activeMapLevel;
         fileData = 0;
@@ -193,8 +193,8 @@ extern "C" ARM void MapDisplay_LoadTreasureMap(MapDisplay* self) {
         self->entryList.records = self->records;
         self->entryList.count = 0x18;
         SpriteContext_LoadArchive((char*)&self->entryList, (struct PacRecord*)fileData, fileLength, alloc);
-        SetBitfieldStoreBytes0205af38((int)((char*)&self->entryList), (char*)&self->records[9], 1, 1);
-        SetBitfieldStoreBytes0205af38((int)((char*)&self->entryList), (char*)&self->records[11], 1, 1);
+        func_0205af38((int)((char*)&self->entryList), (char*)&self->records[9], 1, 1);
+        func_0205af38((int)((char*)&self->entryList), (char*)&self->records[11], 1, 1);
         *(int*)((char*)CachedTextTable_GetInstance() +
 #if defined(jpn)
                 0x608
@@ -204,7 +204,7 @@ extern "C" ARM void MapDisplay_LoadTreasureMap(MapDisplay* self) {
         ) = 0x2000;
 #if defined(jpn)
         MessageSystem* messages = (MessageSystem*)MessageSystem_GetInstance();
-        char* buffer = messages->formatBuffer;
+        char* buffer = messages->unknown_2c_;
         char* vram = (char*)0x06600000;
         VectorizedInvertedMemcpy(vram + 0x2bc0, buffer, 0x540);
         func_02023218(self, buffer, 0, 0x540);
@@ -223,9 +223,9 @@ extern "C" ARM void MapDisplay_LoadTreasureMap(MapDisplay* self) {
         self->taska04 = -1;
         MapDisplay_RefreshAllMemberPanels(self);
 #if defined(jpn)
-        func_02026898(arg0);
+        func_02026898(self);
 #else
-        func_02026f34(arg0);
+        func_02026f34(self);
 #endif
         func_ov017_02191234(axis);
         self->field9c4 = 1;

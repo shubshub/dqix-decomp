@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 
-struct Struct_ov031_02230330 { unsigned short unknown_0_, unknown_2_; };
-struct Struct_ov031_02248f60 { Struct_ov031_02230330 unknown_0_; Struct_ov031_02230330 unknown_4_; };
+struct Struct_ov031_02230330 { unsigned short x, y; };
+struct Struct_ov031_02248f60 { Struct_ov031_02230330 pos; Struct_ov031_02230330 size; };
 struct Struct_ov031_02290ca0_15 {
-	unsigned char unknown_0_;
+	unsigned char unk0;
 	unsigned char unknown_1_;
-	unsigned char unknown_2_;
+	unsigned char unk2;
 	unsigned char unknown_3_;
-	unsigned short unknown_4_;
+	unsigned short field4;
 };
 
 extern "C" int FastIntDivide(int arg0, unsigned int arg1);
-extern "C" int func_ov031_0223d49c(Struct_ov031_02248f60* arg0);
-extern "C" int func_ov031_0223d634(Struct_ov031_02248f60* arg0);
+extern "C" int func_ov031_0223d49c(Struct_ov031_02248f60* p);
+extern "C" int func_ov031_0223d634(Struct_ov031_02248f60* box);
 
 extern Struct_ov031_02248f60 data_ov031_022493b8;
 extern Struct_ov031_02290ca0_15 data_ov031_02290ca0;
@@ -25,67 +25,67 @@ extern Struct_ov031_02248f60 data_ov031_02248fea[3];
 
 // USA: func_ov031_02230330
 extern "C" ARM int func_ov031_02230330(void) {
-	Struct_ov031_02248f60 var0;
+	Struct_ov031_02248f60 box;
 
 	if (!func_ov031_0223d49c(&data_ov031_022493b8)) return 0xe;
 
 	{
-		int var1 = FastIntDivide(data_ov031_02290ca0.unknown_4_, 0x1d);
-		int var2 = 0;
-		var0 = data_ov031_02248f60;
+		int var1 = FastIntDivide(data_ov031_02290ca0.field4, 0x1d);
+		int i = 0;
+		box = data_ov031_02248f60;
 		do {
 			if (var1 != 2 && var1 != 6) {
-				if (func_ov031_0223d634(&var0)) return data_ov031_0224903c[var1];
+				if (func_ov031_0223d634(&box)) return data_ov031_0224903c[var1];
 			}
-			var0.unknown_0_.unknown_2_ += 0x1d;
-			var2++;
+			box.pos.y += 0x1d;
+			i++;
 			var1++;
-		} while (var2 < 4);
+		} while (i < 4);
 	}
 	{
-		int var3 = FastIntDivide(data_ov031_02290ca0.unknown_4_, 0x1d);
-		int var4 = 0;
+		int var3 = FastIntDivide(data_ov031_02290ca0.field4, 0x1d);
+		int i = 0;
 		do {
 			if (var3 == 2) {
-				int var5 = var4 * 0x1d;
-				var0 = data_ov031_02248f70;
-				var0.unknown_0_.unknown_2_ += var5;
-				if (func_ov031_0223d634(&var0)) return 2;
-				var0 = data_ov031_02248f68;
-				var0.unknown_0_.unknown_2_ += var5;
-				if (func_ov031_0223d634(&var0)) return 3;
+				int off = i * 0x1d;
+				box = data_ov031_02248f70;
+				box.pos.y += off;
+				if (func_ov031_0223d634(&box)) return 2;
+				box = data_ov031_02248f68;
+				box.pos.y += off;
+				if (func_ov031_0223d634(&box)) return 3;
 				break;
 			}
-			var4++;
+			i++;
 			var3++;
-		} while (var4 < 4);
+		} while (i < 4);
 	}
 	{
-		int var6 = FastIntDivide(data_ov031_02290ca0.unknown_4_, 0x1d);
-		int var7 = 0;
+		int var6 = FastIntDivide(data_ov031_02290ca0.field4, 0x1d);
+		int i = 0;
 		do {
 			if (var6 == 6) {
-				int var8 = var7 * 0x1d;
-				var0 = data_ov031_02248f70;
-				var0.unknown_0_.unknown_2_ += var8;
-				if (func_ov031_0223d634(&var0)) return 7;
-				var0 = data_ov031_02248f68;
-				var0.unknown_0_.unknown_2_ += var8;
-				if (func_ov031_0223d634(&var0)) return 8;
+				int off = i * 0x1d;
+				box = data_ov031_02248f70;
+				box.pos.y += off;
+				if (func_ov031_0223d634(&box)) return 7;
+				box = data_ov031_02248f68;
+				box.pos.y += off;
+				if (func_ov031_0223d634(&box)) return 8;
 				break;
 			}
-			var7++;
+			i++;
 			var6++;
-		} while (var7 < 4);
+		} while (i < 4);
 	}
 	{
-		Struct_ov031_02248f60* var9 = data_ov031_02248fea;
-		int var10 = 0;
+		Struct_ov031_02248f60* p = data_ov031_02248fea;
+		int i = 0;
 		do {
-			if (func_ov031_0223d49c(var9)) return var10 + 0xb;
-			var10++;
-			var9++;
-		} while (var10 < 3);
+			if (func_ov031_0223d49c(p)) return i + 0xb;
+			i++;
+			p++;
+		} while (i < 3);
 	}
 	return 0xe;
 }

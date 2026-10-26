@@ -59,22 +59,22 @@ struct ChestRecord02015ef4 {
     Foo02048004* icon;
 };
 
-void SprSprite_Unload(Foo02048004*);
+extern "C" void SprSprite_Unload(Foo02048004*);
 extern "C" int ZoneChest_LiftLid(ChestRecord02015ef4*);
 extern "C" int ZoneChest_SettleLid(ChestRecord02015ef4*);
-void* GrottoChestList_Get(GetElement02094d5cList*, int);
-void Zone3D_ClearChestIconsByOpener(Holder020159c0*, int);
-void* ItemTable_Find(ItemTable*, int);
-int ItemRecord_GetFileNumber(StructDE234_020de234*, int);
+extern "C" void* GrottoChestList_Get(GetElement02094d5cList*, int);
+extern "C" void Zone3D_ClearChestIconsByOpener(Holder020159c0*, int);
+extern "C" void* ItemTable_Find(ItemTable*, int);
+extern "C" int ItemRecord_GetFileNumber(StructDE234_020de234*, int);
 extern "C" int sprintf(char*, const char*, ...);
-int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
+extern "C" int FieldTaskQueue_GetCurrentKind(HeadNode02046b24**);
 extern "C" void SprSprite_Init(void*);
-void VramState_CopyCurrentTo(State0207dfc8*, State0207dfc8*);
-void VramState_Restore(char*);
-void SprSprite_LoadFile(void*, int, int, int);
-void VramState_Save(char*);
-void Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
-void RenderFlaggedIndexedEntry(StructAt020473c8*, int);
+extern "C" void VramState_CopyCurrentTo(State0207dfc8*, State0207dfc8*);
+extern "C" void VramState_Restore(char*);
+extern "C" void SprSprite_LoadFile(void*, int, int, int);
+extern "C" void VramState_Save(char*);
+extern "C" void Camera_WorldToScreen(void*, Vec3copy0202ec84*, int*, int*);
+extern "C" void func_020473c8(StructAt020473c8*, int);
 
 struct IconPath02015ef4 {
     char text[0x20];
@@ -226,7 +226,7 @@ extern "C" ARM int ZoneChest_UpdateOpening(Zone3D* self, int index) {
             icon->position.x = iconX << 12;
             icon->position.y = iconY << 12;
             icon->position.z = 0;
-            RenderFlaggedIndexedEntry((StructAt020473c8*)chest->icon, 1);
+            func_020473c8((StructAt020473c8*)chest->icon, 1);
         }
     }
     return 0;

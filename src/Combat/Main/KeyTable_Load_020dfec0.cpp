@@ -10,7 +10,7 @@ struct Header020dffb8 {
 };
 typedef struct Header020dffb8 KeyTableHeader;
 
-int KeyTable_GetEntriesSize(KeyTableHeader* header);
+extern "C" int KeyTable_GetEntriesSize(KeyTableHeader* header);
 
 struct Container020dffc8 {
     unsigned int count : 12;
@@ -23,10 +23,10 @@ typedef struct Container020dffc8 KeyTable;
 
 struct Element020dffc8;
 typedef int (*KeyTableEntryCallback)(KeyTable*, struct Element020dffc8*);
-int KeyTable_ForEachEntry(KeyTable* table, KeyTableEntryCallback callback);
+extern "C" int KeyTable_ForEachEntry(KeyTable* table, KeyTableEntryCallback callback);
 
-struct Struct_020dfbdc;
-extern "C" int func_020dfbdc(void* arg0, struct Struct_020dfbdc* arg1);
+struct Node020dfbdc;
+extern "C" int func_020dfbdc(void* a, struct Node020dfbdc* node);
 
 // Main, originally func_020dfec0 (USA 0x020dfec0, EUR 0x020dfed0, JPN 0x020e1a94)
 extern "C" ARM int KeyTable_Load(KeyTable* table, SafeAllocator* allocator, void* fileData, unsigned int size) {
@@ -55,7 +55,7 @@ extern "C" ARM int KeyTable_Load(KeyTable* table, SafeAllocator* allocator, void
     if (table->texts) {
         memcpy(table->texts, (char*)fileData + (KeyTable_GetEntriesSize((KeyTableHeader*)table) + sizeof(KeyTableHeader)), textSize);
     }
-    relocate = (KeyTableEntryCallback)UpdateNodeField4;
+    relocate = (KeyTableEntryCallback)func_020dfbdc;
     if (relocate) {
         KeyTable_ForEachEntry(table, relocate);
     }

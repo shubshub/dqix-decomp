@@ -7,10 +7,10 @@
 #if defined(jpn)
 #define REGIONAL_OFFSET(jp, us) jp
 #define data_ov002_0216c96c data_ov002_0216cfc0
-enum { Enum_ov002_0215624c_43 = 0x2e };
+enum { regionalState2b = 0x2e };
 #else
 #define REGIONAL_OFFSET(jp, us) us
-enum { Enum_ov002_0215624c_43 = 0x2b };
+enum { regionalState2b = 0x2b };
 #endif
 
 struct Struct_0205d81c;
@@ -25,81 +25,81 @@ struct PacRecord;
 struct Struct0205de24;
 struct Container020e0310;
 
-unsigned char *Window_GetActivePane(struct Struct_0205d81c *s);
-int WindowPane_IsReady(unsigned char *obj);
-void TouchGrid_SetTouchedCell(void *obj, int value);
+extern "C" unsigned char *Window_GetActivePane(struct Struct_0205d81c *s);
+extern "C" int WindowPane_IsReady(unsigned char *obj);
+extern "C" void TouchGrid_SetTouchedCell(void *obj, int value);
 extern "C" int Window_Update(void *obj, int val);
-int Window_GetSelectedIndex(struct Struct_0205c570 *s);
-void PushInputLogB_020a1ef0(int id);
-int MessageSystem_GetInstance(void);
-void Background_SetMapSize(unsigned char *obj, int value);
+extern "C" int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+extern "C" void func_020a1ef0(int id);
+extern "C" int MessageSystem_GetInstance(void);
+extern "C" void Background_SetMapSize(unsigned char *obj, int value);
 extern "C" void Background_SetPriority(void *obj, int val);
-void Background_AllocateMap(struct BackgroundGraphics *obj,
+extern "C" void Background_AllocateMap(struct BackgroundGraphics *obj,
                                                                                          SafeAllocator *alloc);
-int Background_SetScroll(struct BackgroundGraphics *obj, int a, int b);
+extern "C" int Background_SetScroll(struct BackgroundGraphics *obj, int a, int b);
 extern "C" void ColorEffect_ConfigureAlphaBlend(int reg, int a, int b, int c, int d);
 extern "C" void Background_FillRect(void *obj, unsigned short tile, int x, int y, int w, int h, unsigned short palette);
-void Background_UploadMap(struct BackgroundGraphics *obj, void *buf);
+extern "C" void Background_UploadMap(struct BackgroundGraphics *obj, void *buf);
 extern "C" void Background_LoadFile(void *obj, void *data, SafeAllocator *alloc, int size);
-void WindowPane_AllocateBuffer(struct WindowPane *obj, SafeAllocator *alloc,
+extern "C" void WindowPane_AllocateBuffer(struct WindowPane *obj, SafeAllocator *alloc,
                                                                            int buf, unsigned int size);
-void Window_SetPanes(struct Struct_0205cf78 *s,
+extern "C" void Window_SetPanes(struct Struct_0205cf78 *s,
                                                                                      struct WindowPane *arr,
                                                                                      unsigned char count);
 extern "C" void *memset(void *dst, int value, unsigned int length);
 extern "C" void *memcpy(void *dst, const void *src, unsigned int length);
-void *GetTableEntry020421b0(int idx);
+extern "C" void *func_020421b0(int idx);
 void CleanInvalidateCacheRange(const void *where, unsigned int len);
 extern "C" void LoadToMainBG1CharacterData(const void *data, unsigned int offset, unsigned int length);
 extern "C" void LoadToMainBG3CharacterData(const void *data, unsigned int offset, unsigned int length);
-void Sprite_Init(struct Struct0205a198 *s);
-void ClearField0And40205a234(struct ClearTarget0205a234 *t);
-void SpriteContext_Init(char *p);
-void *Pac_GetFile(struct PacRecord *rec, int index, void **out, int *out44);
+extern "C" void Sprite_Init(struct Struct0205a198 *s);
+extern "C" void func_0205a234(struct ClearTarget0205a234 *t);
+extern "C" void SpriteContext_Init(char *p);
+extern "C" void *Pac_GetFile(struct PacRecord *rec, int index, void **out, int *out44);
 extern "C" void SpriteContext_LoadFile(void *a, void *ptr, int val, void *d);
-void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+extern "C" void func_0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int Pac_CountFiles(struct PacRecord *entry);
+extern "C" int Pac_CountFiles(struct PacRecord *entry);
 extern "C" void KeyTable_Load(void *dest, void *allocator, void *fileData, unsigned int size);
-int KeyTable_Get(struct Container020e0310 *c, int key);
+extern "C" int KeyTable_Get(struct Container020e0310 *c, int key);
 extern "C" void func_020dc7e8(int a, int b);
-void InitBattleTag0215bf34(char *self);
-void InitBattleTag0215c028(char *self);
+extern "C" void func_ov002_0215bf34(char *self);
+extern "C" void func_ov002_0215c028(char *self);
 extern "C" void func_ov002_0215bba8(char *self);
 extern "C" void func_ov002_02161cf0(char *self);
 extern "C" void func_ov002_0215c0f8(char *self);
 extern "C" void func_ov002_0215a938(char *self);
 
-struct Struct_ov002_0215624c_12 {
-    int unknown_0_;
-    int unknown_4_;
+struct Obj0ec8_0215624c {
+    int f0;
+    int f4;
 };
 
 struct Struct_ov002_0215624c_13 {
-    int unknown_0_;
-    short unknown_4_;
-    char unknown_6_[0x1a];
+    int size;
+    short count;
+    char pad[0x1a];
 };
 
 struct Struct_ov002_0215624c_14 {
-    unsigned char unknown_0_[3];
+    unsigned char v[3];
 };
 
 struct Struct_ov002_0216c96c {
-    unsigned char unknown_0_[4];
+    unsigned char pad[4];
 #if defined(jpn)
-    struct Struct_ov002_0215624c_14 unknown_7_;
+    struct Struct_ov002_0215624c_14 layer;
     struct Struct_ov002_0215624c_14 unknown_4_;
 #else
     struct Struct_ov002_0215624c_14 unknown_4_;
-    struct Struct_ov002_0215624c_14 unknown_7_;
+    struct Struct_ov002_0215624c_14 layer;
 #endif
 };
 
 struct Struct_ov002_0215624c_16 {
-    unsigned char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
+    unsigned char pad[0x1c];
+    unsigned char lo : 4;
+    unsigned char hi : 4;
 };
 
 extern struct Struct_ov002_0216c96c data_ov002_0216c96c;
@@ -112,29 +112,29 @@ extern char data_ov002_0216cee8[];
 extern char data_ov002_0216cef8[];
 extern char data_ov002_0216cf11[];
 
-#define S16(off) (*(short *) (arg0 + (off)))
-#define S32(off) (*(int *) (arg0 + (off)))
-#define U8(off) (*(unsigned char *) (arg0 + (off)))
+#define S16(off) (*(short *) (self + (off)))
+#define S32(off) (*(int *) (self + (off)))
+#define U8(off) (*(unsigned char *) (self + (off)))
 #define REG16(a) (*(volatile unsigned short *) (a))
 #define REG32(a) (*(volatile unsigned int *) (a))
 
 // USA: func_ov002_0215624c
-extern "C" ARM void func_ov002_0215624c(char *arg0) {
-    BackgroundLoader *var0 = BackgroundLoader::GetInstance();
+extern "C" ARM void func_ov002_0215624c(char *self) {
+    BackgroundLoader *loader = BackgroundLoader::GetInstance();
 
     if (g_keyManager.TestKeysPressed(0x601)) {
         U8(REGIONAL_OFFSET(0x1af7, 0x1c2f)) = 1;
     }
     if (g_keyManager.TestKeysPressed(0x802)) {
         U8(REGIONAL_OFFSET(0x1af7, 0x1c2f))  = 0;
-        S32(REGIONAL_OFFSET(0x1a80, 0x1bb8)) = Enum_ov002_0215624c_43;
+        S32(REGIONAL_OFFSET(0x1a80, 0x1bb8)) = regionalState2b;
         if (S32(REGIONAL_OFFSET(0x1a8c, 0x1bc4)) >= 0) {
-            var0->RemoveTask(S32(REGIONAL_OFFSET(0x1a8c, 0x1bc4)));
+            loader->RemoveTask(S32(REGIONAL_OFFSET(0x1a8c, 0x1bc4)));
             S32(REGIONAL_OFFSET(0x1a8c, 0x1bc4)) = -1;
         }
-        for (int var1 = 0; var1 < 5; var1++) {
-            var0->RemoveTask(((int *) (arg0 + REGIONAL_OFFSET(0x1a6c, 0x1ba4)))[var1]);
-            *(int *) (arg0 + var1 * 4 + REGIONAL_OFFSET(0x1a6c, 0x1ba4)) = -1;
+        for (int i = 0; i < 5; i++) {
+            loader->RemoveTask(((int *) (self + REGIONAL_OFFSET(0x1a6c, 0x1ba4)))[i]);
+            *(int *) (self + i * 4 + REGIONAL_OFFSET(0x1a6c, 0x1ba4)) = -1;
         }
         return;
     }
@@ -148,26 +148,26 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
     S16(REGIONAL_OFFSET(0x1aa8, 0x1be0)) = Window_GetSelectedIndex((struct Struct_0205c570 *) (self + REGIONAL_OFFSET(0xe20, 0xec8)));
     if (S32(REGIONAL_OFFSET(0x1a88, 0x1bc0)) >= 1 && old != S16(REGIONAL_OFFSET(0x1aa8, 0x1be0))) {
         S32(REGIONAL_OFFSET(0x1a90, 0x1bc8)) = 1;
-        int var4   = S32(REGIONAL_OFFSET(0x1a80, 0x1bb8));
+        int saved   = S32(REGIONAL_OFFSET(0x1a80, 0x1bb8));
         S32(REGIONAL_OFFSET(0x1a80, 0x1bb8)) = 1;
-        func_ov002_0215bba8(arg0);
-        S32(REGIONAL_OFFSET(0x1a80, 0x1bb8)) = var4;
+        func_ov002_0215bba8(self);
+        S32(REGIONAL_OFFSET(0x1a80, 0x1bb8)) = saved;
     }
 
     if (S32(REGIONAL_OFFSET(0x1a88, 0x1bc0)) == 0) {
-        PushInputLogB_020a1ef0(1);
+        func_020a1ef0(1);
         char *w     = (char *) GameState::GetInstance()->GetResources();
         S32(REGIONAL_OFFSET(0x1a98, 0x1bd0)) = *(int *) ((char *) MessageSystem_GetInstance() + REGIONAL_OFFSET(0x28, 0x5c));
         ((SafeAllocator *) (self + REGIONAL_OFFSET(0x78c, 0x828)))->Reset();
 
-        struct Bytes3_0215624c prio  = data_ov002_0216c96c.prio;
-        struct Bytes3_0215624c layer = data_ov002_0216c96c.layer;
-        struct Layer0215624c *o;
+        struct Struct_ov002_0215624c_14 var6  = data_ov002_0216c96c.unknown_4_;
+        struct Struct_ov002_0215624c_14 layer = data_ov002_0216c96c.layer;
+        struct Struct_ov002_0215624c_16 *o;
         for (int i = 0; i < 3; i++) {
-            o = (struct Layer0215624c *) (self + REGIONAL_OFFSET(0xedc, 0xf84) + i * 0x20);
+            o = (struct Struct_ov002_0215624c_16 *) (self + REGIONAL_OFFSET(0xedc, 0xf84) + i * 0x20);
             Background_SetMapSize((unsigned char *) o, 0);
             o->lo = 0;
-            o->hi = prio.v[i];
+            o->hi = var6.v[i];
             Background_SetPriority(o, layer.v[i]);
             Background_AllocateMap((struct BackgroundGraphics *) o,
                                                                                      (SafeAllocator *) (self + REGIONAL_OFFSET(0x78c, 0x828)));
@@ -190,10 +190,10 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
         Background_LoadFile(self + REGIONAL_OFFSET(0xefc, 0xfa4), gfx, (SafeAllocator *) (self + REGIONAL_OFFSET(0x78c, 0x828)), 0);
         Background_LoadFile(self + REGIONAL_OFFSET(0xf1c, 0xfc4), gfx, (SafeAllocator *) (self + REGIONAL_OFFSET(0x78c, 0x828)), 0);
 
-        for (int var13 = 0; var13 < 3; var13++) {
-            struct Struct_ov002_0215624c_13 *var14 = (struct Struct_ov002_0215624c_13 *) (arg0 + REGIONAL_OFFSET(0xedc, 0xf84)) + var13;
-            var14->unknown_0_               = 0x60;
-            var14->unknown_4_              = 3;
+        for (int i = 0; i < 3; i++) {
+            struct Struct_ov002_0215624c_13 *h = (struct Struct_ov002_0215624c_13 *) (self + REGIONAL_OFFSET(0xedc, 0xf84)) + i;
+            h->size               = 0x60;
+            h->count              = 3;
         }
 
         S32(REGIONAL_OFFSET(0x1aa0, 0x1bd8)) = (int) ((SafeAllocator *) (self + REGIONAL_OFFSET(0x78c, 0x828)))->Allocate(0x4400);
@@ -203,7 +203,7 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
                                                                        (SafeAllocator *) (self + REGIONAL_OFFSET(0x78c, 0x828)), S32(REGIONAL_OFFSET(0x1aa0, 0x1bd8)), 0x400);
             *(char **) (o + 4) = self + REGIONAL_OFFSET(0xefc, 0xfa4);
         }
-        *(char **) (arg0 + REGIONAL_OFFSET(0xeb8, 0xf60)) = arg0 + REGIONAL_OFFSET(0xedc, 0xf84);
+        *(char **) (self + REGIONAL_OFFSET(0xeb8, 0xf60)) = self + REGIONAL_OFFSET(0xedc, 0xf84);
         U8(REGIONAL_OFFSET(0xed2, 0xf7a))                 = 3;
         Window_SetPanes((struct Struct_0205cf78 *) (self + REGIONAL_OFFSET(0xe20, 0xec8)),
                                                                              (struct WindowPane *) (self + REGIONAL_OFFSET(0xf3c, 0xfe4)), 12);
@@ -218,16 +218,16 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
         for (unsigned char i = 0; i < REGIONAL_OFFSET(0x2c, 0x2b); i++) {
             Sprite_Init((struct Struct0205a198 *) (S32(REGIONAL_OFFSET(0x19bc, 0x1a64)) + i * 0x28));
         }
-        ClearField0And40205a234((struct ClearTarget0205a234 *) S32(REGIONAL_OFFSET(0x19c4, 0x1a6c)));
+        func_0205a234((struct ClearTarget0205a234 *) S32(REGIONAL_OFFSET(0x19c4, 0x1a6c)));
         SpriteContext_Init((char *) S32(REGIONAL_OFFSET(0x19c0, 0x1a68)));
         *(unsigned char *) (S32(REGIONAL_OFFSET(0x19c0, 0x1a68)) + 0x50) = 0;
         {
-            char *var18               = (char *) S32(REGIONAL_OFFSET(0x19c0, 0x1a68));
-            *(int *) (var18 + 0x40)   = S32(REGIONAL_OFFSET(0x19bc, 0x1a64));
-            *(short *) (var18 + 0x4c) = REGIONAL_OFFSET(0x2c, 0x2b);
+            char *p               = (char *) S32(REGIONAL_OFFSET(0x19c0, 0x1a68));
+            *(int *) (p + 0x40)   = S32(REGIONAL_OFFSET(0x19bc, 0x1a64));
+            *(short *) (p + 0x4c) = REGIONAL_OFFSET(0x2c, 0x2b);
         }
         *(int *) (S32(REGIONAL_OFFSET(0x19c0, 0x1a68)) + 0x3c) = S32(REGIONAL_OFFSET(0x19c4, 0x1a6c));
-        memcpy((void *) S32(REGIONAL_OFFSET(0x1aa0, 0x1bd8)), *(void **) (var5 + 0x30), *(unsigned int *) (var5 + 0x34));
+        memcpy((void *) S32(REGIONAL_OFFSET(0x1aa0, 0x1bd8)), *(void **) (w + 0x30), *(unsigned int *) (w + 0x34));
 
         ((SafeAllocator *) (self + REGIONAL_OFFSET(0x7dc, 0x878)))->Reset();
         for (int i = 0; i < 4; i++) {
@@ -238,16 +238,16 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
         }
 
         S16(REGIONAL_OFFSET(0x1aa8, 0x1be0)) = 0;
-        func_0205de24((struct Struct_ov002_0215624c_11 *) (arg0 + REGIONAL_OFFSET(0xe20, 0xec8)), 0, 2);
+        func_0205de24((struct Struct0205de24 *) (self + REGIONAL_OFFSET(0xe20, 0xec8)), 0, 2);
 
         if (U8(REGIONAL_OFFSET(0x22b5, 0x2485)) == 0 && U8(REGIONAL_OFFSET(0x2364, 0x253c)) == 0) {
-            func_ov002_0215bf34(arg0);
-            func_ov002_0215c028(arg0);
-            int var23   = S32(REGIONAL_OFFSET(0x1a80, 0x1bb8));
+            func_ov002_0215bf34(self);
+            func_ov002_0215c028(self);
+            int saved   = S32(REGIONAL_OFFSET(0x1a80, 0x1bb8));
             S32(REGIONAL_OFFSET(0x1a80, 0x1bb8)) = 1;
-            func_ov002_02161cf0(arg0);
-            func_ov002_0215c0f8(arg0);
-            S32(REGIONAL_OFFSET(0x1a80, 0x1bb8)) = var23;
+            func_ov002_02161cf0(self);
+            func_ov002_0215c0f8(self);
+            S32(REGIONAL_OFFSET(0x1a80, 0x1bb8)) = saved;
         }
 
         S32(REGIONAL_OFFSET(0x22ac, 0x247c)) |= 4;
@@ -260,31 +260,31 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
         Window_Update(self + REGIONAL_OFFSET(0xe20, 0xec8), S32(REGIONAL_OFFSET(0x1a68, 0x1ba0)));
 
         if (U8(REGIONAL_OFFSET(0x22b5, 0x2485)) != 0) {
-            char *var24                 = (char *) GameState::GetInstance();
+            char *gs                 = (char *) GameState::GetInstance();
 #if defined(jpn)
-            *(short *) (var24 + 0x6f9c) = 0;
-            *(short *) (var24 + 0x6f9e) = -1;
-            *(short *) (var24 + 0x6fa0) = -1;
+            *(short *) (gs + 0x6f9c) = 0;
+            *(short *) (gs + 0x6f9e) = -1;
+            *(short *) (gs + 0x6fa0) = -1;
 #else
-            *(short *) (var24 + 0x71dc) = 0;
-            *(short *) (var24 + 0x7f58) = 0;
-            *(short *) (var24 + 0x71de) = -1;
-            *(short *) (var24 + 0x71e0) = -1;
+            *(short *) (gs + 0x71dc) = 0;
+            *(short *) (gs + 0x7f58) = 0;
+            *(short *) (gs + 0x71de) = -1;
+            *(short *) (gs + 0x71e0) = -1;
 #endif
         }
 
 #if defined(jpn)
-        S32(REGIONAL_OFFSET(0x1a6c, 0x1ba4)) = var0->QueueLoadFile(data_ov002_0216d50c, 0);
-        S32(REGIONAL_OFFSET(0x1a70, 0x1ba8)) = var0->QueueLoadFile(data_ov002_0216d520, 0);
+        S32(REGIONAL_OFFSET(0x1a6c, 0x1ba4)) = loader->QueueLoadFile(data_ov002_0216d50c, 0);
+        S32(REGIONAL_OFFSET(0x1a70, 0x1ba8)) = loader->QueueLoadFile(data_ov002_0216d520, 0);
 #else
-        S32(REGIONAL_OFFSET(0x1a6c, 0x1ba4)) = var0->QueueLoadFileInGP2(data_ov002_0216ced4, data_ov002_0216cee8, 0);
-        S32(REGIONAL_OFFSET(0x1a70, 0x1ba8)) = var0->QueueLoadFileInGP2(data_ov002_0216cef8, data_ov002_0216cf11, 0);
+        S32(REGIONAL_OFFSET(0x1a6c, 0x1ba4)) = loader->QueueLoadFileInGP2(data_ov002_0216ced4, data_ov002_0216cee8, 0);
+        S32(REGIONAL_OFFSET(0x1a70, 0x1ba8)) = loader->QueueLoadFileInGP2(data_ov002_0216cef8, data_ov002_0216cf11, 0);
 #endif
         S32(REGIONAL_OFFSET(0x1a88, 0x1bc0))++;
     } else if (S32(REGIONAL_OFFSET(0x1a88, 0x1bc0)) == 1) {
         unsigned char var25 = 0;
-        for (int var26 = 0; var26 < 2; var26++) {
-            if (var0->GetTaskStatus(*(int *) (arg0 + var26 * 4 + REGIONAL_OFFSET(0x1a6c, 0x1ba4)))) {
+        for (int i = 0; i < 2; i++) {
+            if (loader->GetTaskStatus(*(int *) (self + i * 4 + REGIONAL_OFFSET(0x1a6c, 0x1ba4)))) {
                 var25++;
             }
         }
@@ -302,13 +302,13 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
             for (unsigned char i = 0; i < REGIONAL_OFFSET(0x2c, 0x2b); i++) {
                 Sprite_Init((struct Struct0205a198 *) (S32(REGIONAL_OFFSET(0x19bc, 0x1a64)) + i * 0x28));
             }
-            ClearField0And40205a234((struct ClearTarget0205a234 *) S32(REGIONAL_OFFSET(0x19c4, 0x1a6c)));
+            func_0205a234((struct ClearTarget0205a234 *) S32(REGIONAL_OFFSET(0x19c4, 0x1a6c)));
             SpriteContext_Init((char *) S32(REGIONAL_OFFSET(0x19c0, 0x1a68)));
             *(unsigned char *) (S32(REGIONAL_OFFSET(0x19c0, 0x1a68)) + 0x50) = 0;
             {
-                char *var33               = (char *) S32(REGIONAL_OFFSET(0x19c0, 0x1a68));
-                *(int *) (var33 + 0x40)   = S32(REGIONAL_OFFSET(0x19bc, 0x1a64));
-                *(short *) (var33 + 0x4c) = REGIONAL_OFFSET(0x2c, 0x2b);
+                char *p               = (char *) S32(REGIONAL_OFFSET(0x19c0, 0x1a68));
+                *(int *) (p + 0x40)   = S32(REGIONAL_OFFSET(0x19bc, 0x1a64));
+                *(short *) (p + 0x4c) = REGIONAL_OFFSET(0x2c, 0x2b);
             }
             *(int *) (S32(REGIONAL_OFFSET(0x19c0, 0x1a68)) + 0x3c) = S32(REGIONAL_OFFSET(0x19c4, 0x1a6c));
             ((SafeAllocator *) (self + REGIONAL_OFFSET(0x7dc, 0x878)))->Reset();
@@ -316,7 +316,7 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
                 void *rec = Pac_GetFile((struct PacRecord *) data, i, &out, &val);
                 SpriteContext_LoadFile((void *) S32(REGIONAL_OFFSET(0x19c0, 0x1a68)), rec, val, self + REGIONAL_OFFSET(0x7dc, 0x878));
             }
-            var0->RemoveTask(S32(REGIONAL_OFFSET(0x1a6c, 0x1ba4)));
+            loader->RemoveTask(S32(REGIONAL_OFFSET(0x1a6c, 0x1ba4)));
             S32(REGIONAL_OFFSET(0x1a6c, 0x1ba4)) = -1;
         }
 
@@ -333,17 +333,17 @@ extern "C" ARM void func_ov002_0215624c(char *arg0) {
 
         if (U8(REGIONAL_OFFSET(0x22b5, 0x2485)) != 0) {
             S32(REGIONAL_OFFSET(0x1a80, 0x1bb8)) = 4;
-            S32(REGIONAL_OFFSET(0x1a84, 0x1bbc)) = Enum_ov002_0215624c_43;
+            S32(REGIONAL_OFFSET(0x1a84, 0x1bbc)) = regionalState2b;
             S32(REGIONAL_OFFSET(0x1a88, 0x1bc0)) = 0;
         } else {
             S32(REGIONAL_OFFSET(0x1a80, 0x1bb8)) = 1;
-            S32(REGIONAL_OFFSET(0x1a84, 0x1bbc)) = Enum_ov002_0215624c_43;
+            S32(REGIONAL_OFFSET(0x1a84, 0x1bbc)) = regionalState2b;
             S32(REGIONAL_OFFSET(0x1a88, 0x1bc0)) = 1;
         }
         S32(REGIONAL_OFFSET(0x22ac, 0x247c)) |= 2;
         U8(REGIONAL_OFFSET(0x22aa, 0x247a)) = 0;
         if (U8(REGIONAL_OFFSET(0x22b5, 0x2485)) == 0) {
-            func_ov002_0215a938(arg0);
+            func_ov002_0215a938(self);
         }
         func_020dc7e8(1, -1);
         func_020dc7e8(8, -1);

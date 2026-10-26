@@ -145,14 +145,14 @@ void ApplyBindPoseRotation(BoneMatrixRenderData* bmrd)
 
             func_020ca7d0(&bmrd->rotationMatrix_);
             bmrd->rotationMatrix_.entries[pivotForm] = (boneMatrix->flags_ & 0x100) ? -1 << 12 : 1 << 12;
-            bmrd->rotationMatrix_.entries[data_020e9284[pivotForm].unknown_0_] = entryA;
-            bmrd->rotationMatrix_.entries[data_020e9284[pivotForm].unknown_1_] = entryB;
+            bmrd->rotationMatrix_.entries[data_020e9284[pivotForm].a] = entryA;
+            bmrd->rotationMatrix_.entries[data_020e9284[pivotForm].b] = entryB;
 
             fix32_t entryC = (boneMatrix->flags_ & 0x200) ? -entryB : entryB;
-            bmrd->rotationMatrix_.entries[data_020e9284[pivotForm].unknown_2_] = entryC;
+            bmrd->rotationMatrix_.entries[data_020e9284[pivotForm].c] = entryC;
 
             fix32_t entryD = (boneMatrix->flags_ & 0x400) ? -entryA : entryA;
-            bmrd->rotationMatrix_.entries[data_020e9284[pivotForm].unknown_3_] = entryD;
+            bmrd->rotationMatrix_.entries[data_020e9284[pivotForm].d] = entryD;
         }
         else // generic 3x3 matrix format
         {
@@ -1127,14 +1127,14 @@ bool GetMatrixFromIndex(Matrix3x3* out, intptr_t pivotList, intptr_t basisList, 
         int form = pivot->flags & 0xf;
         out->entries[form] = (pivot->flags & 0x10) ? -1 << 12 : 1 << 12;
 
-        out->entries[data_020e9284[form].unknown_0_] = entryA;
-        out->entries[data_020e9284[form].unknown_1_] = entryB;
+        out->entries[data_020e9284[form].a] = entryA;
+        out->entries[data_020e9284[form].b] = entryB;
 
         fix32_t entryC = (pivot->flags & 0x20) ? -entryB : entryB;
-        out->entries[data_020e9284[form].unknown_2_] = entryC;
+        out->entries[data_020e9284[form].c] = entryC;
         
         fix32_t entryD = (pivot->flags & 0x40) ? -entryA : entryA;
-        out->entries[data_020e9284[form].unknown_3_] = entryD;
+        out->entries[data_020e9284[form].d] = entryD;
 
         return false;
     }

@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 
-struct Struct_ov011_02184324 { char unknown_0_[0x18]; Struct_ov011_02184324* unknown_18_; };
+struct Struct_ov011_02184324 { char pad[0x18]; Struct_ov011_02184324* next; };
 
 // USA: func_ov011_02184324
-extern "C" ARM void func_ov011_02184324(Struct_ov011_02184324* arg0, Struct_ov011_02184324* arg1) {
-    if (arg0->unknown_18_ != 0) {
-        Struct_ov011_02184324* var0 = arg0->unknown_18_;
-        while (var0->unknown_18_ != 0) {
-            var0 = var0->unknown_18_;
+extern "C" ARM void func_ov011_02184324(Struct_ov011_02184324* head, Struct_ov011_02184324* node) {
+    if (head->next != 0) {
+        Struct_ov011_02184324* p = head->next;
+        while (p->next != 0) {
+            p = p->next;
         }
-        var0->unknown_18_ = arg1;
+        p->next = node;
     } else {
-        arg0->unknown_18_ = arg1;
+        head->next = node;
     }
 }

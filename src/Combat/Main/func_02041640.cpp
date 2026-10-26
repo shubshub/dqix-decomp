@@ -8,8 +8,8 @@
 #endif
 
 // USA: func_02041640
-extern "C" ARM void func_02041640(void* arg0, int arg1, int) {
-    int* var0 = (int*)((char*)arg0 + RG(0x2f4, 0x2e8));
-    *var0 = arg1;
-    ((Object3D*)arg0)->MaybeSetRegularAnimation((char const*)(*var0), 0);
+extern "C" ARM void func_02041640(void* obj, int v, int) {
+    int* p = (int*)((char*)obj + RG(0x2f4, 0x2e8));
+    *p = v;
+    ((Object3D*)obj)->SetAnimationByName((char const*)(*p), 0);
 }

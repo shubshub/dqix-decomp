@@ -20,22 +20,22 @@ extern "C" void func_02022da0(void*);
 
 extern "C" Zone3D* Zone3D_GetInstance(void);
 extern "C" void* OamManager_GetInstance(void);
-void* BgVram_GetInstance(void);
+extern "C" void* BgVram_GetInstance(void);
 extern "C" void MapDisplay_FadeOutSubScreen(void* obj, int amount);
 
 extern "C" int Font_GetTextWidth(void* p, int flag);
 
-void BgVram_Reset(char* obj);
-void OamManager_ResetTextTable(char* obj);
-void OamManager_Init(char* obj);
-void BgVram_FillMap(void* objPtr, int mode, int idx, int fillByte);
+extern "C" void BgVram_Reset(char* obj);
+extern "C" void OamManager_ResetTextTable(char* obj);
+extern "C" void OamManager_Init(char* obj);
+extern "C" void BgVram_FillMap(void* objPtr, int mode, int idx, int fillByte);
 extern "C" void BgTransfers_UploadDirtyScreens(void* obj);
 struct Struct0205a198;
-void Sprite_Init(struct Struct0205a198* p);
-void SpriteContext_Init(char* obj);
+extern "C" void Sprite_Init(struct Struct0205a198* p);
+extern "C" void SpriteContext_Init(char* obj);
 
-int MapDisplay_QueueMapScript(void* obj);
-void MapDisplay_ClearRedChests(char* obj);
+extern "C" int MapDisplay_QueueMapScript(void* obj);
+extern "C" void MapDisplay_ClearRedChests(char* obj);
 #if defined(jpn)
 extern "C" void MapDisplay_LoadShipPositions(char* obj, int handle);
 #else
@@ -44,8 +44,8 @@ extern "C" void MapDisplay_LoadShipPositions(char* obj, int* handle);
 #if defined(jpn)
 #else
 #endif
-int MapDisplay_UploadMapName(void* obj, int flag);
-void MapDisplay_RefreshAllMemberPanels(void* obj);
+extern "C" int MapDisplay_UploadMapName(void* obj, int flag);
+extern "C" void MapDisplay_RefreshAllMemberPanels(void* obj);
 #if defined(jpn)
 extern "C" void MapDisplay_LoadBackgroundPattern(void* obj, int handle, SafeAllocator* alloc);
 #else
@@ -54,9 +54,9 @@ extern "C" void MapDisplay_LoadBackgroundPattern(void* obj, int* handle, SafeAll
 extern "C" void MapDisplay_LoadMapPieces(char* obj, int* handle, SafeAllocator* alloc);
 extern "C" void MapDisplay_CenterOnLeader(void* obj);
 extern "C" void func_ov017_02191234(void* obj);
-void OS_WaitVBlankIntr(void);
+extern "C" void OS_WaitVBlankIntr(void);
 extern "C" void MapDisplay_Draw(void* obj);
-void MapDisplay_RecheckAllMembers(unsigned char* obj);
+extern "C" void MapDisplay_RecheckAllMembers(unsigned char* obj);
 extern "C" void MapDisplay_PlaceMembers(void* obj, int flag);
 
 extern const char* data_020ef460[];                 // mapname_<LG>.bin, data/map/mapname.gp2, minimap.gp2, minimapt.gp2 (usa)

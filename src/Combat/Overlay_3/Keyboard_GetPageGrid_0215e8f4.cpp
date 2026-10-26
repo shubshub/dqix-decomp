@@ -15,7 +15,7 @@ struct Keyboard {
 };
 
 // Overlay 3, originally FindEntryByMask_0215e8f4 (USA/EUR 0x0215e8f4; JPN not identified)
-ARM void* Keyboard_GetPageGrid(struct Keyboard* self) {
+extern "C" ARM void* Keyboard_GetPageGrid(struct Keyboard* self) {
     struct ByteArray_0215e8f4* arr = self->layout;
     unsigned char mask = self->page;
     unsigned char* p = arr->data;

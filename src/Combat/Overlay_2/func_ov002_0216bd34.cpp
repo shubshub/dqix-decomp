@@ -8,36 +8,36 @@
 #define RG(u, j) (u)
 #endif
 
-struct Struct_0205de24_2;
+struct Struct0205de24;
 struct Struct_0205c570;
 struct Obj_0205da38;
 struct SePlayer;
 struct ItemTable;
-void FindAndLinkMatchingEntry0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
+extern "C" void func_0205de24(struct Struct0205de24 *obj, unsigned char keyLow,
                                                                         unsigned char keyHigh);
-int Window_GetSelectedIndex(struct Struct_0205c570 *s);
-int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
-void SePlayer_Play(struct SePlayer *o, int a, int b);
-char *ItemTable_Find(struct ItemTable *c, int key);
-int CheckFlagOrThreshold_02161b48(char *base, int a);
-void InitBattleTag02161798(char *base);
+extern "C" int Window_GetSelectedIndex(struct Struct_0205c570 *s);
+extern "C" int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
+extern "C" void SePlayer_Play(struct SePlayer *o, int a, int b);
+extern "C" char *ItemTable_Find(struct ItemTable *c, int key);
+extern "C" int func_ov002_02161b48(char *base, int a);
+extern "C" void func_ov002_02161798(char *base);
 extern "C" void func_ov002_02161cf0(void *base);
 extern "C" void func_ov002_02156e90(void *base);
 extern "C" void func_ov002_0215a7b4(char *base, int actor, short key, int sel, int x);
 extern "C" char g_sePlayer[];
 
 // USA: func_ov002_0216bd34
-extern "C" ARM void func_ov002_0216bd34(char *arg0) {
-    char *var0  = (char *) GameState::GetInstance();
-    int var1 = *(int *) (arg0 + 0x1000 + RG(0xbc0, 0xa88));
-    if (var1 == 0) {
-        *(short *) (arg0 + RG(0x1c00 + 0x14, 0x1a00 + 0xdc)) = 0;
-        func_0205de24((struct Struct_0205de24_2 *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)), 0, 2);
-        func_ov002_02161cf0(arg0);
-        func_ov002_02161798(arg0);
-        *(signed char *) (arg0 + 0x1000 + RG(0xc20, 0xae8)) = *(int *) (arg0 + *(short *) (arg0 + RG(0x1b00 + 0xe6, 0x1a00 + 0xae)) * 4 + 0x1000 + RG(0xc3c, 0xb00));
-        if (*(signed char *) (arg0 + RG(0x1c00 + 0x20, 0x1a00 + 0xe8)) < 0) {
-            *(signed char *) (arg0 + 0x1000 + RG(0xc20, 0xae8)) = 4;
+extern "C" ARM void func_ov002_0216bd34(char *base) {
+    char *gs  = (char *) GameState::GetInstance();
+    int state = *(int *) (base + 0x1000 + RG(0xbc0, 0xa88));
+    if (state == 0) {
+        *(short *) (base + RG(0x1c00 + 0x14, 0x1a00 + 0xdc)) = 0;
+        func_0205de24((struct Struct0205de24 *) (base + RG(0x2c8 + 0xc00, 0xe20)), 0, 2);
+        func_ov002_02161cf0(base);
+        func_ov002_02161798(base);
+        *(signed char *) (base + 0x1000 + RG(0xc20, 0xae8)) = *(int *) (base + *(short *) (base + RG(0x1b00 + 0xe6, 0x1a00 + 0xae)) * 4 + 0x1000 + RG(0xc3c, 0xb00));
+        if (*(signed char *) (base + RG(0x1c00 + 0x20, 0x1a00 + 0xe8)) < 0) {
+            *(signed char *) (base + 0x1000 + RG(0xc20, 0xae8)) = 4;
         }
         *(int *) (base + 0x1000 + RG(0xbc0, 0xa88)) += 1;
     } else if (state == 1) {
@@ -60,24 +60,24 @@ extern "C" ARM void func_ov002_0216bd34(char *arg0) {
                                                                           (short) key) == NULL)
                         break;
 #if defined(jpn)
-                    *(unsigned short *) (var0 + 0x6f00 + 0x9c) = var3;
+                    *(unsigned short *) (gs + 0x6f00 + 0x9c) = key;
 #else
-                    *(unsigned short *) (var0 + 0x7100 + 0xdc) = var3;
-                    *(unsigned short *) (var0 + 0x7f00 + 0x58) = var3;
+                    *(unsigned short *) (gs + 0x7100 + 0xdc) = key;
+                    *(unsigned short *) (gs + 0x7f00 + 0x58) = key;
 #endif
-                    if (var3 <= 0) break;
-                    *(short *) (var0 + RG(0x7100 + 0xde, 0x6f00 + 0x9e)) = var2;
-                    if (var2 < 0) break;
-                    *(short *) (var0 + RG(0x7100 + 0xe0, 0x6f00 + 0xa0)) = *(short *) (arg0 + RG(0x1b00 + 0xe8, 0x1a00 + 0xb0));
-                    if (*(short *) (arg0 + RG(0x1b00 + 0xe8, 0x1a00 + 0xb0)) < 0) break;
-                    if (*(unsigned char *) (arg0 + 0x2000 + RG(0x486, 0x2b6)) != 0) {
-                        if (var2 >= 0 && var2 <= 3) {
-                            func_ov002_0215a7b4(arg0, var2, var3, *(short *) (arg0 + RG(0x1b00 + 0xe8, 0x1a00 + 0xb0)), 0);
+                    if (key <= 0) break;
+                    *(short *) (gs + RG(0x7100 + 0xde, 0x6f00 + 0x9e)) = actor;
+                    if (actor < 0) break;
+                    *(short *) (gs + RG(0x7100 + 0xe0, 0x6f00 + 0xa0)) = *(short *) (base + RG(0x1b00 + 0xe8, 0x1a00 + 0xb0));
+                    if (*(short *) (base + RG(0x1b00 + 0xe8, 0x1a00 + 0xb0)) < 0) break;
+                    if (*(unsigned char *) (base + 0x2000 + RG(0x486, 0x2b6)) != 0) {
+                        if (actor >= 0 && actor <= 3) {
+                            func_ov002_0215a7b4(base, actor, key, *(short *) (base + RG(0x1b00 + 0xe8, 0x1a00 + 0xb0)), 0);
                         } else {
-                            func_ov002_0215a7b4(arg0, 4, var3, *(short *) (arg0 + RG(0x1b00 + 0xe8, 0x1a00 + 0xb0)), 0);
+                            func_ov002_0215a7b4(base, 4, key, *(short *) (base + RG(0x1b00 + 0xe8, 0x1a00 + 0xb0)), 0);
                         }
                     }
-                    var4 = 1;
+                    done = 1;
                     break;
                 case 1:
                     SePlayer_Play((struct SePlayer *) g_sePlayer, 1, 0);
@@ -86,21 +86,21 @@ extern "C" ARM void func_ov002_0216bd34(char *arg0) {
                     done = 1;
                     break;
             }
-        } else if (func_ov002_02161b48(arg0, 1)) {
-            *(short *) (arg0 + RG(0x1c00 + 0x14, 0x1a00 + 0xdc)) = 0;
-            var4                              = 1;
-            func_ov002_02156e90(arg0);
+        } else if (func_ov002_02161b48(base, 1)) {
+            *(short *) (base + RG(0x1c00 + 0x14, 0x1a00 + 0xdc)) = 0;
+            done                              = 1;
+            func_ov002_02156e90(base);
         }
-        if (!var4) {
-            char *var7                                 = (char *) GameState::GetInstance();
+        if (!done) {
+            char *g                                 = (char *) GameState::GetInstance();
 #if defined(jpn)
-            *(unsigned short *) (var7 + 0x6f00 + 0x9c) = 0;
+            *(unsigned short *) (g + 0x6f00 + 0x9c) = 0;
 #else
-            *(unsigned short *) (var7 + 0x7100 + 0xdc) = 0;
-            *(unsigned short *) (var7 + 0x7f00 + 0x58) = 0;
+            *(unsigned short *) (g + 0x7100 + 0xdc) = 0;
+            *(unsigned short *) (g + 0x7f00 + 0x58) = 0;
 #endif
-            *(short *) (var7 + RG(0x7100 + 0xde, 0x6f00 + 0x9e))          = -1;
-            *(short *) (var7 + RG(0x7100 + 0xe0, 0x6f00 + 0xa0))          = -1;
+            *(short *) (g + RG(0x7100 + 0xde, 0x6f00 + 0x9e))          = -1;
+            *(short *) (g + RG(0x7100 + 0xe0, 0x6f00 + 0xa0))          = -1;
         }
     }
 }

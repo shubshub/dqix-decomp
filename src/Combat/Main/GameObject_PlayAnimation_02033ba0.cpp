@@ -10,24 +10,24 @@ struct AnimationIdRemap {
     signed char values[12];
 };
 
-struct IdleAnimationMap {
+struct Struct_020e77bc {
     unsigned char values[2][7];
 };
 
 extern const AnimationPlayFlags data_020e77cc;
 extern const AnimationIdRemap data_020e77b0;
-extern const IdleAnimationMap data_020e77bc;
+extern const Struct_020e77bc data_020e77bc;
 extern const char *const data_020ef978[7];
 extern const char data_020efa40[];
 extern const char *const data_020ef994[12];
 
 struct GameObjectFields {
     Object3D object;
-    unsigned char unknown_ac[0xc0 - 0xac];
+    unsigned char unknown_ac_[0xc0 - 0xac];
     unsigned char animation;
     unsigned char c1_low : 4;
     unsigned char idlePose : 4;
-    unsigned char unknown_c2[0xe0 - 0xc2];
+    unsigned char unknown_c2_[0xe0 - 0xc2];
     unsigned char e0_bit0 : 1;
     unsigned char enableObjectFlag18 : 1;
 };
@@ -43,7 +43,7 @@ extern "C" ARM void GameObject_PlayAnimation(void *gameObject, int animation) {
     if (animation == 0) {
         unsigned int idlePose = self->idlePose;
         if (idlePose < 7) {
-            IdleAnimationMap idle = data_020e77bc;
+            Struct_020e77bc idle = data_020e77bc;
             int idleRow           = 0;
             if (self->object.actorIndex_ >= 0xc0 && self->object.actorIndex_ <= 0xc7) {
                 idleRow = 1;

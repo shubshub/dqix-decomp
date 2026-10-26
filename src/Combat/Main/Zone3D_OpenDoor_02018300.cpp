@@ -45,18 +45,18 @@ enum {
     kExitDoorControlLockFrames = 8,
 };
 extern "C" void* Scenario_GetInstance();
-int Scenario_RunTriggerCommandsById(void*, int, unsigned short, void*);
+extern "C" int Scenario_RunTriggerCommandsById(void*, int, unsigned short, void*);
 int fix32ReduceAngle0To2Pi(int);
 int fix32cos(int);
 int fix32sin(int);
 void Vector3fixMultiplyScalar(const Vector3i*, int, Vector3i*);
-void* ZoneFeatures_GetFirstOfType(unsigned char*, unsigned int);
-void SePlayer_Play(SePlayer*, int, int);
-void GameObject_DisableControl(Obj020397cc*, int);
-void LinkMessageQueue_SendDoorOpened(unsigned short, unsigned short, int);
-Entry_02028bd0* ZoneRecords_GetInstance();
-Obj02028c64* ZoneRecords_Find(Entry_02028bd0*, int);
-void ZoneRecord_SetDoorOpened(Obj02028c64*, int);
+extern "C" void* ZoneFeatures_GetFirstOfType(unsigned char*, unsigned int);
+extern "C" void SePlayer_Play(SePlayer*, int, int);
+extern "C" void GameObject_DisableControl(Obj020397cc*, int);
+extern "C" void LinkMessageQueue_SendDoorOpened(unsigned short, unsigned short, int);
+extern "C" Entry_02028bd0* ZoneRecords_GetInstance();
+extern "C" Obj02028c64* ZoneRecords_Find(Entry_02028bd0*, int);
+extern "C" void ZoneRecord_SetDoorOpened(Obj02028c64*, int);
 extern const SoundTable Zone3D_doorSounds;
 extern SePlayer g_sePlayer;
 

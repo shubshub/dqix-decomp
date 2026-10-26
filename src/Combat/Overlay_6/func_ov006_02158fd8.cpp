@@ -8,34 +8,34 @@
 #include <std_library_functions.h>
 
 struct Struct_ov006_02157a60 {
-    char unknown_0_[R(0x40, 0x48)];
-    short** unknown_48_;
+    char unk_0[R(0x40, 0x48)];
+    short** items_;
     unsigned char** unknown_4c_;
-    unsigned short* unknown_50_;
+    unsigned short* sizes_;
 };
 
 extern "C" const unsigned short data_ov006_0215fffe[9];
 
 // USA: func_ov006_02158fd8
-extern "C" ARM void func_ov006_02158fd8(Struct_ov006_02157a60* arg0, unsigned int arg1, short arg2, unsigned char arg3) {
-    if (arg2 <= 0 || arg3 == 0)
+extern "C" ARM void func_ov006_02158fd8(Struct_ov006_02157a60* self, unsigned int category, short item, unsigned char count) {
+    if (item <= 0 || count == 0)
         return;
-    short* var0 = arg0->unknown_48_[arg1];
-    unsigned char* var1 = arg0->unknown_4c_[arg1];
-    unsigned short* var2 = &arg0->unknown_50_[arg1];
-    unsigned short var3[9];
-    memcpy(var3, data_ov006_0215fffe, sizeof(var3));
-    unsigned short var4 = var3[arg1];
-    for (unsigned short var5 = 0; var5 < var4; var5++) {
-        short var6 = var0[var5];
-        if (var6 <= 0) {
-            var0[var5] = arg2;
-            var1[var5] = arg3;
-            (*var2)++;
+    short* items = self->items_[category];
+    unsigned char* counts = self->unknown_4c_[category];
+    unsigned short* size = &self->sizes_[category];
+    unsigned short sizes[9];
+    memcpy(sizes, data_ov006_0215fffe, sizeof(sizes));
+    unsigned short capacity = sizes[category];
+    for (unsigned short i = 0; i < capacity; i++) {
+        short entry = items[i];
+        if (entry <= 0) {
+            items[i] = item;
+            counts[i] = count;
+            (*size)++;
             return;
         }
-        if (var6 == arg2) {
-            var1[var5] += arg3;
+        if (entry == item) {
+            counts[i] += count;
             return;
         }
     }

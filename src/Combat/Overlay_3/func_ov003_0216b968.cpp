@@ -10,73 +10,73 @@
 #include "NitroSDK/ColorEffects.h"
 #include "Input/Input.h"
 
-struct Struct_0205a330;
+struct Container0205a330;
 struct Struct_0205c570;
 struct Obj_0205da38;
 struct SePlayer;
 struct Entry_0205d6a0;
 
-struct Struct_ov003_0216b968 {
-    char unknown_0_[REGION_LAYOUT(0x230, 0x2e0)];
-    struct Struct_0205a330* unknown_2e0_;
+struct Global0216b968 {
+    char unk_0[REGION_LAYOUT(0x230, 0x2e0)];
+    struct Container0205a330* entries_;
     char unknown_2e4_[REGION_LAYOUT(0x63c, 0x6bc)];
-    int unknown_9a0_;
+    int mode_;
     char unknown_9a4_[REGION_LAYOUT(0xf6a, 0x100a)];
     unsigned char unknown_19ae_;
 };
 
 struct Struct_ov003_0216b968_2 {
-    char unknown_0_[0x4];
+    char unk_0[0x4];
     short unknown_4_;
-    short unknown_6_;
-    char unknown_8_[0x8];
-    int unknown_10_;
-    char unknown_14_[REGION_LAYOUT(0x113c, 0x12ac)];
-    void* unknown_12c0_;
+    short step_;
+    char unk_8[0x8];
+    int field_0x10;
+    char unk_14[REGION_LAYOUT(0x113c, 0x12ac)];
+    void* list_;
     char unknown_12c4_[0x126];
     unsigned char unknown_13ea_;
     char unknown_13eb_;
-    unsigned char unknown_13ec_;
+    unsigned char flags_;
     char unknown_13ed_;
     unsigned char unknown_13ee_;
 };
 
-Global0216b968* MessageSystem_GetInstance(void);
+extern "C" Global0216b968* MessageSystem_GetInstance(void);
 extern "C" void func_0205d7a0(void* list, int index);
-extern "C" void func_ov003_0216da90(Self0216b968* self);
-void SpriteEntryList_AdvanceAnimations(struct Container0205a330* c, int arg);
-int Window_GetSelectedIndex(struct Struct_0205c570* list);
-extern "C" void func_ov003_0216dc58(Self0216b968* self);
-int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
+extern "C" void func_ov003_0216da90(Struct_ov003_0216b968_2* self);
+extern "C" void SpriteEntryList_AdvanceAnimations(struct Container0205a330* c, int arg);
+extern "C" int Window_GetSelectedIndex(struct Struct_0205c570* list);
+extern "C" void func_ov003_0216dc58(Struct_ov003_0216b968_2* self);
+extern "C" int Window_IsSelectionTouched(struct Obj_0205da38* obj, int key);
 extern "C" int func_0205d97c(void* list);
-void SePlayer_Play(struct SePlayer* obj, int a, int b);
-void Window_ClosePane(struct Entry_0205d6a0* list, int value);
+extern "C" void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern "C" void Window_ClosePane(struct Entry_0205d6a0* list, int value);
 
 extern struct SePlayer g_sePlayer;
 
 // USA: func_ov003_0216b968
-extern "C" ARM void func_ov003_0216b968(Self0216b968* self) {
+extern "C" ARM void func_ov003_0216b968(Struct_ov003_0216b968_2* self) {
     Global0216b968* global = MessageSystem_GetInstance();
 
-    if (arg0->unknown_6_ == 0) {
-        if (var0->unknown_9a0_ == 3) {
-            arg0->unknown_13ea_ = 1;
-            arg0->unknown_6_ = 1;
+    if (self->step_ == 0) {
+        if (global->mode_ == 3) {
+            self->unknown_13ea_ = 1;
+            self->step_ = 1;
         }
-    } else if (arg0->unknown_6_ == 1) {
-        if (arg0->unknown_13ec_ & 1) {
+    } else if (self->step_ == 1) {
+        if (self->flags_ & 1) {
             return;
         }
-        func_0205d7a0(arg0->unknown_12c0_, 0);
-        func_ov003_0216da90(arg0);
+        func_0205d7a0(self->list_, 0);
+        func_ov003_0216da90(self);
         ColorEffect_ConfigureAlphaBlend(0x04000050, 4, 1, 10, 6);
         self->step_ = 2;
     } else if (self->step_ == 2) {
         GameState* gameState = GameState::GetInstance();
         struct Container0205a330* entries = global->entries_;
         SpriteEntryList_AdvanceAnimations(entries, gameState->GetTickCount());
-        global->field_0x19ae = 0;
-        self->field_0x13ee = 0;
+        global->unknown_19ae_ = 0;
+        self->unknown_13ee_ = 0;
         Window_GetSelectedIndex((struct Struct_0205c570*)self->list_);
         if (self->field_0x10 != 0) {
             func_ov003_0216dc58(self);
@@ -92,33 +92,33 @@ extern "C" ARM void func_ov003_0216b968(Self0216b968* self) {
         }
 
 #if defined(jpn)
-        switch (var3) {
+        switch (selection) {
         case 0:
-            self->result_ = 3;
+            self->unknown_4_ = 3;
             self->step_ = 0;
             SePlayer_Play(&g_sePlayer, 1, 0);
             Window_ClosePane((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 1:
-            self->result_ = 5;
+            self->unknown_4_ = 5;
             self->step_ = 0;
             SePlayer_Play(&g_sePlayer, 1, 0);
             Window_ClosePane((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 2:
-            self->result_ = 4;
+            self->unknown_4_ = 4;
             self->step_ = 0;
             SePlayer_Play(&g_sePlayer, 1, 0);
             Window_ClosePane((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case 3:
-            self->result_ = 6;
+            self->unknown_4_ = 6;
             self->step_ = 0;
             SePlayer_Play(&g_sePlayer, 1, 0);
             Window_ClosePane((struct Entry_0205d6a0*)self->list_, 0);
             break;
         case -2:
-            self->result_ = 6;
+            self->unknown_4_ = 6;
             self->step_ = 0;
             Window_ClosePane((struct Entry_0205d6a0*)self->list_, 0);
             break;
@@ -126,30 +126,30 @@ extern "C" ARM void func_ov003_0216b968(Self0216b968* self) {
             break;
         }
 #else
-        int var4;
-        int var5 = 1;
-        switch (var3) {
+        int result;
+        int dispatch = 1;
+        switch (selection) {
         case 0:
-            var4 = 3;
+            result = 3;
             break;
         case 1:
-            var4 = 5;
+            result = 5;
             break;
         case 2:
-            var4 = 4;
+            result = 4;
             break;
         case 3:
-            var4 = 6;
+            result = 6;
             break;
         case -2:
-            var4 = 6;
-            var5 = 0;
+            result = 6;
+            dispatch = 0;
             break;
         default:
             return;
         }
 
-        self->result_ = result;
+        self->unknown_4_ = result;
         self->step_ = 0;
         if (dispatch) {
             SePlayer_Play(&g_sePlayer, 1, 0);

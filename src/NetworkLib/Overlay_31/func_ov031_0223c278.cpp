@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_0223c278 {
-    unsigned char unknown_0_[4];
-    short unknown_4_;
-    unsigned short unknown_6_;
-    unsigned char unknown_8_;
-    unsigned char unknown_9_;
+    unsigned char pad0[4];
+    short field4;
+    unsigned short field6;
+    unsigned char field8;
+    unsigned char field9;
 };
 
 extern void* data_ov031_02290d34;
@@ -13,13 +13,13 @@ extern "C" void* func_ov031_0223e218(void*, void*, void*, int);
 extern "C" void func_ov031_0223c2d0(void*, Struct_ov031_0223c278*);
 
 // USA: func_ov031_0223c278
-extern "C" ARM int func_ov031_0223c278(int arg0) {
-    Struct_ov031_0223c278* var0 = (Struct_ov031_0223c278*)data_ov031_02290d34;
-    if (var0->unknown_9_ != 0) return 0;
-    void* var1 = func_ov031_0223e218((void*)1, (void*)func_ov031_0223c2d0, var0, 0xc8);
-    *(void**)var0 = var1;
-    var0->unknown_4_ = 0;
-    var0->unknown_6_ = (unsigned short)arg0;
-    var0->unknown_9_ = 1;
+extern "C" ARM int func_ov031_0223c278(int arg) {
+    Struct_ov031_0223c278* s = (Struct_ov031_0223c278*)data_ov031_02290d34;
+    if (s->field9 != 0) return 0;
+    void* result = func_ov031_0223e218((void*)1, (void*)func_ov031_0223c2d0, s, 0xc8);
+    *(void**)s = result;
+    s->field4 = 0;
+    s->field6 = (unsigned short)arg;
+    s->field9 = 1;
     return 1;
 }

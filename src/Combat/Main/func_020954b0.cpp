@@ -1,16 +1,16 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8 { int unknown_0_; int unknown_4_; };
+struct Variant02030b0c { int tag; int val; };
 extern int data_02109404;
 
 // USA: func_020954b0
-extern "C" ARM int func_020954b0(struct Struct_0201c1c8* arg0) {
-    unsigned char var0 = ((Script::Parameter*)arg0)->ToInt();
-    unsigned char var1 = ((Script::Parameter*)(arg0 + 1))->ToInt();
-    if (var1 < 0xcc) {
-        unsigned char* var2 = *(unsigned char**)((char*)&data_02109404 + 0x10);
-        var2[var1] = var0;
+extern "C" ARM int func_020954b0(struct Variant02030b0c* args) {
+    unsigned char val = ((Script::Parameter*)args)->ToInt();
+    unsigned char idx = ((Script::Parameter*)(args + 1))->ToInt();
+    if (idx < 0xcc) {
+        unsigned char* base = *(unsigned char**)((char*)&data_02109404 + 0x10);
+        base[idx] = val;
     }
     return 1;
 }

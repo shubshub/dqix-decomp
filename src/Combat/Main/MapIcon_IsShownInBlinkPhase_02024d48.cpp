@@ -11,7 +11,7 @@ struct Actor02024d48 {
 // An icon of a member in a battle in the protagonist's zone is hidden in blink phase 1 (when MapDisplay_DrawBattleMarkers draws
 // the battle marker in its place)
 // Main, originally CheckActionAllowed (USA 0x02024d48, EUR 0x02024d58, JPN 0x0202471c)
-ARM int MapIcon_IsShownInBlinkPhase(CombatActionPosition* icon, int blinkPhase) {
+extern "C" ARM int MapIcon_IsShownInBlinkPhase(CombatActionPosition* icon, int blinkPhase) {
     struct Actor02024d48* flags = (struct Actor02024d48*)icon;
     int result = 1;
     int steady = 1;

@@ -1,51 +1,51 @@
 #include <globaldefs.h>
 
 struct Struct_ov000_02160094 {
-    char unknown_0_[0x1c];
+    char pad0[0x1c];
     short unknown_1c_;
-    char unknown_1e_[2];
-    unsigned short unknown_20_;
+    char pad1e[2];
+    unsigned short combatantId;
 };
 struct Struct_ov000_0215440c_2;
 
 struct Struct_ov025_021eaf48 {
-    unsigned short unknown_0_;
-    char unknown_2_[2];
-    struct Struct_ov025_021eaf48* unknown_4_;
+    unsigned short id;
+    char pad2[2];
+    struct Struct_ov025_021eaf48* next;
 };
 
 struct Struct_ov025_021eaf48_2 {
-    char unknown_0_[8];
-    struct Struct_ov025_021eaf48* unknown_8_;
-    short unknown_c_;
+    char pad0[8];
+    struct Struct_ov025_021eaf48* entries;
+    short value;
 };
 
 extern "C" void* func_ov000_02160130(void);
-extern "C" void* func_ov000_02160f20(void* arg0);
-extern "C" struct Struct_ov000_02160094* func_ov000_02160094(struct Struct_ov000_0215440c_2* arg0, int arg1);
-extern "C" int func_ov025_021ed380(char* arg0, int arg1, int arg2, int arg3, int arg4, short arg5, unsigned short arg6);
-extern "C" void func_ov025_021ed5f0(char* arg0, int arg1, int arg2, int arg3);
+extern "C" void* func_ov000_02160f20(void* obj);
+extern "C" struct Struct_ov000_02160094* func_ov000_02160094(struct Struct_ov000_0215440c_2* list, int index);
+extern "C" int func_ov025_021ed380(char* obj, int id, int val2, int type, int val3, short arg5, unsigned short arg6);
+extern "C" void func_ov025_021ed5f0(char* obj, int val, int type, int val2);
 
 // USA: func_ov025_021eaf48
-extern "C" ARM void func_ov025_021eaf48(char* arg0, int arg1, int arg2, struct Struct_ov025_021eaf48_2* arg3) {
-    struct Struct_ov000_02160094* var0 = func_ov000_02160094((struct Struct_ov000_0215440c_2*)func_ov000_02160f20(func_ov000_02160130()), arg1);
-    if (var0 == 0) {
+extern "C" ARM void func_ov025_021eaf48(char* self, int index, int mode, struct Struct_ov025_021eaf48_2* effect) {
+    struct Struct_ov000_02160094* node = func_ov000_02160094((struct Struct_ov000_0215440c_2*)func_ov000_02160f20(func_ov000_02160130()), index);
+    if (node == 0) {
         return;
     }
-    int var1 = var0->unknown_20_;
-    if (arg3 == 0) {
+    int id = node->combatantId;
+    if (effect == 0) {
         return;
     }
-    short var2 = var1;
-    if (arg2 == 3) {
-        var2 = var0->unknown_1c_;
+    short target = id;
+    if (mode == 3) {
+        target = node->unknown_1c_;
     }
-    struct Struct_ov025_021eaf48* var3 = arg3->unknown_8_;
-    while (var3 != 0) {
-        int var4 = func_ov025_021ed380(arg0 + 0x1e8 + 0x400, var3->unknown_0_, var2, 3, (int)arg3, var1, 0);
-        if (var3->unknown_0_ == 0x172) {
-            func_ov025_021ed5f0(arg0 + 0x1e8 + 0x400, arg3->unknown_c_, 4, var4);
+    struct Struct_ov025_021eaf48* entry = effect->entries;
+    while (entry != 0) {
+        int queued = func_ov025_021ed380(self + 0x1e8 + 0x400, entry->id, target, 3, (int)effect, id, 0);
+        if (entry->id == 0x172) {
+            func_ov025_021ed5f0(self + 0x1e8 + 0x400, effect->value, 4, queued);
         }
-        var3 = var3->unknown_4_;
+        entry = entry->next;
     }
 }

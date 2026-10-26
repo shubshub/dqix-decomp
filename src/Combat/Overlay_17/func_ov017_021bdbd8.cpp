@@ -5,10 +5,10 @@
 #define REGION_FIELD 0x33c
 #endif
 
-struct Struct_ov017_021bdbd8 { char unknown_0_[REGION_FIELD]; int unknown_33c_; };
+struct Struct_ov017_021bdbd8 { char pad[REGION_FIELD]; int value; };
 
 // USA: func_ov017_021bdbd8
-extern "C" ARM int func_ov017_021bdbd8(unsigned char* arg0) {
-	Struct_ov017_021bdbd8* var0 = (Struct_ov017_021bdbd8*)(arg0 + 0x4000);
-	return var0->unknown_33c_;
+extern "C" ARM int func_ov017_021bdbd8(unsigned char* base) {
+	Struct_ov017_021bdbd8* s = (Struct_ov017_021bdbd8*)(base + 0x4000);
+	return s->value;
 }

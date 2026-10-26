@@ -4,31 +4,31 @@
 #include "Resource/GameResources.h"
 #include "World/Object3D.h"
 
-struct Struct_020312bc {
-    Vector3fix unknown_0_[3];
-    Vector3fix unknown_24_;
+struct GeometryTriangle {
+    Vector3fix vertices[3];
+    Vector3fix normal;
 };
 
-struct Struct_02033f6c {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_;
+struct FourHalfwords02033f7c {
+    unsigned short f0;
+    unsigned short f2;
+    unsigned short f4;
     unsigned short unknown_6_;
 };
 
 struct Struct_ov017_02192b48_5 {
-    int unknown_0_;
+    int type;
 };
 
 struct Struct_ov017_02192b48_6 {
-    Struct_ov017_02192b48_5* unknown_0_;
+    Struct_ov017_02192b48_5* header;
     unsigned char unknown_4_[0x10];
-    Struct_02033f6c* unknown_14_;
+    FourHalfwords02033f7c* unknown_14_;
 };
 
 struct Struct_ov017_02192b48_7 {
-    int unknown_0_;
-    Struct_ov017_02192b48_6* unknown_4_;
+    int unused;
+    Struct_ov017_02192b48_6* polygons;
 };
 
 struct Struct_ov017_02192b48_8 {
@@ -36,34 +36,34 @@ struct Struct_ov017_02192b48_8 {
     Struct_ov017_02192b48_7* unknown_24_;
 };
 
-struct Struct_ov017_02193dc4_3 {
+struct Zone02193dc4 {
 #if defined(jpn)
-    unsigned char unknown_0_[0x844];
+    unsigned char unknown0[0x844];
 #else
-    unsigned char unknown1_0_[0x824];
+    unsigned char unknown0[0x824];
 #endif
     Struct_ov017_02192b48_8** unknown_824_;
     unsigned char unknown_828_[0x4];
     int unknown_82c_;
 };
 
-struct Struct_ov017_02193dc4_4 {
-    short unknown_0_[96][12];
+struct TerrainGrid02193dc4 {
+    short cells[96][12];
     int unknown_900_;
-    int unknown_904_;
-    Vector3i unknown_908_;
+    int scale;
+    Vector3i position;
     int unknown_914_;
-    int unknown_918_;
+    int angle;
     int unknown_91c_;
     unsigned char unknown_920_[96];
 };
 
-struct Struct_ov017_02193dc4 {
-    Vector3i unknown_0_;
-    Vector3i unknown_c_;
+struct Probe02193dc4 {
+    Vector3i top;
+    Vector3i bottom;
 };
 
-class Struct_ov017_02193dc4_2 : public Object3D {
+class Actor02193dc4 : public Object3D {
 public:
     short unknown_ac_;
 };
@@ -75,16 +75,16 @@ extern "C" long long fix32_SinFx64c(int);
 extern "C" float _ll_sto_f(long long);
 extern "C" int ZoneTerrain_FindFloorHit(GeometryTriangle* triangles, int count, Vector3fix* start, Vector3fix* end, Vector3fix* point);
 extern "C" int Zone3D_CollectTerrainPolygons(Zone02193dc4* zone, int index, TerrainGrid02193dc4* grid, Probe02193dc4 probe, Actor02193dc4* self);
-void GameObject_ClearWallHit(struct ByteFlags02033f2c* p);
-void GameObject_SetFloorAttribute(void* obj, FourHalfwords02033f7c* src);
+extern "C" void GameObject_ClearWallHit(struct ByteFlags02033f2c* p);
+extern "C" void GameObject_SetFloorAttribute(void* obj, FourHalfwords02033f7c* src);
 
 // USA: func_ov017_02193dc4
-extern "C" ARM int func_ov017_02193dc4(Struct_ov017_02193dc4_2* arg0) {
-    Struct_ov017_02193dc4_4 var0;
-    Struct_020312bc var1[96];
-    Struct_ov017_02193dc4_3* var2;
-    int var3;
-    int var4;
+extern "C" ARM int func_ov017_02193dc4(Actor02193dc4* self) {
+    TerrainGrid02193dc4 grid;
+    GeometryTriangle samples[96];
+    Zone02193dc4* zone;
+    int total;
+    int i;
 
     GameState::GetInstance();
     GetGameResources();
@@ -101,7 +101,7 @@ extern "C" ARM int func_ov017_02193dc4(Struct_ov017_02193dc4_2* arg0) {
     probe.bottom.y -= 0x28000;
     probe.bottom.z -= self->GetRadius() / 2;
     GameObject_ClearWallHit((ByteFlags02033f2c*)self);
-    for (i = 0; i < zone->terrainCount; i++) {
+    for (i = 0; i < zone->unknown_82c_; i++) {
         int count = Zone3D_CollectTerrainPolygons(zone, i, &grid, probe, self);
         if (count > 0) {
             total += count;
@@ -130,18 +130,18 @@ extern "C" ARM int func_ov017_02193dc4(Struct_ov017_02193dc4_2* arg0) {
             if (idx != -1) {
                 hit.y += 0x199;
                 Vector3fix_Add(&hit, &grid.position, &hit);
-                TerrainNode* node = zone->terrain[i];
-                GeometryData* geometry;
-                PolygonData* polygons;
-                if (node != NULL && (geometry = node->geometry) != NULL && (polygons = geometry->polygons) != NULL) {
+                Struct_ov017_02192b48_8* node = zone->unknown_824_[i];
+                Struct_ov017_02192b48_7* var19;
+                Struct_ov017_02192b48_6* polygons;
+                if (node != NULL && (var19 = node->unknown_24_) != NULL && (polygons = var19->polygons) != NULL) {
                     if (polygons->header->type == 3) {
-                        FourHalfwords02033f7c material = polygons->materials[grid.materialIndex[idx]];
+                        FourHalfwords02033f7c material = polygons->unknown_14_[grid.unknown_920_[idx]];
                         GameObject_SetFloorAttribute(self, &material);
                     }
                 }
             }
         }
     }
-    arg0->unknown_ac_ = 0;
-    return var3;
+    self->unknown_ac_ = 0;
+    return total;
 }

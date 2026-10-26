@@ -14,7 +14,7 @@ enum { kFlagsOffset = 0xa00 };
 
 // Sets the recheck bit of every party member object (slots 0-3) that exists
 // Main, originally MarkActiveCombatantSlots02026b7c (USA 0x02026b7c, EUR 0x02026b8c, JPN 0x020264e0)
-ARM void MapDisplay_RecheckAllMembers(unsigned char* mapDisplay) {
+extern "C" ARM void MapDisplay_RecheckAllMembers(unsigned char* mapDisplay) {
     GameState* game = GameState::GetInstance();
     int memberIndex;
     mapDisplay += kBaseOffset;

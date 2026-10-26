@@ -16,7 +16,7 @@ struct Ctx0209a810 { void* table; };
 extern struct Ctx0209a810* SpellTable_scriptContext;
 
 // Main, originally SetupAndRunBufferedScript0209a810 (USA 0x0209a810, EUR 0x0209a820, JPN 0x0209c588)
-ARM void SpellTable_Load(struct Ctx0209a810* ctx, void* table) {
+extern "C" ARM void SpellTable_Load(struct Ctx0209a810* ctx, void* table) {
     unsigned int fileSize;
     char script[0x430];
 

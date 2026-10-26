@@ -40,8 +40,8 @@ struct S_b20c {
 
 // The 12-byte name argument NameText_InitFromPartyMember fills
 struct NameDescriptor {
-    char* singular;
-    char* plural;
+    char* unknown_0_;
+    char* unknown_4_;
     unsigned int flags;
 };
 
@@ -67,38 +67,38 @@ struct PartyMemberData {
 // A party member's GameObject, which points at its PartyMemberData
 struct PartyMemberObject : GameObject {
 #if defined(jpn)
-    unsigned char unknown13c[0x144 - 0x13c];
+    unsigned char unknown_13c_[0x144 - 0x13c];
 #else
-    unsigned char unknown13c[0x150 - 0x13c];
+    unsigned char unknown1_13c_[0x150 - 0x13c];
 #endif
     PartyMemberData* data;
 };
 
 struct Obj0205b674;
 
-MessageStore020200c0* MessageSystem_GetInstance(void);
+extern "C" MessageStore020200c0* MessageSystem_GetInstance(void);
 extern "C" void* memcpy(void* dst, const void* src, unsigned int n);
-void GlyphDestinationRect_Clear(struct Struct02020520* s);
+extern "C" void GlyphDestinationRect_Clear(struct Struct02020520* s);
 extern "C" void CanvasRect_InitFromSprite(struct Struct02020520* layout, int mode, int value);
-void GlyphDestination_Clear(struct S_b20c* obj);
-void GlyphDestination_SetPixels(void* obj, int value);
-void GlyphDestination_SetRects(void* obj, int value, unsigned char flag);
+extern "C" void GlyphDestination_Clear(struct S_b20c* obj);
+extern "C" void GlyphDestination_SetPixels(void* obj, int value);
+extern "C" void GlyphDestination_SetRects(void* obj, int value, unsigned char flag);
 extern "C" void Canvas_FillRect(struct S_b20c* dest, int x, int y, int width, int height, int mode);
-const char* StandardStrings_Get(int key);
+extern "C" const char* StandardStrings_Get(int key);
 extern "C" void GlyphDestination_DrawText(struct S_b20c* dest, short x, int y, const char* text, int color, int mode);
 extern "C" int Font_GetTextWidth(const char* text, int large);
 extern "C" int func_ov017_021bdbcc(GameResources* res);
-void* GetTableEntry020421b0(int index);
+extern "C" void* func_020421b0(int index);
 extern "C" void Canvas_DrawTile(struct S_b20c* dest, void* tile, short x, short y, int size, int color);
-unsigned short GameObject_GetPartyMemberLevel(void* obj);
-void Canvas_DrawNumber(struct Obj0205b674* obj, short posX, int param2, int param3,
-                                         unsigned char param4, unsigned char param5, unsigned char param6, unsigned char param7);
+extern "C" unsigned short GameObject_GetPartyMemberLevel(void* obj);
+extern "C" void Canvas_DrawNumber(struct Obj0205b674* obj, short posX, int param2, int param3,
+                                         unsigned char param4, unsigned char arg5, unsigned char arg6, unsigned char param7);
 extern "C" void __clear(void* buf, int n);
 extern "C" int sprintf(char* dst, const char* fmt, ...);
-void NameText_Clear(void* p);
-void NameText_InitFromPartyMember(void* obj, int combatantId);
+extern "C" void NameText_Clear(void* p);
+extern "C" void NameText_InitFromPartyMember(void* obj, int combatantId);
 extern "C" void MessageSystem_FormatText(MessageStore020200c0* store, int a, const char* format, char* output, int size, int b, int c);
-void OS_WaitVBlankIntr(void);
+extern "C" void OS_WaitVBlankIntr(void);
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 extern "C" void LoadToSubObjVRAM(const void* src, unsigned int offset, unsigned int size);
 extern char data_020ef580[];
@@ -130,7 +130,7 @@ extern "C" ARM void MapDisplay_RefreshMemberPanel(int memberId, int cellRecord) 
     Canvas_FillRect(&canvas, 7, 0x1c, 0x17, 0x24, 1);
     GlyphDestination_DrawText(&canvas, 7, 0x1a, StandardStrings_Get(StandardString_Mp), 0xf, 0);
 
-    PartyMemberObject* member = (PartyMemberObject*)GetCombatantWithFlag0x100_0200ff1c(gameState, memberId);
+    PartyMemberObject* member = (PartyMemberObject*)func_0200ff1c(gameState, memberId);
     if (member == NULL) return;
     char* name = member->baseStats_->name;
     GlyphDestination_DrawText(&canvas, (short)((0x40 - Font_GetTextWidth(name, 0)) >> 1), 3, name, 0xf, 0);
@@ -164,7 +164,7 @@ extern "C" ARM void MapDisplay_RefreshMemberPanel(int memberId, int cellRecord) 
         const char* levelLabel = StandardStrings_Get(StandardString_Level);
         int labelWidth = Font_GetTextWidth(levelLabel, 0);
         if (vocation >= 0) {
-            char* icon = (char*)GetTableEntry020421b0((unsigned char)(vocation * 4 + 0x28));
+            char* icon = (char*)func_020421b0((unsigned char)(vocation * 4 + 0x28));
             for (row = 0; row < 2; row++) {
                 for (col = 0; col < 2; col++) {
                     Canvas_DrawTile(&canvas, icon, col * 8 + 6, row * 8 + 0x29, 8, 0xf);

@@ -3,10 +3,10 @@
 
 struct Words021e60c4 { unsigned int x, y, z; };
 extern "C" void __clear(void*, int);
-void Object3D_SetRotation(void* part, struct Words021e60c4* rotation);
+extern "C" void Object3D_SetRotation(void* part, struct Words021e60c4* rotation);
 
 // Overlay 23, originally InitWordsQuad_021e60e0 (USA/EUR 0x021e60e0, JPN 0x021e62c4)
-ARM void CharacterModel_SetAngle(void* model, unsigned int angle) {
+extern "C" ARM void CharacterModel_SetAngle(void* model, unsigned int angle) {
     struct Words021e60c4 rotation;
     __clear(&rotation, sizeof(rotation));
     rotation.y = angle;

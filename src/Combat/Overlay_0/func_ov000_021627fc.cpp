@@ -1,29 +1,29 @@
 #include <globaldefs.h>
 #include "Resource/ActionDataTables.h"
 
-extern "C" void* func_ov000_02160f20(void* arg0);
-extern "C" int func_ov000_02163690(int arg0);
+extern "C" void* func_ov000_02160f20(void* obj);
+extern "C" int func_ov000_02163690(int id);
 
-extern "C" void* func_02079e2c(char* arg0, int arg1);
+extern "C" void* func_02079e2c(char* p, int key);
 
 // USA: func_ov000_021627fc
-extern "C" ARM int func_ov000_021627fc(void* arg0) {
-    void* var0 = func_ov000_02160f20(arg0);
-    if (var0 == 0) {
+extern "C" ARM int func_ov000_021627fc(void* obj) {
+    void* slot = func_ov000_02160f20(obj);
+    if (slot == 0) {
         return 0;
     }
-    int var1 = *(unsigned short*)var0;
-    if (func_ov000_02163690(var1)) {
-        var1 = 1;
+    int id = *(unsigned short*)slot;
+    if (func_ov000_02163690(id)) {
+        id = 1;
     }
-    Struct_02108e10* var2 = func_020797dc();
-    void* var3 = func_02079e2c((char*)var2, (short)var1);
-    if (var3 == 0) {
+    ActionDataTables* table = func_020797dc();
+    void* entry = func_02079e2c((char*)table, (short)id);
+    if (entry == 0) {
         return 0;
     }
-    unsigned int var4 = *(unsigned int*)((char*)var3 + 0x14) >> 0x1c;
-    if (var4 == 5) {
+    unsigned int kind = *(unsigned int*)((char*)entry + 0x14) >> 0x1c;
+    if (kind == 5) {
         return 1;
     }
-    return var4 == 2;
+    return kind == 2;
 }

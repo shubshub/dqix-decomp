@@ -10,25 +10,25 @@ void BlockCurrentContext(struct BlockedContextList* list);
 extern "C" void HaltSystem(void);
 extern "C" int func_ov031_0220cae0(void* local, void (*fn)(void));
 extern "C" int func_ov031_0220cce4(void);
-extern "C" int func_ov031_0220cdf4(int arg0, int arg1, int arg2);
+extern "C" int func_ov031_0220cdf4(int a, int b, int c);
 extern "C" int func_ov031_0220cf6c(void);
-extern "C" int func_ov031_0220d010(void* arg0, unsigned char* arg1, int arg2);
+extern "C" int func_ov031_0220d010(void* a, unsigned char* b, int c);
 extern "C" int func_ov031_0220d214(void);
 extern "C" int func_ov031_0220d330(void);
 extern "C" void func_ov031_02245e5c(void);
 
 struct Struct_ov031_0224c954 {
-	int unknown_0_;
-	char* unknown_4_;
-	int unknown_8_;
+	int unk0;
+	char* slot;
+	int flagsA;
 	int unknown_c_;
 };
 
 struct Struct_ov031_02291f24_3 {
-	int unknown_0_;
-	int unknown_4_;
-	unsigned int unknown_8_;
-	int unknown_c_;
+	int unk0;
+	int field4;
+	unsigned int field8;
+	int fieldC;
 };
 
 extern int data_ov031_02291f50;
@@ -38,45 +38,45 @@ extern struct Struct_ov031_0224c954 data_ov031_0224c954;
 extern struct Struct_ov031_02291f24_3 data_ov031_02291f24;
 
 // USA: func_ov031_02245c68
-extern "C" ARM int func_ov031_02245c68(int arg0) {
-	int var0 = 7;
+extern "C" ARM int func_ov031_02245c68(int mode) {
+	int result = 7;
 	int var1 = DisableIRQInterrupts();
 
 	for (;;) {
-		switch (arg0) {
+		switch (mode) {
 		case 1:
-			var0 = func_ov031_0220cae0(&data_ov031_02291f50, func_ov031_02245e5c);
+			result = func_ov031_0220cae0(&data_ov031_02291f50, func_ov031_02245e5c);
 			break;
 		case 2:
-			var0 = func_ov031_0220cce4();
+			result = func_ov031_0220cce4();
 			break;
 		case 3: {
-			int var2 = data_ov031_02291f24.unknown_c_ != 0 ? 0xc00000 : 0x800000;
-			char* var3 = data_ov031_0224c954.unknown_4_;
-			int var4 = (data_ov031_0224c954.unknown_8_ | 0xbffe) | var2;
-			var0 = func_ov031_0220cdf4((int)var3, (int)var3 + 0x58, var4);
+			int bits = data_ov031_02291f24.fieldC != 0 ? 0xc00000 : 0x800000;
+			char* slot = data_ov031_0224c954.slot;
+			int flags = (data_ov031_0224c954.flagsA | 0xbffe) | bits;
+			result = func_ov031_0220cdf4((int)slot, (int)slot + 0x58, flags);
 			break;
 		}
 		case 4:
-			var0 = func_ov031_0220cf6c();
+			result = func_ov031_0220cf6c();
 			break;
 		case 5: {
-			char* var5 = data_ov031_0224c954.unknown_4_;
-			var0 = func_ov031_0220d010(&data_ov031_02292040, (unsigned char*)(var5 + 6), data_ov031_0224c954.unknown_c_ | *(int*)(var5 + 0x78));
+			char* slot = data_ov031_0224c954.slot;
+			result = func_ov031_0220d010(&data_ov031_02292040, (unsigned char*)(slot + 6), data_ov031_0224c954.unknown_c_ | *(int*)(slot + 0x78));
 			break;
 		}
 		case 6:
-			var0 = func_ov031_0220d214();
+			result = func_ov031_0220d214();
 			break;
 		case 9:
-			var0 = func_ov031_0220d330();
+			result = func_ov031_0220d330();
 			break;
 		default:
 			SetIRQInterruptState(var1);
-			return var0;
+			return result;
 		}
 
-		switch (var0) {
+		switch (result) {
 		case 4:
 			SleepCurrentContext(1);
 			continue;
@@ -87,7 +87,7 @@ extern "C" ARM int func_ov031_02245c68(int arg0) {
 		case 0:
 		case 1:
 			SetIRQInterruptState(var1);
-			return var0;
+			return result;
 		case 5:
 			HaltSystem();
 			break;
@@ -104,12 +104,12 @@ extern "C" ARM int func_ov031_02245c68(int arg0) {
 
 wake:
 		{
-			int var6;
-			int var7 = data_ov031_02291f24.unknown_8_;
-			switch (var7) {
+			int value;
+			int state = data_ov031_02291f24.field8;
+			switch (state) {
 			case 0:
 			case 1:
-				var6 = *(int*)((char*)&data_ov031_02291f24 + 8);
+				value = *(int*)((char*)&data_ov031_02291f24 + 8);
 				break;
 			case 2:
 			case 3:
@@ -124,7 +124,7 @@ wake:
 				}
 			}
 			SetIRQInterruptState(var1);
-			return var6;
+			return value;
 		}
 	}
 }

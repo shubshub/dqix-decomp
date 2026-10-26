@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 #include <std_library_functions.h>
 
-ARM unsigned int strlen(const char* arg0) {
-    unsigned int var0 = -1;
-    char var1;
+ARM unsigned int strlen(const char* str) {
+    unsigned int len = -1;
+    char c;
     do {
-        var1 = *arg0++;
-        var0++;
-    } while (var1 != 0);
-    return var0;
+        c = *str++;
+        len++;
+    } while (c != 0);
+    return len;
 }

@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
-struct Struct_020a9ea4 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned short unknown_2_;
-    unsigned int unknown_4_;
+struct Struct020a9ea4 {
+    unsigned char field0;
+    unsigned char field1;
+    unsigned short pad;
+    unsigned int field4;
 };
 
 // USA: func_020a9ea4
-extern "C" ARM void func_020a9ea4(struct Struct_020a9ea4 *arg0) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_1_ = 0;
-    arg0->unknown_4_ = 0;
+extern "C" ARM void func_020a9ea4(struct Struct020a9ea4 *p) {
+    p->field0 = 0;
+    p->field1 = 0;
+    p->field4 = 0;
 }

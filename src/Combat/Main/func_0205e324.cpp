@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
-extern "C" void func_0205e22c(void* arg0);
+extern "C" void LinkMessageQueue_Reset(void* p);
 
 // USA: func_0205e324
-extern "C" ARM void func_0205e324(void* arg0) {
-    func_0205e22c(arg0);
+extern "C" ARM void func_0205e324(void* p) {
+    LinkMessageQueue_Reset(p);
 }

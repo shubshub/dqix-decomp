@@ -12,41 +12,41 @@ enum { Enum_ov003_02167494_112 = 0x70 };
 
 
 struct Struct_0207fc6c;
-extern "C" void func_0207fc6c(struct Struct_0207fc6c* arg0, int arg1);
+extern "C" void func_0207fc6c(struct Struct_0207fc6c* obj, int arg);
 
 struct Struct_ov003_02167494 {
-    char unknown_0_[0x10];
-    void* unknown_10_;
+    char pad0[0x10];
+    void* field10;
     char unknown_14_[Enum_ov003_02167494_104 - 0x14];
-    int unknown_68_;
+    int field68;
     int unknown_6c_;
     char unknown_70_[Enum_ov003_02167494_116 - Enum_ov003_02167494_112];
     unsigned char unknown_74_;
 };
 
 // USA: func_ov003_02167494
-extern "C" ARM void func_ov003_02167494(struct Struct_ov003_02167494* arg0, int arg1) {
-    if (arg0->unknown_74_ == 0 || arg0->unknown_10_ == 0) return;
+extern "C" ARM void func_ov003_02167494(struct Struct_ov003_02167494* obj, int arg) {
+    if (obj->unknown_74_ == 0 || obj->field10 == 0) return;
 
-    if (arg1 == 0) arg1 = 1;
-    func_0207fc6c((struct Struct_0207fc6c*)arg0->unknown_10_, arg1);
+    if (arg == 0) arg = 1;
+    func_0207fc6c((struct Struct_0207fc6c*)obj->field10, arg);
 
     *(volatile int*)0x4001010 = 0;
 
-    arg0->unknown_68_ -= arg1 << 11;
-    arg0->unknown_6c_ += arg1 << 11;
+    obj->field68 -= arg << 11;
+    obj->unknown_6c_ += arg << 11;
 
-    if (arg0->unknown_68_ < -0x100000) {
-        arg0->unknown_68_ += 0x100000;
+    if (obj->field68 < -0x100000) {
+        obj->field68 += 0x100000;
     }
-    if (arg0->unknown_6c_ > 0x100000) {
-        arg0->unknown_6c_ -= 0x100000;
+    if (obj->unknown_6c_ > 0x100000) {
+        obj->unknown_6c_ -= 0x100000;
     }
 
-    int var0 = 0x1ff;
-    int var1 = arg0->unknown_6c_ >> 12;
-    int var2 = var0 << 16;
-    int var3 = var2 & (var1 << 16);
-    int var4 = var0 & (arg0->unknown_68_ >> 12);
-    *(volatile int*)0x4001014 = var4 | var3;
+    int mask = 0x1ff;
+    int var1 = obj->unknown_6c_ >> 12;
+    int var2 = mask << 16;
+    int hi = var2 & (var1 << 16);
+    int lo = mask & (obj->field68 >> 12);
+    *(volatile int*)0x4001014 = lo | hi;
 }

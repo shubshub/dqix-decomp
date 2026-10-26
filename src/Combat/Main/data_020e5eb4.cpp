@@ -4,8 +4,8 @@
 
 struct Struct_02058704;
 extern "C" void func_02058704(Struct_02058704*);
-extern "C" void func_0205873c(void* arg0);
-extern "C" void __register_global_object(int arg0, int arg1, void* arg2);
+extern "C" void func_0205873c(void* obj);
+extern "C" void __register_global_object(int c, int b, void* node);
 
 extern void* data_021079ec;
 extern void* data_021079e0;

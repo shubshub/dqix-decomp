@@ -20,31 +20,31 @@
 #include <globaldefs.h>
 #include "Input/Input.h"
 
-extern "C" int func_02080dd4(void* arg0, int arg1, int arg2, int arg3, unsigned char* arg4, unsigned char arg5);
-extern "C" void func_020813ec(void* arg0, int arg1);
+extern "C" int func_02080dd4(void* obj, int p1, int arg2, int arg3, unsigned char* outFlag, unsigned char extra);
+extern "C" void func_020813ec(void* obj, int key);
 
 // USA: func_ov014_02186f10
-extern "C" ARM int func_ov014_02186f10(char* arg0) {
-    unsigned char var0 = 0;
+extern "C" ARM int func_ov014_02186f10(char* self) {
+    unsigned char flag = 0;
 
     if (g_keyManager.TestKeysPressed(0x401)) {
-        var0 = 1;
+        flag = 1;
     }
 
-    if (g_touchInput.pressed_ != 0 && *(short**)(arg0 + 0xd0) != 0) {
-        int var1, var2;
-        g_touchInput.GetTouchPoint(&var1, &var2);
-        int var3 = func_02080dd4(*(void**)(arg0 + 0xc0), *(short*)(arg0 + 0x170), (short)var1, (short)var2, &var0, 1);
-        if (var3 < 0) {
+    if (g_touchInput.pressed_ != 0 && *(short**)(self + 0xd0) != 0) {
+        int a, b;
+        g_touchInput.GetTouchPoint(&a, &b);
+        int result = func_02080dd4(*(void**)(self + 0xc0), *(short*)(self + 0x170), (short)a, (short)b, &flag, 1);
+        if (result < 0) {
             return 0;
         }
-        *(*(short**)(arg0 + 0xd0)) = (short)var3;
-        short var4 = *(*(short**)(arg0 + 0xd0));
-        if (*(short*)(arg0 + 0x178) != var4) {
-            *(short*)(*(char**)(arg0 + 0xc0) + R(0x2a, 0x36)) = var4;
-            func_020813ec(*(void**)(arg0 + 0xc0), *(short*)(arg0 + 0x170));
+        *(*(short**)(self + 0xd0)) = (short)result;
+        short cur = *(*(short**)(self + 0xd0));
+        if (*(short*)(self + 0x178) != cur) {
+            *(short*)(*(char**)(self + 0xc0) + R(0x2a, 0x36)) = cur;
+            func_020813ec(*(void**)(self + 0xc0), *(short*)(self + 0x170));
         }
     }
 
-    return var0;
+    return flag;
 }

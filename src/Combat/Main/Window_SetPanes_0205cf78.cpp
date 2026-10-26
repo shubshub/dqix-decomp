@@ -17,7 +17,7 @@ struct Struct_0205cf78 {
 };
 
 // Main, originally LinkArrayPrevPointers0205cf78 (USA 0x0205cf78, EUR 0x0205cf88, JPN 0x0205e2a8)
-ARM void Window_SetPanes(struct Struct_0205cf78* window, struct WindowPane* panes, unsigned char count) {
+extern "C" ARM void Window_SetPanes(struct Struct_0205cf78* window, struct WindowPane* panes, unsigned char count) {
     unsigned char i;
     window->panes = panes;
     window->paneCount = count;

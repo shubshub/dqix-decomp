@@ -3,72 +3,72 @@
 #include "Graphics/VRAMStaging.h"
 #include "NitroSDK/Cache.h"
 
-struct Struct_02099d34 {
+struct CharacterColors {
     unsigned short unknown_0_[10][2];
     unsigned short unknown_28_[8][2];
     unsigned short unknown_48_[8][4];
     unsigned short unknown_88_[8][8];
     unsigned short unknown_108_[8][2];
-    unsigned short unknown_128_;
+    unsigned short edge_;
 };
 
 extern unsigned short data_02109928[10][2] __attribute__((aligned(4)));
 
 // USA: func_02099d34
-extern "C" ARM void func_02099d34(Model3D* arg0, int arg1, unsigned int arg2, int arg3) {
-    NSBXXTex* var0;
-    unsigned char* var1;
-    int var2;
-    int var3;
-    Struct_02099d34* var4;
-    unsigned char* var5;
-    int var6;
+extern "C" ARM void func_02099d34(Model3D* m, int a, unsigned int b, int c) {
+    NSBXXTex* tex;
+    unsigned char* entry;
+    int count;
+    int len;
+    CharacterColors* colors;
+    unsigned char* p;
+    int rem;
 
-    if (arg2 > 8) {
+    if (b > 8) {
         return;
     }
-    if (arg0 == NULL) {
+    if (m == NULL) {
         return;
     }
-    var0 = arg0->GetTEX0();
-    if (var0 == NULL) {
+    tex = m->GetTEX0();
+    if (tex == NULL) {
         return;
     }
 
-    var1 = NULL;
-    var2 = 0;
-    var4 = (Struct_02099d34*)data_02109928;
+    entry = NULL;
+    count = 0;
+    colors = (CharacterColors*)data_02109928;
 
-    switch (arg1) {
+    switch (a) {
     case 1:
-        var1 = (unsigned char*)&var4->unknown_28_[arg2];
-        var2 = 2;
+        entry = (unsigned char*)&colors->unknown_28_[b];
+        count = 2;
         break;
     case 2:
-        var1 = (unsigned char*)&var4->unknown_48_[arg2];
-        var2 = 4;
+        entry = (unsigned char*)&colors->unknown_48_[b];
+        count = 4;
         break;
     case 4:
-        var1 = (unsigned char*)&var4->unknown_88_[arg2];
-        var2 = 8;
+        entry = (unsigned char*)&colors->unknown_88_[b];
+        count = 8;
         break;
     }
-var3 = var2 * 2;
-    var5 = (unsigned char*)var0 + var0->block4Offset_;
-    var6 = var0->block4NumEightBytes_ << 3;
-    if ((unsigned int)var6 > 0x20) {
-        int var7 = var6 & 0x1f;
-        var5 += var7;
-        var6 -= var7;
+len = count * 2;
+    p = (unsigned char*)tex + tex->block4Offset_;
+    rem = tex->block4NumEightBytes_ << 3;
+    if ((unsigned int)rem > 0x20) {
+        int t = rem & 0x1f;
+        p += t;
+        rem -= t;
     }
 
-    while (var6 > 0) {
-        memcpy(var5 + arg3, var1, var3);
-        var6 -= 0x20;
+    while (rem > 0) {
+        memcpy(p + c, entry, len);
+        rem -= 0x20;
     }
 
-    unsigned int var8 = var0->block4Offset_;
-    unsigned int var9 = var0->block4NumEightBytes_ << 3;
-    CleanInvalidateCacheRange((const void*)((unsigned char*)var0 + var8), var9);
-    StageTexFilePaletteData(var0, true);
+    unsigned int off = tex->block4Offset_;
+    unsigned int size = tex->block4NumEightBytes_ << 3;
+    CleanInvalidateCacheRange((const void*)((unsigned char*)tex + off), size);
+    StageTexFilePaletteData(tex, true);
 }

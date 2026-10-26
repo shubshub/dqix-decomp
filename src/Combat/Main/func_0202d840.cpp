@@ -5,37 +5,37 @@ extern "C" void func_0202c848(int);
 extern "C" int func_0202d788(unsigned short);
 
 struct Struct_0202d840 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_[2];
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    unsigned short pad0;
+    unsigned short f2;
+    unsigned short pad1[2];
+    unsigned short f8;
+    unsigned short fa;
 };
 
 // USA: func_0202d840
-extern "C" ARM void func_0202d840(struct Struct_0202d840* arg0) {
-    if (arg0->unknown_2_ != 0) {
-        func_0202c848(arg0->unknown_2_);
+extern "C" ARM void func_0202d840(struct Struct_0202d840* obj) {
+    if (obj->f2 != 0) {
+        func_0202c848(obj->f2);
         *(int*)(&data_021015a0 + 0x10) = 9;
         return;
     }
-    unsigned short var0 = *(unsigned short*)(&data_021015a0 + 0x6);
-    unsigned short var1 = arg0->unknown_a_;
-    unsigned short var2 = arg0->unknown_8_;
-    if (var0 > var1) {
-        *(unsigned short*)(&data_021015a0 + 0x6) = var1;
-        *(unsigned short*)(&data_021015a0 + 0xc) = 1 << (var2 - 1);
-    } else if (var0 == var1) {
-        unsigned short var3 = *(unsigned short*)(&data_021015a0 + 0xc);
-        *(unsigned short*)(&data_021015a0 + 0xc) = var3 | (1 << (var2 - 1));
+    unsigned short hi = *(unsigned short*)(&data_021015a0 + 0x6);
+    unsigned short lo = obj->fa;
+    unsigned short idx = obj->f8;
+    if (hi > lo) {
+        *(unsigned short*)(&data_021015a0 + 0x6) = lo;
+        *(unsigned short*)(&data_021015a0 + 0xc) = 1 << (idx - 1);
+    } else if (hi == lo) {
+        unsigned short bits = *(unsigned short*)(&data_021015a0 + 0xc);
+        *(unsigned short*)(&data_021015a0 + 0xc) = bits | (1 << (idx - 1));
     }
-    unsigned short var4 = (unsigned short)(var2 + 1);
-    int var5 = func_0202d788(var4);
-    if (var5 == 0x18) {
+    unsigned short next = (unsigned short)(idx + 1);
+    int r = func_0202d788(next);
+    if (r == 0x18) {
         *(int*)(&data_021015a0 + 0x10) = 7;
         return;
     }
-    if (var5 != 2) {
+    if (r != 2) {
         *(int*)(&data_021015a0 + 0x10) = 9;
     }
 }

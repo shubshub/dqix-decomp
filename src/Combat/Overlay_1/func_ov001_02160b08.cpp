@@ -4,14 +4,14 @@
 extern "C" int func_ov017_021d60f4(void*);
 extern "C" void* Zone3D_GetInstance(void);
 
-void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
+extern "C" void* ZoneFeatures_GetFirstOfType(unsigned char* obj, unsigned int index);
 
 // USA: func_ov001_02160b08
-extern "C" ARM int func_ov001_02160b08(void* arg0, int arg1) {
-    int var0 = func_ov017_021d60f4(arg0);
-    int var1 = func_ov017_021d60f4((char*)arg0 + 0x8);
-    if (arg1 > 2) {
-        func_ov017_021d60f4((char*)arg0 + 0x10);
+extern "C" ARM int func_ov001_02160b08(void* self, int mode) {
+    int a = func_ov017_021d60f4(self);
+    int b = func_ov017_021d60f4((char*)self + 0x8);
+    if (mode > 2) {
+        func_ov017_021d60f4((char*)self + 0x10);
     }
     Zone3D* list = (Zone3D*)Zone3D_GetInstance();
     ZoneFeatures::Opcode6aEntry* node = (ZoneFeatures::Opcode6aEntry*)ZoneFeatures_GetFirstOfType((unsigned char*)&list->substruct_6c_, 2);
@@ -20,7 +20,7 @@ extern "C" ARM int func_ov001_02160b08(void* arg0, int arg1) {
             node->unk_2c.type2.flags &= ~0x200;
             func_0201874c(list, node);
         }
-        var3 = var3->unknown_70_;
+        node = node->pNext;
     }
     return 1;
 }

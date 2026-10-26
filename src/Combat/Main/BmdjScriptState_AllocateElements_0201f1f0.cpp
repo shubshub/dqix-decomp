@@ -13,7 +13,7 @@ struct List0201f1f0 {
 };
 
 // Main, originally AllocateList0201f1f0 (USA 0x0201f1f0, EUR 0x0201f200, JPN 0x0201ef7c)
-ARM void BmdjScriptState_AllocateElements(struct List0201f1f0* state, int capacity, SafeAllocator* allocator) {
+extern "C" ARM void BmdjScriptState_AllocateElements(struct List0201f1f0* state, int capacity, SafeAllocator* allocator) {
     state->elements = allocator->Allocate(capacity * sizeof(ZoneResourceTreeRecord));
     state->elementCapacity = capacity;
 }

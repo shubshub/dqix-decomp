@@ -18,7 +18,7 @@ extern const char data_020f1670[];
 extern const char data_020f1677[];
 extern const char data_020f1683[];
 extern const char data_020f1686[];
-extern "C" void* func_020421a0();
+extern "C" void* MessageSystem_GetInstance();
 extern "C" void func_020474a8(void*, int, const char*, char*);
 
 // JPN: func_0209abd0
@@ -32,7 +32,7 @@ extern "C" ARM int func_02099004(Script::Parameter* arg0, int arg1) {
 
     (arg0++)->ToInt();
     if (data_021098e8.unknown_4_->unknown_2_5_ != (arg0++)->ToInt()) return 0;
-    void* var6 = func_020421a0();
+    void* var6 = MessageSystem_GetInstance();
     (arg0++)->ToInt();
     const char* var7 = (arg0++)->ToString();
     if (!data_021098e8.unknown_4_->unknown_3_7_) {
@@ -129,60 +129,60 @@ struct Struct_02099004 {
 struct Struct_021098e8 { unsigned char unknown_0_; unsigned char unknown_1_[3]; char* unknown_4_; Struct_02099004* unknown_8_; };
 extern Struct_021098e8 data_021098e8;
 extern unsigned char data_020e8dac[2];
-struct PagePrefix02099004 { char text[7]; };
-extern const PagePrefix02099004 data_020e8dae;
-int MessageSystem_GetInstance();
-int STD_GetStringLength(const char*);
-char* StandardStrings_Get(int);
-void AppendFormattedData02098f70(int*, void*, int, int);
+struct Struct_020e8dae { char unknown_0_[7]; };
+extern const Struct_020e8dae data_020e8dae;
+extern "C" int MessageSystem_GetInstance();
+extern "C" int STD_GetStringLength(const char*);
+extern "C" char* StandardStrings_Get(int);
+extern "C" void func_02098f70(int*, void*, int, int);
 extern "C" void MessageSystem_FormatText(int, int, const char*, char*, int, int, int);
 extern "C" void __clear(void*, int);
 extern "C" int Font_DecodeText(const char*, char*, int);
 
 // USA: func_02099004
-extern "C" ARM int func_02099004(Script::Parameter* params, int count) {
-    (params++)->ToInt();
-    if (data_021098e8.profile->selector != (params++)->ToInt()) return 0;
-    int base = MessageSystem_GetInstance();
-    (params++)->ToInt();
-    const char* text = (params++)->ToString();
-    if (!data_021098e8.profile->ageEnabled) {
-        text = (params++)->ToString();
-    } else params++;
-    if (data_021098e8.flags & 0x10) text += 17;
-    MessageSystem_FormatText(base, 12, text, data_021098e8.output, 0xe3, 0, 1);
-    char* output = data_021098e8.output;
-    char* cursor = output + strlen(output);
-    PagePrefix02099004 prefix = data_020e8dae;
-    int prefixLength = STD_GetStringLength(prefix.text);
-    char message[0x20];
-    char formatted[0x400];
-    char body[0x20];
-    const char* messageText = StandardStrings_Get(0x3ea);
-    MessageSystem_FormatText(base, 12, messageText, message, 0xe3, 0, 1);
-    char separator[2];
-    separator[0] = data_020e8dac[0];
-    separator[1] = data_020e8dac[1];
-    const char* profileText;
-    if ((data_021098e8.flags & 0x20) && (profileText = data_021098e8.profile->text)[0]) {
-        memcpy(cursor, prefix.text, prefixLength);
-        cursor += prefixLength;
-        int messageLength = strlen(message);
-        memcpy(cursor, message, messageLength);
-        cursor += messageLength;
-        int textLength = STD_GetStringLength(profileText);
-        int position = 0;
+extern "C" ARM int func_02099004(Script::Parameter* arg0, int arg1) {
+    (arg0++)->ToInt();
+    if (data_021098e8.unknown_8_->unknown_2_5_ != (arg0++)->ToInt()) return 0;
+    int var0 = MessageSystem_GetInstance();
+    (arg0++)->ToInt();
+    const char* var1 = (arg0++)->ToString();
+    if (!data_021098e8.unknown_8_->unknown_3_7_) {
+        var1 = (arg0++)->ToString();
+    } else arg0++;
+    if (data_021098e8.unknown_0_ & 0x10) var1 += 17;
+    MessageSystem_FormatText(var0, 12, var1, data_021098e8.unknown_4_, 0xe3, 0, 1);
+    char* var2 = data_021098e8.unknown_4_;
+    char* var3 = var2 + strlen(var2);
+    Struct_020e8dae var4 = data_020e8dae;
+    int var5 = STD_GetStringLength(var4.unknown_0_);
+    char var6[0x20];
+    char var7[0x400];
+    char var8[0x20];
+    const char* var9 = StandardStrings_Get(0x3ea);
+    MessageSystem_FormatText(var0, 12, var9, var6, 0xe3, 0, 1);
+    char var10[2];
+    var10[0] = data_020e8dac[0];
+    var10[1] = data_020e8dac[1];
+    const char* var11;
+    if ((data_021098e8.unknown_0_ & 0x20) && (var11 = data_021098e8.unknown_8_->unknown_8_)[0]) {
+        memcpy(var3, var4.unknown_0_, var5);
+        var3 += var5;
+        int var12 = strlen(var6);
+        memcpy(var3, var6, var12);
+        var3 += var12;
+        int var13 = STD_GetStringLength(var11);
+        int var14 = 0;
         do {
-            int length = textLength - position;
-            if (length > 19) length = 19;
-            __clear(body, sizeof(body));
-            memcpy(body, profileText + position, length);
-            __clear(formatted, sizeof(formatted));
-            Font_DecodeText(body, formatted, 1);
-            cursor += sprintf(cursor, formatted);
-            position += 19;
-            if (position >= textLength) break;
-            cursor += sprintf(cursor, separator);
+            int var15 = var13 - var14;
+            if (var15 > 19) var15 = 19;
+            __clear(var8, sizeof(var8));
+            memcpy(var8, var11 + var14, var15);
+            __clear(var7, sizeof(var7));
+            Font_DecodeText(var8, var7, 1);
+            var3 += sprintf(var3, var7);
+            var14 += 19;
+            if (var14 >= var13) break;
+            var3 += sprintf(var3, var10);
         } while (1);
     }
     const char* var16 = arg0[0].ToString();

@@ -2,50 +2,50 @@
 #include "GameState/GameState.h"
 #include "Resource/GameResources.h"
 
-struct Struct_ov017_021cd748_6 { char unknown_0_[4]; unsigned short unknown_4_; unsigned short unknown_6_; unsigned short unknown_8_; unsigned short unknown_a_; short unknown_c_; short unknown_e_; short unknown_10_; };
-struct Struct_ov017_021d1e50 { unsigned short unknown_0_; char unknown_2_[5]; unsigned char unknown_7_; char unknown_8_[8]; Vector3i unknown_10_; unsigned short unknown_1c_; char unknown_1e_[0x43]; unsigned char unknown_61_; };
-struct Struct_ov017_021d1e50_2 {
-    unsigned short unknown_0_;
+struct Struct_ov017_021cd748_6 { char pad[4]; unsigned short type; unsigned short target; unsigned short first; unsigned short second; short x; short y; short z; };
+struct TransitionHeader { unsigned short target; char pad2[5]; unsigned char active; char pad8[8]; Vector3i position; unsigned short angle; char pad1e[0x43]; unsigned char direct; };
+struct TransitionZone {
+    unsigned short id;
 #if defined(jpn)
-    char unknown_2_[0x27f6];
+    char pad[0x27f6];
 #else
-    char unknown1_2_[0x27b6];
+    char pad[0x27b6];
 #endif
-    Vector3i unknown_27b8_;
+    Vector3i position;
 };
-struct Struct_0201bdac_2;
-struct Struct_0201bdac { char unknown_0_[8]; };
-struct Struct_ov017_021d1e50_3 : Struct_0201bdac {
-    unsigned short unknown_8_;
+struct TailList020469b4;
+struct TailNode020469b4 { char unknown_0_[8]; };
+struct Struct_ov017_021d1e50_3 : TailNode020469b4 {
+    unsigned short first;
 #if defined(jpn)
-    char unknown_a_[0xf7];
+    char pad[0xf7];
 #else
-    char unknown1_a_[0xfb];
+    char pad[0xfb];
 #endif
-    unsigned char unknown_105_;
+    unsigned char special;
 };
 struct SearchStruct0202c1a4;
-int LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
-int FieldTaskQueue_IsEmpty(void**);
+extern "C" int LinkSession_GetOwnSlot(SearchStruct0202c1a4*);
+extern "C" int FieldTaskQueue_IsEmpty(void**);
 extern "C" TransitionZone* Zone3D_GetInstance();
-extern "C" void func_ov017_021baedc(TransitionNode*, int);
-void SetField11c_021bbbf8(void*, unsigned short);
-int GameState_GetStoryChapter(char*);
-void AppendNodeToTail(TailList020469b4*, TailNode020469b4*);
-void* GameState_GetZoneTransition(GameState*);
-void InitStruct02070378(char*);
-void GameState_SetZoneTransition(void*, const void*);
-void FieldTask_InitEnterZone(unsigned char*, int);
-void InitAndAppendState61_021a65c4(void*, unsigned char, int);
+extern "C" void func_ov017_021baedc(Struct_ov017_021d1e50_3*, int);
+extern "C" void func_ov017_021bbbf8(void*, unsigned short);
+extern "C" int GameState_GetStoryChapter(char*);
+extern "C" void func_020469b4(TailList020469b4*, TailNode020469b4*);
+extern "C" void* GameState_GetZoneTransition(GameState*);
+extern "C" void func_02070378(char*);
+extern "C" void GameState_SetZoneTransition(void*, const void*);
+extern "C" void FieldTask_InitEnterZone(unsigned char*, int);
+extern "C" void func_ov017_021a65c4(void*, unsigned char, int);
 
 // USA: func_ov017_021d1e50
-extern "C" ARM void func_ov017_021d1e50(int unused, TransitionEvent* event, GameState* game, GameResources* resources, SearchStruct0202c1a4* search) {
+extern "C" ARM void func_ov017_021d1e50(int unused, Struct_ov017_021cd748_6* event, GameState* game, GameResources* resources, SearchStruct0202c1a4* search) {
     TransitionHeader* header;
     int follow;
     int id;
     int first;
     TailList020469b4* list;
-    TransitionNode* node;
+    Struct_ov017_021d1e50_3* node;
     if (!LinkSession_GetOwnSlot(search)) return;
     list = (TailList020469b4*)resources->fieldTaskQueue_;
     if (!FieldTaskQueue_IsEmpty((void**)list)) return;
@@ -53,66 +53,66 @@ extern "C" ARM void func_ov017_021d1e50(int unused, TransitionEvent* event, Game
     id = zone->id;
     if (id != 0x1901 && id != 0x1902 && id != 0x1903 && id != 0x1904) return;
     if (event->first || event->second) {
-        node = (TransitionNode*)resources->unknown_ptr_array_371c[6];
+        node = (Struct_ov017_021d1e50_3*)resources->unknown_ptr_array_371c[6];
         func_ov017_021baedc(node, 1);
         first = event->first;
         int second = event->second;
         if (!first) { first = second; second = 0; }
         node->first = first;
-        SetField11c_021bbbf8(node, second);
+        func_ov017_021bbbf8(node, second);
         if (GameState_GetStoryChapter((char*)game) >= 0x13 && first == 0x7345 && (unsigned int)(id - 0x1901) <= 3) node->special = 1;
-        AppendNodeToTail(list, node);
+        func_020469b4(list, node);
     } else {
         header = (TransitionHeader*)GameState_GetZoneTransition(game);
-        InitStruct02070378((char*)header);
+        func_02070378((char*)header);
         follow = 1;
         header->active = 1;
         if (event->type) {
             switch (event->type) {
             case 1:
-                var0->unknown_0_ = 0x1198;
-                var1 = 0;
-                var0->unknown_1c_ = 0;
-                var0->unknown_10_.x = -0xd000;
-                var0->unknown_10_.y = 0x4333;
-                var0->unknown_10_.z = -0xd000;
+                header->target = 0x1198;
+                follow = 0;
+                header->angle = 0;
+                header->position.x = -0xd000;
+                header->position.y = 0x4333;
+                header->position.z = -0xd000;
                 break;
             case 2:
-                var0->unknown_0_ = 0x4e27;
-                var0->unknown_1c_ = 0;
-                var0->unknown_10_.x = -0x2b000;
-                var0->unknown_10_.y = 0x14cc;
-                var0->unknown_10_.z = -0x22000;
+                header->target = 0x4e27;
+                header->angle = 0;
+                header->position.x = -0x2b000;
+                header->position.y = 0x14cc;
+                header->position.z = -0x22000;
                 break;
             case 4:
-                var0->unknown_0_ = 0x4e42;
-                var0->unknown_1c_ = 0;
-                var0->unknown_10_.x = 0x4000;
-                var0->unknown_10_.y = 0x14cc;
-                var0->unknown_10_.z = 0x41000;
+                header->target = 0x4e42;
+                header->angle = 0;
+                header->position.x = 0x4000;
+                header->position.y = 0x14cc;
+                header->position.z = 0x41000;
                 break;
             case 3:
-                var0->unknown_0_ = 0x10cd;
-                var0->unknown_1c_ = 0x3244;
-                var1 = 0;
-                var0->unknown_10_.x = 0;
-                var0->unknown_10_.y = -0x6ccc;
-                var0->unknown_10_.z = 0;
+                header->target = 0x10cd;
+                header->angle = 0x3244;
+                follow = 0;
+                header->position.x = 0;
+                header->position.y = -0x6ccc;
+                header->position.z = 0;
                 break;
             case 5:
-                var0->unknown_0_ = 0x1130;
-                var0->unknown_1c_ = 0x3244;
-                var1 = 0;
-                var0->unknown_10_.x = 0;
-                var0->unknown_10_.y = -0x5ccc;
-                var0->unknown_10_.z = 0x1000;
+                header->target = 0x1130;
+                header->angle = 0x3244;
+                follow = 0;
+                header->position.x = 0;
+                header->position.y = -0x5ccc;
+                header->position.z = 0x1000;
                 break;
             }
             GameState_SetZoneTransition(game, header);
             unsigned char* node = (unsigned char*)resources->unknown_ptr_array_3700[3];
             FieldTask_InitEnterZone(node, 0);
-            AppendNodeToTail(list, (TailNode020469b4*)node);
-            if (follow) InitAndAppendState61_021a65c4(resources, 1, 0);
+            func_020469b4(list, (TailNode020469b4*)node);
+            if (follow) func_ov017_021a65c4(resources, 1, 0);
         } else if (event->target) {
             header->direct = 1;
             header->target = event->target;
@@ -128,8 +128,8 @@ extern "C" ARM void func_ov017_021d1e50(int unused, TransitionEvent* event, Game
             GameState_SetZoneTransition(game, header);
             unsigned char* node = (unsigned char*)resources->unknown_ptr_array_3700[3];
             FieldTask_InitEnterZone(node, 0);
-            AppendNodeToTail(list, (TailNode020469b4*)node);
-            InitAndAppendState61_021a65c4(resources, follow, 0);
+            func_020469b4(list, (TailNode020469b4*)node);
+            func_ov017_021a65c4(resources, follow, 0);
         }
     }
 }

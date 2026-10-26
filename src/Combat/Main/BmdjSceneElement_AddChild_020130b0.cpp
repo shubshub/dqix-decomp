@@ -10,7 +10,7 @@ struct ListNode {
 };
 
 // Main, originally AppendToNodeList_020130b0 (USA 0x020130b0, EUR 0x020130c0, JPN 0x02012e78)
-ARM void BmdjSceneElement_AddChild(struct ListNode* parent, struct ListNode* child) {
+extern "C" ARM void BmdjSceneElement_AddChild(struct ListNode* parent, struct ListNode* child) {
     struct ListNode* sibling;
     child->parent = parent;
     sibling = parent->firstChild;

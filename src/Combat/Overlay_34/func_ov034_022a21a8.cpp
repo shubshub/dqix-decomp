@@ -11,15 +11,15 @@ extern "C"
     void func_020a1a40(int);
     void func_020a1ccc(int);
 
-    void func_020c9b10(void* arg0);
+    void func_020c9b10(void* out);
 }
 
 struct AllocatorUnion;
-void* AllocatorUnion_AllocateRounded(struct AllocatorUnion* a, unsigned int n);
+extern "C" void* AllocatorUnion_AllocateRounded(struct AllocatorUnion* a, unsigned int n);
 extern AllocatorUnion g_mainAllocator;
 
-extern "C" void _ZN16BackgroundLoader4TaskaSERKS0_(BackgroundLoader::Task* arg0,
-                                                   const BackgroundLoader::Task* arg1);
+extern "C" void _ZN16BackgroundLoader4TaskaSERKS0_(BackgroundLoader::Task* dst,
+                                                   const BackgroundLoader::Task* src);
 #define TASK_ASSIGN(dst, src) _ZN16BackgroundLoader4TaskaSERKS0_(&(dst), &(src))
 
 extern Struct_ov034_022a2a6c data_ov034_022a2a6c;

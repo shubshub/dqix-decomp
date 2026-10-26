@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 // USA: func_ov000_0216f0bc
-extern "C" ARM unsigned char func_ov000_0216f0bc(void* arg0) {
-	unsigned char* var0 = (unsigned char*)arg0;
-	if (var0[0x260] != 0) {
-		return var0[0x261];
+extern "C" ARM unsigned char func_ov000_0216f0bc(void* obj) {
+	unsigned char* p = (unsigned char*)obj;
+	if (p[0x260] != 0) {
+		return p[0x261];
 	}
 	return 1;
 }

@@ -5,46 +5,46 @@
 #define func_0204f41c func_02050678
 #endif
 
-struct Struct_02072a68_2;
-struct Struct_02046574_2;
-struct Struct_02081870 {
-    Struct_02072a68_2* unknown_0_;
+struct TableA68;
+struct Obj02046574;
+struct TextRenderer {
+    TableA68* strings;
     char unknown_4_[0x14];
-    char* unknown_18_;
+    char* buffer;
 };
-struct Struct_02081870_2 {
+struct TextWindow {
     char unknown_0_[0xa8];
-    short unknown_a8_;
+    short width;
     char unknown_aa_[0xa];
     short unknown_b4_;
     short unknown_b6_;
 };
 struct Struct_02081870_3 {
-    char* unknown_0_;
-    short unknown_4_;
-    short unknown_6_;
-    short unknown_8_;
-    short unknown_a_;
-    short unknown_c_;
+    char* name;
+    short id;
+    short x;
+    short y;
+    short width;
+    short height;
     short unknown_e_;
-    short unknown_10_;
+    short nameIndex;
     unsigned char unknown_12_;
-    unsigned char unknown_13_0_ : 4;
-    unsigned char unknown_13_4_ : 4;
-    unsigned char unknown_14_0_ : 2;
+    unsigned char font : 4;
+    unsigned char color : 4;
+    unsigned char alignment : 2;
     unsigned char unknown_14_2_ : 6;
     char unknown_15_[0x13];
-    short unknown_28_;
-    unsigned char unknown_2a_;
+    short xOffset;
+    unsigned char flags;
 };
-int IsValueEqual12_02042190(int);
-void* FindEntryByKey_02072a68(TableA68*, int);
+extern "C" int func_02042190(int);
+extern "C" void* func_02072a68(TableA68*, int);
 extern "C" int Font_GetTextWidth(char*, int);
-int MessageSystem_GetInstance();
+extern "C" int MessageSystem_GetInstance();
 extern "C" void func_02046380(Obj02046574*);
-void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
+extern "C" void MessageSystem_SetStringArgument(Obj02046574*, int, char*);
 #if defined(jpn)
-int STD_GetStringLength(const char*);
+extern "C" int STD_GetStringLength(const char*);
 extern "C" void func_020474a8(Obj02046574*, int, void*, char*);
 extern "C" void func_0204f41c(TextWindow*, short, int, char*, int, int, short*, short*);
 #else
@@ -54,11 +54,11 @@ extern "C" void func_0204f41c(TextWindow*, short, int, char*, int, int, short*, 
 
 // USA: func_02081870
 #if defined(jpn)
-extern "C" ARM void func_02081870(TextRenderer* renderer, TextWindow* window, TextItem* item) {
+extern "C" ARM void func_02081870(TextRenderer* renderer, TextWindow* window, Struct_02081870_3* item) {
     int color = item->color;
     if (item->flags & 4) color = 5;
     if (item->flags & 8) {
-        char* text = (char*)FindEntryByKey_02072a68(renderer->strings, item->stringId);
+        char* text = (char*)func_02072a68(renderer->strings, item->unknown_e_);
         if (text) {
             short width = window->width * 8;
             int half = STD_GetStringLength(text) >> 1;
@@ -69,28 +69,28 @@ extern "C" ARM void func_02081870(TextRenderer* renderer, TextWindow* window, Te
     memset(renderer->buffer, 0, 0x800);
     func_02046380(formatter);
     MessageSystem_SetStringArgument(formatter, item->nameIndex, item->name);
-    void* text = FindEntryByKey_02072a68(renderer->strings, item->stringId);
+    void* text = func_02072a68(renderer->strings, item->unknown_e_);
     func_020474a8(formatter, item->font, text, renderer->buffer);
-    int firstFont = item->font;
-    window->firstFont = firstFont;
-    window->lastFont = firstFont + 1;
+    int var6 = item->font;
+    window->unknown_b4_ = var6;
+    window->unknown_b6_ = var6 + 1;
     if (item->flags & 0x10) {
-        int selectedFont = item->font;
-        if (selectedFont == 12) {
-            window->firstFont = selectedFont;
-            window->lastFont = 20;
+        int var7 = item->font;
+        if (var7 == 12) {
+            window->unknown_b4_ = var7;
+            window->unknown_b6_ = 20;
         }
     }
-    func_0204f41c(arg1, (short)(arg2->unknown_6_ + arg2->unknown_28_), arg2->unknown_8_,
-        arg0->unknown_18_, arg2->unknown_13_0_, var0, &arg2->unknown_a_, &arg2->unknown_c_);
+    func_0204f41c(window, (short)(item->x + item->xOffset), item->y,
+        renderer->buffer, item->font, color, &item->width, &item->height);
 }
 #else
-extern "C" ARM void func_02081870(TextRenderer* renderer, TextWindow* window, TextItem* item) {
+extern "C" ARM void func_02081870(TextRenderer* renderer, TextWindow* window, Struct_02081870_3* item) {
     int color = item->color;
     if (item->flags & 4) color = 5;
-    int font = IsValueEqual12_02042190(item->font);
+    int font = func_02042190(item->font);
     if (item->flags & 8) {
-        char* text = (char*)FindEntryByKey_02072a68(renderer->strings, item->stringId);
+        char* text = (char*)func_02072a68(renderer->strings, item->unknown_e_);
         if (text) {
             short width = window->width * 8;
             item->x = (short)(width - Font_GetTextWidth(text, font)) >> 1;
@@ -100,16 +100,16 @@ extern "C" ARM void func_02081870(TextRenderer* renderer, TextWindow* window, Te
     memset(renderer->buffer, 0, 0x960);
     func_02046380(formatter);
     MessageSystem_SetStringArgument(formatter, item->nameIndex, item->name);
-    void* text = FindEntryByKey_02072a68(renderer->strings, item->stringId);
+    void* text = func_02072a68(renderer->strings, item->unknown_e_);
     MessageSystem_FormatText(formatter, item->font, text, renderer->buffer, 0x100, 0, 0);
-    int firstFont = item->font;
-    window->firstFont = firstFont;
-    window->lastFont = firstFont + 1;
+    int var14 = item->font;
+    window->unknown_b4_ = var14;
+    window->unknown_b6_ = var14 + 1;
     if (item->flags & 0x10) {
-        int selectedFont = item->font;
-        if (selectedFont == 12) {
-            window->firstFont = selectedFont;
-            window->lastFont = 20;
+        int var15 = item->font;
+        if (var15 == 12) {
+            window->unknown_b4_ = var15;
+            window->unknown_b6_ = 20;
         }
     }
     int offset = 0;

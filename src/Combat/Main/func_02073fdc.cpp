@@ -1,35 +1,35 @@
 #include <globaldefs.h>
 
-extern "C" int func_02032370(int arg0);
+extern "C" int RandomIntBelow(int upperBound);
 
 struct Struct_02073fdc_2 {
-    unsigned short unknown_0_0_ : 12;
-    unsigned short unknown_1_4_ : 3;
-    unsigned short unknown_1_7_ : 1;
-    unsigned short unknown_2_;
+    unsigned short id : 12;
+    unsigned short weight : 3;
+    unsigned short flag : 1;
+    unsigned short field2;
 };
 struct Struct_02073fdc {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned int unknown_4_;
-    Struct_02073fdc_2 unknown_8_[];
+    unsigned short field0;
+    unsigned short count;
+    unsigned int field4;
+    Struct_02073fdc_2 entries[];
 };
 // USA: func_02073fdc
-extern "C" ARM int func_02073fdc(void* arg0) {
-    Struct_02073fdc* var0 = (Struct_02073fdc*)arg0;
-    int var1 = 0;
-    for (int var2 = 0; var2 < var0->unknown_2_; ++var2) {
-        var1 += var0->unknown_8_[var2].unknown_1_4_;
+extern "C" ARM int func_02073fdc(void* data) {
+    Struct_02073fdc* table = (Struct_02073fdc*)data;
+    int total = 0;
+    for (int i = 0; i < table->count; ++i) {
+        total += table->entries[i].weight;
     }
-    int var3 = func_02032370(var1);
-    int var4 = -1;
+    int selected = RandomIntBelow(total);
+    int result = -1;
     int var5 = 0;
-    for (int var6 = 0; var6 < var0->unknown_2_; ++var6) {
-        var5 += var0->unknown_8_[var6].unknown_1_4_;
-        if (var3 < var5) {
-            var4 = var0->unknown_8_[var6].unknown_0_0_;
+    for (int j = 0; j < table->count; ++j) {
+        var5 += table->entries[j].weight;
+        if (selected < var5) {
+            result = table->entries[j].id;
             break;
         }
     }
-    return var4;
+    return result;
 }

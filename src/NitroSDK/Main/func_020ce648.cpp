@@ -1,20 +1,20 @@
 #include <globaldefs.h>
 
-extern "C" int func_020ce4e8(int arg0, int arg1, int arg2, void* arg3, int* arg4);
+extern "C" int func_020ce4e8(int a, int b, int c, void* callback, int* out);
 
 // USA: func_020ce648
-extern "C" ARM int func_020ce648(int arg0, int arg1, void (*arg2)(void), int* arg3) {
-    int var0 = 0;
-    if (arg0 == 0) {
-        if (arg1 == 1) var0 = 6;
-        if (arg1 == 0) var0 = 7;
-    } else if (arg0 == 1) {
-        if (arg1 == 1) var0 = 4;
-        if (arg1 == 0) var0 = 5;
-    } else if (arg0 == 2) {
-        if (arg1 == 1) var0 = 8;
-        if (arg1 == 0) var0 = 9;
+extern "C" ARM int func_020ce648(int a, int b, void (*callback)(void), int* out) {
+    int code = 0;
+    if (a == 0) {
+        if (b == 1) code = 6;
+        if (b == 0) code = 7;
+    } else if (a == 1) {
+        if (b == 1) code = 4;
+        if (b == 0) code = 5;
+    } else if (a == 2) {
+        if (b == 1) code = 8;
+        if (b == 0) code = 9;
     }
-    if (var0 == 0) return 0xffff;
-    return func_020ce4e8(var0, 0, 0, (void*)arg2, arg3);
+    if (code == 0) return 0xffff;
+    return func_020ce4e8(code, 0, 0, (void*)callback, out);
 }

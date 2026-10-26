@@ -15,7 +15,7 @@ struct TimeStamp020103f0 {
 };
 
 // Main, originally ComputeElapsedPlayTimeHMS020103f0 (USA 0x020103f0, EUR 0x02010400, JPN 0x0201024c)
-ARM void GameState_GetTimeSinceMainTimestamp(TimeStamp020103f0* gameState, unsigned short* outHours, unsigned char* outMinutes, unsigned char* outSeconds) {
+extern "C" ARM void GameState_GetTimeSinceMainTimestamp(TimeStamp020103f0* gameState, unsigned short* outHours, unsigned char* outMinutes, unsigned char* outSeconds) {
     unsigned long long elapsed = _ll_udiv(GetCurrentTimestamp() << 6, kSystemClockHz)
                                 - _ll_udiv(gameState->mainTimestamp_ << 6, kSystemClockHz);
     unsigned long long hours = _ll_udiv(elapsed, 3600);

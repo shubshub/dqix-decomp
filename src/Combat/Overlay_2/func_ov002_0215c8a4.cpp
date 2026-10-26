@@ -1,9 +1,9 @@
 #include "std_library_functions.h"
 #include <globaldefs.h>
 
-extern "C" void func_ov002_02157030(void *arg0, int arg1, short *arg2, short *arg3, short *arg4, short *arg5);
-extern "C" void func_ov002_0215be00(void *arg0, int arg1, int arg2, int arg3);
-extern "C" void func_ov002_0215c988(void *arg0, void *arg1, int arg2);
+extern "C" void func_ov002_02157030(void *base, int type, short *a, short *b, short *c, short *d);
+extern "C" void func_ov002_0215be00(void *base, int a, int b, int c);
+extern "C" void func_ov002_0215c988(void *base, void *dst, int flag);
 #if defined(jpn)
 #define RG(u, j) (j)
 extern "C" void Window_OpenPane(void *a, void *b, int p2, int p3, int p4, int p5, int p6);
@@ -12,30 +12,30 @@ extern "C" void Window_OpenPane(void *a, void *b, int p2, int p3, int p4, int p5
 extern "C" void Window_OpenPane(void *a, void *b, int p2, int p3, int p4, int p5, int p6, int p7);
 #endif
 
-struct Struct_ov002_0215c8a4 {
-    char unknown_0_[RG(0xbd0, 0xa98)];
-    void *unknown_bd0_;
+struct BufOv0215c8a4 {
+    char pad[RG(0xbd0, 0xa98)];
+    void *buf;
 };
 struct Struct_ov002_0215c8a4_2 {
-    char unknown_0_[0x58];
-    int unknown_58_;
+    char pad[0x58];
+    int count;
 };
 
 // USA: func_ov002_0215c8a4
-extern "C" ARM void func_ov002_0215c8a4(char *arg0) {
-    struct Struct_ov002_0215c8a4_2 *var0 = (struct Struct_ov002_0215c8a4_2 *) (arg0 + RG(0x2c8 + 0xc00, 0xe20)) + 1;
-    var0--;
-    int var1 = 0;
-    if (var0->unknown_58_ > 1) {
-        var1 = 1;
+extern "C" ARM void func_ov002_0215c8a4(char *base) {
+    struct Struct_ov002_0215c8a4_2 *l = (struct Struct_ov002_0215c8a4_2 *) (base + RG(0x2c8 + 0xc00, 0xe20)) + 1;
+    l--;
+    int flag = 0;
+    if (l->count > 1) {
+        flag = 1;
     }
     short var2 = 0, var3 = 0, var4 = 1, var5 = 1;
-    func_ov002_02157030(arg0, 4, &var2, &var3, &var4, &var5);
+    func_ov002_02157030(base, 4, &var2, &var3, &var4, &var5);
     var2 = var2 + var4;
-    func_ov002_0215be00(arg0, 5, var2, 1);
+    func_ov002_0215be00(base, 5, var2, 1);
 
-    memset(((struct Struct_ov002_0215c8a4 *) (arg0 + 0x1000))->unknown_bd0_, 0, RG(0x960, 0x800));
-    func_ov002_0215c988(arg0, ((struct Struct_ov002_0215c8a4 *) (arg0 + 0x1000))->unknown_bd0_, 0);
+    memset(((struct BufOv0215c8a4 *) (base + 0x1000))->buf, 0, RG(0x960, 0x800));
+    func_ov002_0215c988(base, ((struct BufOv0215c8a4 *) (base + 0x1000))->buf, 0);
 
 #if defined(jpn)
     Window_OpenPane(base + 0xe20, ((struct BufOv0215c8a4 *) (base + 0x1000))->buf, 0, 0, flag, 1, 0);

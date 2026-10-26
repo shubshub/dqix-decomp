@@ -4,7 +4,7 @@
 #include "World/ZoneResourceTree.h"
 
 struct Struct02013380;
-void BmdjSceneElement_SetShown(struct Struct02013380* obj, int unused, int clear4);
+extern "C" void BmdjSceneElement_SetShown(struct Struct02013380* obj, int unused, int clear4);
 
 // BmdjSceneElement::flags bits: whether the element was shown when this pass saved it (Zone3D_RestoreElementVisibility puts it back),
 // and the bit BmdjSceneElement_SetShown sets with every change (Zone3D_RestoreElementVisibility leaves those elements alone)
@@ -14,7 +14,7 @@ enum {
 };
 
 // Main, originally ProcessBattlerEffects02019568 (USA 0x02019568, EUR 0x02019578, JPN 0x02019308)
-ARM void Zone3D_SaveAndOverrideElementVisibility(void* zone, int mode) {
+extern "C" ARM void Zone3D_SaveAndOverrideElementVisibility(void* zone, int mode) {
     GameState::GetInstance();
     LightingManager* lighting = LightingManager::GetInstance();
     int timeOfDay = lighting->timeOfDayIndex_;

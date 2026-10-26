@@ -1,40 +1,40 @@
 #include <globaldefs.h>
 
 struct Struct_0203fca0;
-extern "C" void func_0203fcd4(struct Struct_0203fca0* arg0);
+extern "C" void func_0203fcd4(struct Struct_0203fca0* obj);
 
 struct Struct_02040258 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_[0x37];
-    int unknown_38_;
+    unsigned char field0;
+    unsigned char pad[0x37];
+    int field38;
 };
-extern "C" void func_02040258(struct Struct_02040258* arg0);
+extern "C" void func_02040258(struct Struct_02040258* obj);
 
 struct Struct_0204039c {
-    int unknown_0_;
-    char unknown_4_[4];
-    struct Struct_02040258* unknown_8_;
+    int count;
+    char pad4[4];
+    struct Struct_02040258* table;
 };
 
 // USA: func_0204039c
-extern "C" ARM void func_0204039c(struct Struct_0204039c* arg0, int arg1) {
-    struct Struct_02040258* var0 = arg0->unknown_8_;
-    if (var0 == 0) {
+extern "C" ARM void func_0204039c(struct Struct_0204039c* obj, int index) {
+    struct Struct_02040258* table = obj->table;
+    if (table == 0) {
         return;
     }
-    if (arg1 < 0) {
+    if (index < 0) {
         return;
     }
-    if ((unsigned int)arg0->unknown_0_ <= (unsigned int)arg1) {
+    if ((unsigned int)obj->count <= (unsigned int)index) {
         return;
     }
-    if (var0[arg1].unknown_38_ < 0) {
+    if (table[index].field38 < 0) {
         return;
     }
-    if (var0[arg1].unknown_38_ > 0) {
-        var0[arg1].unknown_38_--;
+    if (table[index].field38 > 0) {
+        table[index].field38--;
         return;
     }
-    func_0203fcd4((struct Struct_0203fca0*)((char*)&var0[arg1] + 0x10));
-    func_02040258(&arg0->unknown_8_[arg1]);
+    func_0203fcd4((struct Struct_0203fca0*)((char*)&table[index] + 0x10));
+    func_02040258(&obj->table[index]);
 }

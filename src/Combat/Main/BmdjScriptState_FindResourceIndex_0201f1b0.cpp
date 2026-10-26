@@ -16,7 +16,7 @@ struct Table_1f1b0 {
 };
 
 // Main, originally FindRecordIndexByHalfwordKey_0201f1b0 (USA 0x0201f1b0, EUR 0x0201f1c0, JPN 0x0201ef3c)
-ARM int BmdjScriptState_FindResourceIndex(struct Table_1f1b0* state, int id) {
+extern "C" ARM int BmdjScriptState_FindResourceIndex(struct Table_1f1b0* state, int id) {
     int i;
     for (i = 0; i < state->resourceCount; i++) {
         if (id == state->resources[i].id) {

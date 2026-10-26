@@ -1,6 +1,6 @@
 // The files CharacterCreationUI_HandleNewGameFinish loads; it fills in each allocator and name, and a NULL
 // allocator ends the list. taskSlot picks the modelTasks entry; slot 2 is a loose file, the rest come from
-// CharacterCreationUI_characterArchive. Originally data_ov009_0218aa98 (USA/EUR 0x0218aa98, JPN 0x0218ba4c).
+// CharacterCreationUI_characterArchive. Originally CharacterCreationUI_finishModelFiles (USA/EUR 0x0218aa98, JPN 0x0218ba4c).
 typedef struct SafeAllocator SafeAllocator;
 
 typedef struct FinishModelFile {

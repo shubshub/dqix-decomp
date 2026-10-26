@@ -4,29 +4,29 @@ struct Struct_0207f0ac;
 struct Struct_0207f524;
 
 struct Struct_020804fc_2 {
-    short* unknown_0_;
-    char unknown_4_[0x13 - 0x4];
-    unsigned char unknown_13_;
+    short* keys;
+    char pad[0x13 - 0x4];
+    unsigned char count;
 };
 
 struct Struct_020804fc {
-    char unknown_0_[0x2a];
-    unsigned char unknown_2a_;
+    char pad[0x2a];
+    unsigned char flags;
 };
 
-extern "C" struct Struct_020804fc_2* func_0207f0ac(struct Struct_0207f0ac* arg0, int arg1);
-extern "C" struct Struct_020804fc* func_0207f6ac(struct Struct_0207f524* arg0, int arg1);
+extern "C" struct Struct_020804fc_2* func_0207f0ac(struct Struct_0207f0ac* list, int id);
+extern "C" struct Struct_020804fc* func_0207f6ac(struct Struct_0207f524* list, int id);
 
 // USA: func_020804fc
-extern "C" ARM void func_020804fc(void* arg0, int arg1) {
-    struct Struct_020804fc_2* var0;
-    unsigned char var1;
-    var0 = func_0207f0ac((struct Struct_0207f0ac*)((char*)arg0 + 0xc), arg1);
-    if (var0 == NULL) return;
-    for (var1 = 0; var1 < var0->unknown_13_; var1++) {
-        struct Struct_020804fc* var2 = func_0207f6ac((struct Struct_0207f524*)((char*)arg0 + 4), var0->unknown_0_[var1]);
-        if (var2 != NULL) {
-            var2->unknown_2a_ &= ~4;
+extern "C" ARM void func_020804fc(void* obj, int id) {
+    struct Struct_020804fc_2* sub;
+    unsigned char i;
+    sub = func_0207f0ac((struct Struct_0207f0ac*)((char*)obj + 0xc), id);
+    if (sub == NULL) return;
+    for (i = 0; i < sub->count; i++) {
+        struct Struct_020804fc* e = func_0207f6ac((struct Struct_0207f524*)((char*)obj + 4), sub->keys[i]);
+        if (e != NULL) {
+            e->flags &= ~4;
         }
     }
 }

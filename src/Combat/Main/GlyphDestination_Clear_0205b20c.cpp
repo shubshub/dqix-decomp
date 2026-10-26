@@ -7,7 +7,7 @@ struct S_b20c {
 };
 
 // Main, originally ClearTwoWordsAndByte_0205b20c (USA 0x0205b20c, EUR 0x0205b21c, JPN 0x0205c5a8)
-ARM void GlyphDestination_Clear(struct S_b20c* obj) {
+extern "C" ARM void GlyphDestination_Clear(struct S_b20c* obj) {
     obj->field0 = 0;
     obj->field4 = 0;
     obj->field8 = 0;

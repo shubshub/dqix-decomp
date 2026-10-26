@@ -9,8 +9,8 @@ enum { kMinimumSize = 0x12d0f4 };
 #include "NitroSDK/Memory/HPXEAllocator.h"
 
 
-int GetArenaLow(int index);
-int GetArenaHigh(int index);
+extern "C" int GetArenaLow(int index);
+extern "C" int GetArenaHigh(int index);
 
 extern "C" {
     void* AllocateFromArenaLow(int, unsigned int, int);
@@ -24,7 +24,7 @@ enum {
 };
 
 // Main, originally InitMainAllocator02012d18 (USA 0x02012d18, EUR 0x02012d28, JPN 0x02012ae0)
-ARM void AllocatorUnion_InitMainArenaHeap(AllocatorUnion* allocator) {
+extern "C" ARM void AllocatorUnion_InitMainArenaHeap(AllocatorUnion* allocator) {
     int arenaLow = GetArenaLow(kMainArena);
     int arenaHigh = GetArenaHigh(kMainArena);
     unsigned int heapStart = (arenaLow + (kHeapAlignment - 1)) & ~(kHeapAlignment - 1);

@@ -33,13 +33,13 @@ struct Struct_ov008_02187278 {
     unsigned int unknown_12_7_ : 7;
     unsigned int unknown_13_6_ : 2;
     short unknown_14_;
-    unsigned char unknown_16_0_ : 1;
+    unsigned char female_ : 1;
     unsigned char unknown_16_1_ : 4;
     unsigned char unknown_16_5_ : 3;
     unsigned char unknown_17_;
 };
 
-struct Struct_01ff8b48_13 {
+struct TextTable {
     int unknown_0_[0x18 / 4];
 };
 
@@ -48,78 +48,78 @@ struct Struct_ov008_02185dc0 {
 };
 
 
-struct Struct_02081870_2 {
+struct TextWindow {
     int unknown_0_[0xbc / 4];
 };
 
-struct Struct_ov006_02158478 {
+struct Canvas {
     int unknown_0_[0xe0 / 4];
 };
 
-struct Struct_ov009_02186e00_2 {
+struct WindowCursor {
     int unknown_0_[0x40 / 4];
 };
 
 struct Struct_ov008_021842a0_2 {
-    SafeAllocator unknown_0_;
+    SafeAllocator allocator_;
     SafeAllocator unknown_14_;
-    SafeAllocator unknown_28_;
-    SafeAllocator unknown_3c_;
-    SafeAllocator unknown_50_;
-    SafeAllocator unknown_64_;
-    SafeAllocator unknown_78_;
+    SafeAllocator textAllocator_;
+    SafeAllocator spriteAllocator_;
+    SafeAllocator iconAllocator_;
+    SafeAllocator modelAllocator_;
+    SafeAllocator titleAllocator_;
     SafeAllocator unknown_8c_;
-    Struct_01ff8b48_13 unknown_a0_;
-    char* unknown_b8_;
+    TextTable texts_;
+    char* text_;
     char unknown_bc_[0x14];
-    Struct_ov003_021594c4 unknown_d0_[3];
-    Struct_02081870_2 unknown_130_;
-    Struct_ov006_02158478 unknown_1ec_[6];
-    void* unknown_72c_;
-    void* unknown_730_;
-    void* unknown_734_;
-    void* unknown_738_;
-    void* unknown_73c_;
-    void* unknown_740_;
-    unsigned char unknown_744_[8];
+    BackgroundGraphics backgrounds_[3];
+    TextWindow window_;
+    Canvas canvases_[6];
+    void* pixels_;
+    void* renderer_;
+    void* sprites_;
+    void* animations_;
+    void* iconRenderer_;
+    void* iconSprite_;
+    unsigned char items_[8];
     unsigned char unknown_74c_;
-    Struct_ov009_02186e00_2 unknown_750_;
-    Object3D unknown_790_;
-    char unknown_83c_[0x2c8];
-    void* unknown_b04_;
+    WindowCursor cursor_;
+    Object3D model_;
+    char camera_[0x2c8];
+    void* titles_;
     void* unknown_b08_;
-    void* unknown_b0c_;
-    signed char unknown_b10_;
-    unsigned char unknown_b11_;
+    void* page_;
+    signed char state_;
+    unsigned char step_;
     unsigned char unknown_b12_;
     unsigned char unknown_b13_;
     short unknown_b14_;
     short unknown_b16_;
-    int unknown_b18_;
+    int flags_;
     int unknown_b1c_;
-    int unknown_b20_;
-    int unknown_b24_;
-    unsigned char unknown_b28_;
+    int task_;
+    int mode_;
+    unsigned char kind_;
     unsigned char unknown_b29_;
     unsigned char unknown_b2a_;
-    int unknown_b2c_;
+    int titleX_;
     const void* unknown_b30_;
     Struct_ov008_02187278* unknown_b34_;
     void* unknown_b38_;
-    void* unknown_b3c_;
+    void* guestTitles_;
     Struct_01ff8b48_26 unknown_b40_[2];
 };
 
-struct Struct_ov005_0215840c_2 {
+struct PartyMemberData {
     char unknown_0_[0x49c];
-    unsigned char unknown_49c_0_ : 1;
+    unsigned char female_ : 1;
     char unknown_49d_[0x950 - 0x49d];
-    int unknown_950_;
+    int vocation_;
 };
 
 struct GameObject {
     char unknown_0_[0x150];
-    Struct_ov005_0215840c_2* unknown_150_;
+    PartyMemberData* unknown_150_;
 };
 
 struct GameState {
@@ -128,19 +128,19 @@ struct GameState {
 };
 
 struct Struct_ov008_02187708 {
-    unsigned int unknown_0_0_ : 19;
+    unsigned int unk_0 : 19;
     int unknown_2_3_ : 11;
     unsigned int unknown_3_6_ : 2;
 };
 
-static inline char* inline_ov008_02187708(GameState* arg0)
+static inline char* inline_ov008_02187708(GameState* gameState)
 {
-    return (char*)arg0 + 0x569c;
+    return (char*)gameState + 0x569c;
 }
 
-struct Struct_02021b84 {
+struct MessageSystem {
     char unknown_0_[0x10];
-    void* unknown_10_;
+    void* unk_10;
 };
 
 struct Struct_ov008_02187708_2 {
@@ -148,10 +148,10 @@ struct Struct_ov008_02187708_2 {
 };
 
 struct Struct_020727d8;
-struct Struct_0201099c_3;
-struct Struct_02072a68_2;
-struct Struct_02013fb4;
-struct Struct_02046574_2;
+struct Container020e0310;
+struct TableA68;
+struct StreamHeader;
+struct Obj02046574;
 
 extern char data_ov008_0218b465[];
 extern char data_ov008_0218b47c[];
@@ -159,17 +159,17 @@ extern char data_ov008_0218b49b[];
 extern char data_ov008_0218b4b0[];
 extern char data_ov008_0218b4c1[];
 
-MessageSystem* MessageSystem_GetInstance();
-void NameText_Clear(void* name);
-void InitObjFromCombatant020e4c74(void* name, GameObject* object);
-void ResetListHeader020727d8(List020727d8* list);
-const char* KeyTable_Get(Container020e0310* texts, int id);
-const char* FindEntryByKey_02072a68(TableA68* texts, int id);
-void SubmitAndRunScript02072928(void* list, StreamHeader* file, int size, int id, void* output, unsigned char female);
-void MessageSystem_SetStringArgument(Obj02046574* messages, int index, char* text);
-char* FindSubstring_020d2f88(char* text, char* search);
-void AppendYTag_02041a5c(char* text, int y);
-void Text_Append(char* text, const char* append);
+extern "C" MessageSystem* MessageSystem_GetInstance();
+extern "C" void NameText_Clear(void* name);
+extern "C" void func_020e4c74(void* name, GameObject* object);
+extern "C" void func_020727d8(Struct_020727d8* list);
+extern "C" const char* KeyTable_Get(Container020e0310* texts, int id);
+extern "C" const char* func_02072a68(TableA68* texts, int id);
+extern "C" void func_02072928(void* list, StreamHeader* file, int size, int id, void* output, unsigned char female);
+extern "C" void MessageSystem_SetStringArgument(Obj02046574* messages, int index, char* text);
+extern "C" char* func_020d2f88(char* text, char* search);
+extern "C" void func_02041a5c(char* text, int y);
+extern "C" void Text_Append(char* text, const char* append);
 
 extern "C" {
 void __clear(void* buffer, unsigned long size);
@@ -177,7 +177,7 @@ int sprintf(char* buffer, const char* format, ...);
 void* ExtractFileFromGP2(char* path, char* inner, unsigned int* size);
 void func_02046380(MessageSystem* messages);
 void Font_DecodeText(const void* codes, char* text, int value);
-void func_020e4b34(MessageName* name, char* text, char* text2, int a, int b, int c, int d, int female, int e,
+void func_020e4b34(Struct_ov008_02187708_2* name, char* text, char* text2, int a, int b, int c, int d, int female, int e,
                    int f, int g, int h);
 const char* func_020e046c(char* output, void* file, unsigned int size, short id);
 void MessageSystem_FormatText(MessageSystem* messages, int value, const char* format, char* output, int size, int a, int b);
@@ -185,11 +185,11 @@ int Font_GetTextWidth(const char* text, int large);
 }
 
 // USA: func_ov008_02187708
-extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg1, Struct_ov008_021843f8_2* arg2)
+extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* self, char* text, Struct_ov008_021843f8_2* records)
 {
-    if (arg1 == NULL)
+    if (text == NULL)
         return;
-    GameState* var0 = GameState::GetInstance();
+    GameState* gameState = GameState::GetInstance();
     BackgroundLoader::GetInstance();
     MessageSystem* messages = MessageSystem_GetInstance();
     char name[0x30];
@@ -199,50 +199,50 @@ extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg
     __clear(buffer, sizeof(buffer));
     unsigned int female = 0;
     func_02046380(messages);
-    MessageName heroName;
-    MessageName guestName;
-    const void* codes = self->guest_;
+    Struct_ov008_02187708_2 heroName;
+    Struct_ov008_02187708_2 guestName;
+    const void* codes = self->unknown_b30_;
     if (codes == NULL)
     {
-        char* var9 = inline_ov008_02187708(var0);
-        var3 = ((Struct_ov008_02187708*)(var9 + 4))->unknown_2_3_;
-        GameObject* var10 = var0->GetProtagonist();
-        if (var10 != NULL)
+        char* var9 = inline_ov008_02187708(gameState);
+        title = ((Struct_ov008_02187708*)(var9 + 4))->unknown_2_3_;
+        GameObject* hero = gameState->GetProtagonist();
+        if (hero != NULL)
         {
-            if (var3 <= 0)
+            if (title <= 0)
             {
-                Struct_ov005_0215840c_2* var11 = var10->unknown_150_;
+                PartyMemberData* data = hero->unknown_150_;
                 int var12 = 0x50dc;
-                if (var11->unknown_49c_0_ == 1)
+                if (data->female_ == 1)
                     var12 = 0x510e;
-                var3 = var12 - 20000 + var11->unknown_950_;
+                title = var12 - 20000 + data->vocation_;
             }
-            female = hero->partyData_->female_;
+            female = hero->unknown_150_->female_;
             NameText_Clear(&heroName);
-            InitObjFromCombatant020e4c74(&heroName, hero);
+            func_020e4c74(&heroName, hero);
             messages->unk_10 = &heroName;
         }
     }
     else
     {
-        GuestRecords* guest = self->guestRecords_;
-        if (guest != NULL)
-            title = guest->title_;
-        female = guest->female_;
+        Struct_ov008_02187278* var13 = self->unknown_b34_;
+        if (var13 != NULL)
+            title = var13->unknown_14_;
+        female = var13->female_;
         Font_DecodeText(codes, name, 1);
         NameText_Clear(&guestName);
         func_020e4b34(&guestName, name, name, 0, 0, 0, 0, female, 0, 1, 0, 1);
         messages->unk_10 = &guestName;
     }
-    if (var3 > 0)
+    if (title > 0)
     {
-        Struct_ov008_02185dc0 var14;
-        func_020727d8((Struct_020727d8*)&var14);
-        const char* var15 = NULL;
-        unsigned int var16 = 0;
-        if (var3 < 700)
+        Struct_ov008_02185dc0 list;
+        func_020727d8((Struct_020727d8*)&list);
+        const char* titleText = NULL;
+        unsigned int size = 0;
+        if (title < 700)
         {
-            if (arg0->unknown_b3c_ != NULL)
+            if (self->guestTitles_ != NULL)
             {
                 titleText = KeyTable_Get((Container020e0310*)self->guestTitles_, title);
             }
@@ -250,49 +250,49 @@ extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg
             {
                 BackgroundLoader::AddLockGlobal();
                 unsigned int var17 = 0;
-                char var18[0x40];
-                char var19[0x20];
-                __clear(var18, sizeof(var18));
-                __clear(var19, sizeof(var19));
-                sprintf(var18, data_ov008_0218b465, var5);
-                sprintf(var19, data_ov008_0218b47c, var5);
-                void* var20 = ExtractFileFromGP2(var18, var19, &var17);
-                if (var20 != NULL)
-                    var15 = func_020e046c(var4, var20, var17, var3);
+                char gp2[0x40];
+                char inner[0x20];
+                __clear(gp2, sizeof(gp2));
+                __clear(inner, sizeof(inner));
+                sprintf(gp2, data_ov008_0218b465, female);
+                sprintf(inner, data_ov008_0218b47c, female);
+                void* file = ExtractFileFromGP2(gp2, inner, &var17);
+                if (file != NULL)
+                    titleText = func_020e046c(buffer, file, var17, title);
                 BackgroundLoader::RemoveLockGlobal();
             }
         }
         else
         {
-            if (arg0->unknown_b38_ != NULL)
+            if (self->unknown_b38_ != NULL)
             {
-                var15 = func_02072a68((Struct_02072a68_2*)arg0->unknown_b38_, (short)(var3 + 20000));
+                titleText = func_02072a68((TableA68*)self->unknown_b38_, (short)(title + 20000));
             }
             else
             {
                 BackgroundLoader::AddLockGlobal();
-                void* var21 = ExtractFileFromGP2(data_ov008_0218b49b, data_ov008_0218b4b0, &var16);
-                if (var21 != NULL)
+                void* file = ExtractFileFromGP2(data_ov008_0218b49b, data_ov008_0218b4b0, &size);
+                if (file != NULL)
                 {
-                    func_02072928(&var14, (Struct_02013fb4*)var21, var16, (short)(var3 + 20000), var4, 0);
-                    var15 = var4;
+                    func_02072928(&list, (StreamHeader*)file, size, (short)(title + 20000), buffer, 0);
+                    titleText = buffer;
                 }
                 BackgroundLoader::RemoveLockGlobal();
             }
         }
         MessageSystem_SetStringArgument((Obj02046574*)messages, 0, (char*)titleText);
     }
-    char* var22 = arg0->unknown_b8_;
-    int var23 = 100;
-    int var24 = 0xee;
-    if (arg2 != NULL)
+    char* output = self->text_;
+    int format = 100;
+    int width = 0xee;
+    if (records != NULL)
     {
-        var23 = 101;
-        var24 = 0xdf;
+        format = 101;
+        width = 0xdf;
     }
     MessageSystem_FormatText(messages, 10, KeyTable_Get((Container020e0310*)&self->texts_, format), output + 0x760, width, 1, 0);
     int color = 7;
-    if (FindSubstring_020d2f88(output + 0x760, data_ov008_0218b4c1) != NULL)
+    if (func_020d2f88(output + 0x760, data_ov008_0218b4c1) != NULL)
         color = 2;
     if (records != NULL)
     {
@@ -300,6 +300,6 @@ extern "C" ARM void func_ov008_02187708(Struct_ov008_021842a0_2* arg0, char* arg
         if (color == 2)
             self->titleX_ = 0xe0000;
     }
-    AppendYTag_02041a5c(text, color);
+    func_02041a5c(text, color);
     Text_Append(text, output + 0x760);
 }

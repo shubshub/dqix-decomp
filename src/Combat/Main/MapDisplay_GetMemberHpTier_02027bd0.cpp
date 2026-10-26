@@ -13,7 +13,7 @@ enum {
 };
 
 // Main, originally ClassifyFlag0x800RatioTier02027bd0 (USA 0x02027bd0, EUR 0x02027be0, JPN 0x0202743c)
-ARM int MapDisplay_GetMemberHpTier(int memberId) {
+extern "C" ARM int MapDisplay_GetMemberHpTier(int memberId) {
     int hp, maxHp;
     GameState* gameState;
     GameObject* member;

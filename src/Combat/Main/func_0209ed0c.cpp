@@ -32,58 +32,58 @@
 #include "std_library_functions.h"
 
 struct Struct_0209ed0c {
-    unsigned int unknown_0_[0x10];
+    unsigned int words[0x10];
 };
 
 struct Struct_0209ed0c_2 {
-    int unknown_0_;
-    Struct_0209ed0c unknown_4_[0x10];
+    int count;
+    Struct_0209ed0c records[0x10];
 };
 
 struct Struct_0209ed0c_3 {
-    int unknown_0_;
-    char* unknown_4_;
+    int unk0;
+    char* data;
     char unknown_8_[0x90];
-    Struct_0209ed0c_2 unknown_98_;
-    Struct_0209ed0c_2 unknown_49c_;
+    Struct_0209ed0c_2 active;
+    Struct_0209ed0c_2 pending;
 };
 
 // USA: func_0209ed0c
-extern "C" ARM void func_0209ed0c(Struct_0209ed0c_3* arg0, int arg1, int arg2)
+extern "C" ARM void func_0209ed0c(Struct_0209ed0c_3* owner, int arg1, int arg)
 {
-    unsigned char var0;
-    int var1;
+    unsigned char total;
+    int i;
 
     if (arg1 == 0) {
-        var1 = 0;
-        arg0->unknown_98_.unknown_0_ = 0;
-        var0 = *(unsigned char*)(arg0->unknown_4_ + 0x8e07);
-        while (var1 < var0) {
-            int var2 = 1;
-            Struct_0209ed0c* var3 = (Struct_0209ed0c*)(arg0->unknown_4_ + 0x5c60) + var1;
-            if (var3 != NULL && func_0209e1cc(arg0, var3, var2, arg2)) {
-                int var4 = arg0->unknown_98_.unknown_0_;
-                arg0->unknown_98_.unknown_0_ = arg0->unknown_98_.unknown_0_ + 1;
-                memcpy(&arg0->unknown_98_.unknown_4_[var4], var3, 0x40);
+        i = 0;
+        owner->active.count = 0;
+        total = *(unsigned char*)(owner->data + 0x8e07);
+        while (i < total) {
+            int mode = 1;
+            Struct_0209ed0c* rec = (Struct_0209ed0c*)(owner->data + 0x5c60) + i;
+            if (rec != NULL && func_0209e1cc(owner, rec, mode, arg)) {
+                int n = owner->active.count;
+                owner->active.count = owner->active.count + 1;
+                memcpy(&owner->active.records[n], rec, 0x40);
             }
-            var1++;
+            i++;
         }
         return;
     }
 
-    arg0->unknown_49c_.unknown_0_ = 0;
-    memset(arg0->unknown_49c_.unknown_4_, 0, 0x400);
-    var1 = 0;
-    while (var1 < arg0->unknown_98_.unknown_0_) {
-        Struct_0209ed0c* var5 = &arg0->unknown_98_.unknown_4_[var1];
-        int var6 = 1;
-        if (func_0209e1cc(arg0, var5, var6, arg2)) {
-            int var7 = arg0->unknown_49c_.unknown_0_;
-            arg0->unknown_49c_.unknown_0_ = arg0->unknown_49c_.unknown_0_ + 1;
-            memcpy(&arg0->unknown_49c_.unknown_4_[var7], var5, 0x40);
+    owner->pending.count = 0;
+    memset(owner->pending.records, 0, 0x400);
+    i = 0;
+    while (i < owner->active.count) {
+        Struct_0209ed0c* rec = &owner->active.records[i];
+        int mode = 1;
+        if (func_0209e1cc(owner, rec, mode, arg)) {
+            int n = owner->pending.count;
+            owner->pending.count = owner->pending.count + 1;
+            memcpy(&owner->pending.records[n], rec, 0x40);
         }
-        var1++;
+        i++;
     }
-    arg0->unknown_98_.unknown_0_ = arg0->unknown_49c_.unknown_0_;
-    memcpy(arg0->unknown_98_.unknown_4_, arg0->unknown_49c_.unknown_4_, 0x400);
+    owner->active.count = owner->pending.count;
+    memcpy(owner->active.records, owner->pending.records, 0x400);
 }

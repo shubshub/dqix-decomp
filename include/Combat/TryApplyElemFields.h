@@ -1,9 +1,9 @@
 #pragma once
 
-struct Struct_0205d5d0;
+struct StructA0205d5d0;
 
-int Window_SetPaneText(StructA0205d5d0* window, int key, int text, int mode
+extern "C" int Window_SetPaneText(StructA0205d5d0* window, int key, int text, int mode
 #if !defined(jpn)
-                            , unsigned char arg4
+                            , unsigned char font
 #endif
 );

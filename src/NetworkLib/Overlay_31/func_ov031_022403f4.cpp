@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-extern "C" int func_020c7e0c(void* arg0, int arg1, int arg2);
+extern "C" int func_020c7e0c(void* data, int a, int b);
 extern int data_ov031_022918bc;
 
 // USA: func_ov031_022403f4

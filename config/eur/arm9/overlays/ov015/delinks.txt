@@ -32,7 +32,7 @@ src/Combat/Overlay_15/func_ov015_0218eef0.cpp:
     complete
     .text start:0x0218eef0 end:0x0218ef7c
 
-src/Combat/Overlay_15/InitList8_0218b9ac.cpp:
+src/Combat/Overlay_15/func_ov015_0218b9ac.cpp:
     complete
     .text start:0x0218b9ac end:0x0218b9d4
 
@@ -40,7 +40,7 @@ src/Combat/Overlay_15/func_ov015_0218b810.cpp:
     complete
     .text start:0x0218b810 end:0x0218b828
 
-src/Combat/Overlay_15/AdjustSubstructField_0219015c_0219015c.cpp:
+src/Combat/Overlay_15/func_ov015_0219015c.cpp:
     complete
     .text start:0x0219015c end:0x021901c8
 
@@ -72,7 +72,7 @@ src/Combat/Overlay_15/func_ov015_0218fff8.cpp:
     complete
     .text start:0x0218fff8 end:0x02190020
 
-src/Combat/Overlay_15/SetField18_0219011c.cpp:
+src/Combat/Overlay_15/func_ov015_0219011c.cpp:
     complete
     .text start:0x0219011c end:0x0219015c
 
@@ -140,7 +140,7 @@ src/Combat/Overlay_15/func_ov015_0218b9d4.cpp:
     complete
     .text start:0x0218b9d4 end:0x0218ba1c
 
-src/Combat/Overlay_16/Trans_0218b5a0.cpp:
+src/Combat/Overlay_15/func_ov015_0218b5a0.cpp:
     complete
     .text start:0x0218b5a0 end:0x0218b5c8
 
@@ -160,7 +160,7 @@ src/Combat/Overlay_15/func_ov015_0218e5c0.cpp:
     complete
     .text start:0x0218e5c0 end:0x0218e60c
 
-src/Combat/Overlay_15/DispatchHolderWithFlag8_0218f364.cpp:
+src/Combat/Overlay_15/func_ov015_0218f364.cpp:
     complete
     .text start:0x0218f364 end:0x0218f39c
 
@@ -192,7 +192,7 @@ src/Combat/Overlay_15/func_ov015_0218e498.cpp:
     complete
     .text start:0x0218e498 end:0x0218e4f8
 
-src/Combat/Overlay_15/UpdateField238FlagStateC00_021925a8.cpp:
+src/Combat/Overlay_15/func_ov015_021925a8.cpp:
     complete
     .text start:0x021925a8 end:0x02192600
 
@@ -212,11 +212,11 @@ src/Combat/Overlay_15/func_ov015_02190d08.cpp:
     complete
     .text start:0x02190d08 end:0x02190d7c
 
-src/Combat/Overlay_15/ResetAndReadCombatFields_02192544.cpp:
+src/Combat/Overlay_15/func_ov015_02192544.cpp:
     complete
     .text start:0x02192544 end:0x021925a8
 
-src/Combat/Overlay_15/InitAndRunStream_0218ba44.cpp:
+src/Combat/Overlay_15/func_ov015_0218ba44.cpp:
     complete
     .text start:0x0218ba44 end:0x0218bae8
 
@@ -236,7 +236,7 @@ src/Combat/Overlay_15/func_ov015_02191af0.cpp:
     complete
     .text start:0x02191af0 end:0x02191ba0
 
-src/Combat/Overlay_15/BuildAndAppendNameEntry_0218b5c8.cpp:
+src/Combat/Overlay_15/func_ov015_0218b5c8.cpp:
     complete
     .text start:0x0218b5c8 end:0x0218b6bc
 
@@ -248,11 +248,11 @@ src/Combat/Overlay_15/func_ov015_02191ba0.cpp:
     complete
     .text start:0x02191ba0 end:0x02191c70
 
-src/Combat/Overlay_15/RunCombatantUpdateAndFlush_02190428.cpp:
+src/Combat/Overlay_15/func_ov015_02190428.cpp:
     complete
     .text start:0x02190428 end:0x0219050c
 
-src/Combat/Overlay_15/UpdateGfxAndDispatchList_02190348.cpp:
+src/Combat/Overlay_15/func_ov015_02190348.cpp:
     complete
     .text start:0x02190348 end:0x02190428
 
@@ -264,7 +264,7 @@ src/Combat/Overlay_15/func_ov015_02193294.cpp:
     complete
     .text start:0x02193294 end:0x021933ac
 
-src/Combat/Overlay_15/ResetAndReloadStream_0218cb2c.cpp:
+src/Combat/Overlay_15/func_ov015_0218cb2c.cpp:
     complete
     .text start:0x0218cb2c end:0x0218cc24
 
@@ -276,11 +276,11 @@ src/Combat/Overlay_15/func_ov015_02192064.cpp:
     complete
     .text start:0x02192064 end:0x02192158
 
-src/Combat/Overlay_15/BuildAndAppendNamedNodeList_0218b6e4.cpp:
+src/Combat/Overlay_15/func_ov015_0218b6e4.cpp:
     complete
     .text start:0x0218b6e4 end:0x0218b810
 
-src/Combat/Overlay_15/BuildStatusMessage_0218c274.cpp:
+src/Combat/Overlay_15/func_ov015_0218c274.cpp:
     complete
     .text start:0x0218c274 end:0x0218c3a4
 

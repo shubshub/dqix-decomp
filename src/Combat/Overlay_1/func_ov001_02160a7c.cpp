@@ -1,44 +1,44 @@
 #include <globaldefs.h>
 #include "Resource/GameResources.h"
 
-extern "C" void func_ov017_021d6134(void* arg0, int arg1);
+extern "C" void func_ov017_021d6134(void* p, int flag);
 
 struct Struct_ov001_02160a7c { 
 #if defined(jpn)
-    char unknown_0_[0xc8];
+    char pad[0xc8];
 #else
-    char unknown1_0_[0xcc];
+    char pad[0xcc];
 #endif
  unsigned char unknown_cc_, unknown_cd_, unknown_ce_, unknown_cf_; };
 
 // USA: func_ov001_02160a7c
-extern "C" ARM int func_ov001_02160a7c(char* arg0, int arg1) {
+extern "C" ARM int func_ov001_02160a7c(char* obj, int count) {
 #if defined(jpn)
     enum { Enum_ov001_02160a7c_14132 = 0x3524 };
 #else
     enum { Enum_ov001_02160a7c_14132 = 0x3734 };
 #endif
-    int var0;
-    void* var1 = GetGameResources();
-    struct Struct_ov001_02160a7c* var2 = *(struct Struct_ov001_02160a7c**)((char*)var1 + Enum_ov001_02160a7c_14132);
-    func_ov017_021d6134(arg0, var2->unknown_cd_);
-    arg0 += 8;
-    if (arg1 >= 2) {
-        func_ov017_021d6134(arg0, var2->unknown_cf_);
-        arg0 += 8;
+    int flag;
+    void* ov17 = GetGameResources();
+    struct Struct_ov001_02160a7c* s = *(struct Struct_ov001_02160a7c**)((char*)ov17 + Enum_ov001_02160a7c_14132);
+    func_ov017_021d6134(obj, s->unknown_cd_);
+    obj += 8;
+    if (count >= 2) {
+        func_ov017_021d6134(obj, s->unknown_cf_);
+        obj += 8;
     }
-    if (arg1 >= 3) {
-        func_ov017_021d6134(arg0, var2->unknown_ce_);
-        arg0 += 8;
+    if (count >= 3) {
+        func_ov017_021d6134(obj, s->unknown_ce_);
+        obj += 8;
     }
-    if (arg1 >= 4) {
-        unsigned char var3 = var2->unknown_cc_;
-        if (var3 == 2) {
-            var0 = 0;
-        } else if (var3 == 1) {
-            var0 = 1;
+    if (count >= 4) {
+        unsigned char v = s->unknown_cc_;
+        if (v == 2) {
+            flag = 0;
+        } else if (v == 1) {
+            flag = 1;
         }
-        func_ov017_021d6134(arg0, var0);
+        func_ov017_021d6134(obj, flag);
     }
     return 1;
 }

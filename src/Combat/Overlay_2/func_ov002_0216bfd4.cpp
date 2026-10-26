@@ -7,13 +7,13 @@
 #endif
 
 struct Entry_0205d6a0;
-struct Outer020e28dc;
-struct Obj020e25e8;
-char *MessageSystem_GetInstance();
-void MessageSystem_Reset(char *p);
-void Window_ClosePane(struct Entry_0205d6a0 *e, int a);
-void ResetSelectionState020e25e8(struct Obj020e25e8 *o);
-int GetInnerFlagBit0020e28dc(struct Outer020e28dc *o);
+struct Struct_020e28dc;
+struct Struct_020e25e8;
+extern "C" char *MessageSystem_GetInstance();
+extern "C" void MessageSystem_Reset(char *p);
+extern "C" void Window_ClosePane(struct Entry_0205d6a0 *e, int a);
+extern "C" void func_020e25e8(struct Struct_020e25e8 *o);
+extern "C" int func_020e28dc(struct Struct_020e28dc *o);
 extern "C" void func_ov002_0215b9a4(char *self, unsigned char key, int flag);
 
 // USA: func_ov002_0216bfd4
@@ -25,98 +25,98 @@ extern "C" ARM void func_ov002_0216bfd4(char *base, unsigned char mode) {
         func_ov002_0215b9a4(base, *(int *) (base + 0x1000 + RG(0xbb8, 0xa80)), 1);
         Window_ClosePane((struct Entry_0205d6a0 *) (base + RG(0x2c8 + 0xc00, 0xe20)), 0);
     }
-    *(unsigned char *) (arg0 + 0x1000 + RG(0xc79, 0xb3d)) = arg1;
-    *(unsigned char *) (arg0 + 0x1000 + RG(0xc30, 0xaf8)) = 1;
-    *(int *) (arg0 + 0x1000 + RG(0xbb8, 0xa80))           = RG(0x26, 0x29);
-    *(int *) (arg0 + 0x1000 + RG(0xbbc, 0xa84))           = RG(0x26, 0x29);
-    int var1                                  = 0;
-    int var2                                   = 0;
+    *(unsigned char *) (base + 0x1000 + RG(0xc79, 0xb3d)) = mode;
+    *(unsigned char *) (base + 0x1000 + RG(0xc30, 0xaf8)) = 1;
+    *(int *) (base + 0x1000 + RG(0xbb8, 0xa80))           = RG(0x26, 0x29);
+    *(int *) (base + 0x1000 + RG(0xbbc, 0xa84))           = RG(0x26, 0x29);
+    int reset                                  = 0;
+    int next                                   = 0;
     int var3                                 = 0;
-    int var4                                  = 0;
-    switch (*(unsigned char *) (arg0 + 0x1000 + RG(0xc79, 0xb3d))) {
+    int force                                  = 0;
+    switch (*(unsigned char *) (base + 0x1000 + RG(0xc79, 0xb3d))) {
         case 0:
-            *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1a00 + 0xf0))          = 0x236f;
-            *(short *) (arg0 + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2))          = -1;
-            *(unsigned char *) (arg0 + 0x1000 + RG(0xc2e, 0xaf6)) = 1;
-            var2                                       = 1;
-            *(short *) (arg0 + RG(0x1c00 + 0x12, 0x1a00 + 0xda))          = 0;
+            *(short *) (base + RG(0x1c00 + 0x28, 0x1a00 + 0xf0))          = 0x236f;
+            *(short *) (base + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2))          = -1;
+            *(unsigned char *) (base + 0x1000 + RG(0xc2e, 0xaf6)) = 1;
+            next                                       = 1;
+            *(short *) (base + RG(0x1c00 + 0x12, 0x1a00 + 0xda))          = 0;
             break;
         case 1: break;
         case 2:
-            *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1a00 + 0xf0)) = 0x2371;
-            *(short *) (arg0 + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2)) = -1;
-            var2                              = 1;
+            *(short *) (base + RG(0x1c00 + 0x28, 0x1a00 + 0xf0)) = 0x2371;
+            *(short *) (base + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2)) = -1;
+            next                              = 1;
             break;
         case 3:
-            *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1a00 + 0xf0))          = 0x2372;
-            *(short *) (arg0 + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2))          = -1;
-            *(unsigned char *) (arg0 + 0x1000 + RG(0xc2e, 0xaf6)) = 1;
-            var2                                       = 1;
-            *(short *) (arg0 + RG(0x1c00 + 0x12, 0x1a00 + 0xda))          = 0;
+            *(short *) (base + RG(0x1c00 + 0x28, 0x1a00 + 0xf0))          = 0x2372;
+            *(short *) (base + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2))          = -1;
+            *(unsigned char *) (base + 0x1000 + RG(0xc2e, 0xaf6)) = 1;
+            next                                       = 1;
+            *(short *) (base + RG(0x1c00 + 0x12, 0x1a00 + 0xda))          = 0;
             break;
         case 4:
-            *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1a00 + 0xf0)) = 0x2373;
-            *(short *) (arg0 + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2)) = -1;
+            *(short *) (base + RG(0x1c00 + 0x28, 0x1a00 + 0xf0)) = 0x2373;
+            *(short *) (base + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2)) = -1;
             var3                            = 1;
-            var2                              = 1;
+            next                              = 1;
             break;
         case 5:
-            *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1a00 + 0xf0))          = 0x2377;
-            *(short *) (arg0 + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2))          = -1;
-            var1                                      = 1;
+            *(short *) (base + RG(0x1c00 + 0x28, 0x1a00 + 0xf0))          = 0x2377;
+            *(short *) (base + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2))          = -1;
+            reset                                      = 1;
             var3                                     = 1;
-            var2                                       = 1;
-            var4                                      = 1;
-            *(unsigned char *) (arg0 + 0x1000 + RG(0xcc5, 0xb89)) = 1;
+            next                                       = 1;
+            force                                      = 1;
+            *(unsigned char *) (base + 0x1000 + RG(0xcc5, 0xb89)) = 1;
             break;
         case 6:
-            *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1a00 + 0xf0)) = 0x2370;
-            *(short *) (arg0 + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2)) = -1;
-            var1                             = 1;
+            *(short *) (base + RG(0x1c00 + 0x28, 0x1a00 + 0xf0)) = 0x2370;
+            *(short *) (base + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2)) = -1;
+            reset                             = 1;
             var3                            = 1;
-            var2                              = 1;
+            next                              = 1;
             break;
         case 7:
-            *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1a00 + 0xf0))          = 0x2375;
-            *(short *) (arg0 + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2))          = -1;
-            var1                                      = 1;
+            *(short *) (base + RG(0x1c00 + 0x28, 0x1a00 + 0xf0))          = 0x2375;
+            *(short *) (base + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2))          = -1;
+            reset                                      = 1;
             var3                                     = 1;
-            var2                                       = 1;
-            var4                                      = 1;
-            *(unsigned char *) (arg0 + 0x1000 + RG(0xcc5, 0xb89)) = 1;
+            next                                       = 1;
+            force                                      = 1;
+            *(unsigned char *) (base + 0x1000 + RG(0xcc5, 0xb89)) = 1;
             break;
-        case 8: var1 = 1; break;
+        case 8: reset = 1; break;
         case 9:
-            *(short *) (arg0 + RG(0x1c00 + 0x28, 0x1a00 + 0xf0)) = 0x2374;
-            *(short *) (arg0 + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2)) = -1;
+            *(short *) (base + RG(0x1c00 + 0x28, 0x1a00 + 0xf0)) = 0x2374;
+            *(short *) (base + RG(0x1c00 + 0x2a, 0x1a00 + 0xf2)) = -1;
             var3                            = 1;
-            var2                              = 1;
-            var4                             = 1;
+            next                              = 1;
+            force                             = 1;
             break;
     }
-    if (var1 && *(void **) (arg0 + 4) != NULL &&
-        func_020e28dc(*(struct Struct_020e28dc **) (arg0 + 4)))
+    if (reset && *(void **) (base + 4) != NULL &&
+        func_020e28dc(*(struct Struct_020e28dc **) (base + 4)))
     {
-        func_020e25e8(*(struct Struct_020e25e8 **) (arg0 + 4));
+        func_020e25e8(*(struct Struct_020e25e8 **) (base + 4));
     }
-    if (reinit) {
+    if (var3) {
         if (!next) {
             MessageSystem_Reset(g);
         } else if (force) {
             MessageSystem_Reset(g);
         }
-        *(int *) (arg0 + 0x1000 + RG(0xbbc, 0xa84))           = RG(9, 10);
-        *(unsigned char *) (arg0 + 0x1000 + RG(0xc30, 0xaf8)) = 0;
-        if (*(unsigned char *) (arg0 + 0x1000 + RG(0xc79, 0xb3d)) == 9) {
-            *(int *) (arg0 + 0x1000 + RG(0xbbc, 0xa84)) = 5;
+        *(int *) (base + 0x1000 + RG(0xbbc, 0xa84))           = RG(9, 10);
+        *(unsigned char *) (base + 0x1000 + RG(0xc30, 0xaf8)) = 0;
+        if (*(unsigned char *) (base + 0x1000 + RG(0xc79, 0xb3d)) == 9) {
+            *(int *) (base + 0x1000 + RG(0xbbc, 0xa84)) = 5;
         }
-        if (*(unsigned char *) (arg0 + 0x1000 + RG(0xc78, 0xb3c)) != 0) {
-            *(signed char *) (arg0 + 0x1000 + RG(0xc20, 0xae8))   = 4;
-            *(unsigned char *) (arg0 + 0x1000 + RG(0xc78, 0xb3c)) = 0;
+        if (*(unsigned char *) (base + 0x1000 + RG(0xc78, 0xb3c)) != 0) {
+            *(signed char *) (base + 0x1000 + RG(0xc20, 0xae8))   = 4;
+            *(unsigned char *) (base + 0x1000 + RG(0xc78, 0xb3c)) = 0;
         }
     }
-    if (var2) {
-        *(int *) (arg0 + 0x1000 + RG(0xbb8, 0xa80)) = RG(0x26, 0x29);
-        *(int *) (arg0 + 0x1000 + RG(0xbc0, 0xa88)) = 0;
+    if (next) {
+        *(int *) (base + 0x1000 + RG(0xbb8, 0xa80)) = RG(0x26, 0x29);
+        *(int *) (base + 0x1000 + RG(0xbc0, 0xa88)) = 0;
     }
 }

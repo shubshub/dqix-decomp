@@ -1,43 +1,43 @@
 #include <globaldefs.h>
 #include "std_library_functions.h"
 
-extern "C" void func_020489bc(void* arg0);
-extern "C" void func_020bc078(int* arg0);
+extern "C" void func_020489bc(void* obj);
+extern "C" void NNS_SndHandleInit(int* field);
 
 #if defined(jpn)
-enum { Enum_02052a4c_0 = 0xc };
+enum { kExtendedOffsetDelta = 0xc };
 #else
-enum { Enum_02052a4c_0 = 0 };
+enum { kExtendedOffsetDelta = 0 };
 #endif
 
 // USA: func_02052a4c
-extern "C" ARM void func_02052a4c(void* arg0) {
-    char* var0 = (char*)arg0;
-    func_020489bc(arg0);
-    *(unsigned short*)var0 |= 0x100;
-    func_020bc078((int*)(var0 + (0x198 - Enum_02052a4c_0)));
-    *(int*)(var0 + (0x150 - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x154 - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x158 - Enum_02052a4c_0)) = 0;
-    memset(var0 + (0x178 - Enum_02052a4c_0), 0, 4);
-    *(unsigned char*)(var0 + (0x17c - Enum_02052a4c_0)) = 0;
-    *(unsigned char*)(var0 + (0x17d - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x180 - Enum_02052a4c_0)) = -1;
-    *(unsigned char*)(var0 + (0x17e - Enum_02052a4c_0)) = 0;
-    *(unsigned char*)(var0 + (0x17f - Enum_02052a4c_0)) = 0;
-    *(unsigned char*)(var0 + (0x184 - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x190 - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x194 - Enum_02052a4c_0)) = -1;
-    *(unsigned char*)(var0 + (0x185 - Enum_02052a4c_0)) = 0;
-    *(unsigned char*)(var0 + (0x186 - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x188 - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x1b4 - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x1b8 - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x1bc - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x18c - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x19c - Enum_02052a4c_0)) = 0;
-    *(unsigned short*)(var0 + (0x1b2 - Enum_02052a4c_0)) = 0;
-    *(unsigned short*)(var0 + (0x1c0 - Enum_02052a4c_0)) = 0;
-    *(int*)(var0 + (0x15c - Enum_02052a4c_0)) = -1;
-    *(int*)(var0 + (0x1c4 - Enum_02052a4c_0)) = 0;
+extern "C" ARM void func_02052a4c(void* obj) {
+    char* p = (char*)obj;
+    func_020489bc(obj);
+    *(unsigned short*)p |= 0x100;
+    NNS_SndHandleInit((int*)(p + (0x198 - kExtendedOffsetDelta)));
+    *(int*)(p + (0x150 - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x154 - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x158 - kExtendedOffsetDelta)) = 0;
+    memset(p + (0x178 - kExtendedOffsetDelta), 0, 4);
+    *(unsigned char*)(p + (0x17c - kExtendedOffsetDelta)) = 0;
+    *(unsigned char*)(p + (0x17d - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x180 - kExtendedOffsetDelta)) = -1;
+    *(unsigned char*)(p + (0x17e - kExtendedOffsetDelta)) = 0;
+    *(unsigned char*)(p + (0x17f - kExtendedOffsetDelta)) = 0;
+    *(unsigned char*)(p + (0x184 - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x190 - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x194 - kExtendedOffsetDelta)) = -1;
+    *(unsigned char*)(p + (0x185 - kExtendedOffsetDelta)) = 0;
+    *(unsigned char*)(p + (0x186 - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x188 - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x1b4 - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x1b8 - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x1bc - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x18c - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x19c - kExtendedOffsetDelta)) = 0;
+    *(unsigned short*)(p + (0x1b2 - kExtendedOffsetDelta)) = 0;
+    *(unsigned short*)(p + (0x1c0 - kExtendedOffsetDelta)) = 0;
+    *(int*)(p + (0x15c - kExtendedOffsetDelta)) = -1;
+    *(int*)(p + (0x1c4 - kExtendedOffsetDelta)) = 0;
 }

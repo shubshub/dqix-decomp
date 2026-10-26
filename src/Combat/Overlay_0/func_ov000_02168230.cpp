@@ -9,14 +9,14 @@
 #endif
 
 
-struct Struct_ov000_02168230 { signed char unknown_0_; unsigned char unknown_1_; short unknown_2_; short unknown_4_; };
-extern "C" void func_ov000_02168268(struct Struct_ov000_02168230* arg0);
+struct Struct_ov000_02168230 { signed char a; unsigned char b; short c; short d; };
+extern "C" void func_ov000_02168268(struct Struct_ov000_02168230* obj);
 
 // USA: func_ov000_02168230
-extern "C" ARM void func_ov000_02168230(char* arg0) {
-    int var0;
-    arg0[REGION_OFFSET_0] = 0;
-    for (var0 = 0; var0 < 4; var0++) {
-        func_ov000_02168268((struct Struct_ov000_02168230*)(arg0 + REGION_OFFSET_1 + var0 * 6));
+extern "C" ARM void func_ov000_02168230(char* p) {
+    int i;
+    p[REGION_OFFSET_0] = 0;
+    for (i = 0; i < 4; i++) {
+        func_ov000_02168268((struct Struct_ov000_02168230*)(p + REGION_OFFSET_1 + i * 6));
     }
 }

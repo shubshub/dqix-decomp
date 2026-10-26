@@ -8,16 +8,16 @@
 
 
 // USA: func_ov000_02171bc0
-extern "C" ARM int func_ov000_02171bc0(char* arg0) {
-    signed char var0 = 0;
-    for (int var1 = 0; var1 < 0x10; var1++) {
-        void* var2 = *(void**)(arg0 + var1 * 4 + REGION_OFFSET_0);
-        if (var2 != 0) {
-            short var3 = *(short*)((char*)var2 + 0x18);
-            if (var3 > 0) {
-                var0 = (signed char)(var0 + 1);
+extern "C" ARM int func_ov000_02171bc0(char* arr) {
+    signed char count = 0;
+    for (int i = 0; i < 0x10; i++) {
+        void* p = *(void**)(arr + i * 4 + REGION_OFFSET_0);
+        if (p != 0) {
+            short v = *(short*)((char*)p + 0x18);
+            if (v > 0) {
+                count = (signed char)(count + 1);
             }
         }
     }
-    return var0;
+    return count;
 }

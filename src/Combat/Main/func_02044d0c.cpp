@@ -6,7 +6,7 @@
 
 extern char data_02107800;
 
-void Background_Init(struct BackgroundGraphics*);
+extern "C" void Background_Init(struct BackgroundGraphics*);
 extern "C" void Background_LoadFile(void* list, void* rec, void* alloc, int size);
 extern "C" unsigned int GetMainBG1ScreenBase(void);
 extern "C" void ColorEffect_ConfigureAlphaBlend(void* reg, int a, int b, int c, int d);
@@ -32,11 +32,11 @@ extern "C" ARM void func_02044d0c(void) {
     var1[7] = (var1[7] & 0x43) | 0x308 | 0x1c00;
 
 #if defined(jpn)
-    char* var2 = *(char**)(&data_02107800 + 0x30);
+    char* base = *(char**)(&data_02107800 + 0x30);
 #else
-    char* var2 = *(char**)&data_02107800;
+    char* base = *(char**)&data_02107800;
 #endif
-    char* var3 = *(char**)((char*)GetGameResources() + 0x2c);
+    char* rec = *(char**)((char*)GetGameResources() + 0x2c);
 
     struct BackgroundGraphics local;
     Background_Init(&local);
@@ -44,32 +44,32 @@ extern "C" ARM void func_02044d0c(void) {
     local.bgNumber_ = 3;
     Background_LoadFile(&local, rec, 0, 0);
 
-    if (var2 != 0) {
-        unsigned char var5;
-        memset(var2, 0, 0x1000);
-        for (var5 = 0; var5 < 6; var5++) {
-            StageMemoryToVRAM(VRAMSubregion_MainBG3Character, var2, var5 << 12, 0x1000, 1, 0);
+    if (base != 0) {
+        unsigned char i;
+        memset(base, 0, 0x1000);
+        for (i = 0; i < 6; i++) {
+            StageMemoryToVRAM(VRAMSubregion_MainBG3Character, base, i << 12, 0x1000, 1, 0);
         }
-        char* var6 = *(char**)(&data_02107800 + 4);
-        if (var6 + BG_UPLOAD_SOURCE_OFFSET != 0) {
-            StageMemoryToVRAM(VRAMSubregion_MainBG2Character, var6 + BG_UPLOAD_SOURCE_OFFSET, 0x20, BG_UPLOAD_SIZE, 1, 0);
+        char* p = *(char**)(&data_02107800 + 4);
+        if (p + BG_UPLOAD_SOURCE_OFFSET != 0) {
+            StageMemoryToVRAM(VRAMSubregion_MainBG2Character, p + BG_UPLOAD_SOURCE_OFFSET, 0x20, BG_UPLOAD_SIZE, 1, 0);
         }
     }
 
-    if (var2 != 0) {
-        unsigned short* var7;
-        unsigned short var8;
-        memset(var2, 0, 0x1000);
-        StageMemoryToVRAM(VRAMSubregion_MainBG2Screen, var2, 0, 0x800, 1, 0);
-        var7 = (unsigned short*)(var2 + 0x800);
-        for (var8 = 0; var8 < 0x300; var8++) {
-            *var7 = var8;
-            var7++;
+    if (base != 0) {
+        unsigned short* w;
+        unsigned short v;
+        memset(base, 0, 0x1000);
+        StageMemoryToVRAM(VRAMSubregion_MainBG2Screen, base, 0, 0x800, 1, 0);
+        w = (unsigned short*)(base + 0x800);
+        for (v = 0; v < 0x300; v++) {
+            *w = v;
+            w++;
         }
-        StageMemoryToVRAM(VRAMSubregion_MainBG3Screen, var2, 0, 0x800, 1, 0);
-        unsigned int var9 = GetMainBG1ScreenBase();
-        if (var9 != 0) {
-            memset((void*)var9, 0, 0x800);
+        StageMemoryToVRAM(VRAMSubregion_MainBG3Screen, base, 0, 0x800, 1, 0);
+        unsigned int bg = GetMainBG1ScreenBase();
+        if (bg != 0) {
+            memset((void*)bg, 0, 0x800);
         }
     }
 

@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 
 struct Struct_ov000_0215fb04 {
-    unsigned char unknown_0_[0x8e44];
-    unsigned char unknown_8e44_[3];
-    unsigned char unknown_8e47_;
+    unsigned char pad[0x8e44];
+    unsigned char data[3];
+    unsigned char count;
 };
 
 // USA: func_ov000_0215fb04
-extern "C" ARM void func_ov000_0215fb04(struct Struct_ov000_0215fb04* arg0, unsigned char arg1) {
-    unsigned char* var0 = arg0->unknown_8e44_;
-    unsigned char* var1 = var0;
-    int var2 = 0;
-    for (int var3 = 0; var3 < arg0->unknown_8e47_; var0++, var3++) {
-        unsigned char var4 = *var0;
-        if (var4 != arg1) {
-            *var1 = var4;
-            var1++;
-            var2++;
+extern "C" ARM void func_ov000_0215fb04(struct Struct_ov000_0215fb04* obj, unsigned char val) {
+    unsigned char* src = obj->data;
+    unsigned char* dst = src;
+    int kept = 0;
+    for (int i = 0; i < obj->count; src++, i++) {
+        unsigned char b = *src;
+        if (b != val) {
+            *dst = b;
+            dst++;
+            kept++;
         }
     }
-    arg0->unknown_8e47_ = var2;
+    obj->count = kept;
 }

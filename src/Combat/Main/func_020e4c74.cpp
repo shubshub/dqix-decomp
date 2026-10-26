@@ -3,18 +3,18 @@
 #include "GameState/GameState.h"
 
 struct Struct_020e4c74 {
-    char unknown_0_[0x49c];
-    unsigned char unknown_49c_0_ : 1;
+    char pad[0x49c];
+    unsigned char bit0 : 1;
 };
 
-extern "C" void func_020e4b34(void* arg0, struct BaseCombatStats* arg1, struct BaseCombatStats* arg2,
-    int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11);
+extern "C" void func_020e4b34(void* obj, struct BaseCombatStats* arg1, struct BaseCombatStats* arg2,
+    int p4, int p5, int p6, int p7, int p8, int p9, int p10, int arg10, int arg11);
 
 // USA: func_020e4c74
-extern "C" ARM void func_020e4c74(void* arg0, GameObject* arg1) {
-    memset(arg0, 0, 0xc);
-    if (arg1 != NULL) {
-        struct Struct_020e4c74* var0 = *(struct Struct_020e4c74**)((char*)arg1 + 0x150);
-        func_020e4b34(arg0, arg1->baseStats_, arg1->baseStats_, 0, 0, 0, 0, var0->unknown_49c_0_, 0, 1, 0, 1);
+extern "C" ARM void func_020e4c74(void* obj, GameObject* combatant) {
+    memset(obj, 0, 0xc);
+    if (combatant != NULL) {
+        struct Struct_020e4c74* sub = *(struct Struct_020e4c74**)((char*)combatant + 0x150);
+        func_020e4b34(obj, combatant->baseStats_, combatant->baseStats_, 0, 0, 0, 0, sub->bit0, 0, 1, 0, 1);
     }
 }

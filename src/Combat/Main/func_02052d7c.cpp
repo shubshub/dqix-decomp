@@ -1,44 +1,38 @@
 #include <globaldefs.h>
 
-#if defined(jpn)
-#define func_0205ec34 func_0205ff20
-#endif
 
-#if defined(jpn)
-#define func_0206df6c func_0206f0c0
-#endif
 #if defined(jpn)
 enum { Enum_02052d7c_336 = 0x144 };
 #else
 enum { Enum_02052d7c_336 = 0x150 };
 #endif
 
-extern "C" void func_0206df6c(void* arg0, unsigned char* arg1, int arg2, int arg3);
-extern "C" void* func_0205ec34(void);
+extern "C" void Scenario_SetFlag(void* unused, unsigned char* array, int bit, int value);
+extern "C" void* Scenario_GetInstance(void);
 
 struct Struct_02052d7c {
-    unsigned char unknown_0_[Enum_02052d7c_336];
-    char* unknown_150_;
+    unsigned char pad[Enum_02052d7c_336];
+    char* f150;
 };
 
 // USA: func_02052d7c
-extern "C" ARM void func_02052d7c(struct Struct_02052d7c* arg0, int arg1, short arg2) {
-    char* var0 = arg0->unknown_150_;
-    if (var0 == 0) return;
-    short var1 = *(short*)(var0 + arg1 * 2 + 0x400 + 0x88);
-    if (arg2 == var1) return;
+extern "C" ARM void func_02052d7c(struct Struct_02052d7c* obj, int index, short value) {
+    char* ptr = obj->f150;
+    if (ptr == 0) return;
+    short old = *(short*)(ptr + index * 2 + 0x400 + 0x88);
+    if (value == old) return;
 
-    if (arg1 != 7 && arg1 != 8) {
-        void* var2 = func_0205ec34();
-        func_0206df6c(var2, (unsigned char*)var2 + 0x8c, 0x113f, 1);
+    if (index != 7 && index != 8) {
+        void* ctx = Scenario_GetInstance();
+        Scenario_SetFlag(ctx, (unsigned char*)ctx + 0x8c, 0x113f, 1);
     }
 
-    var0 = arg0->unknown_150_;
-    *(short*)(var0 + arg1 * 2 + 0x400 + 0x88) = arg2;
-    if (arg1 != 9) return;
+    ptr = obj->f150;
+    *(short*)(ptr + index * 2 + 0x400 + 0x88) = value;
+    if (index != 9) return;
 
-    var0 = arg0->unknown_150_;
-    if (var0 != 0) {
-        var0[0x56e] = 1;
+    ptr = obj->f150;
+    if (ptr != 0) {
+        ptr[0x56e] = 1;
     }
 }

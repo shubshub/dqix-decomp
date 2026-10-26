@@ -9,233 +9,233 @@ extern Script::OpcodeLookupEntry data_020ef388[];
 
 extern "C"
 {
-    extern "C" void* _Z22GameState_GetZoneTablePv(GameState*);
-    void _ZN12ZoneFeatures13Opcode68Entry14Reset_0201ce10Ev(void*);
+    extern "C" void* GameState_GetZoneTable(GameState*);
+    void _ZN15Struct_020134e017Struct_0201cb60_313func_0201ce10Ev(void*);
 
     Matrix4x3 _Z15RotationMatrixYi(fix32_t);
 
     fix32_t _Z22fix32ReduceAngle0To2Pii(fix32_t);
 
-    extern "C" unsigned short* _Z28ZoneTable_FindEntryByMapCodeP12List0209998cPKc(void*, const char*);
+    extern "C" unsigned short* ZoneTable_FindEntryByMapCode(void*, const char*);
 
 }
 
-int WarpScript_AllocateOpcode64Entries(Script::Parameter* params, int numParams)
+extern "C" int WarpScript_AllocateOpcode64Entries(Script::Parameter* params, int numParams)
 {
     data_020fdc20.warp->AllocateOpcode64Entries(params[0].ToInt(), data_020fdc20.allocator);
     return 1;
 }
 
-int WarpScript_CreateOpcode64Entry(Script::Parameter* params, int numParams)
+extern "C" int WarpScript_CreateOpcode64Entry(Script::Parameter* params, int numParams)
 {
     const char* var0;
     const char* var1;
-    int var2 = arg0[0].ToInt();
+    int var2 = params[0].ToInt();
     Vector3fix var3;
-    Script::Parameter* var4 = arg0[1].ToVec3fix(&var3);
-    arg0 = var4 + 1;
+    Script::Parameter* var4 = params[1].ToVec3fix(&var3);
+    params = var4 + 1;
     const char* var5 = var4->ToString();
     var0 = NULL;
     var1 = NULL;
 
-    if (arg1 >= 6)
+    if (numParams >= 6)
     {
-        var0 = arg0->ToString();
-        arg0++;
+        var0 = params->ToString();
+        params++;
     }
-    if (arg1 >= 7)
+    if (numParams >= 7)
     {
-        var1 = arg0->ToString();
-        arg0++;
+        var1 = params->ToString();
+        params++;
     }
 
     if (var5 == NULL)
         return 0;
 
-    Struct_020134e0::Struct_020146fc var6;
-    var6.unknown_0_ = var2;
-    var6.unknown_4_.unknown1_0_ = var3;
-    strcpy(var6.unknown_10_, var5);
+    ZoneFeatures::Opcode64Entry entry;
+    entry.unk_0 = var2;
+    entry.vector_4.vec = var3;
+    strcpy(entry.string_10, var5);
     if (var0 == NULL)
-        var6.unknown_20_[0] = '\0';
+        entry.string_20[0] = '\0';
     else
-        strcpy(var6.unknown_20_, var0);
+        strcpy(entry.string_20, var0);
     if (var1 == NULL)
-        var6.unknown_30_[0] = '\0';
+        entry.string_30[0] = '\0';
     else
-        strcpy(var6.unknown_30_, var1);
+        strcpy(entry.string_30, var1);
 
     data_020fdc20.warp->CreateOpcode64Entry(entry);
     return 1;
 }
 
-extern "C" int func_0201c8a8(Script::Parameter* arg0, int arg1)
+extern "C" int func_0201c8a8(Script::Parameter* params, int numParams)
 {
-    data_020fdc20.unknown_8_->func_0201e288(arg0[0].ToInt(), data_020fdc20.unknown_4_);
+    data_020fdc20.warp->func_0201e288(params[0].ToInt(), data_020fdc20.allocator);
     return 1;
 }
 
-extern "C" int func_0201c8d0(Script::Parameter* arg0, int arg1)
+extern "C" int func_0201c8d0(Script::Parameter* params, int numParams)
 {
     TileFeaturePlacementData var0;
-    var0.unknown_0_ = (arg0++)->ToInt();
-    strcpy(var0.tilename, (arg0++)->ToString());
+    var0.unknown_0_ = (params++)->ToInt();
+    strcpy(var0.tilename, (params++)->ToString());
 
-    for (int var1 = 0; var1 < 9; var1++)
-        var0.directionBitmasks[var1] = (arg0++)->ToInt();
+    for (int i = 0; i < 9; i++)
+        var0.directionBitmasks[i] = (params++)->ToInt();
 
-    data_020fdc20.unknown_8_->func_0201e3c4(var0);
+    data_020fdc20.warp->func_0201e3c4(var0);
     return 1;
 }
 
-int ZoneFeaturesScript_AllocateOpcode66Entries(Script::Parameter* params, int numParams)
+extern "C" int ZoneFeaturesScript_AllocateOpcode66Entries(Script::Parameter* params, int numParams)
 {
     data_020fdc20.warp->AllocateOpcode66Entries(params[0].ToInt(), data_020fdc20.allocator);
     return 1;
 }
 
-int ZoneFeaturesScript_AllocateExits(Script::Parameter* params, int numParams)
+extern "C" int ZoneFeaturesScript_AllocateExits(Script::Parameter* params, int numParams)
 {
     data_020fdc20.warp->AllocateExits(params[0].ToInt(), data_020fdc20.allocator);
     return 1;
 }
 
-void Struct_020134e0::Struct_0201cb60_3::func_0201ce10()
+void ZoneFeatures::Opcode68Entry::func_0201ce10()
 {
-    unknown_0_ = 0;
-    unknown_1c_ = -1;
-    unknown_50_ = 0;
-    unknown_52_ = 0;
-    unknown_54_ = 0;
-    unknown_64_[0] = 0;
-    unknown_64_[1] = 0;
-    unknown_58_[0] = 0;
-    unknown_58_[1] = 0;
-    unknown_58_[2] = 0;
-    unknown_20_[0].x = 0;
-    unknown_20_[0].y = 0;
-    unknown_20_[0].z = 0;
-    unknown_20_[1].x = 0;
-    unknown_20_[1].y = 0;
-    unknown_20_[1].z = 0;
-    unknown_20_[2].x = 0;
-    unknown_20_[2].y = 0;
-    unknown_20_[2].z = 0;
-    unknown_20_[3].x = 0;
-    unknown_20_[3].y = 0;
-    unknown_20_[3].z = 0;
-    unknown_6c_ = -1;
+    unk_0 = 0;
+    unk_1c = -1;
+    unk_50 = 0;
+    unk_52 = 0;
+    unk_54 = 0;
+    unk_64[0] = 0;
+    unk_64[1] = 0;
+    unk_58[0] = 0;
+    unk_58[1] = 0;
+    unk_58[2] = 0;
+    unk_20[0].x = 0;
+    unk_20[0].y = 0;
+    unk_20[0].z = 0;
+    unk_20[1].x = 0;
+    unk_20[1].y = 0;
+    unk_20[1].z = 0;
+    unk_20[2].x = 0;
+    unk_20[2].y = 0;
+    unk_20[2].z = 0;
+    unk_20[3].x = 0;
+    unk_20[3].y = 0;
+    unk_20[3].z = 0;
+    unk_6c = -1;
 }
 
-int ZoneFeaturesScript_AllocateEntries(Script::Parameter* params, int numParams)
+extern "C" int ZoneFeaturesScript_AllocateEntries(Script::Parameter* params, int numParams)
 {
     data_020fdc20.warp->AllocateOpcode6aEntries(params[0].ToInt(), data_020fdc20.allocator);
     return 1;
 }
 
-extern "C" int func_0201d044(Script::Parameter* arg0, int arg1)
+extern "C" int func_0201d044(Script::Parameter* params, int numParams)
 {
-    Script::Parameter* var0 = arg0;
-    Struct_020134e0::Struct_02018300 var1;
-    var1.func_0201d424();
-    int var2 = (arg0++)->ToInt();
-    var1.unknown_4_ = var2;
+    Script::Parameter* paramsStart = params;
+    ZoneFeatures::Opcode6aEntry entry;
+    entry.func_0201d424();
+    int var2 = (params++)->ToInt();
+    entry.maybeType = var2;
     bool var3 = false;
-    if (var1.unknown_4_ >= 10)
+    if (entry.maybeType >= 10)
     {
-        var1.unknown_4_ -= 10;
+        entry.maybeType -= 10;
         var3 = true;
     }
 
     Vector3fix var4;
-    arg0 = arg0->ToVec3fix(&var4);
-    var1.unknown_8_.unknown1_0_ = var4;
-    arg0 = arg0->ToVec3fix(&var4);
-    var1.unknown_14_.unknown1_0_ = var4;
+    params = params->ToVec3fix(&var4);
+    entry.unk_8.vec = var4;
+    params = params->ToVec3fix(&var4);
+    entry.unk_14.vec = var4;
 
     if (var3)
     {
-        fix32_t var5 = 4096.0f * (arg0++)->ToFloat();
-        var1.unknown_22_ = _Z22fix32ReduceAngle0To2Pii(var5);
+        fix32_t angle = 4096.0f * (params++)->ToFloat();
+        entry.unk_22 = _Z22fix32ReduceAngle0To2Pii(angle);
     }
     entry.angle = 4096.0f * (params++)->ToFloat();
 
-    fix32_t var6 = var1.unknown_14_.unknown1_0_.x / 2;
-    fix32_t var7 = var1.unknown_14_.unknown1_0_.z / 2;
+    fix32_t var6 = entry.unk_14.vec.x / 2;
+    fix32_t var7 = entry.unk_14.vec.z / 2;
     fix32_t var8 = FIX32_MULTIPLY(var6, var6);
     fix32_t var9 = FIX32_MULTIPLY(var7, var7);
-    var1.unknown_24_ = var9;
-    var1.unknown_24_ = var8 + var9;
+    entry.unk_24 = var9;
+    entry.unk_24 = var8 + var9;
 
-    if (var1.unknown_4_ == 2)
+    if (entry.maybeType == 2)
     {
         entry.unk_2c.type2.nodeId = (params++)->ToInt();
         entry.unk_2c.type2.elementId = (params++)->ToInt();
         entry.unk_2c.type2.flags = (params++)->ToInt();
     }
-    else if (var1.unknown_4_ == 3)
+    else if (entry.maybeType == 3)
     {
-        var1.unknown_2c_.unknown2_0_.unknown_0_ = (arg0++)->ToInt();
+        entry.unk_2c.type3.unk_0 = (params++)->ToInt();
     }
-    else if (var1.unknown_4_ == 4)
+    else if (entry.maybeType == 4)
     {
-        int var10 = (arg0++)->ToInt();
-        var1.unknown_2c_.unknown3_0_.unknown_1_ = -1;
-        var1.unknown_2c_.unknown3_0_.unknown_0_0_ = var10;
-        var1.unknown_2c_.unknown3_0_.unknown_0_7_ = 0;
-        switch (var1.unknown_2c_.unknown3_0_.unknown_0_0_)
+        int arg = (params++)->ToInt();
+        entry.unk_2c.type4.unk_1 = -1;
+        entry.unk_2c.type4.unk_0 = arg;
+        entry.unk_2c.type4.unk_0_high = 0;
+        switch (entry.unk_2c.type4.unk_0)
         {
         case 0:
-            var1.unknown_2c_.unknown3_0_.unknown_4_.unknown_0_.unknown1_0_.y = 4096.0f * (arg0++)->ToFloat();
-            var1.unknown_2c_.unknown3_0_.unknown_4_.unknown_0_.unknown1_0_.z = 4096.0f * (arg0++)->ToFloat();
+            entry.unk_2c.type4.vector_4.vec3.vec.y = 4096.0f * (params++)->ToFloat();
+            entry.unk_2c.type4.vector_4.vec3.vec.z = 4096.0f * (params++)->ToFloat();
             break;
         case 1:
-            arg0 = arg0->ToVec3fix(&var4);
-            var1.unknown_2c_.unknown3_0_.unknown_4_.unknown_0_.unknown1_0_ = var4;
+            params = params->ToVec3fix(&var4);
+            entry.unk_2c.type4.vector_4.vec3.vec = var4;
             break;
         case 2:
         case 3:
-            arg0 = arg0->ToVec3fix(&var4);
-            var1.unknown_2c_.unknown3_0_.unknown_4_.unknown_0_.unknown1_0_ = var4;
+            params = params->ToVec3fix(&var4);
+            entry.unk_2c.type4.vector_4.vec3.vec = var4;
             break;
         case 4:
         case 5:
         {
-            Vector3fix var11;
-            Vector3fix var12;
-            arg0 = arg0->ToVec3fix(&var11);
-            arg0 = arg0->ToVec3fix(&var12);
-            Struct_0201d044 var13;
-            Vector3fix_Subtract(&var12, &var11, &var13.unknown_0_.unknown1_0_);
-            fix32_t var14 = Vector3fix_Length(&var13.unknown_0_.unknown1_0_);
-            Vector3fix_Normalize(&var13.unknown_0_.unknown1_0_, &var13.unknown_0_.unknown1_0_);
-            var13.unknown_c_ = Vector3fix_InnerProduct(&var13.unknown_0_.unknown1_0_, &var11);
+            Vector3fix vecB;
+            Vector3fix vecA;
+            params = params->ToVec3fix(&vecB);
+            params = params->ToVec3fix(&vecA);
+            MaybeVector4fix difference;
+            Vector3fix_Subtract(&vecA, &vecB, &difference.vec3.vec);
+            fix32_t distance = Vector3fix_Length(&difference.vec3.vec);
+            Vector3fix_Normalize(&difference.vec3.vec, &difference.vec3.vec);
+            difference.w = Vector3fix_InnerProduct(&difference.vec3.vec, &vecB);
             Vector3fix var15  = { 0, 0, 0 };
-            if (var1.unknown_2c_.unknown3_0_.unknown_0_0_ == 4)
+            if (entry.unk_2c.type4.unk_0 == 4)
             {
-                var15.x = 4096.0f * (arg0++)->ToFloat();
+                var15.x = 4096.0f * (params++)->ToFloat();
             }
-            vecC.y = 4096.0f * (params++)->ToFloat();
-            vecC.z = 4096.0f * (params++)->ToFloat();
-            Vector3fix vecD;
-            params = params->ToVec3fix(&vecD);
+            var15.y = 4096.0f * (params++)->ToFloat();
+            var15.z = 4096.0f * (params++)->ToFloat();
+            Vector3fix var16;
+            params = params->ToVec3fix(&var16);
             entry.unk_2c.type4.vector_4.CopyFrom(difference);
             entry.unk_2c.type4.distance_14 = distance;
-            entry.unk_2c.type4.vector_18 = vecC;
-            entry.unk_2c.type4.vector_24 = vecD;
+            entry.unk_2c.type4.vector_18 = var15;
+            entry.unk_2c.type4.vector_24 = var16;
             break;
         }
         }
-        var1.unknown_2c_.unknown3_0_.unknown_30_.x = 0;
-        var1.unknown_2c_.unknown3_0_.unknown_30_.y = 0;
-        var1.unknown_2c_.unknown3_0_.unknown_30_.z = 0;
-        if (arg1 > 12)
+        entry.unk_2c.type4.vector_30.x = 0;
+        entry.unk_2c.type4.vector_30.y = 0;
+        entry.unk_2c.type4.vector_30.z = 0;
+        if (numParams > 12)
         {
-            arg0 = arg0->ToVec3fix(&var4);
-            var1.unknown_2c_.unknown3_0_.unknown_30_ = var4;
+            params = params->ToVec3fix(&var4);
+            entry.unk_2c.type4.vector_30 = var4;
         }
     }
-    else if (var1.unknown_4_ == 5)
+    else if (entry.maybeType == 5)
     {
         entry.unk_2c.type5.unk_0 = (params++)->ToInt();
         entry.unk_2c.type5.unk_2 = (params++)->ToInt();
@@ -248,7 +248,7 @@ extern "C" int func_0201d044(Script::Parameter* arg0, int arg1)
     return 1;
 }
 
-void Struct_020134e0::Struct_02018300::func_0201d424()
+void ZoneFeatures::Opcode6aEntry::func_0201d424()
 {
     VectorizedMemset(this, 0, sizeof(Opcode6aEntry));
     unk_0 = 0;
@@ -268,82 +268,82 @@ void Struct_020134e0::Struct_02018300::func_0201d424()
 
 MaybeVector4fix &MaybeVector4fix::CopyFrom(const MaybeVector4fix &other)
 {
-    unknown_0_ = arg0.unknown_0_;
-    fix32_t var0 = arg0.unknown_c_;
-    unknown_c_ = var0;
+    vec3 = other.vec3;
+    fix32_t var0 = other.w;
+    w = var0;
     return *this;
 }
 
-int ZoneFeaturesScript_SetDefaultPositionAndAngle(Script::Parameter* params, int numParams)
+extern "C" int ZoneFeaturesScript_SetDefaultPositionAndAngle(Script::Parameter* params, int numParams)
 {
     Vector3fix var0;
-    arg0 = arg0->ToVec3fix(&var0);
-    fix32_t var1 = _Z22fix32ReduceAngle0To2Pii(4096.0f * (arg0++)->ToFloat());
+    params = params->ToVec3fix(&var0);
+    fix32_t angle = _Z22fix32ReduceAngle0To2Pii(4096.0f * (params++)->ToFloat());
 
-    Struct_020134e0* var2 = data_020fdc20.unknown_8_;
-    var2->unknown_70_ = var0;
-    var2->unknown_7c_ = var1;
+    ZoneFeatures* warp = data_020fdc20.warp;
+    warp->vector_70_ = var0;
+    warp->angle_7c_ = angle;
     return 1;
 }
 
-int ZoneFeaturesScript_SetClearColor(Script::Parameter* params, int numParams)
+extern "C" int ZoneFeaturesScript_SetClearColor(Script::Parameter* params, int numParams)
 {
-    int var0 = (arg0++)->ToInt();
-    int var1 = (arg0++)->ToInt();
-    int var2 = (arg0++)->ToInt();
-    data_020fdc20.unknown_8_->unknown_7e_ = var0 | (var1 << 5) | (var2 << 10);
+    int red = (params++)->ToInt();
+    int green = (params++)->ToInt();
+    int blue = (params++)->ToInt();
+    data_020fdc20.warp->color_7e_ = red | (green << 5) | (blue << 10);
     return 1;
 }
 
-int ZoneFeaturesScript_AddEntry(Script::Parameter* params, int numParams)
+extern "C" int ZoneFeaturesScript_AddEntry(Script::Parameter* params, int numParams)
 {
-    Struct_020134e0::Struct_02018300 var0;
-    var0.func_0201d424();
-    var0.unknown_4_ = (arg0++)->ToInt();
+    ZoneFeatures::Opcode6aEntry entry;
+    entry.func_0201d424();
+    entry.maybeType = (params++)->ToInt();
     Vector3fix var1;
-    arg0 = arg0->ToVec3fix(&var1);
-    var0.unknown_8_.unknown1_0_ = var1;
-    arg0 = arg0->ToVec3fix(&var1);
-    var0.unknown_14_.unknown1_0_ = var1;
+    params = params->ToVec3fix(&var1);
+    entry.unk_8.vec = var1;
+    params = params->ToVec3fix(&var1);
+    entry.unk_14.vec = var1;
 
     entry.unk_22 = _Z22fix32ReduceAngle0To2Pii(4096.0f * (params++)->ToFloat());
     entry.angle = 4096.0f * (params++)->ToFloat();
 
-    fix32_t var2 = var0.unknown_14_.unknown1_0_.x / 2;
-    fix32_t var3 = var0.unknown_14_.unknown1_0_.z / 2;
+    fix32_t var2 = entry.unk_14.vec.x / 2;
+    fix32_t var3 = entry.unk_14.vec.z / 2;
     fix32_t var4 = FIX32_MULTIPLY(var2, var2);
     fix32_t var5 = FIX32_MULTIPLY(var3, var3);
-    var0.unknown_24_ = var5;
-    var0.unknown_24_ = var4 + var5;
+    entry.unk_24 = var5;
+    entry.unk_24 = var4 + var5;
 
     data_020fdc20.currentEntry = data_020fdc20.warp->CreateOpcode6aEntry(entry);
     return 1;
 }
 
-int ZoneFeaturesScript_SetEntryData(Script::Parameter* params, int numParams)
+extern "C" int ZoneFeaturesScript_SetEntryData(Script::Parameter* params, int numParams)
 {
-    if (data_020fdc20.unknown_0_ == NULL)
+    if (data_020fdc20.currentEntry == NULL)
         return 0;
-    void* worldData = _Z22GameState_GetZoneTablePv(GameState::GetInstance());
+    void* worldData = GameState_GetZoneTable(GameState::GetInstance());
     switch (data_020fdc20.currentEntry->maybeType)
     {
     case 0:
-        data_020fdc20.unknown_0_->unknown_2c_.unknown_0_.unknown_0_ = 0;
-        if (arg1 != 0)
-            data_020fdc20.unknown_0_->unknown_0_ = arg0->ToInt();
+        data_020fdc20.currentEntry->unk_2c.type0.unk_0 = 0;
+        if (numParams != 0)
+            data_020fdc20.currentEntry->unk_0 = params->ToInt();
         break;
     case 6:
-        data_020fdc20.unknown_0_->unknown_4_ = 0;
-        data_020fdc20.unknown_0_->unknown_2c_.unknown_0_.unknown_0_ = 1;
-        if (arg1 != 0)
-            data_020fdc20.unknown_0_->unknown_0_ = arg0->ToInt();
+        data_020fdc20.currentEntry->maybeType = 0;
+        data_020fdc20.currentEntry->unk_2c.type0.unk_0 = 1;
+        if (numParams != 0)
+            data_020fdc20.currentEntry->unk_0 = params->ToInt();
         break;
     case 1:
-        if (arg1 != 0)
-            data_020fdc20.unknown_0_->unknown_0_ = arg0->ToInt();
+        if (numParams != 0)
+            data_020fdc20.currentEntry->unk_0 = params->ToInt();
         break;
     case 2:
-        if (arg1 == 3)
+        if (numParams == 3)
         {
             data_020fdc20.currentEntry->unk_2c.type2.nodeId = (params++)->ToInt();
             data_020fdc20.currentEntry->unk_2c.type2.elementId = (params++)->ToInt();
@@ -352,61 +352,61 @@ int ZoneFeaturesScript_SetEntryData(Script::Parameter* params, int numParams)
         }
         else
         {
-            int numArgsConsumed = 0;
+            int var1 = 0;
             data_020fdc20.currentEntry->unk_2c.type2.nodeId = (params++)->ToInt();
-            numArgsConsumed++;
+            var1++;
             data_020fdc20.currentEntry->unk_2c.type2.elementId = (params++)->ToInt();
-            numArgsConsumed++;
+            var1++;
             data_020fdc20.currentEntry->unk_2c.type2.flags = (params++)->ToInt();
-            numArgsConsumed++;
+            var1++;
             data_020fdc20.currentEntry->unk_2c.type2.soundIndex = (params++)->ToInt();
-            numArgsConsumed++;
+            var1++;
 
             if (data_020fdc20.currentEntry->unk_2c.type2.flags & 8)
             {
-                if (arg0->type == 0)
+                if (params->type == 0)
                 {
                     const char* zoneName = (params++)->ToString();
-                    numArgsConsumed++;
-                    unsigned short* maybeZoneData = _Z28ZoneTable_FindEntryByMapCodeP12List0209998cPKc(worldData, zoneName);
+                    var1++;
+                    unsigned short* maybeZoneData = ZoneTable_FindEntryByMapCode(worldData, zoneName);
 
-                    if (var3 == NULL)
+                    if (maybeZoneData == NULL)
                         return 0;
-                    data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_4_ = *var3;
+                    data_020fdc20.currentEntry->unk_2c.type2.maybeZone = *maybeZoneData;
                 }
                 else
                 {
-                    data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_4_ = (arg0++)->ToInt();
+                    data_020fdc20.currentEntry->unk_2c.type2.maybeZone = (params++)->ToInt();
                     var1++;
                 }
-                data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_6_ = (arg0++)->ToInt();
+                data_020fdc20.currentEntry->unk_2c.type2.unk_6 = (params++)->ToInt();
                 var1++;
-                data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_8_ = (arg0++)->ToInt();
+                data_020fdc20.currentEntry->unk_2c.type2.unk_8 = (params++)->ToInt();
                 var1++;
                 Vector3fix var4;
-                arg0 = arg0->ToVec3fix(&var4);
+                params = params->ToVec3fix(&var4);
                 var1 += 3;
-                data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_c_[0] = var4;
-                data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_3c_ = 4096.0f * (arg0++)->ToFloat();
+                data_020fdc20.currentEntry->unk_2c.type2.vectors_c[0] = var4;
+                data_020fdc20.currentEntry->unk_2c.type2.unk_3c = 4096.0f * (params++)->ToFloat();
                 var1++;
-                data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_3e_ = 4096.0f * (arg0++)->ToFloat();
+                data_020fdc20.currentEntry->unk_2c.type2.unk_3e = 4096.0f * (params++)->ToFloat();
                 var1++;
 
-                for (int var5 = 1; var5 < 4; var5++)
+                for (int i = 1; i < 4; i++)
                 {
-                    arg0 = arg0->ToVec3fix(&var4);
+                    params = params->ToVec3fix(&var4);
                     var1 += 3;
-                    data_020fdc20.unknown_0_->unknown_2c_.unknown1_0_.unknown_c_[var5] = var4;
+                    data_020fdc20.currentEntry->unk_2c.type2.vectors_c[i] = var4;
                 }
             }
-            if (var1 < arg1)
+            if (var1 < numParams)
             {
-                (void)((arg0++)->ToFloat());
+                (void)((params++)->ToFloat());
                 var1++;
             }
-            if (var1 < arg1)
+            if (var1 < numParams)
             {
-                (void)((arg0++)->ToInt());
+                (void)((params++)->ToInt());
                 var1++;
             }
             if (data_020fdc20.currentEntry->unk_2c.type2.flags & DoorFlag_Slides)
@@ -416,128 +416,128 @@ int ZoneFeaturesScript_SetEntryData(Script::Parameter* params, int numParams)
         }
         break;
     case 3:
-        data_020fdc20.unknown_0_->unknown_2c_.unknown2_0_.unknown_0_ = (arg0++)->ToInt();
+        data_020fdc20.currentEntry->unk_2c.type3.unk_0 = (params++)->ToInt();
         break;
     case 4:
     {
-        data_020fdc20.unknown_0_->unknown_2c_.unknown3_0_.unknown_0_0_ = (arg0++)->ToInt();
-        data_020fdc20.unknown_0_->unknown_2c_.unknown3_0_.unknown_1_ = (arg0++)->ToInt();
-        data_020fdc20.unknown_0_->unknown_2c_.unknown3_0_.unknown_0_7_ = (arg0++)->ToInt();
-        Vector3fix var6;
-        Vector3fix var7;
-        arg0 = arg0->ToVec3fix(&var6);
-        arg0 = arg0->ToVec3fix(&var7);
-        Struct_0201d044 var8;
-        Vector3fix_Subtract(&var7, &var6, &var8.unknown_0_.unknown1_0_);
-        fix32_t var9 = Vector3fix_Length(&var8.unknown_0_.unknown1_0_);
-        Vector3fix_Normalize(&var8.unknown_0_.unknown1_0_, &var8.unknown_0_.unknown1_0_);
-        var8.unknown_c_ = Vector3fix_InnerProduct(&var8.unknown_0_.unknown1_0_, &var6);
+        data_020fdc20.currentEntry->unk_2c.type4.unk_0 = (params++)->ToInt();
+        data_020fdc20.currentEntry->unk_2c.type4.unk_1 = (params++)->ToInt();
+        data_020fdc20.currentEntry->unk_2c.type4.unk_0_high = (params++)->ToInt();
+        Vector3fix vecA;
+        Vector3fix vecB;
+        params = params->ToVec3fix(&vecA);
+        params = params->ToVec3fix(&vecB);
+        MaybeVector4fix vector4;
+        Vector3fix_Subtract(&vecB, &vecA, &vector4.vec3.vec);
+        fix32_t distance = Vector3fix_Length(&vector4.vec3.vec);
+        Vector3fix_Normalize(&vector4.vec3.vec, &vector4.vec3.vec);
+        vector4.w = Vector3fix_InnerProduct(&vector4.vec3.vec, &vecA);
         Vector3fix var10 = { 0, 0, 0 };
-        if (data_020fdc20.unknown_0_->unknown_2c_.unknown3_0_.unknown_0_0_ == 4)
+        if (data_020fdc20.currentEntry->unk_2c.type4.unk_0 == 4)
         {
-            arg0 = arg0->ToVec3fix(&var10);
+            params = params->ToVec3fix(&var10);
         }
         else
         {
-            var10.y = 4096.0f * (arg0++)->ToFloat();
-            var10.z = 4096.0f * (arg0++)->ToFloat();
+            var10.y = 4096.0f * (params++)->ToFloat();
+            var10.z = 4096.0f * (params++)->ToFloat();
         }
-        Vector3fix vecD;
-        params = params->ToVec3fix(&vecD);
+        Vector3fix var11;
+        params = params->ToVec3fix(&var11);
         data_020fdc20.currentEntry->unk_2c.type4.vector_4.CopyFrom(vector4);
         data_020fdc20.currentEntry->unk_2c.type4.distance_14 = distance;
-        data_020fdc20.currentEntry->unk_2c.type4.vector_18 = vecC;
-        data_020fdc20.currentEntry->unk_2c.type4.vector_24 = vecD;
+        data_020fdc20.currentEntry->unk_2c.type4.vector_18 = var10;
+        data_020fdc20.currentEntry->unk_2c.type4.vector_24 = var11;
         break;
     }
     case 5:
-        data_020fdc20.unknown_0_->unknown_2c_.unknown4_0_.unknown_0_ = (arg0++)->ToInt();
-        data_020fdc20.unknown_0_->unknown_2c_.unknown4_0_.unknown_2_ = (arg0++)->ToInt();
-        if (arg1 > 2)
-            data_020fdc20.unknown_0_->unknown_0_ = (arg0++)->ToInt();
+        data_020fdc20.currentEntry->unk_2c.type5.unk_0 = (params++)->ToInt();
+        data_020fdc20.currentEntry->unk_2c.type5.unk_2 = (params++)->ToInt();
+        if (numParams > 2)
+            data_020fdc20.currentEntry->unk_0 = (params++)->ToInt();
         break;
     case 8:
-        if (arg1 != 0)
-            data_020fdc20.unknown_0_->unknown_0_ = (arg0++)->ToInt();
+        if (numParams != 0)
+            data_020fdc20.currentEntry->unk_0 = (params++)->ToInt();
         break;
     case 9:
-        data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_0_ = (arg0++)->ToInt();
-        data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_2_ = (arg0++)->ToInt();
-        data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_4_ = (arg0++)->ToInt();
-        data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_5_ = (arg0++)->ToInt();
-        if (data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_5_ & 2)
+        data_020fdc20.currentEntry->unk_2c.type9.unk_0 = (params++)->ToInt();
+        data_020fdc20.currentEntry->unk_2c.type9.unk_2 = (params++)->ToInt();
+        data_020fdc20.currentEntry->unk_2c.type9.unk_4 = (params++)->ToInt();
+        data_020fdc20.currentEntry->unk_2c.type9.unk_5 = (params++)->ToInt();
+        if (data_020fdc20.currentEntry->unk_2c.type9.unk_5 & 2)
         {
-            if (arg0->type == 0)
+            if (params->type == 0)
             {
                 const char* zoneName = (params++)->ToString();
-                unsigned short* maybeZoneData = _Z28ZoneTable_FindEntryByMapCodeP12List0209998cPKc(worldData, zoneName);
+                unsigned short* maybeZoneData = ZoneTable_FindEntryByMapCode(worldData, zoneName);
 
-                if (var13 == NULL)
+                if (maybeZoneData == NULL)
                     return 0;
-                data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_6_ = *var13;
+                data_020fdc20.currentEntry->unk_2c.type9.maybeZone = *maybeZoneData;
             }
             else
             {
-                data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_6_ = (arg0++)->ToInt();
+                data_020fdc20.currentEntry->unk_2c.type9.maybeZone = (params++)->ToInt();
             }
-            data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_8_ = (arg0++)->ToInt();
-            data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_a_ = (arg0++)->ToInt();
-            arg0 = arg0->ToVec3fix(&data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_c_);
-            data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_3c_ = 4096.0f * (arg0++)->ToFloat();
-            data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_3e_ = 4096.0f * (arg0++)->ToFloat();
-            arg0 = arg0->ToVec3fix(&data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_18_);
-            arg0 = arg0->ToVec3fix(&data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_24_);
-            arg0 = arg0->ToVec3fix(&data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_30_);
-            data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_40_ = 4096.0f * (arg0++)->ToFloat();
-            data_020fdc20.unknown_0_->unknown_2c_.unknown5_0_.unknown_42_ = (arg0++)->ToInt();
+            data_020fdc20.currentEntry->unk_2c.type9.unk_8 = (params++)->ToInt();
+            data_020fdc20.currentEntry->unk_2c.type9.unk_a = (params++)->ToInt();
+            params = params->ToVec3fix(&data_020fdc20.currentEntry->unk_2c.type9.vector_c);
+            data_020fdc20.currentEntry->unk_2c.type9.unk_3c = 4096.0f * (params++)->ToFloat();
+            data_020fdc20.currentEntry->unk_2c.type9.unk_3e = 4096.0f * (params++)->ToFloat();
+            params = params->ToVec3fix(&data_020fdc20.currentEntry->unk_2c.type9.vector_18);
+            params = params->ToVec3fix(&data_020fdc20.currentEntry->unk_2c.type9.vector_24);
+            params = params->ToVec3fix(&data_020fdc20.currentEntry->unk_2c.type9.vector_30);
+            data_020fdc20.currentEntry->unk_2c.type9.unk_40 = 4096.0f * (params++)->ToFloat();
+            data_020fdc20.currentEntry->unk_2c.type9.unk_42 = (params++)->ToInt();
         }
         break;
     case 10:
-        data_020fdc20.unknown_0_->unknown_2c_.unknown6_0_.unknown_0_ = (arg0++)->ToInt();
-        arg0 = arg0->ToVec3fix(&data_020fdc20.unknown_0_->unknown_2c_.unknown6_0_.unknown_4_);
-        data_020fdc20.unknown_0_->unknown_2c_.unknown6_0_.unknown_2_ = 4096.0f * (arg0++)->ToFloat();
-        data_020fdc20.unknown_0_->unknown_2c_.unknown6_0_.unknown_10_ = 4096.0f * (arg0++)->ToFloat();
-        if (arg1 > 6)
+        data_020fdc20.currentEntry->unk_2c.type10.unk_0 = (params++)->ToInt();
+        params = params->ToVec3fix(&data_020fdc20.currentEntry->unk_2c.type10.vector_4);
+        data_020fdc20.currentEntry->unk_2c.type10.unk_2 = 4096.0f * (params++)->ToFloat();
+        data_020fdc20.currentEntry->unk_2c.type10.unk_10 = 4096.0f * (params++)->ToFloat();
+        if (numParams > 6)
         {
-            arg0 = arg0->ToVec3fix(&data_020fdc20.unknown_0_->unknown_2c_.unknown6_0_.unknown_14_);
-            data_020fdc20.unknown_0_->unknown_2c_.unknown6_0_.unknown_20_ = 4096.0f * (arg0++)->ToFloat();
+            params = params->ToVec3fix(&data_020fdc20.currentEntry->unk_2c.type10.vector_14);
+            data_020fdc20.currentEntry->unk_2c.type10.unk_20 = 4096.0f * (params++)->ToFloat();
         }
         break;
     case 12:
     {
-        VectorizedMemset(&data_020fdc20.unknown_0_->unknown_2c_.unknown7_0_,
-            0, sizeof(data_020fdc20.unknown_0_->unknown_2c_.unknown7_0_));
-        data_020fdc20.unknown_0_->unknown_2c_.unknown7_0_.unknown_0_ = (arg0++)->ToInt();
-        data_020fdc20.unknown_0_->unknown_2c_.unknown7_0_.unknown_1_ = (arg0++)->ToInt();
-        data_020fdc20.unknown_0_->unknown_2c_.unknown7_0_.unknown_2_ = (arg0++)->ToInt();
+        VectorizedMemset(&data_020fdc20.currentEntry->unk_2c.type12,
+            0, sizeof(data_020fdc20.currentEntry->unk_2c.type12));
+        data_020fdc20.currentEntry->unk_2c.type12.subtype = (params++)->ToInt();
+        data_020fdc20.currentEntry->unk_2c.type12.unk_1 = (params++)->ToInt();
+        data_020fdc20.currentEntry->unk_2c.type12.unk_2 = (params++)->ToInt();
 
-        Struct_020134e0::Struct_02018300* var14 = data_020fdc20.unknown_0_;
-        switch (var14->unknown_2c_.unknown7_0_.unknown_0_)
+        ZoneFeatures::Opcode6aEntry* entry = data_020fdc20.currentEntry;
+        switch (entry->unk_2c.type12.subtype)
         {
         case 1:
-            var14->unknown_2c_.unknown7_0_.unknown_4_.unknown_0_ = 0;
-            var14->unknown_2c_.unknown7_0_.unknown_4_.unknown_1_ = 0;
-            var14->unknown_2c_.unknown7_0_.unknown_4_.unknown_3_ = 0;
-            var14->unknown_2c_.unknown7_0_.unknown_4_.unknown_4_ = (arg0++)->ToInt();
-            var14->unknown_2c_.unknown7_0_.unknown_4_.unknown_5_ = (arg0++)->ToInt();
-            var14->unknown_2c_.unknown7_0_.unknown_4_.unknown_2_ = (arg0++)->ToInt();
+            entry->unk_2c.type12.subtype1.unk_0 = 0;
+            entry->unk_2c.type12.subtype1.unk_1 = 0;
+            entry->unk_2c.type12.subtype1.unk_3 = 0;
+            entry->unk_2c.type12.subtype1.unk_4 = (params++)->ToInt();
+            entry->unk_2c.type12.subtype1.unk_5 = (params++)->ToInt();
+            entry->unk_2c.type12.subtype1.unk_2 = (params++)->ToInt();
             break;
         case 2:
-            var14->unknown_2c_.unknown7_0_.unknown1_4_.unknown_0_ = 0;
-            var14->unknown_2c_.unknown7_0_.unknown1_4_.unknown_4_ = 0;
-            var14->unknown_2c_.unknown7_0_.unknown1_4_.unknown_8_ = 4096.0f * (arg0++)->ToFloat();
-            var14->unknown_2c_.unknown7_0_.unknown1_4_.unknown_c_ = 4096.0f * (arg0++)->ToFloat();
-            var14->unknown_2c_.unknown7_0_.unknown1_4_.unknown_10_ = 25;
+            entry->unk_2c.type12.subtype2.unk_0 = 0;
+            entry->unk_2c.type12.subtype2.unk_4 = 0;
+            entry->unk_2c.type12.subtype2.unk_8 = 4096.0f * (params++)->ToFloat();
+            entry->unk_2c.type12.subtype2.unk_c = 4096.0f * (params++)->ToFloat();
+            entry->unk_2c.type12.subtype2.unk_10 = 25;
             break;
         case 3:
-            var14->unknown_2c_.unknown7_0_.unknown2_4_.unknown_0_ = 0;
-            var14->unknown_2c_.unknown7_0_.unknown2_4_.unknown_1_ = 0;
-            var14->unknown_2c_.unknown7_0_.unknown2_4_.unknown_4_ = 4096 * 9 / 20;
-            var14->unknown_2c_.unknown7_0_.unknown2_4_.unknown_8_ = 4096.0f * (arg0++)->ToFloat();
-            var14->unknown_2c_.unknown7_0_.unknown2_4_.unknown_c_ = 4096.0f * (arg0++)->ToFloat();
-            var14->unknown_2c_.unknown7_0_.unknown2_4_.unknown_10_ = 4096.0f * (arg0++)->ToFloat();
-            var14->unknown_2c_.unknown7_0_.unknown2_4_.unknown_8_ = 4096 * 9 / 20;
-            var14->unknown_2c_.unknown7_0_.unknown2_4_.unknown_10_ = -4096 / 10;
+            entry->unk_2c.type12.subtype3.unk_0 = 0;
+            entry->unk_2c.type12.subtype3.unk_1 = 0;
+            entry->unk_2c.type12.subtype3.unk_4 = 4096 * 9 / 20;
+            entry->unk_2c.type12.subtype3.unk_8 = 4096.0f * (params++)->ToFloat();
+            entry->unk_2c.type12.subtype3.unk_c = 4096.0f * (params++)->ToFloat();
+            entry->unk_2c.type12.subtype3.unk_10 = 4096.0f * (params++)->ToFloat();
+            entry->unk_2c.type12.subtype3.unk_8 = 4096 * 9 / 20;
+            entry->unk_2c.type12.subtype3.unk_10 = -4096 / 10;
             break;
         }
         break;
@@ -546,120 +546,120 @@ int ZoneFeaturesScript_SetEntryData(Script::Parameter* params, int numParams)
     return 1;
 }
 
-int ZoneFeaturesScript_AllocateHeadingLockAreas(Script::Parameter* params, int numParams)
+extern "C" int ZoneFeaturesScript_AllocateHeadingLockAreas(Script::Parameter* params, int numParams)
 {
-    int var0 = arg0[0].ToInt();
-    Struct_020134e0::Struct_0201dfcc* var1 =
-        (Struct_020134e0::Struct_0201dfcc*)data_020fdc20.unknown_4_->Allocate(var0 * sizeof(Struct_020134e0::Struct_0201dfcc));
-    if (var1 == NULL)
+    int count = params[0].ToInt();
+    ZoneFeatures::Opcode7bEntry* alloc =
+        (ZoneFeatures::Opcode7bEntry*)data_020fdc20.allocator->Allocate(count * sizeof(ZoneFeatures::Opcode7bEntry));
+    if (alloc == NULL)
         return 0;
     data_020fdc20.warp->SetHeadingLockAreas(alloc, count);
     return 1;
 }
 
-extern "C" int func_0201e018(Script::Parameter* arg0, int arg1)
+extern "C" int func_0201e018(Script::Parameter* params, int numParams)
 {
-    Struct_020134e0::Struct_0201dfcc var0;
-    arg0 = arg0->ToVec3fix(&var0.unknown_0_.unknown1_0_);
-    arg0 = arg0->ToVec3fix(&var0.unknown_c_.unknown1_0_);
-    var0.unknown_18_ = 4096.0f * (arg0++)->ToFloat();
+    ZoneFeatures::Opcode7bEntry entry;
+    params = params->ToVec3fix(&entry.unknown_0_.vec);
+    params = params->ToVec3fix(&entry.vector_c.vec);
+    entry.unknown_18_ = 4096.0f * (params++)->ToFloat();
 
-    fix32_t var1 = -var0.unknown_c_.unknown1_0_.x / 2;
-    fix32_t var2 = -var0.unknown_c_.unknown1_0_.z / 2;
-    fix32_t var3 = var0.unknown_c_.unknown1_0_.x / 2;
-    fix32_t var4 = var0.unknown_c_.unknown1_0_.z / 2;
+    fix32_t var1 = -entry.vector_c.vec.x / 2;
+    fix32_t var2 = -entry.vector_c.vec.z / 2;
+    fix32_t var3 = entry.vector_c.vec.x / 2;
+    fix32_t var4 = entry.vector_c.vec.z / 2;
 
-    Vector3fix var5[4] = { 0 };
+    Vector3fix vertices[4] = { 0 };
 
-    var5[0].x = var1;
-    var5[0].z = var2;
-    var5[1].x = var1;
-    var5[1].z = var4;
-    var5[2].x = var3;
-    var5[2].z = var2;
-    var5[3].x = var3;
-    var5[3].z = var4;
+    vertices[0].x = var1;
+    vertices[0].z = var2;
+    vertices[1].x = var1;
+    vertices[1].z = var4;
+    vertices[2].x = var3;
+    vertices[2].z = var2;
+    vertices[3].x = var3;
+    vertices[3].z = var4;
 
-    Matrix4x3 var6;
-    var6 = _Z15RotationMatrixYi(var0.unknown_18_);
+    Matrix4x3 matrix;
+    matrix = _Z15RotationMatrixYi(entry.unknown_18_);
 
-    for (int var7 = 0; var7 < 4; var7++)
-        Mat4x3_ApplyToVector(&var5[var7], &var6, &var5[var7]);
+    for (int i = 0; i < 4; i++)
+        Mat4x3_ApplyToVector(&vertices[i], &matrix, &vertices[i]);
 
-    var0.unknown_1c_ = var5[0].x;
-    var0.unknown_20_ = var5[0].z;
-    var0.unknown_24_ = var5[0].x;
-    var0.unknown_28_ = var5[0].z;
+    entry.minX = vertices[0].x;
+    entry.minZ = vertices[0].z;
+    entry.maxX = vertices[0].x;
+    entry.maxZ = vertices[0].z;
 
-    for (int var8 = 1; var8 < 4; var8++)
+    for (int i = 1; i < 4; i++)
     {
-        if (var0.unknown_1c_ > var5[var8].x)
-            var0.unknown_1c_ = var5[var8].x;
-        if (var0.unknown_20_ > var5[var8].z)
-            var0.unknown_20_ = var5[var8].z;
-        if (var0.unknown_24_ < var5[var8].x)
-            var0.unknown_24_ = var5[var8].x;
-        if (var0.unknown_28_ < var5[var8].z)
-            var0.unknown_28_ = var5[var8].z;
+        if (entry.minX > vertices[i].x)
+            entry.minX = vertices[i].x;
+        if (entry.minZ > vertices[i].z)
+            entry.minZ = vertices[i].z;
+        if (entry.maxX < vertices[i].x)
+            entry.maxX = vertices[i].x;
+        if (entry.maxZ < vertices[i].z)
+            entry.maxZ = vertices[i].z;
     }
 
-    fix32_t var9 = var0.unknown_1c_;
-    fix32_t var10 = var0.unknown_24_;
-    fix32_t var11 = var0.unknown_20_;
-    fix32_t var12 = var0.unknown_28_;
+    fix32_t minX = entry.minX;
+    fix32_t maxX = entry.maxX;
+    fix32_t minZ = entry.minZ;
+    fix32_t maxZ = entry.maxZ;
 
-    fix32_t var13 = var0.unknown_0_.unknown1_0_.x;
-    fix32_t var14 = var0.unknown_0_.unknown1_0_.z;
+    fix32_t var13 = entry.unknown_0_.vec.x;
+    fix32_t var14 = entry.unknown_0_.vec.z;
 
-    var9 = var13 + var9;
-    var11 = var14 + var11;
-    var10 = var13 + var10;
-    var12 = var14 + var12;
+    minX = var13 + minX;
+    minZ = var14 + minZ;
+    maxX = var13 + maxX;
+    maxZ = var14 + maxZ;
 
-    var0.unknown_1c_ = var9;
-    var0.unknown_20_ = var11;
-    var0.unknown_24_ = var10;
-    var0.unknown_28_ = var12;
-    data_020fdc20.unknown_8_->func_0201e88c(var0);
+    entry.minX = minX;
+    entry.minZ = minZ;
+    entry.maxX = maxX;
+    entry.maxZ = maxZ;
+    data_020fdc20.warp->func_0201e88c(entry);
     return 1;
 }
 
-void ZoneFeaturesScript_Run(const void* data, unsigned int length, ZoneFeatures* warp, SafeAllocator* alloc)
+extern "C" void ZoneFeaturesScript_Run(const void* data, unsigned int length, ZoneFeatures* warp, SafeAllocator* alloc)
 {
-    if (arg1 == 0)
+    if (length == 0)
         return;
-    data_020fdc20.unknown_8_ = arg2;
-    data_020fdc20.unknown_4_ = arg3;
-    data_020fdc20.unknown_0_ = NULL;
+    data_020fdc20.warp = warp;
+    data_020fdc20.allocator = alloc;
+    data_020fdc20.currentEntry = NULL;
 
-    Script var0;
-    var0.Initialize();
-    var0.SetOpcodeLookup(data_020ef388);
-    var0.Load(arg0, arg1);
-    var0.Execute();
+    Script script;
+    script.Initialize();
+    script.SetOpcodeLookup(data_020ef388);
+    script.Load(data, length);
+    script.Execute();
 
-    data_020fdc20.unknown_8_ = NULL;
-    data_020fdc20.unknown_4_ = NULL;
-    data_020fdc20.unknown_0_ = NULL;
+    data_020fdc20.warp = NULL;
+    data_020fdc20.allocator = NULL;
+    data_020fdc20.currentEntry = NULL;
 }
 
 void ZoneFeatures::Reset()
 {
-    VectorizedMemset(this, 0, sizeof(Struct_020134e0));
+    VectorizedMemset(this, 0, sizeof(ZoneFeatures));
 }
 
 void ZoneFeatures::AllocateOpcode64Entries(int count, SafeAllocator *alloc)
 {
-    unknown_0_ = (Struct_020146fc*)arg1->Allocate(arg0 * sizeof(Struct_020146fc));
-    unknown_4_ = 0;
-    unknown_8_ = arg0;
+    entries64_ = (Opcode64Entry*)alloc->Allocate(count * sizeof(Opcode64Entry));
+    arraySize64_ = 0;
+    arrayCapacity64_ = count;
 }
 
-void Struct_020134e0::func_0201e288(int arg0, SafeAllocator* arg1)
+void ZoneFeatures::func_0201e288(int count, SafeAllocator* alloc)
 {
-    unknown_30_ = (TileFeaturePlacementData*)arg1->Allocate(arg0 * sizeof(TileFeaturePlacementData));
+    unknown_30_ = (TileFeaturePlacementData*)alloc->Allocate(count * sizeof(TileFeaturePlacementData));
     unknown_34_ = 0;
-    unknown_38_ = arg0;
+    unknown_38_ = count;
 }
 
 void ZoneFeatures::LoadFromScript(SafeAllocator* alloc, const void* script, unsigned int length)
@@ -669,111 +669,111 @@ void ZoneFeatures::LoadFromScript(SafeAllocator* alloc, const void* script, unsi
 
 ZoneFeatures::Opcode64Entry* ZoneFeatures::GetOpcode64Entry(int index)
 {
-    if (arg0 < 0 || unknown_4_ <= arg0)
+    if (index < 0 || arraySize64_ <= index)
         return NULL;
-    return &unknown_0_[arg0];
+    return &entries64_[index];
 }
 
 void ZoneFeatures::CreateOpcode64Entry(const Opcode64Entry& source)
 {
-    if (unknown_4_ >= unknown_8_)
+    if (arraySize64_ >= arrayCapacity64_)
         return;
-    Struct_020146fc& var0 = unknown_0_[unknown_4_];
+    Opcode64Entry& dest = entries64_[arraySize64_];
 
-    var0.unknown_0_ = arg0.unknown_0_;
-    var0.unknown_4_ = arg0.unknown_4_;
-    COPY_ARRAY(var0.unknown_10_, arg0.unknown_10_);
-    COPY_ARRAY(var0.unknown_20_, arg0.unknown_20_);
-    COPY_ARRAY(var0.unknown_30_, arg0.unknown_30_);
-    COPY_ARRAY(var0.unknown_40_, arg0.unknown_40_);
-    unknown_4_++;
+    dest.unk_0 = source.unk_0;
+    dest.vector_4 = source.vector_4;
+    COPY_ARRAY(dest.string_10, source.string_10);
+    COPY_ARRAY(dest.string_20, source.string_20);
+    COPY_ARRAY(dest.string_30, source.string_30);
+    COPY_ARRAY(dest.unknown_40_, source.unknown_40_);
+    arraySize64_++;
 }
 
-void Struct_020134e0::func_0201e3c4(const TileFeaturePlacementData& arg0)
+void ZoneFeatures::func_0201e3c4(const TileFeaturePlacementData& source)
 {
     if (unknown_34_ >= unknown_38_)
         return;
 
-    TileFeaturePlacementData& var0 = unknown_30_[unknown_34_];
-    var0.unknown_0_ = arg0.unknown_0_;
-    COPY_ARRAY(var0.directionBitmasks, arg0.directionBitmasks);
-    COPY_ARRAY(var0.tilename, arg0.tilename);
+    TileFeaturePlacementData& dest = unknown_30_[unknown_34_];
+    dest.unknown_0_ = source.unknown_0_;
+    COPY_ARRAY(dest.directionBitmasks, source.directionBitmasks);
+    COPY_ARRAY(dest.tilename, source.tilename);
 
     unknown_34_++;
 }
 
 void ZoneFeatures::AllocateOpcode66Entries(int count, SafeAllocator *alloc)
 {
-    unknown_c_ = (Struct_0201c96c*)arg1->Allocate(arg0 * sizeof(Struct_0201c96c));
-    unknown_10_ = 0;
-    unknown_14_ = arg0;
+    entries66_ = (Opcode66Entry*)alloc->Allocate(count * sizeof(Opcode66Entry));
+    arraySize66_ = 0;
+    arrayCapacity66_ = count;
 }
 
 void ZoneFeatures::CreateOpcode66Entry(const Opcode66Entry& source)
 {
-    if (unknown_10_ >= unknown_14_)
+    if (arraySize66_ >= arrayCapacity66_)
         return;
-    Struct_0201c96c& var0 = unknown_c_[unknown_10_];
+    Opcode66Entry& dest = entries66_[arraySize66_];
 
-    COPY_ARRAY(var0.unknown_0_, arg0.unknown_0_);
-    COPY_ARRAY(var0.unknown_18_, arg0.unknown_18_);
-    var0.unknown_20_ = arg0.unknown_20_;
+    COPY_ARRAY(dest.unk_0, source.unk_0);
+    COPY_ARRAY(dest.unknown_18_, source.unknown_18_);
+    dest.unk_20 = source.unk_20;
 
-    unknown_10_++;
+    arraySize66_++;
 }
 
 void ZoneFeatures::AllocateExits(int count, SafeAllocator* alloc)
 {
-    unknown_18_ = (Struct_0201cb60_3*)arg1->Allocate(arg0 * sizeof(Struct_0201cb60_3));
-    unknown_1c_ = 0;
-    unknown_20_ = arg0;
+    entries68_ = (Opcode68Entry*)alloc->Allocate(count * sizeof(Opcode68Entry));
+    arraySize68_ = 0;
+    arrayCapacity68_ = count;
 }
 
 void ZoneFeatures::CreateExit(const Opcode68Entry& source)
 {
-    if (unknown_1c_ >= unknown_20_)
+    if (arraySize68_ >= arrayCapacity68_)
         return;
-    Struct_0201cb60_3& var0 = unknown_18_[unknown_1c_];
+    Opcode68Entry& dest = entries68_[arraySize68_];
 
-    var0.unknown_0_ = arg0.unknown_0_;
-    COPY_ARRAY(var0.unknown_4_, arg0.unknown_4_);
-    var0.unknown_1c_ = arg0.unknown_1c_;
-    COPY_ARRAY(var0.unknown_20_, arg0.unknown_20_);
-    var0.unknown_50_ = arg0.unknown_50_;
-    var0.unknown_52_ = arg0.unknown_52_;
-    var0.unknown_54_ = arg0.unknown_54_;
-    COPY_ARRAY(var0.unknown_58_, arg0.unknown_58_);
-    COPY_ARRAY(var0.unknown_64_, arg0.unknown_64_);
-    var0.unknown_6c_ = arg0.unknown_6c_;
+    dest.unk_0 = source.unk_0;
+    COPY_ARRAY(dest.unk_4, source.unk_4);
+    dest.unk_1c = source.unk_1c;
+    COPY_ARRAY(dest.unk_20, source.unk_20);
+    dest.unk_50 = source.unk_50;
+    dest.unk_52 = source.unk_52;
+    dest.unk_54 = source.unk_54;
+    COPY_ARRAY(dest.unk_58, source.unk_58);
+    COPY_ARRAY(dest.unk_64, source.unk_64);
+    dest.unk_6c = source.unk_6c;
 
-    unknown_1c_++;
+    arraySize68_++;
 }
 
 void ZoneFeatures::AllocateOpcode6aEntries(int count, SafeAllocator *alloc)
 {
-    unknown_24_ = (Struct_02018300*)arg1->Allocate(arg0 * sizeof(Struct_02018300));
-    unknown_28_ = 0;
-    unknown_2c_ = arg0;
+    entries6a_ = (Opcode6aEntry*)alloc->Allocate(count * sizeof(Opcode6aEntry));
+    arraySize6a_ = 0;
+    arrayCapacity6a_ = count;
 }
 
 void ZoneFeatures::SetHeadingLockAreas(Opcode7bEntry* array, unsigned short capacity)
 {
-    unknown_84_ = arg0;
-    unknown_82_ = arg1;
-    unknown_80_ = 0;
+    entries7b_ = array;
+    arrayCapacity7b_ = capacity;
+    arraySize7b_ = 0;
 }
 
-void Struct_020134e0::func_0201e88c(const Struct_0201dfcc& arg0)
+void ZoneFeatures::func_0201e88c(const Opcode7bEntry& source)
 {
-    if (unknown_84_ == NULL)
+    if (entries7b_ == NULL)
         return;
 
-    Struct_0201dfcc& var0 = unknown_84_[unknown_80_++];
-    var0.unknown_0_ = arg0.unknown_0_;
-    var0.unknown_c_ = arg0.unknown_c_;
-    var0.unknown_18_ = arg0.unknown_18_;
-    var0.unknown_1c_ = arg0.unknown_1c_;
-    var0.unknown_20_ = arg0.unknown_20_;
-    var0.unknown_24_ = arg0.unknown_24_;
-    var0.unknown_28_ = arg0.unknown_28_;
+    Opcode7bEntry& dest = entries7b_[arraySize7b_++];
+    dest.unknown_0_ = source.unknown_0_;
+    dest.vector_c = source.vector_c;
+    dest.unknown_18_ = source.unknown_18_;
+    dest.minX = source.minX;
+    dest.minZ = source.minZ;
+    dest.maxX = source.maxX;
+    dest.maxZ = source.maxZ;
 }

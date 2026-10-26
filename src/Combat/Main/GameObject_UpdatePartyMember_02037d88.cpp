@@ -17,61 +17,61 @@ struct S02037418;
 struct Struct020372b8;
 
 struct Obj02039df4;
-void GameObject_HideInCelestialAreas(struct Obj02039df4* obj);
+extern "C" void GameObject_HideInCelestialAreas(struct Obj02039df4* obj);
 
 struct Obj02052ae8;
-void StepValueTowardTarget02052ae8(struct Obj02052ae8* obj);
+extern "C" void func_02052ae8(struct Obj02052ae8* obj);
 
-int GameObject_IsGesturing(signed char* obj);
-int IsCountAtLeast4_0219a370(unsigned char* base);
-int FieldTaskQueue_IsEmpty(void** obj);
+extern "C" int GameObject_IsGesturing(signed char* obj);
+extern "C" int func_ov017_0219a370(unsigned char* base);
+extern "C" int FieldTaskQueue_IsEmpty(void** obj);
 
 struct BitField0203402c;
-int GameObject_IsSinking(struct BitField0203402c* p);
+extern "C" int GameObject_IsSinking(struct BitField0203402c* p);
 
-int MessageSystem_GetInstance();
+extern "C" int MessageSystem_GetInstance();
 
-unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
-int GameState_GetFollowCamera(char* obj);
+extern "C" unsigned char GameState_GetLeaderIndex(GameState* battleStruct);
+extern "C" int GameState_GetFollowCamera(char* obj);
 
 struct S020a2c70;
-int MarkStateIfFlag020a2c70(struct S020a2c70* p);
+extern "C" int func_020a2c70(struct S020a2c70* p);
 
 struct Obj02052e44;
-int GameObject_StartGesture(Obj02052e44*, signed char);
+extern "C" int GameObject_StartGesture(Obj02052e44*, signed char);
 
 struct Obj02052f44;
-int GameObject_StartGestureSequence(struct Obj02052f44* obj, signed char* src, int len);
+extern "C" int GameObject_StartGestureSequence(struct Obj02052f44* obj, signed char* src, int len);
 
-int LoadBattleBlock020ac4c0(void* dst);
+extern "C" int func_020ac4c0(void* dst);
 
 struct S_a06b0;
-void AddClamped10BitFieldMidAt0x28_020a06b0(struct S_a06b0* p, unsigned int amount);
+extern "C" void func_020a06b0(struct S_a06b0* p, unsigned int amount);
 
 struct S_a0140;
-void AddClamped10BitFieldAt0x14_020a0140(struct S_a0140* p, unsigned int amount);
+extern "C" void func_020a0140(struct S_a0140* p, unsigned int amount);
 
-int CopyInBattleField0x7540_020ac494(void* src);
+extern "C" int func_020ac494(void* src);
 
-void SetByte0x2c4To2IfByte0x2c5Set_020a2c8c(unsigned char* obj);
+extern "C" void func_020a2c8c(unsigned char* obj);
 
 #if defined(jpn)
-enum { ActorRegionOffset = 12, BattleRegionOffset = 0x2d4, StatusRegionOffset = 0x1d0,
+enum { ActorRegionOffset = 12, BattleRegionOffset = 0x2d4, Enum_02037d88_0_3 = 0x1d0,
        ContextFlagOffset = 0x444, OverlayValueBase = 0x3000, OverlayValueOffset = 0xe60,
        OverlayPointerOffset = 0x4ec };
 #else
-enum { ActorRegionOffset = 0, BattleRegionOffset = 0, StatusRegionOffset = 0,
+enum { ActorRegionOffset = 0, BattleRegionOffset = 0, Enum_02037d88_0_3 = 0,
        ContextFlagOffset = 0x424, OverlayValueBase = 0x4000, OverlayValueOffset = 0x80,
        OverlayPointerOffset = 0x6fc };
 #endif
 
-struct SubAt1000_020421a0 {
-    char pad[0x9b1 - StatusRegionOffset];
+struct Struct_02037d88_5 {
+    char pad[0x9b1 - Enum_02037d88_0_3];
     unsigned char flag;
 };
 struct GlobalOuter020421a0 {
     char pad[0x1000];
-    struct SubAt1000_020421a0 sub;
+    struct Struct_02037d88_5 sub;
 };
 
 // A party member's GameObject: Object3D's actorIndex_, position_ and rotation_, GameObject_Update's speed fields,
@@ -139,7 +139,7 @@ extern "C" ARM void GameObject_UpdatePartyMember(struct FieldPartyMember* member
         char* bytesFrom100 = (char*)member + 0x100;
         signed char linePosition = ((signed char*)bytesFrom100)[0xc9 - ActorRegionOffset];  // +0x1c9: 0 = line leader
         if (linePosition != 0) {
-            StepValueTowardTarget02052ae8((struct Obj02052ae8*)member);
+            func_02052ae8((struct Obj02052ae8*)member);
             GameObject_UpdateFollower(member);
             return;
         }
@@ -156,13 +156,13 @@ extern "C" ARM void GameObject_UpdatePartyMember(struct FieldPartyMember* member
             || *(int*)((char*)zone + ContextFlagOffset) != 0
             || camera == 0
             || member->unknownC2Bit5) {
-            StepValueTowardTarget02052ae8((struct Obj02052ae8*)member);
+            func_02052ae8((struct Obj02052ae8*)member);
             return;
         }
 
         {
             short maximumSpeed = member->maximumSpeed;
-            StepValueTowardTarget02052ae8((struct Obj02052ae8*)member);
+            func_02052ae8((struct Obj02052ae8*)member);
             member->maximumSpeed = maximumSpeed;
         }
 
@@ -172,7 +172,7 @@ extern "C" ARM void GameObject_UpdatePartyMember(struct FieldPartyMember* member
         void* fieldTaskQueue = *(void**)((char*)resources3000 + OverlayPointerOffset);  // GameResources::fieldTaskQueue_
 
         if (unknown4080 != 0
-            && IsCountAtLeast4_0219a370(resources) != 0
+            && func_ov017_0219a370(resources) != 0
             && FieldTaskQueue_IsEmpty((void**)fieldTaskQueue) != 0
             && g_keyManager.TestKeysHeld(KEY_B) != 0
             && GameObject_IsSinking((struct BitField0203402c*)member) == 0
@@ -186,8 +186,8 @@ extern "C" ARM void GameObject_UpdatePartyMember(struct FieldPartyMember* member
             if (leaderIndex == actorIndex) {
                 int followCamera = GameState_GetFollowCamera((char*)gameState2);
                 if (followCamera != 0) {
-                    if (IsCountAtLeast4_0219a370(resources) != 0) {
-                        if (MarkStateIfFlag020a2c70((struct S020a2c70*)followCamera) != 0) {
+                    if (func_ov017_0219a370(resources) != 0) {
+                        if (func_020a2c70((struct S020a2c70*)followCamera) != 0) {
                             SetFlags04((GameResources*)resources, GameResourcesFlags04_Unknown80);
                         }
                     }
@@ -213,11 +213,11 @@ extern "C" ARM void GameObject_UpdatePartyMember(struct FieldPartyMember* member
             }
 
             if (gestureStarted != 0) {
-                char record[0xb0];  // a 0xb0-byte block LoadBattleBlock020ac4c0 reads and CopyInBattleField0x7540_020ac494 stores back
-                LoadBattleBlock020ac4c0(record);
-                AddClamped10BitFieldMidAt0x28_020a06b0((struct S_a06b0*)record, 1);
-                AddClamped10BitFieldAt0x14_020a0140((struct S_a0140*)(record + 0x68), 1);
-                CopyInBattleField0x7540_020ac494(record);
+                char record[0xb0];  // a 0xb0-byte block func_020ac4c0 reads and func_020ac494 stores back
+                func_020ac4c0(record);
+                func_020a06b0((struct S_a06b0*)record, 1);
+                func_020a0140((struct S_a0140*)(record + 0x68), 1);
+                func_020ac494(record);
                 return;
             }
         } else {
@@ -231,7 +231,7 @@ extern "C" ARM void GameObject_UpdatePartyMember(struct FieldPartyMember* member
                     if (cameraState != 0) {
                         unsigned char stateByte = cameraState[0];
                         if (stateByte == 1) {
-                            SetByte0x2c4To2IfByte0x2c5Set_020a2c8c((unsigned char*)followCamera);
+                            func_020a2c8c((unsigned char*)followCamera);
                         } else if (stateByte == 2) {
                             short cameraValue = *(short*)(cameraState + 2);
                             if (cameraValue < 0x199) {

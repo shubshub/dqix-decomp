@@ -16,49 +16,49 @@ enum { Enum_ov003_0215b1dc_6574 = 0x19ae };
 #include "Filesystem/BackgroundLoader.h"
 
 struct Struct_ov003_021594c4_2 {
-    char unknown_0_[0x64];
-    char unknown_64_[0x580 - 0x64];
-    unsigned char unknown_580_;
+    char unk_0[0x64];
+    char messages[0x580 - 0x64];
+    unsigned char step;
 };
 
-struct Struct_ov003_0215af9c {
-    char unknown_0_[Enum_ov003_0215b1dc_2456];
+struct BattleGlobals {
+    char unk_0[Enum_ov003_0215b1dc_2456];
     int unknown_998_;
     char unknown_99c_[Enum_ov003_0215b1dc_2464 - Enum_ov003_0215b1dc_2460];
-    int unknown_9a0_;
+    int linkState;
     char unknown_9a4_[Enum_ov003_0215b1dc_6574 - Enum_ov003_0215b1dc_2468];
     unsigned char unknown_19ae_;
 };
 
-BattleGlobals* MessageSystem_GetInstance(void);
+extern "C" BattleGlobals* MessageSystem_GetInstance(void);
 struct Actor0209c678;
-void BgmPlayer_FadeOut(Actor0209c678*, int);
+extern "C" void BgmPlayer_FadeOut(Actor0209c678*, int);
 void SetBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
 int IsMainBrightnessTransitionActive(GameResources*);
 void SetMainBrightness(GameResources*, int, int);
 extern "C" void MessageSystem_Stop(BattleGlobals*);
-void MessageSystem_Reset(char*);
-extern "C" void func_ov003_0215c270(BattleMessageScene*, unsigned int, unsigned int);
+extern "C" void MessageSystem_Reset(char*);
+extern "C" void func_ov003_0215c270(Struct_ov003_021594c4_2*, unsigned int, unsigned int);
 struct Container020e0310;
-void* KeyTable_Get(Container020e0310*, int);
-extern "C" void func_ov003_02159250(BattleMessageScene*, void*);
+extern "C" void* KeyTable_Get(Container020e0310*, int);
+extern "C" void func_ov003_02159250(Struct_ov003_021594c4_2*, void*);
 extern "C" int* LinkSession_GetInstance(void);
-int LinkSession_IsActive(int*);
+extern "C" int LinkSession_IsActive(int*);
 extern "C" void func_ov017_021c37a4(void);
 
 extern unsigned char g_bgmPlayer;
 
 // USA: func_ov003_0215b1dc
-extern "C" ARM void func_ov003_0215b1dc(BattleMessageScene* self) {
+extern "C" ARM void func_ov003_0215b1dc(Struct_ov003_021594c4_2* self) {
     BattleGlobals* g = MessageSystem_GetInstance();
     GameResources* res = GameState::GetInstance()->GetResources();
 
-    if (var0->unknown_9a0_ == 3) {
-        var0->unknown_19ae_ = 0;
+    if (g->linkState == 3) {
+        g->unknown_19ae_ = 0;
     }
 
-    unsigned char var2 = arg0->unknown_580_;
+    unsigned char step = self->step;
 
     if (step == 0) {
         if (g->linkState != 3) return;
@@ -75,19 +75,19 @@ extern "C" ARM void func_ov003_0215b1dc(BattleMessageScene* self) {
         self->step++;
     }
 
-    if (var2 == 2) {
-        func_ov003_0215c270(arg0, 0, 0x1f);
-        if (IsMainBrightnessTransitionActive(var1)) return;
+    if (step == 2) {
+        func_ov003_0215c270(self, 0, 0x1f);
+        if (IsMainBrightnessTransitionActive(res)) return;
         if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() > 0) return;
-        g->messageActive = 1;
+        g->unknown_998_ = 1;
         func_ov003_02159250(self, KeyTable_Get((Container020e0310*)self->messages, 0x6e));
         if (LinkSession_IsActive(LinkSession_GetInstance())) {
             func_ov017_021c37a4();
         }
-        arg0->unknown_580_++;
+        self->step++;
     }
 
-    if (var2 == 3) {
-        func_ov003_0215c270(arg0, 0, 0x1f);
+    if (step == 3) {
+        func_ov003_0215c270(self, 0, 0x1f);
     }
 }

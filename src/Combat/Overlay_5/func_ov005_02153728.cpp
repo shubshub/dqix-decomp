@@ -1,21 +1,21 @@
 #include <globaldefs.h>
 #include <Graphics/Vector.h>
 
-extern "C" void func_ov005_021538fc(void* arg0, fix32_t* arg1, fix32_t* arg2, fix32_t arg3, fix32_t arg4);
+extern "C" void func_ov005_021538fc(void* self, fix32_t* target, fix32_t* value, fix32_t rate, fix32_t threshold);
 
 struct Struct_ov005_02153728 {
-    char unknown_0_[0x18];
-    fix32_t unknown_18_[4];
-    fix32_t unknown_28_[4];
+    char pad[0x18];
+    fix32_t target[4];
+    fix32_t value[4];
 };
 
 // USA: func_ov005_02153728
-extern "C" ARM void func_ov005_02153728(Struct_ov005_02153728* arg0, int arg1) {
-    if (arg1 == 0) { arg1 = 1; }
-    fix32_t var0 = arg1 * 0xb33;
-    fix32_t var1 = arg1 * 0xccc;
-    func_ov005_021538fc(arg0, &arg0->unknown_18_[0], &arg0->unknown_28_[0], var0, var1);
-    func_ov005_021538fc(arg0, &arg0->unknown_18_[1], &arg0->unknown_28_[1], var0, var1);
-    func_ov005_021538fc(arg0, &arg0->unknown_18_[2], &arg0->unknown_28_[2], var0, var1);
-    func_ov005_021538fc(arg0, &arg0->unknown_18_[3], &arg0->unknown_28_[3], var0, var1);
+extern "C" ARM void func_ov005_02153728(Struct_ov005_02153728* self, int speed) {
+    if (speed == 0) { speed = 1; }
+    fix32_t rate = speed * 0xb33;
+    fix32_t threshold = speed * 0xccc;
+    func_ov005_021538fc(self, &self->target[0], &self->value[0], rate, threshold);
+    func_ov005_021538fc(self, &self->target[1], &self->value[1], rate, threshold);
+    func_ov005_021538fc(self, &self->target[2], &self->value[2], rate, threshold);
+    func_ov005_021538fc(self, &self->target[3], &self->value[3], rate, threshold);
 }

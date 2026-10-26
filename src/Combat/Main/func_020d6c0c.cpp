@@ -12,7 +12,7 @@ extern "C" ARM void func_020d6c0c(void);
 #endif
 
 // USA: func_020d6c0c
-ARM void NotifyOverlay0211e33c_020d6c0c() {
+extern "C" ARM void func_020d6c0c() {
     Overlay_Load(OVERLAY_ID(34));
     PopulateOv33BackgroundLoader(&g_fileLoadBuffer, 0x30000, 0x14);
 }

@@ -16,7 +16,7 @@ struct State_1f9b8 {
 };
 
 // Main, originally InitStruct_0201f9b8 (USA 0x0201f9b8, EUR 0x0201f9c8, JPN 0x0201f6dc)
-ARM void MapDisplayPanelStatus_Reset(struct State_1f9b8* status) {
+extern "C" ARM void MapDisplayPanelStatus_Reset(struct State_1f9b8* status) {
     status->hp = -1;
     status->mp = -1;
     status->maxHp = -1;

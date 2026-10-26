@@ -1,14 +1,10 @@
 #include <globaldefs.h>
+#include "Resource/KeyTable.h"
 
-extern "C" int func_020dfbfc(void* arg0, int arg1, int arg2);
-
-struct Struct_020dfbdc {
-    int unknown_0_;
-    int unknown_4_;
-};
+extern "C" int func_020dfbfc(void* a, int b, int c);
 
 // USA: func_020dfbdc
-extern "C" ARM int func_020dfbdc(void* arg0, struct Struct_020dfbdc* arg1) {
-    arg1->unknown_4_ = func_020dfbfc(arg0, arg1->unknown_4_, 0);
+extern "C" ARM int func_020dfbdc(void* a, struct Node020dfbdc* node) {
+    node->text = func_020dfbfc(a, node->text, 0);
     return 1;
 }

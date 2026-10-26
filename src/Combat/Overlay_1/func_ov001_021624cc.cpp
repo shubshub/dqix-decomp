@@ -4,63 +4,63 @@
 #include "NitroSDK/Graphics.h"
 #include "NitroSDK/VRAM.h"
 
-extern "C" int func_ov017_021d612c(void* arg0);
+extern "C" int func_ov017_021d612c(void* obj);
 extern char data_ov001_02165745[];
 
-extern "C" unsigned int func_ov001_0215a750(const char* arg0, void** arg1);
-extern "C" void func_ov001_02162678(int arg0, int arg1, int arg2, int arg3);
+extern "C" unsigned int func_ov001_0215a750(const char* path, void** outPtr);
+extern "C" void func_ov001_02162678(int a, int b, int c, int d);
 
 struct PacRecord;
-int Pac_CountFiles(struct PacRecord* entry);
+extern "C" int Pac_CountFiles(struct PacRecord* entry);
 
-void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
+extern "C" void* Pac_GetFile(struct PacRecord* rec, int index, void** out, int* out44);
 
 struct BackgroundGraphics;
-void Background_Init(struct BackgroundGraphics* obj);
+extern "C" void Background_Init(struct BackgroundGraphics* obj);
 
-void Background_SetMapSize(unsigned char* obj, int value);
+extern "C" void Background_SetMapSize(unsigned char* obj, int value);
 
 extern "C" void Background_SetPriority(void*, int);
 
-int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
+extern "C" int Background_SetScroll(struct BackgroundGraphics* obj, int a, int b);
 
-void OS_WaitVBlankIntr();
+extern "C" void OS_WaitVBlankIntr();
 
-void Background_FlushFile(void* obj, char* str);
+extern "C" void Background_FlushFile(void* obj, char* str);
 
-void Background_UploadFile(struct BackgroundGraphics* self, char* str);
+extern "C" void Background_UploadFile(struct BackgroundGraphics* self, char* str);
 
-void Background_UploadMap(struct BackgroundGraphics* obj, void* buf);
+extern "C" void Background_UploadMap(struct BackgroundGraphics* obj, void* buf);
 
-void Background_Destroy(struct BackgroundGraphics* obj);
+extern "C" void Background_Destroy(struct BackgroundGraphics* obj);
 
 struct Struct_ov001_021624cc {
-    unsigned char unknown_0_[0x1c];
-    unsigned char unknown_1c_0_ : 4;
-    unsigned char unknown_1c_4_ : 4;
+    unsigned char pad0[0x1c];
+    unsigned char lo : 4;
+    unsigned char hi : 4;
     unsigned char unknown_1d_[3];
 };
 
 // USA: func_ov001_021624cc
-extern "C" ARM int func_ov001_021624cc(void* arg0) {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    char* var1[3];
-    int var2[3];
-    Struct_ov001_021624cc var3;
-    void* var4;
-    unsigned int var5;
-    void* var6;
-    char var7[0x50];
+extern "C" ARM int func_ov001_021624cc(void* self) {
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    char* records[3];
+    int sizes[3];
+    Struct_ov001_021624cc s;
+    void* fileData;
+    unsigned int size;
+    void* dummyPtr;
+    char path[0x50];
 
-    sprintf(var7, data_ov001_02165745, func_ov017_021d612c(arg0));
-    int var8 = 0;
-    var4 = NULL;
-    var5 = 0;
-    var0->GetLoadedFileByName(var7, &var4, &var5);
-    if (var4 == NULL) {
+    sprintf(path, data_ov001_02165745, func_ov017_021d612c(self));
+    int locked = 0;
+    fileData = NULL;
+    size = 0;
+    loader->GetLoadedFileByName(path, &fileData, &size);
+    if (fileData == NULL) {
         BackgroundLoader::AddLockGlobal();
-        var8 = 1;
-        if (func_ov001_0215a750(var7, &var4) == 0) {
+        locked = 1;
+        if (func_ov001_0215a750(path, &fileData) == 0) {
             BackgroundLoader::RemoveLockGlobal();
             return 0;
         }
@@ -72,7 +72,7 @@ extern "C" ARM int func_ov001_021624cc(void* arg0) {
     ReleaseMainBGVRAMBanks();
     MapVRAMBanksToMainBG(0x10);
     DISPCNT = (DISPCNT & ~0x1f00) | 0x800;
-    SetBg3ControlFields_02162678(0, 1, 1, 1);
+    func_ov001_02162678(0, 1, 1, 1);
     Background_Init((struct BackgroundGraphics*)&s);
     s.lo = 0;
     s.hi = 3;
@@ -85,7 +85,7 @@ extern "C" ARM int func_ov001_021624cc(void* arg0) {
         Background_FlushFile(&s, record);
         Background_UploadFile((struct BackgroundGraphics*)&s, record);
     }
-    if (var8) {
+    if (locked) {
         BackgroundLoader::RemoveLockGlobal();
     }
     Background_UploadMap((struct BackgroundGraphics*)&s, 0);

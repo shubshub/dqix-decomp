@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
 // USA: func_0204a78c
-extern "C" ARM void func_0204a78c(int arg0, int arg1) {
-    *(volatile unsigned int*)0x400001c = (arg0 & 0x1ff) | ((arg1 << 16) & 0x1ff0000);
+extern "C" ARM void func_0204a78c(int h, int v) {
+    *(volatile unsigned int*)0x400001c = (h & 0x1ff) | ((v << 16) & 0x1ff0000);
 }

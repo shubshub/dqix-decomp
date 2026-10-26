@@ -7,20 +7,20 @@ struct Obj02086aec {
     unsigned char count;
 };
 
-int GetFieldAt0x150_02053c6c(unsigned char* obj);
+extern "C" int func_02053c6c(unsigned char* obj);
 
-struct Slots02083994;
-int CountMatchingUntilNegative02083994(struct Slots02083994* s, int value);
+struct Struct_02083994;
+extern "C" int func_02083994(struct Struct_02083994* s, int value);
 
-struct Container02083554;
-struct Entry02083554;
-struct Entry02083554* FindEntryByShortField02083554(struct Container02083554* c, int id);
+struct Struct_0206f81c;
+struct Struct_0206f81c_8;
+extern "C" struct Struct_0206f81c_8* func_02083554(struct Struct_0206f81c* c, int id);
 
-short SumKeyedLookups02086bf4(char* obj, int key);
+extern "C" short func_02086bf4(char* obj, int key);
 
 // Main, originally SumCombatantKeyMatches02086aec (USA 0x02086aec, EUR 0x02086afc, JPN 0x0208740c)
-ARM short Party_CountItem(struct Obj02086aec* obj, int key) {
-    short acc;
+extern "C" ARM short Party_CountItem(struct Obj02086aec* obj, int key) {
+    short var0;
     GameState* bs;
     unsigned char i;
     GameObject* c;
@@ -28,19 +28,19 @@ ARM short Party_CountItem(struct Obj02086aec* obj, int key) {
     if (key < 0) {
         return 0;
     }
-    acc = 0;
+    var0 = 0;
     bs = GameState::GetInstance();
     for (i = 0; i < obj->count; i++) {
-        c = GetCombatantWithFlag0x100_0200ff1c(bs, obj->ids[i]);
+        c = func_0200ff1c(bs, obj->ids[i]);
         if (c != NULL) {
-            x = (void*)GetFieldAt0x150_02053c6c((unsigned char*)c);
+            x = (void*)func_02053c6c((unsigned char*)c);
             if (x != NULL) {
-                acc = acc + CountMatchingUntilNegative02083994((struct Slots02083994*)x, key);
-                if (FindEntryByShortField02083554((struct Container02083554*)x, key) != NULL) {
-                    acc = acc + 1;
+                var0 = var0 + func_02083994((struct Struct_02083994*)x, key);
+                if (func_02083554((struct Struct_0206f81c*)x, key) != NULL) {
+                    var0 = var0 + 1;
                 }
             }
         }
     }
-    return acc + SumKeyedLookups02086bf4((char*)obj, key);
+    return var0 + func_02086bf4((char*)obj, key);
 }

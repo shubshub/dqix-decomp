@@ -29,77 +29,77 @@ struct Struct_01ff8b48_26 {
     unsigned char unknown_3_;
 };
 
-struct Struct_01ff8b48_13 {
+struct TextTable {
     char unknown_0_[0x18];
 };
 
 
-struct Struct_02081870_2 {
+struct TextWindow {
     char unknown_0_[0xbc];
 };
 
-struct Struct_ov006_02158478 {
+struct Canvas {
     char unknown_0_[0xe0];
 };
 
-struct Struct_ov009_02186e00_2 {
+struct WindowCursor {
     int unknown_0_[0x10];
 };
 
 struct Struct_ov008_021842a0_2 {
-    SafeAllocator unknown_0_;
+    SafeAllocator allocator_;
     SafeAllocator unknown_14_;
-    SafeAllocator unknown_28_;
-    SafeAllocator unknown_3c_;
-    SafeAllocator unknown_50_;
-    SafeAllocator unknown_64_;
-    SafeAllocator unknown_78_;
+    SafeAllocator textAllocator_;
+    SafeAllocator spriteAllocator_;
+    SafeAllocator iconAllocator_;
+    SafeAllocator modelAllocator_;
+    SafeAllocator titleAllocator_;
     SafeAllocator unknown_8c_;
-    Struct_01ff8b48_13 unknown_a0_;
-    char* unknown_b8_;
+    TextTable texts_;
+    char* text_;
     char unknown_bc_[0x14];
-    Struct_ov003_021594c4 unknown_d0_[3];
-    Struct_02081870_2 unknown_130_;
-    Struct_ov006_02158478 unknown_1ec_[6];
-    void* unknown_72c_;
-    void* unknown_730_;
-    void* unknown_734_;
-    void* unknown_738_;
-    void* unknown_73c_;
-    void* unknown_740_;
-    unsigned char unknown_744_[8];
+    BackgroundGraphics backgrounds_[3];
+    TextWindow window_;
+    Canvas canvases_[6];
+    void* pixels_;
+    void* renderer_;
+    void* sprites_;
+    void* animations_;
+    void* iconRenderer_;
+    void* iconSprite_;
+    unsigned char items_[8];
     unsigned char unknown_74c_;
-    Struct_ov009_02186e00_2 unknown_750_;
-    Object3D unknown_790_;
-    char unknown_83c_[0x2c8];
-    void* unknown_b04_;
+    WindowCursor cursor_;
+    Object3D model_;
+    char camera_[0x2c8];
+    void* titles_;
     void* unknown_b08_;
-    void* unknown_b0c_;
-    signed char unknown_b10_;
-    unsigned char unknown_b11_;
+    void* page_;
+    signed char state_;
+    unsigned char step_;
     unsigned char unknown_b12_;
     unsigned char unknown_b13_;
     short unknown_b14_;
     short unknown_b16_;
-    int unknown_b18_;
+    int flags_;
     int unknown_b1c_;
-    int unknown_b20_;
-    int unknown_b24_;
-    unsigned char unknown_b28_;
+    int task_;
+    int mode_;
+    unsigned char kind_;
     unsigned char unknown_b29_;
     unsigned char unknown_b2a_;
-    int unknown_b2c_;
+    int titleX_;
     const void* unknown_b30_;
     void* unknown_b34_;
     void* unknown_b38_;
-    void* unknown_b3c_;
+    void* guestTitles_;
     Struct_01ff8b48_26 unknown_b40_[2];
 };
 
-struct Struct_02021b84 {
+struct MessageSystem {
     char unknown_0_[R(0x228, 0x2d8)];
     void* unknown_2d8_;
-    void* unknown_2dc_;
+    void* unk_2dc;
     void* unknown_2e0_;
 };
 
@@ -107,18 +107,18 @@ struct CombatSlots02045cac;
 struct BackgroundGraphics;
 struct FlagWord020466f4;
 
-void SpriteContext_Destroy(void* renderer);
-MessageSystem* MessageSystem_GetInstance();
-void MessageSystem_ResetGlyphs(CombatSlots02045cac* messages);
-void MessageSystem_Reset(char* messages);
-void Background_ClearMap(BackgroundGraphics* background, void* value);
-void Background_Destroy(BackgroundGraphics* background);
-void SetFlagBytes02017d68(void* unused);
-void* GlobalFlags_GetInstance();
-void FlagWord_ClearBits(FlagWord020466f4* field, unsigned int bits);
+extern "C" void SpriteContext_Destroy(void* renderer);
+extern "C" MessageSystem* MessageSystem_GetInstance();
+extern "C" void MessageSystem_ResetGlyphs(CombatSlots02045cac* messages);
+extern "C" void MessageSystem_Reset(char* messages);
+extern "C" void Background_ClearMap(BackgroundGraphics* background, void* value);
+extern "C" void Background_Destroy(BackgroundGraphics* background);
+extern "C" void func_02017d68(void* unused);
+extern "C" void* GlobalFlags_GetInstance();
+extern "C" void FlagWord_ClearBits(FlagWord020466f4* field, unsigned int bits);
 
 extern "C" {
-void func_ov023_021eb26c(void* guide);
+void func_ov023_021eb26c(void* arg0);
 void MessageSystem_Stop(MessageSystem* messages);
 void Background_FlushMap(BackgroundGraphics* background, int value);
 void Background_TransferMap(BackgroundGraphics* background, int value);
@@ -129,27 +129,27 @@ void* Zone3D_GetInstance();
 }
 
 // USA: func_ov008_021845ac
-extern "C" ARM void func_ov008_021845ac(Struct_ov008_021842a0_2* arg0)
+extern "C" ARM void func_ov008_021845ac(Struct_ov008_021842a0_2* self)
 {
-    BackgroundLoader* var0 = BackgroundLoader::GetInstance();
-    if (arg0->unknown_b20_ >= 0)
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (self->task_ >= 0)
     {
-        var0->RemoveTask(arg0->unknown_b20_);
-        arg0->unknown_b20_ = -1;
+        loader->RemoveTask(self->task_);
+        self->task_ = -1;
     }
     if (self->renderer_ != NULL)
         SpriteContext_Destroy(self->renderer_);
     if (self->iconRenderer_ != NULL)
         SpriteContext_Destroy(self->iconRenderer_);
-    if (self->guide_ != NULL)
-        func_ov023_021eb26c(self->guide_);
+    if (self->unknown_b08_ != NULL)
+        func_ov023_021eb26c(self->unknown_b08_);
     MessageSystem* messages = MessageSystem_GetInstance();
     MessageSystem_ResetGlyphs((CombatSlots02045cac*)messages);
     MessageSystem_Reset((char*)messages);
     MessageSystem_Stop(messages);
-    messages->unk_2d8 = NULL;
+    messages->unknown_2d8_ = NULL;
     messages->unk_2dc = NULL;
-    messages->unk_2e0 = NULL;
+    messages->unknown_2e0_ = NULL;
     BackgroundGraphics* backgrounds[3] = {&self->backgrounds_[0], &self->backgrounds_[1], &self->backgrounds_[2]};
     for (int i = 0; i < 3; i++)
     {
@@ -164,16 +164,16 @@ extern "C" ARM void func_ov008_021845ac(Struct_ov008_021842a0_2* arg0)
     self->model_.Destroy();
     self->text_ = NULL;
     self->pixels_ = NULL;
-    SafeAllocator* allocators[8] = {&self->allocator_,      &self->backgroundAllocator_, &self->textAllocator_,
+    SafeAllocator* allocators[8] = {&self->allocator_,      &self->unknown_14_, &self->textAllocator_,
                                     &self->spriteAllocator_, &self->iconAllocator_,       &self->modelAllocator_,
-                                    &self->titleAllocator_,  &self->guideAllocator_};
+                                    &self->titleAllocator_,  &self->unknown_8c_};
     for (int i = 0; i < 7; i++)
         allocators[i]->Destroy();
-    if (self->exit_ == 0)
+    if (self->unknown_b13_ == 0)
     {
-        if (arg0->unknown_b24_ == 0)
+        if (self->mode_ == 0)
         {
-            SetFlagBytes02017d68(Zone3D_GetInstance());
+            func_02017d68(Zone3D_GetInstance());
         }
         FlagWord_ClearBits((FlagWord020466f4*)GlobalFlags_GetInstance(), 0xf);
     }

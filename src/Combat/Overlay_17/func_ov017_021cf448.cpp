@@ -1,34 +1,34 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov017_021bff8c(int arg0, int arg1);
+extern "C" void func_ov017_021bff8c(int a, int b);
 
 struct Struct_ov017_021cf448 {
-    char unknown_0_[4];
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    unsigned short unknown_10_;
+    char pad0[4];
+    int f4;
+    int f8;
+    int fc;
+    unsigned short f10;
     struct {
-        unsigned char unknown_0_0_ : 1;
+        unsigned char flagA : 1;
         unsigned char unknown_0_1_ : 1;
-    } unknown_12_;
+    } bits;
     signed char unknown_13_;
 };
 
 // USA: func_ov017_021cf448
-extern "C" ARM void func_ov017_021cf448(int arg0, Struct_ov017_021cf448* arg1, unsigned char* arg2, int arg3) {
+extern "C" ARM void func_ov017_021cf448(int unused, Struct_ov017_021cf448* src, unsigned char* base, int extra) {
 #if defined(jpn)
- enum {Enum_ov017_021cf448_32636=0x7ca8, Enum_ov017_021cf448_32640=0x7cac, Enum_ov017_021cf448_32644=0x7cb0, Enum_ov017_021cf448_32648=0x7cb4, Enum_ov017_021cf448_32628=0x7ca0, Enum_ov017_021cf448_32629=0x7ca1};
+ enum {regionalOffset0=0x7ca8, regionalOffset1=0x7cac, regionalOffset2=0x7cb0, regionalOffset3=0x7cb4, regionalOffset4=0x7ca0, regionalOffset5=0x7ca1};
 #else
- enum {Enum_ov017_021cf448_32636=0x7f7c, Enum_ov017_021cf448_32640=0x7f80, Enum_ov017_021cf448_32644=0x7f84, Enum_ov017_021cf448_32648=0x7f88, Enum_ov017_021cf448_32628=0x7f74, Enum_ov017_021cf448_32629=0x7f75};
+ enum {regionalOffset0=0x7f7c, regionalOffset1=0x7f80, regionalOffset2=0x7f84, regionalOffset3=0x7f88, regionalOffset4=0x7f74, regionalOffset5=0x7f75};
 #endif
-    *(int*)(arg2 + Enum_ov017_021cf448_32636) = arg1->unknown_4_;
-    *(int*)(arg2 + Enum_ov017_021cf448_32640) = arg1->unknown_8_;
-    *(int*)(arg2 + Enum_ov017_021cf448_32644) = arg1->unknown_c_;
-    *(unsigned short*)(arg2 + Enum_ov017_021cf448_32648) = arg1->unknown_10_;
-    arg2[Enum_ov017_021cf448_32628] = arg1->unknown_12_.unknown_0_0_;
-    arg2[Enum_ov017_021cf448_32629] = arg1->unknown_12_.unknown_0_1_;
-    if (arg2[Enum_ov017_021cf448_32628] != 0) {
-        func_ov017_021bff8c(arg3, arg1->unknown_13_);
+    *(int*)(base + regionalOffset0) = src->f4;
+    *(int*)(base + regionalOffset1) = src->f8;
+    *(int*)(base + regionalOffset2) = src->fc;
+    *(unsigned short*)(base + regionalOffset3) = src->f10;
+    base[regionalOffset4] = src->bits.flagA;
+    base[regionalOffset5] = src->bits.unknown_0_1_;
+    if (base[regionalOffset4] != 0) {
+        func_ov017_021bff8c(extra, src->unknown_13_);
     }
 }

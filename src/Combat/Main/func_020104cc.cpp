@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 
 unsigned long long GetCurrentTimestamp(void);
-extern "C" unsigned long long _ll_udiv(unsigned long long arg0, unsigned long long arg1);
-extern "C" unsigned int _ull_mod(unsigned long long arg0, unsigned long long arg1);
+extern "C" unsigned long long _ll_udiv(unsigned long long a, unsigned long long b);
+extern "C" unsigned int _ull_mod(unsigned long long a, unsigned long long b);
 
 struct Struct_020104cc {
-    unsigned char unknown_0_[0x3f0];
+    unsigned char pad0[0x3f0];
     long long unknown_3f0_;   // 0x3f0
 };
 
 // USA: func_020104cc
-extern "C" ARM void func_020104cc(Struct_020104cc* arg0, unsigned short* arg1, unsigned char* arg2, unsigned char* arg3) {
-    unsigned long long var0 = _ll_udiv(GetCurrentTimestamp() << 6, 0x1ff6210)
-                                - _ll_udiv(arg0->unknown_3f0_ << 6, 0x1ff6210);
-    unsigned long long var1 = _ll_udiv(var0, 3600);
-    unsigned int var2 = _ull_mod(_ll_udiv(var0, 60), 60);
-    unsigned int var3 = _ull_mod(var0, 60);
-    if (var1 > 10000) var1 = 9999;
-    *arg1 = (unsigned short)var1;
-    *arg2 = var2;
-    *arg3 = var3;
+extern "C" ARM void func_020104cc(Struct_020104cc* obj, unsigned short* outHours, unsigned char* outMinutes, unsigned char* outSeconds) {
+    unsigned long long elapsed = _ll_udiv(GetCurrentTimestamp() << 6, 0x1ff6210)
+                                - _ll_udiv(obj->unknown_3f0_ << 6, 0x1ff6210);
+    unsigned long long hours = _ll_udiv(elapsed, 3600);
+    unsigned int minutes = _ull_mod(_ll_udiv(elapsed, 60), 60);
+    unsigned int seconds = _ull_mod(elapsed, 60);
+    if (hours > 10000) hours = 9999;
+    *outHours = (unsigned short)hours;
+    *outMinutes = minutes;
+    *outSeconds = seconds;
 }

@@ -28,9 +28,9 @@ struct MapDisplayMemberPanel {
 
 enum { kAllMembers = 0xf };     // MapDisplay::mask55d: one bit per party member 0-3
 
-void MapDisplayPanelStatus_Reset(State_1f9b8 *status);
-extern "C" void InitStopwatch0201f9e8(MapDisplayMemberPanel *panel);
-void MapDisplay_ClearRedChests(char *display);
+extern "C" void MapDisplayPanelStatus_Reset(State_1f9b8 *status);
+extern "C" void func_0201f9e8(MapDisplayMemberPanel *panel);
+extern "C" void MapDisplay_ClearRedChests(char *display);
 
 extern State_1f9b8 data_020fdcb0[4];
 // data_020fdcb0[0] + 0x1e: each entry's reset byte (stride 0x20)
@@ -55,7 +55,7 @@ extern "C" ARM void MapDisplay_Init(MapDisplay *display) {
     for (int i = 0; i < 4; i++) {
         MapDisplayPanelStatus_Reset(&data_020fdcb0[i]);
         (&data_020fdcce)[i * 0x20] = 0;
-        InitStopwatch0201f9e8((MapDisplayMemberPanel *) &data_020fdc60[i]);
+        func_0201f9e8((MapDisplayMemberPanel *) &data_020fdc60[i]);
     }
 
     display->flags |= 1;

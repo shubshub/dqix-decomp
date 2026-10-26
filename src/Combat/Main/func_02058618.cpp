@@ -4,13 +4,13 @@
 
 // USA: func_02058618
 extern "C" ARM int func_02058618(void*) {
-    GameState* var0 = GameState::GetInstance();
-    int var1 = 0;
-    int var2;
-    for (var2 = 0; var2 < 0x10; var2++) {
-        if (var0->GetGameObjectByIndex(var2 + 0xd0)) {
-            var1++;
+    GameState* bs = GameState::GetInstance();
+    int count = 0;
+    int i;
+    for (i = 0; i < 0x10; i++) {
+        if (bs->GetGameObjectByIndex(i + 0xd0)) {
+            count++;
         }
     }
-    return var1;
+    return count;
 }

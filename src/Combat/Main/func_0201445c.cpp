@@ -4,55 +4,57 @@
 #include "Filesystem/FileIO.h"
 #include "std_library_functions.h"
 
-extern "C" void func_0207df90(char*);
-extern "C" void func_0207dfac(char*);
+extern "C" void VramState_Restore(char*);
+extern "C" void VramState_Save(char*);
 
-// USA: func_0201445c
-ARM bool Zone3D::func_0201445c(const void* arg0, unsigned int arg1, const char* arg2)
+// USA: ProcessNSBTXFile
+// Main, originally Zone3D::ProcessNSBTXFile_0201445c (USA 0x0201445c, EUR 0x0201446c, JPN 0x02014228)
+ARM bool Zone3D::ProcessNSBTXFile(const void* pFile, unsigned int fileSize, const char* pName)
 {
-    SafeAllocator* var0 = pAllocator_68_;
-    char* var1 = (char*)unknown_ptr_50_;
-    unsigned int var2;
-    void* var3;
+    SafeAllocator* pAlloc = pAllocator_68_;
+    char* vramState = (char*)vramState_;
+    unsigned int rawLength;
+    void* pRaw;
     Zone3D::Model3DListNode* var4 =
-        (Zone3D::Model3DListNode*)var0->Allocate(sizeof(Zone3D::Model3DListNode));
-    Model3D* var5;
+        (Zone3D::Model3DListNode*)pAlloc->Allocate(sizeof(Zone3D::Model3DListNode));
+    Model3D* pModel;
 
     if (var4) {
-        var5 = &var4->model_;
-        var5->Clear();
+        pModel = &var4->model_;
+        pModel->Clear();
         var4->filename_ = 0;
         var4->pNext_ = 0;
-        var4->filename_ = (char*)var0->Allocate(strlen(arg2) + 1);
+        var4->filename_ = (char*)pAlloc->Allocate(strlen(pName) + 1);
         if (var4->filename_) {
-            strcpy((char*)var4->filename_, arg2);
+            strcpy((char*)var4->filename_, pName);
             var4->pNext_ = firstModel_418_;
             firstModel_418_ = var4;
-            var3 = DecompressLZ77FileIntoScratchSpace(*var0, arg0, var2);
-            if (var3) {
-                func_0207df90(var1);
-                var5->SetRawFile(var3, var2);
-                var5->ClearRawFileCache();
-                var5->ProcessRawFile(Model3D::TextureStagingMode_Immediate);
-                func_0207dfac(var1);
+            pRaw = DecompressLZ77FileIntoScratchSpace(*pAlloc, pFile, rawLength);
+            if (pRaw) {
+                VramState_Restore(vramState);
+                pModel->SetRawFile(pRaw, rawLength);
+                pModel->ClearRawFileCache();
+                pModel->ProcessRawFile(Model3D::TextureStagingMode_Immediate);
+                VramState_Save(vramState);
 
-                NSBXXTex* var6 = var5->GetTEX0();
-                if (var6) {
-                    textureImageMemory_ += NSBXX_Tex_GetBlock1Length(var6);
-                    texturePaletteMemory_ += NSBXX_Tex_GetBlock4Length(var6);
+                NSBXXTex* pTex = pModel->GetTEX0();
+                if (pTex) {
+                    textureImageMemory_ += NSBXX_Tex_GetBlock1Length(pTex);
+                    texturePaletteMemory_ += NSBXX_Tex_GetBlock4Length(pTex);
                 }
                 bool var7 = false;
-                if (var6) {
-                    unsigned int var8 = var6->block1Offset_;
-                    void* var9 = var0->Allocate(var8);
-                    if (var9) {
-                        memcpy(var9, var6, var8);
-                        var5->SetTEX0((NSBXXTex*)var9);
+                if (pTex) {
+                    // keep the TEX0 block up to its first data block (the textures are in VRAM now)
+                    unsigned int nTexHeaderSize = pTex->block1Offset_;
+                    void* pCopy = pAlloc->Allocate(nTexHeaderSize);
+                    if (pCopy) {
+                        memcpy(pCopy, pTex, nTexHeaderSize);
+                        pModel->SetTEX0((NSBXXTex*)pCopy);
                         var7 = true;
                     }
                 }
                 if (!var7) {
-                    var5->Clear();
+                    pModel->Clear();
                 }
             }
         }

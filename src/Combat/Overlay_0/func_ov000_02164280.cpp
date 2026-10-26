@@ -3,65 +3,65 @@
 #include "Resource/GameResources.h"
 
 struct Struct_0207df50 {
-    unsigned int unknown_0_[10];
+    unsigned int v[10];
 };
 
 struct Struct_0207df50_2 {
-    unsigned int unknown_0_[2];
+    unsigned int v[2];
 };
 
-struct Struct_0203d028 {
-    struct Struct_0207df50 unknown_0_;
-    struct Struct_0207df50 unknown_28_;
-    unsigned int unknown_50_;
-    unsigned int unknown_54_;
-    struct Struct_0207df50_2 unknown_58_;
-    struct Struct_0207df50_2 unknown_60_;
-    unsigned int unknown_68_;
-    unsigned int unknown_6c_;
+struct Foo0207df50 {
+    struct Struct_0207df50 a;
+    struct Struct_0207df50 b;
+    unsigned int c;
+    unsigned int d;
+    struct Struct_0207df50_2 p1;
+    struct Struct_0207df50_2 p2;
+    unsigned int e;
+    unsigned int f;
 };
 
 struct Struct_ov000_02161e30_6 {
 #if defined(jpn)
-    char unknown_0_[0x27c];
+    char pad0[0x27c];
 #else
-    char unknown1_0_[0x2cc];
+    char pad0[0x2cc];
 #endif
-    struct Struct_0203d028 unknown_2cc_[28];
+    struct Foo0207df50 pairTables[28];
 };
 
 struct Struct_ov000_02164280 {
 #if defined(jpn)
-    char unknown_0_[0x138];
+    char pad0[0x138];
 #else
-    char unknown1_0_[0x14c];
+    char pad0[0x14c];
 #endif
-    struct Struct_0203d028 unknown_14c_;
+    struct Foo0207df50 pairTables;
 #if defined(jpn)
     char unknown_1a8_[0x36ac - 0x1a8];
 #else
     char unknown_1bc_[0x36f0 - 0x1bc];
 #endif
-    char unknown_36f0_[0x800];
+    char workBuf[0x800];
 };
 
 extern "C" char* OamManager_GetInstance(void);
-int* CachedTextTable_GetInstance();
+extern "C" int* CachedTextTable_GetInstance();
 extern "C" void MapVRAMBanksToTextureImage(int handle);
-extern "C" void func_020bb48c(unsigned int arg0, int arg1);
+extern "C" void func_020bb48c(unsigned int mode, int arg1);
 extern "C" void MapVRAMBanksToSubObj(int value);
 extern "C" void MapVRAMBanksToSubBG(int value);
-void VramState_Rewind(struct Foo0207df50* p);
-void OamManager_Init(char* context);
+extern "C" void VramState_Rewind(struct Foo0207df50* p);
+extern "C" void OamManager_Init(char* context);
 extern "C" void CachedTextTable_LoadPalettes(int* ptr);
-void ClearFlag320_02195540(unsigned char* obj);
-void VramState_Restore(char* obj);
+extern "C" void func_ov017_02195540(unsigned char* obj);
+extern "C" void VramState_Restore(char* obj);
 extern "C" void VramState_Reserve(void* p, int a, int b);
-void VramState_Save(char* obj);
+extern "C" void VramState_Save(char* obj);
 
 // USA: func_ov000_02164280
-extern "C" ARM void func_ov000_02164280(BattleScreen* screen) {
-    BattleResources* res = (BattleResources*)GetGameResources();
+extern "C" ARM void func_ov000_02164280(Struct_ov000_02164280* screen) {
+    Struct_ov000_02161e30_6* res = (Struct_ov000_02161e30_6*)GetGameResources();
     char* context = OamManager_GetInstance();
     int* global = CachedTextTable_GetInstance();
     LockStagedTextureVRAMCopying();
@@ -83,7 +83,7 @@ extern "C" ARM void func_ov000_02164280(BattleScreen* screen) {
 
     OamManager_Init(context);
     CachedTextTable_LoadPalettes(global);
-    ClearFlag320_02195540((unsigned char*)res);
+    func_ov017_02195540((unsigned char*)res);
     VramState_Rewind(res->pairTables);
     VramState_Restore((char*)res->pairTables);
     VramState_Reserve(screen->workBuf, 0x18000, 0x800);

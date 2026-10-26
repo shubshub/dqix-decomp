@@ -3,62 +3,62 @@
 static const double huge = 1.0e300;
 
 // USA: func_02008f5c
-extern "C" ARM double func_02008f5c(double arg0) {
-    int var0, var1, var2;
-    unsigned int var3, var4;
-    var0 = ((int*)&arg0)[1];
-    var1 = ((int*)&arg0)[0];
+extern "C" ARM double func_02008f5c(double x) {
+    int var0, i1, var2;
+    unsigned int i, j;
+    var0 = ((int*)&x)[1];
+    i1 = ((int*)&x)[0];
     var2 = ((var0 >> 20) & 0x7ff) - 0x3ff;
     if (var2 < 20) {
         if (var2 < 0) {
-            if (huge + arg0 > 0.0) {
+            if (huge + x > 0.0) {
                 if (var0 >= 0) {
-                    var0 = var1 = 0;
-                } else if (((var0 & 0x7fffffff) | var1) != 0) {
+                    var0 = i1 = 0;
+                } else if (((var0 & 0x7fffffff) | i1) != 0) {
                     var0 = 0xbff00000;
-                    var1 = 0;
+                    i1 = 0;
                 }
             }
         } else {
-            var3 = (0x000fffff) >> var2;
-            if (((var0 & var3) | var1) == 0) {
-                return arg0;
+            i = (0x000fffff) >> var2;
+            if (((var0 & i) | i1) == 0) {
+                return x;
             }
-            if (huge + arg0 > 0.0) {
+            if (huge + x > 0.0) {
                 if (var0 < 0) {
                     var0 += (0x00100000) >> var2;
                 }
-                var0 &= (~var3);
-                var1 = 0;
+                var0 &= (~i);
+                i1 = 0;
             }
         }
     } else if (var2 > 51) {
         if (var2 == 0x400) {
-            return arg0 + arg0;
+            return x + x;
         } else {
-            return arg0;
+            return x;
         }
     } else {
-        var3 = ((unsigned int)(0xffffffff)) >> (var2 - 20);
-        if ((var1 & var3) == 0) {
-            return arg0;
+        i = ((unsigned int)(0xffffffff)) >> (var2 - 20);
+        if ((i1 & i) == 0) {
+            return x;
         }
-        if (huge + arg0 > 0.0) {
+        if (huge + x > 0.0) {
             if (var0 < 0) {
                 if (var2 == 20) {
                     var0 += 1;
                 } else {
-                    var4 = var1 + (1 << (52 - var2));
-                    if (var4 < var1) {
+                    j = i1 + (1 << (52 - var2));
+                    if (j < i1) {
                         var0 += 1;
                     }
-                    var1 = var4;
+                    i1 = j;
                 }
             }
-            var1 &= (~var3);
+            i1 &= (~i);
         }
     }
-    ((int*)&arg0)[1] = var0;
-    ((int*)&arg0)[0] = var1;
-    return arg0;
+    ((int*)&x)[1] = var0;
+    ((int*)&x)[0] = i1;
+    return x;
 }

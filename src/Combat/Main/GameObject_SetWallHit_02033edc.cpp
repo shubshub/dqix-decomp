@@ -27,7 +27,7 @@ struct CopyDst02033edc {
 };
 
 // Main, originally CopyBlocksSetFlag0x40 (USA 0x02033edc, EUR 0x02033eec, JPN 0x02033a14)
-ARM void GameObject_SetWallHit(struct CopyDst02033edc* object, struct CopySrc02033edc* wall) {
+extern "C" ARM void GameObject_SetWallHit(struct CopyDst02033edc* object, struct CopySrc02033edc* wall) {
     object->flagsE0 |= GameObjectFlagsE0_WallHit;
     object->wallCorners = wall->corners;
     object->wallNormal = wall->normal;

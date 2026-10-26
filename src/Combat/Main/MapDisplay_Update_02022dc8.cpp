@@ -13,41 +13,41 @@ struct State_1f9b8 {
     int maxMP;
     int vocation;
     unsigned char level;
-    unsigned char field_0x15[3];
+    unsigned char unknown_15_[3];
     int status;
     unsigned char statsChanged;
     unsigned char stateChanged;
     unsigned char reset;
-    unsigned char field_0x1f;
+    unsigned char unknown_1f_;
 };
-struct Stopwatch0201f9e8 { unsigned char fields[0x14]; };
+struct Struct_020fdc60_3 { unsigned char fields[0x14]; };
 struct PartyMember02022dc8 : GameObject {
 #if defined(jpn)
-    unsigned char unknown13c[0x144 - 0x13c];
+    unsigned char unknown_13c_[0x144 - 0x13c];
 #else
-    unsigned char unknown13c[0x150 - 0x13c];
+    unsigned char unknown1_13c_[0x150 - 0x13c];
 #endif
     PartyMemberData* memberData;
-    unsigned char unknownAfterData[0x38];
+    unsigned char unknown_154_[0x38];
     unsigned int recoveryFlags;
 };
 struct FlagWord02046708;
 struct Obj020214f0;
 extern State_1f9b8 data_020fdcb0[4];
-extern Stopwatch0201f9e8 data_020fdc60[4];
-void MapDisplayPanelStatus_Reset(State_1f9b8*);
-extern "C" void InitStopwatch0201f9e8(Stopwatch0201f9e8*);
-unsigned short GameObject_GetPartyMemberLevel(void*); // the member's level in its current vocation
-FlagWord02046708* GlobalFlags_GetInstance(void);
-int FlagWord_TestBits(FlagWord02046708*, unsigned int);
+extern Struct_020fdc60_3 data_020fdc60[4];
+extern "C" void MapDisplayPanelStatus_Reset(State_1f9b8*);
+extern "C" void func_0201f9e8(Struct_020fdc60_3*);
+extern "C" unsigned short GameObject_GetPartyMemberLevel(void*); // the member's level in its current vocation
+extern "C" FlagWord02046708* GlobalFlags_GetInstance(void);
+extern "C" int FlagWord_TestBits(FlagWord02046708*, unsigned int);
 #if defined(jpn)
 extern "C" void MapDisplay_CancelLoading(MapDisplay*);
 #else
 extern "C" void MapDisplay_CancelLoading(MapDisplay*);
 #endif
 extern "C" void func_020e0688(MapDisplay*);
-void MapDisplay_LoadRedChests(MapDisplay*);
-void MapDisplay_RunModeLoader(Obj020214f0*);
+extern "C" void MapDisplay_LoadRedChests(MapDisplay*);
+extern "C" void MapDisplay_RunModeLoader(Obj020214f0*);
 extern "C" void MapDisplay_PlaceMembers(MapDisplay*, int);
 
 // Main, originally func_02022dc8 (USA 0x02022dc8, EUR 0x02022dd8, JPN 0x02022848)
@@ -59,7 +59,7 @@ extern "C" ARM void MapDisplay_Update(MapDisplay* self) {
     // The panels follow the party order MapDisplay_SetPartyOrder stored (flags758, count field75c)
     int panelCount = self->field75c;
     if (panelCount) {
-        for (int i = panelCount; i < 4; ++i) InitStopwatch0201f9e8(&data_020fdc60[i]);
+        for (int i = panelCount; i < 4; ++i) func_0201f9e8(&data_020fdc60[i]);
     }
     for (int i = 0; i < self->field75c; ++i) {
         int memberIndex = self->flags758[i];

@@ -1,25 +1,25 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov015_0218c538(void *arg0, int arg1);
-extern "C" void func_ov015_0218c920(void *arg0, int arg1);
+extern "C" void func_ov015_0218c538(void *obj, int arg1);
+extern "C" void func_ov015_0218c920(void *obj, int arg1);
 
 struct Struct_ov015_02190090 {
-    char unknown_0_[0x1c];
-    unsigned char unknown_1c_;
-    char unknown_1d_[0x48 - 0x1c - 1];
-    int unknown_48_;
+    char pad0[0x1c];
+    unsigned char state;
+    char pad1[0x48 - 0x1c - 1];
+    int counter;
 };
 
 // USA: func_ov015_02190090
-extern "C" ARM void func_ov015_02190090(Struct_ov015_02190090 *arg0) {
-    arg0->unknown_48_++;
-    arg0->unknown_48_ %= 2;
-    switch (arg0->unknown_1c_) {
+extern "C" ARM void func_ov015_02190090(Struct_ov015_02190090 *obj) {
+    obj->counter++;
+    obj->counter %= 2;
+    switch (obj->state) {
     case 0:
-        func_ov015_0218c538(arg0, 0);
+        func_ov015_0218c538(obj, 0);
         break;
     case 1:
-        func_ov015_0218c920(arg0, 0);
+        func_ov015_0218c920(obj, 0);
         break;
     }
 }

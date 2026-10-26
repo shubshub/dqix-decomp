@@ -17,10 +17,10 @@ struct Obj02033834 {
 };
 
 short fix32ReduceAngle0To2Pi(int);
-void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
+extern "C" void GameObject_SnapFacing(struct Obj02033874* obj, int arg);
 
 // Main, originally SetVecYByMode02033834 (USA 0x02033834, EUR 0x02033844, JPN 0x0203336c)
-ARM void GameObject_SetFacing(struct Obj02033834* self, int angle) {
+extern "C" ARM void GameObject_SetFacing(struct Obj02033834* self, int angle) {
     if (self->motionState == 4 || self->motionState == 3) {
         GameObject_SnapFacing((struct Obj02033874*)self, angle);
     } else {

@@ -1,35 +1,35 @@
 #include <globaldefs.h>
 
-struct Struct_ov000_0215f500 { unsigned short unknown_0_[7]; };
+struct Struct_ov000_0215f500 { unsigned short v[7]; };
 
 struct Struct_ov000_0215f500_2 {
-    unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    short unknown_4_;
-    short unknown_6_;
-    unsigned char unknown_8_;
-    unsigned char unknown_9_;
-    unsigned char unknown_a_;
-    unsigned char unknown_b_;
-    unsigned char unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
+    unsigned short field0;
+    unsigned short field2;
+    short field4;
+    short field6;
+    unsigned char field8;
+    unsigned char field9;
+    unsigned char fieldA;
+    unsigned char fieldB;
+    unsigned char fieldC;
+    int field10;
+    int field14;
     struct Struct_ov000_0215f500 unknown_18_;
 };
 
 // USA: func_ov000_0215f500
-extern "C" ARM struct Struct_ov000_0215f500_2* func_ov000_0215f500(struct Struct_ov000_0215f500_2* arg0, struct Struct_ov000_0215f500_2* arg1) {
-    arg0->unknown_0_ = arg1->unknown_0_;
-    arg0->unknown_2_ = arg1->unknown_2_;
-    arg0->unknown_4_ = arg1->unknown_4_;
-    arg0->unknown_6_ = arg1->unknown_6_;
-    arg0->unknown_8_ = arg1->unknown_8_;
-    arg0->unknown_9_ = arg1->unknown_9_;
-    arg0->unknown_a_ = arg1->unknown_a_;
-    arg0->unknown_b_ = arg1->unknown_b_;
-    arg0->unknown_c_ = arg1->unknown_c_;
-    arg0->unknown_10_ = arg1->unknown_10_;
-    arg0->unknown_14_ = arg1->unknown_14_;
-    arg0->unknown_18_ = arg1->unknown_18_;
-    return arg0;
+extern "C" ARM struct Struct_ov000_0215f500_2* func_ov000_0215f500(struct Struct_ov000_0215f500_2* dst, struct Struct_ov000_0215f500_2* src) {
+    dst->field0 = src->field0;
+    dst->field2 = src->field2;
+    dst->field4 = src->field4;
+    dst->field6 = src->field6;
+    dst->field8 = src->field8;
+    dst->field9 = src->field9;
+    dst->fieldA = src->fieldA;
+    dst->fieldB = src->fieldB;
+    dst->fieldC = src->fieldC;
+    dst->field10 = src->field10;
+    dst->field14 = src->field14;
+    dst->unknown_18_ = src->unknown_18_;
+    return dst;
 }

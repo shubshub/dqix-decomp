@@ -9,12 +9,12 @@
 #endif
 #include <globaldefs.h>
 
-extern "C" void func_ov005_02155544(void* arg0);
+extern "C" void func_ov005_02155544(void* self);
 
 // USA: func_ov005_021551d4
-extern "C" ARM void func_ov005_021551d4(void* arg0) {
-    char* var0 = (char*)arg0;
-    func_ov005_02155544(var0);
-    *(unsigned int*)(var0 + R(0x3d44,0x3dcc)) |= 0x20;
-    *(unsigned char*)(var0 + R(0x3d21,0x3da9)) = 0;
+extern "C" ARM void func_ov005_021551d4(void* p) {
+    char* self = (char*)p;
+    func_ov005_02155544(self);
+    *(unsigned int*)(self + R(0x3d44,0x3dcc)) |= 0x20;
+    *(unsigned char*)(self + R(0x3d21,0x3da9)) = 0;
 }

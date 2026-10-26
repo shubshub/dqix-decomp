@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 struct Obj020bdac0;
-int NNS_SndHeapSaveState(struct Obj020bdac0* obj);
-void* NNS_SndArcSetCurrent(void*);
-int NNS_SndArcLoadSeqEx(void*, int, int);
-int NNS_SndArcLoadSeq(void*, int);
+extern "C" int NNS_SndHeapSaveState(struct Obj020bdac0* obj);
+extern "C" void* NNS_SndArcSetCurrent(void*);
+extern "C" int NNS_SndArcLoadSeqEx(void*, int, int);
+extern "C" int NNS_SndArcLoadSeq(void*, int);
 
 // The sound player g_sePlayer and g_bgmPlayer both start with (0xb0 bytes): a NitroSystem sound heap, the sound
 // archive opened into it (SoundPlayer_OpenArchive), a sequence handle and a stream handle.
@@ -14,8 +14,8 @@ struct SoundPlayer {
     int seqHandle;
     int streamHandle;
     int baseHeapLevel;          // the heap level saved once the archive was open (SoundPlayer_OpenArchive)
-    short streamId;             // the stream SetKeyAndApplyRecord0203ad14 started, -1 for none
-    int streamResumeMs;         // where UpdateScaleOrApplyRecord0203ae4c paused it
+    short streamId;             // the stream func_0203ad14 started, -1 for none
+    int streamResumeMs;         // where func_0203ae4c paused it
     short pendingArchive;       // the entry SoundPlayer_PlayArchiveEntry deferred, -1 for none
     short pendingEntry;
 };
@@ -24,7 +24,7 @@ struct SoundPlayer {
 enum { kSndArcLoad_SeqAndBank = 1 | 2, kSndArcLoad_Wave = 4 };
 
 // Main, originally TryAllocateOrAppend0203aaf8 (USA 0x0203aaf8, EUR 0x0203ab08, JPN 0x0203a550)
-ARM int SoundPlayer_LoadSeq(void* playerRaw, void* seq, int* levelBeforeWaves) {
+extern "C" ARM int SoundPlayer_LoadSeq(void* playerRaw, void* seq, int* levelBeforeWaves) {
     SoundPlayer* player = (SoundPlayer*)playerRaw;
     if (player->heap == NULL) return 0;
     NNS_SndArcSetCurrent(player->archive);

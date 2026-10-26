@@ -16,22 +16,22 @@ struct Struct_ov025_021ed1f0 {
 };
 
 // USA: func_ov025_021ed1f0
-extern "C" ARM void func_ov025_021ed1f0(void* arg0) {
-    struct Struct_ov025_021ed1f0* var0 = (struct Struct_ov025_021ed1f0*)arg0;
-    unsigned char var1 = var0->unknown_150_;
-    if (var1 == 0) return;
-    var0->unknown_150_ = var1 - 1;
+extern "C" ARM void func_ov025_021ed1f0(void* self) {
+    struct Struct_ov025_021ed1f0* view = (struct Struct_ov025_021ed1f0*)self;
+    unsigned char count = view->unknown_150_;
+    if (count == 0) return;
+    view->unknown_150_ = count - 1;
 
-    for (int var2 = 0; var2 < var0->unknown_150_; var2++) {
-        var0->unknown_0_[var2] = var0->unknown_0_[var2 + 1];
-        var0->unknown_20_[var2] = var0->unknown_20_[var2 + 1];
-        var0->unknown_a0_[var2] = var0->unknown_a0_[var2 + 1];
-        var0->unknown_b0_[var2] = var0->unknown_b0_[var2 + 1];
-        var0->unknown_60_[var2] = var0->unknown_60_[var2 + 1];
-        var0->unknown_40_[var2] = var0->unknown_40_[var2 + 1];
-        var0->unknown_80_[var2] = var0->unknown_80_[var2 + 1];
+    for (int i = 0; i < view->unknown_150_; i++) {
+        view->unknown_0_[i] = view->unknown_0_[i + 1];
+        view->unknown_20_[i] = view->unknown_20_[i + 1];
+        view->unknown_a0_[i] = view->unknown_a0_[i + 1];
+        view->unknown_b0_[i] = view->unknown_b0_[i + 1];
+        view->unknown_60_[i] = view->unknown_60_[i + 1];
+        view->unknown_40_[i] = view->unknown_40_[i + 1];
+        view->unknown_80_[i] = view->unknown_80_[i + 1];
     }
 
-    var0->unknown_15c_--;
-    if (var0->unknown_15c_ < 0) var0->unknown_15c_ = 0;
+    view->unknown_15c_--;
+    if (view->unknown_15c_ < 0) view->unknown_15c_ = 0;
 }

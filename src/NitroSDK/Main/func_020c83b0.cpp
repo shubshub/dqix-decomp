@@ -2,8 +2,8 @@
 
 extern "C" int func_020c8548(int);
 extern "C" int func_020c862c(int);
-extern "C" void func_020c86d4(int arg0, int arg1);
-extern "C" void func_020c86e8(int arg0, int arg1);
+extern "C" void func_020c86d4(int index, int value);
+extern "C" void func_020c86e8(int index, int value);
 
 extern int data_0211155c;
 

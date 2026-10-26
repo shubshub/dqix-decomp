@@ -2,66 +2,66 @@
 #include "GameState/GameState.h"
 
 extern "C" void* func_ov011_021845f8(void*, int);
-extern "C" void* func_ov011_0218466c(void* arg0, unsigned short arg1);
+extern "C" void* func_ov011_0218466c(void* obj, unsigned short id);
 
-struct EncodedSize020e03b8;
-int IsEncodedSizeEqual(int unused, struct EncodedSize020e03b8* obj, int val);
-void* KeyTable_Construct(void* p);
+struct Struct_020e03b8;
+extern "C" int func_020e03b8(int unused, struct Struct_020e03b8* obj, int val);
+extern "C" void* KeyTable_Construct(void* p);
 struct Struct020dfc40;
-void KeyTable_Reset(struct Struct020dfc40* p);
+extern "C" void KeyTable_Reset(struct Struct020dfc40* p);
 extern "C" void KeyTable_Load(void*, void*, void*, unsigned int);
-struct Source020e03f0;
-struct StructAA8;
-int ApplyPtrAndShorts(struct Source020e03f0* self, struct StructAA8* obj);
+struct Struct_020e03f0;
+struct Struct_02072aa8;
+extern "C" int func_020e03f0(struct Struct_020e03f0* self, struct Struct_02072aa8* obj);
 
 struct Struct_ov023_021fa644 {
-    char unknown_0_[0x49c];
-    unsigned char unknown_49c_0_ : 1;
+    char pad[0x49c];
+    unsigned char bit0 : 1;
 };
 
-int GameState_GetProtagonistIndex(GameState* battleStruct);
+extern "C" int GameState_GetProtagonistIndex(GameState* battleStruct);
 
 struct Struct_020727d8;
-extern "C" void func_020727d8(struct Struct_020727d8* arg0);
+extern "C" void func_020727d8(struct Struct_020727d8* list);
 
-struct Struct_02013fb4;
-extern "C" void func_020728ac(int, int, struct Struct_02013fb4*, int, int, unsigned short, unsigned char);
+struct StreamHeader;
+extern "C" void func_020728ac(int, int, struct StreamHeader*, int, int, unsigned short, unsigned char);
 
 struct Struct_ov023_021fa644_2 {
-    char unknown_0_[8];
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
+    char pad0[8];
+    unsigned short field8;
+    unsigned short fieldA;
 #if defined(jpn)
     char unknown_c_[0x28 - 0xc];
 #else
     char unknown1_c_[0x2c - 0xc];
 #endif
 
-    unsigned char unknown_2c_;
+    unsigned char field2c;
 };
 
 // USA: func_ov023_021fa644
-extern "C" ARM void func_ov023_021fa644(Struct_ov023_021fa644_2* arg0, void* arg1, Struct_020e03b8* arg2, int arg3) {
+extern "C" ARM void func_ov023_021fa644(Struct_ov023_021fa644_2* obj, void* ctx, Struct_020e03b8* p2, int p3) {
 #if defined(jpn)
- enum {Enum_ov023_021fa644_336=0x144};
+ enum {regionalOffset0=0x144};
 #else
- enum {Enum_ov023_021fa644_336=0x150};
+ enum {regionalOffset0=0x150};
 #endif
-    if (arg2 == 0 || arg3 == 0) {
+    if (p2 == 0 || p3 == 0) {
         return;
     }
-    void* var0 = func_ov011_021845f8(arg1, arg0->unknown_8_);
-    void* var1 = func_ov011_0218466c(arg1, arg0->unknown_a_);
-    if (var0 == 0 || var1 == 0) {
+    void* allocBase = func_ov011_021845f8(ctx, obj->field8);
+    void* node = func_ov011_0218466c(ctx, obj->fieldA);
+    if (allocBase == 0 || node == 0) {
         return;
     }
 
     char local[0x18];
     KeyTable_Construct(local);
-    if (IsEncodedSizeEqual((int)local, p2, p3)) {
+    if (func_020e03b8((int)local, p2, p3)) {
         KeyTable_Reset((Struct020dfc40*)local);
         KeyTable_Load(local, (char*)allocBase + 4, p2, (unsigned int)p3);
-        ApplyPtrAndShorts((Source020e03f0*)local, (StructAA8*)((char*)obj + 0x20));
+        func_020e03f0((Struct_020e03f0*)local, (Struct_02072aa8*)((char*)obj + 0x20));
         return;
     }
 
@@ -72,14 +72,14 @@ extern "C" ARM void func_ov023_021fa644(Struct_ov023_021fa644_2* arg0, void* arg
         int val = GameState_GetProtagonistIndex(bs);
         GameObject* combatant = bs->GetPartyMemberByIndex(val);
         if (combatant != 0) {
-            Sub0x150_021fa644* sub = *(Sub0x150_021fa644**)((char*)combatant + regionalOffset0);
+            Struct_ov023_021fa644* sub = *(Struct_ov023_021fa644**)((char*)combatant + regionalOffset0);
             flag5 = sub->bit0;
         }
-    } else if (var3 == 2) {
-    } else if (var3 == 3) {
-        var4 = 1;
+    } else if (kind == 2) {
+    } else if (kind == 3) {
+        flag5 = 1;
     }
 
-    func_020727d8((Struct_020727d8*)((char*)arg0 + 0x20));
-    func_020728ac((int)((char*)arg0 + 0x20), (int)((char*)var0 + 4), (Struct_02013fb4*)arg2, arg3, 0, 0, var4);
+    func_020727d8((Struct_020727d8*)((char*)obj + 0x20));
+    func_020728ac((int)((char*)obj + 0x20), (int)((char*)allocBase + 4), (StreamHeader*)p2, p3, 0, 0, flag5);
 }

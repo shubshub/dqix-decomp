@@ -2,6 +2,6 @@
 #include "std_library_functions.h"
 
 // USA: func_020a6180
-extern "C" ARM void func_020a6180(void* arg0) {
-    memset(arg0, 0, 0x200);
+extern "C" ARM void func_020a6180(void* obj) {
+    memset(obj, 0, 0x200);
 }

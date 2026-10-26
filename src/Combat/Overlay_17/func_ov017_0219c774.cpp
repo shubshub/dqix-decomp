@@ -5,63 +5,63 @@
 
 struct Struct_ov017_0219c774 {
     unsigned char unknown_0_[12];
-    unsigned char unknown_c_0_ : 4;
-    unsigned char unknown_c_4_ : 4;
+    unsigned char kind : 4;
+    unsigned char flags : 4;
 };
 extern "C" float func_020103e8(GameState*);
 extern "C" void func_020103c8(GameState*, float);
 // USA: func_ov017_0219c774
-extern "C" ARM int func_ov017_0219c774(Struct_ov017_0219c774* arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    float var1 = func_020103e8(var0);
-    float var2 = var1;
-    if (arg1 && arg0 != 0 && arg0->unknown_c_0_ == 0) {
-        var0->SetDayTimer(var1);
-        func_020103c8(var0, var1);
-        LightingManager* var3 = LightingManager::GetInstance();
-        var3->dayNightTimer_ = var0->GetDayTimer();
-        var3->timeOfDayIndex_ = var0->GetTimeOfDay();
+extern "C" ARM int func_ov017_0219c774(Struct_ov017_0219c774* entry, int apply) {
+    GameState* game = GameState::GetInstance();
+    float time = func_020103e8(game);
+    float var2 = time;
+    if (apply && entry != 0 && entry->kind == 0) {
+        game->SetDayTimer(time);
+        func_020103c8(game, time);
+        LightingManager* lighting = LightingManager::GetInstance();
+        lighting->dayNightTimer_ = game->GetDayTimer();
+        lighting->timeOfDayIndex_ = game->GetTimeOfDay();
         return 0;
     }
-    int var4 = TimeOfDay_Night;
-    if (var1 >= data_ov017_021d837c.unknown_8_) var4 = TimeOfDay_Evening;
-    else if (var1 >= data_ov017_021d837c.unknown_4_) var4 = TimeOfDay_Day;
-    else if (var1 >= data_ov017_021d837c.unknown_c_) var4 = TimeOfDay_Morning;
-    int var5 = var0->GetTimeOfDay();
-    if (var4 == var5) {
-        int var6;
-        float var7[4] = {data_ov017_021d837c.unknown_c_, data_ov017_021d837c.unknown_4_, data_ov017_021d837c.unknown_8_, data_ov017_021d837c.unknown_8_ + data_ov017_021d75b8.unknown_10_};
-        float var8;
-        var6 = 0;
-        for (; var6 < 4; var6++) {
-            var8 = data_ov017_021d75b8.unknown_0_;
-            if (var7[var6] - 2.0f * var8 < var1 && var1 < var7[var6]) {
-                var1 = var7[var6] - 2.0f * var8;
-                var2 = var7[var6];
+    int next = TimeOfDay_Night;
+    if (time >= data_ov017_021d837c.eveningStart) next = TimeOfDay_Evening;
+    else if (time >= data_ov017_021d837c.dayStart) next = TimeOfDay_Day;
+    else if (time >= data_ov017_021d837c.morningStart) next = TimeOfDay_Morning;
+    int previous = game->GetTimeOfDay();
+    if (next == previous) {
+        int i;
+        float bounds[4] = {data_ov017_021d837c.morningStart, data_ov017_021d837c.dayStart, data_ov017_021d837c.eveningStart, data_ov017_021d837c.eveningStart + data_ov017_021d75b8.unknown_10_};
+        float step;
+        i = 0;
+        for (; i < 4; i++) {
+            step = data_ov017_021d75b8.unknown_0_;
+            if (bounds[i] - 2.0f * step < time && time < bounds[i]) {
+                time = bounds[i] - 2.0f * step;
+                var2 = bounds[i];
             }
         }
         if (data_ov017_021d837c.unknown_14_ <= var2) var2 = 0.0f;
-        if (arg0 == 0 || arg0->unknown_c_0_ != 0) var1 = var2;
+        if (entry == 0 || entry->kind != 0) time = var2;
     }
-    if ((var4 + 1) % 4 == var5) {
-        float var9[4] = {data_ov017_021d837c.unknown_c_, data_ov017_021d837c.unknown_4_, data_ov017_021d837c.unknown_8_, data_ov017_021d837c.unknown_8_ + data_ov017_021d75b8.unknown_10_};
-        float var10[4] = {data_ov017_021d837c.unknown_10_, data_ov017_021d837c.unknown_c_, data_ov017_021d837c.unknown_4_, data_ov017_021d837c.unknown_8_};
-        if (var9[var4] - 2.0f * data_ov017_021d75b8.unknown_0_ < var1 && var1 < var9[var4]) {
-            var1 = var10[var5];
-            var2 = var1;
+    if ((next + 1) % 4 == previous) {
+        float bounds[4] = {data_ov017_021d837c.morningStart, data_ov017_021d837c.dayStart, data_ov017_021d837c.eveningStart, data_ov017_021d837c.eveningStart + data_ov017_021d75b8.unknown_10_};
+        float values[4] = {data_ov017_021d837c.nightStart, data_ov017_021d837c.morningStart, data_ov017_021d837c.dayStart, data_ov017_021d837c.eveningStart};
+        if (bounds[next] - 2.0f * data_ov017_021d75b8.unknown_0_ < time && time < bounds[next]) {
+            time = values[previous];
+            var2 = time;
         }
     }
-    var4 = TimeOfDay_Night;
-    if (var1 >= data_ov017_021d837c.unknown_8_) var4 = TimeOfDay_Evening;
-    else if (var1 >= data_ov017_021d837c.unknown_4_) var4 = TimeOfDay_Day;
-    else if (var1 >= data_ov017_021d837c.unknown_c_) var4 = TimeOfDay_Morning;
-    if (var4 == var5) arg1 = 1;
-    if (arg1) {
-        var0->SetDayTimer(var1);
-        func_020103c8(var0, var2);
-        LightingManager* var11 = LightingManager::GetInstance();
-        var11->dayNightTimer_ = var0->GetDayTimer();
-        var11->timeOfDayIndex_ = var0->GetTimeOfDay();
+    next = TimeOfDay_Night;
+    if (time >= data_ov017_021d837c.eveningStart) next = TimeOfDay_Evening;
+    else if (time >= data_ov017_021d837c.dayStart) next = TimeOfDay_Day;
+    else if (time >= data_ov017_021d837c.morningStart) next = TimeOfDay_Morning;
+    if (next == previous) apply = 1;
+    if (apply) {
+        game->SetDayTimer(time);
+        func_020103c8(game, var2);
+        LightingManager* lighting = LightingManager::GetInstance();
+        lighting->dayNightTimer_ = game->GetDayTimer();
+        lighting->timeOfDayIndex_ = game->GetTimeOfDay();
     }
-    return var4 != var5;
+    return next != previous;
 }

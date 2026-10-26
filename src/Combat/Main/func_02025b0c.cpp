@@ -5,26 +5,26 @@
 #include "NitroSDK/Memory.h"
 #include "std_library_functions.h"
 
-struct Struct_02020fc4_3;
-struct Struct_02024518_3;
-struct Struct_02024518_2;
-struct Struct_0202441c;
-struct Struct_02024d48;
-struct Struct_02024518 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
+struct Bcb8Params;
+struct Entry_02027878;
+struct List_02027878;
+struct BattleTimer0202441c;
+struct Actor02024d48;
+struct ForwardingRecord02024518 {
+    int unknown0;
+    int entryIndex;
+    int x;
+    int y;
 };
-void* BgVram_GetInstance();
+extern "C" void* BgVram_GetInstance();
 extern "C" void* Zone3D_GetInstance();
-void BgVram_FillMap(void*, int, int, int);
-Entry_02027878* MapDisplay_GetMapPiece(List_02027878*, int);
-void BgImage_Place(Bcb8Params*, int, int);
-void MapDisplay_UpdateBlink(BattleTimer0202441c*);
-int MapDisplay_IsMemberVisible(void*, int);
-int MapIcon_IsShownInBlinkPhase(CombatActionPosition*, int);
-void MapDisplay_DrawSprite(void*, int, int, int, unsigned char, unsigned char, unsigned short, unsigned char, int, int);
+extern "C" void BgVram_FillMap(void*, int, int, int);
+extern "C" Entry_02027878* MapDisplay_GetMapPiece(List_02027878*, int);
+extern "C" void BgImage_Place(Bcb8Params*, int, int);
+extern "C" void MapDisplay_UpdateBlink(BattleTimer0202441c*);
+extern "C" int MapDisplay_IsMemberVisible(void*, int);
+extern "C" int MapIcon_IsShownInBlinkPhase(CombatActionPosition*, int);
+extern "C" void MapDisplay_DrawSprite(void*, int, int, int, unsigned char, unsigned char, unsigned short, unsigned char, int, int);
 
 // USA: func_02025b0c
 extern "C" ARM void func_02025b0c(MapDisplay* self) {
@@ -37,23 +37,23 @@ extern "C" ARM void func_02025b0c(MapDisplay* self) {
     memset(groups, 0, sizeof(groups));
     int count = MapDisplay_CollectIcons(entries, groups, &position);
     int screenX;
-    int cameraY;
+    int var7;
     fix32_t scale;
     scale = self->scale;
     screenX = (int)((float)FIX32_MULTIPLY(position.x, scale) / 4096.0f);
-    cameraY = (int)((float)FIX32_MULTIPLY(self->cameraZ, scale) / 4096.0f);
-    int objectY = (int)((float)FIX32_MULTIPLY(position.y, scale) / 4096.0f);
-    if (cameraY - objectY > 5 || objectY - cameraY > 5) {
-        if (objectY < cameraY) {
-            self->cameraZ -= fix32_Divide((cameraY - objectY - 5) << 12, scale);
+    var7 = (int)((float)FIX32_MULTIPLY(self->cameraZ, scale) / 4096.0f);
+    int var9 = (int)((float)FIX32_MULTIPLY(position.y, scale) / 4096.0f);
+    if (var7 - var9 > 5 || var9 - var7 > 5) {
+        if (var9 < var7) {
+            self->cameraZ -= fix32_Divide((var7 - var9 - 5) << 12, scale);
         } else {
-            arg0->unknown_5b0_ += fix32_Divide((var9 - var7 - 5) << 12, var8);
+            self->cameraZ += fix32_Divide((var9 - var7 - 5) << 12, scale);
         }
     }
-    cameraY = (int)((float)FIX32_MULTIPLY(self->cameraZ, self->scale) / 4096.0f);
+    var7 = (int)((float)FIX32_MULTIPLY(self->cameraZ, self->scale) / 4096.0f);
     self->screenX = screenX;
-    self->screenY = cameraY;
-    int tileY = cameraY < 0 ? cameraY / 8 - 1 : cameraY / 8;
+    self->screenY = var7;
+    int tileY = var7 < 0 ? var7 / 8 - 1 : var7 / 8;
     self->forwardingPending = 0;
     BgVram_FillMap(displayState, 1, 0, self->forwardingFill);
     for (int i = 0; i < self->forwardingCount; ++i) {
@@ -70,16 +70,16 @@ extern "C" ARM void func_02025b0c(MapDisplay* self) {
         if (!MapDisplay_IsMemberVisible(self, entry->combatantId)) {
             continue;
         }
-        fix32_t var17 = arg0->unknown_38_;
-        int var18 = (int)((float)FIX32_MULTIPLY(var16->unknown_0_.x, var17) / 4096.0f);
-        int var19 = -((int)((float)FIX32_MULTIPLY(var16->unknown_0_.y, var17) / 4096.0f) - arg0->unknown_48_);
-        if (var16->unknown_f_ >= 0) {
-            int var20 = var4[var16->unknown_10_] - 1;
-            var18 += data_020e70f0[var20][var16->unknown_f_][0];
-            var19 -= data_020e70f4[var20][var16->unknown_f_][0];
+        fix32_t var17 = self->scale;
+        int x = (int)((float)FIX32_MULTIPLY(entry->position.x, var17) / 4096.0f);
+        int y = -((int)((float)FIX32_MULTIPLY(entry->position.y, var17) / 4096.0f) - self->screenY);
+        if (entry->variant >= 0) {
+            int group = groups[entry->group] - 1;
+            x += data_020e70f0[group][entry->variant][0];
+            y -= data_020e70f4[group][entry->variant][0];
         }
-        if (arg0->unknown_5a4_ & 1) {
-            if (inline_02024518(var16->unknown_e_)) {
+        if (self->flags & 1) {
+            if (inline_02024518(entry->type)) {
                 continue;
             }
         }

@@ -9,15 +9,15 @@
 #endif
 
 
-struct Struct_ov000_021633b8 { unsigned short unknown_0_; unsigned short unknown_2_; unsigned char unknown_4_; signed char unknown_5_; };
+struct Struct_ov000_021633b8 { unsigned short f0; unsigned short f2; unsigned char f4; signed char unknown_5_; };
 
 // USA: func_ov000_021633b8
-extern "C" ARM void func_ov000_021633b8(char* arg0, struct Struct_ov000_021633b8* arg1) {
-    unsigned char* var0 = (unsigned char*)(arg0 + REGION_OFFSET_0);
-    unsigned char var1 = (*var0)++;
-    struct Struct_ov000_021633b8* var2 = (struct Struct_ov000_021633b8*)(arg0 + REGION_OFFSET_1) + var1;
-    var2->unknown_0_ = arg1->unknown_0_;
-    var2->unknown_2_ = arg1->unknown_2_;
-    var2->unknown_4_ = arg1->unknown_4_;
-    var2->unknown_5_ = arg1->unknown_5_;
+extern "C" ARM void func_ov000_021633b8(char* obj, struct Struct_ov000_021633b8* src) {
+    unsigned char* var0 = (unsigned char*)(obj + REGION_OFFSET_0);
+    unsigned char idx = (*var0)++;
+    struct Struct_ov000_021633b8* dest = (struct Struct_ov000_021633b8*)(obj + REGION_OFFSET_1) + idx;
+    dest->f0 = src->f0;
+    dest->f2 = src->f2;
+    dest->f4 = src->f4;
+    dest->unknown_5_ = src->unknown_5_;
 }

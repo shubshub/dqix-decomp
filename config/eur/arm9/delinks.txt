@@ -353,7 +353,7 @@ src/MSL/Main/_fls.cpp:
     complete
     .text start:0x0200c088 end:0x0200c0e4
 
-src/Combat/Main/func_0200cd1c.s:
+src/Combat/Main/_ll_sdiv_0200cd2c.s:
     complete
     .text start:0x0200cd1c end:0x0200cedc
 
@@ -476,7 +476,7 @@ src/Combat/Main/GameState_GetResources_0200fb8c.cpp:
     complete
     .text start:0x0200fb9c end:0x0200fba4
 
-src/Combat/Main/CallFunc0200fbb4AtField0x3f8_0200fba4.cpp:
+src/Combat/Main/func_0200fb94.cpp:
     complete
     .text start:0x0200fba4 end:0x0200fbac
 
@@ -2270,7 +2270,7 @@ src/Combat/Main/func_02028d2c.cpp:
     complete
     .text start:0x02028d3c end:0x02028d68
 
-src/Combat/Main/GlyphMetrics_SetDisplayMode_02028d68.cpp:
+src/Combat/Main/func_02028d58.cpp:
     complete
     .text start:0x02028d68 end:0x02028d78
 
@@ -3110,7 +3110,7 @@ src/Combat/Main/GameObject_PauseMovement_02033fcc.cpp:
     complete
     .text start:0x02033fdc end:0x02033fec
 
-src/Combat/Main/GameObject_FreezeAnimation_02033fec.cpp:
+src/Combat/Main/GameObject_ResumeMovement_02033fdc.cpp:
     complete
     .text start:0x02033fec end:0x02033ffc
 
@@ -3291,7 +3291,7 @@ src/Combat/Main/GameObject_StopFollowing_02039894.cpp:
     complete
     .text start:0x020398a4 end:0x020398b4
 
-src/Combat/Main/GameObject_SetLadderClimb_020398b4.cpp:
+src/Combat/Main/GameObject_ResumeFollowing_020398a4.cpp:
     complete
     .text start:0x020398b4 end:0x020398c4
 
@@ -4191,7 +4191,7 @@ src/Combat/Main/Font_GetTextWidth_020420e8.cpp:
     complete
     .text start:0x020420f8 end:0x020421a0
 
-src/Combat/Main/MessageSystem_GetInstance_020421a0.cpp:
+src/Combat/Main/func_02042190.cpp:
     complete
     .text start:0x020421a0 end:0x020421b0
 
@@ -5219,7 +5219,7 @@ src/Combat/Main/Background_UploadMap_0204b0e8.cpp:
     complete
     .text start:0x0204b0f8 end:0x0204b12c
 
-src/Combat/Main/Background_AllocateMap_0204b12c.cpp:
+src/Combat/Main/Background_SetMapSize_0204b11c.cpp:
     complete
     .text start:0x0204b12c end:0x0204b13c
 
@@ -5588,7 +5588,7 @@ src/Combat/Main/func_02053f58.cpp:
     complete
     .text start:0x02053f68 end:0x02053f7c
 
-src/Combat/Main/Z34SetFieldIfMatchOrFlag02053f7cP11Obj02053f7csi_02053f7c.cpp:
+src/Combat/Main/func_02053f6c.cpp:
     complete
     .text start:0x02053f7c end:0x02053f84
 
@@ -13989,7 +13989,7 @@ src/NitroSDK/Main/func_020c6914.cpp:
     complete
     .text start:0x020c6924 end:0x020c6948
 
-src/NitroSDK/Main/func_020c69c8.cpp:
+src/NitroSDK/Main/EmptyInterruptHandler.cpp:
     complete
     .text start:0x020c69d8 end:0x020c69dc
 
@@ -14614,7 +14614,7 @@ src/NitroSDK/Main/func_020d1144.cpp:
     complete
     .text start:0x020d1154 end:0x020d11a8
 
-src/NitroSDK/Main/ResetDmaAndTerminateOnFlag_020d11a8.cpp:
+src/NitroSDK/Main/Card_IsPulledOut_020d1198.cpp:
     complete
     .text start:0x020d11a8 end:0x020d11b8
 
@@ -14830,11 +14830,11 @@ src/NitroSDK/Main/func_020d21c0.cpp:
     complete
     .text start:0x020d21d0 end:0x020d2208
 
-src/NitroSDK/Main/func_020d21f8.cpp:
+src/NitroSDK/Main/RetainGlobalObject020d21f8.cpp:
     complete
     .text start:0x020d2208 end:0x020d221c
 
-src/NitroSDK/Main/func_020d220c.cpp:
+src/NitroSDK/Main/ReleaseGlobalObject020d220c.cpp:
     complete
     .text start:0x020d221c end:0x020d2230
 
@@ -15885,7 +15885,7 @@ src/Combat/Main/func_020dde84.cpp:
     complete
     .text start:0x020dde94 end:0x020ddea0
 
-src/Combat/Main/UpdateStateAndSeedEntry_020ddea0.cpp:
+src/Combat/Main/func_020dde90.cpp:
     complete
     .text start:0x020ddea0 end:0x020ddea8
 
@@ -16173,7 +16173,7 @@ src/Combat/Main/KeyTable_EndLoad_020dfe88.cpp:
     complete
     .text start:0x020dfe98 end:0x020dfed0
 
-src/Combat/Main/KeyTable_ForEachEntry_020dffc8.cpp:
+src/Combat/Main/KeyTable_GetEntriesSize_020dffb8.cpp:
     complete
     .text start:0x020dffc8 end:0x020dffd8
 
@@ -16201,7 +16201,7 @@ src/Combat/Main/func_020e03f0.cpp:
     complete
     .text start:0x020e0400 end:0x020e0434
 
-src/Combat/Main/KeyTable_Get_020e0434.cpp:
+src/Combat/Main/KeyTable_GetCount_020e0424.cpp:
     complete
     .text start:0x020e0434 end:0x020e0444
 
@@ -16927,7 +16927,7 @@ src/Combat/Main/data_020e5b28.cpp:
     complete
     .init start:0x020e5b38 end:0x020e5b88
 
-src/Combat/Main/data_020e60c0.cpp:
+src/Combat/Main/CreateBattleRandom_020e60c0.cpp:
     complete
     .init start:0x020e60d0 end:0x020e60f0
 
@@ -17082,11 +17082,11 @@ src/Resource/func_020da8e0.cpp:
     complete
     .text start:0x020da8f0 end:0x020daa30
 
-src/NitroSDK/func_020c6a54.cpp:
+src/NitroSDK/DMAInterruptHandlers.cpp:
     complete
     .text start:0x020c6a64 end:0x020c6aa4
 
-src/NitroSDK/func_020c6a94.cpp:
+src/NitroSDK/TimerOverflowInterruptHandlers.cpp:
     complete
     .text start:0x020c6aa4 end:0x020c6ae4
 
@@ -17190,7 +17190,7 @@ src/Combat/Main/func_020776a0.cpp:
     complete
     .text start:0x020776b0 end:0x02077798
 
-src/NitroSDK/func_020c6aec.cpp:
+src/NitroSDK/InterruptRegistration.cpp:
     complete
     .text start:0x020c6afc end:0x020c6ca0
 
@@ -17646,7 +17646,7 @@ src/NitroSDK/Main/Mat4x4_WriteProjectionUnknown.cpp:
     complete
     .text start:0x020c29fc end:0x020c2c04
 
-src/NitroSDK/Main/func_020c69cc.cpp:
+src/NitroSDK/Main/OnDMAOrTimerCompletion.cpp:
     complete
     .text start:0x020c69dc end:0x020c6a64
 
@@ -20248,10 +20248,6 @@ src/MSL/Main/func_02008848.cpp:
     .text start:0x02008848 end:0x02008da4
     .rodata start:0x020e6cd4 end:0x020e6d14
 
-src/MSL/Main/ptmf.c:
-    complete
-    .rodata start:0x020e6d6c end:0x020e6d74
-
 src/Combat/Main/ItemTable_CopyIds_020def98.cpp:
     complete
     .text start:0x020defa8 end:0x020df384
@@ -20481,11 +20477,11 @@ src/NitroSDK/Main/func_020cf864.cpp:
     complete
     .text start:0x020cf874 end:0x020cf88c
 
-src/NitroSDK/Main/func_020c7080.cpp:
+src/NitroSDK/Main/GenerateLockOwnerID_020c7080.cpp:
     complete
     .text start:0x020c7090 end:0x020c70f8
 
-src/NitroSDK/Main/func_020c70e8.cpp:
+src/NitroSDK/Main/ReleaseLockOwnerID_020c70e8.cpp:
     complete
     .text start:0x020c70f8 end:0x020c7140
 
@@ -20505,7 +20501,7 @@ src/Combat/Main/_fadd_0200b9bc.s:
     complete
     .text start:0x0200b9bc end:0x0200bbd8
 
-src/Combat/Main/func_0200ab28.s:
+src/Combat/Main/_dadd_0200ab28.s:
     complete
     .text start:0x0200ab28 end:0x0200ae40
 
@@ -20562,6 +20558,6 @@ src/NitroSDK/TouchScreen.cpp:
     .text start:0x020cd620 end:0x020ce138
     .bss start:0x021117b0 end:0x021117ec
 
-src/MSL/Main/data_020e6d5c.c:
+src/MSL/Main/ptmf.c:
     complete
     .rodata start:0x020e6d6c end:0x020e6d74

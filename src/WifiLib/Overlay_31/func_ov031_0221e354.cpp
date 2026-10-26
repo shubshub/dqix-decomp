@@ -7,22 +7,22 @@ extern "C" void func_ov031_0221e404(signed char*, unsigned char*, int);
 extern "C" void func_ov031_0221e428(unsigned char*, int, unsigned char*);
 
 // USA: func_ov031_0221e354
-extern "C" THUMB int func_ov031_0221e354(unsigned char* arg0, int arg1, const signed char* arg2, int arg3) {
-    signed char* var0 = (signed char*)func_ov031_0221c49c(arg1 / 2);
-    if (var0 == 0) return -1;
-    unsigned char* var1 = (unsigned char*)func_ov031_0221c49c(arg1);
-    if (var1 == 0) {
-        func_ov031_0221c4ac(var0);
+extern "C" THUMB int func_ov031_0221e354(unsigned char* data, int length, const signed char* key, int arg3) {
+    signed char* table = (signed char*)func_ov031_0221c49c(length / 2);
+    if (table == 0) return -1;
+    unsigned char* scratch = (unsigned char*)func_ov031_0221c49c(length);
+    if (scratch == 0) {
+        func_ov031_0221c4ac(table);
         return -1;
     }
-    int var2 = 0;
+    int round = 0;
     do {
-        func_ov031_0221e3d0(var2, var0, arg1, arg2, arg3);
-        func_ov031_0221e404(var0, arg0, arg1);
-        func_ov031_0221e428(arg0, arg1, var1);
-        var2++;
-    } while (var2 < 2);
-    func_ov031_0221c4ac(var0);
-    func_ov031_0221c4ac(var1);
+        func_ov031_0221e3d0(round, table, length, key, arg3);
+        func_ov031_0221e404(table, data, length);
+        func_ov031_0221e428(data, length, scratch);
+        round++;
+    } while (round < 2);
+    func_ov031_0221c4ac(table);
+    func_ov031_0221c4ac(scratch);
     return 0;
 }

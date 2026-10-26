@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 
 struct Struct_020b1540 {
-    signed char unknown_0_;
-    unsigned char unknown_1_;
+    signed char left;
+    unsigned char glyphWidth;
     signed char unknown_2_;
 };
 
@@ -12,15 +12,15 @@ struct Struct_020b27c8_2 {
     unsigned short unknown_2_;
     signed char unknown_4_;
     unsigned char unknown_5_;
-    unsigned char unknown_6_;
-    unsigned char unknown_7_;
+    unsigned char bpp;
+    unsigned char flags;
 };
 
 struct Struct_020b27c8 {
-    unsigned char unknown_0_;
+    unsigned char fontType;
     signed char unknown_1_;
     unsigned short unknown_2_;
-    Struct_020b1540 unknown_4_;
+    Struct_020b1540 defaultWidth;
     unsigned char unknown_7_;
     Struct_020b27c8_2* unknown_8_;
 };
@@ -31,32 +31,32 @@ struct Struct_020b1020 {
 
 struct Struct_020b1540_2 {
     const Struct_020b1540* unknown_0_;
-    const unsigned char* unknown_4_;
+    const unsigned char* image;
 };
 
 struct Struct_020b1540_3 {
-    unsigned char* unknown_0_;
-    int unknown_4_;
+    unsigned char* charBase;
+    int areaWidth;
     int unknown_8_;
     unsigned char unknown_c_;
-    unsigned char unknown_d_[3];
-    unsigned int unknown_10_;
+    unsigned char reserved[3];
+    unsigned int param;
 };
 
 struct Struct_020b1300 {
-    const unsigned char* unknown_0_;
-    const unsigned char* unknown_4_;
+    const unsigned char* dst;
+    const unsigned char* src;
     int unknown_8_;
     int unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
+    int width;
+    int height;
     int unknown_18_;
     int unknown_1c_;
     int unknown_20_;
     unsigned int unknown_24_;
 };
 
-extern "C" void func_020b1300(Struct_020b1300* arg0);
+extern "C" void func_020b1300(Struct_020b1300* i);
 
 static inline int inline_020b1540(const Struct_020b1540_3* arg0) {
     return 8 * 8 * arg0->unknown_c_ / 8;
@@ -71,19 +71,19 @@ static inline unsigned char inline_020b1540_3(const Struct_020b1020* arg0) {
 }
 
 static inline unsigned char inline_020b1540_4(const Struct_020b1020* arg0) {
-    return arg0->unknown_0_->unknown_8_->unknown_6_;
+    return arg0->unknown_0_->unknown_8_->bpp;
 }
 
 // USA: func_020b1540
-extern "C" ARM void func_020b1540(const Struct_020b1540_3* arg0, const Struct_020b1020* arg1, int arg2, int arg3, int arg4, const Struct_020b1540_2* arg5) {
+extern "C" ARM void func_020b1540(const Struct_020b1540_3* arg0, const Struct_020b1020* arg1, int x, int y, int arg4, const Struct_020b1540_2* arg5) {
     int var0;
     int var1;
     int var2;
     int var3;
     int var4;
     unsigned int var5;
-    unsigned char* var6;
-    unsigned char var7;
+    unsigned char* pChar;
+    unsigned char glyphWidth;
     unsigned char var8;
     int var9;
 
@@ -92,9 +92,9 @@ extern "C" ARM void func_020b1540(const Struct_020b1540_3* arg0, const Struct_02
     {
         int var10;
         int var11;
-        const unsigned int var12 = (unsigned int)arg0->unknown_4_;
+        const unsigned int areaWidth = (unsigned int)arg0->areaWidth;
         const unsigned int var13 = (unsigned int)arg0->unknown_8_;
-        unsigned char* const var14 = arg0->unknown_0_;
+        unsigned char* const charBase = arg0->charBase;
         const Struct_020b1540* const var15 = arg5->unknown_0_;
 
         unsigned int var16;
@@ -102,25 +102,25 @@ extern "C" ARM void func_020b1540(const Struct_020b1540_3* arg0, const Struct_02
         unsigned int var18;
         unsigned int var19;
 
-        var7 = var15->unknown_1_;
+        glyphWidth = var15->glyphWidth;
         var8 = inline_020b1540_2(arg1);
 
-        if (var7 <= 0) {
+        if (glyphWidth <= 0) {
             return;
         }
 
-        if ((arg2 + var7 < 0) || (arg3 + var8) < 0) {
+        if ((x + glyphWidth < 0) || (y + var8) < 0) {
             return;
         }
 
-        var16 = (arg2 <= 0) ? 0 : ((unsigned int)arg2 / 8);
-        var18 = (arg3 <= 0) ? 0 : ((unsigned int)arg3 / 8);
+        var16 = (x <= 0) ? 0 : ((unsigned int)x / 8);
+        var18 = (y <= 0) ? 0 : ((unsigned int)y / 8);
 
-        var17 = (unsigned int)(arg2 + var7 + (8 - 1)) / 8;
-        if (var17 >= var12) {
-            var17 = var12;
+        var17 = (unsigned int)(x + glyphWidth + (8 - 1)) / 8;
+        if (var17 >= areaWidth) {
+            var17 = areaWidth;
         }
-        var19 = (unsigned int)(arg3 + var8 + (8 - 1)) / 8;
+        var19 = (unsigned int)(y + var8 + (8 - 1)) / 8;
         if (var19 >= var13) {
             var19 = var13;
         }
@@ -132,36 +132,36 @@ extern "C" ARM void func_020b1540(const Struct_020b1540_3* arg0, const Struct_02
             return;
         }
 
-        var6 = var14 + (arg0->unknown_10_ * var18 + var16) * var9;
+        pChar = charBase + (arg0->param * var18 + var16) * var9;
 
-        var5 = (arg0->unknown_10_ - var10) * var9;
+        var5 = (arg0->param - var10) * var9;
 
-        var0 = (arg2 < 0) ? arg2 : arg2 & 0x7;
-        var2 = (arg3 < 0) ? arg3 : arg3 & 0x7;
+        var0 = (x < 0) ? x : x & 0x7;
+        var2 = (y < 0) ? y : y & 0x7;
         var3 = var0 - 8 * var10;
         var4 = var2 - 8 * var11;
     }
 
     {
-        Struct_020b1300 var20;
+        Struct_020b1300 i;
 
-        var20.unknown_4_ = arg5->unknown_4_;
-        var20.unknown_10_ = var7;
-        var20.unknown_14_ = var8;
-        var20.unknown_24_ = (unsigned int)(arg4 - 1);
-        var20.unknown_1c_ = inline_020b1540_4(arg1);
-        var20.unknown_20_ = arg0->unknown_c_;
-        var20.unknown_18_ = inline_020b1540_3(arg1) * var20.unknown_1c_;
+        i.src = arg5->image;
+        i.width = glyphWidth;
+        i.height = var8;
+        i.unknown_24_ = (unsigned int)(arg4 - 1);
+        i.unknown_1c_ = inline_020b1540_4(arg1);
+        i.unknown_20_ = arg0->unknown_c_;
+        i.unknown_18_ = inline_020b1540_3(arg1) * i.unknown_1c_;
 
         for (; var2 > var4; var2 -= 8) {
-            var20.unknown_c_ = var2;
+            i.unknown_c_ = var2;
             for (var1 = var0; var1 > var3; var1 -= 8) {
-                var20.unknown_0_ = var6;
-                var20.unknown_8_ = var1;
-                func_020b1300(&var20);
-                var6 += var9;
+                i.dst = pChar;
+                i.unknown_8_ = var1;
+                func_020b1300(&i);
+                pChar += var9;
             }
-            var6 += var5;
+            pChar += var5;
         }
     }
 }

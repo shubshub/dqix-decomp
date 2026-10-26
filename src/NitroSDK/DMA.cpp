@@ -194,7 +194,7 @@ void AwaitDMACompletion(int id)
         volatile DMARegisterSet& regs = DMARegisters(id);
         regs.sourceAddr = 0;
         regs.destAddr = 0;
-        regs.controlAndSize.unknown_0_ = DMA_CONTROL_ENABLE | DMA_CONTROL_SRC_ADDR_FIXED | DMA_CONTROL_DST_ADDR_FIXED | 1;
+        regs.controlAndSize.u32 = DMA_CONTROL_ENABLE | DMA_CONTROL_SRC_ADDR_FIXED | DMA_CONTROL_DST_ADDR_FIXED | 1;
     }
     SetIRQInterruptState(priorState);
 }
@@ -215,7 +215,7 @@ void ResetDMAChannel(int id)
         volatile DMARegisterSet& regs = DMARegisters(id);
         regs.sourceAddr = 0;
         regs.destAddr = 0;
-        regs.controlAndSize.unknown_0_ = DMA_CONTROL_ENABLE | DMA_CONTROL_SRC_ADDR_FIXED | DMA_CONTROL_DST_ADDR_FIXED | 1;
+        regs.controlAndSize.u32 = DMA_CONTROL_ENABLE | DMA_CONTROL_SRC_ADDR_FIXED | DMA_CONTROL_DST_ADDR_FIXED | 1;
     }
 
     SetIRQInterruptState(priorState);

@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
-struct Struct_020a095c {
-    short* unknown_0_;
-    signed char* unknown_4_;
-    short unknown_8_;
+struct S_a0af4 {
+    short* keys;
+    signed char* values;
+    short count;
 };
 
 // USA: func_020a0af4
-extern "C" ARM int func_020a0af4(struct Struct_020a095c* arg0, int arg1) {
-    short* var0 = arg0->unknown_0_;
-    short var1 = arg0->unknown_8_;
-    short var2;
-    if (arg1 < 0) {
+extern "C" ARM int func_020a0af4(struct S_a0af4* p, int key) {
+    short* keys = p->keys;
+    short count = p->count;
+    short i;
+    if (key < 0) {
         return -1;
     }
-    for (var2 = 0; var2 < var1; var2++) {
-        if (arg1 == var0[var2]) {
-            return var2;
+    for (i = 0; i < count; i++) {
+        if (key == keys[i]) {
+            return i;
         }
     }
     return -1;

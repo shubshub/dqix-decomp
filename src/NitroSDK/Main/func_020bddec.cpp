@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
-extern "C" void* func_020bd454(int arg0);
-extern "C" int func_020bded0(unsigned short arg0, int arg1, int arg2, int arg3, int arg4);
-extern "C" int func_020be13c(unsigned int arg0, int arg1, int arg2);
-extern "C" int func_020bd8ac(unsigned int arg0);
+extern "C" void* func_020bd454(int index);
+extern "C" int func_020bded0(unsigned short a, int flags, int b, int c, int zero);
+extern "C" int func_020be13c(unsigned int index, int b, int c);
+extern "C" int func_020bd8ac(unsigned int index);
 
 struct Struct_020bddec {
-    int unknown_0_;
-    unsigned short unknown_4_;
+    int val;
+    unsigned short field4;
 };
 
 // USA: func_020bddec
-extern "C" ARM int func_020bddec(int arg0, int arg1, int arg2, int arg3, int* arg4) {
-    struct Struct_020bddec* var0 = (struct Struct_020bddec*)func_020bd454(arg0);
-    if (var0 == NULL) return 2;
-    int var1 = func_020bded0(var0->unknown_4_, arg1, arg2, arg3, 0);
-    if (var1 != 0) return var1;
-    if (arg1 & 1) {
-        var1 = func_020be13c((unsigned int)var0->unknown_0_, arg2, arg3);
-        if (var1 == 0) return 6;
+extern "C" ARM int func_020bddec(int id, int flags, int b, int c, int* out) {
+    struct Struct_020bddec* entry = (struct Struct_020bddec*)func_020bd454(id);
+    if (entry == NULL) return 2;
+    int result = func_020bded0(entry->field4, flags, b, c, 0);
+    if (result != 0) return result;
+    if (flags & 1) {
+        result = func_020be13c((unsigned int)entry->val, b, c);
+        if (result == 0) return 6;
     } else {
-        var1 = func_020bd8ac((unsigned int)var0->unknown_0_);
+        result = func_020bd8ac((unsigned int)entry->val);
     }
-    if (arg4 != NULL) *arg4 = var1;
+    if (out != NULL) *out = result;
     return 0;
 }

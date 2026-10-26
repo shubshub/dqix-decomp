@@ -13,91 +13,91 @@
 #define LO(x) REGIONAL_OFFSET((x) - 0x118, x)
 enum { Enum_ov003_02164400_55 = REGIONAL_OFFSET(0x1b, 0x37) };
 
-struct Struct_0207fdcc_2 { char unknown_0_[REGIONAL_OFFSET(0x2a, 0x36)]; unsigned short unknown_36_; };
+struct Struct_0207fdcc_2 { char pad[REGIONAL_OFFSET(0x2a, 0x36)]; unsigned short unknown_36_; };
 
 struct Struct_0207fe44;
-struct Struct_02038598_4;
+struct FlagWord020466f4;
 struct Struct_02081f20_2;
-struct Struct_020a9ea4;
+struct Struct020a9ea4;
 struct Struct_02081198;
 struct Struct_02081164;
 struct Struct_ov003_02164400;
-struct Struct_020469f8;
-struct Struct_020469f8_2;
+struct HeadList020469f8;
+struct HeadNode020469f8;
 struct Struct_0202bad4_2;
 struct Struct_0202bad4;
 struct Random;
 struct SePlayer;
 
-void* GlobalFlags_GetInstance(void);
-int* GetGlobal02109030_020936f8(void);
+extern "C" void* GlobalFlags_GetInstance(void);
+extern "C" int* func_020936f8(void);
 extern "C" void* LinkSession_GetInstance(void);
 
-extern "C" void func_ov003_021612c0(void* arg0);
-extern "C" int func_ov003_02161344(void* arg0);
-extern "C" int func_ov003_02160a68(void* arg0);
-extern "C" int func_ov003_02160854(void* arg0);
-extern "C" void func_ov003_0215f698(void* arg0, void* arg1);
+extern "C" void func_ov003_021612c0(void* self);
+extern "C" int func_ov003_02161344(void* self);
+extern "C" int func_ov003_02160a68(void* self);
+extern "C" int func_ov003_02160854(void* self);
+extern "C" void func_ov003_0215f698(void* self, void* arg1);
 struct Struct_ov003_02164400_2;
-extern "C" void* func_ov003_0215f650(struct Struct_ov003_02164400_2* arg0, struct Struct_ov003_02164400_2* arg1);
-extern "C" void func_ov003_021666c4(void* arg0);
-extern "C" void func_ov003_0216664c(void* arg0);
-extern "C" void func_ov003_02160344(void* arg0);
+extern "C" void* func_ov003_0215f650(struct Struct_ov003_02164400_2* dst, struct Struct_ov003_02164400_2* src);
+extern "C" void func_ov003_021666c4(void* self);
+extern "C" void func_ov003_0216664c(void* self);
+extern "C" void func_ov003_02160344(void* self);
 extern "C" void func_ov017_021c36a0(void);
-extern "C" void func_ov017_021aeedc(struct Struct_ov003_02164400* arg0);
-extern "C" void func_020469f8(struct Struct_020469f8* arg0, struct Struct_020469f8_2* arg1);
+extern "C" void func_ov017_021aeedc(struct Struct_ov003_02164400* p);
+extern "C" void func_020469f8(struct HeadList020469f8* list, struct HeadNode020469f8* node);
 
-void CallFunc0204c804OverAllElems(struct Cont0207fe44* obj);
-void ClearFlag0x3c9Bit0AndCleanup_020939fc(unsigned char* obj);
-void FlagWord_SetBits(unsigned int* p, unsigned int mask);
-void ClearStruct020a9ea4(struct Struct020a9ea4* p);
-void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
-int IsElementFieldActive020811e8(struct Obj2081* obj, int key);
-void CallFunc0204c804OnMatchingKey_0207fdcc(struct Obj2081* obj, int key);
-void UpdateEntryFlagsNibble02080cec(void* obj, int a, int b);
-void DispatchEntryOp0x8_0208108c(void* obj, int id);
+extern "C" void func_0207fe44(struct Struct_0207fe44* obj);
+extern "C" void func_020939fc(unsigned char* obj);
+extern "C" void FlagWord_SetBits(unsigned int* p, unsigned int mask);
+extern "C" void func_020a9ea4(struct Struct020a9ea4* p);
+extern "C" void FlagWord_ClearBits(struct FlagWord020466f4* word, unsigned int mask);
+extern "C" int func_020811e8(struct Struct_0207fdcc_2* obj, int key);
+extern "C" void func_0207fdcc(struct Struct_0207fdcc_2* obj, int key);
+extern "C" void func_02080cec(void* obj, int a, int b);
+extern "C" void func_0208108c(void* obj, int id);
 extern "C" void func_020813ec(void* obj, int key);
-void ResetWithSub0208203c(struct Obj0208203c* obj);
-void ResetAndSetFlag0x3c9Bit0_020939dc(void* obj);
+extern "C" void func_0208203c(struct Struct_02081f20_2* obj);
+extern "C" void func_020939dc(void* obj);
 extern "C" void LinkSession_End(int* obj);
-void* MessageSystem_GetInstance(void);
+extern "C" void* MessageSystem_GetInstance(void);
 extern "C" int func_020aad1c(int a, int b, int c, int d);
-void SePlayer_Play(struct SePlayer* obj, int a, int b);
-short FindMappedMemberId02080468(void* obj, int id);
-void SetEntryNibbleByShortId(struct StatusOwner02081198* owner, int id, int enable);
-void SetEntryFlag0x2ByShortId(struct StatusOwner02081164* obj, int id, int value);
-int GetField0xc_0202bae4(void* obj);
-struct Element0202bad4* GetElementAt0x10Stride0xc0(struct ElementArray0202bad4* base, int index);
+extern "C" void SePlayer_Play(struct SePlayer* obj, int a, int b);
+extern "C" short func_02080468(void* obj, int id);
+extern "C" void func_02081198(struct Struct_02081198* owner, int id, int enable);
+extern "C" void func_02081164(struct Struct_02081164* obj, int id, int value);
+extern "C" int func_0202bae4(void* obj);
+extern "C" struct Struct_0202bad4* func_0202bad4(struct Struct_0202bad4_2* base, int index);
 extern "C" int memcmp(int val, int key, int field5);
 struct Random* GetBTRandom(void);
 int NextRandomMax(struct Random* random, int maximum);
-void SetSublistEntriesFlag1_02080b54(void* obj, int id);
-int SetEntryFlagById02080b40(void* obj, int id);
-extern struct Elem2081* FindElementByByte0xc4_02081da8(struct Obj2081*, int);
-int WindowPane_IsReady(unsigned char* obj);
+extern "C" void func_02080b54(void* obj, int id);
+extern "C" int func_02080b40(void* obj, int id);
+extern "C" struct Struct_0207fdcc* func_02081da8(struct Struct_0207fdcc_2*, int);
+extern "C" int WindowPane_IsReady(unsigned char* obj);
 
 extern int g_fileLoadBuffer;
 extern struct SePlayer g_sePlayer;
 
-struct Struct_ov003_02164400_3 { char unknown_0_[REGIONAL_OFFSET(0x7fb, 0x9ca)]; unsigned char unknown_9ca_; };
+struct GlobalBig1000 { char pad[REGIONAL_OFFSET(0x7fb, 0x9ca)]; unsigned char flag9ca; };
 
-struct Struct_ov003_02164400_4 { unsigned char unknown_0_0_ : 1; unsigned char unknown_0_1_ : 6; unsigned char unknown_0_7_ : 1; };
+struct Struct_ov003_02164400_4 { unsigned char used : 1; unsigned char rank : 6; unsigned char hi : 1; };
 struct Struct_ov003_02164400_2 {
-    unsigned char unknown_0_0_ : 1;
-    unsigned char unknown_0_1_ : 6;
-    unsigned char unknown_0_7_ : 1;
-    char unknown_1_[REGIONAL_OFFSET(0x14, 0x30)];
-    unsigned char unknown_31_[6];
+    unsigned char used : 1;
+    unsigned char rank : 6;
+    unsigned char hi : 1;
+    char name[REGIONAL_OFFSET(0x14, 0x30)];
+    unsigned char id[6];
 };
 
-static inline int inline_ov003_02164400(unsigned char* arg0, unsigned int arg1) {
-    return (*(unsigned int*)(arg0 + HI(0x464)) & arg1) != 0;
+static inline int inline_ov003_02164400(unsigned char* self, unsigned int mask) {
+    return (*(unsigned int*)(self + HI(0x464)) & mask) != 0;
 }
 
-static inline void inline_020def98(struct Struct_ov003_02164400_2* arg0, struct Struct_ov003_02164400_2* arg1) {
-    struct Struct_ov003_02164400_2 var0 = *arg1;
-    func_ov003_0215f650(arg1, arg0);
-    func_ov003_0215f650(arg0, &var0);
+static inline void inline_020def98(struct Struct_ov003_02164400_2* a, struct Struct_ov003_02164400_2* b) {
+    struct Struct_ov003_02164400_2 var0 = *b;
+    func_ov003_0215f650(b, a);
+    func_ov003_0215f650(a, &var0);
 }
 
 // USA: func_ov003_02164400
@@ -106,78 +106,78 @@ extern "C" ARM void func_ov003_02164400(unsigned char* self) {
     void* flagWord;
     int* globalPtr;
     void* r8val;
-    struct Obj2081* elementObj;
-    short* msg484;
+    struct Struct_0207fdcc_2* elementObj;
+    short* var5;
     unsigned char state;
     int work;
     flagWord = GlobalFlags_GetInstance();
-    globalPtr = GetGlobal02109030_020936f8();
+    globalPtr = func_020936f8();
     r8val = LinkSession_GetInstance();
     state = self[HI(0x4a4)];
-    elementObj = *(struct Obj2081**)(self + LO(0x324));
-    msg484 = (short*)(self + HI(0x484));
+    elementObj = *(struct Struct_0207fdcc_2**)(self + LO(0x324));
+    var5 = (short*)(self + HI(0x484));
 
-    if (var6 == 0) {
-        func_ov003_021612c0(arg0);
-        arg0[HI(0x4a4)] = 1;
+    if (state == 0) {
+        func_ov003_021612c0(self);
+        self[HI(0x4a4)] = 1;
         return;
     }
-    if (var6 == 1) {
-        int var8 = func_ov003_02161344(arg0);
-        if (var8 != -1) {
-            if (var8 == 1) {
-                arg0[HI(0x4a4)] = 2;
-                func_0207fe44((struct Struct_0207fe44*)var4);
-                func_020939fc((unsigned char*)var2);
+    if (state == 1) {
+        int result = func_ov003_02161344(self);
+        if (result != -1) {
+            if (result == 1) {
+                self[HI(0x4a4)] = 2;
+                func_0207fe44((struct Struct_0207fe44*)elementObj);
+                func_020939fc((unsigned char*)globalPtr);
             }
         } else {
-            *(short*)(arg0 + HI(0x488)) = 0x19;
-            *(short*)(arg0 + HI(0x48a)) = 0xa6;
-            *(short*)(arg0 + HI(0x474)) = 0xa6;
+            *(short*)(self + HI(0x488)) = 0x19;
+            *(short*)(self + HI(0x48a)) = 0xa6;
+            *(short*)(self + HI(0x474)) = 0xa6;
             var5[0] = 5;
             var5[1] = 1;
-            arg0[HI(0x4a3)] = 0xa;
-            arg0[HI(0x4a4)] = 1;
+            self[HI(0x4a3)] = 0xa;
+            self[HI(0x4a4)] = 1;
         }
         return;
     }
-    if (var6 == 2) {
+    if (state == 2) {
         var5[0] = 0x35;
-        arg0[HI(0x4a4)] = 3;
-        if (arg0[HI(0x4be)] == 0) return;
-        *(short*)(arg0 + HI(0x484)) = 6;
-        arg0[HI(0x4a4)] = 5;
+        self[HI(0x4a4)] = 3;
+        if (self[HI(0x4be)] == 0) return;
+        *(short*)(self + HI(0x484)) = 6;
+        self[HI(0x4a4)] = 5;
         return;
     }
-    if (var6 == 3) {
-        func_ov003_021612c0(arg0);
-        arg0[HI(0x4a4)] = 4;
+    if (state == 3) {
+        func_ov003_021612c0(self);
+        self[HI(0x4a4)] = 4;
         return;
     }
-    if (var6 == 4) {
-        int var9 = func_ov003_02161344(arg0);
-        if (var9 != -1) {
-            if (var9 == 1) {
+    if (state == 4) {
+        int result = func_ov003_02161344(self);
+        if (result != -1) {
+            if (result == 1) {
                 var5[0] = 0x1a;
-                arg0[HI(0x4a4)] = 0xb;
+                self[HI(0x4a4)] = 0xb;
             }
         } else {
             var5[0] = 0x34;
             var5[1] = 1;
-            arg0[HI(0x4a3)] = 0xa;
-            arg0[HI(0x4a4)] = 0;
+            self[HI(0x4a3)] = 0xa;
+            self[HI(0x4a4)] = 0;
         }
         return;
     }
-    if (var6 == 0xb) {
+    if (state == 0xb) {
         if (BackgroundLoader::GetInstance()->GetNumQueuedTasks() != 0) return;
         FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0x80);
-        ClearStruct020a9ea4((struct Struct020a9ea4*)(self + HI(0x4b4)));
+        func_020a9ea4((struct Struct020a9ea4*)(self + HI(0x4b4)));
         self[HI(0x4a4)] = 0xc;
         return;
     }
-    if (var6 == 0xc) {
-        *(unsigned int*)(arg0 + HI(0x464)) |= 0x2000000;
+    if (state == 0xc) {
+        *(unsigned int*)(self + HI(0x464)) |= 0x2000000;
         BackgroundLoader::AddLockGlobal();
         BackgroundLoader::FreeAllocationsGlobal();
         if (func_020aad1c((int)(self + HI(0x4b4)), (int)&g_fileLoadBuffer, 0xa, 0) == 1) {
@@ -191,114 +191,114 @@ extern "C" ARM void func_ov003_02164400(unsigned char* self) {
         BackgroundLoader::RemoveLockGlobal();
         return;
     }
-    if (var6 == 5) {
-        if (func_020811e8(var4, 0x10) != 0) {
-            *(int*)(arg0 + HI(0x45c)) = 0;
-            func_0207fdcc(var4, 0x10);
-            *(unsigned int*)(arg0 + HI(0x464)) |= 0x180000;
+    if (state == 5) {
+        if (func_020811e8(elementObj, 0x10) != 0) {
+            *(int*)(self + HI(0x45c)) = 0;
+            func_0207fdcc(elementObj, 0x10);
+            *(unsigned int*)(self + HI(0x464)) |= 0x180000;
         } else {
-            memset(arg0, 0, LO(0x226));
-            *(short*)(arg0 + LO(0x226)) = 0;
-            func_02080cec(var4, 0xf, 0xf);
+            memset(self, 0, LO(0x226));
+            *(short*)(self + LO(0x226)) = 0;
+            func_02080cec(elementObj, 0xf, 0xf);
 #if !defined(jpn)
-            func_0208108c(var4, 0x43);
-            func_0208108c(var4, 0x44);
+            func_0208108c(elementObj, 0x43);
+            func_0208108c(elementObj, 0x44);
 #endif
             func_020813ec(elementObj, 0xf);
-            ResetWithSub0208203c((struct Obj0208203c*)(self + LO(0x308)));
+            func_0208203c((struct Struct_02081f20_2*)(self + LO(0x308)));
             *(void**)(self + HI(0x470)) = 0;
             self[HI(0x4a4)] = 6;
             LinkSession_End((int*)r8val);
-            ClearFlag0x3c9Bit0AndCleanup_020939fc((unsigned char*)globalPtr);
+            func_020939fc((unsigned char*)globalPtr);
             func_ov017_021c36a0();
             *(short*)(self + HI(0x476)) = 0;
             *(short*)(self + HI(0x478)) = 0;
-            ResetAndSetFlag0x3c9Bit0_020939dc((unsigned char*)globalPtr);
+            func_020939dc((unsigned char*)globalPtr);
             FlagWord_ClearBits((struct FlagWord020466f4*)flagWord, 0x20);
         }
         return;
     }
-    if (var6 == 6) {
-        *(void**)(arg0 + HI(0x470)) = 0;
-        func_ov003_0215f698(arg0, arg0 + LO(0x226));
-        if (*(short*)(arg0 + LO(0x226)) != 0) {
-            *(unsigned short*)(arg0 + HI(0x476)) = *(unsigned short*)(arg0 + HI(0x476)) + *(int*)(arg0 + HI(0x460));
-            *(short*)(arg0 + HI(0x478)) = 0;
-            if (*(unsigned short*)(arg0 + HI(0x476)) > 0x3c) {
+    if (state == 6) {
+        *(void**)(self + HI(0x470)) = 0;
+        func_ov003_0215f698(self, self + LO(0x226));
+        if (*(short*)(self + LO(0x226)) != 0) {
+            *(unsigned short*)(self + HI(0x476)) = *(unsigned short*)(self + HI(0x476)) + *(int*)(self + HI(0x460));
+            *(short*)(self + HI(0x478)) = 0;
+            if (*(unsigned short*)(self + HI(0x476)) > 0x3c) {
                 var5[0] = 0xa;
-                func_0207fdcc(var4, 0xf);
-                arg0[HI(0x4a4)] = 7;
+                func_0207fdcc(elementObj, 0xf);
+                self[HI(0x4a4)] = 7;
                 return;
             }
         } else {
             *(short*)(self + HI(0x476)) = 0;
             *(unsigned short*)(self + HI(0x478)) = *(unsigned short*)(self + HI(0x478)) + *(int*)(self + HI(0x460));
             if (*(unsigned short*)(self + HI(0x478)) > 0x12c) {
-                UpdateEntryFlagsNibble02080cec(elementObj, 0xf, 2);
+                func_02080cec(elementObj, 0xf, 2);
                 func_020813ec(elementObj, 0xf);
-                CallFunc0204c804OverAllElems((struct Cont0207fe44*)elementObj);
+                func_0207fe44((struct Struct_0207fe44*)elementObj);
                 *(unsigned int*)(self + HI(0x464)) |= 0x80000;
-                msg484[0] = 7;
-                msg484[1] = 1;
+                var5[0] = 7;
+                var5[1] = 1;
                 self[HI(0x4a3)] = 0xa;
                 self[HI(0x4a4)] = 0;
                 LinkSession_End((int*)r8val);
-                ClearFlag0x3c9Bit0AndCleanup_020939fc((unsigned char*)globalPtr);
+                func_020939fc((unsigned char*)globalPtr);
                 return;
             }
         }
-        if (func_ov003_02160a68(arg0) == 0) return;
+        if (func_ov003_02160a68(self) == 0) return;
         {
             ((struct GlobalBig1000*)((char*)MessageSystem_GetInstance() + 0x1000))->flag9ca = 1;
         }
-        CallFunc0204c804OverAllElems((struct Cont0207fe44*)elementObj);
+        func_0207fe44((struct Struct_0207fe44*)elementObj);
         *(unsigned int*)(self + HI(0x464)) |= 0x80000;
-        msg484[0] = 9;
-        msg484[1] = 1;
+        var5[0] = 9;
+        var5[1] = 1;
         self[HI(0x4a3)] = 0xa;
         self[HI(0x4a4)] = 0;
         LinkSession_End((int*)r8val);
-        ClearFlag0x3c9Bit0AndCleanup_020939fc((unsigned char*)globalPtr);
+        func_020939fc((unsigned char*)globalPtr);
         return;
     }
-    if (var6 == 7) {
-        short* var10 = (short*)(arg0 + LO(0x226));
-        while (*(short*)(arg0 + LO(0x226)) > 8) {
+    if (state == 7) {
+        short* var10 = (short*)(self + LO(0x226));
+        while (*(short*)(self + LO(0x226)) > 8) {
             struct Random* var11 = GetBTRandom();
-            int var12 = NextRandomMax(var11, *(short*)(arg0 + LO(0x226)));
-            int var13;
-            memset(arg0 + var12 * Enum_ov003_02164400_55, 0, Enum_ov003_02164400_55);
+            int idx = NextRandomMax(var11, *(short*)(self + LO(0x226)));
+            int j;
+            memset(self + idx * Enum_ov003_02164400_55, 0, Enum_ov003_02164400_55);
             *var10 = *var10 - 1;
-            for (var13 = var12; var13 != *(short*)(arg0 + LO(0x226)); ) {
-                func_ov003_0215f650((struct Struct_ov003_02164400_2*)(arg0 + var13 * Enum_ov003_02164400_55), (struct Struct_ov003_02164400_2*)(arg0 + (var13 + 1) * Enum_ov003_02164400_55));
-                var13++;
-                arg0[var13 * Enum_ov003_02164400_55] &= ~0x80;
+            for (j = idx; j != *(short*)(self + LO(0x226)); ) {
+                func_ov003_0215f650((struct Struct_ov003_02164400_2*)(self + j * Enum_ov003_02164400_55), (struct Struct_ov003_02164400_2*)(self + (j + 1) * Enum_ov003_02164400_55));
+                j++;
+                self[j * Enum_ov003_02164400_55] &= ~0x80;
             }
         }
 
         {
-            struct Struct_ov003_02164400_2* var14 = (struct Struct_ov003_02164400_2*)arg0;
-            short var15;
-            int var16;
-            for (var16 = 0; var16 < ((short*)arg0)[REGIONAL_OFFSET(0x87, 0x113)] - 1; var16 = (short)(var16 + 1)) {
-                struct Struct_ov003_02164400_2* var17;
-                struct Struct_ov003_02164400_2* var18 = &var14[(short)var16];
-                for (var15 = var16 + 1; var15 < *(short*)(arg0 + LO(0x226)); var15++) {
-                    var17 = &var14[var15];
-                    if (strcmp(var18->unknown_1_, var17->unknown_1_) == 1) {
-                        inline_020def98(var18, var17);
+            struct Struct_ov003_02164400_2* recs = (struct Struct_ov003_02164400_2*)self;
+            short j;
+            int i;
+            for (i = 0; i < ((short*)self)[REGIONAL_OFFSET(0x87, 0x113)] - 1; i = (short)(i + 1)) {
+                struct Struct_ov003_02164400_2* b;
+                struct Struct_ov003_02164400_2* a = &recs[(short)i];
+                for (j = i + 1; j < *(short*)(self + LO(0x226)); j++) {
+                    b = &recs[j];
+                    if (strcmp(a->name, b->name) == 1) {
+                        inline_020def98(a, b);
                     }
                 }
             }
-            for (var16 = 0; var16 < ((short*)arg0)[REGIONAL_OFFSET(0x87, 0x113)] - 1; var16 = (short)(var16 + 1)) {
-                struct Struct_ov003_02164400_2* var19;
-                struct Struct_ov003_02164400_2* var20 = &var14[(short)var16];
-                for (var15 = var16 + 1; var15 < *(short*)(arg0 + LO(0x226)); var15++) {
-                    var19 = &var14[var15];
-                    if (strcmp(var20->unknown_1_, var19->unknown_1_) == 0 && var20->unknown_0_1_ < var19->unknown_0_1_) {
-                        struct Struct_ov003_02164400_2 var21 = *var19;
-                        func_ov003_0215f650(var19, var20);
-                        func_ov003_0215f650(var20, &var21);
+            for (i = 0; i < ((short*)self)[REGIONAL_OFFSET(0x87, 0x113)] - 1; i = (short)(i + 1)) {
+                struct Struct_ov003_02164400_2* b;
+                struct Struct_ov003_02164400_2* a = &recs[(short)i];
+                for (j = i + 1; j < *(short*)(self + LO(0x226)); j++) {
+                    b = &recs[j];
+                    if (strcmp(a->name, b->name) == 0 && a->rank < b->rank) {
+                        struct Struct_ov003_02164400_2 var21 = *b;
+                        func_ov003_0215f650(b, a);
+                        func_ov003_0215f650(a, &var21);
                     }
                 }
             }
@@ -306,155 +306,155 @@ extern "C" ARM void func_ov003_02164400(unsigned char* self) {
 
         {
         short* var22 = (short*)0 + 7;
-        func_02081198((struct Struct_02081198*)var4, (int)var22, 1);
-        func_02081164((struct Struct_02081164*)var4, (int)var22, 1);
-        func_020813ec(var4, (int)var22);
+        func_02081198((struct Struct_02081198*)elementObj, (int)var22, 1);
+        func_02081164((struct Struct_02081164*)elementObj, (int)var22, 1);
+        func_020813ec(elementObj, (int)var22);
         }
-        *(unsigned int*)(arg0 + HI(0x464)) |= 0x180000;
-        *(short*)(arg0 + HI(0x488)) = 0x10;
+        *(unsigned int*)(self + HI(0x464)) |= 0x180000;
+        *(short*)(self + HI(0x488)) = 0x10;
         {
-            short var23 = func_02080468(var4, *(short*)(arg0 + HI(0x488)));
-            *(short*)(arg0 + HI(0x496)) = var23;
-            *(short*)(arg0 + HI(0x474)) = var23;
+            short id = func_02080468(elementObj, *(short*)(self + HI(0x488)));
+            *(short*)(self + HI(0x496)) = id;
+            *(short*)(self + HI(0x474)) = id;
         }
-        var4->unknown_36_ = *(short*)(arg0 + HI(0x496));
-        arg0[HI(0x4a0)] = 0;
-        func_ov003_021666c4(arg0);
-        func_0208203c((struct Struct_02081f20_2*)(arg0 + LO(0x308)));
-        *(void**)(arg0 + HI(0x470)) = 0;
-        arg0[HI(0x4a4)] = 8;
-        *(short*)(arg0 + HI(0x478)) = 0;
+        elementObj->unknown_36_ = *(short*)(self + HI(0x496));
+        self[HI(0x4a0)] = 0;
+        func_ov003_021666c4(self);
+        func_0208203c((struct Struct_02081f20_2*)(self + LO(0x308)));
+        *(void**)(self + HI(0x470)) = 0;
+        self[HI(0x4a4)] = 8;
+        *(short*)(self + HI(0x478)) = 0;
         return;
     }
-    if (var6 == 8) {
-        *(unsigned int*)(arg0 + HI(0x464)) |= 1;
-        *(void**)(arg0 + HI(0x470)) = arg0 + HI(0x496);
-        func_ov003_0216664c(arg0);
-        *(unsigned short*)(arg0 + HI(0x478)) = *(unsigned short*)(arg0 + HI(0x478)) + *(int*)(arg0 + HI(0x460));
-        var7 = 0;
-        if (*(unsigned short*)(arg0 + HI(0x478)) > 0x3c) {
-            func_ov003_021666c4(arg0);
-            *(unsigned short*)(arg0 + HI(0x478)) = *(unsigned short*)(arg0 + HI(0x478)) - 0x3c;
-            var7 = 1;
+    if (state == 8) {
+        *(unsigned int*)(self + HI(0x464)) |= 1;
+        *(void**)(self + HI(0x470)) = self + HI(0x496);
+        func_ov003_0216664c(self);
+        *(unsigned short*)(self + HI(0x478)) = *(unsigned short*)(self + HI(0x478)) + *(int*)(self + HI(0x460));
+        work = 0;
+        if (*(unsigned short*)(self + HI(0x478)) > 0x3c) {
+            func_ov003_021666c4(self);
+            *(unsigned short*)(self + HI(0x478)) = *(unsigned short*)(self + HI(0x478)) - 0x3c;
+            work = 1;
         }
-        func_ov003_0215f698(arg0, arg0 + LO(0x226));
-        if (var7 == 0 && inline_ov003_02164400(arg0, 0x1000000)) {
-            func_ov003_021666c4(arg0);
+        func_ov003_0215f698(self, self + LO(0x226));
+        if (work == 0 && inline_ov003_02164400(self, 0x1000000)) {
+            func_ov003_021666c4(self);
         }
         if (func_ov003_02160854(self) != 0) {
-            int idx = FindMappedMemberId02080468(elementObj, *(short*)(self + HI(0x488)));
+            int idx = func_02080468(elementObj, *(short*)(self + HI(0x488)));
             *(short*)(self + HI(0x498)) = *(short*)(self + HI(0x496)) - idx;
             *(short*)(self + HI(0x498)) = *(short*)(self + HI(0x498)) + (((signed char)self[HI(0x4a0)]) << 2);
             if (*(short*)(self + HI(0x498)) < *(short*)(self + LO(0x226))) {
                 SePlayer_Play(&g_sePlayer, 1, 0);
-                ResetWithSub0208203c((struct Obj0208203c*)(self + LO(0x308)));
+                func_0208203c((struct Struct_02081f20_2*)(self + LO(0x308)));
                 *(void**)(self + HI(0x470)) = 0;
-                struct RecordByte0* rb = (struct RecordByte0*)(self + (*(short*)(self + HI(0x498))) * kRec37);
-                int inv = 4 - rb->rank;
-                if (rb->used == 0) {
-                    msg484[0] = 0x37;
+                struct Struct_ov003_02164400_4* var25 = (struct Struct_ov003_02164400_4*)(self + (*(short*)(self + HI(0x498))) * Enum_ov003_02164400_55);
+                int var26 = 4 - var25->rank;
+                if (var25->used == 0) {
+                    var5[0] = 0x37;
                     self[HI(0x4a4)] = 5;
-                } else if (inv == 0) {
-                    msg484[0] = 0x33;
+                } else if (var26 == 0) {
+                    var5[0] = 0x33;
                     self[HI(0x4a4)] = 5;
                 } else {
                     ((struct GlobalBig1000*)((char*)MessageSystem_GetInstance() + 0x1000))->flag9ca = 0;
-                    msg484[0] = 0xb;
+                    var5[0] = 0xb;
                     self[HI(0x4a4)] = 9;
                 }
-                *(unsigned int*)(arg0 + HI(0x464)) |= 4;
+                *(unsigned int*)(self + HI(0x464)) |= 4;
                 return;
             }
         }
         if (func_ov003_02160a68(self) == 0) return;
-        CallFunc0204c804OverAllElems((struct Cont0207fe44*)elementObj);
-        msg484[0] = 1;
+        func_0207fe44((struct Struct_0207fe44*)elementObj);
+        var5[0] = 1;
         self[HI(0x4a3)] = 0xa;
         self[HI(0x4a4)] = 0;
         *(unsigned int*)(self + HI(0x464)) = (*(unsigned int*)(self + HI(0x464)) | 0x80000) & ~0xf00000u;
         LinkSession_End((int*)r8val);
-        ClearFlag0x3c9Bit0AndCleanup_020939fc((unsigned char*)globalPtr);
+        func_020939fc((unsigned char*)globalPtr);
         return;
     }
-    if (var6 == 9) {
-        func_ov003_021612c0(arg0);
-        arg0[HI(0x4a4)] = 0xa;
+    if (state == 9) {
+        func_ov003_021612c0(self);
+        self[HI(0x4a4)] = 0xa;
         return;
     }
-    if (var6 == 0xa) {
-        int var27 = func_ov003_02161344(arg0);
-        if (var27 != -1) {
-            if (var27 == 1) {
-                *(short*)(arg0 + HI(0x47a)) = 0;
-                arg0[HI(0x4a4)] = 0xd;
+    if (state == 0xa) {
+        int result = func_ov003_02161344(self);
+        if (result != -1) {
+            if (result == 1) {
+                *(short*)(self + HI(0x47a)) = 0;
+                self[HI(0x4a4)] = 0xd;
                 var5[0] = 0x38;
-                *(unsigned int*)(arg0 + HI(0x464)) |= 4;
-                func_0207fdcc(var4, 0x10);
-                func_0207fdcc(var4, 0xe);
-                *(unsigned int*)(arg0 + HI(0x464)) |= 0x80000;
+                *(unsigned int*)(self + HI(0x464)) |= 4;
+                func_0207fdcc(elementObj, 0x10);
+                func_0207fdcc(elementObj, 0xe);
+                *(unsigned int*)(self + HI(0x464)) |= 0x80000;
             }
         } else {
             var5[0] = 0xc;
-            arg0[HI(0x4a4)] = 5;
+            self[HI(0x4a4)] = 5;
         }
         return;
     }
-    if (var6 == 0xd) {
-        if (*(unsigned short*)(arg0 + HI(0x47a)) == 0) {
-            *(short*)(arg0 + HI(0x488)) = 0x11;
-            func_02080b54(var4, 0x11);
-            func_02080b40(var4, 0x51);
+    if (state == 0xd) {
+        if (*(unsigned short*)(self + HI(0x47a)) == 0) {
+            *(short*)(self + HI(0x488)) = 0x11;
+            func_02080b54(elementObj, 0x11);
+            func_02080b40(elementObj, 0x51);
 #if !defined(jpn)
-            func_0208108c(var4, 0x51);
+            func_0208108c(elementObj, 0x51);
 #endif
-            func_020813ec(var4, *(short*)(arg0 + HI(0x488)));
-            func_0208203c((struct Struct_02081f20_2*)(arg0 + LO(0x308)));
-            *(void**)(arg0 + HI(0x470)) = 0;
-            *(unsigned short*)(arg0 + HI(0x47a)) = *(unsigned short*)(arg0 + HI(0x47a)) + 1;
+            func_020813ec(elementObj, *(short*)(self + HI(0x488)));
+            func_0208203c((struct Struct_02081f20_2*)(self + LO(0x308)));
+            *(void**)(self + HI(0x470)) = 0;
+            *(unsigned short*)(self + HI(0x47a)) = *(unsigned short*)(self + HI(0x47a)) + 1;
         }
-        void* var28 = func_02081da8(var4, 0x11);
-        if (var28 == 0) {
-            *(short*)(arg0 + HI(0x484)) = 0x30;
-            arg0[HI(0x4a4)] = arg0[HI(0x4a4)] + 1;
-            *(short*)(arg0 + HI(0x47a)) = 0;
-            arg0[HI(0x4a4)] = 0xe;
+        void* found = func_02081da8(elementObj, 0x11);
+        if (found == 0) {
+            *(short*)(self + HI(0x484)) = 0x30;
+            self[HI(0x4a4)] = self[HI(0x4a4)] + 1;
+            *(short*)(self + HI(0x47a)) = 0;
+            self[HI(0x4a4)] = 0xe;
         }
         if (WindowPane_IsReady((unsigned char*)found) == 0) return;
         *(short*)(self + HI(0x47a)) = 0;
         self[HI(0x4a4)] = 0xe;
         return;
     }
-    if (var6 == 0xe) {
-        int var29 = 0;
-        if (*(unsigned short*)(arg0 + HI(0x47a)) > 0x78 || func_ov003_02160a68(arg0) != 0 ||
+    if (state == 0xe) {
+        int flag = 0;
+        if (*(unsigned short*)(self + HI(0x47a)) > 0x78 || func_ov003_02160a68(self) != 0 ||
             g_touchInput.pressed_ != 0) {
-            var29 = 1;
+            flag = 1;
         }
 
         void* arr;
         int idx;
         int count;
-        cur = self + (*(short*)(self + HI(0x498))) * kRec37;
+        cur = self + (*(short*)(self + HI(0x498))) * Enum_ov003_02164400_55;
         arr = LinkSession_GetInstance();
-        count = GetField0xc_0202bae4(arr);
+        count = func_0202bae4(arr);
         for (idx = 0; idx < count; idx++) {
-            struct Element0202bad4* elem = GetElementAt0x10Stride0xc0((struct ElementArray0202bad4*)arr, idx);
+            struct Struct_0202bad4* elem = func_0202bad4((struct Struct_0202bad4_2*)arr, idx);
             if (memcmp((int)(cur + REGIONAL_OFFSET(0x15, 0x31)), (int)((char*)elem + 4), 6) == 0) goto found;
         }
-        var31 = -1;
-    var28:
+        idx = -1;
+    found:
         {
-        if (idx < 0 || ((struct RecordByte0*)(self + (*(short*)(self + HI(0x498))) * kRec37))->used == 0) {
+        if (idx < 0 || ((struct Struct_ov003_02164400_4*)(self + (*(short*)(self + HI(0x498))) * Enum_ov003_02164400_55))->used == 0) {
             if (flag != 0) {
-                CallFunc0204c804OnMatchingKey_0207fdcc(elementObj, 0x11);
+                func_0207fdcc(elementObj, 0x11);
                 ((struct GlobalBig1000*)((char*)MessageSystem_GetInstance() + 0x1000))->flag9ca = 1;
-                msg484[0] = 0x37;
+                var5[0] = 0x37;
                 *(unsigned int*)(self + HI(0x464)) |= 4;
                 *(short*)(self + HI(0x47a)) = 0;
                 self[HI(0x4a4)] = 5;
                 func_ov003_02160344(self);
             } else {
-                *(unsigned short*)(arg0 + HI(0x47a)) = *(unsigned short*)(arg0 + HI(0x47a)) + 1;
+                *(unsigned short*)(self + HI(0x47a)) = *(unsigned short*)(self + HI(0x47a)) + 1;
             }
             return;
         }
@@ -462,47 +462,47 @@ extern "C" ARM void func_ov003_02164400(unsigned char* self) {
         *(int*)(self + HI(0x4b0)) = 0;
         FlagWord_SetBits((unsigned int*)GlobalFlags_GetInstance(), 0x80000);
         {
-            char* var34 = (char*)GetGameResources() + 0x3000;
-            struct Struct_ov003_02164400* var35 = *(struct Struct_ov003_02164400**)(var34 + REGIONAL_OFFSET(0x90c, 0xb2c));
-            struct Struct_020469f8* var36 = *(struct Struct_020469f8**)(var34 + REGIONAL_OFFSET(0x4ec, 0x6fc));
-            func_ov017_021aeedc(var35);
-            memcpy((char*)var35 + 9, arg0 + (*(short*)(arg0 + HI(0x498))) * Enum_ov003_02164400_55 + REGIONAL_OFFSET(0x15, 0x31), 6);
+            char* ov = (char*)GetGameResources() + 0x3000;
+            struct Struct_ov003_02164400* p4 = *(struct Struct_ov003_02164400**)(ov + REGIONAL_OFFSET(0x90c, 0xb2c));
+            struct HeadList020469f8* p5 = *(struct HeadList020469f8**)(ov + REGIONAL_OFFSET(0x4ec, 0x6fc));
+            func_ov017_021aeedc(p4);
+            memcpy((char*)p4 + 9, self + (*(short*)(self + HI(0x498))) * Enum_ov003_02164400_55 + REGIONAL_OFFSET(0x15, 0x31), 6);
             {
-                int var37;
-                for (var37 = 0; var37 < 6; var37++) { }
+                int i;
+                for (i = 0; i < 6; i++) { }
             }
-            func_020469f8(var36, (struct Struct_020469f8_2*)var35);
+            func_020469f8(p5, (struct HeadNode020469f8*)p4);
         }
-        *(short*)(arg0 + HI(0x47a)) = 0;
-        arg0[HI(0x4a4)] = 0xf;
+        *(short*)(self + HI(0x47a)) = 0;
+        self[HI(0x4a4)] = 0xf;
         return;
         }
     }
-    if (var6 == 0xf) {
-        char* var38 = (char*)GetGameResources() + 0x3000;
-        void* var39 = *(void**)(var38 + REGIONAL_OFFSET(0x90c, 0xb2c));
-        signed char var40 = *((signed char*)var39 + 0xf);
-        if (var40 == 1) {
-            func_0207fdcc(var4, 0x11);
-            arg0[HI(0x4a4)] = 0x11;
-        } else if (var40 == -1) {
-            func_0207fe44((struct Struct_0207fe44*)var4);
-            *(short*)(arg0 + HI(0x47a)) = 0;
-            arg0[HI(0x4a4)] = 5;
-            func_ov003_02160344(arg0);
-        } else if (var40 == 0) {
-            func_0207fe44((struct Struct_0207fe44*)var4);
+    if (state == 0xf) {
+        char* ov = (char*)GetGameResources() + 0x3000;
+        void* p = *(void**)(ov + REGIONAL_OFFSET(0x90c, 0xb2c));
+        signed char v = *((signed char*)p + 0xf);
+        if (v == 1) {
+            func_0207fdcc(elementObj, 0x11);
+            self[HI(0x4a4)] = 0x11;
+        } else if (v == -1) {
+            func_0207fe44((struct Struct_0207fe44*)elementObj);
+            *(short*)(self + HI(0x47a)) = 0;
+            self[HI(0x4a4)] = 5;
+            func_ov003_02160344(self);
+        } else if (v == 0) {
+            func_0207fe44((struct Struct_0207fe44*)elementObj);
             var5[0] = 0x37;
-            *(short*)(arg0 + HI(0x47a)) = 0;
-            arg0[HI(0x4a4)] = 5;
-            *(unsigned int*)(arg0 + HI(0x464)) |= 4;
+            *(short*)(self + HI(0x47a)) = 0;
+            self[HI(0x4a4)] = 5;
+            *(unsigned int*)(self + HI(0x464)) |= 4;
         }
-        *(short*)(arg0 + HI(0x47a)) = 0;
+        *(short*)(self + HI(0x47a)) = 0;
         return;
     }
     if (state == 0x11) {
         ((struct GlobalBig1000*)((char*)MessageSystem_GetInstance() + 0x1000))->flag9ca = 0;
-        msg484[0] = 0x36;
+        var5[0] = 0x36;
         *(unsigned int*)(self + HI(0x464)) |= 0x0c004042;
         self[HI(0x4a3)] = 6;
         self[HI(0x4a4)] = 0;

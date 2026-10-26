@@ -2,7 +2,7 @@
 #include "GameState/GameState.h"
 #include "Grotto/Main/GrottoStruct.h"
 
-extern "C" void* func_02012fe4(void* arg0);
+extern "C" void* Zone3D_GetInstance(void* unused);
 
 struct Struct_0208f820 {
     unsigned char unknown_0_[8];
@@ -13,17 +13,17 @@ struct Struct_0208f820 {
 };
 
 // USA: func_0208f820
-extern "C" ARM void func_0208f820(struct Struct_0208f820* arg0) {
-    if (arg0->unknown_b4_ != 0 && arg0->unknown_b6_ != 0) {
-        if (((Object3D*)((unsigned char*)arg0 + 8))->IsVisible() == 0) {
+extern "C" ARM void func_0208f820(struct Struct_0208f820* p) {
+    if (p->unknown_b4_ != 0 && p->unknown_b6_ != 0) {
+        if (((Object3D*)((unsigned char*)p + 8))->IsVisible() == 0) {
             return;
         }
-        GameState* var0 = GameState::GetInstance();
-        GrottoStruct* var1 = var0->GetGrottoStruct();
-        unsigned short var2 = *(unsigned short*)func_02012fe4(var1);
-        if (var2 != *(int*)((char*)var1 + 0xc)) {
+        GameState* battle = GameState::GetInstance();
+        GrottoStruct* grotto = battle->GetGrottoStruct();
+        unsigned short val = *(unsigned short*)Zone3D_GetInstance(grotto);
+        if (val != *(int*)((char*)grotto + 0xc)) {
             return;
         }
-        ((Object3D*)((unsigned char*)arg0 + 8))->Draw(1);
+        ((Object3D*)((unsigned char*)p + 8))->Draw(1);
     }
 }

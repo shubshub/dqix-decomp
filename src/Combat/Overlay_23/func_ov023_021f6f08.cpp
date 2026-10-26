@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
 struct Struct_ov004_02153978 {
-    char unknown_0_[0x6];
-    unsigned short unknown_6_;
+    char pad[0x6];
+    unsigned short field6;
 };
 
 // USA: func_ov023_021f6f08
-extern "C" ARM unsigned int func_ov023_021f6f08(struct Struct_ov004_02153978 *arg0) {
-    return arg0->unknown_6_;
+extern "C" ARM unsigned int func_ov023_021f6f08(struct Struct_ov004_02153978 *obj) {
+    return obj->field6;
 }

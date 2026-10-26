@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 // USA: func_02053ed0
-extern "C" ARM int func_02053ed0(void* arg0) {
+extern "C" ARM int func_02053ed0(void* obj) {
 #if defined(jpn)
-    return *(int*)((char*)arg0 + 0x14c);
+    return *(int*)((char*)obj + 0x14c);
 #else
-    return *(int*)((char*)arg0 + 0x158);
+    return *(int*)((char*)obj + 0x158);
 #endif
 }

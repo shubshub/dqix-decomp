@@ -23,7 +23,7 @@ struct BackgroundLoaderStatics
 
 extern "C"
 {
-    int _Z21GameState_GetLanguageP14Struct0200fb08(GameState*);
+    int GameState_GetLanguage(GameState*);
 
     void HaltSystem();
 
@@ -185,7 +185,7 @@ int BackgroundLoader::QueueFileTask(const char* filename, int type, const char* 
     int newID = -1;
     LockResourceMutex();
 #if defined(usa)
-    int language = _Z21GameState_GetLanguageP14Struct0200fb08(GameState::GetInstance());
+    int language = GameState_GetLanguage(GameState::GetInstance());
     char replacedFilename[80] = { 0 };
     StringReplaceLanguageTag(filename, replacedFilename, language);
 #endif

@@ -6,29 +6,29 @@ void BlockCurrentContext(struct BlockedContextList* p);
 
 struct Mutex;
 void* LockMutex(Mutex*);
-extern "C" void func_020bf79c(void* arg0);
+extern "C" void func_020bf79c(void* p);
 
-extern "C" ARM SignedAllocatorHeader* func_020bf3c8(SignedAllocatorList* arg0);
-extern "C" void func_020bf458(SignedAllocatorHeader* arg0);
+extern "C" ARM SignedAllocatorHeader* func_020bf3c8(SignedAllocatorList* list);
+extern "C" void func_020bf458(SignedAllocatorHeader* header);
 
 struct Struct_ov031_02290f8c;
 void UnlockMutex(Mutex*);
 
 // USA: func_020c015c
-extern "C" ARM void func_020c015c(void *arg0) {
-    char *var0 = (char*)arg0;
+extern "C" ARM void func_020c015c(void *obj) {
+    char *base = (char*)obj;
     for (;;) {
-        BlockCurrentContext((BlockedContextList*)(var0 + 0x4c0));
+        BlockCurrentContext((BlockedContextList*)(base + 0x4c0));
     retry:
-        LockMutex((Mutex*)(var0 + 0x4c8));
+        LockMutex((Mutex*)(base + 0x4c8));
         {
-            SignedAllocatorHeader *var1 = func_020bf3c8((SignedAllocatorList*)(var0 + 0x4e0));
-            if (var1 == 0) {
-                UnlockMutex((Mutex*)(var0 + 0x4c8));
+            SignedAllocatorHeader *e = func_020bf3c8((SignedAllocatorList*)(base + 0x4e0));
+            if (e == 0) {
+                UnlockMutex((Mutex*)(base + 0x4c8));
             } else {
-                func_020bf79c(var1);
-                func_020bf458(var1);
-                UnlockMutex((Mutex*)(var0 + 0x4c8));
+                func_020bf79c(e);
+                func_020bf458(e);
+                UnlockMutex((Mutex*)(base + 0x4c8));
                 goto retry;
             }
         }

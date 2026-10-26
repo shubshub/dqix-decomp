@@ -3,7 +3,7 @@
 
 extern "C" int Vector3fix_HeadingToward(Vector3fix*, Vector3fix*);
 struct Obj02033834;
-void GameObject_SetFacing(struct Obj02033834*, int);
+extern "C" void GameObject_SetFacing(struct Obj02033834*, int);
 int fix32SignedAngleDistance(int a, int b);
 int fix32abs(int x);
 extern char data_020efa3c;

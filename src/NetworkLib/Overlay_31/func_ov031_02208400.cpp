@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_02208400_2 {
-	const char* unknown_0_;
+	const char* name;
 	int unknown_4_;
 	unsigned char* unknown_8_;
 	int unknown_c_;
@@ -9,11 +9,11 @@ struct Struct_ov031_02208400_2 {
 };
 
 struct Struct_ov031_02208400 {
-	unsigned char unknown_0_[0x468];
-	unsigned char unknown_468_[0x14];
-	int unknown_47c_;
-	unsigned char unknown_480_[0x124];
-	unsigned char* unknown_5a4_;
+	unsigned char field_0x0[0x468];
+	unsigned char digest[0x14];
+	int digestLength;
+	unsigned char field_0x480[0x124];
+	unsigned char* signature;
 	int unknown_5a8_;
 };
 
@@ -27,51 +27,51 @@ extern void* (*data_ov031_0224c994)(unsigned int);
 extern int (*data_ov031_0224c9c0)(void*);
 
 // USA: func_ov031_02208400
-extern "C" ARM int func_ov031_02208400(Struct_ov031_02208400* arg0, Struct_ov031_02208400_2* arg1) {
+extern "C" ARM int func_ov031_02208400(Struct_ov031_02208400* state, Struct_ov031_02208400_2* key) {
 	unsigned short* var0;
-	unsigned short* var1;
+	unsigned short* message;
 	unsigned short* var2;
 	unsigned short* var3;
-	int var4;
-	int var5;
-	int var6;
-	int var7;
-	unsigned char* var8;
-	if (arg0->unknown_5a4_ == 0 || arg0->unknown_5a8_ == 0 || arg1->unknown_10_ == 0 || arg1->unknown_c_ == 0 ||
-	    arg1->unknown_8_ == 0 || arg1->unknown_4_ == 0)
+	int words;
+	int result;
+	int i;
+	int length;
+	unsigned char* decoded;
+	if (state->signature == 0 || state->unknown_5a8_ == 0 || key->unknown_10_ == 0 || key->unknown_c_ == 0 ||
+	    key->unknown_8_ == 0 || key->unknown_4_ == 0)
 		return 2;
-	var4 = (arg1->unknown_4_ * 2) / 2;
-	var0 = (unsigned short*)data_ov031_0224c994(var4 * 8);
+	words = (key->unknown_4_ * 2) / 2;
+	var0 = (unsigned short*)data_ov031_0224c994(words * 8);
 	if (var0 == 0)
 		return 2;
-	var1 = var0 + var4;
-	var2 = var1 + var4;
-	var3 = var2 + var4;
-	func_ov031_0220c8d0(var1, arg0->unknown_5a4_, arg0->unknown_5a8_, var4);
-	func_ov031_0220c8d0(var2, arg1->unknown_10_, arg1->unknown_c_, var4);
-	func_ov031_0220c8d0(var3, arg1->unknown_8_, arg1->unknown_4_, var4);
-	unsigned int var9 = func_ov031_02207cf0();
-	func_ov031_0220c2bc(var0, var1, var2, var4, var3);
-	func_ov031_02207d3c(var9);
-	var8 = (unsigned char*)var1;
-	func_ov031_0220c92c(var8, var0, arg1->unknown_4_, var4);
-	var5 = 0;
-	if (var8[0] != 0 || var8[1] != 1) {
-		var5 = 2;
+	message = var0 + words;
+	var2 = message + words;
+	var3 = var2 + words;
+	func_ov031_0220c8d0(message, state->signature, state->unknown_5a8_, words);
+	func_ov031_0220c8d0(var2, key->unknown_10_, key->unknown_c_, words);
+	func_ov031_0220c8d0(var3, key->unknown_8_, key->unknown_4_, words);
+	unsigned int priority = func_ov031_02207cf0();
+	func_ov031_0220c2bc(var0, message, var2, words, var3);
+	func_ov031_02207d3c(priority);
+	decoded = (unsigned char*)message;
+	func_ov031_0220c92c(decoded, var0, key->unknown_4_, words);
+	result = 0;
+	if (decoded[0] != 0 || decoded[1] != 1) {
+		result = 2;
 	} else {
-		var7 = arg1->unknown_4_;
-		var6 = 2;
-		if (var6 < var7) {
+		length = key->unknown_4_;
+		i = 2;
+		if (i < length) {
 			do {
-				if (var8[var6] != 0xff)
+				if (decoded[i] != 0xff)
 					break;
-				var6++;
-			} while (var6 < var7);
+				i++;
+			} while (i < length);
 		}
 		if (i + 1 >= length || decoded[i] != 0 || decoded[i + 1] != 0x30 ||
 		    memcmp(state->digest, decoded + length - state->digestLength, state->digestLength) != 0)
 			result = 2;
 	}
 	data_ov031_0224c9c0(var0);
-	return var5;
+	return result;
 }

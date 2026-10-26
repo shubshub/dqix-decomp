@@ -1,36 +1,36 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_022415e0 {
-	int unknown_0_;
-	int unknown_4_;
+	int unk0;
+	int field4;
 };
 
-extern "C" void func_ov031_022415c8(void* arg0, const void* arg1, unsigned int arg2);
-extern "C" int func_ov031_022414cc(Struct_ov031_022415e0* arg0, int arg1, void* arg2, int arg3, int arg4);
+extern "C" void func_ov031_022415c8(void* dst, const void* src, unsigned int length);
+extern "C" int func_ov031_022414cc(Struct_ov031_022415e0* obj, int b, void* c, int d, int e);
 extern char data_ov031_02291a04[0x400];
 
 // USA: func_ov031_022415e0
-extern "C" ARM int func_ov031_022415e0(Struct_ov031_022415e0* arg0, int arg1, int* arg2, char* arg3, int arg4) {
-	int var0 = arg4;
-	while (var0 > 0) {
-		if (arg0->unknown_4_ != 0) {
+extern "C" ARM int func_ov031_022415e0(Struct_ov031_022415e0* a, int b, int* pos, char* buf, int count) {
+	int remaining = count;
+	while (remaining > 0) {
+		if (a->field4 != 0) {
 			return -1;
 		}
-		int var1 = 0x400 - *arg2;
-		if (var0 <= var1) {
-			var1 = var0;
+		int var1 = 0x400 - *pos;
+		if (remaining <= var1) {
+			var1 = remaining;
 		}
-		func_ov031_022415c8(data_ov031_02291a04 + *arg2, arg3, var1);
-		arg3 += var1;
-		*arg2 += var1;
-		var0 -= var1;
-		if (*arg2 == 0x400) {
-			int var2 = func_ov031_022414cc(arg0, arg1, data_ov031_02291a04, 0x400, 0);
-			if (var2 <= 0) {
-				return var2;
+		func_ov031_022415c8(data_ov031_02291a04 + *pos, buf, var1);
+		buf += var1;
+		*pos += var1;
+		remaining -= var1;
+		if (*pos == 0x400) {
+			int result = func_ov031_022414cc(a, b, data_ov031_02291a04, 0x400, 0);
+			if (result <= 0) {
+				return result;
 			}
-			*arg2 -= var2;
+			*pos -= result;
 		}
 	}
-	return arg4;
+	return count;
 }

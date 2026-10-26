@@ -2,66 +2,66 @@
 
 extern "C" int rand(void);
 
-struct Struct_02028460_3 { int unknown_0_; int unknown_4_; int unknown_8_; };
-extern "C" extern int Vector3fix_Distance(struct Struct_02028460_3* arg0, struct Struct_02028460_3* arg1);
+struct Struct_02028460_3 { int x; int y; int z; };
+extern "C" extern int Vector3fix_Distance(struct Struct_02028460_3* a, struct Struct_02028460_3* b);
 
-struct Struct_020409b0 {
-    char unknown_0_[0x14];
-    void* unknown_14_;
-    void* unknown_18_;
+struct Npc {
+    char pad[0x14];
+    void* walker;   // its NpcWalker
+    void* model;    // its 3D-model mover (NpcModel_WalkTo)
 };
-extern "C" int func_020409b0(struct Struct_020409b0* arg0, int arg1);
+extern "C" int Npc_WalkTo(struct Npc* obj, int arg);
 
 struct Struct_0204117c {
-    int unknown_0_, unknown_4_, unknown_8_;
-    int unknown_c_;
-    struct Struct_0204117c* unknown_10_;
+    int x, y, z;
+    int f0xc;
+    struct Struct_0204117c* next;
 };
 
 struct Struct_0204117c_2 {
-    unsigned char unknown_0_[0x1f];
+    unsigned char pad0[0x1f];
     unsigned char unknown_1f_;
-    unsigned char unknown_20_[0x22 - 0x20];
+    unsigned char pad20[0x22 - 0x20];
     unsigned char unknown_22_;
     unsigned char unknown_23_[0x34 - 0x23];
-    struct Struct_0204117c* unknown_34_;
+    struct Struct_0204117c* listHead;
 };
 
 struct Struct_02040c2c_5 {
-    unsigned char unknown_0_[0xc];
-    struct Struct_0204117c_2* unknown_c_;
+    unsigned char pad0[0xc];
+    struct Struct_0204117c_2* cont;
 };
 
 // USA: func_0204117c
-extern "C" ARM void func_0204117c(struct Struct_02040c2c_5* arg0, struct Struct_02028460_3* arg1) {
-    struct Struct_0204117c* var0 = arg0->unknown_c_->unknown_34_;
-    while (var0 != NULL) {
-        if (var0->unknown_c_ != 0) {
-            if (Vector3fix_Distance((struct Struct_02028460_3*)var0, arg1) != 0) {
-                func_020409b0((struct Struct_020409b0*)arg0, (int)var0);
+extern "C" ARM void func_0204117c(struct Struct_02040c2c_5* obj, struct Struct_02028460_3* arg1) {
+    struct Struct_0204117c* node = obj->cont->listHead;
+    while (node != NULL) {
+        if (node->f0xc != 0) {
+            if (Vector3fix_Distance((struct Struct_02028460_3*)node, arg1) != 0) {
+                Npc_WalkTo((struct Npc*)obj, (int)node);
                 goto epilogue;
             }
             break;
         } else {
-            var0 = var0->unknown_10_;
+            node = node->next;
         }
     }
-    var0->unknown_c_ = 0;
-    var0 = var0->unknown_10_;
-    if (arg0->unknown_c_->unknown_1f_ == 9) {
-        int var1 = rand() % arg0->unknown_c_->unknown_22_;
-        int var2;
-        for (var2 = 0; var2 < var1; var2++) {
-            var0 = var0->unknown_10_;
+    node->f0xc = 0;
+    node = node->next;
+    if (obj->cont->unknown_1f_ == 9) {
+        int var1 = rand() % obj->cont->unknown_22_;
+        int i;
+        for (i = 0; i < var1; i++) {
+            node = node->next;
         }
     }
     {
-        struct Struct_02028460_3 var3;
-        var3.unknown_0_ = var0->unknown_0_;
-        var3.unknown_4_ = var0->unknown_4_;
-        var3.unknown_8_ = var0->unknown_8_;
-        var0->unknown_c_ = 1;
-        func_020409b0((struct Struct_020409b0*)arg0, (int)&var3);
+        struct Struct_02028460_3 localBuf;
+        localBuf.x = node->x;
+        localBuf.y = node->y;
+        localBuf.z = node->z;
+        node->f0xc = 1;
+        Npc_WalkTo((struct Npc*)obj, (int)&localBuf);
     }
 epilogue:;
 }

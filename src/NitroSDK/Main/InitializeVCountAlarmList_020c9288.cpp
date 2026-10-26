@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-struct Module020c9288 {
+struct Struct_02111654 {
     unsigned short initialized;
     unsigned char pad2[2];
     int f4;
@@ -9,11 +9,11 @@ struct Module020c9288 {
     int f10;
 };
 
-extern Module020c9288 data_02111654;
+extern Struct_02111654 data_02111654;
 extern unsigned int DisableSpecificInterrupts(unsigned int mask);
 
 // Main, originally InitModule020c9288 (USA 0x020c9288, EUR 0x020c9298, JPN 0x020cad54)
-ARM void InitializeVCountAlarmList() {
+extern "C" ARM void InitializeVCountAlarmList() {
     if (data_02111654.initialized != 0) {
         return;
     }

@@ -9,149 +9,149 @@
 extern "C" int func_020e0484(void* list, void* alloc, const char* path, void* entries, unsigned short count, bool lock);
 extern "C" int func_ov017_021b2718(void* obj);
 extern const char* g_itemDataArchive;
-static inline char* DateConditionBase(void* state) {
+static inline char* inline_0205faf4(void* state) {
     return (char*)state + 0x5c0c;
 }
 #else
 #define REGION_VALUE(jpnValue, usaValue) usaValue
 #endif
 
-struct Struct_0203d028_2 {
-    int unknown_0_;
-    int unknown_4_;
-    struct Struct_0203d028_3* unknown_8_[0xe9];
+struct BattleStruct {
+    int unk0;
+    int unk4;
+    struct CombatantStruct* combatantList[0xe9];
 };
-struct Struct_0203d028_3 {
-    unsigned short unknown_0_;
-    char unknown_2_[0x132];
-    struct BaseCombatStats* unknown_134_;
-    struct ModifiableCombatStats* unknown_138_;
+struct CombatantStruct {
+    unsigned short flags;
+    char unk[0x132];
+    struct BaseCombatStats* baseStats;
+    struct ModifiableCombatStats* currentStats;
 };
 
 struct Struct_0205faf4_20 {
     unsigned short unknown_0_;
-    unsigned short unknown_2_;
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
-    unsigned short unknown_8_;
-    unsigned short unknown_a_;
-    struct Struct_0205faf4_20* unknown_c_;
+    unsigned short p2;
+    unsigned short p4;
+    unsigned short p6;
+    unsigned short p8;
+    unsigned short pa;
+    struct Struct_0205faf4_20* next;
 };
 
-int Scenario_TestFlag(int unused, unsigned char* arr, int index);
-void GameState_CollectPartyObjectIndices(GameState*, int*, int*);
-int MessageSystem_GetInstance(void);
+extern "C" int Scenario_TestFlag(int unused, unsigned char* arr, int index);
+extern "C" void GameState_CollectPartyObjectIndices(GameState*, int*, int*);
+extern "C" int MessageSystem_GetInstance(void);
 extern "C" int func_020457e0(int);
 struct Struct_0205faf4;
 struct GameState;
 struct Obj02086aec;
-short Party_CountItem(struct Obj02086aec* obj, int key);
+extern "C" short Party_CountItem(struct Obj02086aec* obj, int key);
 struct PackedNibbleArray0206e120;
-int GetPackedNibbleField(struct PackedNibbleArray0206e120* obj, int index);
-int CheckFlagAndThreshold0206e31c(int unused, int index);
+extern "C" int func_0206e120(struct PackedNibbleArray0206e120* obj, int index);
+extern "C" int func_0206e31c(int unused, int index);
 struct PackedNibbleArray0206e260;
-int GetPackedNibbleFlag0x4(struct PackedNibbleArray0206e260* obj, int index);
+extern "C" int func_0206e260(struct PackedNibbleArray0206e260* obj, int index);
 extern "C" void* LinkSession_GetInstance(void* gs);
-int LinkSession_IsActive(int* obj);
+extern "C" int LinkSession_IsActive(int* obj);
 struct SearchStruct0202c1a4;
-signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
-int TestBitWithBias0206eb98(unsigned char* obj, int index);
+extern "C" signed char LinkSession_GetOwnSlot(struct SearchStruct0202c1a4* obj);
+extern "C" int func_0206eb98(unsigned char* obj, int index);
 extern "C" void __clear(void* buf, int count);
-void* GetGlobal02109418_02094d6c(void);
-int TestBitInByteArrayAt0x84_02096088(void* obj, int index);
-void* GetGlobalPtr021075f4_0203cf4c(void);
-void* FindEntryPointerByKey0203df78(void* base, int key);
-struct S02040538;
-void* GetField0xc02040538(struct S02040538* p);
-int GameState_GetStoryStep(char* p);
-int GameState_GetProtagonistIndex(GameState*);
+extern "C" void* func_02094d6c(void);
+extern "C" int func_02096088(void* obj, int index);
+extern "C" void* func_0203cf4c(void);
+extern "C" void* func_0203df78(void* base, int key);
+struct Struct_0203e0a0;
+extern "C" void* func_02040538(struct Struct_0203e0a0* p);
+extern "C" int GameState_GetStoryStep(char* p);
+extern "C" int GameState_GetProtagonistIndex(GameState*);
 struct Base02010834;
-void GameState_GetPartyMemberIds(struct Base02010834* base, int index, int* out, int* outCount);
+extern "C" void GameState_GetPartyMemberIds(struct Base02010834* base, int index, int* out, int* outCount);
 
 struct Struct_0205faf4_5 {
     int unknown_0_;
-    unsigned int unknown_4_0_:10, unknown_5_2_:10, unknown_6_4_:12;
+    unsigned int unknown_4_0_:10, base:10, unknown_6_4_:12;
     int unknown_8_;
-    unsigned int unknown_c_0_:10, unknown_d_2_:10, unknown_e_4_:10;
-    unsigned int unknown_10_0_:10, unknown_11_2_:10, unknown_12_4_:10;
+    unsigned int unknown_c_0_:10, f0:10, f1:10;
+    unsigned int f2:10, f3:10, f4:10;
     unsigned int unknown_14_0_:10;
 };
-void* GetFieldAt0x150_02053c6c(unsigned char* obj);
-unsigned char GameState_GetLeaderIndex(GameState*);
-struct Entry0x194_0205faf4 { char pad[8]; unsigned int _pad18:18, flag:1; };
-struct FindEntryById02096134Table;
-struct FindEntryById02096134Elem { unsigned int _pad0:9, b9:1, _pad10:5, b15:1, _pad16:2, b18:1; };
-struct FindEntryById02096134Elem* FindEntryById02096134(struct FindEntryById02096134Table* t, int id);
+extern "C" void* func_02053c6c(unsigned char* obj);
+extern "C" unsigned char GameState_GetLeaderIndex(GameState*);
+struct Struct_0205faf4_6 { char pad[8]; unsigned int unknown_8_0_:18, flag:1; };
+struct Struct_0205faf4_7;
+struct Struct_0205faf4_8 { unsigned int unknown_0_0_:9, unknown_1_1_:1, unknown_1_2_:5, unknown_1_7_:1, unknown_2_0_:2, unknown_2_2_:1; };
+extern "C" struct Struct_0205faf4_8* func_02096134(struct Struct_0205faf4_7* t, int id);
 extern "C" int func_0206474c(struct BattleStruct* obj, int a1, int a2);
 extern "C" int func_0206483c(struct BattleStruct* obj, char* name);
-void* GetStatFieldPointer02064904(void* obj, int id, unsigned int statIndex);
-void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
-void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
-void* GetPointerFromArray0xbd0_0207c5f8(unsigned char* obj, unsigned int index);
-short CountPositiveEntries0207c638(void* base, unsigned int index);
-struct EntryList020deb24 { int w[6]; };
-struct Entry020deb24 { int f0; int f4; unsigned int _pad9:9, level:3; };
-void* ItemTable_Construct(void* obj);
-void ItemTable_Init(void* obj);
-struct Entry020deb24* GetEntryByIndex020deb24(struct EntryList020deb24* list, int index);
-extern "C" void* ExtractFileFromGP2(const char* gp2Path, const char* innerFilePath, unsigned int* outSize);
+extern "C" void* func_02064904(void* obj, int id, unsigned int arg2);
+extern "C" void* AllocatorUnion_AllocateRounded(AllocatorUnion* alloc, unsigned int size);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" void* func_0207c5f8(unsigned char* obj, unsigned int index);
+extern "C" short func_0207c638(void* base, unsigned int index);
+struct Struct_0205faf4_9 { int w[6]; };
+struct Struct_0205faf4_10 { int f0; int f4; unsigned int unknown_8_0_:9, level:3; };
+extern "C" void* ItemTable_Construct(void* obj);
+extern "C" void ItemTable_Init(void* obj);
+extern "C" struct Struct_0205faf4_10* func_020deb24(struct Struct_0205faf4_9* list, int index);
+extern "C" void* ExtractFileFromGP2(const char* arg0, const char* innerFilePath, unsigned int* outSize);
 extern "C" int ItemTable_LoadIds(void* list, void* alloc, void* data, unsigned int size, void* entries, unsigned short count);
-struct Obj02061bd8;
-int CheckField0x56bLowNibble(struct Obj02061bd8* obj);
-int RegisterSlotA020cf0fc(int out);
+struct Struct_0205faf4_11;
+extern "C" int func_02061bd8(struct Struct_0205faf4_11* obj);
+extern "C" int func_020cf0fc(int out);
 extern "C" void* Zone3D_GetInstance(void);
 struct ReadClearByte02098ee8;
-unsigned char ReadAndClearByte0x1b61(struct ReadClearByte02098ee8* s);
-int CheckBitsInField0x63dc_02011b50(void* obj, int mask);
-struct PackedNibbleArray0206e2dc;
-int GetPackedNibbleFlag0x8(struct PackedNibbleArray0206e2dc* obj, int index);
-void* GameState_GetZoneTransition(GameState*);
+extern "C" unsigned char func_02098ee8(struct ReadClearByte02098ee8* s);
+extern "C" int func_02011b50(void* obj, int mask);
+struct Struct_0205faf4_13;
+extern "C" int func_0206e2dc(struct Struct_0205faf4_13* obj, int index);
+extern "C" void* GameState_GetZoneTransition(GameState*);
 
 extern AllocatorUnion g_mainAllocator;
 extern const char* g_itemDataArchive;
 extern const char* g_itemDataFile;
 
-struct Struct_0205faf4_14 {
-    int unknown_0_[16];
+struct ExtraStruct0205faf4 {
+    int v[16];
 };
-struct Struct_0205faf4_15 { int unknown_0_; int unknown_4_; int unknown_8_; int unknown_c_; };
-struct Struct_0205faf4_16 { unsigned int unknown_0_0_:12, unknown_1_4_:4, unknown_2_0_:5; };
-struct Struct_0205faf4_17 { char unknown_0_[0x56b]; unsigned char unknown_56b_0_:4, unknown_56b_4_:4; };
+struct Struct_0205faf4_15 { int f0; int f4; int f8; int fc; };
+struct Struct_0205faf4_16 { unsigned int unknown_0_0_:12, a:4, b:5; };
+struct Struct_0205faf4_17 { char pad[0x56b]; unsigned char unknown_56b_0_:4, hi:4; };
 
 #define NIB56B(c) (*(struct Struct_0205faf4_17**)((char*)(c) + REGION_VALUE(0x144, 0x150)))
-#define HasNibble56b(c) (NIB56B(c) != NULL ? (NIB56B(c)->unknown_56b_4_ != 0 ? 1 : 0) : 0)
-#define GetNibble56b(c) (NIB56B(c) != NULL ? NIB56B(c)->unknown_56b_4_ : 0)
+#define HasNibble56b(c) (NIB56B(c) != NULL ? (NIB56B(c)->hi != 0 ? 1 : 0) : 0)
+#define GetNibble56b(c) (NIB56B(c) != NULL ? NIB56B(c)->hi : 0)
 
 static inline int inline_0205faf4_2(void* arg0) {
     return *(unsigned short*)((char*)arg0 + 4);
 }
-static inline char* inline_0205faf4_3(void* arg0) {
-    return (char*)arg0 + REGION_VALUE(0x543c, 0x569c);
+static inline char* inline_0205faf4_3(void* bs) {
+    return (char*)bs + REGION_VALUE(0x543c, 0x569c);
 }
-struct Struct_0205faf4_18 { int unknown_0_0_:19, unknown_2_3_:11; };
-static inline struct Struct_0205faf4_6* inline_0205faf4_4(struct Struct_0203d028_3* arg0, unsigned char arg1) {
-    return (struct Struct_0205faf4_6*)(*(char**)((char*)arg0 + REGION_VALUE(0x144, 0x150)) + 0x194 + arg1 * 0x20);
+struct Struct_0205faf4_18 { int unknown_0_0_:19, v:11; };
+static inline struct Struct_0205faf4_6* inline_0205faf4_4(struct CombatantStruct* c, unsigned char i) {
+    return (struct Struct_0205faf4_6*)(*(char**)((char*)c + REGION_VALUE(0x144, 0x150)) + 0x194 + i * 0x20);
 }
 
-struct Struct_0205faf4_19 { char unknown_0_[0xb3c]; unsigned int unknown_b3c_; char unknown_b40_[0xb4c - 0xb40]; unsigned int unknown_b4c_; };
-static inline struct Struct_0205faf4_19* inline_0205faf4_5(void* arg0) {
-    return (struct Struct_0205faf4_19*)((char*)arg0 + REGION_VALUE(0x1860, 0x1840));
+struct Struct_0205faf4_19 { char pad0[0xb3c]; unsigned int fb3c; char pad1[0xb4c - 0xb40]; unsigned int fb4c; };
+static inline struct Struct_0205faf4_19* inline_0205faf4_5(void* p) {
+    return (struct Struct_0205faf4_19*)((char*)p + REGION_VALUE(0x1860, 0x1840));
 }
 #define FLAGS1840(p) inline_0205faf4_5(p)
-#define OBJB ((unsigned char*)arg0)
-#define CU16(o) (*(unsigned short*)((char*)arg1 + (o)))
-#define CS16(o) (*(short*)((char*)arg1 + (o)))
+#define OBJB ((unsigned char*)obj)
+#define CU16(o) (*(unsigned short*)((char*)cmd + (o)))
+#define CS16(o) (*(short*)((char*)cmd + (o)))
 #define EW(o) (*(int*)((char*)extra + (o)))
 #define STAT130(c) (*(void**)((char*)(c) + 0x130))
 #define SUB150(c) (*(char**)((char*)(c) + REGION_VALUE(0x144, 0x150)))
 
-static inline int inline_0205faf4_6(struct Struct_0203d028_3* arg0) { SDK_NULL_ASSERT(arg0); return *(int*)(SUB150(arg0) + REGION_VALUE(0x8b8, 0x950)); }
-static inline int inline_0205faf4_7(struct Struct_0205faf4_14* extra) { SDK_NULL_ASSERT(extra); return EW(0x24); }
+static inline int inline_0205faf4_6(struct CombatantStruct* c) { SDK_NULL_ASSERT(c); return *(int*)(SUB150(c) + REGION_VALUE(0x8b8, 0x950)); }
+static inline int inline_0205faf4_7(struct ExtraStruct0205faf4* extra) { SDK_NULL_ASSERT(extra); return EW(0x24); }
 
 // Main, originally func_0205faf4 (USA 0x0205faf4, EUR 0x0205fb04, JPN 0x02060de0)
 extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, struct ExtraStruct0205faf4* extra) {
-    unsigned short op = *(unsigned short*)cmd;
-    switch (op) {
+    unsigned short var0 = *(unsigned short*)cmd;
+    switch (var0) {
     case 0:
         return Scenario_TestFlag((int)obj, OBJB + 0x8c, CU16(2));
     case 1:
@@ -204,37 +204,37 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
     case 16:
         return CU16(2) == func_020457e0(MessageSystem_GetInstance());
     case 17: {
-        struct Struct_0203d028_2* var11 = (struct Struct_0203d028_2*)(void*)GameState::GetInstance();
+        struct BattleStruct* bs = (struct BattleStruct*)(void*)GameState::GetInstance();
         if (CU16(2) == 1) {
-            return !((GameState*)((struct Struct_0205faf4*)var11))->IsMorningDayOrEvening();
+            return !((GameState*)((struct Struct_0205faf4*)bs))->IsMorningDayOrEvening();
         }
-        return ((GameState*)((struct Struct_0205faf4*)var11))->IsMorningDayOrEvening();
+        return ((GameState*)((struct Struct_0205faf4*)bs))->IsMorningDayOrEvening();
     }
     case 18:
         return Party_CountItem((struct Obj02086aec*)GameState_GetParty((GameState*)(void*)GameState::GetInstance()), CS16(2)) > 0;
     case 19:
         return Party_CountItem((struct Obj02086aec*)GameState_GetParty((GameState*)(void*)GameState::GetInstance()), CS16(2)) <= 0;
     case 20: {
-        int var12 = 0;
-        int var13 = func_0206e120((struct Struct_0205faf4_3*)arg0, CU16(2)) == 2;
-        if (var13) {
-            if (func_0206e31c((int)arg0, CU16(2))) var12 = 1;
+        int result = 0;
+        int match = func_0206e120((struct PackedNibbleArray0206e120*)obj, CU16(2)) == 2;
+        if (match) {
+            if (func_0206e31c((int)obj, CU16(2))) result = 1;
         }
-        return var12;
+        return result;
     }
     case 21: {
-        if (func_0206e260((struct Struct_0205faf4_4*)arg0, CU16(2))) {
-            if (func_0206e31c((int)arg0, CU16(2))) return 1;
+        if (func_0206e260((struct PackedNibbleArray0206e260*)obj, CU16(2))) {
+            if (func_0206e31c((int)obj, CU16(2))) return 1;
         }
         return 0;
     }
     case 22: {
-        int var14 = 0;
-        int var15 = func_0206e120((struct Struct_0205faf4_3*)arg0, CU16(2)) == 3;
-        if (var15) {
-            if (func_0206e31c((int)arg0, CU16(2))) var14 = 1;
+        int result = 0;
+        int match = func_0206e120((struct PackedNibbleArray0206e120*)obj, CU16(2)) == 3;
+        if (match) {
+            if (func_0206e31c((int)obj, CU16(2))) result = 1;
         }
-        return var14;
+        return result;
     }
     case 23: {
         void* g = LinkSession_GetInstance((void*)GameState::GetInstance());
@@ -261,27 +261,27 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
             }
             break;
         }
-        return var17;
+        return result;
     }
     case 25: {
-        int var18 = 0;
-        int var19 = func_0206e120((struct Struct_0205faf4_3*)arg0, CU16(2)) == 1;
-        if (var19) {
-            if (func_0206e31c((int)arg0, CU16(2))) var18 = 1;
+        int result = 0;
+        int match = func_0206e120((struct PackedNibbleArray0206e120*)obj, CU16(2)) == 1;
+        if (match) {
+            if (func_0206e31c((int)obj, CU16(2))) result = 1;
         }
-        return var18;
+        return result;
     }
     case 26:
         return func_0206eb98(OBJB, CU16(2));
     case 27:
         return !func_0206eb98(OBJB, CU16(2));
     case 28: {
-        int var20 = 0;
-        int var21 = func_0206e120((struct Struct_0205faf4_3*)arg0, CU16(2)) == 0;
-        if (var21) {
-            if (func_0206e31c((int)arg0, CU16(2))) var20 = 1;
+        int result = 0;
+        int match = func_0206e120((struct PackedNibbleArray0206e120*)obj, CU16(2)) == 0;
+        if (match) {
+            if (func_0206e31c((int)obj, CU16(2))) result = 1;
         }
-        return var20;
+        return result;
     }
     case 29:
         return CU16(4) == *(unsigned short*)((char*)extra + 0x1c) &&
@@ -292,28 +292,28 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
     case 31:
         return CS16(2) == *((signed char*)(OBJB + 0x400) + 0x90);
     case 32: {
-        int var22;
-        for (var22 = 0; var22 < 4; var22++) {
-            signed char var23 = ((signed char*)((int)arg1 + 4))[var22];
-            if (var23 != 0 && var23 != ((signed char*)extra + var22)[0x2a]) break;
+        int i;
+        for (i = 0; i < 4; i++) {
+            signed char c = ((signed char*)((int)cmd + 4))[i];
+            if (c != 0 && c != ((signed char*)extra + i)[0x2a]) break;
         }
-        return var22 == 4;
+        return i == 4;
     }
     case 33: {
         unsigned char var24[4];
         __clear(var24, 4);
-        signed char* var25 = (signed char*)arg1 + 4;
-        int var26, var27;
-        for (var26 = 0; var26 < 4; var26++) {
-            signed char var28 = var25[var26];
-            if (var28 == 0) continue;
-            for (var27 = 0; var27 < 4; var27++) {
-                if (var28 == ((signed char*)extra + 0x2a)[var27] && var24[var27] == 0) {
-                    var24[var27] = 1;
+        signed char* p = (signed char*)cmd + 4;
+        int i, j;
+        for (i = 0; i < 4; i++) {
+            signed char c = p[i];
+            if (c == 0) continue;
+            for (j = 0; j < 4; j++) {
+                if (c == ((signed char*)extra + 0x2a)[j] && var24[j] == 0) {
+                    var24[j] = 1;
                     break;
                 }
             }
-            if (var27 == 4) return 0;
+            if (j == 4) return 0;
         }
         return 1;
     }
@@ -327,21 +327,21 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
     case 35:
         return CU16(2) == GameState_GetStoryStep((char*)(void*)GameState::GetInstance());
     case 36: {
-        struct Struct_0203d028_3* var31 = (Struct_0203d028_3*)((GameState*)((struct Struct_0203d028_2*)(void*)GameState::GetInstance()))->GetGameObjectByIndex(0);
-        unsigned short var32 = CU16(2);
-        if (var32 != 0 && inline_0205faf4_2(STAT130(var31)) <= 0) return 1;
-        if (var32 == 0 && inline_0205faf4_2(STAT130(var31)) > 0) return 1;
+        struct CombatantStruct* c = (CombatantStruct*)((GameState*)((struct BattleStruct*)(void*)GameState::GetInstance()))->GetGameObjectByIndex(0);
+        unsigned short v = CU16(2);
+        if (v != 0 && inline_0205faf4_2(STAT130(c)) <= 0) return 1;
+        if (v == 0 && inline_0205faf4_2(STAT130(c)) > 0) return 1;
         return 0;
     }
     case 37: {
         if (func_02096088(func_02094d6c(), CU16(2))) {
-            if (func_0206e31c((int)arg0, CU16(2))) return 1;
+            if (func_0206e31c((int)obj, CU16(2))) return 1;
         }
         return 0;
     }
     case 38: {
         if (!func_02096088(func_02094d6c(), CU16(2))) {
-            if (func_0206e31c((int)arg0, CU16(2))) return 1;
+            if (func_0206e31c((int)obj, CU16(2))) return 1;
         }
         return 0;
     }
@@ -350,13 +350,13 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
     case 40:
         return !Scenario_TestFlag((int)obj, OBJB + 0x8c, CU16(2) + 0x776);
     case 41: {
-        struct Keys0205faf4 { int hi; int mid; int lo; };
-        void* e = FindEntryPointerByKey0203df78(GetGlobalPtr021075f4_0203cf4c(), EW(0));
+        struct Struct_0205faf4_2 { int hi; int unknown_4_; int lo; };
+        void* e = func_0203df78(func_0203cf4c(), EW(0));
         if (!e) return 0;
-        void* base = GetField0xc02040538((struct S02040538*)e);
+        void* base = func_02040538((struct Struct_0203e0a0*)e);
         if (!base) return 0;
         struct CombatantStruct* c = (CombatantStruct*)((GameState*)((struct BattleStruct*)(void*)GameState::GetInstance()))->GetLeader();
-        struct Keys0205faf4 k = *(struct Keys0205faf4*)((char*)c + 0x44);
+        struct Struct_0205faf4_2 k = *(struct Struct_0205faf4_2*)((char*)c + 0x44);
         int* node;
         for (node = *(int**)((char*)base + 0x40); node != NULL; node = (int*)node[5]) {
             if (k.hi < node[1] && k.lo < node[2] && k.hi > node[3] && k.lo > node[4]) return CU16(2) != 0;
@@ -364,12 +364,12 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         return CU16(2) == 0;
     }
     case 42: {
-        struct Struct_0203d028_3* var38 = (Struct_0203d028_3*)((GameState*)((struct Struct_0203d028_2*)(void*)GameState::GetInstance()))->GetGameObjectByIndex(0);
-        return CU16(2) == inline_0205faf4_6(var38);
+        struct CombatantStruct* c = (CombatantStruct*)((GameState*)((struct BattleStruct*)(void*)GameState::GetInstance()))->GetGameObjectByIndex(0);
+        return CU16(2) == inline_0205faf4_6(c);
     }
     case 43: {
-        char* var39 = inline_0205faf4_3((void*)GameState::GetInstance());
-        return ((struct Struct_0205faf4_18*)(var39 + 4))->unknown_2_3_ == CU16(2);
+        char* w = inline_0205faf4_3((void*)GameState::GetInstance());
+        return ((struct Struct_0205faf4_18*)(w + 4))->v == CU16(2);
     }
     case 44: {
         struct BattleStruct* bs = (struct BattleStruct*)(void*)GameState::GetInstance();
@@ -382,65 +382,65 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
             if (!c) continue;
             void* sub = STAT130(c);
             if (*(int*)sub & 1) continue;
-            if (GetHp0205faf4(sub) <= 0) continue;
+            if (inline_0205faf4_2(sub) <= 0) continue;
             if (*(unsigned char*)(SUB150(c) + (unsigned char)CU16(2) + 0x464) >= CU16(4)) return 1;
         }
         return 0;
     }
     case 45: {
-        struct Struct_0205faf4_5* var46 = (struct Struct_0205faf4_5*)SUB150((Struct_0203d028_3*)((GameState*)((struct Struct_0203d028_2*)(void*)GameState::GetInstance()))->GetGameObjectByIndex(0));
+        struct Struct_0205faf4_5* p = (struct Struct_0205faf4_5*)SUB150((CombatantStruct*)((GameState*)((struct BattleStruct*)(void*)GameState::GetInstance()))->GetGameObjectByIndex(0));
         unsigned short var47[6];
-        var47[0] = var46->unknown_d_2_; var47[1] = var46->unknown_e_4_; var47[2] = var46->unknown_10_0_;
-        var47[3] = var46->unknown_11_2_; var47[4] = var46->unknown_12_4_; var47[5] = var46->unknown_14_0_;
-        unsigned short var48 = CU16(2);
-        int var49 = var47[var48];
-        int var50;
-        for (var50 = 0; var50 < 6; var50++) {
-            if (var50 == var48) continue;
-            if (var49 < var47[var50]) return 0;
+        var47[0] = p->f0; var47[1] = p->f1; var47[2] = p->f2;
+        var47[3] = p->f3; var47[4] = p->f4; var47[5] = p->unknown_14_0_;
+        unsigned short idx = CU16(2);
+        int v = var47[idx];
+        int j;
+        for (j = 0; j < 6; j++) {
+            if (j == idx) continue;
+            if (v < var47[j]) return 0;
         }
         return 1;
     }
     case 46: {
-        struct Struct_0205faf4_5* var51 = (struct Struct_0205faf4_5*)SUB150((Struct_0203d028_3*)((GameState*)((struct Struct_0203d028_2*)(void*)GameState::GetInstance()))->GetGameObjectByIndex(0));
-        unsigned short var52 = var51->unknown_5_2_;
-        int var53 = CU16(4);
-        unsigned short var54 = CU16(2);
+        struct Struct_0205faf4_5* p = (struct Struct_0205faf4_5*)SUB150((CombatantStruct*)((GameState*)((struct BattleStruct*)(void*)GameState::GetInstance()))->GetGameObjectByIndex(0));
+        unsigned short var52 = p->base;
+        int y = CU16(4);
+        unsigned short z = CU16(2);
         if (CU16(6) != 0) {
-            switch (var54) {
-            case 0: if (var53 >= (unsigned short)var51->unknown_d_2_ - var52) return 1; break;
-            case 1: if (var53 >= (unsigned short)var51->unknown_e_4_ - var52) return 1; break;
-            case 2: if (var53 >= (unsigned short)var51->unknown_10_0_ - var52) return 1; break;
-            case 3: if (var53 >= (unsigned short)var51->unknown_11_2_ - var52) return 1; break;
-            case 4: if (var53 >= (unsigned short)var51->unknown_12_4_ - var52) return 1; break;
-            case 5: if (var53 >= (unsigned short)var51->unknown_14_0_ - var52) return 1; break;
+            switch (z) {
+            case 0: if (y >= (unsigned short)p->f0 - var52) return 1; break;
+            case 1: if (y >= (unsigned short)p->f1 - var52) return 1; break;
+            case 2: if (y >= (unsigned short)p->f2 - var52) return 1; break;
+            case 3: if (y >= (unsigned short)p->f3 - var52) return 1; break;
+            case 4: if (y >= (unsigned short)p->f4 - var52) return 1; break;
+            case 5: if (y >= (unsigned short)p->unknown_14_0_ - var52) return 1; break;
             }
         } else {
-            switch (var54) {
-            case 0: if (var53 < (unsigned short)var51->unknown_d_2_ - var52) return 1; break;
-            case 1: if (var53 < (unsigned short)var51->unknown_e_4_ - var52) return 1; break;
-            case 2: if (var53 < (unsigned short)var51->unknown_10_0_ - var52) return 1; break;
-            case 3: if (var53 < (unsigned short)var51->unknown_11_2_ - var52) return 1; break;
-            case 4: if (var53 < (unsigned short)var51->unknown_12_4_ - var52) return 1; break;
-            case 5: if (var53 < (unsigned short)var51->unknown_14_0_ - var52) return 1; break;
+            switch (z) {
+            case 0: if (y < (unsigned short)p->f0 - var52) return 1; break;
+            case 1: if (y < (unsigned short)p->f1 - var52) return 1; break;
+            case 2: if (y < (unsigned short)p->f2 - var52) return 1; break;
+            case 3: if (y < (unsigned short)p->f3 - var52) return 1; break;
+            case 4: if (y < (unsigned short)p->f4 - var52) return 1; break;
+            case 5: if (y < (unsigned short)p->unknown_14_0_ - var52) return 1; break;
             }
         }
         return 0;
     }
     case 47: {
         struct BattleStruct* bs = (struct BattleStruct*)(void*)GameState::GetInstance();
-        struct CombatantStruct* c = (CombatantStruct*)GetCombatantWithFlag0x100_0200ff1c((GameState*)bs, GameState_GetLeaderIndex((GameState*)bs));
+        struct CombatantStruct* c = (CombatantStruct*)func_0200ff1c((GameState*)bs, GameState_GetLeaderIndex((GameState*)bs));
         if (!c) return 0;
         int count = 0;
         int i;
         for (i = 0; i < 0xb; i++) {
-            struct Entry0x194_0205faf4* entry = Entry194_0205faf4(c, i);
+            struct Struct_0205faf4_6* entry = inline_0205faf4_4(c, i);
             if (entry == NULL) continue;
             if (entry->flag) count++;
         }
         if (CU16(2) != 0) {
-            if (var57 >= CU16(4)) return 1;
-        } else if (var57 < CU16(4)) {
+            if (count >= CU16(4)) return 1;
+        } else if (count < CU16(4)) {
             return 1;
         }
         return 0;
@@ -457,13 +457,13 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         GameState_GetPartyMemberIds((struct Base02010834*)bs, GameState_GetProtagonistIndex((GameState*)bs), outList, &outCount);
         int i;
         for (i = 0; i < outCount; i++) {
-            struct CombatantStruct* c = (CombatantStruct*)GetCombatantWithFlag0x100_0200ff1c((GameState*)bs, outList[i]);
+            struct CombatantStruct* c = (CombatantStruct*)func_0200ff1c((GameState*)bs, outList[i]);
             if (!c) continue;
             void* sub = STAT130(c);
             if (*(int*)sub & 1) continue;
-            if (CU16(2) != Field950_0205faf4(c)) continue;
-            if (GetHp0205faf4(sub) <= 0) continue;
-            void* ptr = GetFieldAt0x150_02053c6c((unsigned char*)c);
+            if (CU16(2) != inline_0205faf4_6(c)) continue;
+            if (inline_0205faf4_2(sub) <= 0) continue;
+            void* ptr = func_02053c6c((unsigned char*)c);
             if (!ptr) continue;
             if (*(unsigned short*)((char*)ptr + CU16(2) * 2 + 0x16c) >= CU16(4)) return 1;
         }
@@ -479,136 +479,136 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         for (; i < count; i++) {
             struct CombatantStruct* c;
             if (CU16(0) == 0x52) {
-                var72 = (Struct_0203d028_3*)((GameState*)var68)->GetProtagonist();
+                c = (CombatantStruct*)((GameState*)bs)->GetProtagonist();
             } else {
-                var72 = (Struct_0203d028_3*)func_0200ff1c((GameState*)var68, *(var69 + var71 + 0xf78));
+                c = (CombatantStruct*)func_0200ff1c((GameState*)bs, *(party + i + 0xf78));
             }
-            if (var72 == NULL) continue;
-            if (*(int*)STAT130(var72) & 1) continue;
+            if (c == NULL) continue;
+            if (*(int*)STAT130(c) & 1) continue;
             if (CU16(2) == 1) {
-                if (CS16(4) > 0 && CS16(4) != *(short*)(SUB150(var72) + 0x1ac)) continue;
-                if (CS16(6) > 0 && CS16(6) != *(short*)(SUB150(var72) + 0x1cc)) continue;
-                if (CS16(8) > 0 && CS16(8) != *(short*)(SUB150(var72) + 0x24c)) continue;
-                if (CS16(10) > 0 && CS16(10) != *(short*)(SUB150(var72) + 0x26c)) continue;
-                *(OBJB + 0x492) |= 1 << var71;
-            } else if (*(OBJB + 0x492) & (1 << var71)) {
-                if (CS16(4) != 0 && CS16(4) != *(short*)(SUB150(var72) + 0x28c)) continue;
-                if (CS16(6) != 0 && CS16(6) != *(short*)(SUB150(var72) + 0x2ac)) continue;
-                if (CS16(8) != 0 && CS16(8) != *(short*)(SUB150(var72) + 0x2cc)) continue;
-                if (CS16(10) == 0 || CS16(10) == *(short*)(SUB150(var72) + 0x2ec)) return 1;
+                if (CS16(4) > 0 && CS16(4) != *(short*)(SUB150(c) + 0x1ac)) continue;
+                if (CS16(6) > 0 && CS16(6) != *(short*)(SUB150(c) + 0x1cc)) continue;
+                if (CS16(8) > 0 && CS16(8) != *(short*)(SUB150(c) + 0x24c)) continue;
+                if (CS16(10) > 0 && CS16(10) != *(short*)(SUB150(c) + 0x26c)) continue;
+                *(OBJB + 0x492) |= 1 << i;
+            } else if (*(OBJB + 0x492) & (1 << i)) {
+                if (CS16(4) != 0 && CS16(4) != *(short*)(SUB150(c) + 0x28c)) continue;
+                if (CS16(6) != 0 && CS16(6) != *(short*)(SUB150(c) + 0x2ac)) continue;
+                if (CS16(8) != 0 && CS16(8) != *(short*)(SUB150(c) + 0x2cc)) continue;
+                if (CS16(10) == 0 || CS16(10) == *(short*)(SUB150(c) + 0x2ec)) return 1;
             }
         }
-        if (CU16(2) != 1 && var71 == var70) return 0;
+        if (CU16(2) != 1 && i == count) return 0;
         return *(OBJB + 0x492);
     }
     case 51: {
-        struct Struct_0205faf4_8* var73 = func_02096134((struct Struct_0205faf4_7*)func_02094d6c(), CU16(2));
-        if (var73 != NULL && var73->unknown_1_7_) return 1;
+        struct Struct_0205faf4_8* e = func_02096134((struct Struct_0205faf4_7*)func_02094d6c(), CU16(2));
+        if (e != NULL && e->unknown_1_7_) return 1;
         break;
     }
     case 52: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
-        sub.op = 5; sub.p2 = CU16(4);
+        sub.unknown_0_ = 5; sub.p2 = CU16(4);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
-        sub.op = 0x17; sub.p2 = CS16(6);
+        sub.unknown_0_ = 0x17; sub.p2 = CS16(6);
         return Scenario_TestCondition(obj, &sub, extra) != 0;
     }
     case 53: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
         if (!func_0206474c(obj, CU16(4), CS16(6))) return 0;
-        sub.op = 0xb; sub.p2 = CU16(8);
+        sub.unknown_0_ = 0xb; sub.p2 = CU16(8);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
-        sub.op = 0x10; sub.p2 = CU16(10);
+        sub.unknown_0_ = 0x10; sub.p2 = CU16(10);
         return Scenario_TestCondition(obj, &sub, extra) != 0;
     }
     case 54: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
         if (!func_0206474c(obj, CU16(4), CS16(6))) return 0;
-        sub.op = 0x12; sub.p2 = CU16(8);
+        sub.unknown_0_ = 0x12; sub.p2 = CU16(8);
         return Scenario_TestCondition(obj, &sub, extra) != 0;
     }
     case 55: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
         return func_0206474c(obj, CU16(4), CS16(6)) ? 1 : 0;
     }
     case 56: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
         if (!func_0206474c(obj, CU16(4), CS16(6))) return 0;
-        sub.op = 0x24; sub.p2 = CU16(8);
+        sub.unknown_0_ = 0x24; sub.p2 = CU16(8);
         return Scenario_TestCondition(obj, &sub, extra) != 0;
     }
     case 57: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
         if (!func_0206474c(obj, CU16(4), CS16(6))) return 0;
-        if (!TestBitWithBias0206eb98(OBJB, CU16(8))) return 0;
-        sub.op = 0x17; sub.p2 = CU16(10);
+        if (!func_0206eb98(OBJB, CU16(8))) return 0;
+        sub.unknown_0_ = 0x17; sub.p2 = CU16(10);
         return Scenario_TestCondition(obj, &sub, extra) != 0;
     }
     case 58: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
         if (!func_0206474c(obj, CU16(4), CS16(6))) return 0;
-        if (TestBitWithBias0206eb98(OBJB, CU16(8))) return 0;
-        sub.op = 0x17; sub.p2 = CU16(10);
+        if (func_0206eb98(OBJB, CU16(8))) return 0;
+        sub.unknown_0_ = 0x17; sub.p2 = CU16(10);
         return Scenario_TestCondition(obj, &sub, extra) != 0;
     }
     case 59: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
         if (!func_0206474c(obj, CU16(4), CS16(6))) return 0;
-        return TestBitWithBias0206eb98(OBJB, CU16(8)) ? 1 : 0;
+        return func_0206eb98(OBJB, CU16(8)) ? 1 : 0;
     }
     case 60: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
         if (!func_0206474c(obj, CU16(4), CS16(6))) return 0;
-        return TestBitWithBias0206eb98(OBJB, CU16(8)) ? 0 : 1;
+        return func_0206eb98(OBJB, CU16(8)) ? 0 : 1;
     }
     case 61: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
         if (!func_0206474c(obj, CU16(4), CS16(6))) return 0;
-        sub.op = 0x17; sub.p2 = CU16(8);
+        sub.unknown_0_ = 0x17; sub.p2 = CU16(8);
         return Scenario_TestCondition(obj, &sub, extra) != 0;
     }
     case 62: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
-        sub.op = 0; sub.p2 = CU16(4);
+        sub.unknown_0_ = 0; sub.p2 = CU16(4);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
-        sub.op = 0x17; sub.p2 = CS16(6);
+        sub.unknown_0_ = 0x17; sub.p2 = CS16(6);
         return Scenario_TestCondition(obj, &sub, extra) != 0;
     }
     case 63: {
-        struct CondNode0205faf4 sub;
-        sub.op = 6; sub.p2 = CU16(2);
+        struct Struct_0205faf4_20 sub;
+        sub.unknown_0_ = 6; sub.p2 = CU16(2);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
-        sub.op = 1; sub.p2 = CU16(4);
+        sub.unknown_0_ = 1; sub.p2 = CU16(4);
         if (!Scenario_TestCondition(obj, &sub, extra)) return 0;
-        sub.op = 0x17; sub.p2 = CS16(6);
+        sub.unknown_0_ = 0x17; sub.p2 = CS16(6);
         return Scenario_TestCondition(obj, &sub, extra) != 0;
     }
     case 64: {
-        struct CondNode0205faf4 sub;
+        struct Struct_0205faf4_20 sub;
         int i;
-        sub.op = 0;
+        sub.unknown_0_ = 0;
         for (i = 0; i < 4; i++) {
             short v = ((short*)((char*)cmd + 4))[i];
             if (v < 0) continue;
@@ -618,9 +618,9 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         return 1;
     }
     case 65: {
-        struct CondNode0205faf4 sub;
+        struct Struct_0205faf4_20 sub;
         int i;
-        sub.op = 1;
+        sub.unknown_0_ = 1;
         for (i = 0; i < 4; i++) {
             short v = ((short*)((char*)cmd + 4))[i];
             if (v < 0) continue;
@@ -639,15 +639,15 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
     case 68:
         return !Scenario_TestFlag((int)obj, OBJB + 0x8c, CU16(2) + 0x1136);
     case 69: {
-        int var93 = func_0206483c(arg0, *(char**)((char*)arg1 + 4));
-        if (CU16(2) != 0) return var93;
-        return var93 == 0;
+        int r = func_0206483c(obj, *(char**)((char*)cmd + 4));
+        if (CU16(2) != 0) return r;
+        return r == 0;
     }
     case 70: {
-        struct Struct_0205faf4_8* var94 = func_02096134((struct Struct_0205faf4_7*)func_02094d6c(), CU16(2));
-        if (var94 != NULL) {
-            if (CU16(4) != 0) return var94->unknown_2_2_;
-            return var94->unknown_2_2_ == 0;
+        struct Struct_0205faf4_8* e = func_02096134((struct Struct_0205faf4_7*)func_02094d6c(), CU16(2));
+        if (e != NULL) {
+            if (CU16(4) != 0) return e->unknown_2_2_;
+            return e->unknown_2_2_ == 0;
         }
         return 0;
     }
@@ -656,46 +656,46 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
     case 72:
         return 0;
     case 73: {
-        int var95 = CU16(4) <= *(short*)(OBJB + 0x2ca);
-        if (CU16(2) != 0) return var95;
-        return var95 == 0;
+        int r = CU16(4) <= *(short*)(OBJB + 0x2ca);
+        if (CU16(2) != 0) return r;
+        return r == 0;
     }
     case 74: {
-        unsigned short var96 = *(unsigned short*)((char*)(void*)GameState::GetInstance() + REGION_VALUE(0x6f9c, 0x71dc));
-        if (var96 == 0) return CU16(2) == 0;
-        return var96 == CU16(2);
+        unsigned short v = *(unsigned short*)((char*)(void*)GameState::GetInstance() + REGION_VALUE(0x6f9c, 0x71dc));
+        if (v == 0) return CU16(2) == 0;
+        return v == CU16(2);
     }
     case 75: {
-        int var97 = 0;
-        if (CU16(4) == inline_0205faf4_7(extra)) var97 = 1;
-        return var97;
+        int r = 0;
+        if (CU16(4) == inline_0205faf4_7(extra)) r = 1;
+        return r;
     }
     case 76: {
-        int var98 = 0;
-        if (CU16(4) == inline_0205faf4_7(extra)) var98 = 1;
-        return var98;
+        int r = 0;
+        if (CU16(4) == inline_0205faf4_7(extra)) r = 1;
+        return r;
     }
     case 77: {
         int r = 0;
         if (Scenario_TestFlag((int)obj, OBJB + 0x8c, 0x364)) {
             if (Scenario_TestFlag((int)obj, OBJB + 0x8c, 0x365)) r = 1;
         }
-        return var99;
+        return r;
     }
     case 78: {
-        unsigned short* var100 = (unsigned short*)func_02064904(arg0, CU16(2), CU16(4));
-        if (var100 != NULL) {
+        unsigned short* p = (unsigned short*)func_02064904(obj, CU16(2), CU16(4));
+        if (p != NULL) {
             switch (CU16(8)) {
-            case 0: return *var100 >= CU16(6);
-            case 1: return *var100 < CU16(6);
-            case 2: return *var100 == CU16(6);
+            case 0: return *p >= CU16(6);
+            case 1: return *p < CU16(6);
+            case 2: return *p == CU16(6);
             }
         }
         return 0;
     }
     case 79: {
-        char* var101 = *(char**)((char*)GetGameResources() + REGION_VALUE(0x3500, 0x3710));
-        return *((unsigned char*)arg1 + 4) == *(unsigned char*)(var101 + 0x133) && CU16(2) == *(unsigned short*)(var101 + 0x134);
+        char* p = *(char**)((char*)GetGameResources() + REGION_VALUE(0x3500, 0x3710));
+        return *((unsigned char*)cmd + 4) == *(unsigned char*)(p + 0x133) && CU16(2) == *(unsigned short*)(p + 0x134);
     }
     case 80: {
         struct BattleStruct* bs = (struct BattleStruct*)(void*)GameState::GetInstance();
@@ -708,7 +708,7 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
             if (!c) continue;
             void* sub = STAT130(c);
             if (*(int*)sub & 1) continue;
-            if (GetHp0205faf4(sub) <= 0) continue;
+            if (inline_0205faf4_2(sub) <= 0) continue;
             char* p = SUB150(c);
             if (*(unsigned short*)(p + *(int*)(p + REGION_VALUE(0x8b8, 0x950)) * 2 + 0x16c) >= CU16(2)) return 1;
         }
@@ -723,14 +723,14 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         void* buf = AllocatorUnion_AllocateRounded(&g_mainAllocator, 0xc000);
         if (buf == NULL) return 0;
         SafeAllocator alloc;
-        struct EntryList020deb24 list;
+        struct Struct_0205faf4_9 list;
         unsigned int size;
         alloc.ResetAllocatorPointer();
         alloc.ResetAllocatorPointer();
         alloc.CreateTypeA(buf, 0xc000);
         unsigned char* party = (unsigned char*)GameState_GetParty((GameState*)(void*)GameState::GetInstance());
-        void* entries = GetPointerFromArray0xbd0_0207c5f8(party + 0x1d4, CU16(2));
-        short n = CountPositiveEntries0207c638(party + 0x1d4, CU16(2));
+        void* entries = func_0207c5f8(party + 0x1d4, CU16(2));
+        short n = func_0207c638(party + 0x1d4, CU16(2));
         ItemTable_Construct(&list);
         ItemTable_Init(&list);
 #if defined(jpn)
@@ -744,13 +744,13 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         }
         BackgroundLoader::RemoveLockGlobal();
 #endif
-        int var118 = 0;
-        signed char var119;
-        for (var119 = 0; var119 < var116; var119++) {
-            struct Struct_0205faf4_10* var120 = func_020deb24(&var112, var119);
-            if (var120 == NULL) continue;
-            if (var120->unknown_9_1_ >= CU16(4)) {
-                var118 = 1;
+        int found = 0;
+        signed char i;
+        for (i = 0; i < n; i++) {
+            struct Struct_0205faf4_10* e = func_020deb24(&list, i);
+            if (e == NULL) continue;
+            if (e->level >= CU16(4)) {
+                found = 1;
                 break;
             }
         }
@@ -759,12 +759,12 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
             alloc.Destroy();
             AllocatorUnion_Free(&g_mainAllocator, h);
         }
-        return var118;
+        return found;
     }
     case 84: {
         GetGameResources();
-        unsigned char var122 = *((unsigned char*)(void*)GameState::GetInstance() + REGION_VALUE(0x629e, 0x64de));
-        return var122 == CU16(2);
+        unsigned char v = *((unsigned char*)(void*)GameState::GetInstance() + REGION_VALUE(0x629e, 0x64de));
+        return v == CU16(2);
     }
     case 85: {
         char* p = (char*)GameState_GetParty((GameState*)(void*)GameState::GetInstance());
@@ -772,22 +772,22 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         return *(unsigned int*)(p + 0xf6c) < *(unsigned int*)((char*)cmd + 4);
     }
     case 86: {
-        struct Struct_0203d028_2* var124 = (struct Struct_0203d028_2*)(void*)GameState::GetInstance();
-        int var125;
-        for (var125 = 0; var125 < 4; var125++) {
-            struct Struct_0203d028_3* var126 = (Struct_0203d028_3*)func_0200ff1c((GameState*)var124, var125);
-            if (var126 == NULL) continue;
-            if (!func_02061bd8((struct Struct_0205faf4_11*)var126)) continue;
-            if (inline_0205faf4_2(STAT130(var126)) <= 0) return CU16(2) == 0;
+        struct BattleStruct* bs = (struct BattleStruct*)(void*)GameState::GetInstance();
+        int i;
+        for (i = 0; i < 4; i++) {
+            struct CombatantStruct* c = (CombatantStruct*)func_0200ff1c((GameState*)bs, i);
+            if (c == NULL) continue;
+            if (!func_02061bd8((struct Struct_0205faf4_11*)c)) continue;
+            if (inline_0205faf4_2(STAT130(c)) <= 0) return CU16(2) == 0;
             return CU16(2) == 1;
         }
-        if ((Struct_0203d028_3*)((GameState*)var124)->GetGameObjectByIndex(0xce) != NULL) return CU16(2) == 1;
+        if ((CombatantStruct*)((GameState*)bs)->GetGameObjectByIndex(0xce) != NULL) return CU16(2) == 1;
         return CU16(2) == 0;
     }
     case 87: {
-        unsigned char var127 = *(unsigned char*)func_02094d6c();
-        if (CU16(2) != 0) return var127 == 8;
-        return var127 < 8;
+        unsigned char v = *(unsigned char*)func_02094d6c();
+        if (CU16(2) != 0) return v == 8;
+        return v < 8;
     }
     case 88:
         if (CU16(2) >= 0x49) return 0;
@@ -796,17 +796,17 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         if (CU16(2) < 0x49) return !Scenario_TestFlag((int)obj, OBJB + 0x8c, CU16(2) + 0x33e);
         return 1;
     case 90: {
-        struct Struct_0205faf4_15 var128;
-        func_020cf0fc((int)&var128);
-        return var128.unknown_4_ == CU16(2) && var128.unknown_8_ == CU16(4);
+        struct Struct_0205faf4_15 s;
+        func_020cf0fc((int)&s);
+        return s.f4 == CU16(2) && s.f8 == CU16(4);
     }
     case 91: {
-        char* var129 = (char*)GetGameResources();
-        return *((unsigned char*)arg1 + 4) == *(unsigned char*)(var129 + REGION_VALUE(0x4199, 0x4449)) && CU16(2) == *(signed char*)(var129 + REGION_VALUE(0x4196, 0x4446));
+        char* p = (char*)GetGameResources();
+        return *((unsigned char*)cmd + 4) == *(unsigned char*)(p + REGION_VALUE(0x4199, 0x4449)) && CU16(2) == *(signed char*)(p + REGION_VALUE(0x4196, 0x4446));
     }
     case 92: {
-        struct Struct_0205faf4_8* var130 = func_02096134((struct Struct_0205faf4_7*)func_02094d6c(), CU16(2));
-        if (var130 != NULL) return var130->unknown_1_1_ == 0;
+        struct Struct_0205faf4_8* e = func_02096134((struct Struct_0205faf4_7*)func_02094d6c(), CU16(2));
+        if (e != NULL) return e->unknown_1_1_ == 0;
         return 0;
     }
     case 93: {
@@ -820,14 +820,14 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         return CS16(2) == v;
     }
     case 96: {
-        struct Struct_0203d028_3* var133 = (Struct_0203d028_3*)((GameState*)((struct Struct_0203d028_2*)(void*)GameState::GetInstance()))->GetProtagonist();
-        if (var133 == NULL) return 0;
-        int var134 = 0;
-        int var135;
-        for (var135 = 0; var135 < 13; var135++) {
-            if (*(unsigned short*)(SUB150(var133) + (unsigned char)var135 * 2 + 0x16c) >= 99) var134++;
+        struct CombatantStruct* c = (CombatantStruct*)((GameState*)((struct BattleStruct*)(void*)GameState::GetInstance()))->GetProtagonist();
+        if (c == NULL) return 0;
+        int n = 0;
+        int i;
+        for (i = 0; i < 13; i++) {
+            if (*(unsigned short*)(SUB150(c) + (unsigned char)i * 2 + 0x16c) >= 99) n++;
         }
-        return var134 >= CU16(2);
+        return n >= CU16(2);
     }
     case 97:
 #if defined(jpn)
@@ -846,7 +846,7 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         GameState_GetPartyMemberIds((struct Base02010834*)bs, GameState_GetProtagonistIndex((GameState*)bs), outList, &outCount);
         int i;
         for (i = 0; i < outCount; i++) {
-            struct CombatantStruct* c = (CombatantStruct*)GetCombatantWithFlag0x100_0200ff1c((GameState*)bs, outList[i]);
+            struct CombatantStruct* c = (CombatantStruct*)func_0200ff1c((GameState*)bs, outList[i]);
             if (c == NULL) continue;
             if (!HasNibble56b(c)) continue;
             if (CU16(2) != GetNibble56b(c)) continue;
@@ -856,23 +856,23 @@ extern "C" ARM int Scenario_TestCondition(struct BattleStruct* obj, void* cmd, s
         return 0;
     }
     case 501:
-        return CU16(2) == ((GameState*)((struct Struct_0203d028_2*)(void*)GameState::GetInstance()))->GetTimeOfDay();
+        return CU16(2) == ((GameState*)((struct BattleStruct*)(void*)GameState::GetInstance()))->GetTimeOfDay();
     case 502:
-        return ReadAndClearByte0x1b61((struct ReadClearByte02098ee8*)((char*)Zone3D_GetInstance() + REGION_VALUE(0x860, 0x840)));
+        return func_02098ee8((struct ReadClearByte02098ee8*)((char*)Zone3D_GetInstance() + REGION_VALUE(0x860, 0x840)));
     case 503:
         if (CU16(2) != 0) return Scenario_TestFlag((int)obj, OBJB + 0x8c, 0x798);
         return !Scenario_TestFlag((int)obj, OBJB + 0x8c, 0x798);
     case 504: {
-        char* var141 = (char*)(void*)GameState::GetInstance();
-        struct Struct_0205faf4_15 var142;
-        func_020cf0fc((int)&var142);
-        struct Struct_0205faf4_16* var143 = (struct Struct_0205faf4_16*)(var141 + REGION_VALUE(0x543c, 0x569c));
-        return var142.unknown_4_ == var143->unknown_1_4_ && var142.unknown_8_ == var143->unknown_2_0_;
+        char* bs = (char*)(void*)GameState::GetInstance();
+        struct Struct_0205faf4_15 s;
+        func_020cf0fc((int)&s);
+        struct Struct_0205faf4_16* w = (struct Struct_0205faf4_16*)(bs + REGION_VALUE(0x543c, 0x569c));
+        return s.f4 == w->a && s.f8 == w->b;
     }
     case 505:
         return func_02011b50((void*)GameState::GetInstance(), 1);
     case 506:
-        return func_0206e2dc((struct Struct_0205faf4_13*)arg0, CU16(2));
+        return func_0206e2dc((struct Struct_0205faf4_13*)obj, CU16(2));
     case 507:
         return CU16(2) == *(unsigned short*)GameState_GetZoneTransition((GameState*)(void*)GameState::GetInstance());
     }

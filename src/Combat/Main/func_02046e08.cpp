@@ -13,28 +13,28 @@ struct Struct_02046e08 {
     unsigned char unknown_1c_;
     unsigned char unknown_1d_;
     int unknown_20_;
-    SafeAllocator unknown_24_;
+    SafeAllocator allocator_;
     int unknown_38_;
-    Object3D unknown_3c_;
+    Object3D object_;
     int unknown_e8_;
     int unknown_ec_;
 };
 
 // USA: func_02046e08
-extern "C" ARM void func_02046e08(Struct_02046e08* arg0) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0;
-    arg0->unknown_20_ = 0;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_c_ = 15.0f;
-    arg0->unknown_ec_ = -1;
-    arg0->unknown_1c_ = 1;
-    arg0->unknown_1d_ = 1;
-    arg0->unknown_3c_.Initialize();
-    arg0->unknown_24_.ResetAllocatorPointer();
-    arg0->unknown_38_ = 0;
-    arg0->unknown_e8_ = 0;
-    arg0->unknown_10_ = 0;
-    arg0->unknown_14_ = 0;
-    arg0->unknown_18_ = 0;
+extern "C" ARM void func_02046e08(Struct_02046e08* obj) {
+    obj->unknown_0_ = 0;
+    obj->unknown_4_ = 0;
+    obj->unknown_20_ = 0;
+    obj->unknown_8_ = 0;
+    obj->unknown_c_ = 15.0f;
+    obj->unknown_ec_ = -1;
+    obj->unknown_1c_ = 1;
+    obj->unknown_1d_ = 1;
+    obj->object_.Initialize();
+    obj->allocator_.ResetAllocatorPointer();
+    obj->unknown_38_ = 0;
+    obj->unknown_e8_ = 0;
+    obj->unknown_10_ = 0;
+    obj->unknown_14_ = 0;
+    obj->unknown_18_ = 0;
 }

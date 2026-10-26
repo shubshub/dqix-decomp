@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
 struct Struct_0205d81c;
-struct Struct_0205d0e0;
-extern "C" struct Struct_0205d0e0* func_0205d81c(struct Struct_0205d81c*, int);
+struct Elem_0205d81c;
+extern "C" struct Elem_0205d81c* func_0205d81c(struct Struct_0205d81c*, int);
 struct Struct_0205d5b8;
 extern "C" void func_0205d5b8(struct Struct_0205d5b8*, int);
 
 struct Struct_0205def8 {
-    char unknown_0_[0x98];
-    int unknown_98_;
+    char pad0[0x98];
+    int field98;
     int unknown_9c_;
 };
 
 // USA: func_0205def8
-extern "C" ARM void func_0205def8(struct Struct_0205def8* arg0, int arg1, int arg2) {
-    struct Struct_0205d0e0* var0;
-    if (arg0->unknown_98_ == 0 || arg0->unknown_9c_ == 0) return;
-    var0 = func_0205d81c((struct Struct_0205d81c*)arg0, arg2);
-    if (var0 == 0) return;
-    func_0205d5b8((struct Struct_0205d5b8*)var0, arg1 == 0);
+extern "C" ARM void func_0205def8(struct Struct_0205def8* s, int clear, int key) {
+    struct Elem_0205d81c* elem;
+    if (s->field98 == 0 || s->unknown_9c_ == 0) return;
+    elem = func_0205d81c((struct Struct_0205d81c*)s, key);
+    if (elem == 0) return;
+    func_0205d5b8((struct Struct_0205d5b8*)elem, clear == 0);
 }

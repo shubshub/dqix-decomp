@@ -2,56 +2,56 @@
 #include "Memory/SafeAllocator.h"
 #include "Resource/GameResources.h"
 
-struct Struct_ov011_02184c30 {
-    int unknown_0_;
-    union { int unknown_0_; float unknown1_0_; } unknown_4_;
+struct TaggedNumber02184c30 {
+    int type;
+    union { int i; float f; } value;
 };
 
 struct Struct_ov011_02184de4 {
-    Struct_ov011_02184c30 unknown_0_;
-    Struct_ov011_02184c30 unknown_8_;
+    TaggedNumber02184c30 a;
+    TaggedNumber02184c30 b;
 };
 
-extern "C" int func_ov011_02184c30(struct Struct_ov011_02184c30* arg0);
+extern "C" int func_ov011_02184c30(struct TaggedNumber02184c30* v);
 extern "C" ARM void* func_ov017_021b2164(void);
 extern "C" ARM void* func_ov011_021845f4(void);
-extern "C" ARM void* func_ov011_021842c8(unsigned char* arg0, unsigned int arg1);
-extern "C" ARM void func_ov011_021842a0(void* arg0);
-extern "C" ARM void* func_ov011_02184324(void* arg0, void* arg1);
+extern "C" ARM void* func_ov011_021842c8(unsigned char* node, unsigned int id);
+extern "C" ARM void func_ov011_021842a0(void* obj);
+extern "C" ARM void* func_ov011_02184324(void* a, void* b);
 
 // USA: func_ov011_02184de4
-extern "C" ARM int func_ov011_02184de4(struct Struct_ov011_02184de4* arg0) {
+extern "C" ARM int func_ov011_02184de4(struct Struct_ov011_02184de4* obj) {
     void* var0 = GetGameResources();
-    void* var1 = func_ov017_021b2164();
-    var1 = func_ov011_021845f4();
+    void* ctx = func_ov017_021b2164();
+    ctx = func_ov011_021845f4();
 
-    int var2 = func_ov011_02184c30(&arg0->unknown_0_);
+    int tag0 = func_ov011_02184c30(&obj->a);
     void* var3;
-    int var4 = func_ov011_02184c30(&arg0->unknown_8_);
+    int tag8 = func_ov011_02184c30(&obj->b);
 
-    void* var5 = func_ov011_021842c8((unsigned char*)var1, var4);
-    if (var5 != 0) return 0;
+    void* n1 = func_ov011_021842c8((unsigned char*)ctx, tag8);
+    if (n1 != 0) return 0;
 
     var3 = 0;
-    switch (var2) {
+    switch (tag0) {
     case 0: var3 = (char*)var0 + 0x38; break;
     case 1: var3 = (char*)var0 + 0xc4; break;
     case 2: var3 = (char*)var0 + 0x9c; break;
     }
     if (var3 == 0) return 0;
 
-    void* var6 = ((SafeAllocator*)var3)->Allocate(0x20);
-    if (var6 == 0) return 0;
+    void* buf = ((SafeAllocator*)var3)->Allocate(0x20);
+    if (buf == 0) return 0;
 
-    func_ov011_021842a0(var6);
-    *(int*)var6 = var4;
+    func_ov011_021842a0(buf);
+    *(int*)buf = tag8;
 
-    unsigned int var7 = ((SafeAllocator*)var3)->GetMaxPossibleAllocation();
-    void* var8 = ((SafeAllocator*)var3)->Allocate(var7);
-    if (var8 == 0) return 0;
+    unsigned int maxAlloc = ((SafeAllocator*)var3)->GetMaxPossibleAllocation();
+    void* buf2 = ((SafeAllocator*)var3)->Allocate(maxAlloc);
+    if (buf2 == 0) return 0;
 
-    ((SafeAllocator*)((char*)var6 + 4))->CreateTypeB(var8, var7, 4);
+    ((SafeAllocator*)((char*)buf + 4))->CreateTypeB(buf2, maxAlloc, 4);
 
-    func_ov011_02184324(var1, var6);
+    func_ov011_02184324(ctx, buf);
     return 1;
 }

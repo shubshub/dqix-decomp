@@ -7,38 +7,38 @@ enum { Enum_ov017_021cf024_30536 = 0x7938 };
 enum { Enum_ov017_021cf024_30536 = 0x7748 };
 #endif
 
-extern "C" void* func_ov017_021b8478(void* arg0);
-extern "C" void* func_ov017_021b8468(void* arg0);
-extern "C" void func_ov000_02163338(unsigned char* arg0, unsigned char arg1);
+extern "C" void* func_ov017_021b8478(void* obj);
+extern "C" void* func_ov017_021b8468(void* obj);
+extern "C" void func_ov000_02163338(unsigned char* obj, unsigned char val);
 
 struct Struct_ov017_021cf024 {
-    unsigned char unknown_0_[4];
-    unsigned short unknown_4_;
-    unsigned char unknown_6_;
+    unsigned char pad0[4];
+    unsigned short field4;
+    unsigned char field6;
     unsigned char unknown_7_;
 };
 
 struct Struct_ov017_021cf024_2 {
-    unsigned char unknown_0_[8];
-    unsigned short unknown_8_;
+    unsigned char unknown0[8];
+    unsigned short key;
 };
 
 struct Struct_ov017_021cf024_3 {
-    unsigned char unknown_0_[Enum_ov017_021cf024_30536];
+    unsigned char unknown0[Enum_ov017_021cf024_30536];
     unsigned char unknown_7748_;
 };
 
 // USA: func_ov017_021cf024
-extern "C" ARM void func_ov017_021cf024(int arg0, Struct_ov017_021cf024* arg1, int arg2, GameResources* arg3) {
-    void* var0 = arg3->unknown_ptr_3718;
-    Struct_ov017_021cf024_2* var1 = (Struct_ov017_021cf024_2*)func_ov017_021b8478(var0);
-    Struct_ov017_021cf024_3* var2 = (Struct_ov017_021cf024_3*)func_ov017_021b8468(var0);
-    if (var2 == NULL) {
+extern "C" ARM void func_ov017_021cf024(int unused0, Struct_ov017_021cf024* evt, int arg2, GameResources* base) {
+    void* table = base->unknown_ptr_3718;
+    Struct_ov017_021cf024_2* record = (Struct_ov017_021cf024_2*)func_ov017_021b8478(table);
+    Struct_ov017_021cf024_3* work = (Struct_ov017_021cf024_3*)func_ov017_021b8468(table);
+    if (work == NULL) {
         return;
     }
-    if (var1->unknown_8_ != arg1->unknown_4_) {
+    if (record->key != evt->field4) {
         return;
     }
-    func_ov000_02163338((unsigned char*)var2, arg1->unknown_6_);
-    var2->unknown_7748_ = arg1->unknown_7_;
+    func_ov000_02163338((unsigned char*)work, evt->field6);
+    work->unknown_7748_ = evt->unknown_7_;
 }

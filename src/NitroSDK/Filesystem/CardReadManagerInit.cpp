@@ -16,8 +16,10 @@
 
 extern "C"
 {
+    // memset but tries to do 32 bytes at a time
     void MIi_CpuClearFast(int value, void* dst, unsigned len);
 
+    // abort() or fatal error or similar
     void HaltSystem();
 }
 // is card read manager initialized
@@ -98,7 +100,7 @@ void InitializeCardReadManager()
     volatileManager->lock.multiplicity = 0;
     manager->lock.taskType = 0;
     manager->pSharedData = &data_02111880;
-
+    
     MIi_CpuClearFast(0, &data_02111880, sizeof(Arm7CardReadData));
     CleanInvalidateCacheRange(&data_02111880, sizeof(Arm7CardReadData));
     manager->instructionCacheCleanThreshold = 0xffffffff;

@@ -1,41 +1,41 @@
 #include <globaldefs.h>
 
 struct Struct_02079ee0 {
-    int unknown_0_;
-    int unknown_4_;
+    int a;
+    int b;
 };
 
 struct Struct_02079ee0_2 {
-    unsigned int unknown_0_0_ : 12;
-    unsigned int unknown_1_4_ : 20;
-    struct Struct_02079ee0* unknown_4_;
+    unsigned int count : 12;
+    unsigned int rest : 20;
+    struct Struct_02079ee0* base;
 };
 
 typedef int (*Type_02079ee0)(struct Struct_02079ee0*);
 
 // USA: func_02079f20
-extern "C" ARM struct Struct_02079ee0* func_02079f20(struct Struct_02079ee0_2* arg0, int arg1, Type_02079ee0 arg2) {
-    struct Struct_02079ee0* var0;
-    int var1;
-    int var2;
-    int var3;
+extern "C" ARM struct Struct_02079ee0* func_02079f20(struct Struct_02079ee0_2* c, int key, Type_02079ee0 fn) {
+    struct Struct_02079ee0* base;
+    int count;
+    int low;
+    int high;
     int var4;
-    struct Struct_02079ee0* var5;
-    int var6;
+    struct Struct_02079ee0* elem;
+    int result;
 
-    var0 = arg0->unknown_4_;
-    if (var0 == NULL || arg2 == NULL) return NULL;
-    var1 = arg0->unknown_0_0_;
-    if (var1 == 0) return NULL;
-    var3 = var1 - 1;
-    var2 = 0;
-    while (var2 <= var3) {
-        var4 = var2 + ((var3 - var2 + 1) >> 1);
-        var5 = var0 + var4;
-        var6 = arg2(var5);
-        if (var6 == arg1) return var5;
-        if (var6 > arg1) var3 = var4 - 1;
-        else var2 = var4 + 1;
+    base = c->base;
+    if (base == NULL || fn == NULL) return NULL;
+    count = c->count;
+    if (count == 0) return NULL;
+    high = count - 1;
+    low = 0;
+    while (low <= high) {
+        var4 = low + ((high - low + 1) >> 1);
+        elem = base + var4;
+        result = fn(elem);
+        if (result == key) return elem;
+        if (result > key) high = var4 - 1;
+        else low = var4 + 1;
     }
     return NULL;
 }

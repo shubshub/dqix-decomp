@@ -1,13 +1,13 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov000_0216d560(void* arg0, int arg1);
-extern "C" void func_0202e0a4(void* arg0);
+extern "C" void func_ov000_0216d560(void* work, int id);
+extern "C" void Camera_Update(void* work);
 
 // USA: func_ov000_0216d50c
-extern "C" ARM void func_ov000_0216d50c(void* arg0) {
-    int var0 = *(int*)((char*)arg0 + 0x224);
-    if (var0 >= 0) {
-        func_ov000_0216d560(arg0, var0);
+extern "C" ARM void func_ov000_0216d50c(void* work) {
+    int id = *(int*)((char*)work + 0x224);
+    if (id >= 0) {
+        func_ov000_0216d560(work, id);
     }
-    func_0202e0a4(arg0);
+    Camera_Update(work);
 }

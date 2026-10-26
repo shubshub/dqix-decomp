@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
 #if defined(jpn)
-enum { Enum_020dcc20_452 = 0x1b8 };
+enum { stateFieldOffset = 0x1b8 };
 #else
-enum { Enum_020dcc20_452 = 0x1c4 };
+enum { stateFieldOffset = 0x1c4 };
 #endif
 #include "GameState/GameState.h"
 
-extern "C" int func_02053c6c(unsigned char* arg0);
+extern "C" int func_02053c6c(unsigned char* obj);
 
 // USA: func_020dcc20
-extern "C" ARM int func_020dcc20(int arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    unsigned char var1 = 0;
-    for (signed char var2 = 0; var2 < 4; var2++) {
-        GameObject* var3 = var0->GetPartyMemberByIndex(var2);
-        if (var3 != NULL) {
-            if (!(arg1 != 0 && *(int*)((char*)var3 + Enum_020dcc20_452) != 0)) {
-                if (func_02053c6c((unsigned char*)var3) != 0) {
-                    var1 = var1 + 1;
+extern "C" ARM int func_020dcc20(int arg0, int flag) {
+    GameState* battle = GameState::GetInstance();
+    unsigned char count = 0;
+    for (signed char i = 0; i < 4; i++) {
+        GameObject* c = battle->GetPartyMemberByIndex(i);
+        if (c != NULL) {
+            if (!(flag != 0 && *(int*)((char*)c + stateFieldOffset) != 0)) {
+                if (func_02053c6c((unsigned char*)c) != 0) {
+                    count = count + 1;
                 }
             }
         }
     }
-    return var1 == arg0;
+    return count == arg0;
 }

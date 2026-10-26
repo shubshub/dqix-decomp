@@ -10,33 +10,33 @@ enum { Enum_ov003_02155208_486 = 0x1e6 };
 struct Struct_020e28dc;
 struct Struct_0207fdcc_2;
 
-extern "C" int func_020e28dc(struct Struct_020e28dc* arg0);
-extern "C" int func_020e2984(struct Struct_020e28dc* arg0);
-extern "C" int func_02080d54(struct Struct_0207fdcc_2* arg0, int arg1, int arg2, int arg3);
+extern "C" int func_020e28dc(struct Struct_020e28dc* o);
+extern "C" int func_020e2984(struct Struct_020e28dc* window);
+extern "C" int func_02080d54(struct Struct_0207fdcc_2* obj, int key, int px, int arg3);
 
 struct Struct_ov003_02155208 {
-    char unknown_0_[0x18];
-    struct Struct_0207fdcc_2* unknown_18_;
+    char pad0[0x18];
+    struct Struct_0207fdcc_2* field18;
     struct Struct_020e28dc* unknown_1c_;
-    char unknown_20_[Enum_ov003_02155208_486 - 0x20];
+    char pad1[Enum_ov003_02155208_486 - 0x20];
     short unknown_1e6_;
 };
 
 // USA: func_ov003_02155208
-extern "C" ARM int func_ov003_02155208(struct Struct_ov003_02155208* arg0) {
-    int var0 = 0;
-    if (g_keyManager.TestKeysPressed(2)) var0 = 1;
+extern "C" ARM int func_ov003_02155208(struct Struct_ov003_02155208* self) {
+    int flag = 0;
+    if (g_keyManager.TestKeysPressed(2)) flag = 1;
 
-    if (arg0->unknown_1c_ != NULL && func_020e28dc(arg0->unknown_1c_)) {
-        if (func_020e2984(arg0->unknown_1c_)) {
-            var0 = 1;
+    if (self->unknown_1c_ != NULL && func_020e28dc(self->unknown_1c_)) {
+        if (func_020e2984(self->unknown_1c_)) {
+            flag = 1;
         }
     } else if (g_touchInput.pressed_ != 0) {
-        int var1, var2;
-        g_touchInput.GetTouchPoint(&var1, &var2);
-        if (!func_02080d54(arg0->unknown_18_, arg0->unknown_1e6_, (short)var1, (short)var2)) {
-            var0 = 1;
+        int a, b;
+        g_touchInput.GetTouchPoint(&a, &b);
+        if (!func_02080d54(self->field18, self->unknown_1e6_, (short)a, (short)b)) {
+            flag = 1;
         }
     }
-    return var0;
+    return flag;
 }

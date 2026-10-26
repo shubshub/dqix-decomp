@@ -5,9 +5,9 @@
 
 extern "C" void func_02079fc8(char*);
 extern "C" void func_0207a014(char*);
-extern "C" void __register_global_object(int arg0, int arg1, void* arg2);
+extern "C" void __register_global_object(int c, int b, void* node);
 
-extern Struct_02108e10 data_02108e10;
+extern ActionDataTables data_02108e10;
 extern void* data_02108e04;
 
 // USA: func_020e60f8

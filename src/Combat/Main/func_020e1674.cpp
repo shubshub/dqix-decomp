@@ -6,26 +6,26 @@ extern "C" int LoadToMainObjStandardPalette(int arg0, int arg1, unsigned int arg
 extern "C" int LoadToSubObjStandardPalette(int arg0, int arg1, unsigned int arg2);
 
 struct Struct_020e1674 {
-    char unknown_0_[0x3e];
-    unsigned char unknown_3e_;
+    char pad[0x3e];
+    unsigned char flag;
 };
 struct Struct_020e1674_2 {
-    char unknown_0_[4];
-    struct Struct_020e1674* unknown_4_;
+    char pad[4];
+    struct Struct_020e1674* ptr;
 };
 
 // USA: func_020e1674
-extern "C" ARM void func_020e1674(struct Struct_020e1674_2* arg0, int arg1, int arg2) {
-    int var0, var1;
-    if (arg2 < 0 || arg2 >= 2) return;
-    var1 = (int)((char*)arg0 + 0x22 + arg2 * 2);
-    var0 = arg1 * 2;
-    CleanInvalidateCacheRange((const void*)(var1), 2);
-    var0 += 0x1c0;
-    if (arg0->unknown_4_->unknown_3e_ == 0) {
-        LoadToMainObjStandardPalette(var1, var0, 2);
+extern "C" ARM void func_020e1674(struct Struct_020e1674_2* obj, int idx, int sel) {
+    int off, addr;
+    if (sel < 0 || sel >= 2) return;
+    addr = (int)((char*)obj + 0x22 + sel * 2);
+    off = idx * 2;
+    CleanInvalidateCacheRange((const void*)(addr), 2);
+    off += 0x1c0;
+    if (obj->ptr->flag == 0) {
+        LoadToMainObjStandardPalette(addr, off, 2);
     } else {
-        LoadToSubObjStandardPalette(var1, var0, 2);
+        LoadToSubObjStandardPalette(addr, off, 2);
     }
-    CleanCacheRange((const void*)(var1), 2);
+    CleanCacheRange((const void*)(addr), 2);
 }

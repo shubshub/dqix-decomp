@@ -1,30 +1,30 @@
 #include <globaldefs.h>
 
 struct Struct_0200da70 {
-    unsigned int unknown_0_;
+    unsigned int key;
     unsigned int unknown_4_;
-    int unknown_8_;
+    int pad8;
 };
 
 // USA: func_0200da70
-extern "C" ARM void* func_0200da70(struct Struct_0200da70* arg0, int arg1, unsigned int arg2) {
-    int var0 = 0;
-    int var1 = arg1 - 1;
-    if (var1 < 0) goto notfound;
+extern "C" ARM void* func_0200da70(struct Struct_0200da70* arr, int count, unsigned int target) {
+    int lo = 0;
+    int hi = count - 1;
+    if (hi < 0) goto notfound;
     do {
-        int var2 = (var0 + var1) >> 1;
-        struct Struct_0200da70* var3 = &arg0[var2];
-        if (arg2 < var3->unknown_0_) {
-            var1 = var2 - 1;
+        int var2 = (lo + hi) >> 1;
+        struct Struct_0200da70* e = &arr[var2];
+        if (target < e->key) {
+            hi = var2 - 1;
         } else {
-            unsigned int var4 = var3->unknown_0_ + (var3->unknown_4_ & ~1);
-            if (arg2 > var4) {
-                var0 = var2 + 1;
+            unsigned int end = e->key + (e->unknown_4_ & ~1);
+            if (target > end) {
+                lo = var2 + 1;
             } else {
-                return var3;
+                return e;
             }
         }
-    } while (var0 <= var1);
+    } while (lo <= hi);
 notfound:
     return 0;
 }

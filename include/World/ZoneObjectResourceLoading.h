@@ -7,23 +7,23 @@
 #include "World/ZoneResourceInitialization.h"
 
 struct Struct_020151cc {
-    unsigned int unknown_0_;
-    int unknown_4_;
-    char unknown_8_[8];
+    unsigned int mask;
+    int slot;
+    char extension[8];
 };
 
 struct Struct_020e6f48 {
-    Struct_020151cc unknown_0_[6];
+    Struct_020151cc entries[6];
 };
 
-struct Struct_02014d80 {
-    char unknown_0_[0x20];
-    int unknown_20_;
+struct ZoneLoadState {
+    char unknown0[0x20];
+    int unknown20;
 };
 
-void *GameState_GetZoneTransition(GameState *state);
-void Zone3D_FormatElementFilePath(int id, char *extension, char *buffer);
-void VramState_Restore(char *tables);
-void VramState_Save(char *tables);
+extern "C" void *GameState_GetZoneTransition(GameState *state);
+extern "C" void Zone3D_FormatElementFilePath(int id, char *extension, char *buffer);
+extern "C" void VramState_Restore(char *tables);
+extern "C" void VramState_Save(char *tables);
 extern char data_020ef1e8[];
 extern const Struct_020e6f48 data_020e6f48;

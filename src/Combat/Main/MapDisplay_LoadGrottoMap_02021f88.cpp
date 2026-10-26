@@ -10,30 +10,30 @@
 
 extern "C" unsigned short* Zone3D_GetInstance(void);
 extern "C" void* OamManager_GetInstance(void);
-void* BgVram_GetInstance(void);
+extern "C" void* BgVram_GetInstance(void);
 extern "C" void MapDisplay_FadeOutSubScreen(void* obj, int amount);
 
-void BgVram_Reset(char* obj);
-void OamManager_ResetTextTable(char* obj);
-void OamManager_Init(char* obj);
-void BgVram_FillMap(void* objPtr, int mode, int idx, int fillByte);
+extern "C" void BgVram_Reset(char* obj);
+extern "C" void OamManager_ResetTextTable(char* obj);
+extern "C" void OamManager_Init(char* obj);
+extern "C" void BgVram_FillMap(void* objPtr, int mode, int idx, int fillByte);
 extern "C" void BgTransfers_UploadDirtyScreens(void* obj);
 struct Struct0205a198;
-void Sprite_Init(struct Struct0205a198* p);
-void SpriteContext_Init(char* obj);
+extern "C" void Sprite_Init(struct Struct0205a198* p);
+extern "C" void SpriteContext_Init(char* obj);
 
-void* CachedTextTable_GetInstance();
+extern "C" void* CachedTextTable_GetInstance();
 extern "C" void* OamManager_GetSubOamBuffer(void);
 struct PacRecord;
-int SpriteContext_LoadArchive(void* a, struct PacRecord* b, int flag, void* d);
-void SetBitfieldStoreBytes0205af38(int a, char* obj, int c, int d);
-int ValidateResourceLookup0205a1f0(void* a, void* b, int c);
-int MessageSystem_GetInstance(void);
+extern "C" int SpriteContext_LoadArchive(void* a, struct PacRecord* b, int flag, void* d);
+extern "C" void func_0205af38(int a, char* obj, int c, int d);
+extern "C" int func_0205a1f0(void* a, void* b, int c);
+extern "C" int MessageSystem_GetInstance(void);
 extern "C" void VectorizedInvertedMemcpy(void* dst, void* src, int size);
-void OS_WaitVBlankIntr(void);
+extern "C" void OS_WaitVBlankIntr(void);
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 extern "C" int LoadToSubObjVRAM(int, int, unsigned int);
-void MapDisplay_RefreshAllMemberPanels(void* obj);
+extern "C" void MapDisplay_RefreshAllMemberPanels(void* obj);
 extern "C" void func_02027974(void* obj, int a, void* b);
 #if defined(jpn)
 extern "C" void MapDisplay_LoadBackgroundPattern(void* obj, int handle, SafeAllocator* alloc);
@@ -42,19 +42,19 @@ extern "C" void MapDisplay_LoadBackgroundPattern(void* obj, int* handle, SafeAll
 #endif
 extern "C" void MapDisplay_LoadMapPieces(char* obj, int* handle, SafeAllocator* alloc);
 struct BackgroundGraphics;
-void Background_Init(struct BackgroundGraphics* obj);
+extern "C" void Background_Init(struct BackgroundGraphics* obj);
 extern "C" void Background_LoadFile(void* obj, void* data, SafeAllocator* alloc, int size);
 extern "C" void MapDisplay_CenterOnLeader(void* obj);
 extern "C" void func_ov017_02191234(void* obj);
 extern "C" void MapDisplay_Draw(void* obj);
-void MapDisplay_RecheckAllMembers(unsigned char* obj);
+extern "C" void MapDisplay_RecheckAllMembers(unsigned char* obj);
 extern "C" void MapDisplay_PlaceMembers(void* obj, int flag);
-int MapDisplay_QueueMapScript(void* obj);
-int ZoneId_IsGrottoBossFloor(int x);
-int ZoneId_IsMainGrottoFloor(int id);
-void MapDisplay_SetMapKey(char* a, char* b);
+extern "C" int MapDisplay_QueueMapScript(void* obj);
+extern "C" int ZoneId_IsGrottoBossFloor(int x);
+extern "C" int ZoneId_IsMainGrottoFloor(int id);
+extern "C" void MapDisplay_SetMapKey(char* a, char* b);
 
-extern "C" void __clear(void* arg0, unsigned int arg1);
+extern "C" void __clear(void* dst, unsigned int size);
 extern int data_020ef460;
 extern char data_020ef5fa[];
 extern char data_020ef613[];
@@ -69,24 +69,24 @@ extern char data_020ef668[];
 extern char data_020ef671[];
 
 struct Struct_02021f88_2 {
-    char unknown_0_[0x10];
-    unsigned int unknown_10_;
-    void* unknown_14_;
+    char pad0[0x10];
+    unsigned int f10;
+    void* f14;
 };
 
-struct Struct_02021f88 {
-    unsigned char unknown_0_;
-    unsigned char unknown_1_;
-    unsigned char unknown_2_;
-    unsigned char unknown_3_;
-    short* unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    struct Struct_02021f88* unknown_10_;
+struct Node02021f88 {
+    unsigned char type;
+    unsigned char id;
+    unsigned char count;
+    unsigned char pad3;
+    short* data;
+    int x;
+    int y;
+    struct Node02021f88* next;
 };
 
-static inline SafeAllocator* inline_02021f88(GameResources* arg0, int arg1) {
-    return &arg0->allocator_array_38[arg1];
+static inline SafeAllocator* inline_02021f88(GameResources* axis, int i) {
+    return &axis->allocator_array_38[i];
 }
 
 #if defined(jpn)
@@ -99,35 +99,35 @@ enum { Enum_02021f88_0 = 0, Enum_02021f88_0_2 = 0, Enum_02021f88_1004 = 0x3ec,
        Enum_02021f88_96 = 0x60, Enum_02021f88_32 = 0x20 };
 #endif
 
-static inline char* inline_02021f88_2(void* arg0) {
-    return (char*)arg0 + Enum_02021f88_1004;
+static inline char* inline_02021f88_2(void* p) {
+    return (char*)p + Enum_02021f88_1004;
 }
 
-static inline char* inline_02021f88_3(char* arg0) {
-    return arg0 + Enum_02021f88_8192;
+static inline char* inline_02021f88_3(char* p) {
+    return p + Enum_02021f88_8192;
 }
 
 // Main, originally func_02021f88 (USA 0x02021f88, EUR 0x02021f98, JPN 0x02021a44)
 extern "C" ARM void MapDisplay_LoadGrottoMap(MapDisplay* self) {
-    char buf4[InitialPathBufferSize];
+    char var0[Enum_02021f88_32];
     char buf3[0x10];
     char buf2[0x40];
     char buf1[0x40];
     void* fileData;
     unsigned int fileLength;
-    Res02021f88* res;
+    Struct_02021f88_2* res;
     void* fileDataA;
     void* fileDataB;
     unsigned int fileLengthA;
     unsigned int fileLengthB;
 
-    BackgroundLoader* var11;
-    unsigned short* var12;
-    GameResources* var13;
-    char* var14;
-    char* var15;
-    int var16;
-    SafeAllocator* var17;
+    BackgroundLoader* loader;
+    unsigned short* p6;
+    GameResources* axis;
+    char* battleCtx;
+    char* table;
+    int state;
+    SafeAllocator* alloc;
 
     GameState::GetInstance();
     loader = BackgroundLoader::GetInstance();
@@ -136,31 +136,31 @@ extern "C" ARM void MapDisplay_LoadGrottoMap(MapDisplay* self) {
     battleCtx = (char*)OamManager_GetInstance();
     table = (char*)BgVram_GetInstance();
     state = self->loadStage;
-    alloc = GetAlloc02021f88(axis, 12);
+    alloc = inline_02021f88(axis, 12);
 
     if (state == 0) {
         MapDisplay_FadeOutSubScreen(self, 0x19);
         loader->AddFence();
         self->taska10 = loader->QueueLoadFile(data_020ef5fa, (SafeAllocator*)0);
-        int v = *(signed char*)((char*)p6 + ZoneValueOffset);
+        int v = *(signed char*)((char*)p6 + Enum_02021f88_9146);
 #if !defined(jpn)
         __clear(var0, 0x20);
 #endif
         if (ZoneId_IsGrottoBossFloor(*p6)) {
-            strcpy(buf4, data_020ef613);
+            strcpy(var0, data_020ef613);
         } else {
-            sprintf(var0, data_020ef622, var18);
+            sprintf(var0, data_020ef622, v);
         }
 #if defined(jpn)
-        arg0->unknown_a14_ = var11->QueueLoadFile(var0, (SafeAllocator*)0);
+        self->taska14 = loader->QueueLoadFile(var0, (SafeAllocator*)0);
 #else
-        arg0->unknown_a14_ = var11->QueueLoadFileInGP2(data_020ef632, var0, (SafeAllocator*)0);
+        self->taska14 = loader->QueueLoadFileInGP2(data_020ef632, var0, (SafeAllocator*)0);
 #endif
         if (ZoneId_IsGrottoBossFloor(*p6)) {
             self->namesTask = MapDisplay_QueueMapScript(self);
         } else if (ZoneId_IsMainGrottoFloor(*p6)) {
 #if !defined(jpn)
-            __clear(var1, 0x10);
+            __clear(buf3, 0x10);
 #endif
             sprintf(buf3, data_020ef642, *p6);
             MapDisplay_SetMapKey((char*)self, buf3);
@@ -189,7 +189,7 @@ extern "C" ARM void MapDisplay_LoadGrottoMap(MapDisplay* self) {
         self->entryList.records = self->records;
         self->entryList.count = 0x1b;
         char* g = (char*)CachedTextTable_GetInstance();
-        *(int*)(g + GlobalBufferOffset) = 0x2000;
+        *(int*)(g + Enum_02021f88_1288) = 0x2000;
         OamManager_GetInstance();
         char* p = (char*)OamManager_GetSubOamBuffer() + 0x2c0;
         g = (char*)CachedTextTable_GetInstance();
@@ -201,15 +201,15 @@ extern "C" ARM void MapDisplay_LoadGrottoMap(MapDisplay* self) {
         fileLength = 0;
         loader->GetLoadedFileByID(self->taska10, &fileData, &fileLength);
         SpriteContext_LoadArchive((char*)&self->entryList, (struct PacRecord*)fileData, fileLength, alloc);
-        SetBitfieldStoreBytes0205af38((int)((char*)&self->entryList), (char*)&self->records[9], 1, 1);
-        SetBitfieldStoreBytes0205af38((int)((char*)&self->entryList), (char*)&self->records[11], 1, 1);
+        func_0205af38((int)((char*)&self->entryList), (char*)&self->records[9], 1, 1);
+        func_0205af38((int)((char*)&self->entryList), (char*)&self->records[11], 1, 1);
         BackgroundLoader::GetInstance()->RemoveTask(self->taska10);
         self->taska10 = -1;
         loader->GetLoadedFileByID(self->taska14, &fileData, &fileLength);
         res = 0;
-        if (ValidateResourceLookup0205a1f0(&res, fileData, fileLength) != 0) return;
+        if (func_0205a1f0(&res, fileData, fileLength) != 0) return;
         char* vram = (char*)MessageSystem_GetInstance();
-        char* dst = *(char**)(vram + VramDataOffset);
+        char* dst = *(char**)(vram + Enum_02021f88_96);
         VectorizedInvertedMemcpy(res->f14, dst, res->f10);
         OS_WaitVBlankIntr();
         CleanInvalidateCacheRange(dst, res->f10);
@@ -223,7 +223,7 @@ extern "C" ARM void MapDisplay_LoadGrottoMap(MapDisplay* self) {
             strcpy(self->name, data_020ef649);
             self->scale = 0x2000;
             self->mapState = alloc->Allocate(0x800);
-            func_02027974(self, (int)((ActiveGrottoClass*)Off2000_02021f88(Zone02021f88(p6)))->floorMap_.pMapAdjacencyData, self->mapState);
+            func_02027974(self, (int)((ActiveGrottoClass*)inline_02021f88_3(inline_02021f88_2(p6)))->floorMap_.pMapAdjacencyData, self->mapState);
             self->forwardingX = -1;
             self->forwardingY = -1;
             Node02021f88* node = (Node02021f88*)alloc->Allocate(0x14);
@@ -235,10 +235,10 @@ extern "C" ARM void MapDisplay_LoadGrottoMap(MapDisplay* self) {
             for (int i = 0; i < node->count; i++) {
                 node->data[i] = *p6;
             }
-            Struct_02021f88* var26 = arg0->unknown_754_;
-            var24->unknown_1_ = var26 ? var26->unknown_1_ + 1 : 1;
-            var24->unknown_10_ = arg0->unknown_754_;
-            arg0->unknown_754_ = var24;
+            Node02021f88* head = self->field754;
+            node->id = head ? head->id + 1 : 1;
+            node->next = self->field754;
+            self->field754 = node;
         } else {
 #if defined(jpn)
             MapDisplay_RunMapScript(self, self->namesTask, alloc);
@@ -249,13 +249,13 @@ extern "C" ARM void MapDisplay_LoadGrottoMap(MapDisplay* self) {
         loader->AddFence();
         sprintf(buf2, data_020ef5b9, self->name);
         self->fileTask928 = loader->QueueLoadFileInGP2(
-            *(const char**)((char*)&data_020ef460 + 8 - GlobalHeaderRegionOffset), buf2, (SafeAllocator*)0);
+            *(const char**)((char*)&data_020ef460 + 8 - Enum_02021f88_0_2), buf2, (SafeAllocator*)0);
         if (ZoneId_IsGrottoBossFloor(*p6)) {
             for (int i = 0; i < self->nameCount; i++) {
                 sprintf(buf2, data_020ef5b9,
                         self->names[i].name);
                 self->nameTasks[i] = loader->QueueLoadFileInGP2(
-                    *(const char**)((char*)&data_020ef460 + 8 - GlobalHeaderRegionOffset), buf2, (SafeAllocator*)0);
+                    *(const char**)((char*)&data_020ef460 + 8 - Enum_02021f88_0_2), buf2, (SafeAllocator*)0);
             }
         }
         self->loadStage = self->loadStage + 1;
@@ -273,27 +273,27 @@ extern "C" ARM void MapDisplay_LoadGrottoMap(MapDisplay* self) {
 #endif
         if (ZoneId_IsMainGrottoFloor(*p6)) {
             self->mapPalette = self->forwardingFill + 1;
-            char* zone = Zone02021f88(p6);
+            char* zone = inline_02021f88_2(p6);
             Background_Init(&self->list4c);
             self->list4c.subScreen_ = 1;
             self->list4c.bgNumber_ = 0;
             self->list4c.characterOffset_ = self->mapPalette << 5;
             loader->AddFence();
-            ActiveGrottoClass* grotto = (ActiveGrottoClass*)(zone + ZoneLargeOffset);
+            ActiveGrottoClass* grotto = (ActiveGrottoClass*)(zone + Enum_02021f88_8192);
             if (grotto->GetActiveGrottoEnviron() == 0) {
                 sprintf(buf1, data_020ef654);
             } else {
-                sprintf(var3, data_020ef65d, var30->GetActiveGrottoEnviron());
+                sprintf(buf1, data_020ef65d, grotto->GetActiveGrottoEnviron());
             }
-            arg0->unknown_a18_ = var11->QueueLoadFileInGP2(
-                *(const char**)((char*)&data_020ef460 + 8 - Enum_02021f88_0_2), var3, (SafeAllocator*)0);
-            if (var30->GetActiveGrottoEnviron() == 0) {
-                sprintf(var3, data_020ef668);
+            self->taska18 = loader->QueueLoadFileInGP2(
+                *(const char**)((char*)&data_020ef460 + 8 - Enum_02021f88_0_2), buf1, (SafeAllocator*)0);
+            if (grotto->GetActiveGrottoEnviron() == 0) {
+                sprintf(buf1, data_020ef668);
             } else {
-                sprintf(var3, data_020ef671, var30->GetActiveGrottoEnviron());
+                sprintf(buf1, data_020ef671, grotto->GetActiveGrottoEnviron());
             }
-            arg0->unknown_a1c_ = var11->QueueLoadFileInGP2(
-                *(const char**)((char*)&data_020ef460 + 8 - Enum_02021f88_0_2), var3, (SafeAllocator*)0);
+            self->taska1c = loader->QueueLoadFileInGP2(
+                *(const char**)((char*)&data_020ef460 + 8 - Enum_02021f88_0_2), buf1, (SafeAllocator*)0);
         } else {
             MapDisplay_LoadMapPieces((char*)self, self->nameTasks, alloc);
         }

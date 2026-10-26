@@ -8,6 +8,6 @@ enum { PartyMember_linePosition = 0x1c9 };
 #endif
 
 // Main, originally SetByte0x1c9_0203986c (USA 0x0203986c, EUR 0x0203987c, JPN 0x020392c4)
-ARM void GameObject_SetLinePosition(unsigned char* partyMember, int position) {
+extern "C" ARM void GameObject_SetLinePosition(unsigned char* partyMember, int position) {
     partyMember[PartyMember_linePosition] = position;
 }

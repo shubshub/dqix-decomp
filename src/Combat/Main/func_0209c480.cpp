@@ -1,50 +1,50 @@
 #include <globaldefs.h>
 
-extern "C" int func_0209c0f4(int arg0, int arg1);
-extern "C" void func_0203aa44(void* arg0);
-extern "C" int func_0203aa64(void* arg0);
-extern "C" void* func_020bc068(void* arg0, int);
-extern "C" void func_0203aa80(void* arg0, int arg1);
-extern "C" int func_0203aaf8(void* arg0, void* arg1, int* arg2);
-struct Struct_0203aba8;
-extern "C" int func_0203aba8(struct Struct_0203aba8* arg0, void* arg1, void* arg2);
-extern "C" void func_0209c2e0(void* arg0, int arg1, int arg2);
+extern "C" int func_0209c0f4(int value, int type);
+extern "C" void SoundPlayer_UnloadAll(void* obj);
+extern "C" int SoundPlayer_SaveHeapState(void* obj);
+extern "C" void* func_020bc068(void* obj, int);
+extern "C" void SoundPlayer_RestoreHeapState(void* obj, int arg1);
+extern "C" int SoundPlayer_LoadSeq(void* obj, void* arg1, int* out);
+struct Obj0203aba8;
+extern "C" int SoundPlayer_StartSeq(struct Obj0203aba8* obj, void* key, void* target);
+extern "C" void func_0209c2e0(void* obj, int a, int b);
 
 struct Struct_0209c480 {
-    char unknown_0_[0xb0];
-    int unknown_b0_;
-    int unknown_b4_;
-    short unknown_b8_;
-    short unknown_ba_;
-    void* unknown_bc_;
-    void* unknown_c0_;
-    void* unknown_c4_;
+    char pad0[0xb0];
+    int state;
+    int field_b4;
+    short field_b8;
+    short field_ba;
+    void* fieldBC;
+    void* fieldC0;
+    void* fieldC4;
     unsigned char unknown_c8_;
     unsigned char unknown_c9_;
     short unknown_ca_;
-    unsigned char unknown_cc_;
+    unsigned char field_cc;
     unsigned char unknown_cd_;
-    short unknown_ce_;
+    short field_ce;
 };
 
 // USA: func_0209c480
-extern "C" ARM void func_0209c480(struct Struct_0209c480* arg0, int arg1) {
-    if (arg0->unknown_b0_ == 2) return;
-    arg0->unknown_b0_ = 2;
-    if (func_0209c0f4(arg0->unknown_b8_, arg1)) {
-        func_0203aa44(arg0);
-        arg0->unknown_b4_ = func_0203aa64(arg0);
+extern "C" ARM void func_0209c480(struct Struct_0209c480* obj, int arg1) {
+    if (obj->state == 2) return;
+    obj->state = 2;
+    if (func_0209c0f4(obj->field_b8, arg1)) {
+        SoundPlayer_UnloadAll(obj);
+        obj->field_b4 = SoundPlayer_SaveHeapState(obj);
     } else {
-        func_020bc068(&arg0->unknown_bc_, 1);
-        if (arg0->unknown_b4_ > 0) {
-            func_0203aa80(arg0, arg0->unknown_b4_);
+        func_020bc068(&obj->fieldBC, 1);
+        if (obj->field_b4 > 0) {
+            SoundPlayer_RestoreHeapState(obj, obj->field_b4);
         }
     }
     if (arg1 >= 0) {
-        func_0203aaf8(arg0, (void*)arg1, 0);
-        func_0203aba8((struct Struct_0203aba8*)arg0, (void*)arg1, &arg0->unknown_c0_);
-        func_0209c2e0(arg0, arg0->unknown_cd_, 0);
-        arg0->unknown_ba_ = (short)arg1;
+        SoundPlayer_LoadSeq(obj, (void*)arg1, 0);
+        SoundPlayer_StartSeq((struct Obj0203aba8*)obj, (void*)arg1, &obj->fieldC0);
+        func_0209c2e0(obj, obj->unknown_cd_, 0);
+        obj->field_ba = (short)arg1;
     }
-    arg0->unknown_ce_ = -1;
+    obj->field_ce = -1;
 }

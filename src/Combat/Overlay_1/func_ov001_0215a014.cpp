@@ -1,18 +1,18 @@
 #include <globaldefs.h>
 
-struct Struct_ov001_0215a014 { char unknown_0_[0x3c]; void* unknown_3c_; };
+struct Struct_ov001_0215a014 { char pad[0x3c]; void* next; };
 
-extern "C" void* func_ov001_02159eb0(void* arg0);
+extern "C" void* func_ov001_02159eb0(void* obj);
 
 // USA: func_ov001_0215a014
-extern "C" ARM void* func_ov001_0215a014(char* arg0) {
-    Struct_ov001_0215a014* var0 = (Struct_ov001_0215a014*)func_ov001_02159eb0(arg0);
-    if (var0 == NULL) return NULL;
-    Struct_ov001_0215a014** var1 = (Struct_ov001_0215a014**)(arg0 + 0x3c);
-    if (*var1 != NULL) (*var1)->unknown_3c_ = var0;
-    *var1 = var0;
-    var0->unknown_3c_ = NULL;
-    Struct_ov001_0215a014** var2 = (Struct_ov001_0215a014**)(arg0 + 0x38);
-    if (*var2 == NULL) *var2 = var0;
-    return var0;
+extern "C" ARM void* func_ov001_0215a014(char* obj) {
+    Struct_ov001_0215a014* node = (Struct_ov001_0215a014*)func_ov001_02159eb0(obj);
+    if (node == NULL) return NULL;
+    Struct_ov001_0215a014** tail = (Struct_ov001_0215a014**)(obj + 0x3c);
+    if (*tail != NULL) (*tail)->next = node;
+    *tail = node;
+    node->next = NULL;
+    Struct_ov001_0215a014** head = (Struct_ov001_0215a014**)(obj + 0x38);
+    if (*head == NULL) *head = node;
+    return node;
 }

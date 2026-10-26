@@ -5,8 +5,8 @@ extern "C" void func_ov017_021d6134(void*, int);
 
 // USA: func_ov023_021eacd8
 extern "C" ARM int func_ov023_021eacd8(void* arg0) {
-    Struct_02061c04 var0;
-    func_020ac4c0(&var0);
-    func_ov017_021d6134(arg0, var0.unknown_90_.unknown_10_0_);
+    Struct_02061c04 record;
+    func_020ac4c0(&record);
+    func_ov017_021d6134(arg0, record.unknown_90_.unknown_10_0_);
     return 1;
 }

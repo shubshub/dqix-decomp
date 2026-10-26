@@ -1,17 +1,17 @@
 #include <globaldefs.h>
 
 #if defined(jpn)
-struct Struct_ov017_021a4e70 { char unknown_0_[0x34]; signed char unknown_54_; };
+struct Struct_ov017_021a4e70 { char pad[0x34]; signed char field; };
 #else
-struct Struct_ov017_021a4e70 { char unknown_0_[0x54]; signed char unknown_54_; };
+struct Struct_ov017_021a4e70 { char pad[0x54]; signed char field; };
 #endif
 
 // USA: func_ov017_021a4e70
-extern "C" ARM int func_ov017_021a4e70(unsigned char* arg0) {
+extern "C" ARM int func_ov017_021a4e70(unsigned char* base) {
 #if defined(jpn)
-	Struct_ov017_021a4e70* var0 = (Struct_ov017_021a4e70*)(arg0 + 0x4100);
+	Struct_ov017_021a4e70* s = (Struct_ov017_021a4e70*)(base + 0x4100);
 #else
-	Struct_ov017_021a4e70* var0 = (Struct_ov017_021a4e70*)(arg0 + 0x4300);
+	Struct_ov017_021a4e70* s = (Struct_ov017_021a4e70*)(base + 0x4300);
 #endif
-	return var0->unknown_54_ <= 0;
+	return s->field <= 0;
 }

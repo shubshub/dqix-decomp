@@ -28,7 +28,7 @@ struct List0201f214 {
 };
 
 // Main, originally AppendCappedElement0201f214 (USA 0x0201f214, EUR 0x0201f224, JPN 0x0201efa0)
-ARM void BmdjScriptState_AddElement(struct List0201f214* state, struct Element0201f214* record) {
+extern "C" ARM void BmdjScriptState_AddElement(struct List0201f214* state, struct Element0201f214* record) {
     int count = state->elementCount;
     struct Element0201f214* slot;
     if (state->elementCapacity <= count) {

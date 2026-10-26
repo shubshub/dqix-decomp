@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-int NNS_SndArcPlayerStartSeqArc(void*, int, int);
+extern "C" int NNS_SndArcPlayerStartSeqArc(void*, int, int);
 extern void* data_ov031_02290d00;
 
 // USA: func_ov031_02236878

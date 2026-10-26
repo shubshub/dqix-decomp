@@ -8,63 +8,63 @@
 #include "std_library_functions.h"
 #include "Memory/SafeAllocator.h"
 
-struct Struct_ov011_02184c30 {
-    int unknown_0_;
-    union { int unknown_0_; float unknown1_0_; } unknown_4_;
+struct TaggedNumber02184c30 {
+    int type;
+    union { int i; float f; } value;
 };
 
-extern "C" int func_ov011_02184c30(struct Struct_ov011_02184c30* arg0);
+extern "C" int func_ov011_02184c30(struct TaggedNumber02184c30* v);
 extern "C" ARM void* func_ov017_021b2164(void);
 extern "C" ARM void* func_ov011_021845f8(void* ctx, int v);
 extern "C" ARM void* func_ov011_021849c8(void* ctx);
-extern "C" ARM int func_ov023_021fbe08(void* obj, void* script, int id, int heapId, int unk);
-void* ItemTable_Construct(void* obj);
+extern "C" ARM int func_ov023_021fbe08(void* obj, void* script, int id, int arg3, int unk);
+extern "C" void* ItemTable_Construct(void* obj);
 
 struct Struct_ov004_0215c30c;
 struct Struct_ov004_0215c30c_2;
-extern "C" void func_ov023_021f67ac(struct Struct_ov004_0215c30c* arg0, struct Struct_ov004_0215c30c_2* arg1);
+extern "C" void func_ov023_021f67ac(struct Struct_ov004_0215c30c* head, struct Struct_ov004_0215c30c_2* node);
 
 extern char data_ov024_021ff280;
 
 struct Struct_ov011_02186b44 {
-    int unknown_0_;
-    SafeAllocator unknown_4_;
+    int id;
+    SafeAllocator allocator;
 };
 
 struct Struct_ov011_02186b44_2 {
     void* unknown_0_;
-    char unknown_4_[0x20 - 4];
-    SafeAllocator unknown_20_;
-    char unknown_34_[0x50 - 0x34];
+    char pad[0x20 - 4];
+    SafeAllocator allocator;
+    char part[0x50 - 0x34];
 };
 
 // USA: func_ov011_02186b44
-extern "C" ARM int func_ov011_02186b44(struct Struct_ov011_02184c30* arg0, int arg1) {
-    int var0;
-    int var1 = func_ov011_02184c30(&arg0[0]);
-    int var2 = func_ov011_02184c30(&arg0[1]);
-    var0 = 0;
-    if (arg1 - 2 != 0)
-        var0 = func_ov011_02184c30(&arg0[2]);
+extern "C" ARM int func_ov011_02186b44(struct TaggedNumber02184c30* params, int count) {
+    int unk;
+    int id = func_ov011_02184c30(&params[0]);
+    int var2 = func_ov011_02184c30(&params[1]);
+    unk = 0;
+    if (count - 2 != 0)
+        unk = func_ov011_02184c30(&params[2]);
 
-    void* var3 = func_ov017_021b2164();
-    Struct_ov011_02186b44* var4 = (Struct_ov011_02186b44*)func_ov011_021845f8(var3, var2);
-    if (var4 == 0)
+    void* script = func_ov017_021b2164();
+    Struct_ov011_02186b44* heap = (Struct_ov011_02186b44*)func_ov011_021845f8(script, var2);
+    if (heap == 0)
         return 0;
 
-    var4->unknown_4_.GetSizeWithLargestBlockRemoved();
-    void* var5 = var4->unknown_4_.Allocate(sizeof(Struct_ov011_02186b44_2));
-    if (var5 == 0)
+    heap->allocator.GetSizeWithLargestBlockRemoved();
+    void* object = heap->allocator.Allocate(sizeof(Struct_ov011_02186b44_2));
+    if (object == 0)
         return 0;
 
-    MenuObject02186b44 prototype;
-    prototype.vtable = &data_ov024_021ff280;
+    Struct_ov011_02186b44_2 prototype;
+    prototype.unknown_0_ = &data_ov024_021ff280;
     prototype.allocator.ResetAllocatorPointer();
     ItemTable_Construct(prototype.part);
-    memcpy(object, &prototype, sizeof(MenuObject02186b44));
-    if (!func_ov023_021fbe08(object, script, id, heapId, unk))
+    memcpy(object, &prototype, sizeof(Struct_ov011_02186b44_2));
+    if (!func_ov023_021fbe08(object, script, id, var2, unk))
         return 0;
 
-    func_ov023_021f67ac((struct Struct_ov004_0215c30c*)func_ov011_021849c8(var3), (struct Struct_ov004_0215c30c_2*)var5);
+    func_ov023_021f67ac((struct Struct_ov004_0215c30c*)func_ov011_021849c8(script), (struct Struct_ov004_0215c30c_2*)object);
     return 1;
 }

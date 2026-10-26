@@ -4,56 +4,56 @@
 
 struct Struct_02087b3c;
 struct Struct_02087b90;
-extern "C" int func_02087b3c(struct Struct_02087b3c* arg0, int arg1);
-extern "C" int func_02087b90(struct Struct_02087b90* arg0, int arg1);
+extern "C" int func_02087b3c(struct Struct_02087b3c* p, int arg1);
+extern "C" int func_02087b90(struct Struct_02087b90* p, int delta);
 void UpdateCombatantMagicalMight(int unused, int combatantId);
-extern "C" void func_ov000_02159eac(void* arg0, void* arg1, int arg2);
+extern "C" void func_ov000_02159eac(void* a0, void* buf, int a2);
 struct Struct_ov024_021e2bd0;
-extern "C" void* func_ov024_021e8ca0(struct Struct_ov024_021e2bd0* arg0, int arg1);
-extern "C" void func_ov000_0215cd44(void* arg0, void* arg1, void* arg2, int arg3, int arg4, int arg5, int arg6);
+extern "C" void* func_ov024_021e8ca0(struct Struct_ov024_021e2bd0* obj, int id);
+extern "C" void func_ov000_0215cd44(void* a, void* b, void* c, int d, int e, int f, int g);
 
-struct Struct_ov024_021e4158 { char unknown_0_[0xc]; void* unknown_c_; void* unknown_10_; };
-struct Struct_ov024_021e4158_2 { char unknown_0_[0x32]; short unknown_32_; };
+struct Struct_ov024_021e4158 { char pad0[0xc]; void* unknown_c_; void* unknown_10_; };
+struct Struct_ov024_021e4158_2 { char pad[0x32]; short unknown_32_; };
 
 // USA: func_ov024_021e4158
-extern "C" ARM unsigned long long func_ov024_021e4158(struct Struct_ov024_021e4158* arg0, int arg1, int arg2, struct Struct_ov024_021e4158_2* arg3) {
-	GameObject* var0 = GetCombatantByID((int)arg0->unknown_10_, arg2);
-	if (!var0) return 0;
-	int var1 = arg3->unknown_32_;
-	if (var1 < -2) var1 = -2;
-	if (var1 > 2) var1 = 2;
+extern "C" ARM unsigned long long func_ov024_021e4158(struct Struct_ov024_021e4158* obj, int unused, int id, struct Struct_ov024_021e4158_2* range) {
+	GameObject* c = GetCombatantByID((int)obj->unknown_10_, id);
+	if (!c) return 0;
+	int delta = range->unknown_32_;
+	if (delta < -2) delta = -2;
+	if (delta > 2) delta = 2;
 	int var2 = 0;
-	if (var1 < 0) var2 = 1;
+	if (delta < 0) var2 = 1;
 	int var3 = 0;
-	int var4 = 0;
-	if (func_02087b3c((struct Struct_02087b3c*)var0->currentStats_, (unsigned char)var2)) {
-		var4 = func_02087b90((struct Struct_02087b90*)var0->currentStats_, (signed char)var1);
-		UpdateCombatantMagicalMight((int)arg0->unknown_10_, arg2);
+	int stage = 0;
+	if (func_02087b3c((struct Struct_02087b3c*)c->currentStats_, (unsigned char)var2)) {
+		stage = func_02087b90((struct Struct_02087b90*)c->currentStats_, (signed char)delta);
+		UpdateCombatantMagicalMight((int)obj->unknown_10_, id);
 		var3 = 1;
 	}
-	union { struct { int unknown_0_; int unknown_4_; }; unsigned long long unknown1_0_; } var5;
-	var5.unknown_0_ = 0;
-	var5.unknown_4_ = 0;
+	union { struct { int lo; int hi; }; unsigned long long v; } local;
+	local.lo = 0;
+	local.hi = 0;
 	if (var3) {
-		int var6;
-		if (var1 > 0) {
-			switch (var4) {
-			case 2: var6 = 0xd0; break;
-			case 0: var6 = 0x1b7; break;
-			default: var6 = 0xd1; break;
+		int msg;
+		if (delta > 0) {
+			switch (stage) {
+			case 2: msg = 0xd0; break;
+			case 0: msg = 0x1b7; break;
+			default: msg = 0xd1; break;
 			}
 		} else {
-			switch (var4) {
-			case -2: var6 = 0x1b6; break;
-			case 0: var6 = 0x1b7; break;
-			default: var6 = 0x1b5; break;
+			switch (stage) {
+			case -2: msg = 0x1b6; break;
+			case 0: msg = 0x1b7; break;
+			default: msg = 0x1b5; break;
 			}
 		}
-		func_ov000_02159eac(arg0->unknown_10_, &var5, 0x20);
-		void* var7 = func_ov024_021e8ca0((struct Struct_ov024_021e2bd0*)arg0, var6);
-		if (var7) {
-			func_ov000_0215cd44(arg0->unknown_10_, var7, var0, 0, 0, 0, 0);
+		func_ov000_02159eac(obj->unknown_10_, &local, 0x20);
+		void* entry = func_ov024_021e8ca0((struct Struct_ov024_021e2bd0*)obj, msg);
+		if (entry) {
+			func_ov000_0215cd44(obj->unknown_10_, entry, c, 0, 0, 0, 0);
 		}
 	}
-	return var5.unknown1_0_;
+	return local.v;
 }

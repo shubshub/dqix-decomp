@@ -11,8 +11,8 @@ enum { kDigitOamSlot = 20, kFillOamSlot = 44, kFrameOamSlot = 48 };
 enum { kPanelWidth = 64, kDigitWidth = 8, kGaugePalette = 6, kNoAffineMatrix = 0xff, kScaleOne = 0x1000 };
 enum { kMinimumFill = 40 };     // a gauge with anything left never shrinks below this 4.12 scale
 
-int MapDisplay_GetMemberHpTier(int);
-void MapDisplay_DrawSprite(void*, int, int, int, unsigned char, unsigned char, unsigned short, unsigned char, int, int);
+extern "C" int MapDisplay_GetMemberHpTier(int);
+extern "C" void MapDisplay_DrawSprite(void*, int, int, int, unsigned char, unsigned char, unsigned short, unsigned char, int, int);
 #if defined(jpn)
 #define data_020e7034 data_020e78d5
 #endif

@@ -12,143 +12,143 @@ struct SePlayer;
 struct Struct_ov005_0215c058
 {
 #if defined(jpn)
-    char unknown_0_[0x34f8];
+    char pad[0x34f8];
 #else
-    char unknown1_0_[0x3708];
+    char pad[0x3708];
 #endif
-    int* unknown_3708_;
+    int* ptr;
 };
 
 struct Struct_ov005_0215c058_2
 {
 #if defined(jpn)
-    char unknown_0_[0x4f8];
+    char pad0[0x4f8];
 #else
-    char unknown1_0_[0x4fc];
+    char pad0[0x4fc];
 #endif
-    int unknown_4fc_;
+    int member;
 #if defined(jpn)
-    char unknown1_4fc_[0x56c - 0x4fc];
+    char pad1[0x56c - 0x4fc];
 #else
-    char unknown_500_[0x634 - 0x500];
+    char pad1[0x634 - 0x500];
 #endif
-    unsigned short unknown_634_;
+    unsigned short flags;
 };
 
 struct Struct_ov005_0215c058_3
 {
-    void* unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
+    void* target;
+    int scale;
+    int minX;
+    int maxX;
     int unknown_10_;
     int unknown_14_;
     int unknown_18_[8];
-    int unknown_38_;
+    int speed;
 };
 
 struct Struct_ov005_0215c058_4
 {
 #if defined(jpn)
-    char unknown_0_[0x196c];
+    char pad0[0x196c];
 #else
-    char unknown1_0_[0x19f4];
+    char pad0[0x19f4];
 #endif
-    char unknown_19f4_[0x1a34 - 0x19f4];
+    char scroll[0x1a34 - 0x19f4];
     void* unknown_1a34_;
-    char unknown_1a38_[0x3daa - 0x1a38];
+    char pad1[0x3daa - 0x1a38];
     unsigned char unknown_3daa_;
-    char unknown_3dab_[0x3db8 - 0x3dab];
+    char pad2[0x3db8 - 0x3dab];
     unsigned char unknown_3db8_;
-    char unknown_3db9_;
-    unsigned char unknown_3dba_;
-    signed char unknown_3dbb_;
-    unsigned char unknown_3dbc_;
-    signed char unknown_3dbd_;
-    char unknown_3dbe_[0x3dcc - 0x3dbe];
-    struct { unsigned int unknown_0_0_ : 2; unsigned int unknown_0_2_ : 1; unsigned int unknown_0_3_ : 1; unsigned int unknown_0_4_ : 2; unsigned int unknown_0_6_ : 1; unsigned int unknown_0_7_ : 25; } unknown_3dcc_;
-    char unknown_3dd0_[0x3de0 - 0x3dd0];
-    short unknown_3de0_;
+    char pad3;
+    unsigned char state;
+    signed char selected;
+    unsigned char tab;
+    signed char page;
+    char pad4[0x3dcc - 0x3dbe];
+    struct { unsigned int b0 : 2; unsigned int f2 : 1; unsigned int f3 : 1; unsigned int unknown_0_4_ : 2; unsigned int unknown_0_6_ : 1; unsigned int rest : 25; } dirty;
+    char pad5[0x3de0 - 0x3dd0];
+    short held;
 };
 
 extern "C" Struct_ov005_0215c058_2* func_ov017_021a193c(int*);
 extern "C" void func_ov005_021551fc(char*, int, int);
 extern "C" GameState* _ZN9GameState11GetInstanceEv();
-extern "C" void func_ov005_02156658(Menu0215c058* self, int x, int y);
-extern "C" int func_ov005_02155670(Menu0215c058* self, int x, int y);
+extern "C" void func_ov005_02156658(Struct_ov005_0215c058_4* self, int x, int y);
+extern "C" int func_ov005_02155670(Struct_ov005_0215c058_4* self, int x, int y);
 extern "C" void GridCursor_SetSelectedIndex(void* obj, int v);
-extern "C" void func_ov005_021579ec(Menu0215c058* self, unsigned int state, unsigned char slot);
+extern "C" void func_ov005_021579ec(Struct_ov005_0215c058_4* self, unsigned int state, unsigned char slot);
 extern "C" unsigned int _ZNK9GameState12GetTickCountEv(GameState* gs);
 extern "C" int GridCursor_Update(void* obj, int v);
-extern "C" int func_ov005_021585fc(Menu0215c058* self, int direction);
-extern "C" void func_ov005_021555c0(Menu0215c058* self);
-extern "C" void func_ov005_021536e0(CursorFrame0215c058* frame);
-extern "C" void func_ov005_021553b4(Menu0215c058* self, int slot, int* x, int* y);
-extern "C" void func_ov005_02154d18(CursorFrame0215c058* obj, int a, int b);
-extern "C" void func_ov005_02154d34(CursorFrame0215c058* obj, int a, int b);
-extern "C" void func_ov005_02154d50(CursorFrame0215c058* obj, int a, int b);
-extern "C" void func_ov005_02154d7c(CursorFrame0215c058* obj, int a, int b);
-extern "C" void func_ov005_021537bc(CursorFrame0215c058* frame, int mode, unsigned short value);
+extern "C" int func_ov005_021585fc(Struct_ov005_0215c058_4* self, int direction);
+extern "C" void func_ov005_021555c0(Struct_ov005_0215c058_4* self);
+extern "C" void func_ov005_021536e0(Struct_ov005_0215c058_3* frame);
+extern "C" void func_ov005_021553b4(Struct_ov005_0215c058_4* self, int slot, int* x, int* y);
+extern "C" void func_ov005_02154d18(Struct_ov005_0215c058_3* obj, int a, int b);
+extern "C" void func_ov005_02154d34(Struct_ov005_0215c058_3* obj, int a, int b);
+extern "C" void func_ov005_02154d50(Struct_ov005_0215c058_3* obj, int a, int b);
+extern "C" void func_ov005_02154d7c(Struct_ov005_0215c058_3* obj, int a, int b);
+extern "C" void func_ov005_021537bc(Struct_ov005_0215c058_3* frame, int mode, unsigned short value);
 struct GridCursor;
-int GridCursor_GetSelectedIndex(GridCursor*);
-void SePlayer_Play(SePlayer*, int, int);
-int CheckFlag30Or401_02157190(void* self);
-unsigned char* GameState_GetParty(GameState*);
-short* GetPointerFromArray0xbd0_0207c5f8(unsigned char*, unsigned int);
-signed char* GetPointerAt0xbf0_0207c60c(void*, unsigned int);
-extern "C" void func_ov005_0215792c(Menu0215c058* self, int mode);
+extern "C" int GridCursor_GetSelectedIndex(GridCursor*);
+extern "C" void SePlayer_Play(SePlayer*, int, int);
+extern "C" int func_ov005_02157190(void* self);
+extern "C" unsigned char* GameState_GetParty(GameState*);
+extern "C" short* func_0207c5f8(unsigned char*, unsigned int);
+extern "C" signed char* func_0207c60c(void*, unsigned int);
+extern "C" void func_ov005_0215792c(Struct_ov005_0215c058_4* self, int mode);
 
 extern char g_sePlayer[];
 extern unsigned char data_ov005_0215cd10[];
 
 // USA: func_ov005_0215c058
-extern "C" ARM void func_ov005_0215c058(Struct_ov005_0215c058_4* arg0)
+extern "C" ARM void func_ov005_0215c058(Struct_ov005_0215c058_4* self)
 {
-    if (arg0->unknown_3dba_ == 0)
+    if (self->state == 0)
     {
-        arg0->unknown_3de0_ = arg0->unknown_3dbb_ - 8 + arg0->unknown_3dbd_ * 16;
+        self->held = self->selected - 8 + self->page * 16;
 #if defined(jpn)
-        arg0->unknown_1a34_ = (char*)arg0 + 0x29d8;
+        self->unknown_1a34_ = (char*)self + 0x29d8;
 #else
-        arg0->unknown_1a34_ = (char*)arg0 + 0x2a60;
+        self->unknown_1a34_ = (char*)self + 0x2a60;
 #endif
-        arg0->unknown_3dba_++;
+        self->state++;
     }
-    else if (arg0->unknown_3dba_ == 1)
+    else if (self->state == 1)
     {
-        Struct_ov005_0215c058_2* var0 = func_ov017_021a193c(((Struct_ov005_0215c058*)GetGameResources())->unknown_3708_);
-        func_ov005_021551fc((char*)arg0, var0->unknown_4fc_, 0);
-        GameState* var1 = _ZN9GameState11GetInstanceEv();
-        int var2 = 0;
-        int var3 = 0;
+        Struct_ov005_0215c058_2* screen = func_ov017_021a193c(((Struct_ov005_0215c058*)GetGameResources())->ptr);
+        func_ov005_021551fc((char*)self, screen->member, 0);
+        GameState* gs = _ZN9GameState11GetInstanceEv();
+        int touched = 0;
+        int moved = 0;
         if (g_touchInput.pressed_)
         {
-            int var4;
-            int var5;
-            var2 = 1;
-            g_touchInput.GetTouchPoint(&var4, &var5);
-            arg0->unknown_3dcc_.unknown_0_2_ = 0;
-            arg0->unknown_3dcc_.unknown_0_3_ = 1;
-            func_ov005_02156658(arg0, var4, var5);
-            int var6 = func_ov005_02155670(arg0, var4, var5);
-            if (var6 >= 8 && var6 < 0x18)
+            int x;
+            int y;
+            touched = 1;
+            g_touchInput.GetTouchPoint(&x, &y);
+            self->dirty.f2 = 0;
+            self->dirty.f3 = 1;
+            func_ov005_02156658(self, x, y);
+            int slot = func_ov005_02155670(self, x, y);
+            if (slot >= 8 && slot < 0x18)
             {
                 self->selected = slot;
                 moved = 1;
                 GridCursor_SetSelectedIndex(self->scroll, self->selected - 8);
-                func_ov005_021579ec(self, self->cursorMode, self->selected);
+                func_ov005_021579ec(self, self->unknown_3db8_, self->selected);
             }
         }
         else if (g_touchInput.isRepeatValid_ != 0 && g_touchInput.currentReading_.isHeld != 0)
         {
-            var2 = 1;
+            touched = 1;
         }
         else if (g_touchInput.released_ != 0)
         {
-            var2 = 1;
+            touched = 1;
         }
 
-        if (!var2)
+        if (!touched)
         {
             int tick = _ZNK9GameState12GetTickCountEv(gs);
             if (tick == 0)
@@ -159,44 +159,44 @@ extern "C" ARM void func_ov005_0215c058(Struct_ov005_0215c058_4* arg0)
             if (col == 0)
             {
                 if (g_keyManager.TestKeysPressed(0x20))
-                    var8 = func_ov005_021585fc(arg0, -1);
+                    changed = func_ov005_021585fc(self, -1);
             }
-            else if (var9 == 3)
+            else if (col == 3)
             {
                 if (g_keyManager.TestKeysPressed(0x10))
-                    var8 = func_ov005_021585fc(arg0, 1);
+                    changed = func_ov005_021585fc(self, 1);
             }
-            if (var8)
-                func_ov005_021555c0(arg0);
+            if (changed)
+                func_ov005_021555c0(self);
         }
 
-        short var10 = arg0->unknown_3dbd_ * 16;
-        short var11 = var10 + 16;
-        if (arg0->unknown_3de0_ >= var10 && arg0->unknown_3de0_ < var11)
+        short top = self->page * 16;
+        short bottom = top + 16;
+        if (self->held >= top && self->held < bottom)
         {
-            Struct_ov005_0215c058_3 var12;
-            int var13;
-            int var14;
-            func_ov005_021536e0(&var12);
+            Struct_ov005_0215c058_3 frame;
+            int x;
+            int y;
+            func_ov005_021536e0(&frame);
 #if defined(jpn)
-            var12.unknown_0_ = (char*)arg0 + 0x27b8;
+            frame.target = (char*)self + 0x27b8;
 #else
-            var12.unknown_0_ = (char*)arg0 + 0x2840;
+            frame.target = (char*)self + 0x2840;
 #endif
-            var12.unknown_4_ = 0x8000;
-            var12.unknown_8_ = -0x3000;
-            var12.unknown_c_ = 0x3000;
-            var12.unknown_14_ = 0x3000;
-            var12.unknown_10_ = -0x3000;
-            func_ov005_021553b4(arg0, arg0->unknown_3de0_ % 16 + 8, &var13, &var14);
-            int var15 = var13 << 12;
-            int var16 = var14 << 12;
-            func_ov005_02154d18(&var12, var15, var16);
-            func_ov005_02154d34(&var12, var15, var16);
-            func_ov005_02154d50(&var12, 0x18000, 0x18000);
-            func_ov005_02154d7c(&var12, 0x18000, 0x18000);
-            var12.unknown_38_ = 0x4800;
-            func_ov005_021537bc(&var12, 0, 0x7fff);
+            frame.scale = 0x8000;
+            frame.minX = -0x3000;
+            frame.maxX = 0x3000;
+            frame.unknown_14_ = 0x3000;
+            frame.unknown_10_ = -0x3000;
+            func_ov005_021553b4(self, self->held % 16 + 8, &x, &y);
+            int fx = x << 12;
+            int var16 = y << 12;
+            func_ov005_02154d18(&frame, fx, var16);
+            func_ov005_02154d34(&frame, fx, var16);
+            func_ov005_02154d50(&frame, 0x18000, 0x18000);
+            func_ov005_02154d7c(&frame, 0x18000, 0x18000);
+            frame.speed = 0x4800;
+            func_ov005_021537bc(&frame, 0, 0x7fff);
         }
 
         int sel = GridCursor_GetSelectedIndex((GridCursor*)self->scroll) + 8;
@@ -204,49 +204,49 @@ extern "C" ARM void func_ov005_0215c058(Struct_ov005_0215c058_4* arg0)
         {
             self->selected = sel;
             SePlayer_Play((SePlayer*)g_sePlayer, 2, 0);
-            func_ov005_021579ec(self, self->cursorMode, self->selected);
+            func_ov005_021579ec(self, self->unknown_3db8_, self->selected);
         }
-        else if (var17 == arg0->unknown_3dbb_)
+        else if (sel == self->selected)
         {
-        if (func_ov005_02157190(arg0) != 0 || var3)
+        if (func_ov005_02157190(self) != 0 || moved)
         {
             short index = self->selected - 8 + self->page * 16;
             unsigned char* bag = GameState_GetParty(gs);
-            short* ids = GetPointerFromArray0xbd0_0207c5f8(bag + 0x1d4, data_ov005_0215cd10[self->tab]);
-            signed char* amounts = GetPointerAt0xbf0_0207c60c(bag + 0x1d4, data_ov005_0215cd10[self->tab]);
+            short* ids = func_0207c5f8(bag + 0x1d4, data_ov005_0215cd10[self->tab]);
+            signed char* var21 = func_0207c60c(bag + 0x1d4, data_ov005_0215cd10[self->tab]);
             short id = ids[self->held];
-            signed char amount = amounts[self->held];
+            signed char amount = var21[self->held];
             ids[self->held] = ids[index];
-            amounts[self->held] = amounts[index];
+            var21[self->held] = var21[index];
             ids[index] = id;
-            amounts[index] = amount;
+            var21[index] = amount;
             func_ov005_021555c0(self);
-            self->dirty.f6 = 1;
-            self->f3daa = 0;
+            self->dirty.unknown_0_6_ = 1;
+            self->unknown_3daa_ = 0;
             self->held = -1;
             func_ov005_0215792c(self, 4);
             SePlayer_Play((SePlayer*)g_sePlayer, 1, 0);
             screen->flags |= 0x81;
 #if defined(jpn)
-            arg0->unknown_1a34_ = (char*)arg0 + 0x19e8;
+            self->unknown_1a34_ = (char*)self + 0x19e8;
 #else
-            arg0->unknown_1a34_ = (char*)arg0 + 0x1a70;
+            self->unknown_1a34_ = (char*)self + 0x1a70;
 #endif
-            arg0->unknown_3dcc_.unknown_0_2_ = 1;
-            arg0->unknown_3dcc_.unknown_0_3_ = 1;
+            self->dirty.f2 = 1;
+            self->dirty.f3 = 1;
         }
         else if (g_keyManager.TestKeysPressed(2))
         {
-            arg0->unknown_3de0_ = -1;
-            func_ov005_0215792c(arg0, 4);
-            var0->unknown_634_ |= 0x81;
+            self->held = -1;
+            func_ov005_0215792c(self, 4);
+            screen->flags |= 0x81;
 #if defined(jpn)
-            arg0->unknown_1a34_ = (char*)arg0 + 0x19e8;
+            self->unknown_1a34_ = (char*)self + 0x19e8;
 #else
-            arg0->unknown_1a34_ = (char*)arg0 + 0x1a70;
+            self->unknown_1a34_ = (char*)self + 0x1a70;
 #endif
-            arg0->unknown_3dcc_.unknown_0_2_ = 1;
-            arg0->unknown_3dcc_.unknown_0_3_ = 1;
+            self->dirty.f2 = 1;
+            self->dirty.f3 = 1;
         }
         }
     }

@@ -2,15 +2,15 @@
 
 
 struct Struct_020d3084 {
-    int unknown_0_;
-    unsigned char* unknown_4_;
+    int remaining;
+    unsigned char* ptr;
 };
 
 // USA: func_020d3084
-extern "C" ARM void func_020d3084(struct Struct_020d3084* arg0, int arg1) {
-    if (arg0->unknown_0_ != 0) {
-        *arg0->unknown_4_ = arg1;
-        arg0->unknown_0_--;
+extern "C" ARM void func_020d3084(struct Struct_020d3084* s, int c) {
+    if (s->remaining != 0) {
+        *s->ptr = c;
+        s->remaining--;
     }
-    arg0->unknown_4_++;
+    s->ptr++;
 }

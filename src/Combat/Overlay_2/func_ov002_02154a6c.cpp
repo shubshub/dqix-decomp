@@ -2,26 +2,26 @@
 #include "World/Object3D.h"
 #include <globaldefs.h>
 
-extern "C" GameObject *func_0200ff1c(GameState *arg0, int arg1);
+extern "C" GameObject *func_0200ff1c(GameState *gameState, int combatantId);
 
 // USA: func_ov002_02154a6c
-extern "C" ARM int func_ov002_02154a6c(void *arg0, int arg1, int arg2) {
-    GameState *var0 = GameState::GetInstance();
-    GameObject *var1 = func_0200ff1c(var0, arg1);
-    if (var1 == NULL) return 0;
-    GameObject *var2 = func_0200ff1c(var0, arg2);
-    if (var2 == NULL) return 0;
+extern "C" ARM int func_ov002_02154a6c(void *self, int idA, int arg2) {
+    GameState *gs = GameState::GetInstance();
+    GameObject *a = func_0200ff1c(gs, idA);
+    if (a == NULL) return 0;
+    GameObject *b = func_0200ff1c(gs, arg2);
+    if (b == NULL) return 0;
 
-    if (var1->obj3D_.GetField06() == var2->obj3D_.GetField06()) return 1;
+    if (a->obj3D_.GetField06() == b->obj3D_.GetField06()) return 1;
 
-    if ((var1->obj3D_.GetField06() == 10000 && var2->obj3D_.GetField06() == 5900) ||
-        (var1->obj3D_.GetField06() == 5900 && var2->obj3D_.GetField06() == 10000))
+    if ((a->obj3D_.GetField06() == 10000 && b->obj3D_.GetField06() == 5900) ||
+        (a->obj3D_.GetField06() == 5900 && b->obj3D_.GetField06() == 10000))
     {
         return 1;
     }
 
-    if ((var1->obj3D_.GetField06() == 10100 && var2->obj3D_.GetField06() == 6401) ||
-        (var1->obj3D_.GetField06() == 6401 && var2->obj3D_.GetField06() == 10100))
+    if ((a->obj3D_.GetField06() == 10100 && b->obj3D_.GetField06() == 6401) ||
+        (a->obj3D_.GetField06() == 6401 && b->obj3D_.GetField06() == 10100))
     {
         return 1;
     }

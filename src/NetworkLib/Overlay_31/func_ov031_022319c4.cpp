@@ -2,7 +2,7 @@
 
 typedef void (*Type_ov031_022234d8)(void*, int, int);
 
-extern "C" void func_ov031_022234d8(int arg0, Type_ov031_022234d8 arg1);
+extern "C" void func_ov031_022234d8(int a0, Type_ov031_022234d8 cb);
 extern "C" extern int LoadToMainBG2ScreenData(int arg0, int arg1, unsigned int arg2);
 
 extern int data_ov031_0224bbf8;

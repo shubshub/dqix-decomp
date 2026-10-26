@@ -90,9 +90,9 @@ extern "C" ARM int Zone3D_CollectTerrainPolygons(Zone3D* self, int index, ZoneTe
     int count = TerrainMesh_CollectPolygons(polygons, grid, probe);
     Vector3fix_Add(&grid->position, &origin, &grid->position);
     int angle = node->angle;
-    float adjustedAngle;
-    if ((float)angle / 4096.0f > 0) adjustedAngle = 0.5f + 4096.0f * ((float)angle / 4096.0f);
-    else adjustedAngle = 4096.0f * ((float)angle / 4096.0f) - 0.5f;
-    grid->angle = (int)adjustedAngle;
+    float var21;
+    if ((float)angle / 4096.0f > 0) var21 = 0.5f + 4096.0f * ((float)angle / 4096.0f);
+    else var21 = 4096.0f * ((float)angle / 4096.0f) - 0.5f;
+    grid->angle = (int)var21;
     return count;
 }

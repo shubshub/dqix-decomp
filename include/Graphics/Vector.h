@@ -5,7 +5,7 @@
 // in the binary
 #include "../NitroSDK/Matrix.h"
 
-void Vector3i_Set(Vector3i* vector, int x, int y, int z);
+extern "C" void Vector3i_Set(Vector3i* vector, int x, int y, int z);
 
 fix32_t fix32sin(fix32_t x);
 fix32_t fix32cos(fix32_t x);

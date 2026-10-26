@@ -9,14 +9,14 @@
 #endif
 
 
-struct Struct_ov000_02171640 { char unknown_0_[REGION_OFFSET_0]; int unknown_9c_[0x42]; };
-extern "C" signed char func_ov000_02171698(struct Struct_ov000_02171640* arg0);
+struct S02171698 { char pad[REGION_OFFSET_0]; int field[0x42]; };
+extern "C" signed char func_ov000_02171698(struct S02171698* s);
 
 // USA: func_ov000_02171640
-extern "C" ARM void func_ov000_02171640(struct Struct_ov000_02171640* arg0, int arg1, int arg2) {
-    if (arg1 < 0) return;
-    if (arg1 >= 0x42) return;
-    if (arg2 == 0) return;
-    arg0->unknown_9c_[arg1] = arg2;
-    *(short*)((char*)arg0 + REGION_OFFSET_1) = func_ov000_02171698(arg0);
+extern "C" ARM void func_ov000_02171640(struct S02171698* obj, int idx, int val) {
+    if (idx < 0) return;
+    if (idx >= 0x42) return;
+    if (val == 0) return;
+    obj->field[idx] = val;
+    *(short*)((char*)obj + REGION_OFFSET_1) = func_ov000_02171698(obj);
 }

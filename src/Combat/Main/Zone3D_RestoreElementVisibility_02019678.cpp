@@ -5,7 +5,7 @@
 #include "World/ZoneResourceTree.h"
 
 struct Struct02013380;
-void BmdjSceneElement_SetShown(struct Struct02013380* obj, int unused, int clear4);
+extern "C" void BmdjSceneElement_SetShown(struct Struct02013380* obj, int unused, int clear4);
 
 // BmdjSceneElement::flags bits: whether the element was shown when Zone3D_SaveAndOverrideElementVisibility saved it, and the
 // bit BmdjSceneElement_SetShown sets with every change since

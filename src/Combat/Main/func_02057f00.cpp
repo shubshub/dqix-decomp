@@ -1,38 +1,38 @@
 #include <globaldefs.h>
 #include "GameState/GameState.h"
 
-extern "C" void func_0200fd48(GameState* arg0, int arg1);
+extern "C" void func_0200fd48(GameState* battleStruct, int id);
 
 struct Struct_02057f00 {
-    int unknown_0_;
-    char unknown_4_[0x1ec - 4];
-    struct Struct_02057f00* unknown_1ec_;
+    int value;
+    char pad[0x1ec - 4];
+    struct Struct_02057f00* next;
 };
 
 struct Struct_02057f00_2 {
-    struct Struct_02057f00* unknown_0_;
+    struct Struct_02057f00* head;
 };
 
 // USA: func_02057f00
-extern "C" ARM void func_02057f00(void* arg0, int arg1) {
-    struct Struct_02057f00* var0 = ((struct Struct_02057f00_2*)arg0)->unknown_0_;
-    struct Struct_02057f00* var1 = 0;
-    GameState* var2 = GameState::GetInstance();
-    int var3;
-    for (var3 = 0; var3 < 16; var3++) {
-        if (arg1 == *(int*)((char*)arg0 + var3 * 0xd4 + 0xd8)) {
-            func_0200fd48(var2, var3 + 0xd0);
+extern "C" ARM void func_02057f00(void* obj, int value) {
+    struct Struct_02057f00* node = ((struct Struct_02057f00_2*)obj)->head;
+    struct Struct_02057f00* prev = 0;
+    GameState* battleStruct = GameState::GetInstance();
+    int i;
+    for (i = 0; i < 16; i++) {
+        if (value == *(int*)((char*)obj + i * 0xd4 + 0xd8)) {
+            func_0200fd48(battleStruct, i + 0xd0);
         }
     }
-    while (var0 != 0) {
-        if (arg1 == var0->unknown_0_) break;
-        var1 = var0;
-        var0 = var0->unknown_1ec_;
+    while (node != 0) {
+        if (value == node->value) break;
+        prev = node;
+        node = node->next;
     }
-    if (var0 == 0) return;
-    if (var1 == 0) {
-        ((struct Struct_02057f00_2*)arg0)->unknown_0_ = var0->unknown_1ec_;
+    if (node == 0) return;
+    if (prev == 0) {
+        ((struct Struct_02057f00_2*)obj)->head = node->next;
     } else {
-        var1->unknown_1ec_ = var0->unknown_1ec_;
+        prev->next = node->next;
     }
 }

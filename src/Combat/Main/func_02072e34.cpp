@@ -1,31 +1,31 @@
 #include <globaldefs.h>
 
 struct Struct_02072e34 {
-    int unknown_0_;
-    int unknown_4_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
-    int unknown_18_;
-    int unknown_1c_;
-    int unknown_20_;
-    int unknown_24_;
-    int unknown_28_;
+    int f0;
+    int f4;
+    int f8;
+    int fc;
+    int f10;
+    int f14;
+    int f18;
+    int f1c;
+    int f20;
+    int f24;
+    int f28;
 };
 
 // USA: func_02072e34
-extern "C" ARM void func_02072e34(int arg0, struct Struct_02072e34* arg1) {
-    int var0 = arg0 * 12;
-    arg1->unknown_0_ = arg0;
-    arg1->unknown_4_ = var0 + 19;
-    arg1->unknown_8_ = var0 + 20;
-    arg1->unknown_c_ = var0 + 21;
-    arg1->unknown_10_ = var0 + 22;
-    arg1->unknown_14_ = var0 + 23;
-    arg1->unknown_18_ = var0 + 25;
-    arg1->unknown_1c_ = var0 + 27;
-    arg1->unknown_20_ = var0 + 28;
-    arg1->unknown_24_ = var0 + 29;
-    arg1->unknown_28_ = -1;
+extern "C" ARM void func_02072e34(int n, struct Struct_02072e34* out) {
+    int base = n * 12;
+    out->f0 = n;
+    out->f4 = base + 19;
+    out->f8 = base + 20;
+    out->fc = base + 21;
+    out->f10 = base + 22;
+    out->f14 = base + 23;
+    out->f18 = base + 25;
+    out->f1c = base + 27;
+    out->f20 = base + 28;
+    out->f24 = base + 29;
+    out->f28 = -1;
 }

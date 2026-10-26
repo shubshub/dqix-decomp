@@ -1,25 +1,25 @@
 #include <globaldefs.h>
 
-struct Struct_ov031_02239be8_2 { unsigned char unknown_0_[0x40]; };
+struct Struct_ov031_02239be8_2 { unsigned char data[0x40]; };
 struct Struct_ov031_0223ae1c {
-	unsigned char unknown_0_[0x200];
+	unsigned char pad0[0x200];
 	unsigned short unknown_200_;
-	unsigned char unknown_202_[2];
+	unsigned char pad1[2];
 	unsigned int unknown_204_;
-	unsigned char unknown_208_[0x440];
+	unsigned char pad2[0x440];
 	unsigned short unknown_648_;
 	unsigned short unknown_64a_;
-	unsigned char unknown_64c_[0x444];
+	unsigned char pad3[0x444];
 	unsigned char unknown_a90_;
-	unsigned char unknown_a91_[0x13];
+	unsigned char pad4[0x13];
 	struct Struct_ov031_02239be8_2* unknown_aa4_;
 };
 extern struct Struct_ov031_0223ae1c* data_ov031_02290d20;
 
 extern "C" int func_ov031_02239be8(void);
 extern "C" unsigned short func_ov031_0223b30c(void);
-extern "C" int func_ov031_0223a0fc(int arg0, int arg1, int arg2);
-extern "C" void func_ov031_0223b0c0(int arg0, int arg1, void* arg2);
+extern "C" int func_ov031_0223a0fc(int selection, int first, int second);
+extern "C" void func_ov031_0223b0c0(int a, int b, void* src);
 extern "C" void func_ov031_0223b228(void);
 
 // USA: func_ov031_0223ae1c

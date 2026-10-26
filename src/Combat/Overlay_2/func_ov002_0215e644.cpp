@@ -5,16 +5,16 @@
 struct Obj02046574;
 struct StoreStruct;
 struct Container020e0310;
-char *MessageSystem_GetInstance();
-GameObject *GetCombatantWithFlag0x100_0200ff1c(GameState *gameState, int combatantId);
-unsigned char *GetFieldAt0x150_02053c6c(unsigned char *p);
-void MessageSystem_SetStringArgument(struct Obj02046574 *obj, int index, char *str);
-void StoreInArray0x8b0_020465c0(struct StoreStruct *base, int index, int value);
-int KeyTable_Get(struct Container020e0310 *c, int key);
-int Text_AppendPaletteTag(char *dst, int palette);
-int Text_Append(char *dst, const char *src);
-void SetByteInRange_020465f0(unsigned char *messages, int index, unsigned char digits);
-void SetByteAtIndex_020465d8(unsigned char *messages, int index, unsigned char value);
+extern "C" char *MessageSystem_GetInstance();
+extern "C" GameObject *func_0200ff1c(GameState *gameState, int combatantId);
+extern "C" unsigned char *func_02053c6c(unsigned char *p);
+extern "C" void MessageSystem_SetStringArgument(struct Obj02046574 *obj, int index, char *str);
+extern "C" void func_020465c0(struct StoreStruct *base, int index, int value);
+extern "C" int KeyTable_Get(struct Container020e0310 *c, int key);
+extern "C" int Text_AppendPaletteTag(char *dst, int palette);
+extern "C" int Text_Append(char *dst, const char *src);
+extern "C" void func_020465f0(unsigned char *messages, int index, unsigned char digits);
+extern "C" void func_020465d8(unsigned char *messages, int index, unsigned char value);
 extern "C" void func_02046380(void *g);
 extern "C" int Font_GetTextWidth(const char *text, int large);
 extern "C" int sprintf(char *dst, const char *fmt, ...);
@@ -23,7 +23,7 @@ extern "C" int func_ov017_021bdbcc(GameResources *r);
 extern "C" void MessageSystem_FormatText(void *messages, int a, const char *format, char *output, int size, int b, int c);
 extern "C" char data_ov002_0216d2a1[];
 
-static inline unsigned short inline_ov002_0215e644(char *arg0, int arg1) { return *(unsigned short *) (arg0 + arg1); }
+static inline unsigned short inline_ov002_0215e644(char *p, int off) { return *(unsigned short *) (p + off); }
 
 // USA: func_ov002_0215e644
 extern "C" ARM void func_ov002_0215e644(char *base, char *dst) {
@@ -32,26 +32,26 @@ extern "C" ARM void func_ov002_0215e644(char *base, char *dst) {
     char text[0x400];
     if (dst == NULL) return;
     char *g       = MessageSystem_GetInstance();
-    GameObject *m = GetCombatantWithFlag0x100_0200ff1c(GameState::GetInstance(), *(signed char *) (base + 0x1c00 + 0x20));
+    GameObject *m = func_0200ff1c(GameState::GetInstance(), *(signed char *) (base + 0x1c00 + 0x20));
     if (m == NULL) return;
-    unsigned char *f = GetFieldAt0x150_02053c6c((unsigned char *) m);
+    unsigned char *f = func_02053c6c((unsigned char *) m);
     if (f == NULL) return;
     func_02046380(g);
     MessageSystem_SetStringArgument((struct Obj02046574 *) g, 0, *(char **) ((char *) m + 0x134));
     int x1 = (0x40 - Font_GetTextWidth(*(const char **) ((char *) m + 0x134), 0)) >> 1;
-    StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 0, LdH(*(char **) ((char *) m + 0x130), 4));
-    StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 1, LdH(*(char **) ((char *) m + 0x134), 0x30));
-    StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 2, LdH(*(char **) ((char *) m + 0x130), 6));
-    StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 3, LdH(*(char **) ((char *) m + 0x134), 0x32));
-    StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 4, *(unsigned short *) (f + *(int *) (f + 0x950) * 2 + 0x16c));
-    StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 5, LdH(*(char **) ((char *) m + 0x134), 0x34));
-    StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 6, LdH(*(char **) ((char *) m + 0x134), 0x36));
-    StoreInArray0x8b0_020465c0((struct StoreStruct *) g, 7, (*(unsigned int *) f << 12) >> 22);
-    int job          = *(int *) (f + 0x950);
+    func_020465c0((struct StoreStruct *) g, 0, inline_ov002_0215e644(*(char **) ((char *) m + 0x130), 4));
+    func_020465c0((struct StoreStruct *) g, 1, inline_ov002_0215e644(*(char **) ((char *) m + 0x134), 0x30));
+    func_020465c0((struct StoreStruct *) g, 2, inline_ov002_0215e644(*(char **) ((char *) m + 0x130), 6));
+    func_020465c0((struct StoreStruct *) g, 3, inline_ov002_0215e644(*(char **) ((char *) m + 0x134), 0x32));
+    func_020465c0((struct StoreStruct *) g, 4, *(unsigned short *) (f + *(int *) (f + 0x950) * 2 + 0x16c));
+    func_020465c0((struct StoreStruct *) g, 5, inline_ov002_0215e644(*(char **) ((char *) m + 0x134), 0x34));
+    func_020465c0((struct StoreStruct *) g, 6, inline_ov002_0215e644(*(char **) ((char *) m + 0x134), 0x36));
+    func_020465c0((struct StoreStruct *) g, 7, (*(unsigned int *) f << 12) >> 22);
+    int var7          = *(int *) (f + 0x950);
     GameResources *v = GetGameResources();
-    if (func_ov017_021bdbcc(v)) job = 0;
+    if (func_ov017_021bdbcc(v)) var7 = 0;
     char *s = (char *) KeyTable_Get((struct Container020e0310 *) (base + 0x20),
-                                                                      (short) (job + 0x834));
+                                                                      (short) (var7 + 0x834));
     int x2  = (0x40 - Font_GetTextWidth(s, 0)) >> 1;
     if (func_ov017_021bdbcc(v)) {
         MessageSystem_SetStringArgument((struct Obj02046574 *) g, 1, s);
@@ -69,13 +69,13 @@ extern "C" ARM void func_ov002_0215e644(char *base, char *dst) {
         Text_AppendPaletteTag(tag, 0xf);
         MessageSystem_SetStringArgument((struct Obj02046574 *) g, 2, tag);
     }
-    for (int var13 = 0; var13 < 8; var13++) {
+    for (int i = 0; i < 8; i++) {
         int var14 = 3;
-        if (var13 == 4) var14 = 2;
-        func_020465f0((unsigned char *) var3, var13, var14);
+        if (i == 4) var14 = 2;
+        func_020465f0((unsigned char *) g, i, var14);
     }
-    for (int var15 = 0; var15 < 8; var15++) {
-        func_020465d8((unsigned char *) var3, var15, 1);
+    for (int i = 0; i < 8; i++) {
+        func_020465d8((unsigned char *) g, i, 1);
     }
     sprintf(text,
             (const char *) KeyTable_Get((struct Container020e0310 *) (base + 0x20), 0x7d0),

@@ -8,6 +8,6 @@ enum { PartyMember_lineLeader = 0x1ca };
 #endif
 
 // Main, originally GetSignedByte0x1ca_02039888 (USA 0x02039888, EUR 0x02039898, JPN 0x020392e0)
-ARM int GameObject_GetLineLeader(void* partyMember) {
+extern "C" ARM int GameObject_GetLineLeader(void* partyMember) {
     return *(signed char*)((char*)partyMember + PartyMember_lineLeader);
 }

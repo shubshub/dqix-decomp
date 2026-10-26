@@ -10,61 +10,61 @@
 #include "GameState/GameState.h"
 #include "std_library_functions.h"
 
-struct Struct_ov003_0216b7bc {
-    char unknown_0_[REGION_LAYOUT(0x28, 0x5c)];
-    char* unknown_5c_;
-    char unknown_60_[REGION_LAYOUT(0x868, 0x998) - REGION_LAYOUT(0x2c, 0x60)];
-    int unknown_998_;
-    int unknown_99c_;
-    int unknown_9a0_;
+struct MsgCtl0216b7bc {
+    char pad0[REGION_LAYOUT(0x28, 0x5c)];
+    char* textBuf;
+    char pad60[REGION_LAYOUT(0x868, 0x998) - REGION_LAYOUT(0x2c, 0x60)];
+    int busy;
+    int mode;
+    int status;
     char unknown_9a4_[REGION_LAYOUT(0x17e2, 0x19b2) - REGION_LAYOUT(0x874, 0x9a4)];
     unsigned char unknown_19b2_;
 };
 
-struct Struct_ov003_0216b7bc_2 {
-    char unknown_0_[0x1b42];
+struct Progress840 {
+    char pad0[0x1b42];
     unsigned char unknown_1b42_;
 };
 
-struct Struct_0201099c_3;
+struct Container020e0310;
 
 struct Struct_ov003_0216b7bc_3 {
-    char unknown_0_[4];
-    short unknown_4_;
+    char pad0[4];
+    short state;
     short unknown_6_;
-    char unknown_8_[2];
-    short unknown_a_;
+    char pad8[2];
+    short request;
     char unknown_c_[REGION_LAYOUT(0x11b4, 0x1324) - 0xc];
-    char unknown_1324_[4];
+    char names[4];
 };
 
-struct MsgCtl0216b7bc* MessageSystem_GetInstance();
+extern "C" struct MsgCtl0216b7bc* MessageSystem_GetInstance();
 extern "C" void* Zone3D_GetInstance(void);
-const char* KeyTable_Get(struct Container020e0310* c, int key);
-int Text_Append(char* dst, const char* src);
+extern "C" const char* KeyTable_Get(struct Container020e0310* c, int key);
+extern "C" int Text_Append(char* dst, const char* src);
 extern "C" void func_02046380(struct MsgCtl0216b7bc* ctl);
 #if !defined(jpn)
-extern "C" void func_0204500c(struct Struct_ov003_0216b7bc* arg0, char* arg1, int arg2, int arg3);
+extern "C" void func_0204500c(struct MsgCtl0216b7bc* ctl, char* text, int a, int b);
 #endif
 #if defined(jpn)
-extern "C" void func_ov003_0216d8d4(struct Struct_ov003_0216b7bc_3* arg0, int arg1);
-extern "C" void func_0204500c(struct Struct_ov003_0216b7bc* arg0, char* arg1, int arg2);
+extern "C" void func_ov003_0216d8d4(struct Struct_ov003_0216b7bc_3* obj, int key);
+extern "C" void func_0204500c(struct MsgCtl0216b7bc* ctl, char* text, int flags);
 #else
-extern "C" void func_ov003_0216d8d4(struct Struct_ov003_0216b7bc_3* arg0, int arg1, int arg2, int arg3, int arg4);
+extern "C" void func_ov003_0216d8d4(struct Struct_ov003_0216b7bc_3* obj, int key, int p3, int p4, int p5);
 #endif
 
 extern char data_ov003_021801b2[];
 extern char data_ov003_021801c2[];
 
 // USA: func_ov003_0216b7bc
-extern "C" ARM void func_ov003_0216b7bc(struct Msg0216b7bc* obj) {
+extern "C" ARM void func_ov003_0216b7bc(struct Struct_ov003_0216b7bc_3* obj) {
     struct MsgCtl0216b7bc* ctl = MessageSystem_GetInstance();
     GameState::GetInstance();
-    if (arg0->unknown_a_ == 3) {
-        arg0->unknown_6_ = 2;
-        arg0->unknown_a_ = 0;
+    if (obj->request == 3) {
+        obj->unknown_6_ = 2;
+        obj->request = 0;
     }
-    if (arg0->unknown_6_ == 0) {
+    if (obj->unknown_6_ == 0) {
 #if defined(jpn)
         char* buf;
         struct Progress840* progress = (struct Progress840*)((char*)Zone3D_GetInstance() + REGION_LAYOUT(0x860, 0x840));
@@ -75,12 +75,12 @@ extern "C" ARM void func_ov003_0216b7bc(struct Msg0216b7bc* obj) {
 #endif
         memset(buf, 0, REGION_LAYOUT(0x800, 0x960));
         Text_Append(buf, KeyTable_Get((struct Container020e0310*)obj->names, 0));
-        if (progress->rewardFlags == 0) {
+        if (progress->unknown_1b42_ == 0) {
             Text_Append(buf, data_ov003_021801b2);
         } else {
             Text_Append(buf, data_ov003_021801c2);
         }
-        unsigned char var3 = var1->unknown_1b42_;
+        unsigned char flags = progress->unknown_1b42_;
 #if defined(jpn)
         if (flags & 0x1) {
             Text_Append(buf, KeyTable_Get((struct Container020e0310*)obj->names, 1));
@@ -98,44 +98,44 @@ extern "C" ARM void func_ov003_0216b7bc(struct Msg0216b7bc* obj) {
             Text_Append(buf, KeyTable_Get((struct Container020e0310*)obj->names, 5));
         }
 #else
-        int var4 = -1;
-        if (var3 & 1) {
-            var4 = 1;
-        } else if (var3 & 2) {
-            var4 = 2;
-        } else if (var3 & 4) {
-            var4 = 3;
-        } else if (var3 & 8) {
-            var4 = 4;
-        } else if (var3 & 0x10) {
-            var4 = 5;
+        int idx = -1;
+        if (flags & 1) {
+            idx = 1;
+        } else if (flags & 2) {
+            idx = 2;
+        } else if (flags & 4) {
+            idx = 3;
+        } else if (flags & 8) {
+            idx = 4;
+        } else if (flags & 0x10) {
+            idx = 5;
         }
         if (idx >= 0) {
             Text_Append(buf, KeyTable_Get((struct Container020e0310*)obj->names, idx));
         }
 #endif
-        var1->unknown_1b42_ &= ~0xff;
+        progress->unknown_1b42_ &= ~0xff;
 #if defined(jpn)
-        func_0204500c(var0, var2, 0);
+        func_0204500c(ctl, buf, 0);
 #else
-        func_02046380(var0);
-        func_0204500c(var0, var2, 0, 0xe3);
+        func_02046380(ctl);
+        func_0204500c(ctl, buf, 0, 0xe3);
 #endif
-        var0->unknown_19b2_ = 1;
-        var0->unknown_99c_ = 2;
-        var0->unknown_998_ = 1;
-        arg0->unknown_6_ = 1;
-    } else if (arg0->unknown_6_ == 1) {
-        if (var0->unknown_9a0_ == 3) {
+        ctl->unknown_19b2_ = 1;
+        ctl->mode = 2;
+        ctl->busy = 1;
+        obj->unknown_6_ = 1;
+    } else if (obj->unknown_6_ == 1) {
+        if (ctl->status == 3) {
 #if defined(jpn)
-            func_ov003_0216d8d4(arg0, 0x29);
+            func_ov003_0216d8d4(obj, 0x29);
 #else
-            func_ov003_0216d8d4(arg0, 0x29, -1, -1, -1);
+            func_ov003_0216d8d4(obj, 0x29, -1, -1, -1);
 #endif
-            arg0->unknown_6_ = 2;
+            obj->unknown_6_ = 2;
         }
-    } else if (arg0->unknown_6_ == 2 && var0->unknown_9a0_ == 3) {
-        arg0->unknown_4_ = 2;
-        arg0->unknown_6_ = 0;
+    } else if (obj->unknown_6_ == 2 && ctl->status == 3) {
+        obj->state = 2;
+        obj->unknown_6_ = 0;
     }
 }

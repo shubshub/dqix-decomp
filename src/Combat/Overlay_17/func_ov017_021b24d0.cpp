@@ -7,61 +7,61 @@
 
 
 #if defined(jpn)
-enum { Enum_ov017_021b24d0_261 = 0x125, Enum_ov017_021b24d0_716 = 0x27c };
+enum { Enum_ov017_021b24d0_261 = 0x125, Field2cc = 0x27c };
 #else
-enum { Enum_ov017_021b24d0_261 = 0x105, Enum_ov017_021b24d0_716 = 0x2cc };
+enum { Enum_ov017_021b24d0_261 = 0x105, Field2cc = 0x2cc };
 #endif
 
 extern "C" void HaltSystem(void);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void Overlay_Load(unsigned int id);
-void PushInputLogB_020a1ef0(int value);
-void PushInputLogA_020a1df8(int value);
+extern "C" void func_020a1ef0(int value);
+extern "C" void func_020a1df8(int value);
 extern "C" void func_ov011_0218438c(char* obj);
 extern "C" void func_ov011_02184550(char* obj, SafeAllocator* allocator, void* data, unsigned int length);
-void InitAndCreateTypeB021845c8(char* obj, void* buffer, unsigned int size);
-void InitEntry02184640(char* obj, char* entry);
+extern "C" void func_ov011_021845c8(char* obj, void* buffer, unsigned int size);
+extern "C" void func_ov011_02184640(char* obj, char* entry);
 extern "C" void func_ov011_02184694(char* obj);
-void Set3DClearColor(int a, int b, int c, int d, int e);
+extern "C" void Set3DClearColor(int a, int b, int c, int d, int e);
 
-struct Struct_ov017_021b24d0 {
-    char unknown_0_[Enum_ov017_021b24d0_261];
-    unsigned char unknown_105_;
+struct Flags021b24d0 {
+    char pad[Enum_ov017_021b24d0_261];
+    unsigned char flags;
 };
 
 struct Struct_ov017_021b24d0_2 {
-    char unknown_0_[0xc40];
-    char unknown_c40_[1];
+    char pad[0xc40];
+    char entry[1];
 };
 
 struct Struct_ov017_021d83f0_6 {
-    int unknown_0_;
-    char* unknown_4_;
+    int f0;
+    char* scene;
 };
 
 extern Struct_ov017_021d83f0_6 data_ov017_021d83f0;
 
 struct Struct_ov017_021b24d0_3 {
-    char unknown_0_[8];
-    int unknown_8_;
-    int unknown_c_;
-    SafeAllocator unknown_10_;
-    char unknown_24_[0x30 - 0x24];
+    char pad0[8];
+    int result;
+    int taskId;
+    SafeAllocator allocator;
+    char pad1[0x30 - 0x24];
     void (*unknown_30_)(SafeAllocator* allocator, char* scene);
-    char unknown_34_[0x38 - 0x34];
+    char pad2[0x38 - 0x34];
     unsigned int unknown_38_0_ : 5;
     unsigned int unknown_38_5_ : 1;
 };
 
 // USA: func_ov017_021b24d0
-extern "C" ARM int func_ov017_021b24d0(Struct_ov017_021b24d0_3* arg0) {
-    GameResources* var0 = GetGameResources();
-    BackgroundLoader* var1 = BackgroundLoader::GetInstance();
-    if (IsBrightnessTransitionActive(var0)) {
-        return arg0->unknown_8_;
+extern "C" ARM int func_ov017_021b24d0(Struct_ov017_021b24d0_3* task) {
+    GameResources* res = GetGameResources();
+    BackgroundLoader* loader = BackgroundLoader::GetInstance();
+    if (IsBrightnessTransitionActive(res)) {
+        return task->result;
     }
-    if (var1->GetTaskStatus(arg0->unknown_c_) == 0) {
-        return arg0->unknown_8_;
+    if (loader->GetTaskStatus(task->taskId) == 0) {
+        return task->result;
     }
     if (loader->GetDetailedTaskStatus(task->taskId) != 2) {
         HaltSystem();
@@ -77,27 +77,27 @@ extern "C" ARM int func_ov017_021b24d0(Struct_ov017_021b24d0_3* arg0) {
         HaltSystem();
     }
     Overlay_Load(OVERLAY_ID(11));
-    PushInputLogB_020a1ef0(1);
-    PushInputLogA_020a1df8(4);
+    func_020a1ef0(1);
+    func_020a1df8(4);
     data_ov017_021d83f0.scene = (char*)task->allocator.Allocate(0x1e0);
     if (data_ov017_021d83f0.scene == NULL) {
         HaltSystem();
     }
-    func_ov011_0218438c(data_ov017_021d83f0.unknown_4_);
-    func_ov011_02184550(data_ov017_021d83f0.unknown_4_, &arg0->unknown_10_, var4, var3);
-    if (arg0->unknown_30_ != NULL) {
-        arg0->unknown_30_(&arg0->unknown_10_, data_ov017_021d83f0.unknown_4_);
+    func_ov011_0218438c(data_ov017_021d83f0.scene);
+    func_ov011_02184550(data_ov017_021d83f0.scene, &task->allocator, data, length);
+    if (task->unknown_30_ != NULL) {
+        task->unknown_30_(&task->allocator, data_ov017_021d83f0.scene);
     }
-    unsigned int var5 = arg0->unknown_10_.GetMaxPossibleAllocation();
-    func_ov011_021845c8(data_ov017_021d83f0.unknown_4_, arg0->unknown_10_.Allocate(var5), var5);
-    func_ov011_02184640(data_ov017_021d83f0.unknown_4_, ((Struct_ov017_021b24d0_2*)((char*)var0 + Enum_ov017_021b24d0_716))->unknown_c40_);
-    var1->RemoveTask(arg0->unknown_c_);
+    unsigned int size = task->allocator.GetMaxPossibleAllocation();
+    func_ov011_021845c8(data_ov017_021d83f0.scene, task->allocator.Allocate(size), size);
+    func_ov011_02184640(data_ov017_021d83f0.scene, ((Struct_ov017_021b24d0_2*)((char*)res + Field2cc))->entry);
+    loader->RemoveTask(task->taskId);
 #if !defined(jpn)
-    arg0->unknown_c_ = -1;
+    task->taskId = -1;
 #endif
-    func_ov011_02184694(data_ov017_021d83f0.unknown_4_);
-    if (!arg0->unknown_38_5_) {
-        SetFlags04(var0, 0x609fe);
+    func_ov011_02184694(data_ov017_021d83f0.scene);
+    if (!task->unknown_38_5_) {
+        SetFlags04(res, 0x609fe);
     }
     Set3DClearColor(0, 0, 0x7fff, 0, 0);
     return 2;

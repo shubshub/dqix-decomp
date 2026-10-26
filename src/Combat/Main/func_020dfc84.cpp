@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 #include "Resource/KeyTable.h"
 
-int KeyTable_EndLoad(struct Struct020dfc40* table);
-void KeyTable_Reset(struct Struct020dfc40* p);
-int ReplaceBinExtensionWithNat020e05f8(char*, char const*, short);
+extern "C" int KeyTable_EndLoad(struct Struct020dfc40* table);
+extern "C" void KeyTable_Reset(struct Struct020dfc40* p);
+extern "C" int func_020e05f8(char*, char const*, short);
 extern "C" int func_020dfd40(void* self, char* a, char* b);
 
 // USA: func_020dfc84
@@ -18,20 +18,20 @@ extern "C" ARM int func_020dfc84(void* self, void* allocator, char* fmt, char* e
     p->singleKey = singleKey;
     p->loadStep = KeyTableLoadStep_Queue;
 
-    if (arg4 >= 0) {
-        func_020e05f8(var0 + 0x20, arg2, arg4);
-        if (arg3 != 0) {
-            func_020e05f8(var0, arg3, arg4);
-            func_020dfd40(arg0, var0 + 0x20, var0);
+    if (n >= 0) {
+        func_020e05f8(buf + 0x20, fmt, n);
+        if (ext != 0) {
+            func_020e05f8(buf, ext, n);
+            func_020dfd40(self, buf + 0x20, buf);
         } else {
-            func_020dfd40(arg0, var0 + 0x20, 0);
+            func_020dfd40(self, buf + 0x20, 0);
         }
         return;
     }
 
-    if (arg3 != 0) {
-        func_020dfd40(arg0, arg2, arg3);
+    if (ext != 0) {
+        func_020dfd40(self, fmt, ext);
     } else {
-        func_020dfd40(arg0, arg2, 0);
+        func_020dfd40(self, fmt, 0);
     }
 }

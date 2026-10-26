@@ -2,77 +2,77 @@
 #include "Resource/CharacterCreationUI.h"
 
 struct Struct_020e28dc;
-extern "C" int func_020e28dc(struct Struct_020e28dc *arg0);
+extern "C" int func_020e28dc(struct Struct_020e28dc *o);
 
 struct Struct_0205d81c;
-struct Struct_0205d0e0 {
-    unsigned char unknown_0_[0xac];
+struct Elem_0205d81c {
+    unsigned char pad0[0xac];
     short unknown_ac_;
     short unknown_ae_;
     unsigned char unknown_b0_[0xc];
     short unknown_bc_;
     short unknown_be_;
 };
-struct Elem_0205d81c *Window_GetActivePane(struct Struct_0205d81c *s);
-int WindowPane_IsOpen(unsigned char *p);
+extern "C" struct Elem_0205d81c *Window_GetActivePane(struct Struct_0205d81c *s);
+extern "C" int WindowPane_IsOpen(unsigned char *p);
 
-struct Struct_0205a254;
-struct Struct_0205a254_2 {
-    unsigned char unknown_0_[0x15];
-    unsigned char unknown_15_;
+struct Container0205a3d0;
+struct Elem0205a3d0 {
+    unsigned char pad0[0x15];
+    unsigned char flags;
 };
-struct Elem0205a3d0 *SpriteEntryList_Find(struct Container0205a3d0 *c, int key);
-void SpriteEntryList_PlayAnimation(struct Container0205a3d0 *c, int key);
-void SpriteEntryList_SetPosition(struct Container0205a3d0 *c, int key, short a, short b);
+extern "C" struct Elem0205a3d0 *SpriteEntryList_Find(struct Container0205a3d0 *c, int key);
+extern "C" void SpriteEntryList_PlayAnimation(struct Container0205a3d0 *c, int key);
+extern "C" void SpriteEntryList_SetPosition(struct Container0205a3d0 *c, int key, short a, short b);
 
 struct Container0205a330;
-void SpriteEntryList_AdvanceAnimations(struct Container0205a330 *c, int arg);
+extern "C" void SpriteEntryList_AdvanceAnimations(struct Container0205a330 *c, int arg);
 
 extern "C" void SpriteContext_DrawEntries(void *obj);
 
 #if defined(jpn)
-enum { Enum_ov002_0215afb8_9340 = 0x22ac, Enum_ov002_0215afb8_3784 = 0xe20, Enum_ov002_0215afb8_6764 = 0x19c4,
+enum { Enum_ov002_0215afb8_9340 = 0x22ac, WindowOffset = 0xe20, EntryListOffset = 0x19c4,
        Enum_ov002_0215afb8_7072 = 0x1a68, Enum_ov002_0215afb8_6760 = 0x19c0 };
 #else
-enum { Enum_ov002_0215afb8_9340 = 0x247c, Enum_ov002_0215afb8_3784 = 0xec8, Enum_ov002_0215afb8_6764 = 0x1a6c,
+enum { Enum_ov002_0215afb8_9340 = 0x247c, WindowOffset = 0xec8, EntryListOffset = 0x1a6c,
        Enum_ov002_0215afb8_7072 = 0x1ba0, Enum_ov002_0215afb8_6760 = 0x1a68 };
 #endif
 
 namespace {
 struct Struct_ov002_0215afb8 {
-    unsigned char unknown_0_[4];
-    Struct_020e28dc* unknown_4_;
-    unsigned char unknown_8_[Enum_ov002_0215afb8_3784 - 8];
-    Struct_ov023_021d9c7c unknown_ec8_;
-    unsigned char unknown_f84_[Enum_ov002_0215afb8_6760 - Enum_ov002_0215afb8_3784 - sizeof(Struct_ov023_021d9c7c)];
-    void* unknown_1a68_;
-    Struct_0205a254* unknown_1a6c_;
-    unsigned char unknown_1a70_[Enum_ov002_0215afb8_7072 - Enum_ov002_0215afb8_6764 - 4];
-    int unknown_1ba0_;
+    unsigned char unknown0[4];
+    Struct_020e28dc* choice;
+    unsigned char unknown8[WindowOffset - 8];
+    CreationWindow window;
+    unsigned char unknown_f84_[Enum_ov002_0215afb8_6760 - WindowOffset - sizeof(CreationWindow)];
+    void* renderer;
+    Container0205a3d0* entries;
+    unsigned char unknown_1a70_[Enum_ov002_0215afb8_7072 - EntryListOffset - 4];
+    int animation;
     unsigned char unknown_1ba4_[Enum_ov002_0215afb8_9340 - Enum_ov002_0215afb8_7072 - 4];
-    int unknown_247c_;
+    int flags;
 };
 }
 
 // JPN: func_ov002_0215c318
 // USA: func_ov002_0215afb8
-extern "C" ARM void func_ov002_0215afb8(char *arg0) {
-    Struct_ov002_0215afb8* var0 = ((Struct_ov002_0215afb8*)(arg0));
-    struct Struct_0205a254_2 *var1;
+extern "C" ARM void func_ov002_0215afb8(char *obj) {
+    Struct_ov002_0215afb8* state = ((Struct_ov002_0215afb8*)(obj));
+    struct Elem0205a3d0 *e;
 
-    if (!(var0->unknown_247c_ & 4)) return;
+    if (!(state->flags & 4)) return;
 
     struct Elem_0205d81c *elem = Window_GetActivePane(((Struct_0205d81c*)(&state->window)));
     if (elem == NULL) return;
     if (!WindowPane_IsOpen(((unsigned char*)(elem)))) return;
-    struct Outer020e28dc *choice = state->choice;
+    struct Struct_020e28dc *choice = state->choice;
     if (choice == NULL) return;
-    if (GetInnerFlagBit0020e28dc(choice)) return;
+    if (func_020e28dc(choice)) return;
 
-    short x = (short) (elem->fac * 8);
-    short y = (short) (elem->fae * 8);
-    x += elem->fbc;
-    y += elem->fbe;
+    short x = (short) (elem->unknown_ac_ * 8);
+    short y = (short) (elem->unknown_ae_ * 8);
+    x += elem->unknown_bc_;
+    y += elem->unknown_be_;
     struct Container0205a3d0 *cont = state->entries;
     SpriteEntryList_PlayAnimation(cont, 0);
     e = SpriteEntryList_Find(cont, 0);

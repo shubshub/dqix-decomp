@@ -8,6 +8,6 @@ enum { PartyMember_controlPending = 0x253 };
 #endif
 
 // Main, originally SetByteField0x253_020397c0 (USA 0x020397c0, EUR 0x020397d0, JPN 0x02039218)
-ARM void GameObject_EnableControl(void* partyMember) {
+extern "C" ARM void GameObject_EnableControl(void* partyMember) {
     *(unsigned char*)((char*)partyMember + PartyMember_controlPending) = 1;
 }

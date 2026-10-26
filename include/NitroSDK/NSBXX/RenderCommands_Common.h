@@ -25,7 +25,6 @@
 #define data_0210a274 data_02109f2c
 #define data_0210a278 data_02109f30
 #define data_0210b078 data_0210ad30
-#define data_0210b678 data_0210b330
 
 #define func_020c1868 func_020c3334
 #define func_020c223c func_020c3d08
@@ -57,7 +56,7 @@ extern unsigned int const data_020e9240[];
 // pivot matrix a/b/c/d position lookup
 // both arrays are identical
 extern struct {
-    uint8_t unknown_0_, unknown_1_, unknown_2_, unknown_3_;
+    uint8_t a, b, c, d;
 } const data_020e9260[], data_020e9284[];
 
 // Holds { func_020b9a2c, func_020b9b30, func_020ba390 }.

@@ -12,26 +12,26 @@
 
 extern "C"
 {
-    void* _Z22GameState_GetZoneTablePv(GameState*);
+    void* GameState_GetZoneTable(GameState*);
 
     void* func_02053c6c(void*);
-    void _Z25RunBufferedStream0205e104iiP12StreamHeaderi(const char*, SafeAllocator*, const void*, unsigned int);
+    void func_0205e104(const char*, SafeAllocator*, const void*, unsigned int);
 
-    void* _Z16VramState_RewindP11Foo0207df50(void*);
-    void _Z17VramState_RestorePc(void*);
-    void _Z14VramState_SavePc(void*);
+    void* VramState_Rewind(void*);
+    void VramState_Restore(void*);
+    void VramState_Save(void*);
 
-    void* _Z24GetData02108f0c_0208a9b4v();
-    void _Z21GrottoChestList_ClearP29ClearThreeWords02094d00Struct(void*);
-    Zone3D_StructPtr_8* _Z19ZoneTable_FindEntryP11SearchTablei(void*, unsigned short id);
+    void* func_0208a9b4();
+    void GrottoChestList_Clear(void*);
+    Zone3D_StructPtr_8* ZoneTable_FindEntry(void*, unsigned short id);
 
     void HaltSystem();
-    void _Z14ItemTable_InitPv(void*);
+    void ItemTable_Init(void*);
 
-    void _Z13Zone3D_UnloadPvi(Zone3D*, bool);
+    void Zone3D_Unload(Zone3D*, bool);
 
-    bool _Z24ZoneId_IsMainGrottoFloori(int id);
-    bool _Z24ZoneId_IsGrottoBossFloori(int id);
+    bool ZoneId_IsMainGrottoFloor(int id);
+    bool ZoneId_IsGrottoBossFloor(int id);
 
 }
 
@@ -78,15 +78,15 @@ void Zone3D::SwitchZone(unsigned short newID, int)
     GameState* gameState = GameState::GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
 
-    void* zoneTable = _Z22GameState_GetZoneTablePv(gameState);
+    void* zoneTable = GameState_GetZoneTable(gameState);
     (void)GetGameResources();
     GameObject* player = gameState->GetLeader();
 
     pAllocator_68_ = pAllocator_4c_;
     pAllocator_68_->Reset();
 
-    _Z16VramState_RewindP11Foo0207df50(vramState_);
-    _Z13Zone3D_UnloadPvi(this, true);
+    VramState_Rewind(vramState_);
+    Zone3D_Unload(this, true);
 
     previousZoneID_ = currentZoneID_;
     currentZoneID_ = newID;
@@ -116,9 +116,9 @@ void Zone3D::SwitchZone(unsigned short newID, int)
 
     substruct_6c_.Reset();
 
-    substruct_c_.unknown_0_[0] = 0;
-    substruct_c_.unknown_a_[0] = 0;
-    substruct_c_.unknown_1a_[0] = 0;
+    substruct_c_.buffer1[0] = 0;
+    substruct_c_.buffer2[0] = 0;
+    substruct_c_.buffer3[0] = 0;
     substruct_c_.unknown_2a_ = 0x7fff;
     substruct_c_.unknown_2c_ = 0;
     substruct_c_.unknown_30_ = 10;
@@ -128,32 +128,32 @@ void Zone3D::SwitchZone(unsigned short newID, int)
 
     atmosphericEffects_.Reset();
     lighting_.Reset();
-    _Z14ItemTable_InitPv(&containerItems_[0]);
+    ItemTable_Init(&containerItems_[0]);
 
-    pUnknownStruct_8_ = _Z19ZoneTable_FindEntryP11SearchTablei(zoneTable, newID);
+    pUnknownStruct_8_ = ZoneTable_FindEntry(zoneTable, newID);
     unknown_4_ = pUnknownStruct_8_->unknown_2_;
     if (pUnknownStruct_8_->unknown_c_low_ == 0)
     {
         GameObject* protagonist = gameState->GetProtagonist();
         if (protagonist != NULL)
         {
-            void* characterData = _Z24GetFieldAt0x150_02053c6cPh(protagonist);
+            void* characterData = func_02053c6c(protagonist);
             if (characterData != NULL)
                 *(unsigned short*)((int)characterData + 0x566) = pUnknownStruct_8_->unknown_0_;
         }
     }
 
-    *(bool*)((int)_Z24GetData02108f0c_0208a9b4v() + 0x9c) = pUnknownStruct_8_->unknown_c_high_ != 0;
-    _Z21GrottoChestList_ClearP29ClearThreeWords02094d00Struct(&grottoChestList_[0]);
+    *(bool*)((int)func_0208a9b4() + 0x9c) = pUnknownStruct_8_->unknown_c_high_ != 0;
+    GrottoChestList_Clear(&grottoChestList_[0]);
 
     grottoTileMapData_420_ = NULL;
 
-    if (_Z24ZoneId_IsMainGrottoFloori(previousZoneID_))
+    if (ZoneId_IsMainGrottoFloor(previousZoneID_))
     {
         grotto_.floorMap_.Clear();
     }
 
-    if (_Z24ZoneId_IsMainGrottoFloori(newID))
+    if (ZoneId_IsMainGrottoFloor(newID))
     {
         isInMainGrottoFloor_23b8_ = true;
         currentGrottoFloor_23ba_ = newID % 20;
@@ -186,9 +186,9 @@ void Zone3D::SwitchZone(unsigned short newID, int)
 }
 
 // USA: func_02013b54
-Vector3i &Vector3i::operator=(const Vector3i &arg0) {
-    x = arg0.x;
-    y = arg0.y;
-    z = arg0.z;
+Vector3i &Vector3i::operator=(const Vector3i &other) {
+    x = other.x;
+    y = other.y;
+    z = other.z;
     return *this;
 }

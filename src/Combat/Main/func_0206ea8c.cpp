@@ -1,25 +1,25 @@
 #include <globaldefs.h>
 
 // USA: func_0206ea8c
-extern "C" ARM int func_0206ea8c(unsigned char* arg0, unsigned char arg1, int arg2, int arg3) {
-    struct Struct_0206ea8c { unsigned char unknown_0_[0x41b]; unsigned char unknown_41b_[2][0x20]; };
-    short var0;
-    short var1;
-    unsigned short var2;
-    struct Struct_0206ea8c* var3;
-    int var4;
-    var1 = arg1 & 1;
-    var0 = arg2 >> 3;
-    var2 = (arg2 & 7) ^ 7;
-    var3 = (struct Struct_0206ea8c*)arg0;
-    if (arg3 != 0) {
-        var4 = 0;
-        var4 = var3->unknown_41b_[var1][var0] | (1 << var2) - var4;
-        var3->unknown_41b_[var1][var0] = var4;
+extern "C" ARM int func_0206ea8c(unsigned char* base, unsigned char idx, int arg, int value) {
+    struct Struct_0206ea8c { unsigned char pad[0x41b]; unsigned char rows[2][0x20]; };
+    short row;
+    short half;
+    unsigned short bit;
+    struct Struct_0206ea8c* s;
+    int v;
+    half = idx & 1;
+    row = arg >> 3;
+    bit = (arg & 7) ^ 7;
+    s = (struct Struct_0206ea8c*)base;
+    if (value != 0) {
+        v = 0;
+        v = s->rows[half][row] | (1 << bit) - v;
+        s->rows[half][row] = v;
     } else {
-        var4 = var3->unknown_41b_[var1][var0];
-        var4 &= ~(1 << var2);
-        var3->unknown_41b_[var1][var0] = var4;
+        v = s->rows[half][row];
+        v &= ~(1 << bit);
+        s->rows[half][row] = v;
     }
-    return var4;
+    return v;
 }

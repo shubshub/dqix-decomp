@@ -4,7 +4,7 @@
 extern "C" void Zone3D_Reset(void* obj);
 
 // Main, originally InitStruct02013718 (USA 0x02013718, EUR 0x02013728, JPN 0x020134e0)
-ARM void Zone3D_Init(char* obj, int allocator, int vramState) {
+extern "C" ARM void Zone3D_Init(char* obj, int allocator, int vramState) {
     Zone3D* zone = (Zone3D*)obj;
     Zone3D_Reset(obj);
     zone->pAllocator_4c_ = (SafeAllocator*)allocator;

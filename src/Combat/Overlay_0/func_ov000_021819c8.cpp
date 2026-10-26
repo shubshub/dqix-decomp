@@ -2,34 +2,34 @@
 #include "GameState/GameState.h"
 
 struct Struct_ov000_02160094 {
-    char unknown_0_[0x30];
-    struct Struct_ov000_02160094* unknown_30_;
+    char pad[0x30];
+    struct Struct_ov000_02160094* next;
 };
 
 struct Struct_ov000_0215440c_2 {
-    char unknown_0_[8];
-    unsigned char unknown_8_;
-    char unknown_9_[7];
-    struct Struct_ov000_02160094* unknown_10_;
+    char pad0[8];
+    unsigned char count;
+    char pad1[7];
+    struct Struct_ov000_02160094* head;
 };
-extern "C" struct Struct_ov000_02160094* func_ov000_02160094(struct Struct_ov000_0215440c_2* arg0, int arg1);
+extern "C" struct Struct_ov000_02160094* func_ov000_02160094(struct Struct_ov000_0215440c_2* list, int index);
 
 // USA: func_ov000_021819c8
-extern "C" ARM int func_ov000_021819c8(struct Struct_ov000_0215440c_2* arg0, int arg1, int* arg2, int arg3) {
-    GameState* var0 = GameState::GetInstance();
-    struct Struct_ov000_02160094* var1 = func_ov000_02160094(arg0, arg1);
-    if (var1 != NULL) {
+extern "C" ARM int func_ov000_021819c8(struct Struct_ov000_0215440c_2* list, int index, int* out, int flag) {
+    GameState* battleStruct = GameState::GetInstance();
+    struct Struct_ov000_02160094* node = func_ov000_02160094(list, index);
+    if (node != NULL) {
         int var2 = 0;
-        if (arg3 == 0) {
-            var2 = *(unsigned short*)((char*)var1 + 0x20) * 0xc + 0x1c;
-        } else if (arg3 == 1) {
-            var2 = *(unsigned short*)((char*)var1 + 0x20) * 0xc + 0x1d;
+        if (flag == 0) {
+            var2 = *(unsigned short*)((char*)node + 0x20) * 0xc + 0x1c;
+        } else if (flag == 1) {
+            var2 = *(unsigned short*)((char*)node + 0x20) * 0xc + 0x1d;
         }
 
-        GameObject* var3 = var0->GetGameObjectByIndex(var2);
-        if (var3 != NULL) {
-            if (var3->obj3D_.unknown_2_ > -1) {
-                *arg2 = var2;
+        GameObject* combatant = battleStruct->GetGameObjectByIndex(var2);
+        if (combatant != NULL) {
+            if (combatant->obj3D_.unknown_2_ > -1) {
+                *out = var2;
                 return 1;
             }
         }

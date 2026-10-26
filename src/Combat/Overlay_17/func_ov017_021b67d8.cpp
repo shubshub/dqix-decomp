@@ -1,0 +1,68 @@
+#if defined(jpn)
+enum {regionalOffset0=0x4ec, regionalOffset1=0x524, regionalOffset2=0xc8};
+#else
+enum {regionalOffset0=0x6fc, regionalOffset1=0x734, regionalOffset2=0xcc};
+#endif
+#include <globaldefs.h>
+#include "Memory/SafeAllocator.h"
+#include "NitroSDK/Memory/AllocatorUnion.h"
+#include "Resource/GameResources.h"
+
+extern "C" void func_020a1e54(int flag);
+extern "C" void AllocatorUnion_Free(AllocatorUnion* alloc, void* data);
+extern "C" void ROMFilesystem_InitFileTables(void);
+struct ListHead02046b60;
+extern "C" int func_02046b60(struct ListHead02046b60* list, int id);
+extern "C" void* LinkSession_GetInstance(void);
+
+extern int g_mainAllocator;
+
+struct Struct_ov017_021b67d8 {
+    unsigned char pad0[0x8];
+    SafeAllocator allocator;
+    unsigned char pad24[0x24 - 0x8 - sizeof(SafeAllocator)];
+    void* field24;
+};
+
+struct Struct_ov017_021b67d8_2 {
+    unsigned char pad0[regionalOffset0];
+    struct ListHead02046b60* unknown_6fc_;
+    unsigned char unknown_700_[regionalOffset1 - regionalOffset0 - 4];
+    unsigned char* unknown_734_;
+};
+
+// USA: func_ov017_021b67d8
+extern "C" ARM void func_ov017_021b67d8(struct Struct_ov017_021b67d8* self) {
+    if (self->field24 != NULL) {
+        self->field24 = NULL;
+        func_020a1e54(1);
+    }
+
+    void* p = self->allocator.GetSignedAllocator();
+    if (p != NULL) {
+        self->allocator.Destroy();
+        AllocatorUnion_Free((AllocatorUnion*)&g_mainAllocator, p);
+    }
+
+    ROMFilesystem_InitFileTables();
+
+    int flag = 1;
+    struct Struct_ov017_021b67d8_2* ctx = (struct Struct_ov017_021b67d8_2*)((char*)GetGameResources() + 0x3000);
+    struct ListHead02046b60* list = ctx->unknown_6fc_;
+    unsigned char* field = ctx->unknown_734_;
+
+    if (func_02046b60(list, 0x18) != 0) {
+        flag = 0;
+    }
+    if (func_02046b60(list, 4) != 0) {
+        if (field[regionalOffset2] == 1) {
+            flag = 0;
+        }
+    }
+    if (flag == 0) {
+        return;
+    }
+
+    char* q = (char*)LinkSession_GetInstance();
+    q[0x1000 + 0x11] = 1;
+}

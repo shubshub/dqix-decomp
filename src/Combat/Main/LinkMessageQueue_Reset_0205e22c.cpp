@@ -1,32 +1,32 @@
 #include <globaldefs.h>
 #include "Combat/SearchEntry.h"
 
-extern "C" void* memset(void* arg0, int arg1, unsigned int arg2);
+extern "C" void* memset(void* dst, int value, unsigned int length);
 
 struct Struct0205e16c;
-ARM void LinkMessageList_Clear(struct Struct0205e16c* p);
+extern "C" ARM void LinkMessageList_Clear(struct Struct0205e16c* p);
 
 struct Struct_0205e18c_2 {
-    char unknown_0_[0x18];
-    struct Struct_0205e18c_2* unknown_18_;
+    char pad[0x18];
+    struct Struct_0205e18c_2* next;
 };
 struct Struct_0205e18c {
-    struct Struct_0205e18c_2* unknown_0_;
-    struct Struct_0205e18c_2* unknown_4_;
-    int unknown_8_;
+    struct Struct_0205e18c_2* head;
+    struct Struct_0205e18c_2* tail;
+    int count;
 };
-extern "C" void func_0205e18c(struct Struct_0205e18c* arg0, struct Struct_0205e18c_2* arg1);
+extern "C" void func_0205e18c(struct Struct_0205e18c* list, struct Struct_0205e18c_2* node);
 
 extern "C" void* LinkSession_GetInstance(void);
 extern "C" void LinkSession_UpdateMemberCount(void);
-void* LinkSession_GetOwnRecord(void* base);
+extern "C" void* LinkSession_GetOwnRecord(void* base);
 
-struct Struct_0202b2f0;
+struct SearchStruct;
 
-struct Struct_0205e22c {
-    unsigned char unknown_0_[0x10];
-    unsigned char unknown_10_;
-    unsigned char unknown_11_[0x14 - 0x11];
+struct Elem0205e22c {
+    unsigned char pad[0x10];
+    unsigned char field10;
+    unsigned char pad2[0x14 - 0x11];
 };
 
 // Main, originally func_0205e22c (USA 0x0205e22c, EUR 0x0205e23c, JPN 0x0205f518)
@@ -35,11 +35,11 @@ extern "C" ARM void LinkMessageQueue_Reset(void* obj) {
     LinkMessageList_Clear((struct Struct0205e16c*)((char*)obj + 0x150c));
     LinkMessageList_Clear((struct Struct0205e16c*)((char*)obj + 0x1518));
 
-    memset(arg0, 0, 0x1500);
+    memset(obj, 0, 0x1500);
 
-    struct Struct_0205e18c_2* var0 = (struct Struct_0205e18c_2*)arg0;
-    for (int var1 = 0; var1 < 0xc0; var1++) {
-        func_0205e18c((struct Struct_0205e18c*)((char*)arg0 + 0x1500), &var0[var1]);
+    struct Struct_0205e18c_2* nodes = (struct Struct_0205e18c_2*)obj;
+    for (int i = 0; i < 0xc0; i++) {
+        func_0205e18c((struct Struct_0205e18c*)((char*)obj + 0x1500), &nodes[i]);
     }
 
     void* base = LinkSession_GetInstance();
@@ -48,8 +48,8 @@ extern "C" ARM void LinkMessageQueue_Reset(void* obj) {
     struct Elem0205e22c* arr = (struct Elem0205e22c*)LinkSession_GetOwnRecord(base);
     memset(arr, 0, 0x74);
 
-    for (int var4 = 0; var4 < 5; var4++) {
-        var3[var4].unknown_10_ = 0xff;
+    for (int j = 0; j < 5; j++) {
+        arr[j].field10 = 0xff;
     }
 
     int idx = 0;
@@ -62,5 +62,5 @@ extern "C" ARM void LinkMessageQueue_Reset(void* obj) {
         }
     }
 
-    memset((char*)arg0 + 0x1524, 0xff, 0x20);
+    memset((char*)obj + 0x1524, 0xff, 0x20);
 }

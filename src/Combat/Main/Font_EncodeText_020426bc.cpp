@@ -1,8 +1,8 @@
 #include <globaldefs.h>
 #include "Resource/Font.h"
 
-struct FontCharacter* Font_FindCharacter(int text, int font);
-int Font_FindCharacterIndex(int text, int font);
+extern "C" struct FontCharacter* Font_FindCharacter(int text, int font);
+extern "C" int Font_FindCharacterIndex(int text, int font);
 
 // Main, originally func_020426bc (USA 0x020426bc, EUR 0x020426cc; JPN not identified)
 extern "C" ARM int Font_EncodeText(char* text, unsigned char* encoded, int font) {

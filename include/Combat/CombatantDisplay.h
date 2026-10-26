@@ -1,14 +1,14 @@
 #pragma once
 
-struct Struct_020fdc60_2 {
-    unsigned char unknown_0_[16];
-    float unknown_10_;
+struct Display0201fdd0 {
+    unsigned char unknown0[16];
+    float y;
 };
 
 extern "C" void MapDisplayMemberPanel_DrawStat(Display0201fdd0* display, int row, int combatant,
                              int amount, int maximum, int digitX, int digitY,
-                             int barX, int barY, int fillCode, int frameCode,
+                             int barX, int barY, int arg9, int arg10,
                              unsigned int bank);
-void MapDisplayMemberPanel_DrawHp(Display0201fdd0* display, int row, int combatant);
-void MapDisplayMemberPanel_DrawMp(Display0201fdd0* display, int row, int combatant);
+extern "C" void MapDisplayMemberPanel_DrawHp(Display0201fdd0* display, int row, int combatant);
+extern "C" void MapDisplayMemberPanel_DrawMp(Display0201fdd0* display, int row, int combatant);
 

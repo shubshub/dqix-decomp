@@ -10,10 +10,10 @@
 
 #include "std_library_functions.h"
 
-int MessageSystem_GetInstance();
+extern "C" int MessageSystem_GetInstance();
 
-extern "C" void func_ov000_0217c638(void* arg0, int arg1, int arg2);
-extern "C" void func_ov000_02177ac8(void* arg0, void* arg1);
+extern "C" void func_ov000_0217c638(void* obj, int a, int b);
+extern "C" void func_ov000_02177ac8(void* obj, void* buf);
 #if defined(jpn)
 extern "C" void Window_OpenPane(void* s, void* buf, int a, int b, int c, int d, int e);
 #else
@@ -21,15 +21,15 @@ extern "C" void Window_OpenPane(void* s, void* buf, int a, int b, int c, int d, 
 #endif
 
 struct Struct_ov000_021779b4 {
-    char unknown_0_[0x44];
-    int unknown_44_;
-    int unknown_48_;
+    char pad[0x44];
+    int x;
+    int y;
 };
 
 // USA: func_ov000_021779b4
-extern "C" ARM void func_ov000_021779b4(void* arg0, struct Struct_ov000_021779b4* arg1, int arg2, int arg3) {
-    char* var0 = (char*)arg0;
-    if (arg1 == 0) {
+extern "C" ARM void func_ov000_021779b4(void* objRaw, struct Struct_ov000_021779b4* in, int arg2, int arg3) {
+    char* obj = (char*)objRaw;
+    if (in == 0) {
         return;
     }
     int x = in->x;

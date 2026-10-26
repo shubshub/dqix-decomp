@@ -1,15 +1,15 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov031_022393e4(int arg0);
+extern "C" void func_ov031_022393e4(int v);
 extern "C" void func_ov031_0223a374(void);
 extern "C" int func_ov031_02239ad8(void);
-extern "C" void func_ov031_02239368(int arg0);
+extern "C" void func_ov031_02239368(int val);
 
 // USA: func_ov031_02239aa4
-extern "C" ARM void func_ov031_02239aa4(unsigned short* arg0) {
-	unsigned short var0 = arg0[1];
-	if (var0 != 0) {
-		func_ov031_022393e4(var0);
+extern "C" ARM void func_ov031_02239aa4(unsigned short* a) {
+	unsigned short v = a[1];
+	if (v != 0) {
+		func_ov031_022393e4(v);
 		func_ov031_0223a374();
 		return;
 	}

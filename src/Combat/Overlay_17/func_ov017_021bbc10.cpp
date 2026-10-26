@@ -18,11 +18,11 @@
 #define data_ov017_021d7df9 data_ov017_021d85d1
 #endif
 
-struct Struct_02038598_5;
-struct Struct_02018300_3;
-struct Struct_020d7aa0_2;
-struct Struct_02010834;
-struct Struct_02033fcc;
+struct ListHead02046b60;
+struct Obj020397cc;
+struct Obj020d7aa0;
+struct Base02010834;
+struct Flags02033fcc;
 
 struct Struct_ov017_021bbc10 {
     unsigned char unknown_0_[1];
@@ -44,42 +44,42 @@ struct Struct_ov017_021bbc10 {
     unsigned char unknown_ce_[0xd0 - 0xce];
     unsigned char unknown_d0_[0x10];
     unsigned char unknown_e0_[0xfd - 0xe0];
-    unsigned char unknown_fd_;
+    unsigned char flagFd;
     unsigned char unknown_fe_[1];
     unsigned char unknown_ff_;
 };
 
-int GameObject_IsClimbingLadder(char*);
-int Camera_GetOrbitYaw(void* obj);
-void* GameState_GetFollowCamera(char*);
-int LinkSession_IsActive(int*);
-int PeekInputLogA_020a1eb0(void);
-void PushInputLogA_020a1df8(int);
-unsigned int* GlobalFlags_GetInstance(void);
-void FlagWord_SetBits(unsigned int* p, unsigned int mask);
-void ClearIntAt0x23c_020a27b8(unsigned char* obj);
-void* TextQueue_GetInstance(void);
-void TextQueue_Reset(Obj020d7aa0* obj);
-void GameObject_DisableControl(Obj020397cc* obj, int arg1);
-void SetField0x158_02053ec8(void*, int);
-void CaptureTransformState02053ed8(void* obj);
-int GameState_GetProtagonistIndex(GameState* gs);
-void GameState_GetPartyMemberIds(Base02010834* base, int index, int* out, int* outCount);
-void GameObject_PauseMovement(Flags02033fcc*);
-void GameObject_ResetTrail(unsigned char* obj);
-struct Obj021bb088;
-void InitTimerObj_021bb088(Obj021bb088*);
-int* GetFieldPtrAt0x5ca4_02010768(void* obj);
+extern "C" int GameObject_IsClimbingLadder(char*);
+extern "C" int Camera_GetOrbitYaw(void* obj);
+extern "C" void* GameState_GetFollowCamera(char*);
+extern "C" int LinkSession_IsActive(int*);
+extern "C" int func_020a1eb0(void);
+extern "C" void func_020a1df8(int);
+extern "C" unsigned int* GlobalFlags_GetInstance(void);
+extern "C" void FlagWord_SetBits(unsigned int* p, unsigned int mask);
+extern "C" void func_020a27b8(unsigned char* obj);
+extern "C" void* TextQueue_GetInstance(void);
+extern "C" void TextQueue_Reset(Obj020d7aa0* obj);
+extern "C" void GameObject_DisableControl(Obj020397cc* obj, int arg1);
+extern "C" void func_02053ec8(void*, int);
+extern "C" void func_02053ed8(void* obj);
+extern "C" int GameState_GetProtagonistIndex(GameState* gs);
+extern "C" void GameState_GetPartyMemberIds(Base02010834* base, int index, int* out, int* outCount);
+extern "C" void GameObject_PauseMovement(Flags02033fcc*);
+extern "C" void GameObject_ResetTrail(unsigned char* obj);
+struct Struct_ov017_021baedc;
+extern "C" void func_ov017_021bb088(Struct_ov017_021baedc*);
+extern "C" int* func_02010768(void* obj);
 struct SafeAllocator;
-void ClearAllocSlotsAndStore_0215aa14(SafeAllocator*);
+extern "C" void func_ov001_0215aa14(SafeAllocator*);
 extern "C" void* Zone3D_GetInstance(void);
 extern "C" void* LinkSession_GetInstance(void);
-extern "C" ARM int func_ov017_021bb27c(Overlay021bbc10* self);
+extern "C" ARM int func_ov017_021bb27c(Struct_ov017_021bbc10* self);
 
-int ListContainsId(ListHead02046b60* list, int id);
-int FieldTaskQueue_IsEmpty(void** obj);
+extern "C" int func_02046b60(ListHead02046b60* list, int id);
+extern "C" int FieldTaskQueue_IsEmpty(void** obj);
 void SetBrightness(GameResources* resources, int brightness, int duration);
-char* strstr(const char* arg0, const char* arg1);
+char* strstr(const char* str, const char* arg1);
 
 extern const char data_ov017_021d7d6c[];
 extern const char data_ov017_021d7d9e[];
@@ -90,7 +90,7 @@ extern const char data_ov017_021d7de0[];
 extern const char data_ov017_021d7df9[];
 
 // USA: func_ov017_021bbc10
-extern "C" ARM int func_ov017_021bbc10(Overlay021bbc10* self) {
+extern "C" ARM int func_ov017_021bbc10(Struct_ov017_021bbc10* self) {
     GameState* gs = GameState::GetInstance();
     BackgroundLoader* loader = BackgroundLoader::GetInstance();
     GameObject* unk = gs->GetLeader();
@@ -98,39 +98,39 @@ extern "C" ARM int func_ov017_021bbc10(Overlay021bbc10* self) {
     GameResources* res = GetGameResources();
     void* search = LinkSession_GetInstance();
 
-    if (ListContainsId((ListHead02046b60*)res->fieldTaskQueue_, 1)) {
-        self->flagFf = 1;
-        self->flag01 = 1;
-        return self->result0a;
+    if (func_02046b60((ListHead02046b60*)res->fieldTaskQueue_, 1)) {
+        self->unknown_ff_ = 1;
+        self->unknown_1_ = 1;
+        return self->unknown_a_;
     }
     FlagWord_SetBits(GlobalFlags_GetInstance(), 0x400e);
     if (res->unknown_4080 != 0) {
-        return self->result0a;
+        return self->unknown_a_;
     }
     SubBlock02038508* field26c = GameObject_GetLadderClimb(unk);
     if (GameObject_IsClimbingLadder((char*)unk) != 0 && field26c->command != 2) {
-        return self->result0a;
+        return self->unknown_a_;
     }
     if (self->flagFd == 0 && FieldTaskQueue_IsEmpty((void**)res->unknown_ptr_array_3700[0]) == 0) {
-        return self->result0a;
+        return self->unknown_a_;
     }
-    SetFlags00(var4, 0x10);
-    if (TestFlags00(var4, 0x1000) == 0 && func_020a1eb0() != 1) {
+    SetFlags00(res, 0x10);
+    if (TestFlags00(res, 0x1000) == 0 && func_020a1eb0() != 1) {
         func_020a1df8(1);
     }
-    ClearAllocSlotsAndStore_0215aa14((SafeAllocator*)NULL);
+    func_ov001_0215aa14((SafeAllocator*)NULL);
     GameObject_DisableControl((Obj020397cc*)unk, 1);
-    ClearIntAt0x23c_020a27b8(field4);
+    func_020a27b8(field4);
     TextQueue_Reset((Obj020d7aa0*)TextQueue_GetInstance());
     *(unsigned short*)(field4 + 0x21e) = Camera_GetOrbitYaw(field4);
 
     if (LinkSession_IsActive((int*)search)) {
         char* arr = (char*)GameState_GetParty(gs);
         for (int i = 0; i < *(unsigned char*)(arr + 0xf7c); i++) {
-            GameObject* combatant = GetCombatantWithFlag0x100_0200ff1c(gs, *(unsigned char*)(arr + i + 0xf78));
+            GameObject* combatant = func_0200ff1c(gs, *(unsigned char*)(arr + i + 0xf78));
             if (combatant != NULL) {
-                SetField0x158_02053ec8(combatant, 3);
-                CaptureTransformState02053ed8(combatant);
+                func_02053ec8(combatant, 3);
+                func_02053ed8(combatant);
             }
         }
     }
@@ -152,33 +152,33 @@ extern "C" ARM int func_ov017_021bbc10(Overlay021bbc10* self) {
     if (extra != NULL) {
         GameObject_ResetTrail((unsigned char*)extra);
     }
-    func_ov017_021bb088((Struct_ov017_021baedc*)arg0->unknown_d0_);
-    int* var15 = func_02010768(var0);
+    func_ov017_021bb088((Struct_ov017_021baedc*)self->unknown_d0_);
+    int* var15 = func_02010768(gs);
     var15[0] = 0;
     var15[1] = 0;
-    var1->AddFence();
+    loader->AddFence();
 
-    if (self->useAltPath9c != 0) {
-        self->task74 = loader->QueueLoadFile(data_ov017_021d7d9e, NULL);
-    } else if (self->flagCc != 0) {
+    if (self->unknown_9c_ != 0) {
+        self->unknown_74_ = loader->QueueLoadFile(data_ov017_021d7d9e, NULL);
+    } else if (self->unknown_cc_ != 0) {
         char* name = *(char**)((char*)Zone3D_GetInstance() + 8);
-        if (gs->GetGameObjectByIndex(self->indexCd) == NULL || strstr(name + 5, data_ov017_021d7db8) == NULL ||
+        if (gs->GetGameObjectByIndex(self->unknown_cd_) == NULL || strstr(name + 5, data_ov017_021d7db8) == NULL ||
             strstr(name + 5, data_ov017_021d7dbb) == NULL) {
             SetBrightness(res, 0, 0x28);
             func_ov017_021bb27c(self);
-            self->flag01 = 1;
-            return self->result0a;
+            self->unknown_1_ = 1;
+            return self->unknown_a_;
         }
         return 0xc;
     } else {
-        unsigned int var17 = arg0->unknown_8_;
-        if (var17 >= 0x5208 && var17 < 0x9c40) {
-            arg0->unknown_74_ = var1->QueueLoadFile(data_ov017_021d7dbf, NULL);
-            var1->GetNumQueuedTasks();
-        } else if (var17 >= 0x9c40) {
-            arg0->unknown_74_ = var1->QueueLoadFile(data_ov017_021d7de0, NULL);
+        unsigned int id = self->unknown_8_;
+        if (id >= 0x5208 && id < 0x9c40) {
+            self->unknown_74_ = loader->QueueLoadFile(data_ov017_021d7dbf, NULL);
+            loader->GetNumQueuedTasks();
+        } else if (id >= 0x9c40) {
+            self->unknown_74_ = loader->QueueLoadFile(data_ov017_021d7de0, NULL);
         } else {
-            arg0->unknown_74_ = var1->QueueLoadFile(data_ov017_021d7df9, NULL);
+            self->unknown_74_ = loader->QueueLoadFile(data_ov017_021d7df9, NULL);
         }
     }
     return 1;

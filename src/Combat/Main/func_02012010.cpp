@@ -1,11 +1,11 @@
 #include <globaldefs.h>
 
 // USA: func_02012010
-extern "C" ARM void func_02012010(void* arg0, int arg1) {
-    unsigned char* var0 = (unsigned char*)arg0;
+extern "C" ARM void func_02012010(void* gameState, int value) {
+    unsigned char* bytes = (unsigned char*)gameState;
 #if defined(jpn)
-    *(int*)(var0 + 0x7c98) = arg1;
+    *(int*)(bytes + 0x7c98) = value;
 #else
-    *(int*)(var0 + 0x7f6c) = arg1;
+    *(int*)(bytes + 0x7f6c) = value;
 #endif
 }

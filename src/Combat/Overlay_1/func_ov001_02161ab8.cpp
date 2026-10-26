@@ -5,127 +5,127 @@
 struct Struct_0205faf4_11;
 
 struct Struct_ov001_02161ab8 {
-    unsigned int unknown_0_;
-    unsigned short unknown_4_;
+    unsigned int flags;
+    unsigned short hp;
 };
 
 struct Struct_ov001_02161ab8_2 {
-    unsigned char unknown_0_[0x56b];
-    unsigned char unknown_56b_0_ : 4;
-    unsigned char unknown_56b_4_ : 4;
+    unsigned char pad[0x56b];
+    unsigned char unk_56b : 4;
+    unsigned char rank : 4;
 };
 
 struct Struct_ov001_02161ab8_3 {
-    unsigned short unknown_0_;
+    unsigned short flags;
     short unknown_2_;
-    short unknown_4_;
+    short level;
     char unknown_6_[0x130 - 0x6];
-    Struct_ov001_02161ab8* unknown_130_;
+    Struct_ov001_02161ab8* status;
     #if defined(jpn)
     char unknown_134_[0x144 - 0x134];
 #else
     char unknown1_134_[0x150 - 0x134];
 #endif
-    Struct_ov001_02161ab8_2* unknown_150_;
+    Struct_ov001_02161ab8_2* party;
 };
 
 struct Struct_ov001_02161ab8_4 {
     unsigned char unknown_0_0_ : 4;
-    unsigned char unknown_0_4_ : 4;
-    unsigned char unknown_1_;
-    short unknown_2_;
+    unsigned char kind : 4;
+    unsigned char id;
+    short combatantId;
     char unknown_4_[0x34 - 0x4];
-    Struct_ov001_02161ab8_4* unknown_34_;
+    Struct_ov001_02161ab8_4* next;
 };
 
 struct Struct_ov001_02161ab8_5 {
     #if defined(jpn)
-    char unknown_0_[0xcc];
+    char pad[0xcc];
 #else
-    char unknown1_0_[0xd0];
+    char pad[0xd0];
 #endif
-    Struct_ov001_02161ab8_4* unknown_d0_;
+    Struct_ov001_02161ab8_4* head;
 };
 
-extern "C" int func_ov017_021d60f4(void* arg0);
-extern "C" void func_ov017_021d6134(void* arg0, int arg1);
-extern "C" GameObject* func_0200ff58(GameState* arg0, int arg1);
-extern "C" int func_02061bd8(Struct_0205faf4_11* arg0);
+extern "C" int func_ov017_021d60f4(void* arg);
+extern "C" void func_ov017_021d6134(void* arg, int value);
+extern "C" GameObject* func_0200ff58(GameState* battleStruct, int combatantId);
+extern "C" int func_02061bd8(Struct_0205faf4_11* obj);
 
-static inline int inline_ov000_0215a908_2(Struct_ov001_02161ab8* arg0) { return arg0->unknown_4_; }
+static inline int inline_ov000_0215a908_2(Struct_ov001_02161ab8* status) { return status->hp; }
 
 // USA: func_ov001_02161ab8
-extern "C" ARM int func_ov001_02161ab8(char* arg0, int arg1) {
-    GameState* var0 = GameState::GetInstance();
-    Struct_ov001_02161ab8_5* var1 = (Struct_ov001_02161ab8_5*)GetGameResources()->unknown_ptr_array_371c[6];
-    int var2 = func_ov017_021d60f4(arg0);
-    Struct_ov001_02161ab8_4* var3;
-    for (var3 = var1->unknown_d0_; var3 != NULL; var3 = var3->unknown_34_) {
-        if (var3->unknown_1_ == var2) break;
+extern "C" ARM int func_ov001_02161ab8(char* self, int count) {
+    GameState* gs = GameState::GetInstance();
+    Struct_ov001_02161ab8_5* work = (Struct_ov001_02161ab8_5*)GetGameResources()->unknown_ptr_array_371c[6];
+    int id = func_ov017_021d60f4(self);
+    Struct_ov001_02161ab8_4* e;
+    for (e = work->head; e != NULL; e = e->next) {
+        if (e->id == id) break;
     }
-    if (var3 == NULL) {
-        func_ov017_021d6134(arg0 + 8, -1);
-        func_ov017_021d6134(arg0 + 0x10, 2);
+    if (e == NULL) {
+        func_ov017_021d6134(self + 8, -1);
+        func_ov017_021d6134(self + 0x10, 2);
         return 1;
     }
-    int var4;
-    int var5;
-    int var6;
-    var6 = -1;
-    var5 = var3->unknown_0_4_;
-    if (var5 == 0) {
-        func_ov017_021d6134(arg0 + 8, var5);
-        func_ov017_021d6134(arg0 + 0x10, 0);
+    int state;
+    int kind;
+    int combatantId;
+    combatantId = -1;
+    kind = e->kind;
+    if (kind == 0) {
+        func_ov017_021d6134(self + 8, kind);
+        func_ov017_021d6134(self + 0x10, 0);
         return 1;
     }
-    if (var3->unknown_0_0_ == 10) {
-        Struct_ov001_02161ab8_3* var7 = (Struct_ov001_02161ab8_3*)func_0200ff58(var0, 0xce);
-        if (var7 != NULL) {
-            var4 = 0;
+    if (e->unknown_0_0_ == 10) {
+        Struct_ov001_02161ab8_3* c = (Struct_ov001_02161ab8_3*)func_0200ff58(gs, 0xce);
+        if (c != NULL) {
+            state = 0;
         } else {
-            int var8;
-            for (var8 = 0; var8 < 4; var8++) {
-                var7 = (Struct_ov001_02161ab8_3*)func_0200ff58(var0, var8);
-                if (var7 != NULL && func_02061bd8((Struct_0205faf4_11*)var7)) break;
+            int i;
+            for (i = 0; i < 4; i++) {
+                c = (Struct_ov001_02161ab8_3*)func_0200ff58(gs, i);
+                if (c != NULL && func_02061bd8((Struct_0205faf4_11*)c)) break;
             }
-            if (var8 == 4) {
-                func_ov017_021d6134(arg0 + 8, var5);
-                func_ov017_021d6134(arg0 + 0x10, 2);
+            if (i == 4) {
+                func_ov017_021d6134(self + 8, kind);
+                func_ov017_021d6134(self + 0x10, 2);
                 return 1;
             }
-            var4 = inline_ov000_0215a908_2(var7->unknown_130_) <= 0 ? 1 : 0;
+            state = inline_ov000_0215a908_2(c->status) <= 0 ? 1 : 0;
         }
     } else {
-        Struct_ov001_02161ab8_3* var9 = (Struct_ov001_02161ab8_3*)func_0200ff1c(var0, var3->unknown_2_);
-        if (var9 == NULL) return 0;
-        var6 = var3->unknown_2_;
-        Struct_ov001_02161ab8_2* var10 = var9->unknown_150_;
+        Struct_ov001_02161ab8_3* c = (Struct_ov001_02161ab8_3*)func_0200ff1c(gs, e->combatantId);
+        if (c == NULL) return 0;
+        combatantId = e->combatantId;
+        Struct_ov001_02161ab8_2* party = c->party;
         int var11;
-        if (var10 != NULL) {
-            var11 = var10->unknown_56b_4_ != 0;
+        if (party != NULL) {
+            var11 = party->rank != 0;
         } else {
             var11 = 0;
         }
         if (var11) {
-            var5 = (var10 != NULL ? var10->unknown_56b_4_ : 0) + 7;
-        } else if (!(var9->unknown_0_ & 0x1000) && var9->unknown_4_ > 0 && var9->unknown_4_ < 4) {
-            var5 = 14;
+            kind = (party != NULL ? party->rank : 0) + 7;
+        } else if (!(c->flags & 0x1000) && c->level > 0 && c->level < 4) {
+            kind = 14;
         }
-        if (var9 != NULL) {
-            Struct_ov001_02161ab8* var12 = var9->unknown_130_;
-            if (inline_ov000_0215a908_2(var12) <= 0 && (var12->unknown_0_ & 1)) {
-                var4 = 1;
+        if (c != NULL) {
+            Struct_ov001_02161ab8* status = c->status;
+            if (inline_ov000_0215a908_2(status) <= 0 && (status->flags & 1)) {
+                state = 1;
             } else {
-                var4 = 0;
+                state = 0;
             }
         } else {
-            var4 = 2;
+            state = 2;
         }
     }
-    func_ov017_021d6134(arg0 + 8, var5);
-    func_ov017_021d6134(arg0 + 0x10, var4);
-    if (arg1 > 3) {
-        func_ov017_021d6134(arg0 + 0x18, var6);
+    func_ov017_021d6134(self + 8, kind);
+    func_ov017_021d6134(self + 0x10, state);
+    if (count > 3) {
+        func_ov017_021d6134(self + 0x18, combatantId);
     }
     return 1;
 }

@@ -5,16 +5,16 @@ extern "C" void* func_02057924(void);
 extern "C" void* LinkSession_GetInstance(void);
 extern "C" void func_020531f0(void* obj);
 struct Obj020397cc;
-void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
+extern "C" void GameObject_DisableControl(struct Obj020397cc* obj, int arg1);
 struct U16Field0x6_020375f8;
 extern "C" void func_ov017_021c2b6c(void* self);
-void ForwardResetAndCaptureTimestamp_021c2e50(char* self);
-void InitAndDispatchCombatant_021c2ea4(unsigned char* self);
-int CountValidCombatants02058618(void* unused);
+extern "C" void func_ov017_021c2e50(char* self);
+extern "C" void func_ov017_021c2ea4(unsigned char* self);
+extern "C" int func_02058618(void* unused);
 unsigned long long GetCurrentTimestamp(void);
-extern "C" unsigned long long _ll_udiv(unsigned long long dividend, unsigned int divisor, unsigned int flag);
-int LinkSession_IsActive(int* obj);
-void GameObject_EnableControl(void* obj);
+extern "C" unsigned long long _ll_udiv(unsigned long long arg0, unsigned int arg1, unsigned int flag);
+extern "C" int LinkSession_IsActive(int* obj);
+extern "C" void GameObject_EnableControl(void* obj);
 extern "C" void func_ov017_021c310c(void* self);
 extern "C" void ROMFilesystem_InitFileTables(void);
 
@@ -57,21 +57,21 @@ extern "C" ARM void FieldTask_CastSafePassage(unsigned char* self) {
     }
     if (state == 2) {
         if (self[0x94] == 0) {
-            ForwardResetAndCaptureTimestamp_021c2e50((char*)self);
+            func_ov017_021c2e50((char*)self);
             return;
         }
-        if (self[0x94] == 1) InitAndDispatchCombatant_021c2ea4(self);
+        if (self[0x94] == 1) func_ov017_021c2ea4(self);
         return;
     }
     if (state != 3) return;
 
     if (*(void**)(self + 0x90) != 0) {
-        if (CountValidCombatants02058618(r7) > 0) return;
+        if (func_02058618(r7) > 0) return;
     }
 
     unsigned long long diff = GetCurrentTimestamp() - *(unsigned long long*)(self + 0x98);
-    unsigned long long quotient = _ll_udiv(diff << 6, 0x82ea, 0);
-    if (quotient < 0x4b0) return;
+    unsigned long long var5 = _ll_udiv(diff << 6, 0x82ea, 0);
+    if (var5 < 0x4b0) return;
 
     self[0x1] = 1;
     func_ov017_021c310c(self);

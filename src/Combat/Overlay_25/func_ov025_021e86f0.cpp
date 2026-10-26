@@ -9,7 +9,7 @@ enum { Enum_ov025_021e86f0_1162 = 0x48a };
 
 // USA: func_ov025_021e86f0
 extern "C" ARM int func_ov025_021e86f0(void) {
-    char* var0 = (char*)GetGameResources() + 0x4000;
-    var0[Enum_ov025_021e86f0_1162] = 1;
+    char* p = (char*)GetGameResources() + 0x4000;
+    p[Enum_ov025_021e86f0_1162] = 1;
     return 1;
 }

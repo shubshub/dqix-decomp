@@ -7,19 +7,19 @@
 #endif
 
 
-extern "C" void* func_ov000_02161318(void* arg0, int arg1);
+extern "C" void* func_ov000_02161318(void* obj, int index);
 
 // USA: func_ov000_02181694
-extern "C" ARM void func_ov000_02181694(void* arg0, int arg1) {
-    void* var0;
-    int var1;
-    if (arg1 < 0) {
-        for (var1 = 0; var1 < 4; var1++) {
-            var0 = func_ov000_02161318(arg0, var1);
-            if (var0 != 0) *((char*)var0 + REGION_OFFSET_0) = 1;
+extern "C" ARM void func_ov000_02181694(void* obj, int index) {
+    void* p;
+    int i;
+    if (index < 0) {
+        for (i = 0; i < 4; i++) {
+            p = func_ov000_02161318(obj, i);
+            if (p != 0) *((char*)p + REGION_OFFSET_0) = 1;
         }
     } else {
-        var0 = func_ov000_02161318(arg0, arg1);
-        if (var0 != 0) *((char*)var0 + REGION_OFFSET_0) = 1;
+        p = func_ov000_02161318(obj, index);
+        if (p != 0) *((char*)p + REGION_OFFSET_0) = 1;
     }
 }

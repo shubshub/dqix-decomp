@@ -2,9 +2,9 @@
 
 struct Struct_ov016_0219d0c0_3 {
 #if defined(jpn)
-    unsigned char unknown1_0_[0x3c];
+    unsigned char unknown0[0x3c];
 #else
-    unsigned char unknown_0_[0x48];
+    unsigned char unknown0[0x48];
 #endif
     unsigned long long unknown_48_;
 };

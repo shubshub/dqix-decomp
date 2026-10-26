@@ -3,59 +3,59 @@
 #include "Memory/SafeAllocator.h"
 #include "Resource/MonsterDefinition.h"
 
-extern "C" char* func_020da150(SafeAllocator* arg0, const char* arg1);
+extern "C" char* func_020da150(SafeAllocator* allocator, const char* source);
 
 extern Struct_0206f01c_2* data_02108d14;
 
 // USA: func_0206f230
-extern "C" ARM void func_0206f230(struct Struct_0206f01c_2* arg0, SafeAllocator* arg1,
+extern "C" ARM void func_0206f230(struct Struct_0206f01c_2* output, SafeAllocator* allocator,
 #if defined(jpn)
-                                          struct Struct_0206efd8* arg2, int arg3, short* arg4, int arg5) {
+                                          struct Struct_0206efd8* source, int arg3, short* arg4, int arg5) {
 #else
-                                          struct Struct_0206efd8* arg2, int arg3, short* arg4, int arg5,
+                                          struct Struct_0206efd8* source, int arg3, short* arg4, int arg5,
                                           SafeAllocator* arg6, unsigned char* arg7) {
 #endif
     short* var0;
-    int var1;
-    bool var2;
+    int request;
+    bool isNew;
     int var3;
     unsigned char var4;
     struct Struct_0206ef48 var5;
     short var6[0x200];
     short var7;
-    int var8;
-    struct Struct_0206ef40* var9;
+    int position;
+    struct MonsterDefinition* destination;
     short* var10;
-    short var11;
+    short id;
     short* var12;
-    int var13;
-    struct Struct_0206ef40* var14;
+    int selected;
+    struct MonsterDefinition* definition;
 
-    data_02108d14 = arg0;
+    data_02108d14 = output;
     if (arg5 == 0) {
         return;
     }
     var4 = 0;
-    func_0206f170(&var5, arg2, &var4, func_0206ef48);
+    func_0206f170(&var5, source, &var4, func_0206ef48);
     var7 = 0;
-    for (var0 = arg4, var1 = 0; var1 < arg5; var1++, var0++) {
-        var11 = *var0;
-        if (func_0206f470(&var5.unknown_0_, var11,
+    for (var0 = arg4, request = 0; request < arg5; request++, var0++) {
+        id = *var0;
+        if (func_0206f470(&var5.table, id,
                                      func_0206ef40) != NULL) {
             var12 = var6;
-            var2 = true;
-            for (var8 = 0; var8 < var7; var8++, var12++) {
-                if (*var12 == var11) {
-                    var2 = false;
+            isNew = true;
+            for (position = 0; position < var7; position++, var12++) {
+                if (*var12 == id) {
+                    isNew = false;
                     break;
                 }
-                if (*var12 > var11) {
-                    memmove(var12 + 1, var12, (var7 - var8) * sizeof(short));
+                if (*var12 > id) {
+                    memmove(var12 + 1, var12, (var7 - position) * sizeof(short));
                     break;
                 }
             }
-            if (var2) {
-                *var12 = var11;
+            if (isNew) {
+                *var12 = id;
                 var7 = var7 + 1;
                 if (var7 >= 0x200) {
                     break;
@@ -64,40 +64,40 @@ extern "C" ARM void func_0206f230(struct Struct_0206f01c_2* arg0, SafeAllocator*
         }
     }
 
-    arg0->unknown_4_ = (struct Struct_0206ef40*)arg1->Allocate(var7 * sizeof(struct Struct_0206ef40));
-    if (arg0->unknown_4_ == NULL) {
+    output->arr = (struct MonsterDefinition*)allocator->Allocate(var7 * sizeof(struct MonsterDefinition));
+    if (output->arr == NULL) {
         return;
     }
 #if !defined(jpn)
     if (arg6 != NULL && arg7 != NULL) {
-        arg1->Allocate(0x80 - var7 * 8);
+        allocator->Allocate(0x80 - var7 * 8);
     }
 #endif
 
     var3 = 0;
-    var9 = arg0->unknown_4_;
-    for (var10 = var6, var13 = 0; var13 < var7; var13++, var10++) {
-        var14 = (struct Struct_0206ef40*)func_0206f470(
-            &var5.unknown_0_, *var10, func_0206ef40);
-        if (var14 == NULL) {
+    destination = output->arr;
+    for (var10 = var6, selected = 0; selected < var7; selected++, var10++) {
+        definition = (struct MonsterDefinition*)func_0206f470(
+            &var5.table, *var10, func_0206ef40);
+        if (definition == NULL) {
             continue;
         }
-        memcpy(var9, var14, sizeof(struct Struct_0206ef40));
+        memcpy(destination, definition, sizeof(struct MonsterDefinition));
 #if defined(jpn)
-        var9->unknown1_0_ = func_020da150(arg1, var14->unknown1_0_);
+        destination->name = func_020da150(allocator, definition->name);
 #else
         if (arg6 != NULL && arg7 != NULL) {
-            var9->unknown1_0_ = func_020da150(arg6, var14->unknown1_0_);
-            var9->unknown_14_ = func_020da150(arg6, var14->unknown_14_);
-            arg1->Allocate(arg7[var13]);
+            destination->name = func_020da150(arg6, definition->name);
+            destination->unknown_14_ = func_020da150(arg6, definition->unknown_14_);
+            allocator->Allocate(arg7[selected]);
         } else {
-            var9->unknown1_0_ = func_020da150(arg1, var14->unknown1_0_);
-            var9->unknown_14_ = func_020da150(arg1, var14->unknown_14_);
+            destination->name = func_020da150(allocator, definition->name);
+            destination->unknown_14_ = func_020da150(allocator, definition->unknown_14_);
         }
 #endif
-        var9->unknown_4_ = func_020da150(arg1, var14->unknown_4_);
-        var9++;
+        destination->unknown_4_ = func_020da150(allocator, definition->unknown_4_);
+        destination++;
         var3 = (short)(var3 + 1);
     }
-    arg0->unknown_0_.unknown_0_0_ = var3;
+    output->header.count = var3;
 }

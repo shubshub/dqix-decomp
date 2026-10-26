@@ -1,30 +1,30 @@
 #include <globaldefs.h>
 
 struct Struct_0203fca0 {
-    int unknown_0_;
-    unsigned short unknown_4_;
-    unsigned short unknown_6_;
-    int unknown_8_;
-    int unknown_c_;
-    int unknown_10_;
-    int unknown_14_;
-    int unknown_18_;
+    int field0;
+    unsigned short field4;
+    unsigned short field6;
+    int field8;
+    int fieldC;
+    int field10;
+    int field14;
+    int field18;
     int unknown_1c_;
-    int unknown_20_;
-    int unknown_24_;
+    int field20;
+    int field24;
 };
 
 // USA: func_0203fca0
-extern "C" ARM void func_0203fca0(struct Struct_0203fca0* arg0) {
-    arg0->unknown_0_ = 0;
-    arg0->unknown_4_ = 0;
-    arg0->unknown_6_ = 0;
-    arg0->unknown_8_ = 0;
-    arg0->unknown_c_ = 0;
-    arg0->unknown_10_ = 0;
-    arg0->unknown_14_ = 0;
-    arg0->unknown_18_ = 0;
-    arg0->unknown_1c_ = 0;
-    arg0->unknown_20_ = 0;
-    arg0->unknown_24_ = 0;
+extern "C" ARM void func_0203fca0(struct Struct_0203fca0* obj) {
+    obj->field0 = 0;
+    obj->field4 = 0;
+    obj->field6 = 0;
+    obj->field8 = 0;
+    obj->fieldC = 0;
+    obj->field10 = 0;
+    obj->field14 = 0;
+    obj->field18 = 0;
+    obj->unknown_1c_ = 0;
+    obj->field20 = 0;
+    obj->field24 = 0;
 }

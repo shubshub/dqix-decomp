@@ -5,9 +5,9 @@
 #include "NitroSDK/VRAM.h"
 
 extern "C" Zone3D* Zone3D_GetInstance(void);
-void GXS_SetGraphicsMode(unsigned int mode);
-void G2S_SetBG0Control(int screenSize, int colorMode, int screenBase, int charBase, int extPaletteSlot);
-void G2S_SetBG1Control(int screenSize, int colorMode, int screenBase, int charBase, int extPaletteSlot);
+extern "C" void GXS_SetGraphicsMode(unsigned int mode);
+extern "C" void G2S_SetBG0Control(int screenSize, int colorMode, int screenBase, int charBase, int extPaletteSlot);
+extern "C" void G2S_SetBG1Control(int screenSize, int colorMode, int screenBase, int charBase, int extPaletteSlot);
 
 // Sub-screen DISPCNT bits (GBATEK): the visible layers are bits 8-12 (BG0-BG3, OBJ); bit 4 is 1D OBJ tile
 // mapping and bits 20-21 its boundary (0 = 32 bytes).

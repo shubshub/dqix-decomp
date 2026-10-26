@@ -1,24 +1,24 @@
 #include <globaldefs.h>
 
-extern "C" void* func_0207f100(unsigned char* arg0, short arg1);
+extern "C" void* func_0207f100(unsigned char* obj, short index);
 
 // USA: func_020810b4
-extern "C" ARM void* func_020810b4(unsigned char* arg0, short arg1) {
-    short var0 = *(short*)(arg0 + 0x10);
-    short var1;
-    for (var1 = 0; var1 < var0; var1++) {
-        unsigned char* var2 = (unsigned char*)func_0207f100(arg0 + 0xc, var1);
-        if (var2 == NULL) {
+extern "C" ARM void* func_020810b4(unsigned char* self, short val) {
+    short count = *(short*)(self + 0x10);
+    short i;
+    for (i = 0; i < count; i++) {
+        unsigned char* rec = (unsigned char*)func_0207f100(self + 0xc, i);
+        if (rec == NULL) {
             continue;
         }
         {
-            unsigned char var3 = 0;
-            while (var3 < var2[0x13]) {
-                short* var4 = *(short**)(var2 + 0);
-                if (arg1 == var4[var3]) {
-                    return var2;
+            unsigned char j = 0;
+            while (j < rec[0x13]) {
+                short* arr = *(short**)(rec + 0);
+                if (val == arr[j]) {
+                    return rec;
                 }
-                var3 = var3 + 1;
+                j = j + 1;
             }
         }
     }

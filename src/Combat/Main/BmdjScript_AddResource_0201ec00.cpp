@@ -30,17 +30,17 @@ struct EntryList_1f170 {
     int count;
 };
 
-void BmdjScriptState_AddResource(struct List0201f0f0*, struct Elem0201f0f0*);
-struct Entry_1f170* BmdjScriptState_FindResource(struct EntryList_1f170*, int);
+extern "C" void BmdjScriptState_AddResource(struct List0201f0f0*, struct Elem0201f0f0*);
+extern "C" struct Entry_1f170* BmdjScriptState_FindResource(struct EntryList_1f170*, int);
 
 // data_020fdc40, the BMDJ script's context while BmdjScriptState_RunScript runs it
-struct Container0201ec00 {
+struct Struct_020fdc40_2 {
     struct Entry_1f170* currentResource;
     SafeAllocator* allocator;
     struct List0201f0f0* state;
     char pad[16];
 };
-extern struct Container0201ec00 data_020fdc40;
+extern struct Struct_020fdc40_2 data_020fdc40;
 
 // Main, originally func_0201ec00 (USA 0x0201ec00, EUR 0x0201ec10, JPN 0x0201e98c)
 extern "C" ARM int BmdjScript_AddResource(Script::Parameter* params, int numParams) {

@@ -1,47 +1,47 @@
 #include <globaldefs.h>
 
 // USA: func_ov031_0221ac6c
-extern "C" ARM int func_ov031_0221ac6c(const char* arg0, unsigned int arg1, char* arg2, unsigned int arg3) {
-    if (arg1 & 3) return -1;
-    int var0 = 0;
-    unsigned int var1 = 0;
-    if (arg1 > var1) {
+extern "C" ARM int func_ov031_0221ac6c(const char* input, unsigned int length, char* output, unsigned int capacity) {
+    if (length & 3) return -1;
+    int bits = 0;
+    unsigned int i = 0;
+    if (length > i) {
         do {
-            if (arg0[var1] != '*') var0 += 6;
-            ++var1;
-        } while (var1 < arg1);
+            if (input[i] != '*') bits += 6;
+            ++i;
+        } while (i < length);
     }
-    int var2 = var0 / 8;
-    if (arg2 == 0) return var2;
-    if (arg3 < (unsigned int)var2) return -1;
-    if (arg1 == 0) return 0;
-    char* var3 = arg2;
+    int size = bits / 8;
+    if (output == 0) return size;
+    if (capacity < (unsigned int)size) return -1;
+    if (length == 0) return 0;
+    char* dst = output;
     int var4;
     do {
-        char var5[4];
-        char* var6 = var5;
-        int var7 = 0;
+        char values[4];
+        char* value = values;
+        int i = 0;
         do {
-            int var8 = arg0[var7];
-            if (var8 >= 'A' && var8 <= 'Z') *var6 = var8 - 'A';
-            else if (var8 >= 'a' && var8 <= 'z') *var6 = var8 - 'G';
-            else if (var8 >= '0' && var8 <= '9') *var6 = var8 + 4;
-            else if (var8 == '.') *var6 = 62;
-            else if (var8 == '-') *var6 = 63;
-            else *var6 = 0;
-            ++var7;
-            ++var6;
-        } while (var7 < 4);
-        var3[0] = (var5[0] << 2) | (var5[1] >> 4);
-        var4 = var3 + 1 - arg2;
-        arg0 += 4;
-        if (var4 >= var2) break;
-        var3[1] = (var5[1] << 4) | (var5[2] >> 2);
-        var4 = var3 + 2 - arg2;
-        if (var4 >= var2) break;
-        var3[2] = (var5[2] << 6) | var5[3];
-        var3 += 3;
-        var4 = var3 - arg2;
-    } while (var4 < var2);
+            int c = input[i];
+            if (c >= 'A' && c <= 'Z') *value = c - 'A';
+            else if (c >= 'a' && c <= 'z') *value = c - 'G';
+            else if (c >= '0' && c <= '9') *value = c + 4;
+            else if (c == '.') *value = 62;
+            else if (c == '-') *value = 63;
+            else *value = 0;
+            ++i;
+            ++value;
+        } while (i < 4);
+        dst[0] = (values[0] << 2) | (values[1] >> 4);
+        var4 = dst + 1 - output;
+        input += 4;
+        if (var4 >= size) break;
+        dst[1] = (values[1] << 4) | (values[2] >> 2);
+        var4 = dst + 2 - output;
+        if (var4 >= size) break;
+        dst[2] = (values[2] << 6) | values[3];
+        dst += 3;
+        var4 = dst - output;
+    } while (var4 < size);
     return var4;
 }

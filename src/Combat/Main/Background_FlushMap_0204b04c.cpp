@@ -3,7 +3,7 @@
 
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 
-static inline unsigned int GetSize(unsigned int mapType, unsigned int mapSize) {
+static inline unsigned int inline_0204b04c(unsigned int mapType, unsigned int mapSize) {
     return Background_mapSizes[mapType][mapSize];
 }
 
@@ -11,5 +11,5 @@ static inline unsigned int GetSize(unsigned int mapType, unsigned int mapSize) {
 extern "C" ARM void Background_FlushMap(BackgroundGraphics* layer, void* map) {
     if (map == NULL) map = layer->map_;
     if (map == NULL) return;
-    CleanInvalidateCacheRange(map, GetSize(layer->mapType_, layer->mapSize_));
+    CleanInvalidateCacheRange(map, inline_0204b04c(layer->mapType_, layer->mapSize_));
 }

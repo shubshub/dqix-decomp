@@ -48,10 +48,10 @@ extern "C" ARM void Zone3D_BuildSceneElements(Zone3D *zone, void *scriptNode, Sa
     }
 
     int timeOfDay        = lighting->timeOfDayIndex_;
-    void *overrideObject = GetGameResources()->unknown_ptr_3718;
-    if (overrideObject != NULL && IsField600B4Zero_021b8b54(overrideObject)) {
-        unsigned char *overrideData = static_cast<unsigned char *>(func_ov017_021b8478(overrideObject));
-        timeOfDay                   = overrideData[5];
+    void *var14 = GetGameResources()->unknown_ptr_3718;
+    if (var14 != NULL && func_ov017_021b8b54(var14)) {
+        unsigned char *var15 = static_cast<unsigned char *>(func_ov017_021b8478(var14));
+        timeOfDay                   = var15[5];
     }
 
     for (int i = 0; i < count; i++) {

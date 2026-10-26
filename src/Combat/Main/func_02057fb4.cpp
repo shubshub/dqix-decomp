@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
-extern "C" void* func_02057f8c(void* arg0, int arg1);
-extern "C" void func_02057fd8(void* arg0, void* arg1, void* arg2);
+extern "C" void* func_02057f8c(void* list, int id);
+extern "C" void func_02057fd8(void* a1, void* node, void* config);
 
 // USA: func_02057fb4
-extern "C" ARM void func_02057fb4(void* arg0, int arg1, void* arg2) {
-    void* var0 = func_02057f8c(arg0, arg1);
-    func_02057fd8(arg0, var0, arg2);
+extern "C" ARM void func_02057fb4(void* list, int id, void* config) {
+    void* node = func_02057f8c(list, id);
+    func_02057fd8(list, node, config);
 }

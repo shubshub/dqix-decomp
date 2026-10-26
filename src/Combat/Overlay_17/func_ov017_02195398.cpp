@@ -1,27 +1,27 @@
 #include <globaldefs.h>
 
-extern "C" void func_ov017_02195214(void* arg0, void* arg1);
+extern "C" void func_ov017_02195214(void* dst, void* src);
 
 // USA: func_ov017_02195398
-extern "C" ARM void func_ov017_02195398(void* arg0, unsigned char arg1) {
+extern "C" ARM void func_ov017_02195398(void* obj, unsigned char key) {
 #if defined(jpn)
- enum {Enum_ov017_02195398_17136=0x40d0, Enum_ov017_02195398_17137=0x40d1, Enum_ov017_02195398_752=0xd0, Enum_ov017_02195398_753=0xd1};
+ enum {regionalOffset0=0x40d0, regionalOffset1=0x40d1, regionalOffset2=0xd0, regionalOffset3=0xd1};
 #else
- enum {Enum_ov017_02195398_17136=0x42f0, Enum_ov017_02195398_17137=0x42f1, Enum_ov017_02195398_752=0x2f0, Enum_ov017_02195398_753=0x2f1};
+ enum {regionalOffset0=0x42f0, regionalOffset1=0x42f1, regionalOffset2=0x2f0, regionalOffset3=0x2f1};
 #endif
-	unsigned char* var0 = (unsigned char*)arg0;
-	int var1 = 0;
-	while (var1 < var0[Enum_ov017_02195398_17136]) {
-		unsigned char* var2 = var0 + 0x4000 + var1 * 15;
-		if (arg1 == var2[Enum_ov017_02195398_753]) {
-			unsigned char* var3 = var0 + 0x4000;
-			var3[Enum_ov017_02195398_752] = var3[Enum_ov017_02195398_752] - 1;
-			while (var1 < var3[Enum_ov017_02195398_752]) {
-				func_ov017_02195214(var0 + Enum_ov017_02195398_17137 + var1 * 15, var0 + Enum_ov017_02195398_17137 + (var1 + 1) * 15);
-				var1++;
+	unsigned char* o = (unsigned char*)obj;
+	int i = 0;
+	while (i < o[regionalOffset0]) {
+		unsigned char* p = o + 0x4000 + i * 15;
+		if (key == p[regionalOffset3]) {
+			unsigned char* hdr = o + 0x4000;
+			hdr[regionalOffset2] = hdr[regionalOffset2] - 1;
+			while (i < hdr[regionalOffset2]) {
+				func_ov017_02195214(o + regionalOffset1 + i * 15, o + regionalOffset1 + (i + 1) * 15);
+				i++;
 			}
 			return;
 		}
-		var1++;
+		i++;
 	}
 }

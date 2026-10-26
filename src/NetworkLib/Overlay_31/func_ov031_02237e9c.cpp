@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-struct Struct_ov031_02237e9c { unsigned char unknown_0_[0x1b]; signed char unknown_1b_; };
+struct Struct_ov031_02237e9c { unsigned char pad[0x1b]; signed char unknown_1b_; };
 extern Struct_ov031_02237e9c* data_ov031_02290d10;
 
 // USA: func_ov031_02237e9c

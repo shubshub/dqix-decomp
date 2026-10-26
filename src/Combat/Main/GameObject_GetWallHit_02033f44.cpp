@@ -10,6 +10,6 @@ struct BitFlag02033f44 {
 };
 
 // Main, originally GetField0xe4IfFlag0x40 (USA 0x02033f44, EUR 0x02033f54, JPN 0x02033a7c)
-ARM int* GameObject_GetWallHit(struct BitFlag02033f44* object) {
+extern "C" ARM int* GameObject_GetWallHit(struct BitFlag02033f44* object) {
     return object->wallHit ? &object->wall : 0;
 }

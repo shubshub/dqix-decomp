@@ -5,21 +5,21 @@
 #endif
 #include <globaldefs.h>
 
-extern "C" void func_ov004_02166bd8(void* arg0);
-extern "C" int func_ov004_021666bc(void* arg0, int* arg1);
-extern "C" void* func_ov004_02165e70(void* arg0, int arg1);
+extern "C" void func_ov004_02166bd8(void* a1);
+extern "C" int func_ov004_021666bc(void* a1, int* out);
+extern "C" void* func_ov004_02165e70(void* a, int key);
 struct Struct_0208becc;
-extern "C" void func_0208becc(struct Struct_0208becc* arg0, int arg1, unsigned char arg2);
+extern "C" void func_0208becc(struct Struct_0208becc* obj, int value, unsigned char b);
 
 // USA: func_ov004_021675fc
-extern "C" ARM int func_ov004_021675fc(void* arg0) {
-    int var0;
-    func_ov004_02166bd8(arg0);
-    int var1 = func_ov004_021666bc(arg0, &var0);
-    unsigned char var2 = *(unsigned char*)&var0;
-    void* var3 = func_ov004_02165e70(arg0, 7);
-    if (var3) {
-        func_0208becc((struct Struct_0208becc*)((char*)var3 + 0x34), var1, var2);
+extern "C" ARM int func_ov004_021675fc(void* a) {
+    int local;
+    func_ov004_02166bd8(a);
+    int ret = func_ov004_021666bc(a, &local);
+    unsigned char byteVal = *(unsigned char*)&local;
+    void* node = func_ov004_02165e70(a, 7);
+    if (node) {
+        func_0208becc((struct Struct_0208becc*)((char*)node + 0x34), ret, byteVal);
     }
     return 0;
 }

@@ -7,20 +7,20 @@ enum { Enum_02053da0_412 = 0x19c };
 #endif
 
 struct Struct_02053da0 {
-    short unknown_0_;
-    char unknown_2_;
-    char unknown_3_;
-    char unknown_4_;
-    char unknown_5_[3];
-    int unknown_8_;
+    short f0;
+    char f2;
+    char f3;
+    char f4;
+    char pad[3];
+    int f8;
 };
 
 // USA: func_02053da0
-extern "C" ARM void func_02053da0(char* arg0, struct Struct_02053da0* arg1) {
-    *(struct Struct_02053da0**)(arg0 + Enum_02053da0_412) = arg1;
-    arg1->unknown_0_ = 0;
-    arg1->unknown_2_ = 0;
-    arg1->unknown_3_ = 0;
-    arg1->unknown_4_ = 0;
-    arg1->unknown_8_ = 0;
+extern "C" ARM void func_02053da0(char* obj, struct Struct_02053da0* p) {
+    *(struct Struct_02053da0**)(obj + Enum_02053da0_412) = p;
+    p->f0 = 0;
+    p->f2 = 0;
+    p->f3 = 0;
+    p->f4 = 0;
+    p->f8 = 0;
 }

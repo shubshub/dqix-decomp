@@ -5,50 +5,50 @@ struct GameResources;
 void SetBrightness(GameResources*, int, int);
 void SetSubBrightness(GameResources*, int, int);
 int IsBrightnessTransitionActive(GameResources*);
-int IsAnimationActive0209ca2c(void* obj);
+extern "C" int func_0209ca2c(void* obj);
 struct Entry_0205d6a0;
-void Window_ClosePane(Entry_0205d6a0*, int);
+extern "C" void Window_ClosePane(Entry_0205d6a0*, int);
 
-struct Struct_0209cae8;
-extern "C" short func_0209cae8(struct Struct_0209cae8* arg0);
+struct ShortField0xb8_0209cae8;
+extern "C" short func_0209cae8(struct ShortField0xb8_0209cae8* obj);
 
 struct Actor0209c678;
-void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg);
+extern "C" void BgmPlayer_FadeOut(struct Actor0209c678* actor, int arg);
 
 extern int g_bgmPlayer;
 
 struct Struct_ov008_021868a8 {
-    char unknown_0_[0xb10];
-    unsigned char unknown_b10_;
+    char pad0[0xb10];
+    unsigned char b10;
     unsigned char unknown_b11_;
-    char unknown_b12_;
+    char pad1;
     unsigned char unknown_b13_;
-    char unknown_b14_[0xb24 - 0xb14];
+    char pad2[0xb24 - 0xb14];
     int unknown_b24_;
 };
 
 // USA: func_ov008_021868a8
-extern "C" ARM void func_ov008_021868a8(struct Obj021868a8* obj) {
+extern "C" ARM void func_ov008_021868a8(struct Struct_ov008_021868a8* obj) {
     int* word = (int*)GameState::GetInstance()->GetResources();
-    unsigned char flag = obj->b11;
+    unsigned char flag = obj->unknown_b11_;
     if (flag == 0) {
-        if (obj->b24 == 0) {
+        if (obj->unknown_b24_ == 0) {
             SetBrightness((GameResources*)word, -16, 15);
-            if (obj->b13 == 0) {
-                if (GetShortAt0xb8((struct ShortField0xb8_0209cae8*)&g_bgmPlayer) != 0x29) {
+            if (obj->unknown_b13_ == 0) {
+                if (func_0209cae8((struct ShortField0xb8_0209cae8*)&g_bgmPlayer) != 0x29) {
                     BgmPlayer_FadeOut((struct Actor0209c678*)&g_bgmPlayer, 15);
                 }
             }
         } else {
-            SetSubBrightness((GameResources*)var0, -16, 15);
+            SetSubBrightness((GameResources*)word, -16, 15);
         }
-        arg0->unknown_b11_ = arg0->unknown_b11_ + 1;
+        obj->unknown_b11_ = obj->unknown_b11_ + 1;
         return;
     }
     if (flag != 1) return;
     if (IsBrightnessTransitionActive((GameResources*)word) != 0) return;
-    if (IsAnimationActive0209ca2c(&g_bgmPlayer) != 0) return;
+    if (func_0209ca2c(&g_bgmPlayer) != 0) return;
     Window_ClosePane((Entry_0205d6a0*)((char*)obj + 0x130), 1);
     obj->b10 = 0xe;
-    obj->b11 = 0;
+    obj->unknown_b11_ = 0;
 }

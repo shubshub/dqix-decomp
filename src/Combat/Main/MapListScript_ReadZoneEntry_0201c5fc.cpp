@@ -44,7 +44,7 @@ enum {
 };
 
 // Main, originally InitFromVariantBlock0201c5fc (USA 0x0201c5fc, EUR 0x0201c60c, JPN 0x0201c374)
-ARM int MapListScript_ReadZoneEntry(void* params) {
+extern "C" ARM int MapListScript_ReadZoneEntry(void* params) {
     const Script::Parameter* parameters = static_cast<const Script::Parameter*>(params);
 
     if (data_020ef2bc != parameters[kParam_ZoneId].ToInt())

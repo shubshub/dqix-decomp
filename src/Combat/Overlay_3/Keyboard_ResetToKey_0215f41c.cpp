@@ -1,7 +1,7 @@
 #include <globaldefs.h>
 #include "Resource/Keyboard.h"
 
-int STD_GetStringLength(const char* s);
+extern "C" int STD_GetStringLength(const char* s);
 extern "C" int memcmp(void* a, void* b, int n);
 
 // One key (0x14 bytes), with Keyboard_FindKeyByText's field names.

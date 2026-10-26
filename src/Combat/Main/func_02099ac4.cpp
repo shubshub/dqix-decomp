@@ -1,23 +1,23 @@
 #include <globaldefs.h>
 #include "Resource/Script.h"
 
-struct Struct_0201c1c8 {
-    int unknown_0_;
+struct Variant02030b0c {
+    int tag;
     union {
-        int unknown_0_;
-        float unknown1_0_;
-    } unknown_4_;
+        int i;
+        float f;
+    } u;
 };
 
 extern unsigned short data_02109928[10][2];
 
 // USA: func_02099ac4
-extern "C" ARM int func_02099ac4(Struct_0201c1c8* arg0) {
-    int var0, var1;
-    for (var0 = 0; var0 < 10; var0++) {
-        for (var1 = 0; var1 < 2; var1++) {
-            data_02109928[var0][var1] = (unsigned short)((Script::Parameter*)arg0)->ToInt();
-            arg0++;
+extern "C" ARM int func_02099ac4(Variant02030b0c* p) {
+    int i, j;
+    for (i = 0; i < 10; i++) {
+        for (j = 0; j < 2; j++) {
+            data_02109928[i][j] = (unsigned short)((Script::Parameter*)p)->ToInt();
+            p++;
         }
     }
     return 1;

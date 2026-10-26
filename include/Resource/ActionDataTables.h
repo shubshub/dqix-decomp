@@ -8,51 +8,51 @@ struct Struct_02079808;
 struct Struct_02079bac;
 
 struct Struct_02079a58 {
-    unsigned int unknown_0_0_ : 12;
-    unsigned int unknown_1_4_ : 19;
-    unsigned int unknown_3_7_ : 1;
-    void* unknown_4_;
-    void* unknown_8_;
+    unsigned int count : 12;
+    unsigned int size : 19;
+    unsigned int flag : 1;
+    void* p1;
+    void* p2;
 };
 
 struct Struct_02079bac_2 {
-    unsigned int unknown_0_0_ : 12;
-    unsigned int unknown_1_4_ : 19;
-    unsigned int unknown_3_7_ : 1;
-    Struct_02079bac* unknown_4_;
-    unsigned char* unknown_8_;
+    unsigned int count : 12;
+    unsigned int hi : 19;
+    unsigned int flag : 1;
+    Struct_02079bac* arr;
+    unsigned char* extra;
 };
 
 typedef int (*Type_02079900)(void*, Struct_02079808*);
 typedef void (*Type_02079bac)(Struct_02079bac_2*, void*);
 typedef void (*Type_02079bac_2)(Struct_02079bac_2*);
 
-extern "C" int func_02079a58(Struct_02079a58* arg0, SafeAllocator* arg1, void* arg2,
-                            Type_02079900 arg3,
+extern "C" int func_02079a58(Struct_02079a58* table, SafeAllocator* allocator, void* data,
+                            Type_02079900 relocate,
                             void (*arg4)(Struct_02079a58*)
 #if !defined(jpn)
                             , SafeAllocator* arg5
 #endif
 );
 
-extern "C" int func_02079bac(Struct_02079bac_2* arg0, SafeAllocator* arg1, void* arg2,
-                            Type_02079bac arg3, Type_02079bac_2 arg4
+extern "C" int func_02079bac(Struct_02079bac_2* table, SafeAllocator* allocator, void* data,
+                            Type_02079bac relocate, Type_02079bac_2 arg4
 #if !defined(jpn)
                             , SafeAllocator* arg5
 #endif
 );
 
-extern "C" int func_02079808(void* arg0, Struct_02079808* arg1);
+extern "C" int func_02079808(void* table, Struct_02079808* record);
 
-struct Struct_02108e10 {
-    Struct_02079a58 unknown_0_;
+struct ActionDataTables {
+    Struct_02079a58 actions;
     Struct_02079a58 unknown_c_;
     Struct_02079bac_2 unknown_18_;
     Struct_02079bac_2 unknown_24_;
 };
 
-extern "C" Struct_02108e10* func_020797dc();
+extern "C" ActionDataTables* func_020797dc();
 
-extern "C" void func_02079900(Struct_02108e10* arg0, SafeAllocator* arg1);
-extern "C" void func_02079cf8(Struct_02108e10* arg0, SafeAllocator* arg1, SafeAllocator* arg2);
+extern "C" void func_02079900(ActionDataTables* tables, SafeAllocator* allocator);
+extern "C" void func_02079cf8(ActionDataTables* tables, SafeAllocator* allocator, SafeAllocator* arg2);
 

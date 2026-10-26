@@ -3,8 +3,8 @@
 extern "C" int func_02057334(int);
 
 // USA: func_02055774
-extern "C" ARM int func_02055774(int* arg0) {
-    int var0 = arg0[1];
-    if (var0 == 0) return var0;
-    return func_02057334(var0);
+extern "C" ARM int func_02055774(int* obj) {
+    int x = obj[1];
+    if (x == 0) return x;
+    return func_02057334(x);
 }

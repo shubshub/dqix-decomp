@@ -21,7 +21,7 @@ void ConfigureDMATransferAtomic(int channel, unsigned src, unsigned dst, unsigne
     volatile DMARegisterSet& regs = DMARegisters(channel);
     regs.sourceAddr = src;
     regs.destAddr = dst;
-    regs.controlAndSize.unknown_0_ = ctrl;
+    regs.controlAndSize.u32 = ctrl;
 
     SetIRQInterruptState(priorState);
 }
@@ -33,7 +33,7 @@ void ConfigureDMATransferSafeAtomic(int channel, unsigned src, unsigned dst, uns
     volatile DMARegisterSet& regs = DMARegisters(channel);
     regs.sourceAddr = src;
     regs.destAddr = dst;
-    regs.controlAndSize.unknown_0_ = ctrl;
+    regs.controlAndSize.u32 = ctrl;
 
     // wastes 2 cycles, probably for timing purposes
     (void)DMARegisters(0).sourceAddr;
@@ -43,7 +43,7 @@ void ConfigureDMATransferSafeAtomic(int channel, unsigned src, unsigned dst, uns
     {
         regs.sourceAddr = 0;
         regs.destAddr = 0;
-        regs.controlAndSize.unknown_0_ = DMA_CHANNEL_0_DEFAULT_CONTROL;
+        regs.controlAndSize.u32 = DMA_CHANNEL_0_DEFAULT_CONTROL;
     }
 
     SetIRQInterruptState(priorState);
@@ -54,7 +54,7 @@ void ConfigureDMATransfer(int channel, unsigned src, unsigned dst, unsigned ctrl
     volatile DMARegisterSet& regs = DMARegisters(channel);
     regs.sourceAddr = src;
     regs.destAddr = dst;
-    regs.controlAndSize.unknown_0_ = ctrl;
+    regs.controlAndSize.u32 = ctrl;
 }
 
 void ConfigureDMATransferSafe(int channel, unsigned src, unsigned dst, unsigned ctrl)
@@ -62,7 +62,7 @@ void ConfigureDMATransferSafe(int channel, unsigned src, unsigned dst, unsigned 
     volatile DMARegisterSet& regs = DMARegisters(channel);
     regs.sourceAddr = src;
     regs.destAddr = dst;
-    regs.controlAndSize.unknown_0_ = ctrl;
+    regs.controlAndSize.u32 = ctrl;
 
     // wastes 2 cycles, probably for timing purposes
     (void)DMARegisters(0).sourceAddr;
@@ -72,7 +72,7 @@ void ConfigureDMATransferSafe(int channel, unsigned src, unsigned dst, unsigned 
     {
         regs.sourceAddr = 0;
         regs.destAddr = 0;
-        regs.controlAndSize.unknown_0_ = DMA_CHANNEL_0_DEFAULT_CONTROL;
+        regs.controlAndSize.u32 = DMA_CHANNEL_0_DEFAULT_CONTROL;
     }
 
     (void)DMARegisters(0).sourceAddr;

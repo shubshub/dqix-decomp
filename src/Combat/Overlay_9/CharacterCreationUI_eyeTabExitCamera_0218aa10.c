@@ -1,4 +1,4 @@
-// The default view the eye colour tab eases back to. Originally data_ov009_0218aa10 and data_ov009_0218aa1c (ZevyaDev/dqix-decomp#324;
+// The default view the eye colour tab eases back to. Originally CharacterCreationUI_eyeTabExitCameraPosition and CharacterCreationUI_eyeTabExitCameraTarget (ZevyaDev/dqix-decomp#324;
 // jpn 0x0218b9ec, values assumed equal to usa).
 typedef struct Vector3fix {
     int x;

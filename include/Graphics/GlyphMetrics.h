@@ -4,11 +4,11 @@
 
 // Shared text layout and display mode state. The first halfword is also
 // initialized by DebugMenu_Init; the following two bytes remain unidentified.
-struct GlyphMetrics {
+struct Struct_020ef74c {
     unsigned short unknown0;
     unsigned char unknown2[2];
     int rowHeight;
-    int columnWidth;
+    int unknown_8_;
     int displayMode;
 };
 

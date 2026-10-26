@@ -2,12 +2,12 @@
 #include "World/Object3D.h"
 
 struct Struct_ov023_021fcfd0 {
-	char unknown_0_[0x1c];
-	int unknown_1c_;
+	char pad0[0x1c];
+	int result;
 };
 
 // USA: func_ov023_021fcfd0
-extern "C" ARM int func_ov023_021fcfd0(struct Struct_ov023_021fcfd0 *arg0) {
-	((Object3D*)((char*)arg0 + 0x20))->AdvanceEffects();
-	return arg0->unknown_1c_;
+extern "C" ARM int func_ov023_021fcfd0(struct Struct_ov023_021fcfd0 *obj) {
+	((Object3D*)((char*)obj + 0x20))->AdvanceEffects();
+	return obj->result;
 }

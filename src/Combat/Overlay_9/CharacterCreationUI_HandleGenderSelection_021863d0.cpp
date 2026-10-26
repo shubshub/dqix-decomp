@@ -11,9 +11,9 @@ extern "C" void CharacterCreationUI_ApplyChoice(CharacterCreationUI* self, int c
 extern "C" int CharacterCreationUI_HandleInput(CharacterCreationUI* self);
 extern "C" void CharacterModel_InvalidatePart(CharacterModel* character, int part);
 #if defined(jpn)
-void CharacterCreationUI_SwitchTab(unsigned char*, int);
+extern "C" void CharacterCreationUI_SwitchTab(unsigned char*, int);
 #else
-void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
+extern "C" void CharacterCreationUI_SwitchTab(unsigned char* self, int state);
 #endif
 
 // CharacterCreationUI::step on the gender tab. Setup falls through into FadeIn in the same frame.
@@ -48,7 +48,7 @@ extern "C" ARM void CharacterCreationUI_HandleGenderSelection(CharacterCreationU
 
     if (self->step == GenderStep_FadeIn)
     {
-        if (IsBrightnessTransitionActive(var1))
+        if (IsBrightnessTransitionActive(resources))
             return;
         self->flags |= CreationFlag_StylusRotation;
         self->step++;

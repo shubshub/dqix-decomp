@@ -2,54 +2,54 @@
 #include "std_library_functions.h"
 #include "Resource/CharacterCreationUI.h"
 
-extern "C" int func_020e0434(Struct_0201099c_3*, int);
-struct Struct_0205d304;
-extern "C" void func_0205d304(Struct_0205d304* arg0, const char* arg1, int arg2,
-                            unsigned char arg3, unsigned char arg4,
-                            unsigned char arg5, void* arg6
+extern "C" int KeyTable_Get(Container020e0310*, int);
+struct Ctx0205d304;
+extern "C" void Window_OpenPane(Ctx0205d304* renderer, const char* text, int mode,
+                            unsigned char border, unsigned char flagBit3,
+                            unsigned char fullWidth, void* extraStyle
 #if !defined(jpn)
-                            , unsigned char arg7
+                            , unsigned char font
 #endif
 );
 
 // USA: 021d9c7c; JPN: 021da52c.
-extern "C" ARM void func_ov023_021d9c7c(void* arg0) {
-    Struct_ov009_021842a0* var0 = (Struct_ov009_021842a0*)arg0;
+extern "C" ARM void func_ov023_021d9c7c(void* objRaw) {
+    CharacterCreationUI* self = (CharacterCreationUI*)objRaw;
 #if defined(jpn)
-    var0->unknown_1f8_[1].unknown_a0_[0] = 0xd;
-    var0->unknown_1f8_[1].unknown_a0_[1] = 2;
-    var0->unknown_1f8_[1].unknown_a0_[2] = 2;
-    var0->unknown_1f8_[1].unknown_a0_[3] = 0x13;
-    var0->unknown_1f8_[1].unknown_a0_[4] = 2;
-    var0->unknown_1f8_[1].unknown_a0_[5] = 2;
-    var0->unknown_1f8_[1].unknown_a0_[6] = 0xa;
-    var0->unknown_1f8_[1].unknown_a0_[7] = 0xc;
-    var0->unknown_1f8_[1].unknown_b1_ = 2;
-    var0->unknown_1f8_[1].unknown_b7_ = 0xa;
-    var0->unknown_1f8_[1].unknown_b5_ = 1;
-    var0->unknown_1f8_[1].unknown_b6_ = 1;
-    memset(var0->unknown_f8_, 0, 0x800);
-    int var1 = func_020e0434(&var0->unknown_e0_, 0x4274);
-    sprintf(var0->unknown_f8_, (const char*)var1);
-    func_0205d304((Struct_0205d304*)&var0->unknown_1f8_[1], var0->unknown_f8_, 0, 0, 0, 1, 0);
+    self->windows[1].paneWidth = 0xd;
+    self->windows[1].paneHeight = 2;
+    self->windows[1].unknownA4[0] = 2;
+    self->windows[1].unknownA4[1] = 0x13;
+    self->windows[1].paneTextX = 2;
+    self->windows[1].unknownAa[0] = 2;
+    self->windows[1].unknownAa[1] = 0xa;
+    self->windows[1].unknownAa[2] = 0xc;
+    self->windows[1].nextWindow = 2;
+    self->windows[1].fontHeight = 0xa;
+    self->windows[1].flags = 1;
+    self->windows[1].noHorizontalInset = 1;
+    memset(self->textBuffer, 0, 0x800);
+    int fmt = KeyTable_Get(&self->texts, CreationText_WidthTag);
+    sprintf(self->textBuffer, (const char*)fmt);
+    Window_OpenPane((Ctx0205d304*)&self->windows[1], self->textBuffer, 0, 0, 0, 1, 0);
 #else
-    Struct_ov023_021d9c7c* var2 = &var0->unknown_1f8_[1];
-    var2->unknown_a0_[0] = 0xd;
-    var2->unknown_a0_[1] = 2;
-    var2->unknown_a0_[2] = 2;
-    var2->unknown_a0_[3] = 0x13;
-    var2->unknown_a0_[4] = 2;
-    var2->unknown_a0_[5] = 2;
-    var2->unknown_a0_[6] = 0xa;
-    var2->unknown_a0_[7] = 0xc;
-    var2->unknown_b1_ = 2;
-    var2->unknown_b7_ = 0xa;
-    var2->unknown_b5_ = 1;
-    var2->unknown_b6_ = 1;
-    char* var3 = var0->unknown_f8_;
-    memset(var3, 0, 0x960);
-    int var4 = func_020e0434(&var0->unknown_e0_, 0x4274);
-    sprintf(var3, (const char*)var4);
-    func_0205d304((Struct_0205d304*)var2, var3, 0, 0, 0, 1, 0, 0);
+    CreationWindow* tag = &self->windows[1];
+    tag->paneWidth = 0xd;
+    tag->paneHeight = 2;
+    tag->unknownA4[0] = 2;
+    tag->unknownA4[1] = 0x13;
+    tag->paneTextX = 2;
+    tag->unknownAa[0] = 2;
+    tag->unknownAa[1] = 0xa;
+    tag->unknownAa[2] = 0xc;
+    tag->nextWindow = 2;
+    tag->fontHeight = 0xa;
+    tag->flags = 1;
+    tag->noHorizontalInset = 1;
+    char* buf = self->textBuffer;
+    memset(buf, 0, 0x960);
+    int fmt = KeyTable_Get(&self->texts, CreationText_WidthTag);
+    sprintf(buf, (const char*)fmt);
+    Window_OpenPane((Ctx0205d304*)tag, buf, 0, 0, 0, 1, 0, 0);
 #endif
 }

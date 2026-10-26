@@ -4,18 +4,18 @@ extern signed char data_020e8b13[];
 extern signed char data_020e8b12[];
 
 // USA: func_020855d0
-extern "C" ARM int func_020855d0(unsigned char* arg0) {
-    int var0 = 0;
+extern "C" ARM int func_020855d0(unsigned char* actor) {
+    int i = 0;
     signed char var1;
-    while ((var1 = data_020e8b12[var0 * 2]) != -1) {
-        signed char var2 = data_020e8b13[var0 + var0];
-        if (*(short*)(arg0 + (var2 << 5) + 0x1ac) > 0) {
-            int var3 = *(int*)(arg0 + var1 * 0x2c + 0x2f4);
-            if ((unsigned int)(var3 << 9) >> 31) {
+    while ((var1 = data_020e8b12[i * 2]) != -1) {
+        signed char id = data_020e8b13[i + i];
+        if (*(short*)(actor + (id << 5) + 0x1ac) > 0) {
+            int v = *(int*)(actor + var1 * 0x2c + 0x2f4);
+            if ((unsigned int)(v << 9) >> 31) {
                 return 1;
             }
         }
-        var0++;
+        i++;
     }
     return 0;
 }

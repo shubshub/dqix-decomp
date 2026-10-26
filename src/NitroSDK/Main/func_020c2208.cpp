@@ -1,9 +1,9 @@
 #include <globaldefs.h>
 
-struct Struct_020b6bb0 { int unknown_0_, unknown_4_, unknown_8_, unknown_c_; };
-struct Struct_020b6bb0_2 { int unknown_0_, unknown_4_, unknown_8_; };
-struct Struct_020c2208 { struct Struct_020b6bb0 unknown_0_[4]; };
-struct Struct_020c2208_2 { struct Struct_020b6bb0_2 unknown_0_[4]; };
+struct Struct_020b6bb0 { int x, y, z, w; };
+struct Struct_020b6bb0_2 { int x, y, z; };
+struct Struct_020c2208 { struct Struct_020b6bb0 r[4]; };
+struct Struct_020c2208_2 { struct Struct_020b6bb0_2 r[4]; };
 
 // USA: func_020c2208
 //

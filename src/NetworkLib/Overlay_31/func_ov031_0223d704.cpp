@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-int SetLcdPower(int a);
+extern "C" int SetLcdPower(int a);
 extern unsigned char data_ov031_02290d40;
 
 // USA: func_ov031_0223d704

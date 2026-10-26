@@ -21,30 +21,30 @@ enum { Enum_ov003_02178548_58 = 0x3a };
 #endif
 
 
-extern "C" short func_02080468(void* arg0, int arg1);
+extern "C" short func_02080468(void* obj, int id);
 
 // USA: func_ov003_02178548
-extern "C" ARM void func_ov003_02178548(unsigned char* arg0) {
-	void* var0 = *(void**)(arg0 + Enum_ov003_02178548_2204);
+extern "C" ARM void func_ov003_02178548(unsigned char* self) {
+	void* var0 = *(void**)(self + Enum_ov003_02178548_2204);
 	short var1 = func_02080468(var0, 3);
-	short var2 = *(short*)(arg0 + Enum_ov003_02178548_4102);
-	int var3 = var2 - var1;
-	short var4 = *(short*)(arg0 + Enum_ov003_02178548_4116);
-	short var5 = (short)(var4 * 6 + var3);
+	short var2 = *(short*)(self + Enum_ov003_02178548_4102);
+	int diff = var2 - var1;
+	short mult = *(short*)(self + Enum_ov003_02178548_4116);
+	short idx = (short)(mult * 6 + diff);
 
-	unsigned char var6 = *(unsigned char*)(arg0 + Enum_ov003_02178548_2101);
-	if ((int)var6 <= (int)var5) {
-		var5 = (short)(var6 - 1);
+	unsigned char byteVal = *(unsigned char*)(self + Enum_ov003_02178548_2101);
+	if ((int)byteVal <= (int)idx) {
+		idx = (short)(byteVal - 1);
 	}
 
-	short var7 = *(short*)(arg0 + Enum_ov003_02178548_2048 + var5 * 2 + Enum_ov003_02178548_72);
-	*(short*)(arg0 + Enum_ov003_02178548_4096 + Enum_ov003_02178548_58) = var7;
+	short v = *(short*)(self + Enum_ov003_02178548_2048 + idx * 2 + Enum_ov003_02178548_72);
+	*(short*)(self + Enum_ov003_02178548_4096 + Enum_ov003_02178548_58) = v;
 
-	short var8 = func_02080468(var0, 3);
-	int var9 = var5 % 6;
+	short id2 = func_02080468(var0, 3);
+	int rem = idx % 6;
 #if defined(jpn)
-	*(short*)(arg0 + 0xf00 + 0x82) = (short)(var9 + var8);
+	*(short*)(self + 0xf00 + 0x82) = (short)(rem + id2);
 #else
-	*(short*)(arg0 + 0x1000 + 6) = (short)(var9 + var8);
+	*(short*)(self + 0x1000 + 6) = (short)(rem + id2);
 #endif
 }

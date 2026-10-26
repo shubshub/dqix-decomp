@@ -1,10 +1,12 @@
 #include <globaldefs.h>
 
-// USA: func_02039760
-extern "C" ARM int func_02039760(void* arg0) {
 #if defined(jpn)
-    return *(int*)((char*)arg0 + 0x258);
+enum { PartyMember_unknown264 = 0x258 };
 #else
-    return *(int*)((char*)arg0 + 0x264);
+enum { PartyMember_unknown264 = 0x264 };
 #endif
+
+// USA: func_02039760
+extern "C" ARM int func_02039760(void* partyMember) {
+    return *(int*)((char*)partyMember + PartyMember_unknown264);
 }

@@ -4,7 +4,7 @@
 void CleanInvalidateCacheRange(const void* addr, unsigned int size);
 
 // Main, originally CopyFieldsAndFlushCache0204a8f4 (USA 0x0204a8f4, EUR 0x0204a904, JPN 0x0204b714)
-ARM void TileHeader_Flush(char* dst, char* src) {
+extern "C" ARM void TileHeader_Flush(char* dst, char* src) {
     unsigned int size;
     unsigned int unused;
     memcpy(&unused, src, 4);

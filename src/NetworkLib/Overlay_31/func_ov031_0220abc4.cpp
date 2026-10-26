@@ -1,10 +1,10 @@
 #include <globaldefs.h>
 
 struct Struct_ov031_0220abc4 {
-	unsigned int unknown_0_[4];
+	unsigned int state[4];
 };
 
-extern "C" ARM void func_ov031_0220abac(void* arg0, const void* arg1, unsigned int arg2);
+extern "C" ARM void func_ov031_0220abac(void* dst, const void* src, unsigned int length);
 
 extern unsigned char data_ov031_02249764[];
 extern unsigned int data_ov031_022497e4[];
@@ -15,64 +15,64 @@ extern unsigned int data_ov031_022497e4[];
 #define MD5_I(x, y, z) ((y) ^ ((x) | ~(z)))
 #define MD5_ROTL(v, s) (((v) << (s)) | ((v) >> (32 - (s))))
 #define MD5_STEP(f, a, b, c, d, j, s) \
-	a += f(b, c, d) + var4[data_ov031_02249764[var5 + (j)]] + data_ov031_022497e4[var5 + (j)]; \
+	a += f(b, c, d) + x[data_ov031_02249764[n + (j)]] + data_ov031_022497e4[n + (j)]; \
 	a = b + MD5_ROTL(a, s)
 
 // USA: func_ov031_0220abc4
-extern "C" ARM void func_ov031_0220abc4(Struct_ov031_0220abc4* arg0, const void* arg1) {
-	unsigned int var0 = arg0->unknown_0_[0];
-	unsigned int var1 = arg0->unknown_0_[1];
-	unsigned int var2 = arg0->unknown_0_[2];
-	unsigned int var3 = arg0->unknown_0_[3];
-	unsigned int var4[16];
-	int var5;
-	int var6;
+extern "C" ARM void func_ov031_0220abc4(Struct_ov031_0220abc4* ctx, const void* block) {
+	unsigned int a = ctx->state[0];
+	unsigned int b = ctx->state[1];
+	unsigned int c = ctx->state[2];
+	unsigned int d = ctx->state[3];
+	unsigned int x[16];
+	int n;
+	int i;
 
-	func_ov031_0220abac(var4, arg1, 0x40);
-	var5 = 0;
+	func_ov031_0220abac(x, block, 0x40);
+	n = 0;
 
-	var6 = 0;
+	i = 0;
 	do {
-		MD5_STEP(MD5_F, var0, var1, var2, var3, 0, 7);
-		MD5_STEP(MD5_F, var3, var0, var1, var2, 1, 12);
-		MD5_STEP(MD5_F, var2, var3, var0, var1, 2, 17);
-		MD5_STEP(MD5_F, var1, var2, var3, var0, 3, 22);
-		var5 += 4;
-		var6++;
-	} while (var6 < 4);
+		MD5_STEP(MD5_F, a, b, c, d, 0, 7);
+		MD5_STEP(MD5_F, d, a, b, c, 1, 12);
+		MD5_STEP(MD5_F, c, d, a, b, 2, 17);
+		MD5_STEP(MD5_F, b, c, d, a, 3, 22);
+		n += 4;
+		i++;
+	} while (i < 4);
 
-	var6 = 0;
+	i = 0;
 	do {
-		MD5_STEP(MD5_G, var0, var1, var2, var3, 0, 5);
-		MD5_STEP(MD5_G, var3, var0, var1, var2, 1, 9);
-		MD5_STEP(MD5_G, var2, var3, var0, var1, 2, 14);
-		MD5_STEP(MD5_G, var1, var2, var3, var0, 3, 20);
-		var5 += 4;
-		var6++;
-	} while (var6 < 4);
+		MD5_STEP(MD5_G, a, b, c, d, 0, 5);
+		MD5_STEP(MD5_G, d, a, b, c, 1, 9);
+		MD5_STEP(MD5_G, c, d, a, b, 2, 14);
+		MD5_STEP(MD5_G, b, c, d, a, 3, 20);
+		n += 4;
+		i++;
+	} while (i < 4);
 
-	var6 = 0;
+	i = 0;
 	do {
-		MD5_STEP(MD5_H, var0, var1, var2, var3, 0, 4);
-		MD5_STEP(MD5_H, var3, var0, var1, var2, 1, 11);
-		MD5_STEP(MD5_H, var2, var3, var0, var1, 2, 16);
-		MD5_STEP(MD5_H, var1, var2, var3, var0, 3, 23);
-		var5 += 4;
-		var6++;
-	} while (var6 < 4);
+		MD5_STEP(MD5_H, a, b, c, d, 0, 4);
+		MD5_STEP(MD5_H, d, a, b, c, 1, 11);
+		MD5_STEP(MD5_H, c, d, a, b, 2, 16);
+		MD5_STEP(MD5_H, b, c, d, a, 3, 23);
+		n += 4;
+		i++;
+	} while (i < 4);
 
-	var6 = 0;
+	i = 0;
 	do {
-		MD5_STEP(MD5_I, var0, var1, var2, var3, 0, 6);
-		MD5_STEP(MD5_I, var3, var0, var1, var2, 1, 10);
-		MD5_STEP(MD5_I, var2, var3, var0, var1, 2, 15);
-		MD5_STEP(MD5_I, var1, var2, var3, var0, 3, 21);
-		var5 += 4;
-		var6++;
-	} while (var6 < 4);
+		MD5_STEP(MD5_I, a, b, c, d, 0, 6);
+		MD5_STEP(MD5_I, d, a, b, c, 1, 10);
+		MD5_STEP(MD5_I, c, d, a, b, 2, 15);
+		MD5_STEP(MD5_I, b, c, d, a, 3, 21);
+		n += 4;
+		i++;
+	} while (i < 4);
 
-	arg0->unknown_0_[0] += var0;
-	arg0->unknown_0_[1] += var1;
-	arg0->unknown_0_[2] += var2;
-	arg0->unknown_0_[3] += var3;
+	ctx->state[0] += a;
+	ctx->state[1] += b;
+	ctx->state[2] += c;
+	ctx->state[3] += d;
 }

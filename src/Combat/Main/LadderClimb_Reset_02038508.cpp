@@ -2,7 +2,7 @@
 #include "Combat/ActorAction.h"
 
 // Main, originally InitBlock02038508 (USA 0x02038508, EUR 0x02038518, JPN 0x02037f60)
-ARM void LadderClimb_Reset(struct SubBlock02038508* ladderClimb) {
+extern "C" ARM void LadderClimb_Reset(struct SubBlock02038508* ladderClimb) {
     ladderClimb->active = 0;
     ladderClimb->command = 0;
     ladderClimb->unknown2 = 0;

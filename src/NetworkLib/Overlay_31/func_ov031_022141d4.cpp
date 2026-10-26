@@ -1,6 +1,6 @@
 #include <globaldefs.h>
 
-struct Struct_ov031_022141d4 { unsigned char unknown_0_; };
+struct Struct_ov031_022141d4 { unsigned char state; };
 
 extern "C" int func_ov031_0221425c(void);
 extern "C" void func_ov031_02219178(void);
@@ -8,25 +8,25 @@ extern "C" void func_ov031_02219080(void);
 extern "C" int func_ov031_022142ec(void);
 
 // USA: func_ov031_022141d4
-extern "C" ARM int func_ov031_022141d4(Struct_ov031_022141d4* arg0) {
-	unsigned char var0 = arg0->unknown_0_;
-	if (var0 <= 0xa) {
-		int var1 = func_ov031_0221425c();
-		if (var1 == 1) {
-			arg0->unknown_0_ = 0;
+extern "C" ARM int func_ov031_022141d4(Struct_ov031_022141d4* p) {
+	unsigned char st = p->state;
+	if (st <= 0xa) {
+		int r = func_ov031_0221425c();
+		if (r == 1) {
+			p->state = 0;
 			return 1;
 		}
-		if (var1 == -1) {
-			arg0->unknown_0_ = 0x12;
+		if (r == -1) {
+			p->state = 0x12;
 			return 1;
 		}
-	} else if (var0 == 0xe) {
+	} else if (st == 0xe) {
 		func_ov031_02219178();
 		func_ov031_02219080();
-		arg0->unknown_0_ = 0xc;
-	} else if (var0 < 0x12) {
+		p->state = 0xc;
+	} else if (st < 0x12) {
 		if (func_ov031_022142ec() == 1) {
-			arg0->unknown_0_ = 0xa;
+			p->state = 0xa;
 		}
 	}
 	return 0;

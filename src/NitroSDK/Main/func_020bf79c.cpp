@@ -4,13 +4,13 @@
 #include <NitroSDK/Cache.h>
 
 struct Struct_020bf658_2;
-extern "C" void func_020bf658(struct Struct_020bf658_2* arg0);
+extern "C" void func_020bf658(struct Struct_020bf658_2* obj);
 
 struct Struct_020bf79c {
     struct {
         short unknown_0_;
         unsigned char unknown_2_;
-        unsigned char unknown_3_;
+        unsigned char padding;
     };
 };
 
@@ -21,14 +21,14 @@ typedef void (*Type_01ff8b48_3)(int status, int numChannels, void* buffer[], uns
                                      Enum_020bf79c format, void* arg);
 
 struct Struct_020bf79c_3 {
-    char unknown_0_[0xa8];
+    char stream[0xa8];
     char unknown_a8_[0x18];
-    unsigned char unknown_c0_;
+    unsigned char format;
     unsigned char unknown_c1_;
     unsigned char unknown_c2_;
     unsigned char unknown_c3_;
     unsigned short unknown_c4_;
-    unsigned short unknown_c6_;
+    unsigned short timer;
     unsigned int unknown_c8_;
     unsigned int unknown_cc_;
     unsigned int unknown_d0_;
@@ -51,9 +51,9 @@ struct Struct_020bf79c_3 {
     volatile int unknown_11c_;
     int unknown_120_;
     unsigned char unknown_124_;
-    unsigned char unknown_125_;
+    unsigned char padding;
     unsigned char unknown_126_[6];
-    void* unknown_12c_;
+    void* buffer;
     unsigned int unknown_130_;
     Type_01ff8b48_3 unknown_134_;
     void* unknown_138_;
@@ -61,11 +61,11 @@ struct Struct_020bf79c_3 {
     void* unknown_140_;
     int unknown_144_;
     int unknown_148_;
-    void* unknown_14c_;
+    void* handle;
     int unknown_150_;
     int unknown_154_;
     int unknown_158_;
-    int unknown_15c_;
+    int volume;
     unsigned int unknown_160_;
     void* unknown_164_;
     void* unknown_168_;
@@ -74,16 +74,16 @@ struct Struct_020bf79c_3 {
 };
 
 struct Struct_020bf79c_2 {
-    void* unknown_0_[2];
-    Struct_020bf79c_3* unknown_8_;
-    int unknown_c_;
+    void* link[2];
+    Struct_020bf79c_3* player;
+    int status;
     int unknown_10_;
-    void* unknown_14_[6];
+    void* buffer[6];
     unsigned int unknown_2c_;
 };
 
 struct Struct_021103b0_6 {
-    int unknown_0_;
+    int f0;
     unsigned char* unknown_4_;
     unsigned char* unknown_8_;
 };
@@ -93,44 +93,44 @@ extern const short data_020e9348[89];
 extern struct Struct_021103b0_6 data_021103b0;
 extern Mutex data_021103c8;
 
-static inline short inline_020bf79c(int arg0, Struct_020bf79c* arg1) {
-    int var0;
-    int var1;
-    int var2;
-    int var3;
+static inline short inline_020bf79c(int code, Struct_020bf79c* state) {
+    int step;
+    int sample;
+    int index;
+    int d;
 
-    var1 = arg1->unknown_0_;
-    var2 = arg1->unknown_2_;
+    sample = state->unknown_0_;
+    index = state->unknown_2_;
 
-    var0 = data_020e9348[var2];
+    step = data_020e9348[index];
 
-    var3 = var0 >> 3;
-    if (arg0 & 4) var3 += var0;
-    if (arg0 & 2) var3 += var0 >> 1;
-    if (arg0 & 1) var3 += var0 >> 2;
+    d = step >> 3;
+    if (code & 4) d += step;
+    if (code & 2) d += step >> 1;
+    if (code & 1) d += step >> 2;
 
-    if (arg0 & 8) {
-        var1 -= var3;
-        if (var1 < -32768) var1 = -32768;
+    if (code & 8) {
+        sample -= d;
+        if (sample < -32768) sample = -32768;
     } else {
-        var1 += var3;
-        if (var1 > 32767) var1 = 32767;
+        sample += d;
+        if (sample > 32767) sample = 32767;
     }
 
-    var2 += data_020e9338[arg0];
+    index += data_020e9338[code];
 
-    if (var2 < 0) var2 = 0;
-    else if (var2 > 89 - 1) var2 = 89 - 1;
+    if (index < 0) index = 0;
+    else if (index > 89 - 1) index = 89 - 1;
 
-    arg1->unknown_0_ = (short)var1;
-    arg1->unknown_2_ = (unsigned char)var2;
+    state->unknown_0_ = (short)sample;
+    state->unknown_2_ = (unsigned char)index;
 
-    return (short)var1;
+    return (short)sample;
 }
 
 // USA: func_020bf79c
-extern "C" ARM void func_020bf79c(Struct_020bf79c_2* arg0) {
-    Struct_020bf79c_3* var0 = arg0->unknown_8_;
+extern "C" ARM void func_020bf79c(Struct_020bf79c_2* command) {
+    Struct_020bf79c_3* player = command->player;
     int var1;
     long var2;
     unsigned int var3;
@@ -139,80 +139,80 @@ extern "C" ARM void func_020bf79c(Struct_020bf79c_2* arg0) {
     unsigned int var6;
     unsigned int var7;
     unsigned int var8;
-    unsigned int var9;
-    unsigned int var10;
-    unsigned int var11;
+    unsigned int offset;
+    unsigned int samples;
+    unsigned int size;
     unsigned int var12;
-    int var13;
+    int ch;
 
-    if (var0->unknown_110_5_ && var0->unknown_114_ > 0) {
-        var0->unknown_114_--;
+    if (player->unknown_110_5_ && player->unknown_114_ > 0) {
+        player->unknown_114_--;
     }
 
     var2 = 0;
 
-    var3 = arg0->unknown_2c_;
+    var3 = command->unknown_2c_;
     while (var3 > 0) {
-        if (var0->unknown_110_5_) {
-            for (var13 = 0; var13 < arg0->unknown_10_; var13++) {
-                VectorizedMemset((unsigned char*)(arg0->unknown_14_[var13]) + var2, 0, var3);
+        if (player->unknown_110_5_) {
+            for (ch = 0; ch < command->unknown_10_; ch++) {
+                VectorizedMemset((unsigned char*)(command->buffer[ch]) + var2, 0, var3);
             }
             break;
         }
 
-        var4 = var0->unknown_160_ / var0->unknown_dc_;
+        var4 = player->unknown_160_ / player->unknown_dc_;
 
-        if (var4 < var0->unknown_d4_ - 1) {
-            var5 = var0->unknown_d8_;
-            var6 = var0->unknown_dc_;
+        if (var4 < player->unknown_d4_ - 1) {
+            var5 = player->unknown_d8_;
+            var6 = player->unknown_dc_;
         } else {
-            var5 = var0->unknown_e0_;
-            var6 = var0->unknown_e4_;
+            var5 = player->unknown_e0_;
+            var6 = player->unknown_e4_;
         }
 
-        var7 = var0->unknown_160_;
-        var7 -= var4 * var0->unknown_dc_;
+        var7 = player->unknown_160_;
+        var7 -= var4 * player->unknown_dc_;
 
-        var10 = var3;
-        if (var0->unknown_c0_ != 0) {
-            var10 >>= 1;
+        samples = var3;
+        if (player->format != 0) {
+            samples >>= 1;
         }
 
-        if (var0->unknown_110_4_) {
+        if (player->unknown_110_4_) {
             if (var7 == 0) {
-                var0->unknown_110_4_ = 0;
+                player->unknown_110_4_ = 0;
             } else {
-                var10 = var7;
+                samples = var7;
                 var7 = 0;
             }
         }
 
         var1 = 0;
-        if (var7 + var10 >= var6) {
-            var10 = var6 - var7;
+        if (var7 + samples >= var6) {
+            samples = var6 - var7;
 
-            if (var4 >= var0->unknown_d4_ - 1) {
-                if (var0->unknown_c1_) {
+            if (var4 >= player->unknown_d4_ - 1) {
+                if (player->unknown_c1_) {
                     var1 = 1;
                 } else {
-                    var0->unknown_110_5_ = 1;
+                    player->unknown_110_5_ = 1;
                 }
             }
         }
 
         var8 = var7;
-        var11 = var10;
-        switch (var0->unknown_c0_) {
+        size = samples;
+        switch (player->format) {
         case 0:
-            var12 = var11;
+            var12 = size;
             break;
         case 1:
             var8 <<= 1;
-            var11 <<= 1;
-            var12 = var11;
+            size <<= 1;
+            var12 = size;
             break;
         case 2: {
-            unsigned int var14 = var7 + var10;
+            unsigned int var14 = var7 + samples;
             var8 >>= 1;
             var14++;
             var14 >>= 1;
@@ -222,114 +222,114 @@ extern "C" ARM void func_020bf79c(Struct_020bf79c_2* arg0) {
             } else {
                 var8 += sizeof(Struct_020bf79c);
             }
-            var11 <<= 1;
+            size <<= 1;
             break;
         }
         }
 
-        var9 = var8;
-        var9 += var4 * var0->unknown_d8_ * var0->unknown_c2_;
-        var9 += var0->unknown_d0_;
+        offset = var8;
+        offset += var4 * player->unknown_d8_ * player->unknown_c2_;
+        offset += player->unknown_d0_;
 
-        for (var13 = 0; var13 < arg0->unknown_10_; var13++) {
-            void* var15;
+        for (ch = 0; ch < command->unknown_10_; ch++) {
+            void* dest;
             void* var16;
 
-            var15 = var16 = (unsigned char*)(arg0->unknown_14_[var13]) + var2;
+            dest = var16 = (unsigned char*)(command->buffer[ch]) + var2;
 
-            if (var13 < var0->unknown_c2_) {
+            if (ch < player->unknown_c2_) {
                 int var17;
 
-                if (var0->unknown_c0_ == 2) {
+                if (player->format == 2) {
                     LockMutex(&data_021103c8);
                     var16 = data_021103b0.unknown_8_;
                 }
 
-                var17 = var0->unknown_16c_(var0, var16, var12, var9 + var13 * var5);
+                var17 = player->unknown_16c_(player, var16, var12, offset + ch * var5);
 
                 if (var17 != var12) {
-                    var11 = 0;
-                    var10 = 0;
+                    size = 0;
+                    samples = 0;
                     var1 = 0;
-                    var0->unknown_110_5_ = 1;
-                    if (var0->unknown_c0_ == 2) {
+                    player->unknown_110_5_ = 1;
+                    if (player->format == 2) {
                         UnlockMutex(&data_021103c8);
                     }
                     break;
                 }
 
-                if (var0->unknown_c0_ == 2) {
-                    Struct_020bf79c* var18 = &var0->unknown_f8_[var13];
+                if (player->format == 2) {
+                    Struct_020bf79c* state = &player->unknown_f8_[ch];
                     unsigned char* var19 = data_021103b0.unknown_8_;
-                    short* var20 = (short*)var15;
-                    unsigned int var21;
-                    unsigned int var22;
+                    short* destp = (short*)dest;
+                    unsigned int i;
+                    unsigned int end;
 
                     if (var7 == 0) {
-                        *var18 = *((Struct_020bf79c*)var19)++;
+                        *state = *((Struct_020bf79c*)var19)++;
                     }
 
-                    var22 = var7 + var10;
+                    end = var7 + samples;
 
-                    var21 = var7;
-                    if (var21 & 0x01) {
-                        *var20++ = inline_020bf79c((*var19 >> 4) & 0x0f, var18);
-                        var21++;
+                    i = var7;
+                    if (i & 0x01) {
+                        *destp++ = inline_020bf79c((*var19 >> 4) & 0x0f, state);
+                        i++;
                         var19++;
                     }
-                    while (var21 < (var22 & ~0x01)) {
-                        *var20++ = inline_020bf79c(*var19 & 0x0f, var18);
-                        var21++;
-                        *var20++ = inline_020bf79c((*var19 >> 4) & 0x0f, var18);
-                        var21++;
+                    while (i < (end & ~0x01)) {
+                        *destp++ = inline_020bf79c(*var19 & 0x0f, state);
+                        i++;
+                        *destp++ = inline_020bf79c((*var19 >> 4) & 0x0f, state);
+                        i++;
                         var19++;
                     }
-                    if (var21 < var22) {
-                        *var20++ = inline_020bf79c(*var19 & 0x0f, var18);
-                        var21++;
+                    if (i < end) {
+                        *destp++ = inline_020bf79c(*var19 & 0x0f, state);
+                        i++;
                     }
                     UnlockMutex(&data_021103c8);
                 }
             } else {
-                if (var0->unknown_110_6_) {
-                    VectorizedMemset(var15, 0, var11);
+                if (player->unknown_110_6_) {
+                    VectorizedMemset(dest, 0, size);
                 } else {
-                    VectorizedInvertedMemcpy((unsigned char*)(arg0->unknown_14_[0]) + var2, var15, var11);
+                    VectorizedInvertedMemcpy((unsigned char*)(command->buffer[0]) + var2, dest, size);
                 }
             }
         }
 
-        if (var0->unknown_110_4_) {
-            var0->unknown_110_4_ = 0;
+        if (player->unknown_110_4_) {
+            player->unknown_110_4_ = 0;
             continue;
         }
 
         if (var1) {
-            var0->unknown_160_ = var0->unknown_c8_;
+            player->unknown_160_ = player->unknown_c8_;
         } else {
-            var0->unknown_160_ += var10;
+            player->unknown_160_ += samples;
         }
 
-        var2 += var11;
+        var2 += size;
 
-        var3 -= var11;
+        var3 -= size;
 
-        if (var0->unknown_110_5_ && var0->unknown_13c_) {
-            func_020bf658((struct Struct_020bf658_2*)var0);
+        if (player->unknown_110_5_ && player->unknown_13c_) {
+            func_020bf658((struct Struct_020bf658_2*)player);
         }
     }
 
-    if (var0->unknown_134_ != NULL) {
-        var0->unknown_134_(arg0->unknown_c_, arg0->unknown_10_, arg0->unknown_14_, arg0->unknown_2c_,
-                             var0->unknown_c0_ == 0 ? Enum_020bf79c_0 : Enum_020bf79c_1,
-                             var0->unknown_138_);
+    if (player->unknown_134_ != NULL) {
+        player->unknown_134_(command->status, command->unknown_10_, command->buffer, command->unknown_2c_,
+                             player->format == 0 ? Enum_020bf79c_0 : Enum_020bf79c_1,
+                             player->unknown_138_);
     }
 
-    for (var13 = 0; var13 < arg0->unknown_10_; var13++) {
-        CleanInvalidateCacheRange(arg0->unknown_14_[var13], arg0->unknown_2c_);
+    for (ch = 0; ch < command->unknown_10_; ch++) {
+        CleanInvalidateCacheRange(command->buffer[ch], command->unknown_2c_);
     }
 
-    if (arg0->unknown_c_ == 0) {
-        var0->unknown_118_ = 1;
+    if (command->status == 0) {
+        player->unknown_118_ = 1;
     }
 }

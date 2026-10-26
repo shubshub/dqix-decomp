@@ -2,8 +2,8 @@
 #include "NitroSDK/Matrix.h"
 
 // USA: func_ov000_0216f1e4
-extern "C" ARM void func_ov000_0216f1e4(void* arg0, int* arg1, int arg2, int arg3) {
-    *(Vector3i*)((char*)arg0 + 0x264) = *(Vector3i*)arg1;
-    *(int*)((char*)arg0 + 0x270) = arg2;
-    *(int*)((char*)arg0 + 0x274) = arg3;
+extern "C" ARM void func_ov000_0216f1e4(void* obj, int* arg1, int a, int b) {
+    *(Vector3i*)((char*)obj + 0x264) = *(Vector3i*)arg1;
+    *(int*)((char*)obj + 0x270) = a;
+    *(int*)((char*)obj + 0x274) = b;
 }

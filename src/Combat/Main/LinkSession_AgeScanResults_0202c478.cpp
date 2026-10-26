@@ -1,14 +1,14 @@
 #include <globaldefs.h>
 #include "Combat/SearchEntry.h"
 
-ARM void VCountIrq_PushDisable(void);
+extern "C" ARM void VCountIrq_PushDisable(void);
 extern "C" void VCountIrq_PopDisable(void);
 
-struct Record0202ba08;
-ARM struct Record0202ba08* CopyRecord0202ba08(struct Record0202ba08* dst, struct Record0202ba08* src);
+struct Struct_0202ba08_2;
+extern "C" ARM struct Struct_0202ba08_2* func_0202ba08(struct Struct_0202ba08_2* dst, struct Struct_0202ba08_2* src);
 
 // Main, originally ShiftRecords0202c478 (USA 0x0202c478, EUR 0x0202c488, JPN 0x0202c004)
-ARM void LinkSession_AgeScanResults(SearchStruct* obj) {
+extern "C" ARM void LinkSession_AgeScanResults(SearchStruct* obj) {
     VCountIrq_PushDisable();
     char* base = (char*)obj;
     int i;
@@ -19,8 +19,8 @@ ARM void LinkSession_AgeScanResults(SearchStruct* obj) {
         }
         int j;
         for (j = i; j < *(int*)(base + 0xc) - 1; j++) {
-            CopyRecord0202ba08((struct Record0202ba08*)(base + 0x10 + j * 0xc0),
-                                (struct Record0202ba08*)(base + 0x10 + (j + 1) * 0xc0));
+            func_0202ba08((struct Struct_0202ba08_2*)(base + 0x10 + j * 0xc0),
+                                (struct Struct_0202ba08_2*)(base + 0x10 + (j + 1) * 0xc0));
         }
         (*(int*)(base + 0xc))--;
     }

@@ -2,85 +2,85 @@
 #include "NitroSDK/Memory/SignedAllocator.h"
 
 struct Struct_020546c8;
-extern "C" void* func_020550d8(struct Struct_020546c8* arg0);
+extern "C" void* func_020550d8(struct Struct_020546c8* p);
 
 struct Struct_02055ccc {
-    int unknown_0_;
-    float unknown_4_;
-    float unknown_8_;
-    float unknown_c_;
+    int x;
+    float y;
+    float z;
+    float w;
 };
 
 struct Struct_020557a4;
-extern "C" float func_020578e8(Struct_020557a4* arg0, Struct_020557a4* arg1);
+extern "C" float func_020578e8(Struct_020557a4* a, Struct_020557a4* b);
 
 struct Struct_02055ccc_2 {
-    Struct_02055ccc* unknown_0_;
+    Struct_02055ccc* p;
 };
 
 struct Struct_02055ccc_3 {
-    char unknown_0_[0x10];
-    unsigned char unknown_10_[3];
+    char pad0[0x10];
+    unsigned char f10[3];
     unsigned char unknown_13_;
 };
 
 struct Struct_02055ccc_4 {
-    char unknown_0_[4];
-    int unknown_4_;
-    char unknown_8_[0x28];
+    char pad0[4];
+    int field4;
+    char pad1[0x28];
     void* unknown_30_;
-    char unknown_34_[0x70];
+    char pad2[0x70];
     float unknown_a4_[3];
-    float unknown_b0_;
-    float unknown_b4_;
-    float unknown_b8_;
-    unsigned short unknown_bc_[3];
+    float fieldB0;
+    float fieldB4;
+    float fieldB8;
+    unsigned short fieldBC[3];
     unsigned short unknown_c2_;
 };
 
 // USA: func_02055ccc
-extern "C" ARM void func_02055ccc(struct Struct_02055ccc_4* arg0) {
-    Struct_02055ccc_3* var0 = (Struct_02055ccc_3*)func_020550d8((struct Struct_020546c8*)arg0->unknown_30_);
+extern "C" ARM void func_02055ccc(struct Struct_02055ccc_4* self) {
+    Struct_02055ccc_3* sub = (Struct_02055ccc_3*)func_020550d8((struct Struct_020546c8*)self->unknown_30_);
 
-    for (int var1 = 0; var1 < 3; var1++) {
-        if (var0->unknown_10_[var1] <= 1)
+    for (int i = 0; i < 3; i++) {
+        if (sub->f10[i] <= 1)
             continue;
-        if (var0->unknown_10_[var1] <= arg0->unknown_bc_[var1])
+        if (sub->f10[i] <= self->fieldBC[i])
             continue;
-        Struct_02055ccc_2* var2 = (Struct_02055ccc_2*)((SignedAllocatorList*)((char*)arg0->unknown_30_ + 0x80 + var1 * 12))->GetNthElement(arg0->unknown_bc_[var1]);
-        if (var2 == 0)
+        Struct_02055ccc_2* elem = (Struct_02055ccc_2*)((SignedAllocatorList*)((char*)self->unknown_30_ + 0x80 + i * 12))->GetNthElement(self->fieldBC[i]);
+        if (elem == 0)
             continue;
-        if ((unsigned int)var2->unknown_0_->unknown_0_ >= (unsigned int)arg0->unknown_4_)
+        if ((unsigned int)elem->p->x >= (unsigned int)self->field4)
             continue;
-        *(unsigned short*)((char*)arg0 + 0xbc + var1 * 2) = *(unsigned short*)((char*)arg0 + 0xbc + var1 * 2) + 1;
-        if (arg0->unknown_bc_[var1] >= var0->unknown_10_[var1]) {
-            arg0->unknown_a4_[var1] = 0;
+        *(unsigned short*)((char*)self + 0xbc + i * 2) = *(unsigned short*)((char*)self + 0xbc + i * 2) + 1;
+        if (self->fieldBC[i] >= sub->f10[i]) {
+            self->unknown_a4_[i] = 0;
             continue;
         }
-        Struct_02055ccc_2* var3 = (Struct_02055ccc_2*)((SignedAllocatorList*)((char*)arg0->unknown_30_ + 0x80 + var1 * 12))->GetNthElement(arg0->unknown_bc_[var1]);
-        if (var3 == 0)
+        Struct_02055ccc_2* elem2 = (Struct_02055ccc_2*)((SignedAllocatorList*)((char*)self->unknown_30_ + 0x80 + i * 12))->GetNthElement(self->fieldBC[i]);
+        if (elem2 == 0)
             continue;
-        arg0->unknown_a4_[var1] = func_020578e8((Struct_020557a4*)var2, (Struct_020557a4*)var3);
+        self->unknown_a4_[i] = func_020578e8((Struct_020557a4*)elem, (Struct_020557a4*)elem2);
     }
 
-    if (var0->unknown_13_ <= 1)
+    if (sub->unknown_13_ <= 1)
         return;
-    if (var0->unknown_13_ <= arg0->unknown_c2_)
+    if (sub->unknown_13_ <= self->unknown_c2_)
         return;
-    Struct_02055ccc_2* var4 = (Struct_02055ccc_2*)((SignedAllocatorList*)((char*)arg0->unknown_30_ + 0xa4))->GetNthElement(arg0->unknown_c2_);
-    if (var4 == 0)
+    Struct_02055ccc_2* elem = (Struct_02055ccc_2*)((SignedAllocatorList*)((char*)self->unknown_30_ + 0xa4))->GetNthElement(self->unknown_c2_);
+    if (elem == 0)
         return;
-    if ((unsigned int)var4->unknown_0_->unknown_0_ >= (unsigned int)arg0->unknown_4_)
+    if ((unsigned int)elem->p->x >= (unsigned int)self->field4)
         return;
-    arg0->unknown_c2_ = arg0->unknown_c2_ + 1;
-    if (arg0->unknown_c2_ >= var0->unknown_13_) {
-        arg0->unknown_b0_ = arg0->unknown_b4_ = arg0->unknown_b8_ = 0;
+    self->unknown_c2_ = self->unknown_c2_ + 1;
+    if (self->unknown_c2_ >= sub->unknown_13_) {
+        self->fieldB0 = self->fieldB4 = self->fieldB8 = 0;
         return;
     }
-    Struct_02055ccc_2* var5 = (Struct_02055ccc_2*)((SignedAllocatorList*)((char*)arg0->unknown_30_ + 0xa4))->GetNthElement(arg0->unknown_c2_);
-    if (var5 == 0)
+    Struct_02055ccc_2* elem2 = (Struct_02055ccc_2*)((SignedAllocatorList*)((char*)self->unknown_30_ + 0xa4))->GetNthElement(self->unknown_c2_);
+    if (elem2 == 0)
         return;
-    arg0->unknown_b0_ = (var5->unknown_0_->unknown_4_ - var4->unknown_0_->unknown_4_) / (float)(var5->unknown_0_->unknown_0_ - var4->unknown_0_->unknown_0_);
-    arg0->unknown_b4_ = (var5->unknown_0_->unknown_8_ - var4->unknown_0_->unknown_8_) / (float)(var5->unknown_0_->unknown_0_ - var4->unknown_0_->unknown_0_);
-    arg0->unknown_b8_ = (var5->unknown_0_->unknown_c_ - var4->unknown_0_->unknown_c_) / (float)(var5->unknown_0_->unknown_0_ - var4->unknown_0_->unknown_0_);
+    self->fieldB0 = (elem2->p->y - elem->p->y) / (float)(elem2->p->x - elem->p->x);
+    self->fieldB4 = (elem2->p->z - elem->p->z) / (float)(elem2->p->x - elem->p->x);
+    self->fieldB8 = (elem2->p->w - elem->p->w) / (float)(elem2->p->x - elem->p->x);
 }

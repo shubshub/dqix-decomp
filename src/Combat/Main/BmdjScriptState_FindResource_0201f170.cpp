@@ -16,7 +16,7 @@ struct EntryList_1f170 {
 };
 
 // Main, originally FindEntryBySignedId_0201f170 (USA 0x0201f170, EUR 0x0201f180, JPN 0x0201eefc)
-ARM struct Entry_1f170* BmdjScriptState_FindResource(struct EntryList_1f170* state, int id) {
+extern "C" ARM struct Entry_1f170* BmdjScriptState_FindResource(struct EntryList_1f170* state, int id) {
     int i;
     for (i = 0; i < state->resourceCount; i++) {
         if (id == state->resources[i].id) {

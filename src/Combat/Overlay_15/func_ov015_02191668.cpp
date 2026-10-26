@@ -14,80 +14,80 @@
 
 struct Struct_ov015_02190d7c_2 {};
 struct Struct_ov015_02190d7c : Struct_ov015_02190d7c_2 {
-    char unknown_0_[0x34];
-    int unknown_34_;
-    signed char unknown_38_;
-    char unknown_39_[0x194-0x39];
-    int unknown_194_;
-    int unknown_198_;
-    char unknown_19c_[8];
-    int unknown_1a4_;
+    char pad0[0x34];
+    int selection;
+    signed char mode;
+    char pad39[0x194-0x39];
+    int current;
+    int previous;
+    char pad19c[8];
+    int state;
     char unknown_1a8_[0x268-0x1a8];
-    short unknown_268_[0x2e];
-    int unknown_2c4_;
+    short indices[0x2e];
+    int cursor;
 };
-struct Struct_ov000_02179cdc_2 { char unknown_0_[0xb]; unsigned char unknown_b_; };
+struct MenuEntry { char pad[0xb]; unsigned char state; };
 extern "C" int func_ov015_021925a8(Struct_ov015_02190d7c*);
 extern "C" void func_ov015_02191874(Struct_ov015_02190d7c*);
 extern "C" int func_ov015_02191284(int*);
 extern "C" void func_ov015_02191ea4(Struct_ov015_02190d7c*, int);
 extern "C" void func_ov015_02191f04(Struct_ov015_02190d7c*);
 extern "C" void func_ov015_02192064(Struct_ov015_02190d7c*, int);
-extern "C" Struct_ov000_02179cdc_2* func_ov015_02193160(Struct_ov015_02190d7c*, int, int*);
+extern "C" MenuEntry* func_ov015_02193160(Struct_ov015_02190d7c*, int, int*);
 extern "C" void func_ov015_021931b4(Struct_ov015_02190d7c*, int);
 extern "C" int func_ov015_021931cc(Struct_ov015_02190d7c_2*);
 extern "C" void func_ov015_02192700(Struct_ov015_02190d7c*, int);
 
 // USA: func_ov015_02191668
-extern "C" ARM void func_ov015_02191668(Struct_ov015_02190d7c* arg0) {
-    if (func_ov015_021925a8(arg0)) return;
-    if (arg0->unknown_1a4_ == 0x27) func_ov015_02191874(arg0);
+extern "C" ARM void func_ov015_02191668(Struct_ov015_02190d7c* self) {
+    if (func_ov015_021925a8(self)) return;
+    if (self->state == 0x27) func_ov015_02191874(self);
     if (g_keyManager.TestKeysPressed(1)) {
-        int var0 = func_ov015_02191284(&arg0->unknown_2c4_);
-        arg0->unknown_268_[arg0->unknown_1a4_] = var0;
-        switch (arg0->unknown_1a4_) {
-        case 0x24: func_ov015_02191ea4(arg0, var0); break;
-        case 0x26: func_ov015_02191f04(arg0); break;
-        case 0x25: func_ov015_02192064(arg0, var0); break;
+        int index = func_ov015_02191284(&self->cursor);
+        self->indices[self->state] = index;
+        switch (self->state) {
+        case 0x24: func_ov015_02191ea4(self, index); break;
+        case 0x26: func_ov015_02191f04(self); break;
+        case 0x25: func_ov015_02192064(self, index); break;
         case 0x27: break;
         default:
-            int var1 = 0;
-            func_ov015_02193160(arg0, arg0->unknown_1a4_, &var1);
-            var0 += var1;
-            Struct_ov000_02179cdc_2* var2 = func_ov015_02193160(arg0, arg0->unknown_1a4_, &var0);
-            if (var2->unknown_b_) {
-                func_ov015_021931b4(arg0, arg0->unknown_1a4_);
-                arg0->unknown_1a4_ = var2->unknown_b_;
-                func_ov015_02192700(arg0, 0);
+            int start = 0;
+            func_ov015_02193160(self, self->state, &start);
+            index += start;
+            MenuEntry* entry = func_ov015_02193160(self, self->state, &index);
+            if (entry->state) {
+                func_ov015_021931b4(self, self->state);
+                self->state = entry->state;
+                func_ov015_02192700(self, 0);
             }
             break;
         }
     } else if (g_keyManager.TestKeysPressed(2)) {
-        if (arg0->unknown_1a4_ > 0x23) {
-            arg0->unknown_268_[arg0->unknown_1a4_] = func_ov015_02191284(&arg0->unknown_2c4_);
-            arg0->unknown_1a4_ = func_ov015_021931cc(arg0);
-            func_ov015_02192700(arg0, 0);
+        if (self->state > 0x23) {
+            self->indices[self->state] = func_ov015_02191284(&self->cursor);
+            self->state = func_ov015_021931cc(self);
+            func_ov015_02192700(self, 0);
         } else {
-            int var3 = arg0->unknown_194_;
-            arg0->unknown_194_ = arg0->unknown_198_;
-            arg0->unknown_198_ = var3;
-            int var4;
-            do { var4 = func_ov015_021931cc(arg0); } while (var4 >= 0x23);
-            if (arg0->unknown_38_ >= 0) {
-                switch (arg0->unknown_38_) {
+            int previous = self->current;
+            self->current = self->previous;
+            self->previous = previous;
+            int state;
+            do { state = func_ov015_021931cc(self); } while (state >= 0x23);
+            if (self->mode >= 0) {
+                switch (self->mode) {
                 case 0: case 1:
-                    while (var4 >= 0xf) var4 = func_ov015_021931cc(arg0);
+                    while (state >= 0xf) state = func_ov015_021931cc(self);
                     break;
                 case 2:
-                    while (var4 >= 0x21) var4 = func_ov015_021931cc(arg0);
+                    while (state >= 0x21) state = func_ov015_021931cc(self);
                     break;
                 }
-                arg0->unknown_38_ = -1;
-                if (arg0->unknown_194_ == 1) arg0->unknown_194_ = 0;
+                self->mode = -1;
+                if (self->current == 1) self->current = 0;
             }
-            arg0->unknown_1a4_ = var4;
-            func_ov015_02192700(arg0, 0);
-            arg0->unknown_34_ = 0;
+            self->state = state;
+            func_ov015_02192700(self, 0);
+            self->selection = 0;
         }
     }
 }

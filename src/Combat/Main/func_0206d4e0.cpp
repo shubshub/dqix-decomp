@@ -6,19 +6,19 @@
 #include "Combat/WorkRecord.h"
 
 
-struct Struct_0201c1c8;
+struct Variant02030b0c;
 struct Struct_0201d530;
 struct Vector3i;
 
 struct GameState;
 
 extern "C" char* Scenario_GetInstance();
-int Scenario_TestFlag(int, unsigned char*, int);
-int TestBitWithBias0206eb98(unsigned char*, int);
-void UnlinkNodeByByteId0206dd68(void*, int);
+extern "C" int Scenario_TestFlag(int, unsigned char*, int);
+extern "C" int func_0206eb98(unsigned char*, int);
+extern "C" void func_0206dd68(void*, int);
 
 struct Struct_02108cec {
-    unsigned char unknown_0_[0xa];
+    unsigned char pad0[0xa];
     unsigned short unknown_a_;
     unsigned short unknown_c_;
     void* unknown_10_;
@@ -27,18 +27,18 @@ struct Struct_02108cec {
 extern struct Struct_02108cec data_02108cec;
 
 // USA: func_0206d4e0
-extern "C" ARM int func_0206d4e0(void* arg0, int arg1) {
-    if (arg1 < 9) {
+extern "C" ARM int func_0206d4e0(void* param0, int param1) {
+    if (param1 < 9) {
         return 0;
     }
     data_02108cec.unknown_a_++;
     bool var0 = false;
-    if (arg1 % 2 == 0) {
+    if (param1 % 2 == 0) {
         var0 = true;
     }
     int n;
     int second;
-    int half = (even ? param1 - 8 : param1 - 7) / 2;
+    int half = (var0 ? param1 - 8 : param1 - 7) / 2;
     char* ctx = Scenario_GetInstance();
     struct Variant02030b0c* arg = (struct Variant02030b0c*)param0;
     for (n = half; n > 0; n--) {
@@ -52,9 +52,9 @@ extern "C" ARM int func_0206d4e0(void* arg0, int arg1) {
             if ((second != 0 && hit == 0) || (second == 0 && hit != 0)) {
                 return 1;
             }
-        } else if (var8 == 2) {
-            int var10 = func_0206eb98((unsigned char*)var4, (unsigned short)var6);
-            if ((var2 != 0 && var10 == 0) || (var2 == 0 && var10 != 0)) {
+        } else if (mode == 2) {
+            int hit = func_0206eb98((unsigned char*)ctx, (unsigned short)packed);
+            if ((second != 0 && hit == 0) || (second == 0 && hit != 0)) {
                 return 1;
             }
         } else {
@@ -62,45 +62,45 @@ extern "C" ARM int func_0206d4e0(void* arg0, int arg1) {
         }
     }
 
-    int var11 = ((Script::Parameter*)var5)->ToInt();
-    struct GameState* var12 = GameState::GetInstance();
-    if (var11 == 1) {
-        if (var12->IsMorningDayOrEvening()) {
+    int kind = ((Script::Parameter*)arg)->ToInt();
+    struct GameState* gs = GameState::GetInstance();
+    if (kind == 1) {
+        if (gs->IsMorningDayOrEvening()) {
             return 1;
         }
-    } else if (var11 == 0) {
-        if (!var12->IsMorningDayOrEvening()) {
+    } else if (kind == 0) {
+        if (!gs->IsMorningDayOrEvening()) {
             return 1;
         }
     }
 
-    int var13 = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)var5 + 8)))->ToInt();
-    int var14 = ((Script::Parameter*)((struct Struct_0201c1c8*)((char*)var5 + 0x10)))->ToInt();
-    if (var13 != data_02108cec.unknown_c_) {
-        func_0206dd68(data_02108cec.unknown_10_, var14);
+    int a = ((Script::Parameter*)((struct Variant02030b0c*)((char*)arg + 8)))->ToInt();
+    int b = ((Script::Parameter*)((struct Variant02030b0c*)((char*)arg + 0x10)))->ToInt();
+    if (a != data_02108cec.unknown_c_) {
+        func_0206dd68(data_02108cec.unknown_10_, b);
         return 1;
     }
 
-    struct Struct_0206bf2c* var15 = (struct Struct_0206bf2c*)((SafeAllocator*)data_02108cec.unknown_14_)->Allocate(0x78);
-    if (var15 == 0) {
+    struct Struct_0206bf2c* rec = (struct Struct_0206bf2c*)((SafeAllocator*)data_02108cec.unknown_14_)->Allocate(0x78);
+    if (rec == 0) {
         return 0;
     }
-    func_0206bf2c(var15);
-    var15->unknown_2_ = (unsigned short)var13;
-    int var16 = arg1 - var3 * 2 - var0;
-    var15->unknown_0_ = (unsigned char)var14;
-    if (var16 < 4) {
-        func_0206dd68(data_02108cec.unknown_10_, var15->unknown_0_);
+    func_0206bf2c(rec);
+    rec->field2 = (unsigned short)a;
+    int rem = param1 - half * 2 - var0;
+    rec->field0 = (unsigned char)b;
+    if (rem < 4) {
+        func_0206dd68(data_02108cec.unknown_10_, rec->field0);
         return 1;
     }
 
-    struct Struct_0201d530* var17 = (Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)((char*)var5 + 0x18)))->ToVec3fix((Vector3i*)var15->unknown1_10_);
-    var15->unknown_1c_ = (short)(4096.0f * ((Script::Parameter*)var17)->ToFloat());
+    struct Struct_0201d530* v = (Struct_0201d530*)((Script::Parameter*)((struct Struct_0201d530*)((char*)arg + 0x18)))->ToVec3fix((Vector3i*)rec->vec);
+    rec->field1c = (short)(4096.0f * ((Script::Parameter*)v)->ToFloat());
     if (var0) {
-        var15->unknown_1e_ = (unsigned char)((Script::Parameter*)((struct Struct_0201c1c8*)((char*)var17 + 8)))->ToInt();
+        rec->unknown_1e_ = (unsigned char)((Script::Parameter*)((struct Variant02030b0c*)((char*)v + 8)))->ToInt();
     }
-    var15->unknown_44_ = data_02108cec.unknown_a_;
-    var15->unknown_a_2_ = 1;
-    func_0206db48(data_02108cec.unknown_10_, var15);
+    rec->field44 = data_02108cec.unknown_a_;
+    rec->unknown_a_2_ = 1;
+    func_0206db48(data_02108cec.unknown_10_, rec);
     return 1;
 }

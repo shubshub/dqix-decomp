@@ -11,129 +11,129 @@ extern const char data_020f07ce[];
 extern const char data_020f0aeb[];
 
 // JPN: func_0206c794
-extern "C" ARM void func_0206c794(void* arg0) {
-    Struct_02021b84* var0 = static_cast<Struct_02021b84*>(arg0);
-    unsigned short var1[16];
-    unsigned char var2 = 0;
-    __clear(var1, sizeof(var1));
-    unsigned short* var3 = static_cast<unsigned short*>(var0->unknown_1c_);
-    int var4 = 0;
-    var0->unknown_1774_ = 0;
-    unsigned char var5 = var0->unknown_17f3_;
+extern "C" ARM void func_0206c794(void* context) {
+    MessageSystem* self = static_cast<MessageSystem*>(context);
+    unsigned short caption[16];
+    unsigned char length = 0;
+    __clear(caption, sizeof(caption));
+    unsigned short* cursor = static_cast<unsigned short*>(self->unknown_1c_);
+    int changed = 0;
+    self->unknown_1774_ = 0;
+    unsigned char var5 = self->unknown_17f3_;
     for (;;) {
-        if (func_02069408(var0, *var3)) {
-            var2 = 0;
-            var0->unknown_1774_ = -1;
-            var0->unknown_1772_ = 0;
-            var0->unknown_19c4_ = 0;
-            var4 = 1;
+        if (func_02069408(self, *cursor)) {
+            length = 0;
+            self->unknown_1774_ = -1;
+            self->unknown_1772_ = 0;
+            self->unknown_19c4_ = 0;
+            changed = 1;
             break;
         }
         if (!func_02069430(self, *cursor)) {
             if (memcmp(cursor, data_020f07ce, 2) == 0) {
-                self->b19c2 = 0;
+                self->unknown_17f3_ = 0;
                 break;
             }
-            var1[var2] = *var3;
-            var2 = (unsigned char)(var2 + 1) & 15;
+            caption[length] = *cursor;
+            length = (unsigned char)(length + 1) & 15;
         }
-        var0->unknown_1774_++;
-        var3++;
+        self->unknown_1774_++;
+        cursor++;
     }
-    var3++;
+    cursor++;
     for (;;) {
         if (func_02069408(self, *cursor)) break;
         if (!func_02069430(self, *cursor)) {
             if (memcmp(cursor, data_020f0aeb, 2) == 0) {
                 length = 0;
-                self->h1944 = -1;
-                self->lineGlyphCount = 0;
-                self->b19c4 = 0;
-                self->b19c2 = previousStatus;
+                self->unknown_1774_ = -1;
+                self->unknown_1772_ = 0;
+                self->unknown_19c4_ = 0;
+                self->unknown_17f3_ = var5;
                 changed = 1;
                 break;
             }
             if (memcmp(cursor, data_020f07ce, 2) == 0) break;
         }
-        var3++;
+        cursor++;
     }
-    if (!var0->unknown_17f3_ && var2) {
-        unsigned short var6;
-        for (unsigned char var7 = 0; var7 < var0->unknown_1772_; var7++) {
-            var6 = var0->unknown_1752_[var7];
-            if (!func_02069430(var0, var6)) {
-                Struct_0204166c* var8 = &var0->unknown_9b8_[var6];
-                if (var8->unknown_8_ >= 0 &&
-                    var8->unknown1_18_ != var1[var7]) {
-                    var4 = 1;
+    if (!self->unknown_17f3_ && length) {
+        unsigned short slot;
+        for (unsigned char i = 0; i < self->unknown_1772_; i++) {
+            slot = self->unknown_1752_[i];
+            if (!func_02069430(self, slot)) {
+                Struct_0204166c* glyph = &self->glyphs[slot];
+                if (glyph->unknown_8_ >= 0 &&
+                    glyph->unknown1_18_ != caption[i]) {
+                    changed = 1;
                     break;
                 }
             }
         }
     }
-    if (var4) {
-        for (unsigned char var9 = 0; var9 < var0->unknown_1772_; var9++)
-            func_0206cb14(var0, 10, var0->unknown_1752_[var9]);
-        memset(var0->unknown_1752_, 0xff01, sizeof(var0->unknown_1752_));
-        var0->unknown_19c3_ = 0;
-    } else if (var0->unknown_1772_) {
-        var0->unknown_6c_ = (short)var0->unknown_1774_;
-        var0->unknown1_40_ = var0->unknown_1774_;
-        var0->unknown_78_ = (short)var0->unknown_1774_;
+    if (changed) {
+        for (unsigned char i = 0; i < self->unknown_1772_; i++)
+            func_0206cb14(self, 10, self->unknown_1752_[i]);
+        memset(self->unknown_1752_, 0xff01, sizeof(self->unknown_1752_));
+        self->unknown_19c3_ = 0;
+    } else if (self->unknown_1772_) {
+        self->unknown_6c_ = (short)self->unknown_1774_;
+        self->unknown1_40_ = self->unknown_1774_;
+        self->unknown_78_ = (short)self->unknown_1774_;
         return;
     }
-    var0->unknown_1772_ = 0;
+    self->unknown_1772_ = 0;
 }
 #else
 
 struct Entry0204254c { int value; signed char width; signed char advance : 6; signed char field5 : 2; unsigned char field6[2]; };
-Entry0204254c* Font_FindCharacter(int, int);
-int Font_GetFallbackWidth(int);
-struct CombatSlots0206b198;
-void DecrementSlotRef0206b198(CombatSlots0206b198*, unsigned short);
+extern "C" Entry0204254c* Font_FindCharacter(int, int);
+extern "C" int Font_GetFallbackWidth(int);
+struct Struct_0204500c_4;
+extern "C" void func_0206b198(Struct_0204500c_4*, unsigned short);
 extern char data_020f08dc[];
 extern char data_020f0979[];
 extern char data_020f097c[];
 extern "C" void __clear(void*, int);
 struct Struct_0206ad74 {
-    unsigned char unknown_0_[0x50];
-    char* unknown_50_;
-    unsigned char unknown_54_[0x74-0x54];
-    int unknown_74_;
-    int unknown_78_;
-    unsigned char unknown_7c_[8];
+    unsigned char field0[0x50];
+    char* text;
+    unsigned char field54[0x74-0x54];
+    int start;
+    int end;
+    unsigned char field7c[8];
     int unknown_84_;
     int unknown_88_;
     unsigned char unknown_8c_[0x912-0x8c];
-    unsigned char unknown_912_;
+    unsigned char mode;
     unsigned char unknown_913_[0x934-0x913];
     short unknown_934_;
     short unknown_936_;
     unsigned char unknown_938_[0x1882-0x938];
-    unsigned short unknown_1882_[64];
-    char unknown_1902_[64];
-    unsigned short unknown_1942_;
-    short unknown_1944_;
+    unsigned short slots[64];
+    char caption[64];
+    unsigned short count;
+    short width;
     short unknown_1946_;
     unsigned char unknown_1948_[0x19c2-0x1948];
-    unsigned char unknown_19c2_;
-    unsigned char unknown_19c3_;
+    unsigned char status;
+    unsigned char changed;
     unsigned char unknown_19c4_[0x19dc-0x19c4];
-    unsigned char unknown_19dc_;
+    unsigned char font;
 };
 
 // USA: func_0206ad74
-extern "C" ARM void func_0206ad74(Caption0206ad74* self) {
+extern "C" ARM void func_0206ad74(Struct_0206ad74* self) {
     int defaultWidth;
     int length = 0;
-    self->specialStart = 0;
-    self->specialEnd = 0;
+    self->unknown_84_ = 0;
+    self->unknown_88_ = 0;
     self->width = 0;
     self->count = 0;
-    self->specialLength = 0;
-    unsigned char previousStatus = self->status;
+    self->unknown_1946_ = 0;
+    unsigned char var2 = self->status;
     int changed = 1;
-    int prefixCount = 0;
+    int var4 = 0;
     char caption[64];
     __clear(caption, sizeof(caption));
     unsigned char fontWidth;
@@ -145,21 +145,21 @@ extern "C" ARM void func_0206ad74(Caption0206ad74* self) {
     fontWidth = Font_GetFallbackWidth(self->font);
     if (start) {
         for (;;) {
-            if (var8 == var9) break;
-            unsigned short var12;
-            memcpy(&var12, var8, 2);
+            if (text == start) break;
+            unsigned short code;
+            memcpy(&code, text, 2);
             var4++;
-            if ((var12 & 0xff00) == 0xff00) var8++;
-            var8++;
+            if ((code & 0xff00) == 0xff00) text++;
+            text++;
         }
-        char* var13 = var9 + 2;
-        char* var14 = strstr(var13, data_020f08dc);
+        char* selected = start + 2;
+        char* var14 = strstr(selected, data_020f08dc);
         if (var14) {
-            var1 = var14 - var13;
-            memcpy(var5, var13, var1);
-            var3 = 0;
-            arg0->unknown_19c2_ = var3;
-            var7 = var5;
+            length = var14 - selected;
+            memcpy(caption, selected, length);
+            changed = 0;
+            self->status = changed;
+            cursor = caption;
             for (;;) {
                 defaultWidth = fontWidth + 1;
                 if (!*cursor) break;
@@ -171,43 +171,43 @@ extern "C" ARM void func_0206ad74(Caption0206ad74* self) {
                     self->width += width + 1;
                     cursor += advance;
                 } else {
-                    arg0->unknown_1942_++;
-                    var7++;
-                    arg0->unknown_1944_ += var0;
+                    self->count++;
+                    cursor++;
+                    self->width += defaultWidth;
                 }
             }
-            arg0->unknown_1946_ = var14 - var9;
-            arg0->unknown_1946_ += 3;
-            arg0->unknown_1946_ += var4 - 2;
-            arg0->unknown_912_ = 4;
-            short var18 = 8 - (arg0->unknown_1944_ & 7);
-            arg0->unknown_934_ = arg0->unknown_1944_ + 18 + var18;
-            arg0->unknown_936_ = 22;
-        } else arg0->unknown_19c2_ = var2;
+            self->unknown_1946_ = var14 - start;
+            self->unknown_1946_ += 3;
+            self->unknown_1946_ += var4 - 2;
+            self->mode = 4;
+            short padding = 8 - (self->width & 7);
+            self->unknown_934_ = self->width + 18 + padding;
+            self->unknown_936_ = 22;
+        } else self->status = var2;
     } else {
-        if (var10 || var11) arg0->unknown_912_ = 3;
-        else arg0->unknown_1946_ = -1;
+        if (middle || alternate) self->mode = 3;
+        else self->unknown_1946_ = -1;
     }
-    if (!arg0->unknown_19c2_ && var1) var3 = strcmp(arg0->unknown_1902_, var5);
-    if (var3) {
-        for (int var19 = 0; var19 < arg0->unknown_1942_; var19++) func_0206b198((Struct_0204500c_4*)arg0, arg0->unknown_1882_[var19]);
-        memset(arg0->unknown_1882_, 0xff01, sizeof(arg0->unknown_1882_));
-        memset(arg0->unknown_1902_, 0, sizeof(arg0->unknown_1902_));
-        memcpy(arg0->unknown_1902_, var5, var1);
-        arg0->unknown_19c3_ = 0;
-        if (arg0->unknown_1942_) {
-            arg0->unknown_84_ = arg0->unknown_1946_;
-            arg0->unknown_88_ = arg0->unknown_1942_ + var4 + 3;
+    if (!self->status && length) changed = strcmp(self->caption, caption);
+    if (changed) {
+        for (int i = 0; i < self->count; i++) func_0206b198((Struct_0204500c_4*)self, self->slots[i]);
+        memset(self->slots, 0xff01, sizeof(self->slots));
+        memset(self->caption, 0, sizeof(self->caption));
+        memcpy(self->caption, caption, length);
+        self->changed = 0;
+        if (self->count) {
+            self->unknown_84_ = self->unknown_1946_;
+            self->unknown_88_ = self->count + var4 + 3;
         }
-    } else if (arg0->unknown_1942_) {
-        arg0->unknown_84_ = arg0->unknown_1946_;
-        arg0->unknown_88_ = arg0->unknown_1942_ + var4 + 3;
-        arg0->unknown_74_ = arg0->unknown_1942_ + var4 + 3;
-        arg0->unknown_78_ = arg0->unknown_1942_ + var4 + 3;
-        arg0->unknown_1942_++;
+    } else if (self->count) {
+        self->unknown_84_ = self->unknown_1946_;
+        self->unknown_88_ = self->count + var4 + 3;
+        self->start = self->count + var4 + 3;
+        self->end = self->count + var4 + 3;
+        self->count++;
         return;
     }
-    arg0->unknown_1942_ = 0;
+    self->count = 0;
 }
 
 #endif

@@ -8,105 +8,105 @@
 #include "std_library_functions.h"
 
 struct Struct_02086f24_3 {
-    unsigned int unknown_0_0_ : 10;
-    unsigned int unknown_1_2_ : 10;
-    unsigned int unknown_2_4_ : 10;
-    unsigned int unknown_3_6_ : 2;
+    unsigned int x : 10;
+    unsigned int y : 10;
+    unsigned int z : 10;
+    unsigned int reserved : 2;
 };
 
 struct Struct_02086f24_8 {
-    short unknown_0_[10];
-    unsigned char unknown_14_0_ : 1;
-    unsigned char unknown_14_1_ : 3;
-    unsigned char unknown_14_4_ : 4;
-    unsigned char unknown_15_0_ : 4;
+    short equipment[10];
+    unsigned char gender : 1;
+    unsigned char hairStyle : 3;
+    unsigned char hairColor : 4;
+    unsigned char face : 4;
     short unknown_16_;
-    short unknown_18_;
-    short unknown_1a_;
+    short height;
+    short width;
 };
 
-struct Struct_0201099c_20 {
-    signed char unknown_0_0_ : 6;
-    unsigned char unknown_0_6_ : 1;
-    unsigned char unknown_0_7_ : 1;
-    unsigned char unknown_1_0_ : 4;
+struct CombatSelection {
+    signed char selected : 6;
+    unsigned char active : 1;
+    unsigned char reserved : 1;
+    unsigned char count : 4;
     unsigned char unknown_1_4_ : 1;
-    unsigned char unknown_1_5_ : 3;
-    unsigned char unknown_2_[13];
-    unsigned char unknown_f_[13];
-    int unknown_1c_[13];
-    int unknown_50_;
+    unsigned char mode : 3;
+    unsigned char levels[13];
+    unsigned char status[13];
+    int experience[13];
+    int current;
     unsigned short unknown_54_;
     char unknown_56_[2];
-    Struct_02086f24_3 unknown_58_[13][3];
-    unsigned short unknown_f4_;
-    unsigned char unknown_f6_[27];
+    Struct_02086f24_3 triples[13][3];
+    unsigned short skillPoints;
+    unsigned char flags[27];
     unsigned char unknown_111_[9];
     unsigned char unknown_11a_[36];
     unsigned char unknown_13e_;
-    unsigned char unknown_13f_0_ : 3;
-    unsigned char unknown_13f_3_ : 5;
-    unsigned char unknown_140_[12];
+    unsigned char cursor : 3;
+    unsigned char capacity : 5;
+    unsigned char name[12];
     Struct_02086f24_3 unknown_14c_[4];
-    unsigned int unknown_15c_0_ : 10;
+    unsigned int timer : 10;
     unsigned int unknown_15d_2_ : 10;
     unsigned int unknown_15e_4_ : 12;
-    Struct_02086f24_8 unknown_160_;
+    Struct_02086f24_8 appearance;
     unsigned char unknown_17c_[0xc0];
 };
 
 struct Struct_02086f24 {
-    signed char unknown_0_;
-    char unknown_1_[3];
-    const char* unknown_4_;
-    unsigned char unknown_8_;
+    signed char id;
+    char pad1[3];
+    const char* name;
+    unsigned char gender;
     char unknown_9_;
     short unknown_a_;
     char unknown_c_[4];
-    unsigned char unknown_10_;
-    unsigned char unknown_11_;
-    unsigned char unknown_12_;
+    unsigned char hairStyle;
+    unsigned char face;
+    unsigned char hairColor;
     char unknown_13_;
-    float unknown_14_;
-    float unknown_18_;
-    short unknown_1c_[10];
-    unsigned char unknown_30_[13];
-    unsigned char unknown_3d_;
-    unsigned char unknown_3e_;
-    unsigned char unknown_3f_;
+    float height;
+    float width;
+    short equipment[10];
+    unsigned char levels[13];
+    unsigned char vocation;
+    unsigned char count;
+    unsigned char cursor;
 };
 
-struct Struct_0201099c_6 {
-    Struct_02086f24* unknown_0_;
-    short unknown_4_;
+struct ResetFieldsStruct {
+    Struct_02086f24* entries;
+    short count;
     short unknown_6_;
-    short unknown_8_;
+    short f8;
     char unknown_a_[2];
-    int unknown_c_;
-    short unknown_10_;
-    char unknown_12_[2];
-    int unknown_14_;
-    short unknown_18_;
+    int fc;
+    short f10;
+    char pad12[2];
+    int f14;
+    short f18;
 };
 
 struct Struct_01ff8b48 {
-    char unknown_0_[0x30];
+    char name[0x30];
     unsigned short unknown_30_;
     unsigned short unknown_32_;
     unsigned short unknown_34_;
     unsigned short unknown_36_;
 };
 
-struct Struct_0201099c_9 {
-    unsigned int unknown_0_[8];
+struct Element020de650 {
+    unsigned int v[8];
 };
 
 struct Struct_02086f24_2 {
-    Struct_02086f24_3 unknown_0_[4];
-    unsigned char unknown_10_[0x2c];
-    Struct_01ff8b48 unknown_3c_;
+    Struct_02086f24_3 base[4];
+    unsigned char pad10[0x2c];
+    Struct_01ff8b48 profile;
     unsigned char unknown_74_[0x120];
-    Struct_0201099c_9 unknown_194_[11];
+    Element020de650 equipment[11];
 #if defined(jpn)
     unsigned char unknown_2f4_[0x5d8];
 #else
@@ -120,27 +120,27 @@ struct Party02086f24 {
 };
 
 struct Struct_02086f24_5;
-struct Struct_02086f24_6 { void* unknown_0_; };
+struct Ctx0209a8b4 { void* field0; };
 struct Struct_02086f24_7;
-struct Struct_02013fb4;
+struct StreamHeader;
 
-void PresetTable_Reset(ResetFieldsStruct* s);
-void PresetTable_Destroy(ResetFieldsStruct* s);
-void PresetTable_Load(void* param0, void* param1, const char* param2);
-RecruitTemplate02086f24* FindEntryBySignedId02089fb0(EntryArray02089fb0* arr, int id);
+extern "C" void PresetTable_Reset(ResetFieldsStruct* s);
+extern "C" void PresetTable_Destroy(ResetFieldsStruct* s);
+extern "C" void PresetTable_Load(void* param0, void* param1, const char* param2);
+extern "C" Struct_02086f24* func_02089fb0(Struct_02086f24_5* arr, int id);
 extern "C" void PartyMemberRecord_Init(CombatSelection* selection);
 extern "C" void __clear(void* dst, unsigned int size);
 extern "C" int Font_EncodeText(const void* a, void* b, int flag);
-extern "C" void func_02082828(CharacterRecord02086f24* record);
-extern "C" void func_02082d6c(CharacterRecord02086f24* dst, CombatSelection* src);
-void LoadAndApplyResourceEntry02082fc4(void* a, void* b);
-void ItemTable_Construct(void* p);
-void ItemTable_Init(void* p);
-int InitAndDispatch020def44(int a0, int a1, int a2, short a3);
-extern "C" void PartyMember_RecalculateStats(void* a, int arg2);
-void ClearField00209a804(int* p);
-void SetupAndRunBufferedScript0209a8b4(Ctx0209a8b4* ctx, SafeAllocator* alloc, StreamHeader* data, int length);
-int CollectPairsBelowThreshold0209ab20(Holder0209ab20* h, int slot, int threshold, unsigned char* out);
+extern "C" void func_02082828(Struct_02086f24_2* record);
+extern "C" void func_02082d6c(Struct_02086f24_2* dst, CombatSelection* src);
+extern "C" void func_02082fc4(void* a, void* b);
+extern "C" void ItemTable_Construct(void* p);
+extern "C" void ItemTable_Init(void* p);
+extern "C" int func_020def44(int a0, int a1, int a2, short a3);
+extern "C" void PartyMember_RecalculateStats(void* a, int arg1);
+extern "C" void func_0209a804(int* p);
+extern "C" void func_0209a8b4(Ctx0209a8b4* ctx, SafeAllocator* alloc, StreamHeader* data, int length);
+extern "C" int func_0209ab20(Struct_02086f24_7* h, int slot, int threshold, unsigned char* out);
 extern "C" int Party_AddMemberRecord(Party02086f24* party, CombatSelection* sel, unsigned char c, unsigned char d);
 
 extern const char* g_itemDataArchive;
@@ -149,7 +149,7 @@ extern const signed char data_020e8a94[10];
 extern const char data_020f102e[];
 extern unsigned char g_fileLoadBuffer[];
 #if defined(jpn)
-extern "C" void* func_020e0968(const char* arg0, unsigned int* arg1);
+extern "C" void* func_020e0968(const char* filename, unsigned int* outLength);
 extern const char data_020f1150[];
 #define HEAP_SIZE_02086f24 0xc00
 #else
@@ -158,42 +158,42 @@ extern const char data_020f1150[];
 
 #define FX_F32_TO_FX16(x) ((short)(((x) > 0) ? (short)((x) * 4096.0f + 0.5f) : (short)((x) * 4096.0f - 0.5f)))
 
-static inline void inline_02086f24(Struct_0201099c_20* arg0, int arg1) {
-    arg0->unknown_54_ |= 1 << arg1;
-    arg0->unknown_50_ = arg1;
+static inline void inline_02086f24(CombatSelection* s, int n) {
+    s->unknown_54_ |= 1 << n;
+    s->current = n;
 }
 
-static inline int inline_02086f24_2(int arg0) { return arg0 / 8; }
+static inline int inline_02086f24_2(int n) { return n / 8; }
 
-static inline int inline_02086f24_3(int arg0) { return arg0 % 8; }
+static inline int inline_02086f24_3(int n) { return n % 8; }
 
-static inline short inline_02086f24_4(const Struct_02086f24* arg0, int arg1) { return arg0->unknown_1c_[arg1]; }
+static inline short inline_02086f24_4(const Struct_02086f24* t, int k) { return t->equipment[k]; }
 
-static inline unsigned short inline_02086f24_5(const Struct_01ff8b48* arg0) { SDK_NULL_ASSERT(arg0); return arg0->unknown_30_; }
+static inline unsigned short inline_02086f24_5(const Struct_01ff8b48* profile) { SDK_NULL_ASSERT(profile); return profile->unknown_30_; }
 
-static inline unsigned short inline_02086f24_6(const Struct_01ff8b48* arg0) { SDK_NULL_ASSERT(arg0); return arg0->unknown_32_; }
+static inline unsigned short inline_02086f24_6(const Struct_01ff8b48* profile) { SDK_NULL_ASSERT(profile); return profile->unknown_32_; }
 
-static inline unsigned short inline_02086f24_7(const Struct_01ff8b48* arg0) { SDK_NULL_ASSERT(arg0); return arg0->unknown_34_; }
+static inline unsigned short inline_02086f24_7(const Struct_01ff8b48* profile) { SDK_NULL_ASSERT(profile); return profile->unknown_34_; }
 
-static inline unsigned short inline_02086f24_8(const Struct_01ff8b48* arg0) { SDK_NULL_ASSERT(arg0); return arg0->unknown_36_; }
+static inline unsigned short inline_02086f24_8(const Struct_01ff8b48* profile) { SDK_NULL_ASSERT(profile); return profile->unknown_36_; }
 
 // USA: func_02086f24
-extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, SafeAllocator* arg2) {
-    Struct_0201099c_20 var0;
-    Struct_0201099c_2 var1;
-    Struct_02086f24_2 var2;
-    Struct_0201099c_6 var3;
-    SafeAllocator var4;
+extern "C" ARM int func_02086f24(Party02086f24* party, unsigned char id, SafeAllocator* heap) {
+    CombatSelection sel;
+    ResourceScriptEntry entry;
+    Struct_02086f24_2 record;
+    ResetFieldsStruct templates;
+    SafeAllocator scriptAlloc;
 #if !defined(jpn)
-    unsigned char var5[12];
+    unsigned char nameBuf[12];
 #endif
     ItemTable items;
-    unsigned char skills[20];
+    unsigned char var7[20];
     unsigned int itemSize;
     unsigned int size;
     Ctx0209a8b4 ctx;
 
-    if (arg2->GetMaxPossibleAllocation() < HEAP_SIZE_02086f24) {
+    if (heap->GetMaxPossibleAllocation() < HEAP_SIZE_02086f24) {
         return 0;
     }
     scriptAlloc.ResetAllocatorPointer();
@@ -202,7 +202,7 @@ extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, Sa
     scriptAlloc.Reset();
     PresetTable_Reset(&templates);
     PresetTable_Load(&templates, &scriptAlloc, NULL);
-    RecruitTemplate02086f24* t = FindEntryBySignedId02089fb0((EntryArray02089fb0*)&templates, (short)(id + 7));
+    Struct_02086f24* t = func_02089fb0((Struct_02086f24_5*)&templates, (short)(id + 7));
     PartyMemberRecord_Init(&sel);
     int vocation = 0;
     int ok;
@@ -210,27 +210,27 @@ extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, Sa
         sel.active = 1;
         sel.count = t->count;
         sel.cursor = t->cursor;
-        SetVocation02086f24(&sel, t->vocation);
+        inline_02086f24(&sel, t->vocation);
 #if defined(jpn)
-        sprintf((char*)var0.unknown_140_, data_020f1150, var11->unknown_4_);
+        sprintf((char*)sel.name, data_020f1150, t->name);
 #else
         __clear(nameBuf, sizeof(nameBuf));
         Font_EncodeText(t->name, nameBuf, 1);
         memcpy(sel.name, nameBuf, sizeof(nameBuf));
 #endif
-        VectorizedInvertedMemcpy(var11->unknown_30_, var0.unknown_2_, sizeof(var0.unknown_2_));
-        Struct_02086f24_8* var14 = &var0.unknown_160_;
-        VectorizedInvertedMemcpy(var11->unknown_1c_, var14->unknown_0_, sizeof(var14->unknown_0_));
-        var14->unknown_14_0_ = var11->unknown_8_;
-        var14->unknown_14_1_ = var11->unknown_10_;
-        var14->unknown_14_4_ = var11->unknown_12_;
-        var14->unknown_15_0_ = var11->unknown_11_;
-        var14->unknown_16_ = var11->unknown_a_;
-        var14->unknown_18_ = FX_F32_TO_FX16(var11->unknown_14_);
-        var14->unknown_1a_ = FX_F32_TO_FX16(var11->unknown_18_);
-        func_02082828(&var2);
-        func_02082d6c(&var2, &var0);
-        func_02082fc4(&var2, &var1);
+        VectorizedInvertedMemcpy(t->levels, sel.levels, sizeof(sel.levels));
+        Struct_02086f24_8* look = &sel.appearance;
+        VectorizedInvertedMemcpy(t->equipment, look->equipment, sizeof(look->equipment));
+        look->gender = t->gender;
+        look->hairStyle = t->hairStyle;
+        look->hairColor = t->hairColor;
+        look->face = t->face;
+        look->unknown_16_ = t->unknown_a_;
+        look->height = FX_F32_TO_FX16(t->height);
+        look->width = FX_F32_TO_FX16(t->width);
+        func_02082828(&record);
+        func_02082d6c(&record, &sel);
+        func_02082fc4(&record, &entry);
         BackgroundLoader::AddLockGlobal();
         itemSize = 0;
         ItemTable_Construct(&items);
@@ -240,50 +240,50 @@ extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, Sa
 #else
         void* itemData = ExtractFileFromGP2(g_itemDataArchive, g_itemDataFile, &itemSize);
 #endif
-        for (int var16 = 0; var16 < 10; var16++) {
-            short var17 = inline_02086f24_4(var11, var16);
+        for (int k = 0; k < 10; k++) {
+            short equip = inline_02086f24_4(t, k);
 #if defined(jpn)
-            InitAndDispatch020def44((int)&record.equipment[data_020e8a94[k]], (int)g_fileLoadBuffer, itemSize, equip);
+            func_020def44((int)&record.equipment[data_020e8a94[k]], (int)g_fileLoadBuffer, itemSize, equip);
 #else
-            func_020def44((int)&var2.unknown_194_[data_020e8a94[var16]], (int)var15, var8, var17);
+            func_020def44((int)&record.equipment[data_020e8a94[k]], (int)itemData, itemSize, equip);
 #endif
         }
         BackgroundLoader::RemoveLockGlobal();
         PartyMember_RecalculateStats(&record, 0);
-        sel.vectors[0].x = record.base[0].x;
-        sel.vectors[0].y = record.base[0].y;
-        sel.vectors[0].z = record.base[0].z;
-        sel.vectors[1].x = record.base[1].x;
-        sel.vectors[1].y = record.base[1].y;
-        sel.vectors[1].z = record.base[1].z;
-        sel.vectors[2].x = record.base[2].x;
-        sel.vectors[2].y = GetStat6c02086f24(&record.profile);
-        sel.vectors[3].x = GetStat6c02086f24(&record.profile) & 0x3ff;
-        sel.vectors[2].z = GetStat6e02086f24(&record.profile);
-        sel.vectors[3].y = GetStat6e02086f24(&record.profile);
-        sel.vectors[3].z = GetStat7002086f24(&record.profile);
-        sel.timer = GetStat7202086f24(&record.profile);
-        sel.timerLimit = record.base[3].x;
+        sel.unknown_14c_[0].x = record.base[0].x;
+        sel.unknown_14c_[0].y = record.base[0].y;
+        sel.unknown_14c_[0].z = record.base[0].z;
+        sel.unknown_14c_[1].x = record.base[1].x;
+        sel.unknown_14c_[1].y = record.base[1].y;
+        sel.unknown_14c_[1].z = record.base[1].z;
+        sel.unknown_14c_[2].x = record.base[2].x;
+        sel.unknown_14c_[2].y = inline_02086f24_5(&record.profile);
+        sel.unknown_14c_[3].x = inline_02086f24_5(&record.profile) & 0x3ff;
+        sel.unknown_14c_[2].z = inline_02086f24_6(&record.profile);
+        sel.unknown_14c_[3].y = inline_02086f24_6(&record.profile);
+        sel.unknown_14c_[3].z = inline_02086f24_7(&record.profile);
+        sel.timer = inline_02086f24_8(&record.profile);
+        sel.unknown_15d_2_ = record.base[3].x;
         sel.skillPoints = entry.initial.value4High;
         sel.experience[t->vocation] = entry.initial.value0;
         vocation = t->vocation;
     } else {
-        var13 = 0;
+        ok = 0;
     }
     PresetTable_Destroy(&templates);
     scriptAlloc.Reset();
     if (ok) {
         void* data = LoadFileIntoMemory(data_020f102e, g_fileLoadBuffer, &size);
         if (data != NULL) {
-            ClearField00209a804((int*)&ctx);
-            SetupAndRunBufferedScript0209a8b4(&ctx, &scriptAlloc, (StreamHeader*)data, size);
-            int count = CollectPairsBelowThreshold0209ab20((Holder0209ab20*)&ctx, vocation, sel.levels[vocation], skills);
-            unsigned char* p = skills;
+            func_0209a804((int*)&ctx);
+            func_0209a8b4(&ctx, &scriptAlloc, (StreamHeader*)data, size);
+            int count = func_0209ab20((Struct_02086f24_7*)&ctx, vocation, sel.levels[vocation], var7);
+            unsigned char* p = var7;
             for (int i = 0; i < count; i++) {
                 int skill = *p;
-                int byte = SkillByteIndex02086f24(skill);
-                int bit = SkillBitIndex02086f24(skill);
-                sel.groupFlags[byte] |= 1 << bit;
+                int var23 = inline_02086f24_2(skill);
+                int bit = inline_02086f24_3(skill);
+                sel.unknown_111_[var23] |= 1 << bit;
                 p++;
             }
         }
@@ -295,6 +295,6 @@ extern "C" ARM int func_02086f24(Struct_02086f24_4* arg0, unsigned char arg1, Sa
             party->memberCount = 4;
         }
     }
-    var4.Destroy();
-    return var13;
+    scriptAlloc.Destroy();
+    return ok;
 }

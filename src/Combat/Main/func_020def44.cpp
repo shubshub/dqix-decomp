@@ -1,22 +1,22 @@
 #include <globaldefs.h>
 
 struct Struct_020deeb8 {
-    unsigned char unknown_0_[0xc];
+    unsigned char pad[0xc];
     int unknown_c_;
     int unknown_10_;
 };
 
 struct Struct_020def44 {
-    unsigned char unknown_0_[0x14];
+    unsigned char pad[0x14];
 };
 
-extern "C" int func_020deeb8(int arg0, struct Struct_020deeb8* arg1, int arg2, int arg3, int arg4);
-extern "C" int func_020def98(int arg0, void* arg1, void* arg2, short* arg3, int arg4);
+extern "C" int func_020deeb8(int a, struct Struct_020deeb8* b, int c, int d, int e);
+extern "C" int ItemTable_CopyIds(int a, void* b, void* c, short* d, int e);
 
 // USA: func_020def44
-extern "C" ARM int func_020def44(int arg0, int arg1, int arg2, short arg3) {
-    struct Struct_020deeb8 var0;
-    struct Struct_020def44 var1;
-    func_020deeb8((int)&var1, &var0, arg0, arg1, arg2);
-    return func_020def98(0, &var0, &var1, &arg3, 1);
+extern "C" ARM int func_020def44(int a0, int a1, int a2, short a3) {
+    struct Struct_020deeb8 st;
+    struct Struct_020def44 other;
+    func_020deeb8((int)&other, &st, a0, a1, a2);
+    return ItemTable_CopyIds(0, &st, &other, &a3, 1);
 }

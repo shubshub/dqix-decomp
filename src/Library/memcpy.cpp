@@ -1,12 +1,12 @@
 #include <globaldefs.h>
 #include <std_library_functions.h>
 
-ARM void* memcpy(void* arg0, void* arg1, unsigned int arg2) {
-    char* var0 = (char*)arg0;
-    char* var1 = (char*)arg1;
-    if (arg2 == 0) return arg0;
+ARM void* memcpy(void* dst, void* src, unsigned int length) {
+    char* d = (char*)dst;
+    char* s = (char*)src;
+    if (length == 0) return dst;
     do {
-        *var0++ = *var1++;
-    } while (--arg2);
-    return arg0;
+        *d++ = *s++;
+    } while (--length);
+    return dst;
 }
